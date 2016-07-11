@@ -1,0 +1,67 @@
+.md-navbar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: @navbar-height;
+  max-height: 1000px;
+  z-index: @z-index-navbar;
+  .shadow-4();
+}
+
+//侧边栏按钮
+.md-navbar-drawer-btn {
+  i {
+    width: 24px;
+    height: 24px;
+  }
+  padding: (@navbar-height - 24)/2;
+  cursor: pointer;
+  user-select: none;
+}
+
+//logo
+.md-navbar-logo {
+  margin-left: 12px;
+  margin-right: 24px;
+  a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 24px;
+  }
+  img {
+    height: 24px;
+  }
+}
+
+//标题
+.md-navbar-title {
+  margin-left: 24px;
+  font-size: 20px;
+  max-width: 138px;
+  .overflow-ellipsis();
+}
+
+//纵向分隔符
+.md-navbar-divider {
+  width: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  height: @navbar-height - 32;
+}
+
+//搜索框
+.md-navbar-search {
+  margin: 0;
+}
+
+.md-navbar-search-field {
+  padding: 0;
+  line-height: 48px;
+  border: none;
+  border-radius: 2px;
+}
+
+.md-navbar-fixed {
+  position: fixed;
+  top: 0;
+}

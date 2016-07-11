@@ -1,0 +1,39 @@
+.container {
+  margin: 0 auto;
+  max-width: 1280px;
+  width: 70%;
+}
+
+.md-row {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: stretch;
+  margin-left: -@grid-gutter-default;
+  margin-right: -@grid-gutter-default;
+}
+
+.md-col,
+[class*="md-col-"] {
+  padding: @grid-gutter-default;
+  box-sizing: border-box;
+}
+
+[class*="md-col-"] {
+  flex: none;
+}
+
+//使单元格之间没有间隔
+.md-row-no-gutter {
+  margin-left: 0;
+  margin-right: 0;
+
+  .md-col,
+  [class*="md-col-"] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@import "grid/desktop.less";
+@import "grid/phone.less";
+@import "grid/tablet.less";

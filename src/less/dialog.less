@@ -1,0 +1,141 @@
+// 提示框外层，使提示框居中、保持边距
+.md-dialog-wrapper {
+  padding: 8px;
+  backface-visibility: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  z-index: @z-index-dialog;
+  align-items: center;
+  justify-content: center;
+  &.md-dialog-in {
+    display: flex!important;
+  }
+}
+
+// 提示框
+.md-dialog {
+  position: relative;
+  box-sizing: border-box;
+  padding-bottom: 52px;
+  width: 100%;
+  max-width: 728px;
+  min-width: 280px;
+  max-height: 100%;
+  background: #fff;
+  border-radius: 2px;
+  opacity: 0;
+  transform: translate3d(0, 0, 0) scale(0.95);
+  will-change: transform, opacity, visibility;
+  transition-property: transform, opacity, visibility;
+  transition-duration: .3s;
+  visibility: hidden;
+  outline: none;
+  text-size-adjust: 100%;
+  .shadow-24();
+
+  &.md-dialog-in {
+    visibility: visible;
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  &.md-dialog-out {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.md-dialog-inner {
+  max-height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding-bottom: 52px;
+  .scrollbar();
+}
+
+// 提示框标题
+.md-dialog-title {
+  font-size: 18px;
+  line-height: 18px;
+  height: 18px;
+  font-weight: bold;
+  padding: 24px 24px 0 24px;
+  text-align: left;
+  background: #fff;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+
+// 提示框文本
+.md-dialog-text {
+  font-size: 15px;
+  color: #707070;
+  word-break: break-all;
+  padding: 20px 24px 24px 24px;
+  text-align: left;
+}
+
+// 提示框自定义内容
+.md-dialog-content {
+}
+
+// 提示框按钮
+.md-dialog-buttons {
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  height: 36px;
+  padding: 8px;
+  text-align: right;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  .md-btn {
+    margin-left: 8px;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+// 垂直叠放的提示框按钮
+.md-dialog-buttons-stacked {
+  .md-dialog-buttons {
+    height: auto;
+    padding: 24px 0 8px 0;
+    .md-btn {
+      height: 48px;
+      margin: 0;
+      width: 100%;
+      text-align: right;
+      border-radius: 0;
+    }
+  }
+}
+
+// 提示框标题固定在顶部
+.md-dialog-title-fixed {
+  .md-dialog-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e3e3e3;
+  }
+
+  .md-dialog-inner {
+    padding-top: 62px;
+  }
+
+  .md-dialog-buttons {
+    border-top: 1px solid #e3e3e3;
+  }
+}

@@ -1,0 +1,92 @@
+//按钮 hover/active 状态颜色
+._color-hover-active-mixin(@colorName) {
+  @colorHover: 'color-@{colorName}-hover';
+  @colorActive: 'color-@{colorName}-active';
+
+  .md-color-@{colorName}{
+    &.md-btn{
+      &:hover{
+        background-color: @@colorHover !important;
+      }
+      &:active{
+        background-color: @@colorActive !important;
+      }
+    }
+  }
+}
+.color-hover-active-mixin(@colorName) {
+  ._color-hover-active-mixin(@colorName);
+  .md-theme-@{colorName} {
+    ._color-hover-active-mixin(@colorName);
+  }
+}
+
+//按钮颜色深度
+._color-version-mixin(@colorName, @version) {
+  @color: 'color-@{colorName}-@{version}';
+  .md-color-@{colorName}-@{version} {
+    background-color: @@color !important;
+  }
+  .md-text-color-@{colorName}-@{version} {
+    color: @@color !important;
+  }
+  .md-theme-@{colorName} {
+    .md-color-primary-@{version} {
+      background-color: @@color !important;
+    }
+    .md-text-color-primary-@{version} {
+      color: @@color !important;
+    }
+  }
+}
+
+.color-version-mixin(@colorName, @version) {
+  //.md-color-primary
+  & when (@version = 0) {
+    @color: 'color-@{colorName}';
+    .md-color-@{colorName} {
+      background-color: @@color !important;
+    }
+    .md-text-color-@{colorName} {
+      color: @@color !important;
+    }
+    .md-theme-@{colorName} {
+      .md-color-primary {
+        background-color: @@color !important;
+      }
+      .md-text-color-primary {
+        color: @@color !important;
+      }
+    }
+
+    .color-hover-active-mixin(@colorName);
+  }
+
+  //.md-color-primary-200
+  & when (@version > 0) {
+    ._color-version-mixin(@colorName, @version);
+  }
+
+  //.md-color-primary-a100
+  & when (isstring(@version)) {
+    ._color-version-mixin(@colorName, @version);
+  }
+}
+
+.color-mixin(@colorName, @withAccent: 1) {
+  .color-version-mixin(@colorName, 0);
+  .color-version-mixin(@colorName, 50);
+  .color-version-mixin(@colorName, 100);
+  .color-version-mixin(@colorName, 200);
+  .color-version-mixin(@colorName, 300);
+  .color-version-mixin(@colorName, 400);
+  .color-version-mixin(@colorName, 500);
+  .color-version-mixin(@colorName, 600);
+  .color-version-mixin(@colorName, 700);
+  & when (@withAccent = 1) {
+    .color-version-mixin(@colorName, ~"a100");
+    .color-version-mixin(@colorName, ~"a200");
+    .color-version-mixin(@colorName, ~"a400");
+    .color-version-mixin(@colorName, ~"a700");
+  }
+}

@@ -1,0 +1,52 @@
+body {
+  font-size: @font-size-body;
+  font-family: @font-family-base;
+  background-color: @body-background-color;
+  color: @body-text-color;
+}
+
+a {
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  background-color: transparent;
+  color: inherit;
+}
+
+// 隐藏元素
+.md-hidden,
+[hidden] {
+  display: none !important;
+}
+
+// 锁定屏幕
+html.md-locked {
+  overflow: hidden;
+}
+
+// 响应式图片
+.md-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// 遮罩层
+.md-mask {
+  position: fixed;
+  z-index: @z-index-mask;
+  top: -5000px;
+  right: -5000px;
+  bottom: -5000px;
+  left: -5000px;
+  backface-visibility: hidden;
+  background: rgba(0, 0, 0, .4);
+  opacity: 0;
+  visibility: hidden;
+  transition-property: opacity, visibility;
+  transition-duration: .3s;
+}
+// 显示遮罩层
+.md-mask-show {
+  opacity: 1;
+  visibility: visible;
+}

@@ -1,0 +1,170 @@
+// Flat Button 默认为扁平按钮
+.md-btn {
+  background: transparent;
+  border: none;
+  border-radius: @button-border-radius;
+
+  position: relative;
+  height: @button-height;
+  margin: 0;
+  min-width: @button-min-width;
+  padding: 0 @button-padding;
+  display: inline-block;
+  overflow: hidden;
+  will-change: box-shadow;
+  transition: box-shadow .2s @animation-curve-fast-out-linear-in,
+  background-color .2s @animation-curve-default,
+  color .2s @animation-curve-default;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  line-height: @button-height;
+  vertical-align: middle;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0;
+
+  zoom: 1;
+  white-space: nowrap;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  box-sizing: border-box;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  &:hover {
+    background-color: @button-hover-color;
+  }
+
+  &:active {
+    background-color: @button-active-color;
+  }
+}
+
+//禁用按钮
+.md-btn[disabled],
+.md-btn-disabled {
+  background-color: rgba(0, 0, 0, .12) !important;
+  color: rgba(0, 0, 0, .26);
+  .shadow-0();
+  cursor: default;
+}
+
+// 加粗按钮文本
+.md-btn-bold {
+  font-weight: bold;
+}
+
+input.md-btn[type="submit"] {
+  -webkit-appearance: none;
+}
+
+// Raised button 浮动按钮
+.md-btn-raised {
+  .shadow-2();
+
+  &:active {
+    background-color: @button-active-color;
+    .shadow-8();
+  }
+}
+
+// FABs 悬浮响应按钮
+.md-btn-fab,
+.md-btn-fab-mini {
+  border-radius: 50%;
+  font-size: @button-fab-font-size;
+  margin: auto;
+  padding: 0;
+  overflow: hidden;
+  line-height: normal;
+  .shadow-6();
+  &:active {
+    .shadow-12();
+  }
+}
+
+.md-btn-fab {
+  height: @button-fab-size;
+  width: @button-fab-size;
+  min-width: @button-fab-size;
+}
+
+.md-btn-fab-mini {
+  height: @button-fab-size-mini;
+  width: @button-fab-size-mini;
+  min-width: @button-fab-size-mini;
+}
+
+// 固定到右下角的 FAB 按钮
+.md-btn-fab-fixed {
+  position: fixed !important;
+  right: 24px;
+  bottom: 24px;
+  @media (max-width: @grid-phone-max) {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
+//图标按钮
+.md-btn-icon,
+.md-btn-icon-mini {
+  border-radius: 50%;
+  font-size: @button-fab-font-size;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+  overflow: hidden;
+  line-height: normal;
+}
+
+.md-btn-icon {
+  height: @button-icon-size;
+  width: @button-icon-size;
+  min-width: @button-icon-size;
+}
+
+.md-btn-icon-mini {
+  height: @button-icon-size-mini;
+  width: @button-icon-size-mini;
+  min-width: @button-icon-size-mini;
+}
+
+//按钮内容的图标
+.md-btn-fab,
+.md-btn-fab-mini,
+.md-btn-icon,
+.md-btn-icon-mini {
+  .md-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-12px, -12px);
+    line-height: 24px;
+    width: 24px;
+  }
+}
+
+//按钮水波纹
+.md-btn-fab,
+.md-btn-fab-mini,
+.md-btn-icon,
+.md-btn-icon-mini {
+  &.waves-effect {
+    transform: translateZ(0);
+  }
+}
+
+//按钮 100% 宽度
+&.md-btn-block {
+  display: block;
+  width: 100%;
+}

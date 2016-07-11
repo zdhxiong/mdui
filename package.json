@@ -1,0 +1,19 @@
+{
+  "name": "mdui",
+  "version": "0.0.1",
+  "author": "zdhxiong",
+  "devDependencies": {
+    "grunt": "~1.0.0",
+    "grunt-autoprefixer": "^3.0.4",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "~1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-jshint": "~1.0.0",
+    "grunt-contrib-less": "^1.0.0",
+    "grunt-contrib-uglify": "~1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-jsbeautifier": "~0.2.12",
+    "grunt-zip": "0.17.1"
+  }
+}

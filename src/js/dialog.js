@@ -146,8 +146,8 @@ var Dialog = (function($, util){
       inst.$wrapper.removeClass('md-dialog-in');
       inst.state = 'closed';
       inst.$wrapper.trigger('closed.dialog.mdui', [inst]);
-      //todo 动画结束后新对话框已经打开，队列已经没有数据
-      if(util.queue(queueName).length === 0){
+
+      if(util.queue(queueName).length === 0 && current.state === 'closed'){
         util.unlockScreen();
       }
 
@@ -161,16 +161,17 @@ var Dialog = (function($, util){
     }
 
     if(inst.options.hashTracking && util.queue(queueName).length === 0){
-      // 是否需要后退历史纪录，默认为false。
-      // 为false时是通过js关闭，需要后退一个历史记录
-      // 为true时是通过后退按钮关闭，不需要后退历史记录
+      // 是否需要后退历史纪录，默认为 false。
+      // 为 false 时是通过 js 关闭，需要后退一个历史记录
+      // 为 true 时是通过后退按钮关闭，不需要后退历史记录
       if(!arguments[0]){
         window.history.back();
       }
       $(window).off('hashchange.dialog.mdui');
     }
 
-    // 关闭旧对话框，打开新对话框。加一点延迟，仅仅为了视觉效果更好。不加延时也不影响功能
+    // 关闭旧对话框，打开新对话框。
+    // 加一点延迟，仅仅为了视觉效果更好。不加延时也不影响功能
     setTimeout(function(){
       util.dequeue(queueName);
     }, 100);

@@ -13,7 +13,8 @@ var Dialog = (function($, util){
     closeBlur: true, //点击对话框外面区域关闭对话框
     closeEsc: true, //按下 esc 关闭对话框
     mask: true, //是否显示遮罩层
-    hashTracking: true //跟踪hashchange
+    hashTracking: true, //跟踪hashchange
+    destroyAfterClose: false //关闭后销毁
   };
 
   /**
@@ -151,9 +152,9 @@ var Dialog = (function($, util){
         util.unlockScreen();
       }
 
-      // if(inst.options.destroyClose){
-      //   inst.destroy();
-      // }
+      if(inst.options.destroyAfterClose){
+        inst.destroy();
+      }
     });
 
     if(inst.options.mask && util.queue(queueName).length === 0){
@@ -203,15 +204,16 @@ var Dialog = (function($, util){
   /**
    * 销毁对话框
    */
-  /*Dialog.prototype.destroy = function(){
+  Dialog.prototype.destroy = function(){
     var inst = this;
 
-    inst.$wrapper.removeClass('md-dialog-in');
-    util.unlockScreen();
-    util.hideMask();
-
     inst.$wrapper.remove();
-  };*/
+
+    if(current === inst){
+      util.unlockScreen();
+      util.hideMask();
+    }
+  };
 
   // esc 按下时关闭对话框
   $(document).on('keydown.escape.dialog.mdui', function(e){

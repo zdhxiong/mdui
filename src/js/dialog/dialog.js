@@ -1,39 +1,28 @@
 /**
  * 弹出对话框函数
  * @param option
- * 参数：
- *  title           标题
- *  text            文本
- *  content         自定义内容
- *  buttons         按钮
- *  stackedButtons  是否垂直按钮
- *  cssClass        附加的css类
- *  closeBlur       点击对话框外面区域关闭对话框
- *  closeEsc        按下 esc 键关闭对话框
- *  mask            打开对话框时显示遮罩层
- *  hashTracking    hash跟踪
- *  onClick(inst, i)点击按钮回调
- *  destroyClose    关闭后自动销毁
- * 按钮参数：
- *  text            文本
- *  bold            是否加粗文本
- *  close           点击后是否关闭对话框
- *  onClick(inst)   点击回调
  */
 mdui.dialog = function(option){
   var DEFAULT = {
-    title: '',
-    text: '',
-    content: '',
-    buttons: [],
-    stackedButtons: false,
-    cssClass: '',
-    closeBlur: false,
-    closeEsc: true,
-    mask: true,
-    hashTracking: true,
-    onClick: function(inst, i){},
-    destroyClose: true
+    title: '',                    // 标题
+    text: '',                     // 文本
+    content: '',                  // 自定义内容
+    buttons: [
+      // {
+      //   text: '',                   // 文本
+      //   bold: false,                // 是否加粗文本
+      //   close: false,               // 点击后是否关闭对话框
+      //   onClick: function(inst){}   // 点击回调
+      // }
+    ],                  // 按钮
+    stackedButtons: false,        // 是否垂直按钮
+    cssClass: '',                 // 附加的css类
+    closeBlur: false,             // 点击对话框外面区域关闭对话框
+    closeEsc: true,               // 按下 esc 键关闭对话框
+    mask: true,                   // 打开对话框时显示遮罩层
+    hashTracking: true,           // hash跟踪
+    onClick: function(inst, i){}, // 点击按钮回调
+    destroyAfterClose: true       // 关闭后自动销毁
   };
   var options = $.extend({}, DEFAULT, option);
 
@@ -76,7 +65,7 @@ mdui.dialog = function(option){
     closeEsc: options.closeEsc,
     mask: options.mask,
     hashTracking: options.hashTracking,
-    destroyClose: true
+    destroyAfterClose: options.destroyAfterClose
   });
   inst.open();
 };

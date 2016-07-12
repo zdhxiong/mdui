@@ -36,6 +36,18 @@
     inst.$wrapper = $wrapper;
     inst.$dialog = $wrapper.find('.md-dialog');
 
+    // 按钮垂直放置时，根据按钮区域高度设置 md-dialog-inner 的 padding-bottom 的值
+    if(inst.$dialog.hasClass('md-dialog-buttons-stacked')){
+      var $buttonsWrapper = inst.$dialog.find('.md-dialog-buttons');
+      var $buttons = $buttonsWrapper.find('.md-btn');
+      var buttonsCount = $buttons.length;
+      var innerPaddingBottom =
+        parseInt($buttonsWrapper.css('padding-top')) +
+        parseInt($buttonsWrapper.css('padding-bottom')) +
+        parseInt($buttons.css('height'))*buttonsCount;
+      inst.$dialog.find('.md-dialog-inner').css('padding-bottom', innerPaddingBottom);
+    }
+
     // 绑定按钮点击事件
     inst.$wrapper.find('.md-dialog-buttons .md-btn').each(function(i, el){
       $(el).on('click.buttons.dialog.mdui', function(){

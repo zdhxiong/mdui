@@ -22,7 +22,6 @@
 .md-dialog {
   position: relative;
   box-sizing: border-box;
-  padding-bottom: 52px;
   width: 100%;
   max-width: 728px;
   min-width: 280px;
@@ -105,21 +104,6 @@
   }
 }
 
-// 垂直叠放的提示框按钮
-.md-dialog-buttons-stacked {
-  .md-dialog-buttons {
-    height: auto;
-    padding: 24px 0 8px 0;
-    .md-btn {
-      height: 48px;
-      margin: 0;
-      width: 100%;
-      text-align: right;
-      border-radius: 0;
-    }
-  }
-}
-
 // 提示框标题固定在顶部
 .md-dialog-title-fixed {
   .md-dialog-title {
@@ -128,14 +112,24 @@
     right: 0;
     top: 0;
     padding-bottom: 20px;
-    border-bottom: 1px solid #e3e3e3;
   }
 
   .md-dialog-inner {
     padding-top: 62px;
   }
+}
 
+// 垂直叠放的提示框按钮
+.md-dialog-buttons-stacked {
   .md-dialog-buttons {
-    border-top: 1px solid #e3e3e3;
+    height: auto;
+    padding: 8px 0 8px 0;
+    .md-btn {
+      height: 48px;
+      margin: 0;
+      width: 100%;
+      text-align: right;
+      border-radius: 0;
+    }
   }
 }

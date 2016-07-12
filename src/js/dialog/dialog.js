@@ -3,18 +3,19 @@
  * @param option
  */
 mdui.dialog = function(option){
+  //默认参数
   var DEFAULT = {
     title: '',                    // 标题
     text: '',                     // 文本
     content: '',                  // 自定义内容
-    buttons: [
+    buttons: [                    // 按钮
       // {
       //   text: '',                   // 文本
       //   bold: false,                // 是否加粗文本
       //   close: false,               // 点击后是否关闭对话框
       //   onClick: function(inst){}   // 点击回调
       // }
-    ],                  // 按钮
+    ],
     stackedButtons: false,        // 是否垂直按钮
     cssClass: '',                 // 附加的css类
     closeBlur: false,             // 点击对话框外面区域关闭对话框
@@ -26,6 +27,7 @@ mdui.dialog = function(option){
   };
   var options = $.extend({}, DEFAULT, option);
 
+  // 创建 HTML 结构
   var buttonsHTML = '',
       dialogHTML;
   if(options.buttons && options.buttons.length > 0){
@@ -53,10 +55,14 @@ mdui.dialog = function(option){
   var $wrapper = $(dialogHTML);
   $(document.body).append($wrapper);
 
-  var inst = new Dialog($wrapper, {
+  var dialogOptions = {
     onClick: function(inst, i){
       options.buttons[i].onClick(inst);
       options.onClick(inst, i);
+
+      // 必须把 close 操作放到最后
+      // 在嵌套使用 dialog 时，先把需要打开的 dialog 放入队列，等旧 dialog 关闭后再从队列中打开新 dialog
+      // 根据队列中是否有数据，决定是否需要隐藏遮罩、解锁屏幕
       if(options.buttons[i].close){
         inst.close();
       }
@@ -66,6 +72,8 @@ mdui.dialog = function(option){
     mask: options.mask,
     hashTracking: options.hashTracking,
     destroyAfterClose: options.destroyAfterClose
-  });
+  };
+
+  var inst = new Dialog($wrapper, dialogOptions);
   inst.open();
 };

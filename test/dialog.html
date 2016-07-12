@@ -7,21 +7,31 @@
 <body>
 
 <div>
-  <button class="md-btn md-btn-raised md-color-blue" data-md-model="dialog" data-md-options-dialog="target:#dialog-1">使用 DATA-API 打开对话框</button>
-
   <div class="md-dialog-wrapper" id="dialog-1">
-    <div class="md-dialog md-dialog-title-fixed md-dialog-no-buttons">
+    <div class="md-dialog md-dialog-title-fixed">
       <div class="md-dialog-inner">
         <div class="md-dialog-title">这是标题</div>
         <div class="md-dialog-text">这是文本</div>
         <div class="md-dialog-content"><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p><p>这是很长的文本</p></div>
       </div>
+      <div class="md-dialog-buttons">
+        <button class="md-btn md-text-color-blue">cancel</button>
+        <button class="md-btn md-text-color-blue md-btn-bold">ok</button>
+      </div>
     </div>
   </div>
 
+  <h2>DATA API</h2>
+  <a href="" class="md-btn md-btn-raised md-color-blue" data-md-model="dialog" data-md-options-dialog="target:#dialog-1">使用 DATA-API 打开对话框</a>
 
+  <h2>jQuery 插件 $('#dialog').mduiDialog({})</h2>
+  <button id="open-dialog-jquery" class="md-btn md-btn-raised md-color-blue">对话框</button>
 
-  <a href="" id="open-dialog" class="md-btn md-btn-raised md-color-blue">对话框</a>
+  <h2>mdui.dialog({})</h2>
+  <button id="open-dialog-dialog" class="md-btn md-btn-raised md-color-blue">open</button>
+
+  <h2>mdui.alert(text, title, onConfirm);</h2>
+  <button id="open-dialog-alert" class="md-btn md-btn-raised md-color-blue">open</button>
 
   <p>1</p>
   <p>2</p>
@@ -59,6 +69,7 @@
 <script>
   $(function(){
 
+    // jQuery
     var $dialog1 = $('#dialog-1');
     var inst = $dialog1.mduiDialog({
       onClick: function(inst, i){
@@ -66,7 +77,7 @@
       }
     });
 
-    $('#open-dialog').on('click', function(e){
+    $('#open-dialog-jquery').on('click', function(e){
       if($(this).is('a')){
         e.preventDefault();
       }
@@ -86,6 +97,64 @@
     $dialog1.on('closed.dialog.mdui', function(){
       console.log('dialog closed');
     });
+
+    //mdui.dialog
+    $('#open-dialog-dialog').on('click', function(){
+      mdui.dialog({
+        title: '这是标题第一级',
+        text: '这是文本第一级',
+        buttons: [
+          {
+            text: 'cancel',
+            close: true,
+            onClick: function(inst){
+
+            }
+          },
+          {
+            text: 'ok',
+            close: false,
+            onClick: function(inst){
+              mdui.dialog({
+                title: '这是标题',
+                text: '这是文本',
+                buttons: [
+                  {
+                    text: 'cancel',
+                    close: true,
+                    onClick: function(inst){
+
+                    }
+                  },
+                  {
+                    text: 'ok',
+                    close: false,
+                    onClick: function(inst){
+                      inst.close();
+                    }
+                  }
+                ]
+              });
+              inst.close();
+            }
+          }
+        ]
+      })
+    });
+
+    //mdui.alert
+    $('#open-dialog-alert').on('click', function(){
+      mdui.alert('第一个对话框', function(inst){
+        mdui.alert('第二个对话框', function(inst){
+          mdui.alert('第三个对话框', function(){
+            mdui.alert('第四个对话框', function(){
+
+            })
+          })
+        });
+      });
+    });
+
   });
 
 </script>

@@ -53,13 +53,14 @@
     if(!$mask.length) {
       $mask = $('<div>').addClass('md-mask');
       $('body').append($mask);
+
+      var _temp = window.getComputedStyle($mask[0]).opacity; //使动态添加的元素的 transition 动画能生效
     }
 
     if(z_index){
       $mask.css('z-index', z_index);
     }
 
-    var _temp = window.getComputedStyle($mask[0]).opacity; //使动态添加的元素的 transition 动画能生效
     $mask.addClass('md-mask-show');
 
     return $mask;
@@ -86,6 +87,34 @@
    */
   util.unlockScreen = function(){
     $('html').removeClass('md-locked');
+  };
+
+  // 存储队列。util.queue 和 util.dequeue 比 jQuery 的少一个参数
+  util._queueData = [];
+  /**
+   * 写入队列
+   * @param name 队列名
+   * @param func 函数名，没有函数名时，返回所有队列
+   * @returns {*}
+   */
+  util.queue = function(name, func){
+    if(typeof util._queueData[name] === 'undefined'){
+      util._queueData[name] = [];
+    }
+    if(typeof func === 'undefined'){
+      return util._queueData[name];
+    }
+    util._queueData[name].push(func);
+  };
+
+  /**
+   * 从队列中移除一个函数，并执行该函数
+   * @param name
+   */
+  util.dequeue = function(name){
+    if(util._queueData[name].length){
+      (util._queueData[name].shift())();
+    }
   };
 
   /**

@@ -45,6 +45,10 @@ module.exports = function (grunt) {
           'src/js/util.js',
           'src/js/drawer.js',
           'src/js/dialog.js',
+          'src/js/dialog/dialog.js',
+          'src/js/dialog/alert.js',
+          'src/js/dialog/confirm.js',
+          'src/js/dialog/prompt.js',
           'src/js/wrap_end.js'
         ],
         dest: 'dist/js/mdui.js'

@@ -2,7 +2,7 @@
  * 对话框
  */
 
-(function($, util){
+var Dialog = (function($, util){
 
   /**
    * 默认参数
@@ -20,6 +20,12 @@
    * 当前对话框
    */
   var current;
+
+  /**
+   * 队列名
+   * @type {string}
+   */
+  var queueName = '__md_dialog';
 
   /**
    * 对话框实例
@@ -78,8 +84,12 @@
       return;
     }
 
-    if(current && current !== inst){
-      current.close();
+    // 如果当前有正在打开或已经打开的对话框，则先加入队列，等旧对话框开始关闭时再打开
+    if(current && (current.state === 'opening' || current.state === 'opened') && current !== inst){
+      util.queue(queueName, function(){
+        inst.open();
+      });
+      return;
     }
 
     current = inst;
@@ -136,18 +146,21 @@
       inst.$wrapper.removeClass('md-dialog-in');
       inst.state = 'closed';
       inst.$wrapper.trigger('closed.dialog.mdui', [inst]);
-      util.unlockScreen();
+      //todo 动画结束后新对话框已经打开，队列已经没有数据
+      if(util.queue(queueName).length === 0){
+        util.unlockScreen();
+      }
 
       // if(inst.options.destroyClose){
       //   inst.destroy();
       // }
     });
 
-    if(inst.options.mask){
+    if(inst.options.mask && util.queue(queueName).length === 0){
       util.hideMask();
     }
 
-    if(inst.options.hashTracking){
+    if(inst.options.hashTracking && util.queue(queueName).length === 0){
       // 是否需要后退历史纪录，默认为false。
       // 为false时是通过js关闭，需要后退一个历史记录
       // 为true时是通过后退按钮关闭，不需要后退历史记录
@@ -156,6 +169,12 @@
       }
       $(window).off('hashchange.dialog.mdui');
     }
+
+    // 关闭旧对话框，打开新对话框。加一点延迟，仅仅为了视觉效果更好。不加延时也不影响功能
+    setTimeout(function(){
+      util.dequeue(queueName);
+    }, 100);
+
   };
 
   /**
@@ -200,6 +219,11 @@
     }
   });
 
+  return Dialog;
+})($, util);
+
+
+(function($, util){
   // jQuery 插件
   $.fn.mduiDialog = function(option){
     var inst;
@@ -209,9 +233,9 @@
 
       if(!inst){
         var options = $.extend(
-            {},
-            util.parseOptions($this.data('md-options-dialog')),
-            typeof option === 'object' && option
+          {},
+          util.parseOptions($this.data('md-options-dialog')),
+          typeof option === 'object' && option
         );
 
         inst = new Dialog($this, options);

@@ -43,6 +43,7 @@ module.exports = function (grunt) {
           'src/js/init.js',
           'src/js/device.js',
           'src/js/util.js',
+          'src/js/ripple.js',
           'src/js/drawer.js',
           'src/js/dialog.js',
           'src/js/dialog/dialog.js',

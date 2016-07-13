@@ -89,4 +89,14 @@
     .color-version-mixin(@colorName, ~"a400");
     .color-version-mixin(@colorName, ~"a700");
   }
+
+  // 涟漪的背景色
+  .waves-effect {
+    &.md-ripple-@{colorName} {
+      @color: 'color-@{colorName}';
+      .waves-ripple {
+        background: rgba(red(@@color), green(@@color), blue(@@color), 0.3) !important;
+      }
+    }
+  }
 }

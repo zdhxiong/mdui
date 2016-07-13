@@ -587,7 +587,7 @@ document.addEventListener('DOMContentLoaded', function() {
   Waves.attach('.md-js-ripple:not([class*="md-color-"]), .md-js-ripple.md-color-white, .md-js-ripple.md-color-transparent');
 
   //有背景色的使用浅色水波纹
-  Waves.attach('.md-js-ripple[class*="md-color-"]:not(.md-color-white):not(.md-color-transparent)', ['waves-light']);
+  Waves.attach('.md-js-ripple[class*="md-color-"]:not(.md-color-white):not(.md-color-transparent)', ['md-ripple-light']);
 
   Waves.init();
 

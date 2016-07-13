@@ -584,10 +584,10 @@
 //初始化 waves
 document.addEventListener('DOMContentLoaded', function() {
   //白色和透明背景使用深色水波纹
-  Waves.attach('.md-js-ripple:not([class*="md-color-"]), .md-js-ripple.md-color-white, .md-js-ripple.md-color-transparent');
+  Waves.attach('.md-ripple:not([class*="md-color-"]), .md-ripple.md-color-white, .md-ripple.md-color-transparent');
 
   //有背景色的使用浅色水波纹
-  Waves.attach('.md-js-ripple[class*="md-color-"]:not(.md-color-white):not(.md-color-transparent)', ['md-ripple-light']);
+  Waves.attach('.md-ripple[class*="md-color-"]:not(.md-color-white):not(.md-color-transparent)', ['md-ripple-light']);
 
   Waves.init();
 

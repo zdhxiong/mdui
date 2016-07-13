@@ -18,7 +18,7 @@ mdui.dialog = function(option){
     ],
     stackedButtons: false,        // 是否垂直按钮
     cssClass: '',                 // 附加的css类
-    closeBlur: false,             // 点击对话框外面区域关闭对话框
+    closeBlur: true,              // 点击对话框外面区域关闭对话框
     closeEsc: true,               // 按下 esc 键关闭对话框
     mask: true,                   // 打开对话框时显示遮罩层
     hashTracking: true,           // hash跟踪
@@ -32,7 +32,7 @@ mdui.dialog = function(option){
       dialogHTML;
   if(options.buttons && options.buttons.length > 0){
     for(var i = 0, len = options.buttons.length; i < len; i++){
-      buttonsHTML += '<button class="md-btn md-text-color-primary ' + options.buttons[i].cssClass + '">' + options.buttons[i].text + '</button>';
+      buttonsHTML += '<button class="md-btn md-ripple md-text-color-primary ' + options.buttons[i].cssClass + '">' + options.buttons[i].text + '</button>';
     }
   }
   var titleHTML = options.title ? '<div class="md-dialog-title">' + options.title + '</div>' : '';
@@ -57,8 +57,14 @@ mdui.dialog = function(option){
 
   var dialogOptions = {
     onClick: function(inst, i){
-      options.buttons[i].onClick(inst);
-      options.onClick(inst, i);
+      // 指定按钮的回调
+      if(typeof options.buttons[i].onClick === 'function'){
+        options.buttons[i].onClick(inst);
+      }
+      // 所有按钮的回调
+      if(typeof options.onClick === 'function'){
+        options.onClick(inst, i);
+      }
 
       // 必须把 close 操作放到最后
       // 在嵌套使用 dialog 时，先把需要打开的 dialog 放入队列，等旧 dialog 关闭后再从队列中打开新 dialog
@@ -76,4 +82,6 @@ mdui.dialog = function(option){
 
   var inst = new Dialog($wrapper, dialogOptions);
   inst.open();
+
+  return inst;
 };

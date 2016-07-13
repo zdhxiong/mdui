@@ -33,6 +33,12 @@
   <h2>mdui.alert(text, title, onConfirm);</h2>
   <button id="open-dialog-alert" class="md-btn md-btn-raised md-color-blue">open</button>
 
+  <h2>mdui.confirm(text, title, onConfirm, onCancel);</h2>
+  <button id="open-dialog-confirm" class="md-btn md-btn-raised md-color-blue">open</button>
+
+  <h2>mdui.prompt(text, title, onConfirm, onCancel)</h2>
+  <button id="open-dialog-prompt" class="md-btn md-btn-raised md-color-blue">open</button>
+
   <p>1</p>
   <p>2</p>
   <p>3</p>
@@ -147,11 +153,26 @@
       mdui.alert('第一个对话框', function(inst){
         mdui.alert('第二个对话框', function(inst){
           mdui.alert('第三个对话框', function(){
-            mdui.alert('第四个对话框', function(){
-
-            })
+            mdui.alert('第四个对话框');
           })
         });
+      });
+    });
+
+    //mdui.confirm
+    $('#open-dialog-confirm').on('click', function(){
+      mdui.confirm('确定要这样做吗？', function(){
+        mdui.confirm('真的确定要这样做吗？', function(){
+          mdui.confirm('要不要再考虑下？');
+        })
+      });
+    });
+
+    //mdui.prompt
+    $('#open-dialog-prompt').on('click', function(){
+      mdui.prompt('谁是世界上最帅的人？', function(inst, val){
+        console.log(inst);
+        console.log(val);
       });
     });
 

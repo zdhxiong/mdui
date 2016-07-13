@@ -12,6 +12,7 @@ mdui.dialog = function(option){
       // {
       //   text: '',                   // 文本
       //   bold: false,                // 是否加粗文本
+      //   cssClass: '',               // 在按钮上添加的 css 类
       //   close: false,               // 点击后是否关闭对话框
       //   onClick: function(inst){}   // 点击回调
       // }
@@ -32,7 +33,7 @@ mdui.dialog = function(option){
       dialogHTML;
   if(options.buttons && options.buttons.length > 0){
     for(var i = 0, len = options.buttons.length; i < len; i++){
-      buttonsHTML += '<button class="md-btn md-text-color-primary' + (options.buttons[i].bold ? ' md-btn-bold' : '') + '">' + options.buttons[i].text + '</button>';
+      buttonsHTML += '<button class="md-btn md-text-color-primary' + (options.buttons[i].bold ? ' md-btn-bold' : '') + ' ' + options.buttons[i].cssClass + '">' + options.buttons[i].text + '</button>';
     }
   }
   var titleHTML = options.title ? '<div class="md-dialog-title">' + options.title + '</div>' : '';

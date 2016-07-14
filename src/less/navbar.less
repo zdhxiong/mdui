@@ -1,3 +1,4 @@
+// 导航栏
 .md-navbar {
   box-sizing: border-box;
   display: flex;
@@ -7,46 +8,68 @@
   max-height: 1000px;
   z-index: @z-index-navbar;
   .shadow-4();
-}
 
-//侧边栏按钮
-.md-navbar-drawer-btn {
-  i {
-    width: 24px;
-    height: 24px;
+  nav {
+    display: flex;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+    align-items: center;
+    line-height: @navbar-height;
   }
-  padding: (@navbar-height - 24)/2;
-  cursor: pointer;
-  user-select: none;
-}
 
-//logo
-.md-navbar-logo {
-  margin-left: 12px;
-  margin-right: 24px;
   a {
-    color: inherit;
+    // 链接悬浮颜色变化在 color/_mixin.less 中
+    transition-property: background-color;
+    transition-duration: .3s;
+    user-select: none;
+    display: block;
+    line-height: 64px;
+    padding: 0 20px;
     text-decoration: none;
-    font-size: 24px;
+    margin: 0;
   }
-  img {
+  .md-icon {
+    vertical-align: middle;
+    padding: (@navbar-height - 24px) / 2 0;
     height: 24px;
+    width: 24px;
   }
 }
 
-//标题
-.md-navbar-title {
-  margin-left: 24px;
-  font-size: 20px;
-  max-width: 138px;
-  .overflow-ellipsis();
+// 使导航栏固定在页面顶部
+.md-navbar-fixed {
+  position: fixed;
+  top: 0;
 }
 
-//纵向分隔符
+// 纵向分隔符
 .md-navbar-divider {
   width: 0;
   border-left: 1px solid rgba(255, 255, 255, 0.2);
   height: @navbar-height - 32;
+  margin: 0 6px;
+}
+
+// 间隔
+.md-navbar-spacer {
+  flex-grow: 1;
+}
+
+// logo
+.md-navbar-logo {
+  font-size: 24px;
+  img{
+    height: 24px;
+    padding: (@navbar-height - 24px) / 2 0;
+  }
+}
+
+// 标题
+.md-navbar-title {
+  font-size: 20px;
+  max-width: 138px;
+  padding: 0 20px;
+  .overflow-ellipsis();
 }
 
 //搜索框
@@ -61,8 +84,3 @@
   border-radius: 2px;
 }
 
-// 使导航栏固定在页面顶部
-.md-navbar-fixed {
-  position: fixed;
-  top: 0;
-}

@@ -4,19 +4,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui, maximum-scale=1, user-scalable=no">
   <link rel="stylesheet" href="../dist/css/mdui.css">
 </head>
-<body>
+<body class="md-theme-blue">
+  <header class="md-navbar md-color-primary md-navbar-fixed">
+    <a href="#" data-md-model="drawer" data-md-options-drawer="target:#drawer-1"><i class="md-icon material-icons">menu</i></a>
+    <a href="#" class="md-navbar-logo">MDUI</a>
+    <div class="md-navbar-divider"></div>
+    <a href="#" class="md-navbar-title">title</a>
+    <div class="md-navbar-spacer"></div>
+    <form class="md-navbar-search" method="post" action="">
+      <input class="md-navbar-search-field" type="search" placeholder="搜索"/>
+    </form>
+    <div class="md-navbar-spacer"></div>
+    <nav>
+      <a href="#"><i class="md-icon material-icons">notifications</i> 消息</a>
+      <a href="#">社区</a>
+      <a href="#"><i class="md-icon material-icons">menu</i></a>
+    </nav>
+  </header>
 
-<header class="md-navbar md-color-primary md-navbar-fixed md-navbar-headroom">
-  <div class="md-navbar-drawer-btn" data-md-model="drawer" data-md-options-drawer="target:#drawer-1"><i class="material-icons">menu</i></div>
-  <div class="md-navbar-logo">
-    <a href="#">MDUI</a>
-  </div>
-  <div class="md-navbar-divider"></div>
-  <div class="md-navbar-title">title</div>
-  <form class="md-navbar-search" method="post" action="">
-    <input class="md-navbar-search-field" type="search" placeholder="搜索"/>
-  </form>
-</header>
 
 <div class="md-drawer md-color-white" id="drawer-1">
 

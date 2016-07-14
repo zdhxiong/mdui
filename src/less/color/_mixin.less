@@ -1,15 +1,28 @@
-//按钮 hover/active 状态颜色
 ._color-hover-active-mixin(@colorName) {
+  @color: 'color-@{colorName}';
   @colorHover: 'color-@{colorName}-hover';
   @colorActive: 'color-@{colorName}-active';
 
-  .md-color-@{colorName}{
+  // 按钮 hover/active 状态颜色
+  .md-color-@{colorName} {
     &.md-btn{
       &:hover{
         background-color: @@colorHover !important;
       }
       &:active{
         background-color: @@colorActive !important;
+      }
+    }
+  }
+
+  // 导航栏链接的 hover 颜色变化
+  .md-theme-@{colorName} .md-navbar.md-color-primary,
+  // todo 这里 primary 是个例外，要排除掉，不过会被后面的样式覆盖掉，不影响效果
+  .md-color-@{colorName}.md-navbar {
+    a{
+      &:hover,
+      &:active {
+        background-color: @@colorHover;
       }
     }
   }
@@ -21,7 +34,7 @@
   }
 }
 
-//按钮颜色深度
+//颜色深度
 ._color-version-mixin(@colorName, @version) {
   @color: 'color-@{colorName}-@{version}';
   .md-color-@{colorName}-@{version} {

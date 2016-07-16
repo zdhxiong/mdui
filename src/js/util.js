@@ -172,14 +172,11 @@
   };
 
   // 公共方法
-  mdui.util = {
-    showMask: util.showMask,
-    hideMask: util.hideMask,
-    lockScreen: util.lockScreen,
-    unlockScreen: util.unlockScreen,
-    transitionEnd: util.transitionEnd,
-    animationEnd: util.animationEnd
-  };
+  var publicMethods = ('showMask hideMask lockScreen unlockScreen transitionEnd animationEnd').split(' ');
+  mdui.util = {};
+  for(var i = 0, len = publicMethods.length; i < len; i++){
+    mdui.util[publicMethods[i]] = util[publicMethods[i]];
+  }
 })($);
 
 

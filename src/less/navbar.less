@@ -33,12 +33,21 @@
   }
 }
 
-// 使导航栏固定在页面顶部
+// 使导航栏固定在页面顶部，需要添加到 body 上
 .md-navbar-fixed {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  &body{
+    padding-top: @navbar-height;
+    @media (max-width: @grid-tablet-max) {
+      padding-top: @navbar-height-tablet;
+    }
+    @media (max-width: @grid-phone-max) {
+      padding-top: @navbar-height-phone;
+    }
+  }
 }
 
 // 纵向分隔符
@@ -106,7 +115,7 @@
 }
 
 //desktop
-._navbar_responsive_mixed(@navbar-height-desktop);
+._navbar_responsive_mixed(@navbar-height);
 
 //tablet
 @media (max-width: @grid-tablet-max) {

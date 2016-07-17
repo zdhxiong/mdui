@@ -10,7 +10,7 @@
   transform: translateX(0);
   transition: transform .3s ease-in-out;
   overflow: hidden;
-  padding: 12px 8px 52px 8px;
+  padding: 12px 0 52px 0;
   margin: 0;
   white-space: nowrap;
   &:hover {
@@ -56,8 +56,7 @@
 .md-drawer-item {
   display: flex;
   align-items: center;
-  padding-left: 16px;
-  padding-right: 12px;
+  padding: 0 12px 0 16px;
   height: @drawer-item-height;
   border-radius: 2px;
   &:hover {
@@ -112,11 +111,6 @@
   margin: 8px 0 16px 0;
 }
 
-//抽屉栏覆盖住导航栏
-.md-drawer-covered {
-  top: 0;
-}
-
 //抽屉栏不是透明时添加阴影
 .md-drawer[class*="md-color-"]:not(.md-color-transparent) {
   .shadow-16();
@@ -140,4 +134,9 @@
 // phone
 @media (max-width: @grid-phone-max) {
   ._drawer_responsive_mixed(@navbar-height-phone);
+}
+
+//抽屉栏覆盖住导航栏
+.md-drawer-covered {
+  top: 0;
 }

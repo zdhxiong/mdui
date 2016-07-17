@@ -171,6 +171,31 @@
     return this;
   };
 
+  /**
+   * 根据窗口宽度判断是否是手机设备
+   * @returns {boolean}
+   *
+   */
+  util.isPhone = function(){
+    return window.innerWidth < 480;
+  };
+
+  /**
+   * 根据窗口宽度判断是否是平板设备
+   * @returns {boolean}
+   */
+  util.isTablet = function(){
+    return window.innerWidth < 840 && window.innerWidth >= 480;
+  };
+
+  /**
+   * 根据窗口宽度判断是否是桌面设备
+   * @returns {boolean}
+   */
+  util.isDesktop = function(){
+    return window.innerWidth >= 840;
+  };
+
   // 公共方法
   var publicMethods = ('showMask hideMask lockScreen unlockScreen transitionEnd animationEnd').split(' ');
   mdui.util = {};

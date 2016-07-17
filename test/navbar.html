@@ -4,9 +4,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui, maximum-scale=1, user-scalable=no">
   <link rel="stylesheet" href="../dist/css/mdui.css">
 </head>
-<body class="md-theme-blue">
-  <header class="md-navbar md-color-primary md-navbar-fixed">
-    <a href="#" data-md-model="drawer" data-md-options-drawer="target:#drawer-1"><i class="md-icon material-icons">menu</i></a>
+<body class="md-theme-blue md-navbar-fixed md-drawer-left">
+  <header class="md-navbar md-color-primary">
+    <a href="#" data-md-model="drawer" data-md-options-drawer="target:#drawer-1,mask:false"><i class="md-icon material-icons">menu</i></a>
     <a href="#" class="md-navbar-logo">MDUI</a>
     <div class="md-navbar-divider"></div>
     <a href="#" class="md-navbar-title">title</a>
@@ -23,7 +23,7 @@
   </header>
 
 
-<div class="md-drawer md-color-white" id="drawer-1">
+<div class="md-drawer md-color-white md-drawer-clipped" id="drawer-1">
 
   <nav class="md-drawer-items">
     <ul>
@@ -68,7 +68,7 @@
 这是第二个抽屉栏
 </div>
 
-<div class="" style="margin-top: 100px;margin-left: 260px;">
+<div class="" style="margin-top: 20px;margin-left: 20px;">
   <button class="md-btn md-btn-raised md-ripple md-color-blue js-drawer2-open">打开第二个抽屉栏</button>
   <button class="md-btn md-btn-raised md-ripple md-color-blue js-drawer2-close">关闭第二个抽屉栏</button>
   <button class="md-btn md-btn-raised md-ripple md-color-blue js-drawer2-toggle">切换第二个抽屉栏显示状态</button>

@@ -1,13 +1,18 @@
-// 抽屉栏外层，默认出现在左侧
+/**
+ * 抽屉栏导航
+ * 桌面设备默认显示，手机平板默认隐藏
+ */
+
+// 抽屉栏外层，默认出现在左侧且隐藏
 .md-drawer {
   width: @drawer-width;
   box-sizing: border-box;
   position: fixed;
   left: 0;
   bottom: 0;
+  top: 0;
   z-index: @z-index-drawer;
   will-change: transform;
-  transform: translateX(0);
   transition: transform .3s ease-in-out;
   overflow: hidden;
   padding: 12px 0 52px 0;
@@ -18,20 +23,40 @@
   }
   .scrollbar();
 
-  //隐藏抽屉栏
-  &.md-drawer-close {
+  // 桌面设备默认显示
+  @media (min-width: @grid-desktop-min) {
+    transform: translateX(0);
+  }
+  // 手机和平板默认隐藏
+  @media (max-width: @grid-tablet-max) {
     transform: translateX(-@drawer-width - 10);
   }
+}
+
+// 强制隐藏抽屉栏
+.md-drawer-close {
+  transform: translateX(-@drawer-width - 10);
+}
+
+// 强制显示抽屉栏
+.md-drawer-open {
+  transform: translateX(0);
 }
 
 // 出现在右侧的抽屉栏
 .md-drawer-right {
   left: auto;
   right: 0;
+  transform: translateX(@drawer-width + 10);
+}
 
-  //隐藏抽屉栏
-  &.md-drawer-close {
-    transform: translateX(@drawer-width + 10);
+// 添加在 body 上的类，使 body 获得 padding-left 或 padding-right
+@media (min-width: @grid-desktop-min) {
+  body.md-drawer-left {
+    padding-left: @drawer-width;
+  }
+  body.md-drawer-right {
+    padding-right: @drawer-width;
   }
 }
 
@@ -116,27 +141,22 @@
   .shadow-16();
 }
 
-// 响应式
-._drawer_responsive_mixed(@navbar-height){
-  .md-drawer {
+//不覆盖导航栏
+._drawer_responsive(@navbar-height){
+  .md-drawer-clipped {
     top: @navbar-height;
   }
 }
 
 //desktop
-._drawer_responsive_mixed(@navbar-height-desktop);
+._drawer_responsive(@navbar-height);
 
 //tablet
 @media (max-width: @grid-tablet-max) {
-  ._drawer_responsive_mixed(@navbar-height-tablet);
+  ._drawer_responsive(@navbar-height-tablet);
 }
 
 // phone
 @media (max-width: @grid-phone-max) {
-  ._drawer_responsive_mixed(@navbar-height-phone);
-}
-
-//抽屉栏覆盖住导航栏
-.md-drawer-covered {
-  top: 0;
+  ._drawer_responsive(@navbar-height-phone);
 }

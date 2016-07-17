@@ -3,7 +3,6 @@
   width: @drawer-width;
   box-sizing: border-box;
   position: fixed;
-  top: @navbar-height;
   left: 0;
   bottom: 0;
   z-index: @z-index-drawer;
@@ -123,3 +122,22 @@
   .shadow-16();
 }
 
+// 响应式
+._drawer_responsive_mixed(@navbar-height){
+  .md-drawer {
+    top: @navbar-height;
+  }
+}
+
+//desktop
+._drawer_responsive_mixed(@navbar-height-desktop);
+
+//tablet
+@media (max-width: @grid-tablet-max) {
+  ._drawer_responsive_mixed(@navbar-height-tablet);
+}
+
+// phone
+@media (max-width: @grid-phone-max) {
+  ._drawer_responsive_mixed(@navbar-height-phone);
+}

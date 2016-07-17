@@ -4,7 +4,6 @@
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: @navbar-height;
   max-height: 1000px;
   z-index: @z-index-navbar;
   .shadow-4();
@@ -14,7 +13,6 @@
     flex-wrap: nowrap;
     box-sizing: border-box;
     align-items: center;
-    line-height: @navbar-height;
   }
 
   a {
@@ -23,14 +21,13 @@
     transition-duration: .3s;
     user-select: none;
     display: block;
-    line-height: 64px;
     padding: 0 20px;
     text-decoration: none;
     margin: 0;
+    .overflow-ellipsis();
   }
   .md-icon {
     vertical-align: middle;
-    padding: (@navbar-height - 24px) / 2 0;
     height: 24px;
     width: 24px;
   }
@@ -48,7 +45,6 @@
 .md-navbar-divider {
   width: 0;
   border-left: 1px solid rgba(255, 255, 255, 0.2);
-  height: @navbar-height - 32;
   margin: 0 6px;
 }
 
@@ -62,7 +58,6 @@
   font-size: 24px;
   img{
     height: 24px;
-    padding: (@navbar-height - 24px) / 2 0;
   }
 }
 
@@ -86,3 +81,39 @@
   border-radius: 2px;
 }
 
+// 响应式
+._navbar_responsive_mixed(@navbar-height){
+  .md-navbar {
+    min-height: @navbar-height;
+    nav {
+      line-height: @navbar-height;
+    }
+    a {
+      line-height: @navbar-height;
+    }
+    .md-icon {
+      padding: (@navbar-height - 24px) / 2 0;
+    }
+  }
+  .md-navbar-divider{
+    height: @navbar-height - 32;
+  }
+  .md-navbar-logo{
+    img{
+      padding: (@navbar-height - 24px) / 2 0;
+    }
+  }
+}
+
+//desktop
+._navbar_responsive_mixed(@navbar-height-desktop);
+
+//tablet
+@media (max-width: @grid-tablet-max) {
+  ._navbar_responsive_mixed(@navbar-height-tablet);
+}
+
+// phone
+@media (max-width: @grid-phone-max) {
+  ._navbar_responsive_mixed(@navbar-height-phone);
+}

@@ -27,9 +27,7 @@
     inst.$drawer = $drawer;
     inst.$body = $('body');
     inst.masked = false;//是否显示着遮罩层
-
-    inst.drawer_left = inst.$drawer.hasClass('md-drawer-right') ? false : true;
-    inst.drawer_right = !inst.drawer_left;
+    inst.position = inst.$drawer.hasClass('md-drawer-right') ? 'right' : 'left';
 
     if(inst.$drawer.length > 0){
       inst.$drawer = inst.$drawer.eq(0);
@@ -44,6 +42,12 @@
     }else{
       inst.state = 'closed';
     }
+
+    $(window).resize(function(){
+      if(util.isDesktop()){
+
+      }
+    });
   }
 
   /**
@@ -60,12 +64,7 @@
     inst.state = 'opening';
     inst.$drawer.trigger('opening.drawer.mdui', [inst]);
 
-    if(inst.drawer_right){
-      inst.$body.addClass('md-drawer-body-right');
-    }
-    if(inst.drawer_left){
-      inst.$body.addClass('md-drawer-body-left');
-    }
+    inst.$body.addClass('md-drawer-body-' + inst.position);
 
     util.transitionEnd(inst.$drawer, function(){
       inst.state = 'opened';
@@ -96,12 +95,7 @@
     inst.state = 'closing';
     inst.$drawer.trigger('closing.drawer.mdui', [inst]);
 
-    if(inst.drawer_right){
-      inst.$body.removeClass('md-drawer-body-right');
-    }
-    if(inst.drawer_left){
-      inst.$body.removeClass('md-drawer-body-left');
-    }
+    inst.$body.removeClass('md-drawer-body-' + inst.position);
 
     util.transitionEnd(inst.$drawer, function(){
       inst.state = 'closed';
@@ -162,8 +156,9 @@
     return inst;
   };
 
-  // data api
   $(function(){
+
+    // data api
     $(document).on('click.drawer.data-api.mdui', '[data-md-model="drawer"]', function(e){
       var $this = $(this);
       var options = util.parseOptions($this.data('md-options-drawer'));

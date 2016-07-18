@@ -13,7 +13,7 @@
   top: 0;
   z-index: @z-index-drawer;
   will-change: transform;
-  transition: transform .3s ease-in-out;
+  transition: all .3s ease-in-out;
   overflow: hidden;
   padding: 12px 0 52px 0;
   margin: 0;
@@ -30,9 +30,14 @@
 
   // 桌面设备默认显示
   transform: translateX(0);
-  // 手机和平板默认隐藏
+
   @media (max-width: @grid-tablet-max) {
+    // 手机和平板默认隐藏
     transform: translateX(-@drawer-width - 10);
+
+    // 手机平板始终有背景和阴影
+    background: #fff;
+    .shadow-16();
   }
 }
 
@@ -49,6 +54,14 @@
   }
 }
 
+// 强制隐藏抽屉栏
+.md-drawer-close {
+  transform: translateX(-@drawer-width - 10);
+  &.md-drawer-right {
+    transform: translateX(@drawer-width + 10);
+  }
+}
+
 // 手机上抽屉栏宽度为 100% - 56px
 @media (max-width: @grid-phone-max) {
   .md-drawer,
@@ -59,14 +72,6 @@
   .md-drawer-right,
   .md-drawer-right.md-drawer-close {
     transform: translateX(calc(~"100% + 10px"));
-  }
-}
-
-// 强制隐藏抽屉栏
-.md-drawer-close {
-  transform: translateX(-@drawer-width - 10);
-  &.md-drawer-right {
-    transform: translateX(@drawer-width + 10);
   }
 }
 

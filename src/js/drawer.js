@@ -44,8 +44,23 @@
     }
 
     $(window).resize(function(){
+      //由手机平板切换到桌面时，如果显示着遮罩，则隐藏遮罩
       if(util.isDesktop()){
+        if(inst.masked){
+          util.hideMask();
+          inst.masked = false;
+        }
+      }
+      //由桌面切换到手机平板时，如果抽屉栏是打开着的且没有遮罩，则添加遮罩
+      else{
+        if(!inst.masked && inst.state === 'opened'){
+          util.showMask(100);
+          inst.masked = true;
 
+          $('.md-mask').one('click.mask.drawer.mdui', function(){
+            inst.close();
+          });
+        }
       }
     });
   }

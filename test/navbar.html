@@ -4,9 +4,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui, maximum-scale=1, user-scalable=no">
   <link rel="stylesheet" href="../dist/css/mdui.css">
 </head>
-<body class="md-theme-blue md-navbar-fixed md-drawer-left">
+<body class="md-theme-blue md-navbar-fixed md-drawer-body-left">
   <header class="md-navbar md-color-primary">
-    <a href="#" data-md-model="drawer" data-md-options-drawer="target:#drawer-1,mask:false"><i class="md-icon material-icons">menu</i></a>
+    <a href="#" data-md-model="drawer" data-md-options-drawer="target:#drawer-1"><i class="md-icon material-icons">menu</i></a>
     <a href="#" class="md-navbar-logo">MDUI</a>
     <div class="md-navbar-divider"></div>
     <a href="#" class="md-navbar-title">title</a>
@@ -23,7 +23,7 @@
   </header>
 
 
-<div class="md-drawer md-color-white md-drawer-clipped" id="drawer-1">
+<div class="md-drawer md-color-white" id="drawer-1">
 
   <nav class="md-drawer-items">
     <ul>
@@ -64,7 +64,7 @@
   </nav>
 </div>
 
-<div class="md-drawer md-drawer-right md-drawer-close md-color-white" id="drawer-2">
+<div class="md-drawer md-drawer-right md-color-white" id="drawer-2">
 这是第二个抽屉栏
 </div>
 
@@ -171,9 +171,7 @@
     var $drawer2 = $('#drawer-2');
 
     // jQuery 插件方式初始化
-    var drawer2 = $drawer2.mduiDrawer({
-      mask: false
-    });
+    var drawer2 = $drawer2.mduiDrawer();
 
     $('.js-drawer2-open').on('click', function () {
       drawer2.open();

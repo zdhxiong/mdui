@@ -1,6 +1,7 @@
 /**
  * 抽屉栏
- * 在手机和平板设备上始终显示遮罩层，且覆盖导航栏
+ * 在桌面设备上默认显示抽屉栏，不显示遮罩层
+ * 在手机和平板设备上默认不显示抽屉栏，始终显示遮罩层，且覆盖导航栏
  */
 (function($, util){
 
@@ -9,7 +10,7 @@
    * @type {{}}
    */
   var DEFAULT = {
-    mask: false //在桌面设备上是否显示遮罩层。在手机和平板上不受这个参数影响，始终会显示遮罩层
+    //width: 232 //抽屉栏宽度，仅桌面和平板设备有效。手机上始终距离右侧 56px
   };
 
   /**
@@ -24,14 +25,24 @@
     inst.options = $.extend({}, DEFAULT, (opts || {}));
 
     inst.$drawer = $drawer;
+    inst.$body = $('body');
+    inst.masked = false;//是否显示着遮罩层
+
+    inst.drawer_left = inst.$drawer.hasClass('md-drawer-right') ? false : true;
+    inst.drawer_right = !inst.drawer_left;
+
     if(inst.$drawer.length > 0){
       inst.$drawer = inst.$drawer.eq(0);
     }
 
     if(inst.$drawer.hasClass('md-drawer-close')){
       inst.state = 'closed';
-    }else{
+    }else if(inst.$drawer.hasClass('md-drawer-open')){
       inst.state = 'opened';
+    }else if(util.isDesktop()){
+      inst.state = 'opened';
+    }else{
+      inst.state = 'closed';
     }
   }
 
@@ -45,17 +56,25 @@
       return;
     }
 
-    inst.$drawer.removeClass('md-drawer-close');
+    inst.$drawer.removeClass('md-drawer-close').addClass('md-drawer-open');
     inst.state = 'opening';
     inst.$drawer.trigger('opening.drawer.mdui', [inst]);
+
+    if(inst.drawer_right){
+      inst.$body.addClass('md-drawer-body-right');
+    }
+    if(inst.drawer_left){
+      inst.$body.addClass('md-drawer-body-left');
+    }
 
     util.transitionEnd(inst.$drawer, function(){
       inst.state = 'opened';
       inst.$drawer.trigger('opened.drawer.mdui', [inst]);
     });
 
-    if(inst.options.mask){
+    if(!util.isDesktop()){
       util.showMask(100);
+      inst.masked = true;
 
       $('.md-mask').one('click.mask.drawer.mdui', function(){
         inst.close();
@@ -73,16 +92,26 @@
       return;
     }
 
-    inst.$drawer.addClass('md-drawer-close');
+    inst.$drawer.addClass('md-drawer-close').removeClass('md-drawer-open');
     inst.state = 'closing';
     inst.$drawer.trigger('closing.drawer.mdui', [inst]);
+
+    if(inst.drawer_right){
+      inst.$body.removeClass('md-drawer-body-right');
+    }
+    if(inst.drawer_left){
+      inst.$body.removeClass('md-drawer-body-left');
+    }
 
     util.transitionEnd(inst.$drawer, function(){
       inst.state = 'closed';
       inst.$drawer.trigger('closed.drawer.mdui', [inst]);
     });
 
-    util.hideMask();
+    if(inst.masked){
+      util.hideMask();
+      inst.masked = false;
+    }
   };
 
   /**

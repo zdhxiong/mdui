@@ -128,13 +128,15 @@
     text-overflow: ellipsis;
 }
 
-// 优化滚动条样式
+// 优化滚动条样式，仅优化桌面设备的滚动条
 .scrollbar(){
-  &::-webkit-scrollbar {
-    background: transparent;
-    width: 8px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #bdbdbd;
+  @media (min-width: @grid-desktop-min) {
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #bdbdbd;
+    }
   }
 }

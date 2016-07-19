@@ -114,6 +114,9 @@ ul.md-drawer-items,
   display: flex;
   align-items: center;
   padding: 0 12px 0 16px;
+  @media (min-width: @grid-desktop-min) {
+    padding-left: 24px;
+  }
   height: @drawer-item-height;
   border-radius: 2px;
   &:hover {

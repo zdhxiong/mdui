@@ -192,4 +192,9 @@
     });
   });
 
+  // 支持 touch 的设备会自动隐藏滚动条；不支持 touch 的设备在鼠标悬浮时显示滚动条
+  if(util.supportTouch()){
+    $('.md-drawer').css('overflow-y', 'auto');
+  }
+
 })($, util);

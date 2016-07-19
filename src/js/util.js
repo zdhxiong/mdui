@@ -196,6 +196,14 @@
     return window.innerWidth >= 840;
   };
 
+  /**
+   * 判断设备是否支持 touch
+   * @returns {boolean}
+   */
+  util.supportTouch = function(){
+    return ("ontouchstart" in document);
+  };
+
   // 公共方法
   var publicMethods = ('showMask hideMask lockScreen unlockScreen transitionEnd animationEnd').split(' ');
   mdui.util = {};

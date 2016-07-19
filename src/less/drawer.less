@@ -91,12 +91,13 @@
   }
 }
 
-// 抽屉栏中的导航链接
+// 抽屉栏中的菜单
+ul.md-drawer-items,
+.md-drawer-items ul {
+  padding: 0;
+  margin: 0;
+}
 .md-drawer-items {
-  ul{
-    padding: 0;
-    margin: 0;
-  }
   li{
     list-style: none;
     position: relative;
@@ -108,7 +109,7 @@
   }
 }
 
-// 抽屉栏的导航链接项
+// 抽屉栏的菜单项
 .md-drawer-item {
   display: flex;
   align-items: center;
@@ -124,13 +125,20 @@
   }
 }
 
-// 导航项最左侧图标
+// 子菜单
+.md-drawer-subitems {
+  .md-drawer-item {
+    padding-left: 40px;
+  }
+}
+
+// 菜单项最左侧图标
 .md-drawer-item-icon {
   padding-right: 24px;
   min-width: 24px;
 }
 
-// 导航项标题
+// 菜单项标题
 .md-drawer-item-title {
   padding-right: 12px;
   .overflow-ellipsis();

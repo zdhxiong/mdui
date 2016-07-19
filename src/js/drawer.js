@@ -11,6 +11,7 @@
    */
   var DEFAULT = {
     //width: 232 //抽屉栏宽度，仅桌面和平板设备有效。手机上始终距离右侧 56px
+    mask: false //在桌面设备上是否显示遮罩层。手机和平板不受这个参数影响，始终会显示遮罩层
   };
 
   /**
@@ -46,7 +47,7 @@
     $(window).resize(function(){
       //由手机平板切换到桌面时，如果显示着遮罩，则隐藏遮罩
       if(util.isDesktop()){
-        if(inst.masked){
+        if(inst.masked && !inst.options.mask){
           util.hideMask();
           inst.masked = false;
         }
@@ -81,7 +82,7 @@
       inst.$drawer.trigger('opened.drawer.mdui', [inst]);
     });
 
-    if(!util.isDesktop()){
+    if(!util.isDesktop() || inst.options.mask){
       util.showMask(100);
       inst.masked = true;
 

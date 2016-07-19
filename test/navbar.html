@@ -26,9 +26,9 @@
 <div class="md-drawer" id="drawer-1">
 
   <ul class="md-drawer-items">
-    <!--<li>
+    <li>
       <a href="#" class="md-drawer-item md-ripple">
-        <div class="md-drawer-item-icon"><i class="material-icons md-text-color-blue">accessibility</i></div>
+        <div class="md-drawer-item-icon"><i class="material-icons md-text-color-blue">3d rotation</i></div>
         <div class="md-drawer-item-title">草稿箱草稿箱草稿箱草稿箱</div>
       </a>
       <a href="#" class="md-drawer-item-after md-btn md-btn-icon-mini">
@@ -44,7 +44,7 @@
       <a href="#" class="md-drawer-item-after md-btn md-btn-icon-mini">
         <i class="md-icon material-icons">settings</i>
       </a>
-    </li>-->
+    </li>
     <li>
       <a href="#" class="md-drawer-item md-ripple">
         <div class="md-drawer-item-title">介绍</div>
@@ -98,7 +98,7 @@
 这是第二个抽屉栏
 </div>
 
-<div class="" style="margin-top: 20px;margin-left: 20px;">
+<div class="md-container">
   <button class="md-btn md-btn-raised md-ripple md-color-blue js-drawer2-open">打开第二个抽屉栏</button>
   <button class="md-btn md-btn-raised md-ripple md-color-blue js-drawer2-close">关闭第二个抽屉栏</button>
   <button class="md-btn md-btn-raised md-ripple md-color-blue js-drawer2-toggle">切换第二个抽屉栏显示状态</button>
@@ -230,17 +230,17 @@
     });
 
     //第二个抽屉栏的事件
-    $drawer2.on('opening.drawer.mdui', function(e, inst){
+    drawer2.$drawer.on('opening.drawer.mdui', function(e, inst){
       console.log(inst);
       console.log('drawer2 opening');
     });
-    $drawer2.on('opened.drawer.mdui', function(){
+    drawer2.$drawer.on('opened.drawer.mdui', function(){
       console.log('drawer2 opened');
     });
-    $drawer2.on('closing.drawer.mdui', function(){
+    drawer2.$drawer.on('closing.drawer.mdui', function(){
       console.log('drawer2 closing');
     });
-    $drawer2.on('closed.drawer.mdui', function(){
+    drawer2.$drawer.on('closed.drawer.mdui', function(){
       console.log('drawer2 closed');
     });
 

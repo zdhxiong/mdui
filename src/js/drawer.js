@@ -52,10 +52,19 @@
           inst.masked = false;
         }
       }
-      //由桌面切换到手机平板时，如果抽屉栏是打开着的且没有遮罩层则关闭抽屉栏
+      //由桌面切换到手机平板时。如果抽屉栏是打开着的且没有遮罩层，则关闭抽屉栏；如果是强制打开，则添加遮罩
       else{
         if(!inst.masked && inst.state === 'opened'){
-          inst.close();
+          if(inst.$drawer.hasClass('md-drawer-open')){
+            util.showMask(100);
+            inst.masked = true;
+
+            $('.md-mask').one('click.mask.drawer.mdui', function(){
+              inst.close();
+            });
+          }else{
+            inst.close();
+          }
         }
       }
     });

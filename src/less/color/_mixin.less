@@ -1,4 +1,4 @@
-._color-hover-active-mixin(@colorName) {
+.color-hover-active-mixin(@colorName) {
   @color: 'color-@{colorName}';
   @colorHover: 'color-@{colorName}-hover';
   @colorActive: 'color-@{colorName}-active';
@@ -14,10 +14,22 @@
       }
     }
   }
+  .md-theme-@{colorName} {
+    .md-color-primary {
+      &.md-btn{
+        &:hover{
+          background-color: @@colorHover !important;
+        }
+        &:active{
+          background-color: @@colorActive !important;
+        }
+      }
+    }
+  }
 
   // 导航栏链接的 hover 颜色变化
   .md-theme-@{colorName} .md-navbar.md-color-primary,
-  // todo 这里 primary 是个例外，要排除掉，不过会被后面的样式覆盖掉，不影响效果
+    // todo 这里 primary 是个例外，要排除掉，不过会被后面的样式覆盖掉，不影响效果
   .md-color-@{colorName}.md-navbar {
     a{
       &:hover,
@@ -25,12 +37,6 @@
         background-color: @@colorHover;
       }
     }
-  }
-}
-.color-hover-active-mixin(@colorName) {
-  ._color-hover-active-mixin(@colorName);
-  .md-theme-@{colorName} {
-    ._color-hover-active-mixin(@colorName);
   }
 }
 

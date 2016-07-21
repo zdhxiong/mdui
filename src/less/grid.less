@@ -1,7 +1,7 @@
 .md-container {
   margin: 0 auto;
   max-width: 1280px;
-  padding: 24px;
+  padding: 8px;
   &:after {
     content: '';
     display: table;
@@ -17,7 +17,6 @@
   margin-right: -@grid-gutter-default;
 }
 
-.md-col,
 [class*="md-col-"] {
   padding: @grid-gutter-default;
   box-sizing: border-box;
@@ -28,17 +27,111 @@
   margin-left: 0;
   margin-right: 0;
 
-  .md-col,
   [class*="md-col-"] {
     padding-left: 0;
     padding-right: 0;
   }
 }
 
-@import "grid/desktop.less";
-@import "grid/phone.less";
-@import "grid/tablet.less";
-
 [class*="md-col-"] {
   flex: none;
+}
+
+// 列对齐方式
+.md-row-top,
+.md-row-sm-top {
+  align-items: flex-start;
+}
+.md-row-middle,
+.md-row-sm-middle {
+  align-items: center;
+}
+.md-row-bottom,
+.md-row-sm-bottom {
+  align-items: flex-end;
+}
+.md-row-stretch,
+.md-row-sm-stretch {
+  align-items: stretch;
+}
+
+// 平分列
+.md-col-sm {
+  flex: 1;
+}
+
+@_screen-col-1: 8.3333%;
+@_screen-col-2: 16.6667%;
+@_screen-col-3: 25%;
+@_screen-col-4: 33.3333%;
+@_screen-col-5: 41.6667%;
+@_screen-col-6: 50%;
+@_screen-col-7: 58.3333%;
+@_screen-col-8: 66.6667%;
+@_screen-col-9: 75%;
+@_screen-col-10: 83.3333%;
+@_screen-col-11: 91.6667%;
+@_screen-col-12: 100%;
+
+._grid_col_loop_mixin(@cols, @screen) when (@cols > 0) {
+  ._grid_col_loop_mixin((@cols - 1), @screen);
+
+  @widthName: '_screen-col-@{cols}';
+
+  // 列宽度
+  .md-col-@{screen}-@{cols} {
+    width: @@widthName;
+  }
+  // 列偏移
+  .md-col-@{screen}-offset-@{cols} {
+    margin-left: @@widthName;
+  }
+  // 列排序
+  .md-col-@{screen}-order-@{cols} {
+    order: @cols;
+  }
+}
+
+._grid_col_mixin(@screen) {
+  // 列对齐方式
+  .md-row-@{screen}-top {
+    align-items: flex-start;
+  }
+  .md-row-@{screen}-middle {
+    align-items: center;
+  }
+  .md-row-@{screen}-bottom {
+    align-items: flex-end;
+  }
+  .md-row-@{screen}-stretch {
+    align-items: stretch;
+  }
+
+  // 平分列
+  .md-col-@{screen} {
+    flex: 1;
+  }
+}
+
+// sm
+._grid_col_loop_mixin(12, ~"sm");
+
+// md
+@media (min-width: @screen-md-min) {
+  ._grid_col_loop_mixin(12, ~"md");
+  ._grid_col_mixin(~"md");
+
+  .md-container {
+    padding: 16px;
+  }
+}
+
+// lg
+@media (min-width: @screen-lg-min) {
+  ._grid_col_loop_mixin(12, ~"lg");
+  ._grid_col_mixin(~"lg");
+
+  .md-container {
+    padding: 24px;
+  }
 }

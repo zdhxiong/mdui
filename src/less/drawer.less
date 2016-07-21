@@ -25,14 +25,14 @@
   .scrollbar();
 
   // 桌面设备默认不覆盖导航栏
-  @media (min-width: @grid-desktop-min) {
-    top: @navbar-height;
+  @media (min-width: @screen-lg-min) {
+    top: @navbar-height-lg;
   }
 
   // 桌面设备默认显示
   transform: translateX(0);
 
-  @media (max-width: @grid-tablet-max) {
+  @media (max-width: @screen-md-max) {
     // 手机和平板默认隐藏
     transform: translateX(-@drawer-width - 10);
 
@@ -50,7 +50,7 @@
   // 桌面设备默认显示
   transform: translateX(0);
   // 手机平板默认隐藏
-  @media (max-width: @grid-tablet-max) {
+  @media (max-width: @screen-md-max) {
     transform: translateX(@drawer-width + 10);
   }
 }
@@ -64,7 +64,7 @@
 }
 
 // 手机上抽屉栏宽度为 100% - 56px
-@media (max-width: @grid-phone-max) {
+@media (max-width: @screen-sm-max) {
   .md-drawer,
   .md-drawer.md-drawer-close {
     width: calc(~"100% - 56px");
@@ -82,7 +82,7 @@
 }
 
 // 添加在 body 上的类
-@media (min-width: @grid-desktop-min) {
+@media (min-width: @screen-lg-min) {
   // 使 body 获得 padding-left 或 padding-right
   body.md-drawer-body-left {
     padding-left: @drawer-width;
@@ -115,7 +115,7 @@ ul.md-drawer-items,
   display: flex;
   align-items: center;
   padding: 0 12px 0 16px;
-  @media (min-width: @grid-desktop-min) {
+  @media (min-width: @screen-lg-min) {
     padding-left: 24px;
   }
   height: @drawer-item-height;

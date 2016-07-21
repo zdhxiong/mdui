@@ -44,12 +44,12 @@
 }
 // 为 body 添加 padding-top
 body.md-navbar-fixed{
-  padding-top: @navbar-height;
-  @media (max-width: @grid-tablet-max) {
-    padding-top: @navbar-height-tablet;
+  padding-top: @navbar-height-sm;
+  @media (min-width: @screen-md-min) {
+    padding-top: @navbar-height-md;
   }
-  @media (max-width: @grid-phone-max) {
-    padding-top: @navbar-height-phone;
+  @media (min-width: @screen-lg-min) {
+    padding-top: @navbar-height-lg;
   }
 }
 
@@ -118,14 +118,14 @@ body.md-navbar-fixed{
 }
 
 //desktop
-._navbar_responsive_mixed(@navbar-height);
+._navbar_responsive_mixed(@navbar-height-lg);
 
 //tablet
-@media (max-width: @grid-tablet-max) {
-  ._navbar_responsive_mixed(@navbar-height-tablet);
+@media (max-width: @screen-md-max) {
+  ._navbar_responsive_mixed(@navbar-height-md);
 }
 
 // phone
-@media (max-width: @grid-phone-max) {
-  ._navbar_responsive_mixed(@navbar-height-phone);
+@media (max-width: @screen-sm-max) {
+  ._navbar_responsive_mixed(@navbar-height-sm);
 }

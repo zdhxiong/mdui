@@ -12,17 +12,17 @@
   display: inline-block;
   overflow: hidden;
   will-change: box-shadow;
-  transition: box-shadow .2s @animation-curve-fast-out-linear-in,
-  background-color .2s @animation-curve-default,
-  color .2s @animation-curve-default;
+  transition: box-shadow @button-transition-duration @animation-curve-fast-out-linear-in,
+  background-color @button-transition-duration @animation-curve-default,
+  color @button-transition-duration @animation-curve-default;
   outline: none;
   cursor: pointer;
   text-decoration: none;
   text-align: center;
   line-height: @button-height;
   vertical-align: middle;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: @button-font-size;
+  font-weight: @button-font-weight;
   text-transform: uppercase;
   letter-spacing: 0;
 
@@ -51,8 +51,8 @@
 //禁用按钮
 .md-btn[disabled],
 .md-btn-disabled {
-  background-color: rgba(0, 0, 0, .12) !important;
-  color: rgba(0, 0, 0, .26);
+  background-color: @button-disabled-color !important;
+  color: @button-disabled-text-color;
   .shadow-0();
   cursor: default;
 }
@@ -106,11 +106,17 @@ input.md-btn[type="submit"] {
 // 固定到右下角的 FAB 按钮
 .md-btn-fab-fixed {
   position: fixed !important;
-  right: 24px;
-  bottom: 24px;
-  @media (max-width: @screen-sm-max) {
-    right: 16px;
-    bottom: 16px;
+  right: @button-fab-fixed-right-sm;
+  bottom: @button-fab-fixed-bottom-sm;
+
+  @media (min-width: @screen-md-min) {
+    right: @button-fab-fixed-right-md;
+    bottom: @button-fab-fixed-bottom-md;
+  }
+
+  @media (min-width: @screen-lg-min) {
+    right: @button-fab-fixed-right-lg;
+    bottom: @button-fab-fixed-bottom-lg;
   }
 }
 

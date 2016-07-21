@@ -6,7 +6,7 @@
   width: 100%;
   max-height: 1000px;
   z-index: @z-index-navbar;
-  transition: all .3s ease-in-out;
+  transition: all @navbar-transition-duration @animation-curve-default;
   .shadow-4();
 
   nav {
@@ -19,7 +19,7 @@
   a {
     // 链接悬浮颜色变化在 color/_mixin.less 中
     transition-property: background-color;
-    transition-duration: .3s;
+    transition-duration: @navbar-transition-duration;
     user-select: none;
     display: block;
     padding: 0 20px;
@@ -56,7 +56,7 @@ body.md-navbar-fixed{
 // 纵向分隔符
 .md-navbar-divider {
   width: 0;
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: @navbar-divider-width solid @navbar-divider-color;
   margin: 0 6px;
 }
 
@@ -75,8 +75,8 @@ body.md-navbar-fixed{
 
 // 标题
 .md-navbar-title {
-  font-size: 20px;
-  max-width: 138px;
+  font-size: @navbar-title-font-size;
+  max-width: @navbar-title-max-width;
   padding: 0 20px;
   .overflow-ellipsis();
 }
@@ -117,15 +117,10 @@ body.md-navbar-fixed{
   }
 }
 
-//desktop
-._navbar_responsive_mixed(@navbar-height-lg);
-
-//tablet
-@media (max-width: @screen-md-max) {
+._navbar_responsive_mixed(@navbar-height-sm);
+@media (min-width: @screen-md-min) {
   ._navbar_responsive_mixed(@navbar-height-md);
 }
-
-// phone
-@media (max-width: @screen-sm-max) {
-  ._navbar_responsive_mixed(@navbar-height-sm);
+@media (min-width: @screen-lg-min) {
+  ._navbar_responsive_mixed(@navbar-height-lg);
 }

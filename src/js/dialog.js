@@ -227,8 +227,9 @@ var Dialog = (function($, util){
 
 
 (function($, util){
-  // jQuery 插件
-  $.fn.mduiDialog = function(option){
+  // JQUERY PLUGIN
+  // ============
+  function Plugin(option){
     var inst;
     this.each(function(){
       var $this = $(this);
@@ -247,12 +248,24 @@ var Dialog = (function($, util){
     });
 
     return inst;
+  }
+
+  var old = $.fn.mdDialog;
+
+  $.fn.mdDialog = Plugin;
+  $.fn.mdDialog.Constructor = Dialog;
+
+  // NO CONFLICT
+  // ==========
+  $.fn.mdDialog.noConflict = function(){
+    $.fn.mdDialog = old;
+    return this;
   };
 
   $(function(){
 
     // DATA-API
-
+    // ========
     $(document).on('click.dialog.data-api.mdui', '[data-md-dialog]', function(e){
       var $this = $(this);
       var options = util.parseOptions($this.data('md-dialog'));
@@ -262,7 +275,7 @@ var Dialog = (function($, util){
         e.preventDefault();
       }
 
-      $target.mduiDialog(options).open();
+      $target.mdDialog(options).open();
     });
   });
 

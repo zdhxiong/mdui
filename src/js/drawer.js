@@ -150,12 +150,9 @@
   };
 
 
-  /**
-   * jQuery 插件
-   * @param option
-   * @returns {*}
-   */
-  $.fn.mduiDrawer = function(option){
+  // JQUERY PLUGIN
+  // =============
+  function Plugin(option){
     var inst;
     this.each(function(){
       var $this = $(this);
@@ -163,9 +160,9 @@
 
       if(!inst){
         var options = $.extend(
-            {},
-            util.parseOptions($this.data('md-drawer')),
-            typeof option === 'object' && option
+          {},
+          util.parseOptions($this.data('md-drawer')),
+          typeof option === 'object' && option
         );
 
         inst = new Drawer($this, options);
@@ -174,11 +171,24 @@
     });
 
     return inst;
+  }
+
+  var old = $.fn.mdDrawer;
+
+  $.fn.mdDrawer = Plugin;
+  $.fn.mdDrawer.Constructor = Drawer;
+
+  // NO CONFLICT
+  // ===========
+  $.fn.mdDrawer.noConflict = function(){
+    $.fn.mdDrawer = old;
+    return this;
   };
 
   $(function(){
 
-    // data api
+    // DATA-API
+    // ========
     $(document).on('click.drawer.data-api.mdui', '[data-md-drawer]', function(e){
       var $this = $(this);
       var options = util.parseOptions($this.data('md-drawer'));
@@ -188,7 +198,7 @@
         e.preventDefault();
       }
 
-      $target.mduiDrawer(options).toggle();
+      $target.mdDrawer(options).toggle();
     });
   });
 

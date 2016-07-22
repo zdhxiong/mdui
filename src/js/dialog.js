@@ -237,7 +237,7 @@ var Dialog = (function($, util){
       if(!inst){
         var options = $.extend(
           {},
-          util.parseOptions($this.data('md-options-dialog')),
+          util.parseOptions($this.data('md-dialog')),
           typeof option === 'object' && option
         );
 
@@ -253,9 +253,9 @@ var Dialog = (function($, util){
 
     // DATA-API
 
-    $(document).on('click.dialog.data-api.mdui', '[data-md-model="dialog"]', function(e){
+    $(document).on('click.dialog.data-api.mdui', '[data-md-dialog]', function(e){
       var $this = $(this);
-      var options = util.parseOptions($this.data('md-options-dialog'));
+      var options = util.parseOptions($this.data('md-dialog'));
       var $target = $(options.target);
 
       if($this.is('a')){

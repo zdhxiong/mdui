@@ -164,7 +164,7 @@
       if(!inst){
         var options = $.extend(
             {},
-            util.parseOptions($this.data('md-options-drawer')),
+            util.parseOptions($this.data('md-drawer')),
             typeof option === 'object' && option
         );
 
@@ -179,9 +179,9 @@
   $(function(){
 
     // data api
-    $(document).on('click.drawer.data-api.mdui', '[data-md-model="drawer"]', function(e){
+    $(document).on('click.drawer.data-api.mdui', '[data-md-drawer]', function(e){
       var $this = $(this);
-      var options = util.parseOptions($this.data('md-options-drawer'));
+      var options = util.parseOptions($this.data('md-drawer'));
       var $target = $(options.target || '.md-drawer');
 
       if($this.is('a')){

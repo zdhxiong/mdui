@@ -17,4 +17,5 @@ if (typeof jQuery === 'undefined') {
 
 
 var mdui = {};
+mdui.option = {};
 var util = {};

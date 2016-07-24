@@ -227,6 +227,9 @@ var Dialog = (function($, util){
 
 
 (function($, util){
+
+  mdui.option.mdDialog = {};
+
   // JQUERY PLUGIN
   // ============
   function Plugin(option){
@@ -238,6 +241,7 @@ var Dialog = (function($, util){
       if(!inst){
         var options = $.extend(
           {},
+          mdui.option.mdDialog,
           util.parseOptions($this.data('md-dialog')),
           typeof option === 'object' && option
         );

@@ -50,11 +50,14 @@
 
 //禁用按钮
 .md-btn[disabled],
-.md-btn-disabled {
-  background-color: @button-disabled-color !important;
-  color: @button-disabled-text-color;
-  .shadow-0();
-  cursor: default;
+.md-btn.md-disabled {
+  &,
+  &:hover{
+    background-color: @button-disabled-color !important;
+    color: @button-disabled-text-color;
+    .shadow-0();
+    cursor: default;
+  }
 }
 
 // 加粗按钮文本
@@ -76,7 +79,7 @@ input.md-btn[type="submit"] {
   }
 }
 
-// FABs 悬浮响应按钮
+// FABs 浮动操作按钮
 .md-btn-fab,
 .md-btn-fab-mini {
   border-radius: 50%;

@@ -45,6 +45,20 @@
   @color: 'color-@{colorName}-@{version}';
   .md-color-@{colorName}-@{version} {
     background-color: @@color !important;
+
+    //文本颜色
+    @text-color: 'color-@{colorName}-@{version}-text-color';
+    //文本透明度
+    @opacity: 'color-@{colorName}-@{version}-opacity';
+    //@@text-color 始终是 #FFFFFF 或者 -1
+    & when (iscolor(@@text-color)) {
+      & when (@@opacity < 0) {
+        color: @@text-color;
+      }
+      & when (@@opacity >= 0) {
+        color: fade(@@text-color, @@opacity * 100);
+      }
+    }
   }
   .md-text-color-@{colorName}-@{version} {
     color: @@color !important;
@@ -65,6 +79,20 @@
     @color: 'color-@{colorName}';
     .md-color-@{colorName} {
       background-color: @@color !important;
+
+      //文本颜色
+      @text-color: 'color-@{colorName}-text-color';
+      //文本透明度
+      @opacity: 'color-@{colorName}-opacity';
+      //@@text-color 始终是 #FFFFFF 或者 -1
+      & when (iscolor(@@text-color)) {
+        & when (@@opacity < 0) {
+          color: @@text-color;
+        }
+        & when (@@opacity >= 0) {
+          color: fade(@@text-color, @@opacity * 100);
+        }
+      }
     }
     .md-text-color-@{colorName} {
       color: @@color !important;

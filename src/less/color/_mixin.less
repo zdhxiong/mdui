@@ -42,16 +42,27 @@
 
 //颜色深度
 ._color-version-mixin(@colorName, @version) {
+  //背景色
   @color: 'color-@{colorName}-@{version}';
+  //文本颜色
+  @text-color: 'color-@{colorName}-@{version}-text-color';
+  //文本透明度
+  @opacity: 'color-@{colorName}-@{version}-opacity';
+
   .md-color-@{colorName}-@{version} {
     background-color: @@color !important;
 
-    //文本颜色
-    @text-color: 'color-@{colorName}-@{version}-text-color';
-    //文本透明度
-    @opacity: 'color-@{colorName}-@{version}-opacity';
-    //@@text-color 始终是 #FFFFFF 或者 -1
-    & when (iscolor(@@text-color)) {
+    & when (@@opacity < 0) {
+      color: @@text-color;
+    }
+    & when (@@opacity >= 0) {
+      color: fade(@@text-color, @@opacity * 100);
+    }
+  }
+  .md-theme-@{colorName} {
+    .md-color-primary-@{version} {
+      background-color: @@color !important;
+
       & when (@@opacity < 0) {
         color: @@text-color;
       }
@@ -60,32 +71,26 @@
       }
     }
   }
-  .md-theme-@{colorName} {
-    .md-color-primary-@{version} {
-      background-color: @@color !important;
-    }
-  }
 }
 
 .color-version-mixin(@colorName, @version) {
   //.md-color-primary
   & when (@version = 0) {
+    //背景色
     @color: 'color-@{colorName}';
+    //文本颜色
+    @text-color: 'color-@{colorName}-text-color';
+    //文本透明度
+    @opacity: 'color-@{colorName}-opacity';
+
     .md-color-@{colorName} {
       background-color: @@color !important;
 
-      //文本颜色
-      @text-color: 'color-@{colorName}-text-color';
-      //文本透明度
-      @opacity: 'color-@{colorName}-opacity';
-      //@@text-color 始终是 #FFFFFF 或者 -1
-      & when (iscolor(@@text-color)) {
-        & when (@@opacity < 0) {
-          color: @@text-color;
-        }
-        & when (@@opacity >= 0) {
-          color: fade(@@text-color, @@opacity * 100);
-        }
+      & when (@@opacity < 0) {
+        color: @@text-color;
+      }
+      & when (@@opacity >= 0) {
+        color: fade(@@text-color, @@opacity * 100);
       }
     }
     .md-text-color-@{colorName} {
@@ -94,6 +99,13 @@
     .md-theme-@{colorName} {
       .md-color-primary {
         background-color: @@color !important;
+
+        & when (@@opacity < 0) {
+          color: @@text-color;
+        }
+        & when (@@opacity >= 0) {
+          color: fade(@@text-color, @@opacity * 100);
+        }
       }
       .md-text-color-primary {
         color: @@color !important;

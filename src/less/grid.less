@@ -1,29 +1,32 @@
-.md-container {
+.md-container,
+.md-container-fluid {
   margin: 0 auto;
-  max-width: 1280px;
-  padding: 16px;
+  padding: @grid-gap-default;
   &:after {
     content: '';
     display: table;
     clear: both;
   }
 }
+.md-container {
+  max-width: 1280px;
+}
 
 .md-row {
   display: flex;
   flex-flow: row wrap;
   align-items: stretch;
-  margin-left: -@grid-gutter-default;
-  margin-right: -@grid-gutter-default;
-}
+  margin-left: -@grid-gap-default / 2;
+  margin-right: -@grid-gap-default / 2;
 
-[class*="md-col-"] {
-  padding: @grid-gutter-default;
-  box-sizing: border-box;
+  [class*="md-col-"] {
+    padding: @grid-gap-default / 2;
+    box-sizing: border-box;
+  }
 }
 
 //使单元格之间没有间隔
-.md-row-no-gutter {
+.md-col-gapless {
   margin-left: 0;
   margin-right: 0;
 
@@ -31,33 +34,6 @@
     padding-left: 0;
     padding-right: 0;
   }
-}
-
-/*[class*="md-col-"] {
-  flex: none;
-}*/
-
-// 列对齐方式
-.md-row-top,
-.md-row-sm-top {
-  align-items: flex-start;
-}
-.md-row-middle,
-.md-row-sm-middle {
-  align-items: center;
-}
-.md-row-bottom,
-.md-row-sm-bottom {
-  align-items: flex-end;
-}
-.md-row-stretch,
-.md-row-sm-stretch {
-  align-items: stretch;
-}
-
-// 平分列
-.md-col-sm {
-  flex: 1;
 }
 
 @_screen-col-1: 8.3333%;
@@ -78,60 +54,106 @@
 
   @widthName: '_screen-col-@{cols}';
 
-  // 列宽度
-  .md-col-@{screen}-@{cols} {
-    width: @@widthName;
+  & when (@screen = ~"sm") {
+    // 列宽度
+    .md-col-@{cols},
+    .md-col-@{screen}-@{cols} {
+      width: @@widthName;
+    }
+    // 列偏移
+    .md-col-offset-@{cols},
+    .md-col-@{screen}-offset-@{cols} {
+      margin-left: @@widthName;
+    }
+    // 列排序
+    .md-col-order-@{cols},
+    .md-col-@{screen}-order-@{cols} {
+      order: @cols;
+    }
   }
-  // 列偏移
-  .md-col-@{screen}-offset-@{cols} {
-    margin-left: @@widthName;
-  }
-  // 列排序
-  .md-col-@{screen}-order-@{cols} {
-    order: @cols;
+
+  & when not (@screen = ~"sm") {
+    // 列宽度
+    .md-col-@{screen}-@{cols} {
+      width: @@widthName;
+    }
+    // 列偏移
+    .md-col-@{screen}-offset-@{cols} {
+      margin-left: @@widthName;
+    }
+    // 列排序
+    .md-col-@{screen}-order-@{cols} {
+      order: @cols;
+    }
   }
 }
 
 ._grid_col_mixin(@screen) {
-  // 列对齐方式
-  .md-row-@{screen}-top {
-    align-items: flex-start;
+  & when (@screen = ~"sm") {
+    // 平分列
+    .md-col,
+    .md-col-@{screen} {
+      flex: 1;
+    }
+    // 列对齐方式
+    .md-col-top,
+    .md-col-@{screen}-top {
+      align-items: flex-start;
+    }
+    .md-col-middle,
+    .md-col-@{screen}-middle {
+      align-items: center;
+    }
+    .md-col-bottom,
+    .md-col-@{screen}-bottom {
+      align-items: flex-end;
+    }
+    .md-col-stretch,
+    .md-col-@{screen}-stretch {
+      align-items: stretch;
+    }
   }
-  .md-row-@{screen}-middle {
-    align-items: center;
-  }
-  .md-row-@{screen}-bottom {
-    align-items: flex-end;
-  }
-  .md-row-@{screen}-stretch {
-    align-items: stretch;
-  }
-
-  // 平分列
-  .md-col-@{screen} {
-    flex: 1;
+  & when not (@screen = ~"sm") {
+    // 平分列
+    .md-col-@{screen} {
+      flex: 1;
+    }
+    // 列对齐方式
+    .md-col-@{screen}-top {
+      align-items: flex-start;
+    }
+    .md-col-@{screen}-middle {
+      align-items: center;
+    }
+    .md-col-@{screen}-bottom {
+      align-items: flex-end;
+    }
+    .md-col-@{screen}-stretch {
+      align-items: stretch;
+    }
   }
 }
 
 // sm
+._grid_col_mixin(~"sm");
 ._grid_col_loop_mixin(12, ~"sm");
 
 // md
 @media (min-width: @screen-md-min) {
-  ._grid_col_loop_mixin(12, ~"md");
-  ._grid_col_mixin(~"md");
-
   .md-container {
-    padding: 24px;
+    padding: @grid-gap-24;
   }
+
+  ._grid_col_mixin(~"md");
+  ._grid_col_loop_mixin(12, ~"md");
 }
 
 // lg
 @media (min-width: @screen-lg-min) {
-  ._grid_col_loop_mixin(12, ~"lg");
-  ._grid_col_mixin(~"lg");
-
   .md-container {
-    padding: 32px;
+    padding: @grid-gap-40;
   }
+
+  ._grid_col_mixin(~"lg");
+  ._grid_col_loop_mixin(12, ~"lg");
 }

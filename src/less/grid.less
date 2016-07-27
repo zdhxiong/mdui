@@ -18,23 +18,39 @@
   align-items: stretch;
   margin-left: -@grid-gap-default / 2;
   margin-right: -@grid-gap-default / 2;
+}
 
-  [class*="md-col-"],
-  .md-col {
-    padding: @grid-gap-default / 2;
-    box-sizing: border-box;
-  }
+[class*="md-col-"],
+.md-col {
+  padding: @grid-gap-default / 2;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 //使单元格之间没有间隔
-.md-col-gapless {
+.md-row-gapless {
   margin-left: 0;
   margin-right: 0;
 
-  [class*="md-col-"] {
+  [class*="md-col-"],
+  .md-col {
     padding-left: 0;
     padding-right: 0;
   }
+}
+
+// 列对齐方式
+.md-row-top {
+  align-items: flex-start;
+}
+.md-row-middle {
+  align-items: center;
+}
+.md-row-bottom {
+  align-items: flex-end;
+}
+.md-row-stretch {
+  align-items: stretch;
 }
 
 @_screen-col-1: 8.3333%;
@@ -96,41 +112,11 @@
     .md-col-@{screen} {
       flex: 1;
     }
-    // 列对齐方式
-    .md-col-top,
-    .md-col-@{screen}-top {
-      align-items: flex-start;
-    }
-    .md-col-middle,
-    .md-col-@{screen}-middle {
-      align-items: center;
-    }
-    .md-col-bottom,
-    .md-col-@{screen}-bottom {
-      align-items: flex-end;
-    }
-    .md-col-stretch,
-    .md-col-@{screen}-stretch {
-      align-items: stretch;
-    }
   }
   & when not (@screen = ~"sm") {
     // 平分列
     .md-col-@{screen} {
       flex: 1;
-    }
-    // 列对齐方式
-    .md-col-@{screen}-top {
-      align-items: flex-start;
-    }
-    .md-col-@{screen}-middle {
-      align-items: center;
-    }
-    .md-col-@{screen}-bottom {
-      align-items: flex-end;
-    }
-    .md-col-@{screen}-stretch {
-      align-items: stretch;
     }
   }
 }

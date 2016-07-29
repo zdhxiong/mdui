@@ -42,3 +42,12 @@
 .md-invisible {
   visibility: hidden;
 }
+
+// 强制文本换行
+.md-textwrap {
+  &,
+  td, th {
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+}

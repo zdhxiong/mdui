@@ -1,10 +1,18 @@
 body {
-  font-size: @font-size-body;
   font-family: @font-family-base;
+  font-size: @screen-sm-font-size;
   background-color: @body-background-color;
   color: @body-text-color;
   transition: padding @drawer-transition-duration @animation-curve-linear-out-slow-in;
+  @media (min-width: @screen-md-min) {
+    font-size: @screen-md-font-size;
+  }
+  @media (min-width: @screen-lg-min) {
+    font-size: @screen-lg-font-size;
+  }
 }
+
+
 
 a {
   text-decoration: none;

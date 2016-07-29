@@ -78,3 +78,223 @@
   letter-spacing: .08em;
   opacity: 0.54;
 }
+
+// https://github.com/sofish/typo.css/blob/master/typo.css
+// https://github.com/sofish/typo.css/blob/master/license.txt
+.md-typo {
+  blockquote {
+    position: relative;
+    color: #999;
+    font-weight: 400;
+    border-left: 1px solid #2196F3;
+    padding-left: 1em;
+    margin: 1em 3em 1em 2em;
+    @media only screen and ( max-width: @screen-md-max ) {
+      margin: 1em 0;
+    }
+  }
+
+  // Firefox 以外，元素没有下划线，需添加
+  acronym,
+  abbr {
+    border-bottom: 1px dotted;
+    font-variant: normal;
+  }
+
+  // 添加鼠标问号，进一步确保应用的语义是正确的（要知道，交互他们也有洁癖，如果你不去掉，那得多花点口舌）
+  abbr {
+    cursor: help;
+    text-decoration: none;
+  }
+
+  // 一致的 del 样式
+  del {
+    text-decoration: line-through;
+  }
+
+  address, caption, cite, code, dfn, em, th, var {
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  // 去掉列表前的标识, li 会继承，大部分网站通常用列表来很多内容，所以应该当去
+  ul, ol {
+    list-style: none;
+  }
+
+  // 对齐是排版最重要的因素, 别让什么都居中
+  caption, th {
+    text-align: left;
+  }
+
+  q:before, q:after {
+    content: '';
+  }
+
+  // 统一上标和下标
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+  }
+
+  :root sub, :root sup {
+    vertical-align: baseline; /* for ie9 and other modern browsers */
+  }
+
+  sup {
+    top: -0.5em;
+  }
+
+  sub {
+    bottom: -0.25em;
+  }
+
+  // 让链接在 hover 状态下显示下划线
+  a {
+    color: #2196F3;
+    border-bottom: 1px solid #2196F3;
+    text-decoration: underline;
+    &:hover {
+      border-bottom-color: #555;
+      color: #555;
+      text-decoration: none;
+    }
+  }
+
+  // 默认不显示下划线，保持页面简洁
+  ins {
+    text-decoration: none;
+  }
+
+  // 专名号
+  u {
+    text-decoration: underline;
+  }
+
+  // 标记，类似于手写的荧光笔的作用
+  mark {
+    background: #fffdd1;
+    border-bottom: 1px solid #ffedce;
+    padding: 2px;
+    margin: 0 5px;
+  }
+
+  // 代码片断
+  pre, code, pre tt {
+    font-family: Courier, 'Courier New', monospace;
+  }
+
+  pre {
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 1em 1.5em;
+    display: block;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  // 一致化 horizontal rule
+  hr {
+    border: none;
+    border-bottom: 1px solid #cfcfcf;
+    margin-bottom: 0.8em;
+    height: 10px;
+  }
+
+  // 底部印刷体、版本等标记
+  small,
+  figcaption {
+    font-size: 0.9em;
+    color: #888;
+  }
+
+  strong, b {
+    font-weight: bold;
+    color: #000;
+  }
+
+  // 可拖动文件添加拖动手势
+  [draggable] {
+    cursor: move;
+  }
+
+  // 保证块/段落之间的空白隔行
+  p, pre, ul, ol, dl, form, hr, table {
+    margin: 0 0 1.2em 0;
+  }
+
+  // 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优化
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+    color: #000;
+    margin-top: 1.2em;
+    margin-bottom: 0.6em;
+    line-height: 1.35;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.8em;
+  }
+  h3 {
+    font-size: 1.6em;
+  }
+  h4 {
+    font-size: 1.4em;
+  }
+  h5, h6 {
+    font-size: 1.2em;
+  }
+
+  ul {
+    margin-left: 1.3em;
+    list-style: disc;
+  }
+  ol {
+    list-style: decimal;
+    margin-left: 1.9em;
+  }
+  li ul,
+  li ol {
+    margin-bottom: 0.8em;
+    margin-left: 2em;
+  }
+  li ul {
+    list-style: circle;
+  }
+
+  // 去掉各Table cell 的边距并让其边重合
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  // 同 ul/ol，在文章中应用 table 基本格式
+  table th, table td, th, td, table caption {
+    border: 1px solid #ddd;
+    padding: 0.5em 1em;
+    color: #666;
+  }
+
+  table th, th {
+    background: #fbfbfb;
+  }
+
+  table thead th, thead th {
+    background: #f1f1f1;
+  }
+
+  table caption {
+    border-bottom: none;
+  }
+
+  em, legend, caption {
+    color: #000;
+    font-weight: inherit;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}

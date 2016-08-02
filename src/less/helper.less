@@ -51,8 +51,6 @@
 
 // 隐藏元素
 .md-hidden,
-.md-hidden-lg-down,
-.md-hidden-sm-up,
 [hidden] {
   display: none !important;
 }
@@ -64,8 +62,7 @@
 
 // 响应式工具
 @media (max-width: @screen-sm-max) {
-  .md-hidden-sm-down,
-  .md-hidden-sm-only {
+  .md-hidden-sm {
     display: none !important;
   }
 }
@@ -83,14 +80,13 @@
 }
 
 @media (min-width: @screen-lg-min) {
-  .md-hidden-lg-up,
-  .md-hidden-lg-only {
+  .md-hidden-lg {
     display: none !important;
   }
 }
 
 @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-  .md-hidden-md-only {
+  .md-hidden-md {
     display: none !important;
   }
 }

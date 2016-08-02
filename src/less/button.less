@@ -51,9 +51,12 @@
   // 按钮内的图标
   .md-icon-left,
   .md-icon-right {
-    height: inherit;
-    line-height: inherit;
-    font-size: 1.3em;
+    &,
+    &::before {
+      height: inherit;
+      line-height: inherit;
+      font-size: 1.3em;
+    }
   }
   .md-icon-left {
     float: left;

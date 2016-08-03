@@ -13,17 +13,44 @@
     word-wrap: normal;
     white-space: nowrap;
     direction: ltr;
+  }
+}
 
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
+// 深色图标
+.md-icon-black {
+  // 普通状态
+  &.md-icon,
+  &.md-icon::before,
+  .md-icon,
+  .md-icon::before {
+    opacity: @icon-opacity-black;
+  }
 
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
+  // 禁用状态
+  &.md-disabled.md-icon,
+  &.md-disabled.md-icon::before,
+  .md-disabled.md-icon,
+  .md-disabled.md-icon::before {
+    opacity: @icon-opacity-black-inactive;
+  }
+}
 
-    /* Support for IE. */
-    font-feature-settings: 'liga';
+// 浅色图标
+.md-icon-white {
+  // 普通状态
+  &.md-icon,
+  &.md-icon::before,
+  .md-icon,
+  .md-icon::before {
+    opacity: @icon-opacity-white;
+  }
+
+  // 禁用状态
+  &.md-disabled.md-icon,
+  &.md-disabled.md-icon::before,
+  .md-disabled.md-icon,
+  .md-disabled.md-icon::before {
+    opacity: @icon-opacity-white-inactive;
   }
 }
 

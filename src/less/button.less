@@ -94,7 +94,6 @@ input.md-btn[type="submit"] {
   .shadow-2();
 
   &:active {
-    background-color: @button-active-color;
     .shadow-8();
   }
 }
@@ -105,9 +104,9 @@ input.md-btn[type="submit"] {
   border-radius: 50%;
   font-size: @button-fab-font-size;
   margin: auto;
-  padding: 0;
+  padding: 0 !important;
   overflow: hidden;
-  line-height: normal;
+  line-height: normal !important;
   .shadow-6();
   &:active {
     .shadow-12();
@@ -150,9 +149,9 @@ input.md-btn[type="submit"] {
   font-size: @button-fab-font-size;
   margin-left: 0;
   margin-right: 0;
-  padding: 0;
+  padding: 0 !important;
   overflow: hidden;
-  line-height: normal;
+  line-height: normal !important;
 }
 
 .md-btn-icon {

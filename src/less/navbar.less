@@ -120,9 +120,17 @@ body.md-navbar-fixed{
     a {
       line-height: 44px;
       padding: (@navbar-height - 44px) / 2;
+
+      &::before,
+      &::after {
+        content: '';
+        padding: (@navbar-height - 44px) / 4;
+      }
     }
     .md-icon {
       padding: (@navbar-height - 24px) / 2 0;
+      margin-left: -(@navbar-height - 44px) / 2;
+      margin-right: -(@navbar-height - 44px) / 2;
     }
   }
   .md-navbar-divider{

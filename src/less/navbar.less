@@ -22,10 +22,27 @@
     transition-duration: @navbar-transition-duration;
     user-select: none;
     display: block;
-    padding: 0 20px;
     text-decoration: none;
     margin: 0;
     .overflow-ellipsis();
+
+    // 导航栏中图标 悬浮、点击 颜色变化
+    .md-icon {
+      padding: 10px;
+      border-radius: 50%;
+      transition: background-color @navbar-transition-duration @animation-curve-default;
+      transform: translateZ(0);
+    }
+    &:hover {
+      .md-icon {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+    &:active {
+      .md-icon {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    }
   }
   .md-icon {
     vertical-align: middle;
@@ -101,7 +118,8 @@ body.md-navbar-fixed{
       line-height: @navbar-height;
     }
     a {
-      line-height: @navbar-height;
+      line-height: 44px;
+      padding: (@navbar-height - 44px) / 2;
     }
     .md-icon {
       padding: (@navbar-height - 24px) / 2 0;

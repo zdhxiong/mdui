@@ -1,18 +1,34 @@
-.md-icon {
-  &,
-  &::before {
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;  /* Preferred icon size */
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
+.md-icon,
+.md-icon::before {
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  color: rgba(0, 0, 0, @icon-opacity-black);
+}
+.md-disabled,
+[disabled] {
+  &.md-icon,
+  &.md-icon::before,
+  .md-icon,
+  .md-icon::before {
+    color: rgba(0, 0, 0, @icon-opacity-black-inactive);
+  }
+}
+
+// 背景色中的图标继承背景色中定义的文本色
+[class*="md-color-"] {
+  .md-icon,
+  .md-icon::before {
+    color: inherit;
   }
 }
 
@@ -23,15 +39,19 @@
   &.md-icon::before,
   .md-icon,
   .md-icon::before {
-    opacity: @icon-opacity-black;
+    color: rgba(0, 0, 0, @icon-opacity-black);
   }
 
   // 禁用状态
   &.md-disabled.md-icon,
   &.md-disabled.md-icon::before,
   .md-disabled.md-icon,
-  .md-disabled.md-icon::before {
-    opacity: @icon-opacity-black-inactive;
+  .md-disabled.md-icon::before,
+  &.md-disabled .md-icon,
+  &.md-disabled .md-icon::before,
+  .md-disabled .md-icon,
+  .md-disabled .md-icon::before {
+    color: rgba(0, 0, 0, @icon-opacity-black-inactive);
   }
 }
 
@@ -42,15 +62,19 @@
   &.md-icon::before,
   .md-icon,
   .md-icon::before {
-    opacity: @icon-opacity-white;
+    color: rgba(255, 255, 255, @icon-opacity-white);
   }
 
   // 禁用状态
   &.md-disabled.md-icon,
   &.md-disabled.md-icon::before,
   .md-disabled.md-icon,
-  .md-disabled.md-icon::before {
-    opacity: @icon-opacity-white-inactive;
+  .md-disabled.md-icon::before,
+  &.md-disabled .md-icon,
+  &.md-disabled .md-icon::before,
+  .md-disabled .md-icon,
+  .md-disabled .md-icon::before {
+    color: rgba(255, 255, 255, @icon-opacity-white-inactive);
   }
 }
 

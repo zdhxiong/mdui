@@ -5,7 +5,7 @@
 
   // 按钮 hover/active 状态颜色
   .md-color-@{colorName} {
-    &.md-btn{
+    &.md-btn:not(.md-disabled):not([disabled]) {
       &:hover{
         background-color: @@colorHover !important;
       }
@@ -16,7 +16,7 @@
   }
   .md-theme-@{colorName} {
     .md-color-primary {
-      &.md-btn{
+      &.md-btn:not(.md-disabled):not([disabled]) {
         &:hover{
           background-color: @@colorHover !important;
         }

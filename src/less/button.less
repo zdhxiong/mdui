@@ -75,7 +75,10 @@
 .md-btn[disabled],
 .md-btn.md-disabled {
   &,
-  &:hover{
+  &:hover,
+  &:active,
+  &:focus,
+  &.md-ripple:active {
     background-color: @button-disabled-color !important;
     color: @button-disabled-text-color;
     .shadow-0();

@@ -204,6 +204,21 @@
     return ("ontouchstart" in document);
   };
 
+  /**
+   * 获取指定元素的指定css属性的值
+   * @param obj
+   * @param attribute
+   * @returns {*}
+   */
+  util.currentStyle = function(obj, attribute){
+    if(obj instanceof jQuery){
+      obj = obj[0];
+    }
+    return obj.currentStyle ?
+      obj.currentStyle[attribute] :
+      document.defaultView.getComputedStyle(obj, null)[attribute];
+  };
+
   // 公共方法
   var publicMethods = ('showMask hideMask lockScreen unlockScreen transitionEnd animationEnd').split(' ');
   mdui.util = {};

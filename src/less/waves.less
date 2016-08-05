@@ -24,7 +24,7 @@
     margin-top: -50px;
     margin-left: -50px;
     opacity: 0;
-    background: rgba(0, 0, 0, 0.14);
+    background: @ripple-dark-background-color;
     transition: all 0.5s ease-out;
     transition-property: transform, opacity;
     transform: scale(0) translate(0, 0);
@@ -32,7 +32,11 @@
   }
   // 浅色
   &.md-ripple-light .waves-ripple {
-    background: rgba(255, 255, 255, 0.4);
+    background: @ripple-light-background-color !important;
+  }
+  // 深色
+  &.md-ripple-dark .waves-ripple {
+    background: @ripple-dark-background-color !important;
   }
 
   // 其他颜色的代码放在 less/color/_mixin.less

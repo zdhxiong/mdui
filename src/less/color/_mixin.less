@@ -62,8 +62,8 @@
     }
   }
 
-  // 按钮 hover/active 状态颜色
   .md-color-hover-active-mixin() {
+    // 按钮 hover/active 状态颜色
     &.md-btn {
       &:hover {
         background-color: @@color-hover !important;
@@ -76,6 +76,17 @@
         background-color: @@color-hover !important;
       }
     }
+
+    // 根据 md-color-[color] 自动判断使用深色或浅色涟漪
+    &.waves-ripple,
+    .waves-ripple {
+      & when (@@text-color = @color-white-text) {
+        background: @ripple-light-background-color;
+      }
+      & when (@@text-color = @color-black-text) {
+        background: @ripple-dark-background-color;
+      }
+    }
   }
   .md-color-@{colorName} {
     .md-color-hover-active-mixin();
@@ -85,6 +96,7 @@
       .md-color-hover-active-mixin();
     }
   }
+
 
 
   // 涟漪的背景色

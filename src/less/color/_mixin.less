@@ -1,35 +1,5 @@
-.color-hover-active-mixin(@colorName) {
-  @color: 'color-@{colorName}';
-  @colorHover: 'color-@{colorName}-hover';
-  @colorActive: 'color-@{colorName}-active';
-
-  // 按钮 hover/active 状态颜色
-  .md-color-@{colorName} {
-    &.md-btn:not(.md-disabled):not([disabled]) {
-      &:hover{
-        background-color: @@colorHover !important;
-      }
-      &:active{
-        background-color: @@colorActive !important;
-      }
-    }
-  }
-  .md-theme-@{colorName} {
-    .md-color-primary {
-      &.md-btn:not(.md-disabled):not([disabled]) {
-        &:hover{
-          background-color: @@colorHover !important;
-        }
-        &:active{
-          background-color: @@colorActive !important;
-        }
-      }
-    }
-  }
-}
-
 //颜色深度
-._color-version-mixin(@colorName, @version) {
+.color-version-mixin(@colorName, @version) {
   //背景色
   @color: 'color-@{colorName}-@{version}';
   //文本颜色
@@ -47,47 +17,7 @@
   }
 }
 
-.color-version-mixin(@colorName, @version) {
-  //.md-color-primary
-  & when (@version = 0) {
-    //背景色
-    @color: 'color-@{colorName}';
-    //文本颜色
-    @text-color: 'text-color-@{colorName}';
-
-    .md-color-@{colorName} {
-      background-color: @@color !important;
-      color: @@text-color;
-    }
-    .md-text-color-@{colorName} {
-      color: @@color !important;
-    }
-    .md-theme-@{colorName} {
-      .md-color-primary {
-        background-color: @@color !important;
-        color: @@text-color;
-      }
-      .md-text-color-primary {
-        color: @@color !important;
-      }
-    }
-
-    .color-hover-active-mixin(@colorName);
-  }
-
-  //.md-color-primary-200
-  & when (@version > 0) {
-    ._color-version-mixin(@colorName, @version);
-  }
-
-  //.md-color-primary-a100
-  & when (isstring(@version)) {
-    ._color-version-mixin(@colorName, @version);
-  }
-}
-
 .color-mixin(@colorName, @withAccent: 1) {
-  .color-version-mixin(@colorName, 0);
   .color-version-mixin(@colorName, 50);
   .color-version-mixin(@colorName, 100);
   .color-version-mixin(@colorName, 200);
@@ -104,6 +34,58 @@
     .color-version-mixin(@colorName, ~"a400");
     .color-version-mixin(@colorName, ~"a700");
   }
+
+  //============= md-color-primary
+  //背景色
+  @color: 'color-@{colorName}';
+  //文本颜色
+  @text-color: 'text-color-@{colorName}';
+  //悬浮状态背景色
+  @color-hover: 'color-@{colorName}-hover';
+  //激活状态背景色
+  @color-active: 'color-@{colorName}-active';
+
+  .md-color-@{colorName} {
+    background-color: @@color !important;
+    color: @@text-color;
+  }
+  .md-text-color-@{colorName} {
+    color: @@color !important;
+  }
+  .md-theme-@{colorName} {
+    .md-color-primary {
+      background-color: @@color !important;
+      color: @@text-color;
+    }
+    .md-text-color-primary {
+      color: @@color !important;
+    }
+  }
+
+  // 按钮 hover/active 状态颜色
+  .md-color-@{colorName} {
+    &.md-btn:not(.md-disabled):not([disabled]) {
+      &:hover{
+        background-color: @@color-hover !important;
+      }
+      &:active{
+        background-color: @@color-active !important;
+      }
+    }
+  }
+  .md-theme-@{colorName} {
+    .md-color-primary {
+      &.md-btn:not(.md-disabled):not([disabled]) {
+        &:hover{
+          background-color: @@color-hover !important;
+        }
+        &:active{
+          background-color: @@color-active !important;
+        }
+      }
+    }
+  }
+
 
   // 涟漪的背景色
   .waves-effect {

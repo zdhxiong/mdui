@@ -30,6 +30,15 @@
   .md-icon::before {
     color: inherit;
   }
+  .md-disabled,
+  [disabled] {
+    &.md-icon,
+    &.md-icon::before,
+    .md-icon,
+    .md-icon::before {
+      color: rgba(255, 255, 255, @icon-opacity-white-inactive);
+    }
+  }
 }
 
 // 深色图标

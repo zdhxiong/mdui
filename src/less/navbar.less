@@ -17,37 +17,33 @@
   }
 
   a {
-    // 链接悬浮颜色变化在 color/_mixin.less 中
-    transition-property: background-color;
-    transition-duration: @navbar-transition-duration;
+    transition: background-color @navbar-transition-duration @animation-curve-default;
     user-select: none;
     display: block;
     text-decoration: none;
     margin: 0;
     .overflow-ellipsis();
+  }
 
-    // 导航栏中图标 悬浮、点击 颜色变化
+  // 导航栏中的图标按钮
+  .md-btn-icon,
+  .md-btn-icon-mini {
     .md-icon {
-      padding: 10px;
-      border-radius: 50%;
-      transition: background-color @navbar-transition-duration @animation-curve-default;
-      transform: translateZ(0);
-    }
-    &:hover {
-      .md-icon {
-        background-color: rgba(255, 255, 255, 0.1);
-      }
-    }
-    &:active {
-      .md-icon {
-        background-color: rgba(255, 255, 255, 0.2);
-      }
+      vertical-align: middle;
+      height: 24px;
+      line-height: 24px;
+      width: 24px;
     }
   }
-  .md-icon {
-    vertical-align: middle;
-    height: 24px;
-    width: 24px;
+  .md-btn-icon {
+    width: @navbar-icon-width;
+    height: @navbar-icon-width;
+    min-width: @navbar-icon-width;
+  }
+  .md-btn-icon-mini {
+    width: @navbar-icon-mini-width;
+    height: @navbar-icon-mini-width;
+    min-width: @navbar-icon-mini-width;
   }
 }
 
@@ -113,24 +109,20 @@ body.md-navbar-fixed{
 // 响应式
 ._navbar_responsive_mixed(@navbar-height){
   .md-navbar {
-    min-height: @navbar-height;
-    nav {
+    &,
+    nav,
+    .md-icon {
+      height: @navbar-height;
       line-height: @navbar-height;
     }
     a {
-      line-height: 44px;
-      padding: (@navbar-height - 44px) / 2;
-
-      &::before,
-      &::after {
-        content: '';
-        padding: (@navbar-height - 44px) / 4;
-      }
+      padding: 0 @navbar-height - @navbar-icon-width;
     }
-    .md-icon {
-      padding: (@navbar-height - 24px) / 2 0;
-      margin-left: -(@navbar-height - 44px) / 2;
-      margin-right: -(@navbar-height - 44px) / 2;
+    .md-btn-icon {
+      margin: 0 (@navbar-height - @navbar-icon-width) / 2;
+    }
+    .md-btn-icon-mini {
+      margin: 0 (@navbar-height - @navbar-icon-mini-width) / 2;
     }
   }
   .md-navbar-divider{

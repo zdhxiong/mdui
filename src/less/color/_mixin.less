@@ -63,26 +63,26 @@
   }
 
   // 按钮 hover/active 状态颜色
-  .md-color-@{colorName} {
+  .md-color-hover-active-mixin() {
     &.md-btn:not(.md-disabled):not([disabled]) {
-      &:hover{
+      &:hover {
         background-color: @@color-hover !important;
       }
-      &:active{
+      &:active {
         background-color: @@color-active !important;
+      }
+      // 按钮有涟漪时，使 active 状态颜色和 hover 状态颜色一样
+      &.md-ripple:active {
+        background-color: @@color-hover !important;
       }
     }
   }
+  .md-color-@{colorName} {
+    .md-color-hover-active-mixin();
+  }
   .md-theme-@{colorName} {
     .md-color-primary {
-      &.md-btn:not(.md-disabled):not([disabled]) {
-        &:hover{
-          background-color: @@color-hover !important;
-        }
-        &:active{
-          background-color: @@color-active !important;
-        }
-      }
+      .md-color-hover-active-mixin();
     }
   }
 

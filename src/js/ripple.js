@@ -191,23 +191,24 @@
   // 事件监听
   // ======
   var $document = $(document);
+  var isSupportTouch = util.supportTouch();
+  var eventName = {
+    touchstart: isSupportTouch ? 'touchstart.ripple.mdui' : 'mousedown.ripple.mdui',
+    touchmove: isSupportTouch ? 'touchmove.ripple.mdui' : 'mousemove.ripple.mdui',
+    touchend: isSupportTouch ? 'touchend.ripple.mdui' : 'mouseup.ripple.mdui'
+  };
 
-  $document.on('touchstart.ripple.mdui', '.md-ripple', function (e) {
-    touchStartX = e.targetTouches[0].pageX;
-    touchStartY = e.targetTouches[0].pageY;
+  $document.on(eventName.touchstart, '.md-ripple', function(e){
+    touchStartX = isSupportTouch ? e.originalEvent.targetTouches[0].pageX : e.pageX;
+    touchStartY = isSupportTouch ? e.originalEvent.targetTouches[0].pageY : e.pageY;
     rippleTouchStart(e.target);
   });
-  $document.on('mousedown.ripple.mdui', '.md-ripple', function (e) {
-    touchStartX = e.pageX;
-    touchStartY = e.pageY;
-    rippleTouchStart(e.target);
-  });
 
-  $document.on('touchmove.ripple.mdui mousemove.ripple.mdui', '.md-ripple', function () {
+  $document.on(eventName.touchmove, '.md-ripple', function () {
     rippleTouchMove();
   });
 
-  $document.on('touchend.ripple.mdui touchcancel.ripple.mdui mouseup.ripple.mdui', '.md-ripple', function () {
+  $document.on(eventName.touchend, '.md-ripple', function () {
     rippleTouchEnd();
   });
 })($, util);

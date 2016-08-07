@@ -38,10 +38,10 @@ module.exports = function (grunt) {
     concat: {
       app: {
         src: [
-          'src/js/waves.js',
           'src/js/wrap_start.js',
           'src/js/init.js',
           'src/js/device.js',
+          'src/js/color.js',
           'src/js/util.js',
           'src/js/ripple.js',
           'src/js/drawer.js',

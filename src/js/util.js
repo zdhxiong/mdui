@@ -1,14 +1,14 @@
 /**
  * 工具
  */
-(function($){
+(function ($) {
   /**
    * 参数解析
    * @param str
    * @returns {{}}
    */
-  util.parseOptions = function(str) {
-    if(!str){
+  util.parseOptions = function (str) {
+    if (!str) {
       return {};
     }
 
@@ -47,17 +47,17 @@
    * 创建遮罩层并显示
    * @param z_index 遮罩层的 z_index
    */
-  util.showMask = function(z_index) {
+  util.showMask = function (z_index) {
     var $mask = $('.md-mask');
 
-    if(!$mask.length) {
+    if (!$mask.length) {
       $mask = $('<div>').addClass('md-mask');
       $('body').append($mask);
 
       var _temp = window.getComputedStyle($mask[0]).opacity; //使动态添加的元素的 transition 动画能生效
     }
 
-    if(z_index){
+    if (z_index) {
       $mask.css('z-index', z_index);
     }
 
@@ -69,7 +69,7 @@
   /**
    * 隐藏遮罩层
    */
-  util.hideMask = function() {
+  util.hideMask = function () {
     var $mask = $('.md-mask');
     $mask.removeClass('md-mask-show');
     return $mask;
@@ -78,14 +78,14 @@
   /**
    * 锁定屏幕
    */
-  util.lockScreen = function(){
+  util.lockScreen = function () {
     $('html').addClass('md-locked');
   };
 
   /**
    * 解除屏幕锁定
    */
-  util.unlockScreen = function(){
+  util.unlockScreen = function () {
     $('html').removeClass('md-locked');
   };
 
@@ -97,11 +97,11 @@
    * @param func 函数名，没有函数名时，返回所有队列
    * @returns {*}
    */
-  util.queue = function(name, func){
-    if(typeof util._queueData[name] === 'undefined'){
+  util.queue = function (name, func) {
+    if (typeof util._queueData[name] === 'undefined') {
       util._queueData[name] = [];
     }
-    if(typeof func === 'undefined'){
+    if (typeof func === 'undefined') {
       return util._queueData[name];
     }
     util._queueData[name].push(func);
@@ -111,10 +111,27 @@
    * 从队列中移除一个函数，并执行该函数
    * @param name
    */
-  util.dequeue = function(name){
-    if(util._queueData[name].length){
+  util.dequeue = function (name) {
+    if (util._queueData[name].length) {
       (util._queueData[name].shift())();
     }
+  };
+
+  util.transform = function (dom, transform) {
+    for (var i = 0; i < dom.length; i++) {
+      var elStyle = dom[i].style;
+      elStyle.webkitTransform = elStyle.MsTransform = elStyle.msTransform = elStyle.MozTransform = elStyle.OTransform = elStyle.transform = transform;
+    }
+  };
+  util.transition = function (dom, duration) {
+    if (typeof duration !== 'string') {
+      duration = duration + 'ms';
+    }
+    for (var i = 0; i < dom.length; i++) {
+      var elStyle = dom[i].style;
+      elStyle.webkitTransitionDuration = elStyle.MsTransitionDuration = elStyle.msTransitionDuration = elStyle.MozTransitionDuration = elStyle.OTransitionDuration = elStyle.transitionDuration = duration;
+    }
+    return this;
   };
 
   /**
@@ -123,12 +140,13 @@
    * @param callback
    * @returns {util}
    */
-  util.transitionEnd = function(dom, callback) {
-    if(!(dom instanceof jQuery)){
+  util.transitionEnd = function (dom, callback) {
+    if (!(dom instanceof jQuery)) {
       dom = $(dom);
     }
     var events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'],
         i;
+
     function fireCallBack(e) {
       /*jshint validthis:true */
       if (e.target !== this) return;
@@ -137,6 +155,7 @@
         dom.off(events[i], fireCallBack);
       }
     }
+
     if (callback) {
       for (i = 0; i < events.length; i++) {
         dom.on(events[i], fireCallBack);
@@ -151,18 +170,20 @@
    * @param callback
    * @returns {util}
    */
-  util.animationEnd = function(dom, callback) {
-    if(!(dom instanceof jQuery)){
+  util.animationEnd = function (dom, callback) {
+    if (!(dom instanceof jQuery)) {
       dom = $(dom);
     }
     var events = ['webkitAnimationEnd', 'OAnimationEnd', 'MSAnimationEnd', 'animationend'],
         i;
+
     function fireCallBack(e) {
       callback(e);
       for (i = 0; i < events.length; i++) {
         dom.off(events[i], fireCallBack);
       }
     }
+
     if (callback) {
       for (i = 0; i < events.length; i++) {
         dom.on(events[i], fireCallBack);
@@ -176,7 +197,7 @@
    * @returns {boolean}
    *
    */
-  util.isPhone = function(){
+  util.isPhone = function () {
     return window.innerWidth < 480;
   };
 
@@ -184,7 +205,7 @@
    * 根据窗口宽度判断是否是平板设备
    * @returns {boolean}
    */
-  util.isTablet = function(){
+  util.isTablet = function () {
     return window.innerWidth < 840 && window.innerWidth >= 480;
   };
 
@@ -192,7 +213,7 @@
    * 根据窗口宽度判断是否是桌面设备
    * @returns {boolean}
    */
-  util.isDesktop = function(){
+  util.isDesktop = function () {
     return window.innerWidth >= 840;
   };
 
@@ -200,29 +221,14 @@
    * 判断设备是否支持 touch
    * @returns {boolean}
    */
-  util.supportTouch = function(){
+  util.supportTouch = function () {
     return ("ontouchstart" in document);
-  };
-
-  /**
-   * 获取指定元素的指定css属性的值
-   * @param obj
-   * @param attribute
-   * @returns {*}
-   */
-  util.currentStyle = function(obj, attribute){
-    if(obj instanceof jQuery){
-      obj = obj[0];
-    }
-    return obj.currentStyle ?
-      obj.currentStyle[attribute] :
-      document.defaultView.getComputedStyle(obj, null)[attribute];
   };
 
   // 公共方法
   var publicMethods = ('showMask hideMask lockScreen unlockScreen transitionEnd animationEnd').split(' ');
   mdui.util = {};
-  for(var i = 0, len = publicMethods.length; i < len; i++){
+  for (var i = 0, len = publicMethods.length; i < len; i++) {
     mdui.util[publicMethods[i]] = util[publicMethods[i]];
   }
 })($);

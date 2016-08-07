@@ -1,0 +1,56 @@
+// 水波纹
+
+.md-ripple {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+}
+
+// Ripple
+.md-ripple-wave {
+  left: 0;
+  top: 0;
+  position: absolute !important;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+  transform: translate3d(0px, 0px, 0) scale(0);
+  transition-duration: 1400ms;
+}
+
+.md-ripple-wave-fill {
+  transition-duration: 300ms;
+  opacity: 0.35;
+}
+
+.md-ripple-wave-out {
+  transition-duration: 600ms;
+  opacity: 0;
+}
+
+// 水波纹颜色；其他颜色在 color/_mixin.less 中
+.md-ripple-light .md-ripple-wave,
+.md-ripple-light.md-ripple-wave {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.md-ripple-dark .md-ripple-wave,
+.md-ripple-dark.md-ripple-wave {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+// 圆形
+.md-ripple {
+  &.md-btn-fab,
+  &.md-btn-fab-mini,
+  &.md-btn-icon,
+  &.md-btn-icon-mini {
+    transform: translateZ(0);
+  }
+}

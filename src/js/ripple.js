@@ -91,11 +91,11 @@
         }
 
         if (typeof colorIsDark !== 'undefined') {
-          rippleColorClass = colorIsDark ? 'md-ripple-light' : 'md-ripple-dark';
+          rippleColorClass = colorIsDark ? 'md-ripple-white' : 'md-ripple-black';
         }
       }
       if (!rippleColorClass) {
-        rippleColorClass = 'md-ripple-dark';
+        rippleColorClass = 'md-ripple-black';
       }
     }
 

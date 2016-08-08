@@ -68,9 +68,13 @@
       &:hover {
         background-color: @@color-hover !important;
       }
-      // 按钮没有水波纹时，active 状态颜色变化；有水波纹时不变化
-      &:not(.md-ripple):active {
+      // 下面两行写在一起会导致优先级过高，覆盖后面的样式
+      &:active {
         background-color: @@color-active !important;
+      }
+      // 按钮有涟漪时，使 active 状态颜色和 hover 状态颜色一样
+      &.md-ripple:active {
+        background-color: @@color-hover !important;
       }
     }
   }

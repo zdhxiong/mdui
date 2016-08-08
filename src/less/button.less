@@ -81,7 +81,7 @@
   &.md-ripple:active {
     background-color: @button-disabled-color !important;
     color: @button-disabled-text-color;
-    .shadow-0();
+    .shadow(0);
     cursor: default;
   }
 }
@@ -97,10 +97,10 @@ input.md-btn[type="submit"] {
 
 // Raised button 浮动按钮
 .md-btn-raised {
-  .shadow-2();
+  .shadow(2);
 
   &:active {
-    .shadow-8();
+    .shadow(8);
   }
 }
 
@@ -113,9 +113,9 @@ input.md-btn[type="submit"] {
   padding: 0 !important;
   overflow: hidden;
   line-height: normal !important;
-  .shadow-6();
+  .shadow(6);
   &:active {
-    .shadow-12();
+    .shadow(12);
   }
 }
 

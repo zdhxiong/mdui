@@ -1,18 +1,27 @@
+// 根据背景色设置文本色
+.color-text-color-mixin(@color-is-dark) {
+  & when (@color-is-dark = 1) {
+    color: @color-white-text;
+  }
+  & when (@color-is-dark = 0) {
+    color: @color-black-text;
+  }
+}
+
 //颜色深度
 .color-version-mixin(@colorName, @version) {
   //背景色
   @color: 'color-@{colorName}-@{version}';
-  //文本颜色
-  @text-color: 'text-color-@{colorName}-@{version}';
+  @color-is-dark: 'color-@{colorName}-@{version}-is-dark';
 
   .md-color-@{colorName}-@{version} {
     background-color: @@color !important;
-    color: @@text-color;
+    .color-text-color-mixin(@@color-is-dark);
   }
   .md-theme-@{colorName} {
     .md-color-primary-@{version} {
       background-color: @@color !important;
-      color: @@text-color;
+      .color-text-color-mixin(@@color-is-dark);
     }
   }
 }
@@ -38,8 +47,7 @@
   //============= md-color-primary
   //背景色
   @color: 'color-@{colorName}';
-  //文本颜色
-  @text-color: 'text-color-@{colorName}';
+  @color-is-dark: 'color-@{colorName}-is-dark';
   //悬浮状态背景色
   @color-hover: 'color-@{colorName}-hover';
   //激活状态背景色
@@ -47,7 +55,7 @@
 
   .md-color-@{colorName} {
     background-color: @@color !important;
-    color: @@text-color;
+    .color-text-color-mixin(@@color-is-dark);
   }
   .md-text-color-@{colorName} {
     color: @@color !important;
@@ -55,7 +63,7 @@
   .md-theme-@{colorName} {
     .md-color-primary {
       background-color: @@color !important;
-      color: @@text-color;
+      .color-text-color-mixin(@@color-is-dark);
     }
     .md-text-color-primary {
       color: @@color !important;

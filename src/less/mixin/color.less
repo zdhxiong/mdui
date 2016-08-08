@@ -1,0 +1,51 @@
+// 根据背景色设置文本色
+._md-color-text-color(@color-is-dark) {
+  & when (@color-is-dark = 1) {
+    color: @color-white-text;
+  }
+  & when (@color-is-dark = 0) {
+    color: @color-black-text;
+  }
+}
+
+// 背景色
+.md-color(@colorName, @degree: 500) {
+  @color: 'color-@{colorName}-@{degree}';
+  @color-is-dark: 'color-@{colorName}-@{degree}-is-dark';
+
+  background-color: @@color !important;
+  ._md-color-text-color(@@color-is-dark);
+}
+
+// hover 状态背景色
+.md-color-hover(@colorName) {
+  @color-is-dark: 'color-@{colorName}-500-is-dark';
+  & when (@@color-is-dark = 1) {
+    @color: 'color-@{colorName}-400';
+    background-color: @@color !important;
+  }
+  & when (@@color-is-dark = 0) {
+    @color: 'color-@{colorName}-600';
+    background-color: @@color !important;
+  }
+}
+
+// active 状态背景色
+.md-color-active(@colorName) {
+  @color-is-dark: 'color-@{colorName}-500-is-dark';
+  & when (@@color-is-dark = 1) {
+    @color: 'color-@{colorName}-300';
+    background-color: @@color !important;
+  }
+  & when (@@color-is-dark = 0) {
+    @color: 'color-@{colorName}-700';
+    background-color: @@color !important;
+  }
+}
+
+// 文本色
+.md-text-color(@colorName) {
+  @color: 'color-@{colorName}-500';
+
+  color: @@color !important;
+}

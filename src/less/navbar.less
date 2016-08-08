@@ -7,7 +7,7 @@
   max-height: 1000px;
   z-index: @z-index-navbar;
   transition: all @navbar-transition-duration @animation-curve-default;
-  .shadow(4);
+  .md-shadow-4();
 
   nav {
     display: flex;
@@ -22,7 +22,7 @@
     display: block;
     text-decoration: none;
     margin: 0;
-    .overflow-ellipsis();
+    .md-text-overflow();
   }
 
   // 导航栏中的图标按钮
@@ -91,7 +91,7 @@ body.md-navbar-fixed{
   font-size: @navbar-title-font-size;
   max-width: @navbar-title-max-width;
   padding: 0 20px;
-  .overflow-ellipsis();
+  .md-text-overflow();
 }
 
 //搜索框

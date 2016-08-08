@@ -1,0 +1,11 @@
+// 清除浮动
+.md-clearfix(){
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}

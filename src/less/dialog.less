@@ -36,7 +36,7 @@
   visibility: hidden;
   outline: none;
   text-size-adjust: 100%;
-  .shadow(24);
+  .md-shadow-24();
 
   &.md-dialog-in {
     visibility: visible;
@@ -55,7 +55,9 @@
   overflow-y: auto;
   box-sizing: border-box;
   padding-bottom: 52px;
-  .scrollbar();
+  @media (min-width: @screen-lg-min) {
+    .md-scrollbar-beautify();
+  }
 }
 
 // 提示框标题

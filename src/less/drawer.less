@@ -22,7 +22,9 @@
   &:hover {
     overflow-y: auto!important;
   }
-  .scrollbar();
+  @media (min-width: @screen-lg-min) {
+    .md-scrollbar-beautify();
+  }
 
   // 桌面设备默认不覆盖导航栏
   @media (min-width: @screen-lg-min) {
@@ -38,7 +40,7 @@
 
     // 手机平板始终有背景和阴影
     background: #fff;
-    .shadow(16);
+    .md-shadow-16();
   }
 }
 
@@ -144,7 +146,7 @@ ul.md-drawer-items,
 // 菜单项标题
 .md-drawer-item-title {
   padding-right: 12px;
-  .overflow-ellipsis();
+  .md-text-overflow();
 }
 
 // 导航项右侧设置按钮
@@ -179,7 +181,7 @@ ul.md-drawer-items,
 
 //抽屉栏不是透明时添加阴影
 .md-drawer[class*="md-color-"]:not(.md-color-transparent) {
-  .shadow(16);
+  .md-shadow-16();
 }
 
 //抽屉栏 100% 高度，覆盖在导航栏上面

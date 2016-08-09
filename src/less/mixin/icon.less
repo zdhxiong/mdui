@@ -10,14 +10,14 @@
 }
 
 // 禁用状态图标颜色，深色图标有 26% 不透明度，浅色图标有 30% 不透明度
-.md-icon-color-inactive(@colorName) {
+.md-icon-color-disabled(@colorName) {
   @color: 'color-@{colorName}-500';
   @color-is-dark: 'color-@{colorName}-500-is-dark';
 
   & when (@@color-is-dark = 1) {
-    color: rgba(red(@@color), green(@@color), blue(@@color), @icon-opacity-black-inactive);
+    color: rgba(red(@@color), green(@@color), blue(@@color), @icon-opacity-black-disabled);
   }
   & when (@@color-is-dark = 0) {
-    color: rgba(red(@@color), green(@@color), blue(@@color), @icon-opacity-white-inactive);
+    color: rgba(red(@@color), green(@@color), blue(@@color), @icon-opacity-white-disabled);
   }
 }

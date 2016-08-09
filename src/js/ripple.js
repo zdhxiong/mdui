@@ -1,5 +1,5 @@
 /**
- * 水波纹
+ * 涟漪
  *
  * Inspired by https://github.com/nolimits4web/Framework7/blob/master/src/js/fast-clicks.js
  * https://github.com/nolimits4web/Framework7/blob/master/LICENSE
@@ -43,13 +43,13 @@
   }
 
   /**
-   * 创建水波纹动画
+   * 创建涟漪动画
    * @param x
    * @param y
    * @param $el
    */
   function createRipple(x, y, $el) {
-    // 设置水波纹颜色
+    // 设置涟漪颜色
     // ===========
     var classStr = $el.attr('class');
     var rippleColorClass = '';
@@ -59,7 +59,7 @@
       var colorReg = /(md-color-\w+(-\w+)?(-\w+)?)/g;
       var colorClassArray = classStr.match(colorReg);
 
-      // 存在背景色，根据背景色判断使用深色还是浅色水波纹
+      // 存在背景色，根据背景色判断使用深色还是浅色涟漪
       if (colorClassArray) {
         var colorClass = colorClassArray[colorClassArray.length - 1];
         var colorClassTempArray = colorClass.replace('md-color-', '').split('-');
@@ -99,7 +99,7 @@
       }
     }
 
-    // 计算水波纹位置
+    // 计算涟漪位置
     // ===========
     var box = $el[0].getBoundingClientRect();
     var offset = $el.offset();
@@ -113,7 +113,7 @@
         Math.pow((Math.pow(height, 2) + Math.pow(width, 2)), 0.5), 48
     );
 
-    // 添加水波纹
+    // 添加涟漪
     // ========
     $rippleWave = $(
         '<div class="md-ripple-wave" style="' +
@@ -135,7 +135,7 @@
   }
 
   /**
-   * 移除水波纹动画
+   * 移除涟漪动画
    */
   function removeRipple() {
     if (!$rippleWave) {

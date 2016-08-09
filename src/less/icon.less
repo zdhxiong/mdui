@@ -12,7 +12,7 @@
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
-  color: rgba(0, 0, 0, @icon-opacity-black);
+  .md-icon-color('black');
 }
 .md-disabled,
 [disabled] {
@@ -20,7 +20,7 @@
   &.md-icon::before,
   .md-icon,
   .md-icon::before {
-    color: rgba(0, 0, 0, @icon-opacity-black-inactive);
+    .md-icon-color-inactive('black');
   }
 }
 
@@ -29,15 +29,6 @@
   .md-icon,
   .md-icon::before {
     color: inherit;
-  }
-  .md-disabled,
-  [disabled] {
-    &.md-icon,
-    &.md-icon::before,
-    .md-icon,
-    .md-icon::before {
-      color: rgba(255, 255, 255, @icon-opacity-white-inactive);
-    }
   }
 }
 
@@ -48,7 +39,7 @@
   &.md-icon::before,
   .md-icon,
   .md-icon::before {
-    color: rgba(0, 0, 0, @icon-opacity-black);
+    .md-icon-color('black');
   }
 
   // 禁用状态
@@ -60,7 +51,7 @@
   &.md-disabled .md-icon::before,
   .md-disabled .md-icon,
   .md-disabled .md-icon::before {
-    color: rgba(0, 0, 0, @icon-opacity-black-inactive);
+    .md-icon-color-inactive('black');
   }
 }
 
@@ -71,7 +62,7 @@
   &.md-icon::before,
   .md-icon,
   .md-icon::before {
-    color: rgba(255, 255, 255, @icon-opacity-white);
+    .md-icon-color('white');
   }
 
   // 禁用状态
@@ -83,7 +74,7 @@
   &.md-disabled .md-icon::before,
   .md-disabled .md-icon,
   .md-disabled .md-icon::before {
-    color: rgba(255, 255, 255, @icon-opacity-white-inactive);
+    .md-icon-color-inactive('white');
   }
 }
 

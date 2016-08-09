@@ -10,15 +10,12 @@
 
 // 水平居中
 .md-center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  .md-center();
 }
 
 // 垂直居中
 .md-valign {
-  display: flex;
-  align-items: center;
+  .md-valign();
 }
 
 // 文本对齐方式
@@ -81,14 +78,5 @@
 @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
   .md-hidden-md {
     display: none !important;
-  }
-}
-
-// 强制文本换行
-.md-textwrap {
-  &,
-  td, th {
-    word-wrap: break-word;
-    word-break: break-all;
   }
 }

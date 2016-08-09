@@ -9,3 +9,41 @@
     clear: both;
   }
 }
+
+// 用省略号代替被截断的文本
+.md-text-overflow() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// 文本强制换行
+.md-textwrap() {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+// 使子元素垂直居中
+.md-valign() {
+  display: flex;
+  align-items: center;
+}
+
+// 使元素水平剧中
+.md-center() {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// 美化滚动条样式
+.md-scrollbar-beautify() {
+  &::-webkit-scrollbar {
+    background: transparent;
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #bdbdbd;
+  }
+}

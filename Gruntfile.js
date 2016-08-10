@@ -75,7 +75,14 @@ module.exports = function (grunt) {
     //css 自动加前缀
     autoprefixer: {
       options: {
-        browsers: ['last 3 versions']
+        browsers: [
+          'last 2 versions',
+          '> 1%',
+          'Chrome >= 30',
+          'Firefox >= 30',
+          'ie >= 10',
+          'Safari >= 8'
+        ]
       },
       dist: {
         src: ['dist/css/mdui.css']

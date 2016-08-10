@@ -48,15 +48,15 @@
     // 按钮 hover/active 状态颜色
     &.md-btn {
       &:hover {
-        .md-color-hover(@colorName);
+        ._md-background-color-hover(@colorName);
       }
       // 下面两行写在一起会导致优先级过高，覆盖后面的样式
       &:active {
-        .md-color-active(@colorName);
+        ._md-background-color-active(@colorName);
       }
       // 按钮有涟漪时，使 active 状态颜色和 hover 状态颜色一样
       &.md-ripple:active {
-        .md-color-hover(@colorName);
+        ._md-background-color-hover(@colorName);
       }
     }
   }

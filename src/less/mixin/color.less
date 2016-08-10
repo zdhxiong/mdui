@@ -14,16 +14,8 @@
   background-color: @@color !important;
 }
 
-// 背景色和文本色
-.md-color(@colorName, @degree: 500) {
-  .md-background-color(@colorName, @degree);
-
-  @color-is-dark: 'color-@{colorName}-@{degree}-is-dark';
-  ._md-color-text-color(@@color-is-dark);
-}
-
 // hover 状态背景色
-.md-color-hover(@colorName) {
+._md-background-color-hover(@colorName) {
   @color-is-dark: 'color-@{colorName}-500-is-dark';
   & when (@@color-is-dark = 1) {
     @color: 'color-@{colorName}-400';
@@ -36,7 +28,7 @@
 }
 
 // active 状态背景色
-.md-color-active(@colorName) {
+._md-background-color-active(@colorName) {
   @color-is-dark: 'color-@{colorName}-500-is-dark';
   & when (@@color-is-dark = 1) {
     @color: 'color-@{colorName}-300';
@@ -48,16 +40,22 @@
   }
 }
 
-// 文本色
-.md-text-color(@colorName) {
-  @color: 'color-@{colorName}-500';
+// 背景色和文本色
+.md-color(@colorName, @degree: 500) {
+  .md-background-color(@colorName, @degree);
 
-  color: @@color !important;
+  @color-is-dark: 'color-@{colorName}-@{degree}-is-dark';
+  ._md-color-text-color(@@color-is-dark);
 }
 
-// 设置文本色的不透明度
-.md-text-color-opacity(@colorName, @opacity: 1) {
+// 文本色
+.md-text-color(@colorName, @opacity: 1) {
   @color: 'color-@{colorName}-500';
 
-  color: rgba(red(@@color), green(@@color), blue(@@color), @opacity) !important;
+  & when (@opacity = 1) {
+    color: @@color !important;
+  }
+  & when (@opacity < 1) {
+    color: rgba(red(@@color), green(@@color), blue(@@color), @opacity) !important;
+  }
 }

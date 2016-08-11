@@ -1,10 +1,10 @@
 // 图标颜色，纯黑色图标有 54% 不透明度，其他颜色保持原色
 .md-icon-color(@colorName) {
   @color: 'color-@{colorName}-500';
-  & when (@colorName = 'black') {
+  & when (@colorName = black) {
     color: rgba(0, 0, 0, @icon-opacity-black);
   }
-  & when not (@colorName = 'black') {
+  & when not (@colorName = black) {
     color: @@color;
   }
 }

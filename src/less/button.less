@@ -80,9 +80,12 @@
   &:focus,
   &.md-ripple:active {
     background-color: @button-disabled-color !important;
-    color: @button-disabled-text-color;
+    color: @button-disabled-text-color !important;
     .md-shadow(0);
     cursor: default;
+    .md-icon {
+      color: @button-disabled-text-color !important;
+    }
   }
 }
 

@@ -31,16 +31,36 @@
   //============= md-color-primary
   .md-color-@{colorName} {
     .md-color(@colorName, 500);
+
+    @color-is-dark: 'color-@{colorName}-500-is-dark';
+    & when (@@color-is-dark = false) {
+      .md-icon {
+        .md-icon-color(black);
+      }
+    }
   }
   .md-text-color-@{colorName} {
-    .md-text-color(@colorName) !important;
+    &,
+    .md-icon {
+      .md-text-color(@colorName) !important;
+    }
   }
   .md-theme-@{colorName} {
     .md-color-primary {
       .md-color(@colorName, 500);
+
+      @color-is-dark: 'color-@{colorName}-500-is-dark';
+      & when (@@color-is-dark = false) {
+        .md-icon {
+          .md-icon-color(black);
+        }
+      }
     }
     .md-text-color-primary {
-      .md-text-color(@colorName) !important;
+      &,
+      .md-icon {
+        .md-text-color(@colorName) !important;
+      }
     }
   }
 

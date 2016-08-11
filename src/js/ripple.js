@@ -11,20 +11,25 @@
 
   /**
    * 找到含 md-ripple 类的元素，如果当前元素不存在 md-ripple 类，则从父元素找
+   * 含 .md-disabled 类和 disabled 属性的元素不产生涟漪
    * @param el
    * @returns {*}
    */
   function findRippleElement(el) {
     var $el = $(el);
+    var $target;
     if ($el.hasClass('md-ripple')) {
-      return $el;
+      $target = $el;
     } else {
       var rippleParents = $el.parents('.md-ripple');
       if (rippleParents.length > 0) {
-        return rippleParents.eq(0);
-      } else {
-        return false;
+        $target = rippleParents.eq(0);
       }
+    }
+    if($target && !$target.hasClass('md-disabled') && typeof $target.attr('disabled') === 'undefined' ) {
+      return $target;
+    }else{
+      return false;
     }
   }
 

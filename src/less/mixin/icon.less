@@ -14,10 +14,10 @@
   @color: 'color-@{colorName}-500';
   @color-is-dark: 'color-@{colorName}-500-is-dark';
 
-  & when (@@color-is-dark = 1) {
+  & when (@@color-is-dark = true) {
     color: rgba(red(@@color), green(@@color), blue(@@color), @icon-opacity-black-disabled);
   }
-  & when (@@color-is-dark = 0) {
+  & when (@@color-is-dark = false) {
     color: rgba(red(@@color), green(@@color), blue(@@color), @icon-opacity-white-disabled);
   }
 }

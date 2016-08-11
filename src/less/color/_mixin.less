@@ -10,7 +10,7 @@
   }
 }
 
-.color-mixin(@colorName, @withAccent: 1) {
+.color-mixin(@colorName, @withAccent: true) {
   ._md-color-degree(@colorName, 50);
   ._md-color-degree(@colorName, 100);
   ._md-color-degree(@colorName, 200);
@@ -21,11 +21,11 @@
   ._md-color-degree(@colorName, 700);
   ._md-color-degree(@colorName, 800);
   ._md-color-degree(@colorName, 900);
-  & when (@withAccent = 1) {
-    ._md-color-degree(@colorName, ~"a100");
-    ._md-color-degree(@colorName, ~"a200");
-    ._md-color-degree(@colorName, ~"a400");
-    ._md-color-degree(@colorName, ~"a700");
+  & when (@withAccent = true) {
+    ._md-color-degree(@colorName, a100);
+    ._md-color-degree(@colorName, a200);
+    ._md-color-degree(@colorName, a400);
+    ._md-color-degree(@colorName, a700);
   }
 
   //============= md-color-primary

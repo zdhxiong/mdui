@@ -1,6 +1,8 @@
-// https://github.com/nolimits4web/Framework7/blob/master/src/js/proto-device.js
-// MIT LICENSE
-
+/**
+ * 设备类型检测
+ * https://github.com/nolimits4web/Framework7/blob/master/src/js/proto-device.js
+ * MIT LICENSE
+ */
 (function(){
   var device = {};
   var ua = navigator.userAgent;

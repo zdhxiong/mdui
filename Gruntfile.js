@@ -39,10 +39,16 @@ module.exports = function (grunt) {
       app: {
         src: [
           'src/js/wrap_start.js',
+
+          // GLOBAL
           'src/js/init.js',
+          'src/js/support.js',
           'src/js/device.js',
           'src/js/color.js',
           'src/js/util.js',
+          'src/js/global.js',
+
+          // PLUGINS
           'src/js/ripple.js',
           'src/js/drawer.js',
           'src/js/dialog.js',
@@ -50,6 +56,7 @@ module.exports = function (grunt) {
           'src/js/dialog/alert.js',
           'src/js/dialog/confirm.js',
           'src/js/dialog/prompt.js',
+
           'src/js/wrap_end.js'
         ],
         dest: 'dist/js/mdui.js'

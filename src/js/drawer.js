@@ -3,7 +3,7 @@
  * 在桌面设备上默认显示抽屉栏，不显示遮罩层
  * 在手机和平板设备上默认不显示抽屉栏，始终显示遮罩层，且覆盖导航栏
  */
-(function($, util){
+(function($){
 
   /**
    * 默认参数
@@ -26,7 +26,6 @@
     inst.options = $.extend({}, DEFAULT, (opts || {}));
 
     inst.$drawer = $drawer;
-    inst.$body = $('body');
     inst.masked = false;//是否显示着遮罩层
     inst.position = inst.$drawer.hasClass('md-drawer-right') ? 'right' : 'left';
 
@@ -38,7 +37,7 @@
       inst.state = 'closed';
     }else if(inst.$drawer.hasClass('md-drawer-open')){
       inst.state = 'opened';
-    }else if(util.isDesktop()){
+    }else if(mdui.isDesktop()){
       inst.state = 'opened';
     }else{
       inst.state = 'closed';
@@ -46,9 +45,9 @@
 
     $(window).resize(function(){
       //由手机平板切换到桌面时，如果显示着遮罩，则隐藏遮罩
-      if(util.isDesktop()){
+      if(mdui.isDesktop()){
         if(inst.masked && !inst.options.mask){
-          util.hideMask();
+          mdui.hideMask();
           inst.masked = false;
         }
       }
@@ -56,7 +55,7 @@
       else{
         if(!inst.masked && inst.state === 'opened'){
           if(inst.$drawer.hasClass('md-drawer-open')){
-            util.showMask(100);
+            mdui.showMask(100);
             inst.masked = true;
 
             $('.md-mask').one('click.mask.drawer.mdui', function(){
@@ -84,15 +83,15 @@
     inst.state = 'opening';
     inst.$drawer.trigger('opening.drawer.mdui', [inst]);
 
-    inst.$body.addClass('md-drawer-body-' + inst.position);
+    mdui.$body.addClass('md-drawer-body-' + inst.position);
 
-    util.transitionEnd(inst.$drawer, function(){
+    mdui.transitionEnd(inst.$drawer, function(){
       inst.state = 'opened';
       inst.$drawer.trigger('opened.drawer.mdui', [inst]);
     });
 
-    if(!util.isDesktop() || inst.options.mask){
-      util.showMask(100);
+    if(!mdui.isDesktop() || inst.options.mask){
+      mdui.showMask(100);
       inst.masked = true;
 
       $('.md-mask').one('click.mask.drawer.mdui', function(){
@@ -115,15 +114,15 @@
     inst.state = 'closing';
     inst.$drawer.trigger('closing.drawer.mdui', [inst]);
 
-    inst.$body.removeClass('md-drawer-body-' + inst.position);
+    mdui.$body.removeClass('md-drawer-body-' + inst.position);
 
-    util.transitionEnd(inst.$drawer, function(){
+    mdui.transitionEnd(inst.$drawer, function(){
       inst.state = 'closed';
       inst.$drawer.trigger('closed.drawer.mdui', [inst]);
     });
 
     if(inst.masked){
-      util.hideMask();
+      mdui.hideMask();
       inst.masked = false;
     }
   };
@@ -161,7 +160,7 @@
       if(!inst){
         var options = $.extend(
           {},
-          util.parseOptions($this.data('md-drawer')),
+          parseOptions($this.data('md-drawer')),
           typeof option === 'object' && option
         );
 
@@ -191,7 +190,7 @@
     // ========
     $(document).on('click.drawer.data-api.mdui', '[data-md-drawer]', function(e){
       var $this = $(this);
-      var options = util.parseOptions($this.data('md-drawer'));
+      var options = parseOptions($this.data('md-drawer'));
       var $target = $(options.target || '.md-drawer');
 
       if($this.is('a')){
@@ -203,8 +202,8 @@
   });
 
   // 不支持 touch 的设备默认隐藏滚动条，鼠标移入时显示滚动条；支持 touch 的设备会自动隐藏滚动条
-  if(!util.supportTouch()){
+  if(!mdui.support.touch){
     $('.md-drawer').css('overflow-y', 'hidden');
   }
 
-})($, util);
+})($);

@@ -4,7 +4,7 @@
  * Inspired by https://github.com/nolimits4web/Framework7/blob/master/src/js/fast-clicks.js
  * https://github.com/nolimits4web/Framework7/blob/master/LICENSE
  */
-(function ($, util) {
+(function ($) {
 
   var touchStartX, touchStartY;
   var $rippleWave, $rippleTarget, rippleTransform, rippleTimeout;
@@ -37,7 +37,7 @@
    * 获取 body 中的 md-theme-[color] 的颜色值
    */
   function getThemeColorName() {
-    var bodyClassStr = $('body').attr('class');
+    var bodyClassStr = mdui.$body.attr('class');
     var themeColorReg = /md-theme-(\w+)/g;
     var themeColorClassArray = bodyClassStr.match(themeColorReg);
     if (!themeColorClassArray) {
@@ -73,26 +73,26 @@
         // md-color-red  md-color-primary
         if (colorClassTempArray.length === 1) {
           if (colorClassTempArray[0] === 'primary') {
-            colorIsDark = util.isColorDark[getThemeColorName()][500];
+            colorIsDark = mdui.isColorDark[getThemeColorName()][500];
           } else {
-            colorIsDark = util.isColorDark[colorClassTempArray[0]][500];
+            colorIsDark = mdui.isColorDark[colorClassTempArray[0]][500];
           }
         } else if (colorClassTempArray.length === 2) {
           // md-color-red-200  md-color-primary-200
           if (["50", "100", "200", "300", "400", "500", "600", "700", "800", "900", "a100", "a200", "a400", "a700"].indexOf(colorClassTempArray[1]) > -1) {
             if (colorClassTempArray[0] === 'primary') {
-              colorIsDark = util.isColorDark[getThemeColorName()][colorClassTempArray[1]];
+              colorIsDark = mdui.isColorDark[getThemeColorName()][colorClassTempArray[1]];
             } else {
-              colorIsDark = util.isColorDark[colorClassTempArray[0]][colorClassTempArray[1]];
+              colorIsDark = mdui.isColorDark[colorClassTempArray[0]][colorClassTempArray[1]];
             }
           }
           // md-color-light-blue
           else {
-            colorIsDark = util.isColorDark[colorClassTempArray[0] + '-' + colorClassTempArray[1]][500];
+            colorIsDark = mdui.isColorDark[colorClassTempArray[0] + '-' + colorClassTempArray[1]][500];
           }
         } else if (colorClassTempArray.length === 3) {
           //md-color-light-blue-200
-          colorIsDark = util.isColorDark[colorClassTempArray[0] + '-' + colorClassTempArray[1]][colorClassTempArray[2]];
+          colorIsDark = mdui.isColorDark[colorClassTempArray[0] + '-' + colorClassTempArray[1]][colorClassTempArray[2]];
         }
 
         if (typeof colorIsDark !== 'undefined') {
@@ -136,7 +136,7 @@
     $el.prepend($rippleWave);
     var _temp = window.getComputedStyle($rippleWave[0]).opacity;
     rippleTransform = 'translate3d(' + (-center.x + width / 2) + 'px, ' + (-center.y + height / 2) + 'px, 0) scale(1)';
-    util.transform($rippleWave, rippleTransform);
+    mdui.transform($rippleWave, rippleTransform);
   }
 
   /**
@@ -153,19 +153,19 @@
     }, 400);
 
     $rippleWave.addClass('md-ripple-wave-fill');
-    util.transform($rippleWave, rippleTransform.replace('scale(1)', 'scale(1.01)'));
-    util.transitionEnd($rippleWave, function () {
+    mdui.transform($rippleWave, rippleTransform.replace('scale(1)', 'scale(1.01)'));
+    mdui.transitionEnd($rippleWave, function () {
       clearTimeout(removeTimeout);
 
       var rippleWave = $(this).addClass('md-ripple-wave-out');
-      util.transform(rippleWave, rippleTransform.replace('scale(1)', 'scale(1.01)'));
+      mdui.transform(rippleWave, rippleTransform.replace('scale(1)', 'scale(1.01)'));
 
       removeTimeout = setTimeout(function () {
         rippleWave.remove();
       }, 700);
 
       setTimeout(function () {
-        util.transitionEnd(rippleWave, function () {
+        mdui.transitionEnd(rippleWave, function () {
           clearTimeout(removeTimeout);
           $(this).remove();
         });
@@ -195,25 +195,17 @@
 
   // 事件监听
   // ======
-  var $document = $(document);
-  var isSupportTouch = util.supportTouch();
-  var eventName = {
-    touchstart: isSupportTouch ? 'touchstart.ripple.mdui' : 'mousedown.ripple.mdui',
-    touchmove: isSupportTouch ? 'touchmove.ripple.mdui' : 'mousemove.ripple.mdui',
-    touchend: isSupportTouch ? 'touchend.ripple.mdui' : 'mouseup.ripple.mdui'
-  };
-
-  $document.on(eventName.touchstart, '.md-ripple', function(e){
-    touchStartX = isSupportTouch ? e.originalEvent.targetTouches[0].pageX : e.pageX;
-    touchStartY = isSupportTouch ? e.originalEvent.targetTouches[0].pageY : e.pageY;
+  mdui.$document.on(mdui.touchEvents.start + '.ripple.mdui', '.md-ripple', function(e){
+    touchStartX = mdui.support.touch ? e.originalEvent.targetTouches[0].pageX : e.pageX;
+    touchStartY = mdui.support.touch ? e.originalEvent.targetTouches[0].pageY : e.pageY;
     rippleTouchStart(e.target);
   });
 
-  $document.on(eventName.touchmove, '.md-ripple', function () {
+  mdui.$document.on(mdui.touchEvents.move + '.ripple.mdui', '.md-ripple', function () {
     rippleTouchMove();
   });
 
-  $document.on(eventName.touchend, '.md-ripple', function () {
+  mdui.$document.on(mdui.touchEvents.end + '.ripple.mdui', '.md-ripple', function () {
     rippleTouchEnd();
   });
-})($, util);
+})($);

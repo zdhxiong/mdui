@@ -2,7 +2,7 @@
  * 对话框
  */
 
-var Dialog = (function($, util){
+var Dialog = (function($){
 
   /**
    * 默认参数
@@ -87,7 +87,7 @@ var Dialog = (function($, util){
 
     // 如果当前有正在打开或已经打开的对话框，则先加入队列，等旧对话框开始关闭时再打开
     if(current && (current.state === 'opening' || current.state === 'opened') && current !== inst){
-      util.queue(queueName, function(){
+      mdui.queue(queueName, function(){
         inst.open();
       });
       return;
@@ -98,18 +98,18 @@ var Dialog = (function($, util){
     inst.$wrapper.addClass('md-dialog-in');
     var _temp = window.getComputedStyle(inst.$dialog[0]).opacity; //使动态添加的元素的 transition 动画能生效
     inst.$dialog.removeClass('md-dialog-out').addClass('md-dialog-in');
-    util.lockScreen();
+    mdui.lockScreen();
 
     inst.state = 'opening';
     inst.$wrapper.trigger('opening.dialog.mdui', [inst]);
 
-    util.transitionEnd(inst.$dialog, function(){
+    mdui.transitionEnd(inst.$dialog, function(){
       inst.state = 'opened';
       inst.$wrapper.trigger('opened.dialog.mdui', [inst]);
     });
 
     if(inst.options.mask){
-      util.showMask(300);
+      mdui.showMask(300);
     }
 
     if(inst.options.hashTracking){
@@ -143,13 +143,13 @@ var Dialog = (function($, util){
     inst.state = 'closing';
     inst.$wrapper.trigger('closing.dialog.mdui', [inst]);
 
-    util.transitionEnd(inst.$dialog, function(){
+    mdui.transitionEnd(inst.$dialog, function(){
       inst.$wrapper.removeClass('md-dialog-in');
       inst.state = 'closed';
       inst.$wrapper.trigger('closed.dialog.mdui', [inst]);
 
-      if(util.queue(queueName).length === 0 && current.state === 'closed'){
-        util.unlockScreen();
+      if(mdui.queue(queueName).length === 0 && current.state === 'closed'){
+        mdui.unlockScreen();
       }
 
       if(inst.options.destroyAfterClose){
@@ -157,11 +157,11 @@ var Dialog = (function($, util){
       }
     });
 
-    if(inst.options.mask && util.queue(queueName).length === 0){
-      util.hideMask();
+    if(inst.options.mask && mdui.queue(queueName).length === 0){
+      mdui.hideMask();
     }
 
-    if(inst.options.hashTracking && util.queue(queueName).length === 0){
+    if(inst.options.hashTracking && mdui.queue(queueName).length === 0){
       // 是否需要后退历史纪录，默认为 false。
       // 为 false 时是通过 js 关闭，需要后退一个历史记录
       // 为 true 时是通过后退按钮关闭，不需要后退历史记录
@@ -174,7 +174,7 @@ var Dialog = (function($, util){
     // 关闭旧对话框，打开新对话框。
     // 加一点延迟，仅仅为了视觉效果更好。不加延时也不影响功能
     setTimeout(function(){
-      util.dequeue(queueName);
+      mdui.dequeue(queueName);
     }, 100);
 
   };
@@ -210,8 +210,8 @@ var Dialog = (function($, util){
     inst.$wrapper.remove();
 
     if(current === inst){
-      util.unlockScreen();
-      util.hideMask();
+      mdui.unlockScreen();
+      mdui.hideMask();
     }
   };
 
@@ -223,10 +223,10 @@ var Dialog = (function($, util){
   });
 
   return Dialog;
-})($, util);
+})($);
 
 
-(function($, util){
+(function($){
 
   mdui.option.mdDialog = {};
 
@@ -242,7 +242,7 @@ var Dialog = (function($, util){
         var options = $.extend(
           {},
           mdui.option.mdDialog,
-          util.parseOptions($this.data('md-dialog')),
+          parseOptions($this.data('md-dialog')),
           typeof option === 'object' && option
         );
 
@@ -272,7 +272,7 @@ var Dialog = (function($, util){
     // ========
     $(document).on('click.dialog.data-api.mdui', '[data-md-dialog]', function(e){
       var $this = $(this);
-      var options = util.parseOptions($this.data('md-dialog'));
+      var options = parseOptions($this.data('md-dialog'));
       var $target = $(options.target);
 
       if($this.is('a')){
@@ -283,4 +283,4 @@ var Dialog = (function($, util){
     });
   });
 
-})($, util);
+})($);

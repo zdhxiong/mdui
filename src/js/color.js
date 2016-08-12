@@ -2,7 +2,7 @@
  * 颜色表
  */
 (function () {
-  util.isColorDark = {
+  mdui.isColorDark = {
     red: {
       50: 0,
       100: 0,
@@ -303,5 +303,5 @@
     }
   };
 
-  util.isColorDark.primary = util.isColorDark.indigo;
+  mdui.isColorDark.primary = mdui.isColorDark.indigo;
 })();

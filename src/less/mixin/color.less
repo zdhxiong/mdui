@@ -19,11 +19,11 @@
   @color-is-dark: 'color-@{colorName}-500-is-dark';
   & when (@@color-is-dark = true) {
     @color: 'color-@{colorName}-400';
-    background-color: @@color !important;
+    background-color: @@color;
   }
   & when (@@color-is-dark = false) {
     @color: 'color-@{colorName}-600';
-    background-color: @@color !important;
+    background-color: @@color;
   }
 }
 
@@ -32,11 +32,11 @@
   @color-is-dark: 'color-@{colorName}-500-is-dark';
   & when (@@color-is-dark = true) {
     @color: 'color-@{colorName}-300';
-    background-color: @@color !important;
+    background-color: @@color;
   }
   & when (@@color-is-dark = false) {
     @color: 'color-@{colorName}-700';
-    background-color: @@color !important;
+    background-color: @@color;
   }
 }
 

@@ -67,11 +67,11 @@
   ._md-color-hover-active() {
     // 按钮 hover/active 状态颜色
     &.md-btn {
-      &:not(.md-ripple):hover {
-        ._md-background-color-hover(@colorName);
+      &:not(.md-ripple):not([disabled]):not(.md-disabled):hover {
+        ._md-background-color-hover(@colorName) !important;
       }
-      &:not(.md-ripple):active {
-        ._md-background-color-active(@colorName);
+      &:not(.md-ripple):not([disabled]):not(.md-disabled):active {
+        ._md-background-color-active(@colorName) !important;
       }
     }
   }

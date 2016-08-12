@@ -40,11 +40,11 @@
     border: 0;
   }
 
-  &:not(.md-ripple):hover {
+  &:not(.md-ripple):not([disabled]):not(.md-disabled):hover {
     background-color: @button-hover-color;
   }
 
-  &:not(.md-ripple):active {
+  &:not(.md-ripple):not([disabled]):not(.md-disabled):active {
     background-color: @button-active-color;
   }
 

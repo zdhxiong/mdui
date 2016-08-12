@@ -13,8 +13,8 @@
   overflow: hidden;
   will-change: box-shadow;
   transition: box-shadow @button-transition-duration @animation-curve-fast-out-linear-in,
-  background-color @button-transition-duration @animation-curve-default,
-  color @button-transition-duration @animation-curve-default;
+    background-color @button-transition-duration @animation-curve-default,
+    color @button-transition-duration @animation-curve-default;
   outline: none;
   cursor: pointer;
   text-decoration: none;
@@ -40,15 +40,12 @@
     border: 0;
   }
 
-  &:hover {
+  &:not(.md-ripple):hover {
     background-color: @button-hover-color;
   }
 
-  &:active {
+  &:not(.md-ripple):active {
     background-color: @button-active-color;
-  }
-  &.md-ripple:active {
-    background-color: @button-hover-color;
   }
 
   // 按钮内的图标

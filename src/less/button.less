@@ -108,55 +108,6 @@ input.md-btn[type="submit"] {
   }
 }
 
-// FABs 浮动操作按钮
-.md-btn-fab,
-.md-btn-fab-mini {
-  border-radius: 50%;
-  font-size: @button-fab-font-size;
-  margin: auto;
-  padding: 0 !important;
-  overflow: hidden;
-  line-height: normal !important;
-  .md-shadow(6);
-
-  &:hover{
-    .md-shadow(8);
-  }
-
-  &:active {
-    .md-shadow(12);
-  }
-}
-
-.md-btn-fab {
-  height: @button-fab-size;
-  width: @button-fab-size;
-  min-width: @button-fab-size;
-}
-
-.md-btn-fab-mini {
-  height: @button-fab-size-mini;
-  width: @button-fab-size-mini;
-  min-width: @button-fab-size-mini;
-}
-
-// 固定到右下角的 FAB 按钮
-.md-btn-fab-fixed {
-  position: fixed !important;
-  right: @button-fab-fixed-right-sm;
-  bottom: @button-fab-fixed-bottom-sm;
-
-  @media (min-width: @screen-md-min) {
-    right: @button-fab-fixed-right-md;
-    bottom: @button-fab-fixed-bottom-md;
-  }
-
-  @media (min-width: @screen-lg-min) {
-    right: @button-fab-fixed-right-lg;
-    bottom: @button-fab-fixed-bottom-lg;
-  }
-}
-
 //图标按钮
 .md-btn-icon,
 .md-btn-icon-mini {

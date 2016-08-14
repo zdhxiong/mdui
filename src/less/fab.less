@@ -30,8 +30,21 @@
   min-width: @button-fab-size-mini;
 }
 
+.md-btn-fab,
+.md-btn-fab-mini {
+  .md-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-12px, -12px);
+    line-height: 24px;
+    width: 24px;
+  }
+}
+
 // 固定到右下角的 FAB 按钮
-.md-btn-fab-fixed {
+.md-btn-fab-fixed,
+.md-btn-fab-wrapper {
   position: fixed !important;
   right: @button-fab-fixed-right-sm;
   bottom: @button-fab-fixed-bottom-sm;
@@ -48,3 +61,33 @@
 }
 
 // 含表盘的浮动操作按钮
+.md-btn-fab-wrapper {
+  position: relative;
+  width: @button-fab-size;
+  height: @button-fab-size;
+  padding-top: 8px;
+
+  .md-btn-fab-dial {
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: @button-fab-size + 10px;
+    text-align: center;
+
+    .md-btn {
+      margin: 8px 0;
+      transform: scale(0);
+      opacity: 0;
+      transition: transform 150ms @animation-curve-default, opacity 150ms @animation-curve-default;
+    }
+
+    &.md-btn-fab-dial-show {
+      visibility: visible;
+      .md-btn {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  }
+}

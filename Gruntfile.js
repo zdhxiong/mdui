@@ -50,6 +50,7 @@ module.exports = function (grunt) {
 
           // PLUGINS
           'src/js/ripple.js',
+          'src/js/fab.js',
           'src/js/drawer.js',
           'src/js/dialog.js',
           'src/js/dialog/dialog.js',

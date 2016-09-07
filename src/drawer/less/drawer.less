@@ -1,0 +1,192 @@
+/**
+ * 抽屉栏导航
+ * 桌面设备默认显示，手机平板默认隐藏
+ */
+
+// 抽屉栏外层，默认出现在左侧且隐藏
+.md-drawer {
+  width: @drawer-width;
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  z-index: @z-index-drawer;
+  will-change: transform;
+  transition: all @drawer-transition-duration @animation-curve-linear-out-slow-in;
+  //padding: 12px 0 52px 0;
+  margin: 0;
+  white-space: nowrap;
+  overflow-x: hidden;
+  overflow-y: auto;
+  &:hover {
+    overflow-y: auto!important;
+  }
+  @media (min-width: @screen-lg-min) {
+    .md-scrollbar-beautify();
+  }
+
+  // 桌面设备默认不覆盖导航栏
+  @media (min-width: @screen-lg-min) {
+    top: @navbar-height-lg;
+  }
+
+  // 桌面设备默认显示
+  transform: translateX(0);
+
+  @media (max-width: @screen-md-max) {
+    // 手机和平板默认隐藏
+    transform: translateX(-@drawer-width - 10);
+
+    // 手机平板始终有背景和阴影
+    background: #fff;
+    .md-shadow(16);
+  }
+}
+
+// 出现在右侧的抽屉栏
+.md-drawer-right {
+  left: auto;
+  right: 0;
+
+  // 桌面设备默认显示
+  transform: translateX(0);
+  // 手机平板默认隐藏
+  @media (max-width: @screen-md-max) {
+    transform: translateX(@drawer-width + 10);
+  }
+}
+
+// 强制隐藏抽屉栏
+.md-drawer-close {
+  transform: translateX(-@drawer-width - 10);
+  &.md-drawer-right {
+    transform: translateX(@drawer-width + 10);
+  }
+}
+
+// 手机上抽屉栏宽度为 100% - 56px
+@media (max-width: @screen-sm-max) {
+  .md-drawer,
+  .md-drawer.md-drawer-close {
+    width: calc(~"100% - 56px");
+    transform: translateX(calc(~"-1 * 100% - 10px"));
+  }
+  .md-drawer-right,
+  .md-drawer-right.md-drawer-close {
+    transform: translateX(calc(~"100% + 10px"));
+  }
+}
+
+// 强制显示抽屉栏
+.md-drawer-open {
+  transform: translateX(0);
+}
+
+// 添加在 body 上的类
+@media (min-width: @screen-lg-min) {
+  // 使 body 获得 padding-left 或 padding-right
+  body.md-drawer-body-left {
+    padding-left: @drawer-width;
+  }
+  body.md-drawer-body-right {
+    padding-right: @drawer-width;
+  }
+}
+
+//抽屉栏不是透明时添加阴影
+.md-drawer[class*="md-color-"]:not(.md-color-transparent) {
+  .md-shadow(16);
+}
+
+//抽屉栏 100% 高度，覆盖在导航栏上面
+.md-drawer-full-height {
+  top: 0;
+}
+
+
+// 抽屉栏中的菜单
+ul.md-drawer-items,
+.md-drawer-items ul {
+  padding: 0;
+  margin: 0;
+}
+.md-drawer-items {
+  li{
+    list-style: none;
+    position: relative;
+    &:hover {
+      .md-drawer-item-after {
+        display: block;
+      }
+    }
+  }
+}
+
+// 抽屉栏的菜单项
+.md-drawer-item {
+  display: flex;
+  align-items: center;
+  padding: 0 12px 0 16px;
+  @media (min-width: @screen-lg-min) {
+    padding-left: 24px;
+  }
+  height: @drawer-item-height;
+  border-radius: 2px;
+  &:hover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.03));
+  }
+  &:active {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
+  }
+}
+
+// 子菜单
+.md-drawer-subitems {
+  .md-drawer-item {
+    padding-left: 40px;
+  }
+}
+
+// 菜单项最左侧图标
+.md-drawer-item-icon {
+  padding-right: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+// 菜单项标题
+.md-drawer-item-title {
+  padding-right: 12px;
+  .md-text-overflow();
+}
+
+// 导航项右侧设置按钮
+.md-drawer-item-after {
+  position: absolute;
+  right: 4px;
+  top: (@drawer-item-height - 24) / 2;
+  display: none;
+  .md-icon {
+    font-size: 18px;
+    opacity: .8;
+    &:hover,
+    &:focus,
+    &:active {
+      opacity: 1;
+    }
+  }
+}
+
+//激活状态
+.md-drawer-item-active {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
+  font-weight: bold;
+}
+
+//分割线
+.md-drawer-divider {
+  height: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 8px 0 16px 0;
+}

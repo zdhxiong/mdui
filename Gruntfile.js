@@ -6,7 +6,7 @@ module.exports = function (grunt) {
     less: {
       development: {
         files: {
-          "dist/css/mdui.css": "src/less/mdui.less"
+          "dist/css/mdui.css": "src/mdui.less"
         }
       }
     },
@@ -36,38 +36,58 @@ module.exports = function (grunt) {
 
     //js 文件合并
     concat: {
-      app: {
+      mdui: {
         src: [
-          'src/js/wrap_start.js',
+          'src/global/js/wrap_start.js',
+
+          // DOM
+          'src/global/js/dom.js',
 
           // GLOBAL
-          'src/js/init.js',
-          'src/js/support.js',
-          'src/js/device.js',
-          'src/js/color.js',
-          'src/js/util.js',
-          'src/js/global.js',
+          'src/global/js/support.js',
+          'src/color/js/color.js',
+          'src/global/js/global.js',
 
           // PLUGINS
-          'src/js/ripple.js',
-          'src/js/fab.js',
-          'src/js/drawer.js',
-          'src/js/dialog.js',
-          'src/js/dialog/dialog.js',
-          'src/js/dialog/alert.js',
-          'src/js/dialog/confirm.js',
-          'src/js/dialog/prompt.js',
+          'src/ripple/js/ripple.js',
 
-          'src/js/wrap_end.js'
+          'src/fab/js/fab.js',
+          'src/fab/js/fab.data.js',
+
+          'src/drawer/js/drawer.js',
+          'src/drawer/js/drawer.data.js',
+
+          'src/dialog/js/dialog.js',
+          //'src/js/dialog/dialog.js',
+          //'src/js/dialog/alert.js',
+          //'src/js/dialog/confirm.js',
+          //'src/js/dialog/prompt.js',
+
+          'src/global/js/wrap_end.js'
         ],
         dest: 'dist/js/mdui.js'
+      },
+      mdui_jquery: {
+        src: [
+          'dist/js/mdui.js',
+
+          'src/fab/js/fab.jquery.js',
+          'src/drawer/js/drawer.jquery.js'
+        ],
+        dest: 'dist/js/mdui.jquery.js'
       }
     },
 
     //美化 js
     jsbeautifier: {
+      options: {
+        js: {
+          indentSize: 2
+        }
+      },
       files: [
-        'dist/js/mdui.js'
+        'dist/js/mdui.js',
+        'dist/js/mdui.jquery.js'
       ]
     },
 
@@ -75,6 +95,7 @@ module.exports = function (grunt) {
     uglify: {
       app: {
         files: {
+          'dist/js/mdui.jquery.mini.js': ['dist/js/mdui.jquery.js'],
           'dist/js/mdui.min.js': ['dist/js/mdui.js']
         }
       }
@@ -101,13 +122,13 @@ module.exports = function (grunt) {
     watch: {
       css: {
         files: [
-          'src/less/**/*.less'
+          'src/**/*.less'
         ],
         tasks: ['less', 'autoprefixer']
       },
       scripts: {
         files: [
-          'src/js/**/*.js'
+          'src/**/*.js'
         ],
         tasks: ['jshint', 'concat', 'jsbeautifier']
       }

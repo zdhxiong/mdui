@@ -1,7 +1,24 @@
 {
   "name": "mdui",
   "version": "0.0.1",
+  "description": "a CSS Framework based on material design",
+  "main": "dist/js/mdui.min.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zdhxiong/mdui.git"
+  },
+  "keywords": [
+    "material design"
+  ],
   "author": "zdhxiong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zdhxiong/mdui/issues"
+  },
+  "homepage": "https://github.com/zdhxiong/mdui#readme",
   "devDependencies": {
     "grunt": "~1.0.0",
     "grunt-autoprefixer": "^3.0.4",

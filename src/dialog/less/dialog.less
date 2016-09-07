@@ -1,0 +1,123 @@
+// 提示框外层，使提示框居中、保持边距
+.md-dialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 8px;
+  display: none;
+  overflow: hidden;
+  z-index: @z-index-dialog;
+  align-items: center;
+  justify-content: center;
+
+  &.md-dialog-open {
+    display: flex!important;
+  }
+}
+
+// 提示框
+.md-dialog-content {
+  display: flex;
+  flex-direction: column;
+  max-width: 728px;
+  min-width: 280px;
+  max-height: 100%;
+  background: #fff;
+  border-radius: 2px;
+  opacity: 0;
+  transform: translate3d(0, 0, 0) scale(0.95);
+  will-change: transform, opacity, visibility;
+  transition-property: transform, opacity, visibility;
+  transition-duration: .3s;
+  visibility: hidden;
+  .md-shadow(24);
+
+  &.md-dialog-open {
+    visibility: visible;
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.md-dialog-inner {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 24px 24px 4px 24px;
+
+  .md-scrollbar-beautify();
+}
+
+// 提示框标题
+.md-dialog-title {
+  font-size: 20px;
+  line-height: 20px;
+  height: 20px;
+  font-weight: 500;
+  padding-bottom: 20px;
+  text-align: left;
+  background: #fff;
+}
+
+// 提示框文本
+.md-dialog-text {
+  font-size: 15px;
+  color: #707070;
+  word-break: break-all;
+  padding-bottom: 20px;
+  text-align: left;
+  line-height: 1.5;
+}
+
+// 提示框自定义内容
+.md-dialog-body {
+  padding-bottom: 20px;
+}
+
+// 提示框按钮
+.md-dialog-buttons {
+  height: 36px;
+  padding: 8px;
+  text-align: right;
+  .md-btn {
+    min-width: 64px;
+    margin-left: 8px;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+// 垂直叠放的提示框按钮
+.md-dialog-buttons-stacked {
+  height: auto;
+  padding: 8px 0 8px 0;
+  .md-btn {
+    height: 48px;
+    margin: 0;
+    width: 100%;
+    text-align: right;
+    border-radius: 0;
+  }
+}
+
+.md-dialog-inner + .md-dialog-buttons {
+  border-top: 1px solid @color-black-divider;
+}
+.md-dialog-title + .md-dialog-inner {
+  padding-top: 0;
+}
+.md-dialog-text + .md-dialog-inner {
+  padding-top: 0;
+}
+.md-dialog-content {
+  &>.md-dialog-title {
+    padding: 24px 24px 20px 24px;
+  }
+  &>.md-dialog-text {
+    padding: 20px 24px 20px 24px;
+  }
+}

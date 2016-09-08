@@ -32,6 +32,12 @@ mdui.Drawer = (function () {
     var inst = this;
 
     inst.target = $.dom(selector)[0];
+
+    var oldInst = $.getData(inst.target, 'drawer.mdui');
+    if(oldInst){
+      return oldInst;
+    }
+
     inst.options = $.extend(DEFAULT, (opts || {}));
 
     inst.masked = false; // 是否显示着遮罩层

@@ -59,6 +59,12 @@ mdui.Dialog = (function () {
 
     inst.target = $.dom(selector)[0];
 
+    // 已通过 data 属性实例化过，不再重复实例化
+    var oldInst = $.getData(inst.target, 'dialog.mdui');
+    if(oldInst){
+      return oldInst;
+    }
+
     inst.options = $.extend(DEFAULT, (opts || {}));
     inst.state = 'closed';
     inst.content = inst.target.querySelector('.md-dialog-content');

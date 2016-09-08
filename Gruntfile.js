@@ -58,6 +58,7 @@ module.exports = function (grunt) {
           'src/drawer/js/drawer.data.js',
 
           'src/dialog/js/dialog.js',
+          'src/dialog/js/dialog.data.js',
           //'src/js/dialog/dialog.js',
           //'src/js/dialog/alert.js',
           //'src/js/dialog/confirm.js',

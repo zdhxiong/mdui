@@ -75,7 +75,7 @@ mdui.Drawer = (function () {
             mdui.showMask(100);
             inst.masked = true;
 
-            $.one(document.querySelector('.md-mask'), 'click', function () {
+            $.one( $.query('.md-mask'), 'click', function () {
               inst.close();
             });
           }
@@ -117,7 +117,7 @@ mdui.Drawer = (function () {
       mdui.showMask(100);
       inst.masked = true;
 
-      $.one(document.querySelector('.md-mask'), 'click', function () {
+      $.one( $.query('.md-mask'), 'click', function () {
         inst.close();
       });
     }

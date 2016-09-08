@@ -1,13 +1,13 @@
 $.ready(function () {
   // 实例化
-  $.each(document.querySelectorAll('[data-md-drawer]'), function (index, target) {
+  $.each( $.queryAll('[data-md-drawer]'), function (index, target) {
     var options = $.parseOptions(target.getAttribute('data-md-drawer'));
     var inst = new mdui.Drawer(target, options);
     $.setData(target, 'drawer.mdui', inst);
   });
 
   // 操作按钮
-  $.each(document.querySelectorAll('[data-md-drawer-action]'), function (index, btn) {
+  $.each( $.queryAll('[data-md-drawer-action]'), function (index, btn) {
     var target, inst;
 
     var action = btn.getAttribute('data-md-drawer-action');
@@ -17,9 +17,9 @@ $.ready(function () {
 
     var targetId = btn.getAttribute('data-md-drawer-id');
     if (!targetId) {
-      target = document.querySelector('.md-drawer');
+      target = $.query('.md-drawer');
     } else {
-      target = document.getElementById(targetId);
+      target = $.queryId(targetId);
     }
     if (!target) {
       return;

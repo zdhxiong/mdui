@@ -34,7 +34,7 @@ mdui.Fab = (function () {
 
     inst.btn = $.children(inst.target, '.md-btn', true);
     inst.dial = $.children(inst.target, '.md-btn-fab-dial', true);
-    inst.dialBtns = $.toArray(inst.dial.querySelectorAll('.md-btn'));
+    inst.dialBtns = $.queryAll('.md-btn', inst.dial);
 
     inst.state = 'closed';
 

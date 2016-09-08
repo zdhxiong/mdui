@@ -38,7 +38,7 @@ mdui.isDesktop = function () {
  * @param z_index 遮罩层的 z_index
  */
 mdui.showMask = function (z_index) {
-  var mask = document.querySelector('.md-mask');
+  var mask = $.query('.md-mask');
   if(!mask){
     mask = $.dom('<div class="md-mask">')[0];
     document.body.appendChild(mask);
@@ -57,7 +57,7 @@ mdui.showMask = function (z_index) {
  * 隐藏遮罩层
  */
 mdui.hideMask = function () {
-  var mask = document.querySelector('.md-mask');
+  var mask = $.query('.md-mask');
   if(mask){
     mask.classList.remove('md-mask-show');
   }

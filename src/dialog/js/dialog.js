@@ -67,9 +67,9 @@ mdui.Dialog = (function () {
 
     inst.options = $.extend(DEFAULT, (opts || {}));
     inst.state = 'closed';
-    inst.content = inst.target.querySelector('.md-dialog-content');
+    inst.content = $.query('.md-dialog-content');
 
-    inst.buttons = inst.target.querySelectorAll('.md-dialog-buttons .md-btn');
+    inst.buttons = $.queryAll('.md-dialog-buttons .md-btn', inst.target);
 
     // 绑定按钮点击事件
     $.each(inst.buttons, function (i, button) {

@@ -182,6 +182,45 @@
   };
 
   /**
+   * 执行 document.querySelectorAll，并把结果转换为数组
+   * @param selector
+   * @param parent
+   * @returns {Array}
+   */
+  $.queryAll = function(selector, parent){
+    if(arguments.length === 1){
+      parent = document;
+    }
+    return $.toArray(parent.querySelectorAll(selector));
+  };
+
+  /**
+   * 执行 document.querySelector
+   * @param selector
+   * @param parent
+   * @returns {Element}
+   */
+  $.query = function(selector, parent){
+    if(arguments.length === 1){
+      parent = document;
+    }
+    return parent.querySelector(selector);
+  };
+
+  /**
+   * 执行 document.getElementById
+   * @param id
+   * @param parent
+   * @returns {Element}
+   */
+  $.queryId = function(id, parent){
+    if(arguments.length === 1){
+      parent = document;
+    }
+    return parent.getElementById(id);
+  };
+
+  /**
    * @param dom
    * @param selector
    * @returns {*}
@@ -205,7 +244,7 @@
       } else if (dom.msMatchesSelector) {
         return dom.msMatchesSelector(selector);
       } else {
-        compareWith = $.toArray(dom.querySelectorAll(selector));
+        compareWith = $.queryAll(selector);
         return (compareWith.indexOf(dom) !== -1);
       }
     } else if (selector === document) {
@@ -461,10 +500,10 @@
       }else{
         if(selector[0] === '#' &&  !selector.match(/[ .<>:~]/)){
           // ID 选择器
-          return [document.getElementById(selector.split('#')[1])];
+          return [$.queryId(selector.split('#')[1])];
         }else{
           // 其他选择器
-          return $.toArray(document.querySelectorAll(selector));
+          return $.queryAll(selector);
         }
       }
     }

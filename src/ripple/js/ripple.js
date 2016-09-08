@@ -197,8 +197,8 @@
   // 事件监听
   // ======
   $.on(document, mdui.touchEvents.start, '.md-ripple', function(e){
-    touchStartX = mdui.support.touch ? e.originalEvent.targetTouches[0].pageX : e.pageX;
-    touchStartY = mdui.support.touch ? e.originalEvent.targetTouches[0].pageY : e.pageY;
+    touchStartX = mdui.support.touch ? e.targetTouches[0].pageX : e.pageX;
+    touchStartY = mdui.support.touch ? e.targetTouches[0].pageY : e.pageY;
     rippleTouchStart(e.target);
   });
 

@@ -5,7 +5,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  padding: 8px;
+  padding: 16px;
   display: none;
   overflow: hidden;
   z-index: @z-index-dialog;
@@ -50,11 +50,14 @@
   box-sizing: border-box;
   padding: 24px 24px 4px 24px;
 
-  .md-scrollbar-beautify();
-
   .md-dialog-buttons {
     margin: 0 -24px -4px -24px;
   }
+}
+
+// 美化滚动条
+.md-dialog-inner-scrollbar {
+  .md-scrollbar-beautify();
 }
 
 // 提示框标题

@@ -86,6 +86,7 @@ mdui.Drawer = (function () {
     // 不支持 touch 的设备默认隐藏滚动条，鼠标移入时显示滚动条；支持 touch 的设备会自动隐藏滚动条
     if (!mdui.support.touch) {
       inst.target.style['overflow-y'] = 'hidden';
+      inst.target.classList.add('md-drawer-scrollbar');
     }
   }
 

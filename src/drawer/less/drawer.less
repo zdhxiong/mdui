@@ -22,9 +22,6 @@
   &:hover {
     overflow-y: auto!important;
   }
-  @media (min-width: @screen-lg-min) {
-    .md-scrollbar-beautify();
-  }
 
   // 桌面设备默认不覆盖导航栏
   @media (min-width: @screen-lg-min) {
@@ -42,6 +39,11 @@
     background: #fff;
     .md-shadow(16);
   }
+}
+
+// 美化滚动条
+.md-drawer-scrollbar {
+  .md-scrollbar-beautify();
 }
 
 // 出现在右侧的抽屉栏
@@ -66,6 +68,7 @@
 }
 
 // 手机上抽屉栏宽度为 100% - 56px
+// uc浏览器不支持 calc，所以在 uc浏览器上抽屉栏始终未固定宽度
 @media (max-width: @screen-sm-max) {
   .md-drawer,
   .md-drawer.md-drawer-close {

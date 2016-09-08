@@ -67,7 +67,11 @@ mdui.Dialog = (function () {
 
     inst.options = $.extend(DEFAULT, (opts || {}));
     inst.state = 'closed';
-    inst.content = $.query('.md-dialog-content');
+    inst.content = $.query('.md-dialog-content', inst.target);
+
+    if(!mdui.support.touch){
+      $.query('.md-dialog-inner', inst.content).classList.add('md-dialog-inner-scrollbar');
+    }
 
     inst.buttons = $.queryAll('.md-dialog-buttons .md-btn', inst.target);
 

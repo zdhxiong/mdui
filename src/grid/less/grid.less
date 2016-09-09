@@ -32,8 +32,8 @@
 .md-container-fluid {
   margin-left: auto;
   margin-right: auto;
-  padding-left: @grid-gap-16;
-  padding-right: @grid-gap-16;
+  padding-left: @grid-gap-16 / 2;
+  padding-right: @grid-gap-16 / 2;
   &:after{
     content: '';
     display: table;
@@ -43,18 +43,18 @@
 
 .md-container {
   max-width: 1280px;
-  width: 90%;
-  @media (min-width: @screen-md-min) {
-    width: 85%;
+  width: 96%;
+  @media (min-width: @screen-sm-min) {
+    width: 94%;
   }
-  @media (min-width: @screen-lg-min) {
-    width: 80%;
+  @media (min-width: @screen-md-min) {
+    width: 92%;
   }
 }
 
 .md-row {
-  margin-left: -@grid-gap-16;
-  margin-right: -@grid-gap-16;
+  margin-left: -@grid-gap-16 / 2;
+  margin-right: -@grid-gap-16 / 2;
   &:after {
     content: '';
     display: table;
@@ -62,31 +62,35 @@
   }
 }
 
+[class*="md-col-xs-"],
 [class*="md-col-sm-"],
 [class*="md-col-md-"],
-[class*="md-col-lg-"] {
+[class*="md-col-lg-"],
+[class*="md-col-xl-"] {
   position: relative;
   min-height: 1px;
   padding-left: @grid-gap-16 / 2;
   padding-right: @grid-gap-16 / 2;
 }
 
-// 大屏幕设备上间距更大
-@media (min-width: @screen-lg-min) {
+// 中等屏幕及以上的设备上间距更大
+@media (min-width: @screen-md-min) {
   .md-container,
   .md-container-fluid {
-    padding-left: @grid-gap-24;
-    padding-right: @grid-gap-24;
+    padding-left: @grid-gap-24 / 2;
+    padding-right: @grid-gap-24 / 2;
   }
 
   .md-row {
-    margin-left: -@grid-gap-24;
-    margin-right: -@grid-gap-24;
+    margin-left: -@grid-gap-24 / 2;
+    margin-right: -@grid-gap-24 / 2;
   }
 
+  [class*="md-col-xs-"],
   [class*="md-col-sm-"],
   [class*="md-col-md-"],
-  [class*="md-col-lg-"] {
+  [class*="md-col-lg-"],
+  [class*="md-col-xl-"] {
     padding-left: @grid-gap-24 / 2;
     padding-right: @grid-gap-24 / 2;
   }
@@ -94,18 +98,21 @@
 
 // 取消列间距
 .md-col-gapless {
-  margin-left: 0;
-  margin-right: 0;
-
+  [class*="md-col-xs-"],
   [class*="md-col-sm-"],
   [class*="md-col-md-"],
-  [class*="md-col-lg-"] {
+  [class*="md-col-lg-"],
+  [class*="md-col-xl-"] {
     padding-left: 0;
     padding-right: 0;
   }
 }
 
-._grid_col_loop(12, ~"sm");
+._grid_col_loop(12, ~"xs");
+
+@media (min-width: @screen-sm-min) {
+  ._grid_col_loop(12, ~"sm");
+}
 
 @media (min-width: @screen-md-min) {
   ._grid_col_loop(12, ~"md");
@@ -113,4 +120,8 @@
 
 @media (min-width: @screen-lg-min) {
   ._grid_col_loop(12, ~"lg");
+}
+
+@media (min-width: @screen-xl-min) {
+  ._grid_col_loop(12, ~"xl");
 }

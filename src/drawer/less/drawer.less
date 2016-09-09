@@ -23,14 +23,14 @@
   }
 
   // 桌面设备默认不覆盖导航栏
-  @media (min-width: @screen-lg-min) {
-    top: @navbar-height-lg;
+  @media (min-width: @screen-md-min) {
+    top: @navbar-height-md;
   }
 
   // 桌面设备默认显示
   transform: translateX(0);
 
-  @media (max-width: @screen-md-max) {
+  @media (max-width: @screen-sm-max) {
     // 手机和平板默认隐藏
     transform: translateX(-@drawer-width - 10);
 
@@ -53,7 +53,7 @@
   // 桌面设备默认显示
   transform: translateX(0);
   // 手机平板默认隐藏
-  @media (max-width: @screen-md-max) {
+  @media (max-width: @screen-sm-max) {
     transform: translateX(@drawer-width + 10);
   }
 }
@@ -68,7 +68,7 @@
 
 // 手机上抽屉栏宽度为 100% - 56px
 // uc浏览器不支持 calc，所以在 uc浏览器上抽屉栏始终未固定宽度
-@media (max-width: @screen-sm-max) {
+@media (max-width: @screen-xs-max) {
   .md-drawer,
   .md-drawer.md-drawer-close {
     width: calc(~"100% - 56px");
@@ -86,7 +86,7 @@
 }
 
 // 添加在 body 上的类
-@media (min-width: @screen-lg-min) {
+@media (min-width: @screen-md-min) {
   // 使 body 获得 padding-left 或 padding-right
   body.md-drawer-body-left {
     padding-left: @drawer-width;
@@ -96,7 +96,7 @@
   }
 }
 
-//抽屉栏不是透明时添加阴影
+// 抽屉栏不是透明时添加阴影
 .md-drawer[class*="md-color-"]:not(.md-color-transparent) {
   .md-shadow(16);
 }
@@ -130,7 +130,7 @@ ul.md-drawer-items,
   display: flex;
   align-items: center;
   padding: 0 12px 0 16px;
-  @media (min-width: @screen-lg-min) {
+  @media (min-width: @screen-md-min) {
     padding-left: 24px;
   }
   height: @drawer-item-height;

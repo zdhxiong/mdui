@@ -46,17 +46,15 @@
 .md-btn-fab-fixed,
 .md-btn-fab-wrapper {
   position: fixed !important;
-  right: @button-fab-fixed-right-sm;
-  bottom: @button-fab-fixed-bottom-sm;
 
+  // 手机平板上距离屏幕右下角 16px
+  right: @button-fab-fixed-right-small;
+  bottom: @button-fab-fixed-bottom-small;
+
+  // 电脑上距离屏幕右下角 24px
   @media (min-width: @screen-md-min) {
-    right: @button-fab-fixed-right-md;
-    bottom: @button-fab-fixed-bottom-md;
-  }
-
-  @media (min-width: @screen-lg-min) {
-    right: @button-fab-fixed-right-lg;
-    bottom: @button-fab-fixed-bottom-lg;
+    right: @button-fab-fixed-right-large;
+    bottom: @button-fab-fixed-bottom-large;
   }
 }
 

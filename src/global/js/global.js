@@ -14,7 +14,7 @@ mdui.touchEvents = {
  *
  */
 mdui.isPhone = function () {
-  return window.innerWidth < 480;
+  return window.innerWidth < 600;
 };
 
 /**
@@ -22,7 +22,7 @@ mdui.isPhone = function () {
  * @returns {boolean}
  */
 mdui.isTablet = function () {
-  return window.innerWidth < 840 && window.innerWidth >= 480;
+  return window.innerWidth < 1024 && window.innerWidth >= 600;
 };
 
 /**
@@ -30,7 +30,7 @@ mdui.isTablet = function () {
  * @returns {boolean}
  */
 mdui.isDesktop = function () {
-  return window.innerWidth >= 840;
+  return window.innerWidth >= 1024;
 };
 
 /**

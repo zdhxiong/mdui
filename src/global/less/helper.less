@@ -50,33 +50,83 @@
   visibility: hidden;
 }
 
+// ================================
 // 响应式工具
-@media (max-width: @screen-sm-max) {
+// ================================
+
+// 在特定屏幕的特备上隐藏
+@media (max-width: @screen-xs-max) {
+  .md-hidden-xs {
+    display: none !important;
+  }
+}
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
   .md-hidden-sm {
     display: none !important;
   }
 }
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+  .md-hidden-md {
+    display: none !important;
+  }
+}
+@media (min-width: @screen-lg-min) and (max-width: @screen-lg-max) {
+  .md-hidden-lg {
+    display: none !important;
+  }
+}
+@media (min-width: @screen-xl-min) {
+  .md-hidden-xl {
+    display: none !important;
+  }
+}
 
+// 在比特定屏幕小的设备上隐藏
+@media (max-width: @screen-xs-max) {
+  .md-hidden-xs-down {
+    display: none !important;
+  }
+}
+@media (max-width: @screen-sm-max) {
+  .md-hidden-sm-down {
+    display: none !important;
+  }
+}
 @media (max-width: @screen-md-max) {
   .md-hidden-md-down {
     display: none !important;
   }
 }
+@media (max-width: @screen-lg-max) {
+  .md-hidden-lg-down {
+    display: none !important;
+  }
+}
+.md-hidden-xl-down {
+  display: none !important;
+}
 
+// 在比特定屏幕大的设备上隐藏
+.md-hidden-xs-up {
+  display: none !important;
+}
+@media (min-width: @screen-sm-min) {
+  .md-hidden-sm-up {
+    display: none !important;
+  }
+}
 @media (min-width: @screen-md-min) {
   .md-hidden-md-up {
     display: none !important;
   }
 }
-
 @media (min-width: @screen-lg-min) {
-  .md-hidden-lg {
+  .md-hidden-lg-up {
     display: none !important;
   }
 }
-
-@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-  .md-hidden-md {
+@media (min-width: @screen-xl-min) {
+  .md-hidden-xl-up {
     display: none !important;
   }
 }

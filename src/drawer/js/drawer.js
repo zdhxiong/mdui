@@ -78,6 +78,8 @@ mdui.Drawer = (function () {
             $.one( $.query('.md-mask'), 'click', function () {
               inst.close();
             });
+          }else{
+            inst.state = 'closed';
           }
         }
       }
@@ -101,7 +103,11 @@ mdui.Drawer = (function () {
     }
 
     inst.target.classList.remove('md-drawer-close');
+    if(mdui.screen.xs()){
+      inst.target.classList.add('md-drawer-screen-xs');
+    }
     inst.target.classList.add('md-drawer-open');
+
     inst.state = 'opening';
     $.pluginEvent('opening', 'drawer', inst);
 
@@ -136,6 +142,7 @@ mdui.Drawer = (function () {
 
     inst.target.classList.add('md-drawer-close');
     inst.target.classList.remove('md-drawer-open');
+    inst.target.classList.remove('md-drawer-screen-xs');
     inst.state = 'closing';
     $.pluginEvent('closing', 'drawer', inst);
 

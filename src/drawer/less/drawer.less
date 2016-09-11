@@ -66,25 +66,27 @@
   }
 }
 
-// 手机上抽屉栏宽度为 100% - 56px
+// 超小屏幕上抽屉栏宽度为 100% - 56px
 // uc浏览器不支持 calc，所以在 uc浏览器上抽屉栏始终未固定宽度
 @media (max-width: @screen-xs-max) {
-  .md-drawer,
-  .md-drawer.md-drawer-close {
-    width: calc(~"100% - 56px");
+  .md-drawer-screen-xs {
+    &.md-drawer,
+    &.md-drawer.md-drawer-close {
+      width: calc(~"100% - 56px");
 
-    //http://stackoverflow.com/questions/21142923/ie-10-11-css-transitions-with-calc-do-not-work
-    transform: translateX(-100%) translateX(-10px);
-  }
-  .md-drawer-right,
-  .md-drawer-right.md-drawer-close {
-    transform: translateX(-100%) translateX(10px);
+      //http://stackoverflow.com/questions/21142923/ie-10-11-css-transitions-with-calc-do-not-work
+      transform: translateX(-100%) translateX(-10px);
+    }
+    &.md-drawer-right,
+    &.md-drawer-right.md-drawer-close {
+      transform: translateX(-100%) translateX(10px);
+    }
   }
 }
 
 // 强制显示抽屉栏
 .md-drawer-open {
-  transform: translateX(0);
+  transform: translateX(0) !important;
 }
 
 // 添加在 body 上的类

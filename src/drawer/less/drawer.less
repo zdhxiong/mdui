@@ -72,11 +72,13 @@
   .md-drawer,
   .md-drawer.md-drawer-close {
     width: calc(~"100% - 56px");
-    transform: translateX(calc(~"-1 * 100% - 10px"));
+
+    //http://stackoverflow.com/questions/21142923/ie-10-11-css-transitions-with-calc-do-not-work
+    transform: translateX(-100%) translateX(-10px);
   }
   .md-drawer-right,
   .md-drawer-right.md-drawer-close {
-    transform: translateX(calc(~"100% + 10px"));
+    transform: translateX(-100%) translateX(10px);
   }
 }
 

@@ -47,7 +47,7 @@ mdui.Drawer = (function () {
       inst.state = 'closed';
     } else if (inst.target.classList.contains('md-drawer-open')) {
       inst.state = 'opened';
-    } else if (mdui.isDesktop()) {
+    } else if (mdui.screen.mdUp()) {
       inst.state = 'opened';
     } else {
       inst.state = 'closed';
@@ -56,7 +56,7 @@ mdui.Drawer = (function () {
     // 浏览器窗口大小调整时
     $.on(window, 'resize', function () {
       //由手机平板切换到桌面时
-      if (mdui.isDesktop()) {
+      if (mdui.screen.mdUp()) {
         // 如果显示着遮罩，则隐藏遮罩
         if (inst.masked && !inst.options.mask) {
           mdui.hideMask();
@@ -114,7 +114,7 @@ mdui.Drawer = (function () {
       $.pluginEvent('opened', 'drawer', inst);
     });
 
-    if (!mdui.isDesktop() || inst.options.mask) {
+    if (!mdui.screen.mdUp() || inst.options.mask) {
       mdui.showMask(100);
       inst.masked = true;
 

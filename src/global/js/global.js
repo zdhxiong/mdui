@@ -9,28 +9,57 @@ mdui.touchEvents = {
 };
 
 /**
- * 根据窗口宽度判断是否是手机设备
- * @returns {boolean}
- *
+ * 判断窗口大小
+ * @type {{xs: mdui.screen.xs, sm: mdui.screen.sm, md: mdui.screen.md, lg: mdui.screen.lg, xl: mdui.screen.xl, xsDown: mdui.screen.xsDown, smDown: mdui.screen.smDown, mdDown: mdui.screen.mdDown, lgDown: mdui.screen.lgDown, xlDown: mdui.screen.xlDown, xsUp: mdui.screen.xsUp, smUp: mdui.screen.smUp, mdUp: mdui.screen.mdUp, lgUp: mdui.screen.lgUp, xlUp: mdui.screen.xlUp}}
  */
-mdui.isPhone = function () {
-  return window.innerWidth < 600;
-};
+mdui.screen = {
+  xs: function () {
+    return window.innerWidth < 600;
+  },
+  sm: function () {
+    return window.innerWidth >= 600 && window.innerWidth < 1024;
+  },
+  md: function () {
+    return window.innerWidth >= 1024 && window.innerWidth < 1440;
+  },
+  lg: function () {
+    return window.innerWidth >= 1440 && window.innerWidth < 1920;
+  },
+  xl: function () {
+    return window.innerWidth >= 1920;
+  },
 
-/**
- * 根据窗口宽度判断是否是平板设备
- * @returns {boolean}
- */
-mdui.isTablet = function () {
-  return window.innerWidth < 1024 && window.innerWidth >= 600;
-};
+  xsDown: function () {
+    return window.innerWidth < 600;
+  },
+  smDown: function () {
+    return window.innerWidth < 1024;
+  },
+  mdDown: function () {
+    return window.innerWidth < 1440;
+  },
+  lgDown: function () {
+    return window.innerWidth < 1920;
+  },
+  xlDown: function () {
+    return true;
+  },
 
-/**
- * 根据窗口宽度判断是否是桌面设备
- * @returns {boolean}
- */
-mdui.isDesktop = function () {
-  return window.innerWidth >= 1024;
+  xsUp: function () {
+    return true;
+  },
+  smUp: function () {
+    return window.innerWidth >= 600;
+  },
+  mdUp: function () {
+    return window.innerWidth >= 1024;
+  },
+  lgUp: function () {
+    return window.innerWidth >= 1440;
+  },
+  xlUp: function () {
+    return window.innerWidth >= 1920;
+  }
 };
 
 /**
@@ -39,7 +68,7 @@ mdui.isDesktop = function () {
  */
 mdui.showMask = function (z_index) {
   var mask = $.query('.md-mask');
-  if(!mask){
+  if (!mask) {
     mask = $.dom('<div class="md-mask">')[0];
     document.body.appendChild(mask);
 
@@ -47,7 +76,7 @@ mdui.showMask = function (z_index) {
     window.getComputedStyle(mask, null).getPropertyValue('opacity');
   }
 
-  if(typeof z_index !== 'undefined'){
+  if (typeof z_index !== 'undefined') {
     mask.style['z-index'] = z_index;
     mask.classList.add('md-mask-show');
   }
@@ -58,7 +87,7 @@ mdui.showMask = function (z_index) {
  */
 mdui.hideMask = function () {
   var mask = $.query('.md-mask');
-  if(mask){
+  if (mask) {
     mask.classList.remove('md-mask-show');
   }
 };
@@ -77,7 +106,7 @@ mdui.unlockScreen = function () {
   document.body.classList.remove('md-locked');
 };
 
-$.ready(function(){
+$.ready(function () {
   // 避免页面加载完后直接执行css动画
   // https://css-tricks.com/transitions-only-after-page-load/
   var transitionTarget = {
@@ -85,8 +114,8 @@ $.ready(function(){
     ".md-drawer": "all 0.3s cubic-bezier(0, 0, 0.2, 1)",
     ".md-navbar": "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
   };
-  $.each(transitionTarget, function(selector, transition){
-    $.each($.queryAll(selector), function(i, target){
+  $.each(transitionTarget, function (selector, transition) {
+    $.each($.queryAll(selector), function (i, target) {
       target.style['-webkit-transition'] = transition;
       target.style['transition'] = transition;
     });

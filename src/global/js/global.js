@@ -96,7 +96,9 @@ mdui.hideMask = function () {
  * 锁定屏幕
  */
 mdui.lockScreen = function () {
+  var oldBodyWidth = window.getComputedStyle(document.body).width;
   document.body.classList.add('md-locked');
+  document.body.style.width = oldBodyWidth;
 };
 
 /**
@@ -104,6 +106,7 @@ mdui.lockScreen = function () {
  */
 mdui.unlockScreen = function () {
   document.body.classList.remove('md-locked');
+  document.body.style.width = '';
 };
 
 $.ready(function () {

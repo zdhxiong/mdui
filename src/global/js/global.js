@@ -76,3 +76,19 @@ mdui.lockScreen = function () {
 mdui.unlockScreen = function () {
   document.body.classList.remove('md-locked');
 };
+
+$.ready(function(){
+  // 避免页面加载完后直接执行css动画
+  // https://css-tricks.com/transitions-only-after-page-load/
+  var transitionTarget = {
+    "body": "padding 0.3s cubic-bezier(0, 0, 0.2, 1)",
+    ".md-drawer": "all 0.3s cubic-bezier(0, 0, 0.2, 1)",
+    ".md-navbar": "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+  };
+  $.each(transitionTarget, function(selector, transition){
+    $.each($.queryAll(selector), function(i, target){
+      target.style['-webkit-transition'] = transition;
+      target.style['transition'] = transition;
+    });
+  });
+});

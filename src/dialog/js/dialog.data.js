@@ -6,35 +6,44 @@ $.ready(function () {
     $.setData(target, 'dialog.mdui', inst);
   });
 
-  // 操作按钮
-  $.each( $.queryAll('[data-md-dialog-action]'), function (index, btn) {
-    var target, inst;
+  // 方法按钮
+  $.each( $.queryAll('[data-md-dialog-method]'), function (index, btn) {
+    var target, inst, method, trigger;
 
-    var action = btn.getAttribute('data-md-dialog-action');
-    if (['open', 'close', 'toggle'].indexOf(action) === -1) {
-      action = 'open';
-    }
-
-    var targetId = btn.getAttribute('data-md-dialog-id');
-    if (!targetId) {
+    // target
+    var selector = btn.getAttribute('data-md-dialog-target');
+    if(!selector){
       var parent = $.parents(btn, '.md-dialog')[0];
       if(parent){
         // 如果操作按钮位于对话框中，且未指定对话框id，则默认操作该按钮所在的对话框
         target = parent;
       }else{
-        target = $.query('.md-dialog');
+        selector = '.md-dialog';
       }
-    } else {
-      target = $.queryId(targetId);
     }
-    if (!target) {
+    if(!target){
+      target = $.query(selector);
+    }
+    if(!target){
       return;
     }
 
+    // inst
     inst = $.getData(target, 'dialog.mdui');
 
-    $.on(btn, 'click', function () {
-      inst[action]();
+    // method
+    method = btn.getAttribute('data-md-dialog-method');
+    if(typeof inst[method] !== 'function'){
+      method = 'open';
+    }
+
+    // trigger
+    trigger = btn.getAttribute('data-md-dialog-trigger');
+    if(!trigger){
+      trigger = 'click';
+    }
+    $.on(btn, trigger, function () {
+      inst[method]();
     })
 
   });

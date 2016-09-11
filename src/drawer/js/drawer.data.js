@@ -7,28 +7,35 @@ $.ready(function () {
   });
 
   // 操作按钮
-  $.each( $.queryAll('[data-md-drawer-action]'), function (index, btn) {
-    var target, inst;
+  $.each( $.queryAll('[data-md-drawer-method]'), function (index, btn) {
+    var target, inst, method, trigger;
 
-    var action = btn.getAttribute('data-md-drawer-action');
-    if (['open', 'close', 'toggle'].indexOf(action) === -1) {
-      action = 'toggle';
+    // target
+    var selector = btn.getAttribute('data-md-drawer-target');
+    if (!selector) {
+      selector = '.md-drawer';
     }
-
-    var targetId = btn.getAttribute('data-md-drawer-id');
-    if (!targetId) {
-      target = $.query('.md-drawer');
-    } else {
-      target = $.queryId(targetId);
-    }
+    target = $.query(selector);
     if (!target) {
       return;
     }
 
+    // inst
     inst = $.getData(target, 'drawer.mdui');
 
-    $.on(btn, 'click', function () {
-      inst[action]();
+    // method
+    method = btn.getAttribute('data-md-drawer-method');
+    if(typeof inst[method] !== 'function'){
+      method = 'toggle';
+    }
+
+    // trigger
+    trigger = btn.getAttribute('data-md-drawer-trigger');
+    if(!trigger){
+      trigger = 'click';
+    }
+    $.on(btn, trigger, function () {
+      inst[method]();
     });
   });
 });

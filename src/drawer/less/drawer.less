@@ -7,9 +7,9 @@
 .md-drawer {
   width: @drawer-width;
   position: fixed;
+  top: @navbar-height-md;
   left: 0;
   bottom: 0;
-  top: 0;
   z-index: @z-index-drawer;
   will-change: transform;
   //transition: all @drawer-transition-duration @animation-curve-linear-out-slow-in;
@@ -22,19 +22,15 @@
     overflow-y: auto!important;
   }
 
-  // 桌面设备默认不覆盖导航栏
-  @media (min-width: @screen-md-min) {
-    top: @navbar-height-md;
-  }
-
-  // 桌面设备默认显示
-  transform: translateX(0);
-
+  // 手机平板
   @media (max-width: @screen-sm-max) {
-    // 手机和平板默认隐藏
+    // 始终覆盖导航栏
+    top: 0;
+
+    // 默认隐藏
     transform: translateX(-@drawer-width - 10);
 
-    // 手机平板始终有背景和阴影
+    // 始终有背景和阴影
     background: #fff;
     .md-shadow(16);
   }
@@ -63,24 +59,6 @@
   transform: translateX(-@drawer-width - 10);
   &.md-drawer-right {
     transform: translateX(@drawer-width + 10);
-  }
-}
-
-// 超小屏幕上抽屉栏宽度为 100% - 56px
-// uc浏览器不支持 calc，所以在 uc浏览器上抽屉栏始终未固定宽度
-@media (max-width: @screen-xs-max) {
-  .md-drawer-screen-xs {
-    &.md-drawer,
-    &.md-drawer.md-drawer-close {
-      width: calc(~"100% - 56px");
-
-      //http://stackoverflow.com/questions/21142923/ie-10-11-css-transitions-with-calc-do-not-work
-      transform: translateX(-100%) translateX(-10px);
-    }
-    &.md-drawer-right,
-    &.md-drawer-right.md-drawer-close {
-      transform: translateX(-100%) translateX(10px);
-    }
   }
 }
 

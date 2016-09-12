@@ -23,22 +23,6 @@ mdui.Drawer = (function () {
   };
 
   /**
-   * 调整超小屏上的宽度
-   * 因为 css3 calc 兼容性不好，所以用js实现
-   * @param inst
-   */
-  var drawerWidth = function(inst){
-    var isScreenXs = mdui.screen.xs();
-
-    var width = window.innerWidth - 56 + 'px';
-    var transform = 'translateX(' + ( (inst.position == 'left' ? 10 : -10) - window.innerWidth) + 'px)';
-
-    inst.target.style['width'] = isScreenXs ? width : '';
-    inst.target.style['-webkit-transform'] = isScreenXs ? transform : '';
-    inst.target.style['transform'] = isScreenXs ? transform : '';
-  };
-
-  /**
    * 抽屉栏实例
    * @param selector 选择器或 HTML 字符串或 DOM 元素
    * @param opts
@@ -100,7 +84,6 @@ mdui.Drawer = (function () {
         }
       }
 
-      drawerWidth(inst);
     }, 100, 200));
 
     // 不支持 touch 的设备默认隐藏滚动条，鼠标移入时显示滚动条；支持 touch 的设备会自动隐藏滚动条
@@ -119,9 +102,6 @@ mdui.Drawer = (function () {
     if (inst.state === 'opening' || inst.state === 'opened') {
       return;
     }
-
-    // 超小屏上宽度为 100% - 56px
-    drawerWidth(inst);
 
     inst.target.classList.remove('md-drawer-close');
     inst.target.classList.add('md-drawer-open');

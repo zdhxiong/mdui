@@ -1,4 +1,6 @@
-// 导航栏
+/* Navbar 导航栏
+   ========================================================================== */
+
 body.md-loaded .md-navbar {
   transition: all @navbar-transition-duration @animation-curve-default;
 }
@@ -25,7 +27,6 @@ body.md-loaded .md-navbar {
     .md-text-overflow();
   }
 
-  // 导航栏中的图标按钮
   .md-btn-icon,
   .md-btn-icon-mini {
     .md-icon {
@@ -47,10 +48,8 @@ body.md-loaded .md-navbar {
   }
 }
 
-// 为 body 添加 padding-top
+/* navbar 固定在顶部时，为 body 添加 padding-top，避免 navbar 覆盖页面内容 */
 body.md-navbar-fixed{
-
-  // 使导航栏固定在页面顶部
   .md-navbar {
     position: fixed;
     top: 0;
@@ -67,19 +66,19 @@ body.md-navbar-fixed{
   }
 }
 
-// 纵向分隔符
+/* 纵向分隔符 */
 .md-navbar-divider {
   width: 0;
   border-left: @navbar-divider-width solid @navbar-divider-color;
   margin: 0 6px;
 }
 
-// 间隔
+/* 间隔 */
 .md-navbar-spacer {
   flex-grow: 1;
 }
 
-// logo
+/* logo */
 .md-navbar-logo {
   font-size: 24px;
   img{
@@ -87,7 +86,7 @@ body.md-navbar-fixed{
   }
 }
 
-// 标题
+/* 标题 */
 .md-navbar-title {
   font-size: @navbar-title-font-size;
   max-width: @navbar-title-max-width;
@@ -95,7 +94,7 @@ body.md-navbar-fixed{
   .md-text-overflow();
 }
 
-//搜索框
+/* 搜索框 */
 .md-navbar-search {
   margin: 0;
 }

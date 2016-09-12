@@ -1,4 +1,7 @@
-// Flat Button 默认为扁平按钮
+/* Button
+   ========================================================================== */
+
+/* 默认为 Flat 扁平按钮 */
 .md-btn {
   background: transparent;
   border: none;
@@ -48,8 +51,10 @@
   &:not(.md-ripple):not([disabled]):not(.md-disabled):active {
     background-color: @button-active-color;
   }
+}
 
-  // 按钮内的图标
+/* 按钮内的图标 */
+.md-btn {
   .md-icon-left,
   .md-icon-right {
     &,
@@ -69,7 +74,7 @@
   }
 }
 
-//禁用按钮
+/* 禁用按钮 */
 .md-btn[disabled],
 .md-btn.md-disabled {
   &,
@@ -87,7 +92,7 @@
   }
 }
 
-// 加粗按钮文本
+/* 加粗按钮文本 */
 .md-btn-bold {
   font-weight: bold;
 }
@@ -96,7 +101,7 @@ input.md-btn[type="submit"] {
   -webkit-appearance: none;
 }
 
-// Raised button 浮动按钮
+/* Raised button 浮动按钮 */
 .md-btn-raised {
   .md-shadow(2);
 
@@ -109,7 +114,7 @@ input.md-btn[type="submit"] {
   }
 }
 
-//图标按钮
+/* 图标按钮 */
 .md-btn-icon,
 .md-btn-icon-mini {
   border-radius: 50%;
@@ -133,7 +138,7 @@ input.md-btn[type="submit"] {
   min-width: @button-icon-size-mini;
 }
 
-//按钮内容的图标
+/* 按钮内容的图标 */
 .md-btn-icon,
 .md-btn-icon-mini {
   .md-icon {
@@ -147,7 +152,7 @@ input.md-btn[type="submit"] {
 }
 
 
-//按钮 100% 宽度
+/* 按钮 100% 宽度 */
 &.md-btn-block {
   display: block;
   width: 100%;

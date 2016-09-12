@@ -1,3 +1,6 @@
+/* Grid 栅格系统
+   ========================================================================== */
+
 @_screen-col-1: 8.333333%;
 @_screen-col-2: 16.666667%;
 @_screen-col-3: 25%;
@@ -26,7 +29,6 @@
     margin-left: @@widthName;
   }
 }
-
 
 .md-container,
 .md-container-fluid {
@@ -73,7 +75,7 @@
   padding-right: @grid-gap-16 / 2;
 }
 
-// 中等屏幕及以上的设备上间距更大
+/* 中等屏幕及以上的设备上间距更大 */
 @media (min-width: @screen-md-min) {
   .md-container,
   .md-container-fluid {
@@ -96,7 +98,7 @@
   }
 }
 
-// 取消列间距
+/* 取消列间距 */
 .md-col-gapless {
   [class*="md-col-xs-"],
   [class*="md-col-sm-"],

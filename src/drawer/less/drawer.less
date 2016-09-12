@@ -1,12 +1,12 @@
-/**
- * 抽屉栏导航
- * 桌面设备默认显示，手机平板默认隐藏
- */
+/* Drawer 抽屉栏导航
+   ========================================================================== */
 
+/* DOM 加载完后再添加 transition */
 body.md-loaded .md-drawer {
   transition: all @drawer-transition-duration @animation-curve-linear-out-slow-in;
 }
-// 抽屉栏外层，默认出现在左侧且隐藏
+
+/* 抽屉栏外层，默认出现在左侧且隐藏 */
 .md-drawer {
   width: @drawer-width;
   position: fixed;
@@ -23,38 +23,40 @@ body.md-loaded .md-drawer {
   &:hover {
     overflow-y: auto!important;
   }
-
-  // 手机平板
-  @media (max-width: @screen-sm-max) {
-    // 始终覆盖导航栏
-    top: 0;
-
-    // 默认隐藏
-    transform: translateX(-@drawer-width - 10);
-
-    // 始终有背景和阴影
-    background: #fff;
-    .md-shadow(16);
-  }
 }
 
-// 美化滚动条
+/* 美化滚动条 */
 .md-drawer-scrollbar {
   .md-scrollbar-beautify();
 }
 
-// 出现在右侧的抽屉栏
+/* 出现在右侧的抽屉栏 */
 .md-drawer-right {
   left: auto;
   right: 0;
+}
 
-  // 手机平板默认隐藏
-  @media (max-width: @screen-sm-max) {
+/* 手机平板上的样式 */
+@media (max-width: @screen-sm-max) {
+  .md-drawer {
+    /* 始终覆盖导航栏 */
+    top: 0;
+
+    /* 默认隐藏 */
+    transform: translateX(-@drawer-width - 10);
+
+    /* 始终有背景和阴影 */
+    background: #fff;
+    .md-shadow(16);
+  }
+
+  .md-drawer-right {
+    /* 右侧 drawer 也默认隐藏 */
     transform: translateX(@drawer-width + 10);
   }
 }
 
-// 强制隐藏抽屉栏
+/* 强制隐藏抽屉栏 */
 .md-drawer-close {
   transform: translateX(-@drawer-width - 10);
   &.md-drawer-right {
@@ -62,14 +64,13 @@ body.md-loaded .md-drawer {
   }
 }
 
-// 强制显示抽屉栏
+/* 强制显示抽屉栏 */
 .md-drawer-open {
   transform: translateX(0) !important;
 }
 
-// 添加在 body 上的类
 @media (min-width: @screen-md-min) {
-  // 使 body 获得 padding-left 或 padding-right
+  /* 使 body 获得 padding-left 或 padding-right，避免被抽屉栏覆盖住页面 */
   body.md-drawer-body-left {
     padding-left: @drawer-width;
   }
@@ -78,12 +79,12 @@ body.md-loaded .md-drawer {
   }
 }
 
-// 抽屉栏不是透明时添加阴影
+/* 抽屉栏不是透明时添加阴影 */
 .md-drawer[class*="md-color-"]:not(.md-color-transparent) {
   .md-shadow(16);
 }
 
-//抽屉栏 100% 高度，覆盖在导航栏上面
+/* 抽屉栏 100% 高度，覆盖在导航栏上面 */
 .md-drawer-full-height {
   top: 0;
 }

@@ -1,4 +1,6 @@
-// 文字排版
+/* Typography 排版
+   ========================================================================== */
+
 .md-typo-display-4,
 .md-typo-display-4-opacity {
   .md-typo-display-4();
@@ -118,20 +120,20 @@
     }
   }
 
-  // Firefox 以外，元素没有下划线，需添加
+  /* Firefox 以外，元素没有下划线，需添加 */
   acronym,
   abbr {
     border-bottom: 1px dotted;
     font-variant: normal;
   }
 
-  // 添加鼠标问号，进一步确保应用的语义是正确的（要知道，交互他们也有洁癖，如果你不去掉，那得多花点口舌）
+  /* 添加鼠标问号，进一步确保应用的语义是正确的（要知道，交互他们也有洁癖，如果你不去掉，那得多花点口舌） */
   abbr {
     cursor: help;
     text-decoration: none;
   }
 
-  // 一致的 del 样式
+  /* 一致的 del 样式 */
   del {
     text-decoration: line-through;
   }
@@ -141,12 +143,12 @@
     font-weight: 400;
   }
 
-  // 去掉列表前的标识, li 会继承，大部分网站通常用列表来很多内容，所以应该当去
+  /* 去掉列表前的标识, li 会继承，大部分网站通常用列表来很多内容，所以应该当去 */
   ul, ol {
     list-style: none;
   }
 
-  // 对齐是排版最重要的因素, 别让什么都居中
+  /* 对齐是排版最重要的因素, 别让什么都居中 */
   caption, th {
     text-align: left;
   }
@@ -155,7 +157,7 @@
     content: '';
   }
 
-  // 统一上标和下标
+  /* 统一上标和下标 */
   sub, sup {
     font-size: 75%;
     line-height: 0;
@@ -174,7 +176,7 @@
     bottom: -0.25em;
   }
 
-  // 让链接在 hover 状态下显示下划线
+  /* 让链接在 hover 状态下显示下划线 */
   a {
     color: #2196F3;
     border-bottom: 1px solid #2196F3;
@@ -185,17 +187,17 @@
     }
   }
 
-  // 默认不显示下划线，保持页面简洁
+  /* 默认不显示下划线，保持页面简洁 */
   ins, a {
     text-decoration: none;
   }
 
-  // 专名号
+  /* 专名号 */
   u {
     text-decoration: underline;
   }
 
-  // 标记，类似于手写的荧光笔的作用
+  /* 标记，类似于手写的荧光笔的作用 */
   mark {
     background: #fffdd1;
     border-bottom: 1px solid #ffedce;
@@ -203,7 +205,7 @@
     margin: 0 5px;
   }
 
-  // 代码片断
+  /* 代码片断 */
   pre, code, pre tt {
     font-family: Consolas, Courier, 'Courier New', monospace;
   }
@@ -216,7 +218,7 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  // 一致化 horizontal rule
+  /* 一致化 horizontal rule */
   hr {
     border: none;
     border-bottom: 1px solid #cfcfcf;
@@ -224,7 +226,7 @@
     height: 10px;
   }
 
-  // 底部印刷体、版本等标记
+  /* 底部印刷体、版本等标记 */
   small,
   figcaption {
     font-size: 0.9em;
@@ -236,17 +238,17 @@
     color: #000;
   }
 
-  // 可拖动文件添加拖动手势
+  /* 可拖动文件添加拖动手势 */
   [draggable] {
     cursor: move;
   }
 
-  // 保证块/段落之间的空白隔行
+  /* 保证块/段落之间的空白隔行 */
   p, pre, ul, ol, dl, form, hr, table {
     margin: 0 0 1.2em 0;
   }
 
-  // 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优化
+  /* 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优化 */
   h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
     color: #000;
@@ -288,12 +290,12 @@
     list-style: circle;
   }
 
-  // 去掉各Table cell 的边距并让其边重合
+  /* 去掉各Table cell 的边距并让其边重合 */
   table {
     border-collapse: collapse;
     border-spacing: 0;
   }
-  // 同 ul/ol，在文章中应用 table 基本格式
+  /* 同 ul/ol，在文章中应用 table 基本格式 */
   table th, table td, th, td, table caption {
     border: 1px solid #ddd;
     padding: 0.5em 1em;

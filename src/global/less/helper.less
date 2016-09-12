@@ -1,60 +1,76 @@
-// 向左浮动
+/* Helper 辅助类
+   ========================================================================== */
+
+/* 向左浮动 */
 .md-float-left {
   float: left !important;
 }
 
-// 向右浮动
+/* 向右浮动 */
 .md-float-right {
   float: right !important;
 }
 
-// 水平居中
+/* 水平居中 */
 .md-center {
   .md-center();
 }
 
-// 垂直居中
+/* 垂直居中 */
 .md-valign {
   .md-valign();
 }
 
-// 文本对齐方式
+/* 文本左对齐 */
 .md-text-left {
   text-align: left;
 }
+
+/* 文本居中对齐 */
 .md-text-center {
   text-align: center;
 }
+
+/* 文本向右对齐 */
 .md-text-right {
   text-align: right;
 }
 
-// 清除浮动
+/* 清除浮动 */
 .md-clearfix {
   .md-clearfix();
 }
 
-// 显示元素
-.md-show {
+/* display: inline */
+.md-inline {
+  display: inline !important;
+}
+
+/* display: block */
+.md-block {
   display: block !important;
 }
 
-// 隐藏元素
+/* display: inline-block */
+.md-inline-block {
+  display: inline-block !important;
+}
+
+/* 隐藏元素 */
 .md-hidden,
 [hidden] {
   display: none !important;
 }
 
-// 使元素不可见
+/* 使元素不可见 */
 .md-invisible {
   visibility: hidden;
 }
 
-// ================================
-// 响应式工具
-// ================================
+/* Responsive utilities 响应式工具
+   ========================================================================== */
 
-// 在特定屏幕的特备上隐藏
+/* 在特定屏幕的特备上隐藏 */
 @media (max-width: @screen-xs-max) {
   .md-hidden-xs {
     display: none !important;
@@ -81,7 +97,7 @@
   }
 }
 
-// 在比特定屏幕小的设备上隐藏
+/* 在比特定屏幕小的设备上隐藏 */
 @media (max-width: @screen-xs-max) {
   .md-hidden-xs-down {
     display: none !important;
@@ -106,7 +122,7 @@
   display: none !important;
 }
 
-// 在比特定屏幕大的设备上隐藏
+/* 在比特定屏幕大的设备上隐藏 */
 .md-hidden-xs-up {
   display: none !important;
 }

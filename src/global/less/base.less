@@ -1,3 +1,6 @@
+/* Base 公共样式
+   ========================================================================== */
+
 *{
   box-sizing: border-box;
 }
@@ -14,6 +17,8 @@ body {
     font-size: @screen-md-font-size;
   }
 }
+
+/* DOM 加载完毕后添加 transition */
 body.md-loaded {
   transition: padding @drawer-transition-duration @animation-curve-linear-out-slow-in;
 }
@@ -37,12 +42,12 @@ blockquote {
   border-left: 5px solid #ddd;
 }
 
-// 锁定屏幕
+/* 锁定屏幕 */
 body.md-locked {
   overflow: hidden;
 }
 
-// 遮罩层
+/* 遮罩层 */
 .md-mask {
   position: fixed;
   z-index: @z-index-mask;
@@ -57,13 +62,13 @@ body.md-locked {
   transition-property: opacity, visibility;
   transition-duration: .3s;
 }
-// 显示遮罩层
+/* 显示遮罩层 */
 .md-mask-show {
   opacity: 1;
   visibility: visible;
 }
 
-// 取消 transition 过渡效果
+/* 取消 transition 过渡效果 */
 .md-no-transition {
   transition-property: none !important;
 }

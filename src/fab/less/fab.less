@@ -1,4 +1,6 @@
-// FABs 浮动操作按钮
+/* Fab 浮动操作按钮
+   ========================================================================== */
+
 .md-btn-fab,
 .md-btn-fab-mini {
   border-radius: 50%;
@@ -42,23 +44,23 @@
   }
 }
 
-// 固定到右下角的 FAB 按钮
+/* 固定到右下角的 FAB 按钮 */
 .md-btn-fab-fixed,
 .md-btn-fab-wrapper {
   position: fixed !important;
 
-  // 手机平板上距离屏幕右下角 16px
+  /* 手机平板上距离屏幕右下角 16px */
   right: @button-fab-fixed-right-small;
   bottom: @button-fab-fixed-bottom-small;
 
-  // 电脑上距离屏幕右下角 24px
   @media (min-width: @screen-md-min) {
+    /* 电脑上距离屏幕右下角 24px */
     right: @button-fab-fixed-right-large;
     bottom: @button-fab-fixed-bottom-large;
   }
 }
 
-// 含菜单的浮动操作按钮
+/* 含菜单的浮动操作按钮 */
 .md-btn-fab-wrapper {
   position: relative;
   width: @button-fab-size;

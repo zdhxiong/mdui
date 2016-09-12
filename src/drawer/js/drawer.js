@@ -61,6 +61,8 @@ mdui.Drawer = (function () {
         if (inst.masked && !inst.options.mask) {
           mdui.hideMask();
           inst.masked = false;
+
+          mdui.unlockScreen();
         }
         // 没有强制关闭，则状态为打开状态
         if(!inst.target.classList.contains('md-drawer-close')){
@@ -74,6 +76,8 @@ mdui.Drawer = (function () {
           if (inst.target.classList.contains('md-drawer-open')) {
             mdui.showMask(100);
             inst.masked = true;
+
+            mdui.lockScreen();
 
             $.one( $.query('.md-mask'), 'click', function () {
               inst.close();
@@ -122,6 +126,8 @@ mdui.Drawer = (function () {
       mdui.showMask(100);
       inst.masked = true;
 
+      mdui.lockScreen();
+
       $.one( $.query('.md-mask'), 'click', function () {
         inst.close();
       });
@@ -155,6 +161,8 @@ mdui.Drawer = (function () {
     if (inst.masked) {
       mdui.hideMask();
       inst.masked = false;
+
+      mdui.unlockScreen();
     }
   };
 

@@ -109,6 +109,34 @@ mdui.unlockScreen = function () {
   document.body.style.width = '';
 };
 
+/**
+ * 函数节流
+ * @param fn
+ * @param delay
+ * @param mustRunDelay
+ * @returns {Function}
+ */
+mdui.throttle = function(fn, delay, mustRunDelay){
+  var timer = null;
+  var t_start;
+  return function(){
+    var context = this, args = arguments, t_curr = +new Date();
+    clearTimeout(timer);
+    if(!t_start){
+      t_start = t_curr;
+    }
+    if(t_curr - t_start >= mustRunDelay){
+      fn.apply(context, args);
+      t_start = t_curr;
+    }
+    else {
+      timer = setTimeout(function(){
+        fn.apply(context, args);
+      }, delay);
+    }
+  };
+};
+
 $.ready(function () {
   // 避免页面加载完后直接执行css动画
   // https://css-tricks.com/transitions-only-after-page-load/

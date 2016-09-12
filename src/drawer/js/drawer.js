@@ -70,7 +70,7 @@ mdui.Drawer = (function () {
     }
 
     // 浏览器窗口大小调整时
-    $.on(window, 'resize', function () {
+    $.on(window, 'resize', mdui.throttle(function () {
       //由手机平板切换到桌面时
       if (mdui.screen.mdUp()) {
         // 如果显示着遮罩，则隐藏遮罩
@@ -101,7 +101,7 @@ mdui.Drawer = (function () {
       }
 
       drawerWidth(inst);
-    });
+    }, 100, 200));
 
     // 不支持 touch 的设备默认隐藏滚动条，鼠标移入时显示滚动条；支持 touch 的设备会自动隐藏滚动条
     if (!mdui.support.touch) {

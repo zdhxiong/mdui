@@ -113,17 +113,5 @@ $.ready(function () {
   // 避免页面加载完后直接执行css动画
   // https://css-tricks.com/transitions-only-after-page-load/
 
-  var defaultDuration = '0.3s';
-  var defaultTimeingFunction = 'cubic-bezier(0, 0, 0.2, 1)';
-  var transitionTarget = {
-    "body": "padding " + defaultDuration + " " + defaultTimeingFunction,
-    ".md-drawer": "all " + defaultDuration + " " + defaultTimeingFunction,
-    ".md-navbar": "all " + defaultDuration + " " + defaultTimeingFunction
-  };
-  $.each(transitionTarget, function (selector, transition) {
-    $.each($.queryAll(selector), function (i, target) {
-      target.style['-webkit-transition'] = transition;
-      target.style['transition'] = transition;
-    });
-  });
+  document.body.classList.add('md-loaded');
 });

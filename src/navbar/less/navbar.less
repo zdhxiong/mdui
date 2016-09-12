@@ -1,11 +1,13 @@
 // 导航栏
+body.md-loaded .md-navbar {
+  transition: all @navbar-transition-duration @animation-curve-default;
+}
 .md-navbar {
   display: flex;
   align-items: center;
   width: 100%;
   max-height: 1000px;
   z-index: @z-index-navbar;
-  //transition: all @navbar-transition-duration @animation-curve-default;
   .md-shadow(4);
 
   nav {

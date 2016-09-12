@@ -7,13 +7,15 @@ body {
   font-size: @screen-xs-font-size;
   background-color: @body-background-color;
   color: @body-text-color;
-  //transition: padding @drawer-transition-duration @animation-curve-linear-out-slow-in;
   @media (min-width: @screen-sm-min) {
     font-size: @screen-sm-font-size;
   }
   @media (min-width: @screen-md-min) {
     font-size: @screen-md-font-size;
   }
+}
+body.md-loaded {
+  transition: padding @drawer-transition-duration @animation-curve-linear-out-slow-in;
 }
 
 

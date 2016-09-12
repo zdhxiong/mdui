@@ -3,6 +3,9 @@
  * 桌面设备默认显示，手机平板默认隐藏
  */
 
+body.md-loaded .md-drawer {
+  transition: all @drawer-transition-duration @animation-curve-linear-out-slow-in;
+}
 // 抽屉栏外层，默认出现在左侧且隐藏
 .md-drawer {
   width: @drawer-width;
@@ -12,7 +15,6 @@
   bottom: 0;
   z-index: @z-index-drawer;
   will-change: transform;
-  //transition: all @drawer-transition-duration @animation-curve-linear-out-slow-in;
   //padding: 12px 0 52px 0;
   margin: 0;
   white-space: nowrap;

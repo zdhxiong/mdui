@@ -151,6 +151,20 @@
   };
 
   /**
+   * 获取元素的最终样式
+   * @param dom
+   * @param prop 可选
+   * @returns {*}
+   */
+  $.getStyle = function (dom, prop) {
+    var style = window.getComputedStyle(dom, null);
+    if(arguments.length === 1){
+      return style;
+    }
+    return style.getPropertyValue(prop);
+  };
+
+  /**
    * 设置 transform 属性
    * @param dom
    * @param transform
@@ -542,7 +556,7 @@
         children.push(childNodes[i]);
       }
     }
-    return children;
+    return children.length ? children : null;
   };
 
   /**

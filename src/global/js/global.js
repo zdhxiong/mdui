@@ -65,31 +65,41 @@ mdui.screen = {
 /**
  * 创建遮罩层并显示
  * @param z_index 遮罩层的 z_index
+ * @returns {Element}
  */
 mdui.showMask = function (z_index) {
-  var mask = $.query('.md-mask');
-  if (!mask) {
-    mask = $.dom('<div class="md-mask">')[0];
-    document.body.appendChild(mask);
+  var mask = $.dom('<div class="md-mask">')[0];
+  document.body.appendChild(mask);
 
-    //使动态添加的元素的 transition 动画能生效
-    window.getComputedStyle(mask, null).getPropertyValue('opacity');
-  }
+  //使动态添加的元素的 transition 动画能生效
+  window.getComputedStyle(mask, null).getPropertyValue('opacity');
 
-  if (typeof z_index !== 'undefined') {
-    mask.style['z-index'] = z_index;
-    mask.classList.add('md-mask-show');
+  if (typeof z_index === 'undefined') {
+    z_index = 100;
   }
+  mask.style['z-index'] = z_index;
+  mask.classList.add('md-mask-show');
+
+  return mask;
 };
 
 /**
  * 隐藏遮罩层
+ * @param mask 指定遮罩层元素，若没有该参数，则移除所有遮罩层
  */
-mdui.hideMask = function () {
-  var mask = $.query('.md-mask');
-  if (mask) {
-    mask.classList.remove('md-mask-show');
+mdui.hideMask = function (mask) {
+  var masks;
+  if(typeof mask === 'undefined'){
+    masks = $.queryAll('.md-mask');
+  }else{
+    masks = [mask];
   }
+  $.each(masks, function(i, mask){
+    mask.classList.remove('md-mask-show');
+    $.transitionEnd(mask, function(){
+      mask.parentNode.removeChild(mask);
+    });
+  });
 };
 
 /**

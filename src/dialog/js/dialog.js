@@ -2,7 +2,7 @@
  提示框
  */
 
-mdui.Dialog = (function(){
+mdui.Dialog = (function () {
 
   /**
    * 默认参数
@@ -52,26 +52,26 @@ mdui.Dialog = (function(){
   var queueName = '__md_dialog';
 
   /**
-   * window resize 事件，调整提示框位置
+   * 窗口宽度变化，或提示框内容变化时，调整提示框位置和提示框内的滚动条
    */
-  function windowResizeEvent() {
+  function readjust() {
     var dialog = current.target;
 
     // 调整 dialog 的 top 和 height 值
-    var dialogHeight = $.getStyle(dialog, 'height').replace('px', '');
+    var dialogHeight = dialog.clientHeight;
     dialog.style.top = ((window.innerHeight - dialogHeight) / 2) + 'px';
     dialog.style.height = dialogHeight + 'px';
 
     // 调整 md-dialog-content 的高度
 
     var dialogTitle = $.children(dialog, '.md-dialog-title', true);
-    var dialogTitleHeight = dialogTitle ? $.getStyle(dialogTitle, 'height').replace('px', '') : 0;
+    var dialogTitleHeight = dialogTitle ? dialogTitle.scrollHeight : 0;
 
     var dialogActions = $.children(dialog, '.md-dialog-actions', true);
-    var dialogActionsHeight = dialogActions ? $.getStyle(dialogActions, 'height').replace('px', '') : 0;
+    var dialogActionsHeight = dialogActions ? dialogActions.scrollHeight : 0;
 
     var dialogContent = $.children(dialog, '.md-dialog-content', true);
-    if(dialogContent){
+    if (dialogContent) {
       dialogContent.style.height = dialogHeight - dialogTitleHeight - dialogActionsHeight + 'px';
     }
   }
@@ -79,7 +79,7 @@ mdui.Dialog = (function(){
   /**
    * hashchange 事件
    */
-  function hashchangeEvent(){
+  function hashchangeEvent() {
     if (location.hash.substring(1).indexOf('&md-dialog') < 0) {
       current.close(true);
     }
@@ -91,23 +91,23 @@ mdui.Dialog = (function(){
    * @param opts
    * @constructor
    */
-  function Dialog(selector, opts){
+  function Dialog(selector, opts) {
     var inst = this;
 
     inst.target = $.dom(selector)[0];
 
     // 已通过 data 属性实例化过，不再重复实例化
     var oldInst = $.getData(inst.target, 'dialog.mdui');
-    if(oldInst){
+    if (oldInst) {
       return oldInst;
     }
 
     inst.options = $.extend(DEFAULT, (opts || {}));
     inst.state = 'closed';
 
-    if(!mdui.support.touch) {
+    if (!mdui.support.touch) {
       var content = $.query('.md-dialog-content', inst.target);
-      if(content){
+      if (content) {
         content.classList.add('md-dialog-scrollbar');
       }
     }
@@ -125,10 +125,10 @@ mdui.Dialog = (function(){
   /**
    * 打开提示框
    */
-  Dialog.prototype.open = function(){
+  Dialog.prototype.open = function () {
     var inst = this;
 
-    if(inst.state === 'opening' || inst.state === 'opened'){
+    if (inst.state === 'opening' || inst.state === 'opened') {
       return;
     }
 
@@ -146,8 +146,8 @@ mdui.Dialog = (function(){
 
     inst.target.style.display = 'block';
 
-    windowResizeEvent(inst.target);
-    $.on(window, 'resize', windowResizeEvent);
+    readjust(inst.target);
+    $.on(window, 'resize', readjust);
 
     // 打开消息框
     inst.target.classList.add('md-dialog-open');
@@ -155,19 +155,19 @@ mdui.Dialog = (function(){
     inst.state = 'opening';
     $.pluginEvent('opening', 'dialog', inst);
 
-    $.transitionEnd(inst.target, function(){
+    $.transitionEnd(inst.target, function () {
       inst.state = 'opened';
       $.pluginEvent('opened', 'dialog', inst);
     });
 
-    if(!mask){
+    if (!mask) {
       mask = mdui.showMask(300);
 
       // 点击遮罩层关闭提示框
-      if(inst.options.closeBlur){
-        $.one(mask, 'click', function(e){
+      if (inst.options.closeBlur) {
+        $.one(mask, 'click', function (e) {
           var target = e.target;
-          if(target.classList.contains('md-mask')){
+          if (target.classList.contains('md-mask')) {
             inst.close();
           }
         });
@@ -190,10 +190,10 @@ mdui.Dialog = (function(){
   /**
    * 关闭提示框
    */
-  Dialog.prototype.close = function(){
+  Dialog.prototype.close = function () {
     var inst = this;
 
-    if(inst.state === 'closing' || inst.state === 'closed'){
+    if (inst.state === 'closing' || inst.state === 'closed') {
       return;
     }
 
@@ -206,7 +206,7 @@ mdui.Dialog = (function(){
       mask = null;
     }
 
-    $.transitionEnd(inst.target, function(){
+    $.transitionEnd(inst.target, function () {
       inst.state = 'closed';
       $.pluginEvent('closed', 'dialog', inst);
 
@@ -215,7 +215,7 @@ mdui.Dialog = (function(){
         mdui.unlockScreen();
       }
 
-      $.off(window, 'resize', windowResizeEvent);
+      $.off(window, 'resize', readjust);
 
       if (inst.options.destroyAfterClose) {
         inst.destroy();
@@ -242,7 +242,7 @@ mdui.Dialog = (function(){
   /**
    * 切换提示框打开/关闭状态
    */
-  Dialog.prototype.toggle = function(){
+  Dialog.prototype.toggle = function () {
     var inst = this;
 
     if (inst.state === 'opening' || inst.state === 'opened') {
@@ -264,7 +264,7 @@ mdui.Dialog = (function(){
   /**
    * 销毁提示框
    */
-  Dialog.prototype.destroy = function(){
+  Dialog.prototype.destroy = function () {
     var inst = this;
 
     inst.target.parentNode.removeChild(inst.target);
@@ -274,6 +274,13 @@ mdui.Dialog = (function(){
       mdui.unlockScreen();
       mdui.hideMask();
     }
+  };
+
+  /**
+   * 提示框内容变化时，需要调用该方法来调整提示框位置和滚动条高度
+   */
+  Dialog.prototype.handleUpdate = function () {
+    readjust();
   };
 
   // esc 按下时关闭对话框

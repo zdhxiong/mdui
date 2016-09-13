@@ -135,7 +135,7 @@
       rippleWave.classList.add(rippleColorClass);
     }
     el.insertBefore(rippleWave, el.childNodes[0]);
-    window.getComputedStyle(rippleWave).getPropertyValue('opacity');
+    $.getStyle(rippleWave, 'opacity');
     rippleTransform = 'translate3d(' + (-center.x + width / 2) + 'px, ' + (-center.y + height / 2) + 'px, 0) scale(1)';
     $.transform(rippleWave, rippleTransform);
   }

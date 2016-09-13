@@ -72,7 +72,7 @@ mdui.showMask = function (z_index) {
   document.body.appendChild(mask);
 
   //使动态添加的元素的 transition 动画能生效
-  window.getComputedStyle(mask, null).getPropertyValue('opacity');
+  $.getStyle(mask, 'opacity');
 
   if (typeof z_index === 'undefined') {
     z_index = 100;
@@ -106,7 +106,7 @@ mdui.hideMask = function (mask) {
  * 锁定屏幕
  */
 mdui.lockScreen = function () {
-  var oldBodyWidth = window.getComputedStyle(document.body).width;
+  var oldBodyWidth = document.body.clientWidth + 'px';
   document.body.classList.add('md-locked');
   document.body.style.width = oldBodyWidth;
 };

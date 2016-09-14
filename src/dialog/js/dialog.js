@@ -58,9 +58,13 @@ mdui.Dialog = (function () {
    * 窗口宽度变化，或提示框内容变化时，调整提示框位置和提示框内的滚动条
    */
   function readjust() {
+    if(!current) {
+      return;
+    }
     var dialog = current.target;
 
     // 调整 dialog 的 top 和 height 值
+    dialog.style.height = '';
     var dialogHeight = dialog.clientHeight;
     dialog.style.top = ((window.innerHeight - dialogHeight) / 2) + 'px';
     dialog.style.height = dialogHeight + 'px';

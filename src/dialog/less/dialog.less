@@ -15,8 +15,7 @@
   border-radius: 2px;
   display: none;
   z-index: @z-index-dialog;
-  will-change: top, opacity, transform, visibility;
-  visibility: hidden;
+  will-change: top, opacity, transform;
   opacity: 0;
   transform: scale(0.95);
 
@@ -37,7 +36,6 @@
 
   /* 打开提示框 */
   &.md-dialog-open {
-    visibility: visible;
     opacity: 1;
     transform: scale(1);
   }

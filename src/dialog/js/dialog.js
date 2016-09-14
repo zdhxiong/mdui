@@ -6,7 +6,6 @@ mdui.Dialog = (function () {
 
   /**
    * 默认参数
-   * @type {{history: boolean, mask: boolean, closeOnClick: boolean, closeOnEscape: boolean, destroyOnClosed: boolean, onClick: DEFAULT.onClick, onOpening: DEFAULT.onOpening, onOpened: DEFAULT.onOpened, onClosing: DEFAULT.onClosing, onClosed: DEFAULT.onClosed}}
    */
   var DEFAULT = {
     // 监听 hashchange 事件
@@ -220,6 +219,8 @@ mdui.Dialog = (function () {
     $.transitionEnd(inst.target, function () {
       inst.state = 'closed';
       $.pluginEvent('closed', 'dialog', inst);
+
+      inst.target.style.display = 'none';
 
       // 所有提示框都关闭后
       if ($.queue(queueName).length === 0) {

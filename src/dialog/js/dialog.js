@@ -6,17 +6,20 @@ mdui.Dialog = (function () {
 
   /**
    * 默认参数
-   * @type {{closeBlur: boolean, closeEsc: boolean, hashTracking: boolean, destroyAfterClose: boolean, onClick: DEFAULT.onClick, onOpening: DEFAULT.onOpening, onOpened: DEFAULT.onOpened, onClosing: DEFAULT.onClosing, onClosed: DEFAULT.onClosed}}
+   * @type {{history: boolean, mask: boolean, closeOnClick: boolean, closeOnEscape: boolean, destroyOnClosed: boolean, onClick: DEFAULT.onClick, onOpening: DEFAULT.onOpening, onOpened: DEFAULT.onOpened, onClosing: DEFAULT.onClosing, onClosed: DEFAULT.onClosed}}
    */
   var DEFAULT = {
-    // 点击遮罩层关闭提示框
-    closeBlur: true,
+    // 监听 hashchange 事件
+    history: true,
+    // 打开提示框时显示遮罩
+    mask: true,
+
+    // 点击提示框外面区域关闭提示框
+    closeOnClick: true,
     // 按下 esc 关闭提示框
-    closeEsc: true,
-    // 跟踪 hashchange
-    hashTracking: true,
+    closeOnEscape: true,
     // 关闭后销毁
-    destroyAfterClose: false,
+    destroyOnClosed: false,
     /**
      * 点击按钮的回调
      * @param inst 提示框实例
@@ -163,8 +166,12 @@ mdui.Dialog = (function () {
     if (!mask) {
       mask = mdui.showMask(300);
 
+      if(!inst.options.mask) {
+        mask.style.background = 'transparent';
+      }
+
       // 点击遮罩层关闭提示框
-      if (inst.options.closeBlur) {
+      if (inst.options.closeOnClick) {
         $.one(mask, 'click', function (e) {
           var target = e.target;
           if (target.classList.contains('md-mask')) {
@@ -174,7 +181,7 @@ mdui.Dialog = (function () {
       }
     }
 
-    if (inst.options.hashTracking) {
+    if (inst.options.history) {
       // 如果 hash 中原来就有 &md-dialod，先删除，避免后退历史纪录后仍然有 &md-dialog 导致无法关闭
       var hash = location.hash.substring(1);
       if (hash.indexOf('&md-dialog') > -1) {
@@ -217,12 +224,12 @@ mdui.Dialog = (function () {
 
       $.off(window, 'resize', readjust);
 
-      if (inst.options.destroyAfterClose) {
+      if (inst.options.destroyOnClosed) {
         inst.destroy();
       }
     });
 
-    if (inst.options.hashTracking && $.queue(queueName).length === 0) {
+    if (inst.options.history && $.queue(queueName).length === 0) {
       // 是否需要后退历史纪录，默认为 false。
       // 为 false 时是通过 js 关闭，需要后退一个历史记录
       // 为 true 时是通过后退按钮关闭，不需要后退历史记录
@@ -285,7 +292,7 @@ mdui.Dialog = (function () {
 
   // esc 按下时关闭对话框
   $.on(document, 'keydown', function (e) {
-    if (current && current.options.closeEsc && current.state === 'opened' && e.keyCode === 27) {
+    if (current && current.options.closeOnEscape && current.state === 'opened' && e.keyCode === 27) {
       current.close();
     }
   });

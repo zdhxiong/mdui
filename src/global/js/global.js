@@ -151,5 +151,8 @@ $.ready(function () {
   // 避免页面加载完后直接执行css动画
   // https://css-tricks.com/transitions-only-after-page-load/
 
-  document.body.classList.add('md-loaded');
+  setTimeout(function(){
+    document.body.classList.add('md-loaded');
+  }, 0);
+
 });

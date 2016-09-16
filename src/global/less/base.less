@@ -1,10 +1,6 @@
 /* Base 公共样式
    ========================================================================== */
 
-*{
-  box-sizing: border-box;
-}
-
 body {
   font-family: @font-family-base;
   font-size: @screen-xs-font-size;
@@ -21,25 +17,6 @@ body {
 /* DOM 加载完毕后添加 transition */
 body.md-loaded {
   transition: padding @drawer-transition-duration @animation-curve-linear-out-slow-in;
-}
-
-
-
-a {
-  text-decoration: none;
-  -webkit-tap-highlight-color: transparent;
-  background-color: transparent;
-  color: inherit;
-}
-
-code {
-  font-family: @font-family-code;
-}
-
-blockquote {
-  margin: 20px 0;
-  padding-left: 20px;
-  border-left: 5px solid #ddd;
 }
 
 /* 锁定屏幕 */

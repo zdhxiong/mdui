@@ -18,6 +18,8 @@
   transition: box-shadow @button-transition-duration @animation-curve-fast-out-linear-in,
     background-color @button-transition-duration @animation-curve-default,
     color @button-transition-duration @animation-curve-default,
+
+    // fab
     transform 150ms @animation-curve-default,
     opacity 150ms @animation-curve-default;
   outline: none;
@@ -39,6 +41,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  box-sizing: border-box;
 
   // 移除点击延迟触发
   touch-action: manipulation;

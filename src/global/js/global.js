@@ -106,9 +106,15 @@ mdui.hideMask = function (mask) {
  * 锁定屏幕
  */
 mdui.lockScreen = function () {
-  var oldBodyWidth = document.body.clientWidth + 'px';
+  var body = document.body;
+  var oldWindowWidth = body.clientWidth;
+
+  // 不直接把 body 设为 box-sizing: border-box，避免污染全局样式
+  var oldBodyPaddingLeft = $.getStyle(body, 'padding-left').replace('px', '');
+  var oldBodyPaddingRight = $.getStyle(body, 'padding-right').replace('px', '');
+
   document.body.classList.add('md-locked');
-  document.body.style.width = oldBodyWidth;
+  document.body.style.width = oldWindowWidth - oldBodyPaddingLeft - oldBodyPaddingRight + 'px';
 };
 
 /**

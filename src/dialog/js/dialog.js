@@ -62,21 +62,22 @@ mdui.Dialog = (function () {
     }
     var dialog = current.target;
 
+    var dialogTitle = $.children(dialog, '.md-dialog-title', true);
+    var dialogContent = $.children(dialog, '.md-dialog-content', true);
+    var dialogActions = $.children(dialog, '.md-dialog-actions', true);
+
     // 调整 dialog 的 top 和 height 值
     dialog.style.height = '';
+    if(dialogContent){
+      dialogContent.style.height = '';
+    }
     var dialogHeight = dialog.clientHeight;
     dialog.style.top = ((window.innerHeight - dialogHeight) / 2) + 'px';
     dialog.style.height = dialogHeight + 'px';
 
     // 调整 md-dialog-content 的高度
-
-    var dialogTitle = $.children(dialog, '.md-dialog-title', true);
     var dialogTitleHeight = dialogTitle ? dialogTitle.scrollHeight : 0;
-
-    var dialogActions = $.children(dialog, '.md-dialog-actions', true);
     var dialogActionsHeight = dialogActions ? dialogActions.scrollHeight : 0;
-
-    var dialogContent = $.children(dialog, '.md-dialog-content', true);
     if (dialogContent) {
       dialogContent.style.height = dialogHeight - dialogTitleHeight - dialogActionsHeight + 'px';
     }

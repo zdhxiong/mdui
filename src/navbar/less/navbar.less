@@ -5,6 +5,7 @@ body.md-loaded .md-navbar {
   transition: all @navbar-transition-duration @animation-curve-default;
 }
 .md-navbar {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   width: 100%;
@@ -12,17 +13,12 @@ body.md-loaded .md-navbar {
   z-index: @z-index-navbar;
   .md-shadow(4);
 
-  nav {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-  }
-
   a {
     transition: background-color @navbar-transition-duration @animation-curve-default;
     user-select: none;
     display: block;
     text-decoration: none;
+    color: inherit;
     margin: 0;
     .md-text-overflow();
   }

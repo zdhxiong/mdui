@@ -9,6 +9,7 @@ body.md-loaded .md-drawer {
 /* 抽屉栏外层，默认出现在左侧且隐藏 */
 .md-drawer {
   width: @drawer-width;
+  box-sizing: border-box;
   position: fixed;
   top: @navbar-height-md;
   left: 0;
@@ -113,6 +114,8 @@ ul.md-drawer-items,
   display: flex;
   align-items: center;
   padding: 0 12px 0 16px;
+  text-decoration: none;
+  color: inherit;
   @media (min-width: @screen-md-min) {
     padding-left: 24px;
   }

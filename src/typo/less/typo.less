@@ -1,6 +1,7 @@
 /* Typography 排版
    ========================================================================== */
 
+/* .md-typo-display-4 */
 .md-typo-display-4,
 .md-typo-display-4-opacity {
   .md-typo-display-4();
@@ -9,6 +10,7 @@
   ._md-typo-display-4-opacity();
 }
 
+/* .md-typo-display-3 */
 .md-typo-display-3,
 .md-typo-display-3-opacity {
   .md-typo-display-3();
@@ -17,6 +19,7 @@
   ._md-typo-display-3-opacity();
 }
 
+/* .md-typo-display-2 */
 .md-typo-display-2,
 .md-typo-display-2-opacity {
   .md-typo-display-2();
@@ -25,6 +28,7 @@
   ._md-typo-display-2-opacity();
 }
 
+/* .md-typo-display-1 */
 .md-typo-display-1,
 .md-typo-display-1-opacity {
   .md-typo-display-1();
@@ -33,6 +37,7 @@
   ._md-typo-display-1-opacity();
 }
 
+/* .md-typo-headline */
 .md-typo-headline,
 .md-typo-headline-opacity {
   .md-typo-headline();
@@ -41,6 +46,7 @@
   ._md-typo-headline-opacity();
 }
 
+/* .md-typo-title */
 .md-typo-title,
 .md-typo-title-opacity {
   .md-typo-title();
@@ -81,74 +87,14 @@
   ._md-typo-caption-opacity();
 }
 
-// https://github.com/sofish/typo.css/blob/master/typo.css
-// https://github.com/sofish/typo.css/blob/master/license.txt
 .md-typo {
   line-height: 1.8;
 
-  dl,
-  dt,
-  dd,
-  ul,
-  ol,
-  li,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  pre,
-  code,
-  legend,
-  p,
-  blockquote,
-  hr {
-    margin: 0;
-    padding: 0;
-  }
-
-  blockquote {
-    position: relative;
-    color: #999;
-    font-weight: 400;
-    border-left: 1px solid #2196F3;
-    padding-left: 1em;
-    margin: 1em 3em 1em 2em;
-    @media only screen and ( max-width: @screen-xs-max ) {
-      margin: 1em 0;
-    }
-  }
-
-  /* Firefox 以外，元素没有下划线，需添加 */
-  acronym,
-  abbr {
-    border-bottom: 1px dotted;
-    font-variant: normal;
-  }
-
-  /* 添加鼠标问号，进一步确保应用的语义是正确的（要知道，交互他们也有洁癖，如果你不去掉，那得多花点口舌） */
-  abbr {
-    cursor: help;
-    text-decoration: none;
-  }
-
-  /* 一致的 del 样式 */
-  del {
-    text-decoration: line-through;
-  }
-
-  address, caption, cite, code, dfn, em, th, var {
+  address, caption, cite, code, dfn, th, var {
     font-style: normal;
     font-weight: 400;
   }
 
-  /* 去掉列表前的标识, li 会继承，大部分网站通常用列表来很多内容，所以应该当去 */
-  ul, ol {
-    list-style: none;
-  }
-
-  /* 对齐是排版最重要的因素, 别让什么都居中 */
   caption, th {
     text-align: left;
   }
@@ -157,29 +103,29 @@
     content: '';
   }
 
-  /* 统一上标和下标 */
-  sub, sup {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
+  pre, code, pre tt {
+    font-family: Consolas, Courier, 'Courier New', monospace;
   }
 
-  :root sub, :root sup {
-    vertical-align: baseline; /* for ie9 and other modern browsers */
+  figcaption {
+    font-size: 80%;
+    opacity: @opacity-black-secondary;
   }
 
-  sup {
-    top: -0.5em;
+  [draggable] {
+    cursor: move;
   }
 
-  sub {
-    bottom: -0.25em;
+  p, pre, ul, ol, dl, form, hr, table {
+    margin: 0 0 1.2em 0;
   }
 
-  /* 让链接在 hover 状态下显示下划线 */
+
+  /* a */
   a {
     color: #2196F3;
     border-bottom: 1px solid #2196F3;
+    text-decoration: none;
     &:hover {
       border-bottom-color: #555;
       color: #555;
@@ -187,17 +133,27 @@
     }
   }
 
-  /* 默认不显示下划线，保持页面简洁 */
-  ins, a {
-    text-decoration: none;
+  /* small */
+  small {
+    font-size: 80%;
   }
 
-  /* 专名号 */
-  u {
-    text-decoration: underline;
+  /* blockquote */
+  blockquote {
+    font-weight: 400;
+    border-left: 4px solid #ddd;
+    padding-left: 1em;
+    margin: 1em 3em 1em 2em;
+    @media only screen and ( max-width: @screen-xs-max ) {
+      margin: 1em 0;
+    }
+
+    small {
+      opacity: @opacity-black-secondary;
+    }
   }
 
-  /* 标记，类似于手写的荧光笔的作用 */
+  /* mark */
   mark {
     background: #fffdd1;
     border-bottom: 1px solid #ffedce;
@@ -205,58 +161,22 @@
     margin: 0 5px;
   }
 
-  /* 代码片断 */
-  pre, code, pre tt {
-    font-family: Consolas, Courier, 'Courier New', monospace;
-  }
-
-  pre {
-    background: #f8f8f8;
-    border: 1px solid #ddd;
-    padding: 1em 1.5em;
-    display: block;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* 一致化 horizontal rule */
-  hr {
-    border: none;
-    border-bottom: 1px solid #cfcfcf;
-    margin-bottom: 0.8em;
-    height: 10px;
-  }
-
-  /* 底部印刷体、版本等标记 */
-  small,
-  figcaption {
-    font-size: 0.9em;
-    color: #888;
-  }
-
-  strong, b {
-    font-weight: bold;
-    color: #000;
-  }
-
-  /* 可拖动文件添加拖动手势 */
-  [draggable] {
-    cursor: move;
-  }
-
-  /* 保证块/段落之间的空白隔行 */
-  p, pre, ul, ol, dl, form, hr, table {
-    margin: 0 0 1.2em 0;
-  }
-
-  /* 标题应该更贴紧内容，并与其他块区分，margin 值要相应做优化 */
+  /* h1 - h6 */
   h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
-    color: #000;
+    color: inherit;
+    font-family: inherit;
     margin-top: 1.2em;
     margin-bottom: 0.6em;
     line-height: 1.35;
-  }
 
+    small {
+      font-size: 65%;
+      line-height: 1;
+      font-weight: 400;
+      opacity: @opacity-black-secondary;
+    }
+  }
   h1 {
     font-size: 2em;
   }
@@ -269,25 +189,83 @@
   h4 {
     font-size: 1.4em;
   }
-  h5, h6 {
+  h5 {
     font-size: 1.2em;
   }
+  h6 {
+    font-size: 1.1em;
+  }
 
+  /* code */
+  code {
+    padding: 2px 6px;
+    color: #c7254e;
+    background-color: #f7f7f9;
+    border-radius: 2px;
+  }
+
+  /* abbr */
+  abbr[title] {
+    cursor: help;
+    text-decoration: none;
+    border-bottom: 1px dotted;
+  }
+
+  /* ins */
+  ins {
+    text-decoration: none;
+    border-bottom: 1px solid ;
+  }
+
+  /* u */
+  u {
+    text-decoration: none;
+    border-bottom: 1px solid;
+  }
+
+  /* del */
+  del {
+    text-decoration: line-through;
+  }
+
+  /* hr */
+  hr {
+    border: none;
+    border-bottom: 1px solid #cfcfcf;
+    margin-bottom: 0.8em;
+    height: 10px;
+  }
+
+  /* pre */
+  pre {
+    background: #f8f8f8;
+    border-radius: 2px;
+    border: 1px solid #ddd;
+    padding: 12px 16px;
+    display: block;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ul / ol */
   ul {
-    margin-left: 1.3em;
+    padding-left: 2em;
     list-style: disc;
   }
   ol {
     list-style: decimal;
-    margin-left: 1.9em;
+    padding-left: 2em;
   }
   li ul,
   li ol {
-    margin-bottom: 0.8em;
-    margin-left: 2em;
+    margin: 0.8em 0;
   }
   li ul {
     list-style: circle;
+  }
+
+  /* img */
+  img {
+    max-width: 100%;
   }
 
   /* 去掉各Table cell 的边距并让其边重合 */
@@ -312,14 +290,5 @@
 
   table caption {
     border-bottom: none;
-  }
-
-  em, legend, caption {
-    color: #000;
-    font-weight: inherit;
-  }
-
-  img {
-    max-width: 100%;
   }
 }

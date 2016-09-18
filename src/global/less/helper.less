@@ -1,6 +1,64 @@
 /* Helper 辅助类
    ========================================================================== */
 
+/**
+ * =================== 边距
+ */
+._spacing_margin_mixin(@spacing) when (@spacing > -1) {
+  ._spacing_margin_mixin(@spacing - 1);
+
+  .md-m-a-@{spacing} {
+    .md-m-a(@spacing) !important;
+  }
+  .md-m-t-@{spacing} {
+    .md-m-t(@spacing) !important;
+  }
+  .md-m-r-@{spacing} {
+    .md-m-r(@spacing) !important;
+  }
+  .md-m-b-@{spacing} {
+    .md-m-b(@spacing) !important;
+  }
+  .md-m-l-@{spacing} {
+    .md-m-l(@spacing) !important;
+  }
+  .md-m-x-@{spacing} {
+    .md-m-x(@spacing) !important;
+  }
+  .md-m-y-@{spacing} {
+    .md-m-y(@spacing) !important;
+  }
+
+  .md-p-a-@{spacing} {
+    .md-p-a(@spacing) !important;
+  }
+  .md-p-t-@{spacing} {
+    .md-p-t(@spacing) !important;
+  }
+  .md-p-r-@{spacing} {
+    .md-p-r(@spacing) !important;
+  }
+  .md-p-b-@{spacing} {
+    .md-p-b(@spacing) !important;
+  }
+  .md-p-l-@{spacing} {
+    .md-p-l(@spacing) !important;
+  }
+  .md-p-x-@{spacing} {
+    .md-p-x(@spacing) !important;
+  }
+  .md-p-y-@{spacing} {
+    .md-p-y(@spacing) !important;
+  }
+}
+
+._spacing_margin_mixin(5);
+
+
+/**
+ * ======================== 快速浮动
+ */
+
 /* 向左浮动 */
 .md-float-left {
   float: left !important;
@@ -11,51 +69,71 @@
   float: right !important;
 }
 
+/**
+ * ========================= 水平居中
+ */
 /* 水平居中 */
 .md-center {
-  .md-center();
+  .md-center() !important;
 }
 
+/**
+ * ========================= 垂直居中
+ */
 /* 垂直居中 */
 .md-valign {
-  .md-valign();
+  .md-valign() !important;
 }
 
+/**
+ * ========================= 文本对齐方式
+ */
 /* 文本左对齐 */
 .md-text-left {
-  text-align: left;
+  text-align: left !important;
 }
 
 /* 文本居中对齐 */
 .md-text-center {
-  text-align: center;
+  text-align: center !important;
 }
 
 /* 文本向右对齐 */
 .md-text-right {
-  text-align: right;
+  text-align: right !important;
 }
 
+/**
+ * ========================= 文本大小写转换
+ */
+/* 文本转为小写 */
+.md-text-lowercase {
+  text-transform: lowercase !important;
+}
+/* 文本转为大写 */
+.md-text-uppercase {
+  text-transform: uppercase !important;
+}
+
+/**
+ * ======================== 文本截断
+ */
+/* 文本截断 */
+.md-text-truncate {
+  .md-text-truncate();
+}
+
+/**
+ * ========================= 清除浮动
+ */
 /* 清除浮动 */
 .md-clearfix {
   .md-clearfix();
 }
 
-/* display: inline */
-.md-inline {
-  display: inline !important;
-}
-
-/* display: block */
-.md-block {
-  display: block !important;
-}
-
-/* display: inline-block */
-.md-inline-block {
-  display: inline-block !important;
-}
-
+/**
+ * ========================= 隐藏内容
+ */
 /* 隐藏元素 */
 .md-hidden,
 [hidden] {

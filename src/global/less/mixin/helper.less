@@ -1,3 +1,52 @@
+// ======================== 边距
+.md-m-a(@spacing) {
+  margin: @spacing * @spacing-base;
+}
+.md-m-t(@spacing) {
+  margin-top: @spacing * @spacing-base;
+}
+.md-m-r(@spacing) {
+  margin-right: @spacing * @spacing-base;
+}
+.md-m-b(@spacing) {
+  margin-bottom: @spacing * @spacing-base;
+}
+.md-m-l(@spacing) {
+  margin-left: @spacing * @spacing-base;
+}
+.md-m-x(@spacing) {
+  margin-left: @spacing * @spacing-base;
+  margin-right: @spacing * @spacing-base;
+}
+.md-m-y(@spacing) {
+  margin-top: @spacing * @spacing-base;
+}
+
+.md-p-a(@spacing) {
+  padding: @spacing * @spacing-base;
+}
+.md-p-t(@spacing) {
+  padding-top: @spacing * @spacing-base;
+}
+.md-p-r(@spacing) {
+  padding-right: @spacing * @spacing-base;
+}
+.md-p-b(@spacing) {
+  padding-bottom: @spacing * @spacing-base;
+}
+.md-p-l(@spacing) {
+  padding-left: @spacing * @spacing-base;
+}
+.md-p-x(@spacing) {
+  padding-left: @spacing * @spacing-base;
+  padding-right: @spacing * @spacing-base;
+}
+.md-p-y(@spacing) {
+  padding-top: @spacing * @spacing-base;
+  padding-bottom: @spacing * @spacing-base;
+}
+
+//=========================== 清除浮动
 // 清除浮动
 .md-clearfix(){
   &:before,
@@ -11,7 +60,7 @@
 }
 
 // 用省略号代替被截断的文本
-.md-text-overflow() {
+.md-text-truncate() {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -29,7 +78,7 @@
   align-items: center;
 }
 
-// 使元素水平剧中
+// 使元素水平居中
 .md-center() {
   display: block;
   margin-left: auto;

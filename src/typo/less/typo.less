@@ -90,7 +90,7 @@
 .md-typo {
   line-height: 1.8;
 
-  address, caption, cite, code, dfn, th, var {
+  address, caption, cite, code, dfn, th {
     font-style: normal;
     font-weight: 400;
   }
@@ -103,7 +103,7 @@
     content: '';
   }
 
-  pre, code, pre tt {
+  pre, code, kbd, samp, pre tt {
     font-family: Consolas, Courier, 'Courier New', monospace;
   }
 
@@ -116,7 +116,7 @@
     cursor: move;
   }
 
-  p, pre, ul, ol, dl, form, hr, table {
+  p, pre, ul, ol, dl, form, hr, table, figure {
     margin: 0 0 1.2em 0;
   }
 
@@ -148,8 +148,9 @@
       margin: 1em 0;
     }
 
-    small {
+    footer {
       opacity: @opacity-black-secondary;
+      font-size: 86%;
     }
   }
 
@@ -253,6 +254,15 @@
     padding: 12px 16px;
     display: block;
     -webkit-overflow-scrolling: touch;
+  }
+
+  /* kbd */
+  kbd {
+    padding: 2px 6px;
+    font-size: 90%;
+    color: #fff;
+    background-color: #333;
+    border-radius: 2px;
   }
 
   /* ul / ol */

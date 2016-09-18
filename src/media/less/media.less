@@ -1,15 +1,18 @@
 /* Media 媒体工具
    ========================================================================== */
 
+/* 响应式图片和视频 */
 .md-img-fluid,
 .md-video-fluid {
   .md-img-fluid();
 }
 
+/* 圆角图片 */
 .md-img-rounded {
   border-radius: 2px;
 }
 
+/* 圆形图片 */
 .md-img-circle {
   border-radius: 50%;
 }
@@ -30,4 +33,23 @@
     width: 100%;
     height: 100%
   }
+}
+
+/**
+ * Figure
+ */
+
+.md-figure {
+  display: inline-block;
+  margin: 0 0 1.2em 0;
+}
+
+.md-figure-img {
+  margin-bottom: @spacing-base;
+  line-height: 1;
+}
+
+.md-figure-caption {
+  font-size: 90%;
+  opacity: 0.54;
 }

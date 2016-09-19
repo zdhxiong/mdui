@@ -9,6 +9,7 @@
   overflow: hidden;
   .md-shadow(@card-shadow);
   transition: box-shadow @card-transition-duration @animation-curve-default;
+  color: #000;
 }
 
 /* 鼠标悬浮在卡片上，阴影加深 */
@@ -17,13 +18,12 @@
 }
 
 /**
- * ===================== 卡片头部，包含头像、标题、副标题
+ * ===================== 头部，包含头像、标题、副标题
  */
 .md-card-header {
   box-sizing: border-box;
   padding: 16px;
   position: relative;
-  color: #000;
 }
 
 /* 卡片头部头像 */
@@ -62,7 +62,6 @@
 .md-card-primary {
   position: relative;
   padding: 24px 16px 16px 16px;
-  color: #000;
 }
 
 /* 主标题区域标题 */
@@ -133,7 +132,7 @@
 }
 
 /**
- * ============================= 卡片媒体元素区域
+ * ============================= 媒体元素区域
  */
 .md-card-media {
   position: relative;
@@ -141,14 +140,19 @@
     display: block;
     width: 100%;
   }
+}
 
-  /* 媒体元素内的标题 */
+/* 覆盖在媒体元素上的内容 */
+.md-card-media-covered {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+
+  /* 覆盖在媒体元素上的标题 */
   .md-card-primary {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, @opacity-black-disabled);
     color: #fff;
   }
   .md-card-primary-title {
@@ -158,16 +162,8 @@
     opacity: @opacity-white-secondary;
   }
 
-  /* 媒体元素内的按钮 */
+  /* 覆盖在媒体元素上的按钮 */
   .md-card-actions {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, @opacity-black-disabled);
-    color: #fff;
-    .md-btn {
-      color: #fff;
-    }
+    border: none;
   }
 }

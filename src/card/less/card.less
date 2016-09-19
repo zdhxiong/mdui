@@ -1,0 +1,173 @@
+/* Card 卡片
+   ========================================================================== */
+
+/* 卡片 */
+.md-card {
+  box-sizing: border-box;
+  border-radius: @card-boder-radius;
+  margin-bottom: @card-margin-bottom;
+  overflow: hidden;
+  .md-shadow(@card-shadow);
+  transition: box-shadow @card-transition-duration @animation-curve-default;
+}
+
+/* 鼠标悬浮在卡片上，阴影加深 */
+.md-card-hoverable:hover {
+  .md-shadow(@card-shadow-hover);
+}
+
+/**
+ * ===================== 卡片头部，包含头像、标题、副标题
+ */
+.md-card-header {
+  box-sizing: border-box;
+  padding: 16px;
+  position: relative;
+  color: #000;
+}
+
+/* 卡片头部头像 */
+.md-card-header-avatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  float: left;
+}
+
+/* 卡片头部标题 */
+.md-card-header-title {
+  display: block;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  margin-left: 52px;
+  .md-text-truncate();
+  opacity: @opacity-black-text;
+}
+
+/* 卡片头部副标题 */
+.md-card-header-subtitle {
+  display: block;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  margin-left: 52px;
+  .md-text-truncate();
+  opacity: @opacity-black-secondary;
+}
+
+/**
+ * =========================== 主标题区域
+ */
+.md-card-primary {
+  position: relative;
+  padding: 24px 16px 16px 16px;
+  color: #000;
+}
+
+/* 主标题区域标题 */
+.md-card-primary-title {
+  display: block;
+  font-size: 24px;
+  line-height: 36px;
+  opacity: @opacity-black-text;
+  .md-text-truncate();
+}
+
+/* 主标题区域副标题 */
+.md-card-primary-subtitle {
+  display: block;
+  font-size: 14px;
+  line-height: 24px;
+  opacity: @opacity-black-secondary;
+  .md-text-truncate();
+}
+
+/**
+ * ============================ 内容区域
+ */
+.md-card-content {
+  position: relative;
+  padding: 16px;
+  line-height: 24px;
+  font-size: 14px;
+}
+
+/**
+ * ============================ 卡片菜单
+ */
+.md-card-menu {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+/**
+ * =========================== 按钮区域
+ */
+.md-card-actions {
+  position: relative;
+  box-sizing: border-box;
+  padding: 8px;
+  border-top: 1px solid rgba(0, 0, 0, @opacity-black-divider);
+  .md-btn {
+    min-width: 64px;
+    margin: 0 8px 0 0;
+    max-width: 100%;
+    .md-text-truncate();
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+/* 使按钮竖向排列 */
+.md-card-actions-stacked {
+  .md-btn {
+    margin: 0 0 4px 0;
+    display: block;
+    &:last-child {
+      margin: 0;
+    }
+  }
+}
+
+/**
+ * ============================= 卡片媒体元素区域
+ */
+.md-card-media {
+  position: relative;
+  img, video {
+    display: block;
+    width: 100%;
+  }
+
+  /* 媒体元素内的标题 */
+  .md-card-primary {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, @opacity-black-disabled);
+    color: #fff;
+  }
+  .md-card-primary-title {
+    opacity: @opacity-white-text;
+  }
+  .md-card-primary-subtitle {
+    opacity: @opacity-white-secondary;
+  }
+
+  /* 媒体元素内的按钮 */
+  .md-card-actions {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, @opacity-black-disabled);
+    color: #fff;
+    .md-btn {
+      color: #fff;
+    }
+  }
+}

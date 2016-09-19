@@ -1,4 +1,4 @@
-(function(){
+(function($){
 
   function Plugin(option){
     var value;
@@ -28,4 +28,4 @@
     $.fn.mdDrawer = old;
     return this;
   };
-})();
+})(jQuery);

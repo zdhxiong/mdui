@@ -104,6 +104,11 @@
   box-sizing: border-box;
   padding: 8px;
   border-top: 1px solid rgba(0, 0, 0, @opacity-black-divider);
+
+  .md-icon {
+    padding-right: 10px;
+  }
+
   .md-btn {
     margin: 0 8px 0 0;
     max-width: 100%;
@@ -111,6 +116,13 @@
     &:last-child {
       margin-right: 0;
     }
+    .md-icon {
+      padding-right: 0;
+    }
+  }
+
+  * {
+    line-height: @button-height;
   }
 }
 
@@ -157,4 +169,23 @@
   .md-card-actions {
     border: none;
   }
+}
+
+/* 覆盖在媒体元素顶部 */
+.md-card-media-covered-top {
+  bottom: auto;
+  top: 0;
+}
+
+/* 覆盖层透明 */
+.md-card-media-covered-transparent {
+  background: transparent;
+}
+
+/* 覆盖层渐变 */
+.md-card-media-covered-gradient {
+  background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  background: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  background: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
 }

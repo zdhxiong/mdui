@@ -18,6 +18,7 @@
   box-sizing: border-box;
   padding: 16px;
   position: relative;
+  height: 72px;
 }
 
 /* 卡片头部头像 */
@@ -64,7 +65,6 @@
   font-size: 24px;
   line-height: 36px;
   opacity: @opacity-black-text;
-  .md-text-truncate();
 }
 
 /* 主标题区域副标题 */
@@ -73,7 +73,6 @@
   font-size: 14px;
   line-height: 24px;
   opacity: @opacity-black-secondary;
-  .md-text-truncate();
 }
 
 /**
@@ -93,6 +92,10 @@
   position: absolute;
   top: 16px;
   right: 16px;
+
+  .md-btn {
+    margin-left: 8px;
+  }
 }
 
 /**
@@ -105,24 +108,16 @@
   padding: 8px;
   border-top: 1px solid rgba(0, 0, 0, @opacity-black-divider);
 
-  .md-icon {
-    padding-right: 10px;
-  }
-
   .md-btn {
     margin: 0 8px 0 0;
     max-width: 100%;
     .md-text-truncate();
-    &:last-child {
-      margin-right: 0;
-    }
-    .md-icon {
-      padding-right: 0;
-    }
   }
 
-  * {
-    line-height: @button-height;
+  .md-btn-icon {
+    width: @button-height;
+    height: @button-height;
+    margin: 0 8px;
   }
 }
 
@@ -146,6 +141,11 @@
     display: block;
     width: 100%;
   }
+}
+
+/* 按钮区域紧跟在媒体元素后面，则去除按钮区域的上边框 */
+.md-card-media + .md-card-actions {
+  border-top: none;
 }
 
 /* 覆盖在媒体元素上的内容 */
@@ -184,8 +184,9 @@
 
 /* 覆盖层渐变 */
 .md-card-media-covered-gradient {
-  background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-  background: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-  background: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0));
+
+  &.md-card-media-covered-top {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0));
+  }
 }

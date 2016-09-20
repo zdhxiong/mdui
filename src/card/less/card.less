@@ -7,14 +7,8 @@
   border-radius: @card-boder-radius;
   margin-bottom: @card-margin-bottom;
   overflow: hidden;
-  .md-shadow(@card-shadow);
-  transition: box-shadow @card-transition-duration @animation-curve-default;
   color: #000;
-}
-
-/* 鼠标悬浮在卡片上，阴影加深 */
-.md-card-hoverable:hover {
-  .md-shadow(@card-shadow-hover);
+  .md-shadow(@card-shadow);
 }
 
 /**
@@ -105,12 +99,12 @@
  * =========================== 按钮区域
  */
 .md-card-actions {
+  .md-clearfix();
   position: relative;
   box-sizing: border-box;
   padding: 8px;
   border-top: 1px solid rgba(0, 0, 0, @opacity-black-divider);
   .md-btn {
-    min-width: 64px;
     margin: 0 8px 0 0;
     max-width: 100%;
     .md-text-truncate();
@@ -152,9 +146,6 @@
   color: #fff;
 
   /* 覆盖在媒体元素上的标题 */
-  .md-card-primary {
-    color: #fff;
-  }
   .md-card-primary-title {
     opacity: @opacity-white-text;
   }

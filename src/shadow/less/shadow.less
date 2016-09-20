@@ -10,3 +10,12 @@
 }
 
 ._md_shadow(24);
+
+/* 鼠标悬浮时加深阴影 */
+.md-hoverable {
+  transition: @shadow-hover-transition;
+
+  &:hover {
+    .md-shadow(@shadow-hover-depth);
+  }
+}

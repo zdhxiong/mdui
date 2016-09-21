@@ -1,0 +1,107 @@
+/* Grid List 网格列表
+   ========================================================================== */
+
+.md-gridlist {
+  box-sizing: border-box;
+  margin-bottom: 4px;
+  overflow: hidden;
+  position: relative;
+
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
+/* 操作栏 */
+.md-gridlist-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 48px;
+  max-height: 68px;
+  padding: 16px;
+  box-sizing: border-box;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.2);
+
+  .md-icon {
+    color: #fff;
+  }
+}
+
+/* 操作栏内的文本 */
+.md-gridlist-text {
+  overflow: hidden;
+}
+
+/* 标题 */
+.md-gridlist-title {
+  font-size: 16px;
+  height: 16px;
+  line-height: 16px;
+  .md-text-truncate();
+
+  .md-icon {
+    margin-right: 8px;
+  }
+}
+
+/* 副标题 */
+.md-gridlist-subtitle {
+  margin-top: 4px;
+  font-size: 12px;
+  height: 18px;
+  line-height: 18px;
+  .md-text-truncate();
+
+  .md-icon {
+    font-size: 18px;
+    margin-right: 8px;
+  }
+}
+
+/* 操作栏内的按钮 */
+.md-gridlist-buttons {
+  white-space: nowrap;
+  margin: -8px;
+
+  .md-btn {
+    margin-left: 8px;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+.md-gridlist-text + .md-gridlist-buttons {
+  margin-left: 8px;
+}
+.md-gridlist-buttons + .md-gridlist-text {
+  margin-left: 16px;
+}
+
+/* 操作栏位于顶部 */
+.md-gridlist-actions-top {
+  bottom: auto;
+  top: 0;
+}
+
+/* 操作栏背景透明 */
+.md-gridlist-actions-transparent {
+  background: transparent;
+}
+
+/* 操作栏背景渐变 */
+.md-gridlist-actions-gradient {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0));
+
+  &.md-gridlist-actions-top {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0));
+  }
+}

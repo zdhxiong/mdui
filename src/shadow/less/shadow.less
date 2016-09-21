@@ -13,7 +13,8 @@
 
 /* 鼠标悬浮时加深阴影 */
 .md-hoverable {
-  transition: @shadow-hover-transition;
+  will-change: box-shadow;
+  transition: box-shadow @shadow-hover-transition-duration @shadow-hover-transition-timing-function;
 
   &:hover {
     .md-shadow(@shadow-hover-depth);

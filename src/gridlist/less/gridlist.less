@@ -17,7 +17,6 @@
 .md-gridlist-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
   position: absolute;
   left: 0;
@@ -38,6 +37,7 @@
 /* 操作栏内的文本 */
 .md-gridlist-text {
   overflow: hidden;
+  flex: 1;
 }
 
 /* 标题 */
@@ -70,6 +70,7 @@
 .md-gridlist-buttons {
   white-space: nowrap;
   margin: -8px;
+  flex: none;
 
   .md-btn {
     margin-left: 8px;

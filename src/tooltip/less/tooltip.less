@@ -1,0 +1,25 @@
+/* Tooltip 工具提示
+   ========================================================================== */
+
+.md-tooltip {
+  transition: all @tooltip-transition-duration @tooltip-transition-timing-function;
+  border-radius: @tooltip-border-radius;
+  background-color: @tooltip-background;
+  color: @tooltip-font-color;
+}
+
+/* 桌面版样式，由 js 检测后添加该类 */
+.md-tooltip-desktop {
+  font-size: @tooltip-font-size-desktop;
+  margin-top: @tooltip-margin-top-desktop;
+  padding: 0 @tooltip-padding-x-desktop;
+  min-height: @tooltip-height-desktop;
+}
+
+/* 触摸版样式，由 js 检测后添加该类 */
+.md-tooltip-mobile {
+  font-size: @tooltip-font-size-mobile;
+  margin-top: @tooltip-margin-top-mobile;
+  padding: 0 @tooltip-padding-x-mobile;
+  min-height: @tooltip-height-mobile;
+}

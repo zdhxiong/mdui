@@ -1,0 +1,39 @@
+// Tooltip 工具提示
+// =============================================================================
+
+// 动画时间
+@tooltip-transition-duration: 0.15s;
+// 动画曲线
+@tooltip-transition-timing-function: @animation-curve-default;
+
+// 背景颜色
+@tooltip-background-color: @color-grey-700;
+// 背景色透明度
+@tooltip-background-opacity: 0.9;
+// 背景
+@tooltip-background: rgba(red(@tooltip-background-color), green(@tooltip-background-color), blue(@tooltip-background-color), 0.9);
+// 文本色
+@tooltip-font-color: #fff;
+
+// 圆角
+@tooltip-border-radius: 2px;
+
+// ============================= 桌面版样式
+// 字体大小
+@tooltip-font-size-desktop: 12px;
+// 上外边距
+@tooltip-margin-top-desktop: 14px;
+// 左右内边距
+@tooltip-padding-x-desktop: 8px;
+// 高度
+@tooltip-height-desktop: 24px;
+
+// ============================= 触摸版样式
+// 触摸版字体大小
+@tooltip-font-size-mobile: 14px;
+// 上外边距
+@tooltip-margin-top-mobile: 24px;
+// 左右内边距
+@tooltip-padding-x-mobile: 16px;
+// 高度
+@tooltip-height-mobile: 32px;

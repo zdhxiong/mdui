@@ -14,19 +14,42 @@
 @_screen-col-11: 91.666667%;
 @_screen-col-12: 100%;
 
-// 生成列、列偏移
+// 等分列
+@_screen-average-1: 100%;
+@_screen-average-2: 50%;
+@_screen-average-3: 33.333333%;
+@_screen-average-4: 25%;
+@_screen-average-5: 20%;
+@_screen-average-6: 16.666667%;
+@_screen-average-7: 14.285714%;
+@_screen-average-8: 12.5%;
+@_screen-average-9: 11.111111%;
+@_screen-average-10: 10%;
+@_screen-average-11: 9.090909%;
+@_screen-average-12: 8.333333%;
+
+  // 生成列、列偏移
 ._grid_col_loop(@cols, @screen) when (@cols > 0) {
   ._grid_col_loop((@cols - 1), @screen);
 
   @widthName: '_screen-col-@{cols}';
 
+  // 列宽度
   .md-col-@{screen}-@{cols} {
     float: left;
     width: @@widthName;
   }
 
+  // 列偏移
   .md-col-offset-@{screen}-@{cols} {
     margin-left: @@widthName;
+  }
+
+  // 等分列
+  @averageName: '_screen-average-@{cols}';
+  .md-row-@{screen}-@{cols} .md-col {
+    float: left;
+    width: @@averageName;
   }
 }
 
@@ -55,7 +78,8 @@
   }
 }
 
-.md-row {
+.md-row,
+[class*="md-row-"] {
   margin-left: -@grid-gap-16 / 2;
   margin-right: -@grid-gap-16 / 2;
   &:after {
@@ -69,7 +93,8 @@
 [class*="md-col-sm-"],
 [class*="md-col-md-"],
 [class*="md-col-lg-"],
-[class*="md-col-xl-"] {
+[class*="md-col-xl-"],
+.md-col {
   box-sizing: border-box;
   position: relative;
   min-height: 1px;
@@ -85,7 +110,8 @@
     padding-right: @grid-gap-24 / 2;
   }
 
-  .md-row {
+  .md-row,
+  [class*="md-row-"] {
     margin-left: -@grid-gap-24 / 2;
     margin-right: -@grid-gap-24 / 2;
   }
@@ -94,7 +120,8 @@
   [class*="md-col-sm-"],
   [class*="md-col-md-"],
   [class*="md-col-lg-"],
-  [class*="md-col-xl-"] {
+  [class*="md-col-xl-"],
+  .md-col {
     padding-left: @grid-gap-24 / 2;
     padding-right: @grid-gap-24 / 2;
   }

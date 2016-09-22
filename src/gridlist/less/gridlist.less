@@ -1,7 +1,23 @@
 /* Grid List 网格列表
    ========================================================================== */
 
-.md-gridlist {
+/* 调整网格边距 */
+.md-grid-list {
+  margin: 0 -2px;
+
+  .md-col,
+  [class*="md-col-xs-"],
+  [class*="md-col-sm-"],
+  [class*="md-col-md-"],
+  [class*="md-col-lg-"],
+  [class*="md-col-xl-"] {
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+}
+
+/* 单元格 */
+.md-grid-tile {
   box-sizing: border-box;
   margin-bottom: 4px;
   overflow: hidden;
@@ -14,7 +30,7 @@
 }
 
 /* 操作栏 */
-.md-gridlist-actions {
+.md-grid-tile-actions {
   display: flex;
   align-items: center;
 
@@ -35,13 +51,13 @@
 }
 
 /* 操作栏内的文本 */
-.md-gridlist-text {
+.md-grid-tile-text {
   overflow: hidden;
   flex: 1;
 }
 
 /* 标题 */
-.md-gridlist-title {
+.md-grid-tile-title {
   font-size: 16px;
   height: 16px;
   line-height: 16px;
@@ -53,7 +69,7 @@
 }
 
 /* 副标题 */
-.md-gridlist-subtitle {
+.md-grid-tile-subtitle {
   margin-top: 4px;
   font-size: 12px;
   height: 18px;
@@ -67,7 +83,7 @@
 }
 
 /* 操作栏内的按钮 */
-.md-gridlist-buttons {
+.md-grid-tile-buttons {
   white-space: nowrap;
   margin: -8px;
   flex: none;
@@ -80,29 +96,29 @@
   }
 }
 
-.md-gridlist-text + .md-gridlist-buttons {
+.md-grid-tile-text + .md-grid-tile-buttons {
   margin-left: 8px;
 }
-.md-gridlist-buttons + .md-gridlist-text {
+.md-grid-tile-buttons + .md-grid-tile-text {
   margin-left: 16px;
 }
 
 /* 操作栏位于顶部 */
-.md-gridlist-actions-top {
+.md-grid-tile-actions-top {
   bottom: auto;
   top: 0;
 }
 
 /* 操作栏背景透明 */
-.md-gridlist-actions-transparent {
+.md-grid-tile-actions-transparent {
   background: transparent;
 }
 
 /* 操作栏背景渐变 */
-.md-gridlist-actions-gradient {
+.md-grid-tile-actions-gradient {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0));
 
-  &.md-gridlist-actions-top {
+  &.md-grid-tile-actions-top {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0));
   }
 }

@@ -3,7 +3,7 @@
 
 /* 调整网格边距 */
 .md-grid-list {
-  margin: 0 -2px;
+  margin: 0 -@grid-list-gutter / 2;
 
   .md-col,
   [class*="md-col-xs-"],
@@ -11,15 +11,15 @@
   [class*="md-col-md-"],
   [class*="md-col-lg-"],
   [class*="md-col-xl-"] {
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: @grid-list-gutter / 2;
+    padding-right: @grid-list-gutter / 2;
   }
 }
 
 /* 单元格 */
 .md-grid-tile {
   box-sizing: border-box;
-  margin-bottom: 4px;
+  margin-bottom: @grid-list-gutter / 2;
   overflow: hidden;
   position: relative;
 

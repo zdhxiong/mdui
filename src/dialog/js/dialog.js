@@ -11,7 +11,7 @@ mdui.Dialog = (function () {
     // 监听 hashchange 事件
     history: true,
     // 打开提示框时显示遮罩
-    mask: true,
+    overlay: true,
 
     // 点击提示框外面区域关闭提示框
     closeOnClick: true,
@@ -40,7 +40,7 @@ mdui.Dialog = (function () {
   /**
    * 遮罩层元素
    */
-  var mask;
+  var overlay;
 
   /**
    * 当前提示框
@@ -167,18 +167,18 @@ mdui.Dialog = (function () {
       $.pluginEvent('opened', 'dialog', inst);
     });
 
-    if (!mask) {
-      mask = mdui.showMask(300);
+    if (!overlay) {
+      overlay = mdui.showOverlay(300);
 
-      if(!inst.options.mask) {
-        mask.style.background = 'transparent';
+      if(!inst.options.overlay) {
+        overlay.style.background = 'transparent';
       }
 
       // 点击遮罩层关闭提示框
       if (inst.options.closeOnClick) {
-        $.one(mask, 'click', function (e) {
+        $.one(overlay, 'click', function (e) {
           var target = e.target;
-          if (target.classList.contains('md-mask')) {
+          if (target.classList.contains('md-overlay')) {
             inst.close();
           }
         });
@@ -213,8 +213,8 @@ mdui.Dialog = (function () {
     $.pluginEvent('closing', 'dialog', inst);
 
     if ($.queue(queueName).length === 0) {
-      mdui.hideMask(mask);
-      mask = null;
+      mdui.hideOverlay(overlay);
+      overlay = null;
     }
 
     $.transitionEnd(inst.target, function () {
@@ -285,7 +285,7 @@ mdui.Dialog = (function () {
 
     if (current === inst) {
       mdui.unlockScreen();
-      mdui.hideMask();
+      mdui.hideOverlay();
     }
   };
 

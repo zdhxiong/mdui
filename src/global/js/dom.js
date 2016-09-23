@@ -575,45 +575,24 @@
    * @returns {{}}
    */
   $.parseOptions = function (str) {
+    if (typeof str === 'object') {
+      return str;
+    }
+
+    var options = {};
     if (!str) {
-      return {};
+      return options;
     }
 
-    // JSON 格式
-    if(str[0] === '{'){
-      return JSON.parse(str);
+    var start = str.indexOf('{');
+    try {
+      options = (new Function('',
+        'var json = ' + str.substr(start) +
+        '; return JSON.parse(JSON.stringify(json));'))();
+    } catch (e) {
     }
 
-    // 键值对格式
-    var obj = {};
-    var arr;
-    var len;
-    var val;
-    var i;
-
-    // 删除逗号和分号前后的空格
-    str = str.replace(/\s*:\s*/g, ':').replace(/\s*,\s*/g, ',');
-
-    // 解析字符串
-    arr = str.split(',');
-    for (i = 0, len = arr.length; i < len; i++) {
-      arr[i] = arr[i].split(':');
-      val = arr[i][1];
-
-      // bool 值转换
-      if (typeof val === 'string' || val instanceof String) {
-        val = val === 'true' || (val === 'false' ? false : val);
-      }
-
-      // 数字值转换
-      if (typeof val === 'string' || val instanceof String) {
-        val = !isNaN(val) ? +val : val;
-      }
-
-      obj[arr[i][0]] = val;
-    }
-
-    return obj;
+    return options;
   };
 
   /**

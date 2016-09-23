@@ -25,9 +25,9 @@ body.md-locked {
 }
 
 /* 遮罩层 */
-.md-mask {
+.md-overlay {
   position: fixed;
-  z-index: @z-index-mask;
+  z-index: @z-index-overlay;
   top: -5000px;
   right: -5000px;
   bottom: -5000px;
@@ -41,7 +41,7 @@ body.md-locked {
   transition-duration: .3s;
 }
 /* 显示遮罩层 */
-.md-mask-show {
+.md-overlay-show {
   opacity: 1;
   visibility: visible;
 }

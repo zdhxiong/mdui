@@ -11,7 +11,7 @@ mdui.Drawer = (function () {
    */
   var DEFAULT = {
     // 在桌面设备上是否显示遮罩层。手机和平板不受这个参数影响，始终会显示遮罩层
-    mask: false,
+    overlay: false,
     onOpening: function (inst) {
     },
     onOpened: function (inst) {
@@ -40,7 +40,7 @@ mdui.Drawer = (function () {
 
     inst.options = $.extend(DEFAULT, (opts || {}));
 
-    inst.masked = false; // 是否显示着遮罩层
+    inst.overlay = false; // 是否显示着遮罩层
     inst.position = inst.target.classList.contains('md-drawer-right') ? 'right' : 'left';
 
     if (inst.target.classList.contains('md-drawer-close')) {
@@ -58,9 +58,9 @@ mdui.Drawer = (function () {
       //由手机平板切换到桌面时
       if (mdui.screen.mdUp()) {
         // 如果显示着遮罩，则隐藏遮罩
-        if (inst.masked && !inst.options.mask) {
-          mdui.hideMask();
-          inst.masked = false;
+        if (inst.overlay && !inst.options.overlay) {
+          mdui.hideOverlay();
+          inst.overlay = false;
 
           mdui.unlockScreen();
         }
@@ -71,15 +71,15 @@ mdui.Drawer = (function () {
       }
       //由桌面切换到手机平板时。如果抽屉栏是打开着的且没有遮罩层，则关闭抽屉栏
       else {
-        if (!inst.masked && inst.state === 'opened') {
+        if (!inst.overlay && inst.state === 'opened') {
           // 抽屉栏处于强制打开状态，添加遮罩
           if (inst.target.classList.contains('md-drawer-open')) {
-            mdui.showMask(100);
-            inst.masked = true;
+            mdui.showOverlay(100);
+            inst.overlay = true;
 
             mdui.lockScreen();
 
-            $.one( $.query('.md-mask'), 'click', function () {
+            $.one( $.query('.md-overlay'), 'click', function () {
               inst.close();
             });
           }else{
@@ -88,7 +88,7 @@ mdui.Drawer = (function () {
         }
       }
 
-    }, 100, 200));
+    }, 100));
 
     // 不支持 touch 的设备默认隐藏滚动条，鼠标移入时显示滚动条；支持 touch 的设备会自动隐藏滚动条
     if (!mdui.support.touch) {
@@ -113,7 +113,7 @@ mdui.Drawer = (function () {
     inst.state = 'opening';
     $.pluginEvent('opening', 'drawer', inst);
 
-    if(!inst.options.mask){
+    if(!inst.options.overlay){
       document.body.classList.add('md-drawer-body-' + inst.position);
     }
 
@@ -122,13 +122,13 @@ mdui.Drawer = (function () {
       $.pluginEvent('opened', 'drawer', inst);
     });
 
-    if (!mdui.screen.mdUp() || inst.options.mask) {
-      mdui.showMask(100);
-      inst.masked = true;
+    if (!mdui.screen.mdUp() || inst.options.overlay) {
+      mdui.showOverlay(100);
+      inst.overlay = true;
 
       mdui.lockScreen();
 
-      $.one( $.query('.md-mask'), 'click', function () {
+      $.one( $.query('.md-overlay'), 'click', function () {
         inst.close();
       });
     }
@@ -149,7 +149,7 @@ mdui.Drawer = (function () {
     inst.state = 'closing';
     $.pluginEvent('closing', 'drawer', inst);
 
-    if(!inst.options.mask){
+    if(!inst.options.overlay){
       document.body.classList.remove('md-drawer-body-' + inst.position);
     }
 
@@ -158,9 +158,9 @@ mdui.Drawer = (function () {
       $.pluginEvent('closed', 'drawer', inst);
     });
 
-    if (inst.masked) {
-      mdui.hideMask();
-      inst.masked = false;
+    if (inst.overlay) {
+      mdui.hideOverlay();
+      inst.overlay = false;
 
       mdui.unlockScreen();
     }

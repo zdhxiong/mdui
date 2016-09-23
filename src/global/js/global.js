@@ -67,37 +67,37 @@ mdui.screen = {
  * @param z_index 遮罩层的 z_index
  * @returns {Element}
  */
-mdui.showMask = function (z_index) {
-  var mask = $.dom('<div class="md-mask">')[0];
-  document.body.appendChild(mask);
+mdui.showOverlay = function (z_index) {
+  var overlay = $.dom('<div class="md-overlay">')[0];
+  document.body.appendChild(overlay);
 
   //使动态添加的元素的 transition 动画能生效
-  $.getStyle(mask, 'opacity');
+  $.getStyle(overlay, 'opacity');
 
   if (typeof z_index === 'undefined') {
     z_index = 100;
   }
-  mask.style['z-index'] = z_index;
-  mask.classList.add('md-mask-show');
+  overlay.style['z-index'] = z_index;
+  overlay.classList.add('md-overlay-show');
 
-  return mask;
+  return overlay;
 };
 
 /**
  * 隐藏遮罩层
- * @param mask 指定遮罩层元素，若没有该参数，则移除所有遮罩层
+ * @param overlay 指定遮罩层元素，若没有该参数，则移除所有遮罩层
  */
-mdui.hideMask = function (mask) {
-  var masks;
-  if(typeof mask === 'undefined'){
-    masks = $.queryAll('.md-mask');
+mdui.hideOverlay = function (overlay) {
+  var overlays;
+  if(typeof overlay === 'undefined'){
+    overlays = $.queryAll('.md-overlay');
   }else{
-    masks = [mask];
+    overlays = [overlay];
   }
-  $.each(masks, function(i, mask){
-    mask.classList.remove('md-mask-show');
-    $.transitionEnd(mask, function(){
-      mask.parentNode.removeChild(mask);
+  $.each(overlays, function(i, overlay){
+    overlay.classList.remove('md-overlay-show');
+    $.transitionEnd(overlay, function(){
+      overlay.parentNode.removeChild(overlay);
     });
   });
 };
@@ -129,25 +129,18 @@ mdui.unlockScreen = function () {
  * 函数节流
  * @param fn
  * @param delay
- * @param mustRunDelay
  * @returns {Function}
  */
-mdui.throttle = function(fn, delay, mustRunDelay){
+mdui.throttle = function (fn, delay) {
   var timer = null;
-  var t_start;
-  return function(){
-    var context = this, args = arguments, t_curr = +new Date();
-    clearTimeout(timer);
-    if(!t_start){
-      t_start = t_curr;
-    }
-    if(t_curr - t_start >= mustRunDelay){
-      fn.apply(context, args);
-      t_start = t_curr;
-    }
-    else {
-      timer = setTimeout(function(){
+
+  return function () {
+    var context = this, args = arguments;
+
+    if (timer === null) {
+      timer = setTimeout(function () {
         fn.apply(context, args);
+        timer = null;
       }, delay);
     }
   };
@@ -155,18 +148,22 @@ mdui.throttle = function(fn, delay, mustRunDelay){
 
 /**
  * 生成唯一 id
+ * @param pluginName 插件名，若传入该参数，guid 将以该参数作为前缀
+ * @returns {string}
  */
-mdui.guid = (function() {
+mdui.guid = function(pluginName){
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
       .substring(1);
   }
-  return function() {
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-      s4() + '-' + s4() + s4() + s4();
-  };
-})();
+  var guid = s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+  if(pluginName){
+    guid = 'md-' + pluginName + '-' + guid;
+  }
+  return guid;
+};
+
 
 $.ready(function () {
   // 避免页面加载完后直接执行css动画

@@ -64,6 +64,9 @@ module.exports = function (grunt) {
           //'src/js/dialog/confirm.js',
           //'src/js/dialog/prompt.js',
 
+          'src/tooltip/js/tooltip.js',
+          'src/tooltip/js/tooltip.data.js',
+
           'src/global/js/wrap_end.js'
         ],
         dest: 'dist/js/mdui.js'

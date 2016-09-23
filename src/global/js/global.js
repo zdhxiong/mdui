@@ -153,6 +153,21 @@ mdui.throttle = function(fn, delay, mustRunDelay){
   };
 };
 
+/**
+ * 生成唯一 id
+ */
+mdui.guid = (function() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return function() {
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+      s4() + '-' + s4() + s4() + s4();
+  };
+})();
+
 $.ready(function () {
   // 避免页面加载完后直接执行css动画
   // https://css-tricks.com/transitions-only-after-page-load/

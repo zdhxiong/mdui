@@ -118,8 +118,8 @@
    * @returns {*}
    */
   $.getData = function (dom, key) {
-    if (dom.domDataStorage && (key in dom.domDataStorage)) {
-      return dom.domDataStorage[key];
+    if (dom.mduiDomDataStorage && (key in dom.mduiDomDataStorage)) {
+      return dom.mduiDomDataStorage[key];
     } else {
       return null;
     }
@@ -132,10 +132,10 @@
    * @param value
    */
   $.setData = function (dom, key, value) {
-    if (!dom.domDataStorage) {
-      dom.domDataStorage = {};
+    if (!dom.mduiDomDataStorage) {
+      dom.mduiDomDataStorage = {};
     }
-    dom.domDataStorage[key] = value;
+    dom.mduiDomDataStorage[key] = value;
   };
 
   /**
@@ -144,9 +144,9 @@
    * @param key
    */
   $.removeData = function (dom, key) {
-    if (dom.domDataStorage && dom.domDataStorage[key]) {
-      dom.domDataStorage[key] = null;
-      delete dom.domDataStorage[key];
+    if (dom.mduiDomDataStorage && dom.mduiDomDataStorage[key]) {
+      dom.mduiDomDataStorage[key] = null;
+      delete dom.mduiDomDataStorage[key];
     }
   };
 
@@ -599,28 +599,24 @@
    * 触发插件的事件
    * @param eventName 事件名
    * @param pluginName 插件名
-   * @param inst 实例
+   * @param inst 插件实例
+   * @param trigger 在该元素上触发
    * @param obj 事件参数
    */
-  $.pluginEvent = function(eventName, pluginName, inst, obj){
+  $.pluginEvent = function(eventName, pluginName, inst, trigger, obj){
     if(typeof obj === 'undefined'){
       obj = {};
     }
-    var args = $.toArray(obj);
-    args.unshift(inst);
+    obj.inst = inst;
 
-    var fullEventName = eventName + '.' + pluginName + '.mdui';
-
-    // 回调函数
-    inst.options['on' + eventName[0].toUpperCase() + eventName.substring(1)].apply(inst.options, args);
+    var fullEventName = eventName + '.mdui.' + pluginName;
 
     // jQuery 事件
     if(typeof jQuery !== 'undefined'){
-      jQuery(inst.target).trigger(fullEventName, args);
+      jQuery(trigger).trigger(fullEventName, obj);
     }
 
     // 原生js事件
-    obj.inst = inst;
-    $.trigger(inst.target, fullEventName, obj);
+    $.trigger(trigger, fullEventName, obj);
   };
 })();

@@ -8,33 +8,13 @@ mdui.Dialog = (function () {
    * 默认参数
    */
   var DEFAULT = {
-    // 监听 hashchange 事件
-    history: true,
-    // 打开提示框时显示遮罩
-    overlay: true,
-
-    // 点击提示框外面区域关闭提示框
-    closeOnClick: true,
-    // 按下 esc 关闭提示框
-    closeOnEscape: true,
-    // 关闭后销毁
-    destroyOnClosed: false,
-    /**
-     * 点击按钮的回调
-     * @param inst 提示框实例
-     * @param i 第 i 个按钮
-     */
-    onClick: function (inst, i) {
-    },
-
-    onOpening: function (inst) {
-    },
-    onOpened: function (inst) {
-    },
-    onClosing: function (inst) {
-    },
-    onClosed: function (inst) {
-    }
+    history: true,                // 监听 hashchange 事件
+    overlay: true,                // 打开提示框时显示遮罩
+    closeOnClick: true,           // 点击提示框外面区域关闭提示框
+    closeOnEsc: true,             // 按下 esc 关闭提示框
+    closeOnCancel: true,          // 按下取消按钮时关闭提示框
+    closeOnConfirm: true,         // 按下确认按钮时关闭提示框
+    destroyOnClosed: false        // 关闭后销毁
   };
 
   /**
@@ -60,7 +40,7 @@ mdui.Dialog = (function () {
     if(!current) {
       return;
     }
-    var dialog = current.target;
+    var dialog = current.dialog;
 
     var dialogTitle = $.children(dialog, '.md-dialog-title', true);
     var dialogContent = $.children(dialog, '.md-dialog-content', true);
@@ -101,10 +81,11 @@ mdui.Dialog = (function () {
   function Dialog(selector, opts) {
     var inst = this;
 
-    inst.target = $.dom(selector)[0];
+    // 提示框元素
+    inst.dialog = $.dom(selector)[0];
 
     // 已通过 data 属性实例化过，不再重复实例化
-    var oldInst = $.getData(inst.target, 'dialog.mdui');
+    var oldInst = $.getData(inst.dialog, 'inst.mdui.dialog');
     if (oldInst) {
       return oldInst;
     }
@@ -112,21 +93,39 @@ mdui.Dialog = (function () {
     inst.options = $.extend(DEFAULT, (opts || {}));
     inst.state = 'closed';
 
+    // 在不支持触摸的设备上美化滚动条
     if (!mdui.support.touch) {
-      var content = $.query('.md-dialog-content', inst.target);
+      var content = $.query('.md-dialog-content', inst.dialog);
       if (content) {
         content.classList.add('md-dialog-scrollbar');
       }
     }
 
-    inst.actions = $.queryAll('.md-dialog-actions .md-btn', inst.target);
-
-    // 绑定按钮点击事件
-    $.each(inst.actions, function (i, button) {
-      $.on(button, 'click', function () {
-        inst.options.onClick(inst, i);
+    // 绑定事件
+    var cancel = $.query('[data-md-dialog-cancel]', inst.dialog);
+    var confirm = $.query('[data-md-dialog-confirm]', inst.dialog);
+    var close = $.query('[data-md-dialog-close]', inst.dialog);
+    if(cancel){
+      $.on(cancel, 'click', function(){
+        $.pluginEvent('cancel', 'dialog', inst, inst.dialog);
+        if(inst.options.closeOnCancel){
+          inst.close();
+        }
       });
-    });
+    }
+    if(confirm){
+      $.on(confirm, 'click', function(){
+        $.pluginEvent('confirm', 'dialog', inst, inst.dialog);
+        if(inst.options.closeOnConfirm){
+          inst.close();
+        }
+      });
+    }
+    if(close){
+      $.on(close, 'click', function(){
+        inst.close();
+      });
+    }
   }
 
   /**
@@ -151,20 +150,20 @@ mdui.Dialog = (function () {
 
     mdui.lockScreen();
 
-    inst.target.style.display = 'block';
+    inst.dialog.style.display = 'block';
 
-    readjust(inst.target);
+    readjust();
     $.on(window, 'resize', readjust);
 
     // 打开消息框
-    inst.target.classList.add('md-dialog-open');
+    inst.dialog.classList.add('md-dialog-open');
 
     inst.state = 'opening';
-    $.pluginEvent('opening', 'dialog', inst);
+    $.pluginEvent('opening', 'dialog', inst, inst.dialog);
 
-    $.transitionEnd(inst.target, function () {
+    $.transitionEnd(inst.dialog, function () {
       inst.state = 'opened';
-      $.pluginEvent('opened', 'dialog', inst);
+      $.pluginEvent('opened', 'dialog', inst, inst.dialog);
     });
 
     if (!overlay) {
@@ -177,8 +176,7 @@ mdui.Dialog = (function () {
       // 点击遮罩层关闭提示框
       if (inst.options.closeOnClick) {
         $.one(overlay, 'click', function (e) {
-          var target = e.target;
-          if (target.classList.contains('md-overlay')) {
+          if (e.target.classList.contains('md-overlay')) {
             inst.close();
           }
         });
@@ -208,20 +206,20 @@ mdui.Dialog = (function () {
       return;
     }
 
-    inst.target.classList.remove('md-dialog-open');
+    inst.dialog.classList.remove('md-dialog-open');
     inst.state = 'closing';
-    $.pluginEvent('closing', 'dialog', inst);
+    $.pluginEvent('closing', 'dialog', inst, inst.dialog);
 
     if ($.queue(queueName).length === 0) {
       mdui.hideOverlay(overlay);
       overlay = null;
     }
 
-    $.transitionEnd(inst.target, function () {
+    $.transitionEnd(inst.dialog, function () {
       inst.state = 'closed';
-      $.pluginEvent('closed', 'dialog', inst);
+      $.pluginEvent('closed', 'dialog', inst, inst.dialog);
 
-      inst.target.style.display = 'none';
+      inst.dialog.style.display = 'none';
 
       // 所有提示框都关闭后
       if ($.queue(queueName).length === 0) {
@@ -280,8 +278,8 @@ mdui.Dialog = (function () {
   Dialog.prototype.destroy = function () {
     var inst = this;
 
-    inst.target.parentNode.removeChild(inst.target);
-    $.removeData(inst.target, 'dialog.mdui');
+    inst.dialog.parentNode.removeChild(inst.dialog);
+    $.removeData(inst.dialog, 'dialog.mdui');
 
     if (current === inst) {
       mdui.unlockScreen();
@@ -298,7 +296,7 @@ mdui.Dialog = (function () {
 
   // esc 按下时关闭对话框
   $.on(document, 'keydown', function (e) {
-    if (current && current.options.closeOnEscape && current.state === 'opened' && e.keyCode === 27) {
+    if (current && current.options.closeOnEsc && current.state === 'opened' && e.keyCode === 27) {
       current.close();
     }
   });

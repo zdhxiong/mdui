@@ -10,16 +10,7 @@ mdui.Drawer = (function () {
    * @type {{}}
    */
   var DEFAULT = {
-    // 在桌面设备上是否显示遮罩层。手机和平板不受这个参数影响，始终会显示遮罩层
-    overlay: false,
-    onOpening: function (inst) {
-    },
-    onOpened: function (inst) {
-    },
-    onClosing: function (inst) {
-    },
-    onClosed: function (inst) {
-    }
+    overlay: false      // 在桌面设备上是否显示遮罩层。手机和平板不受这个参数影响，始终会显示遮罩层
   };
 
   /**
@@ -31,9 +22,9 @@ mdui.Drawer = (function () {
   function Drawer(selector, opts) {
     var inst = this;
 
-    inst.target = $.dom(selector)[0];
+    inst.drawer = $.dom(selector)[0];
 
-    var oldInst = $.getData(inst.target, 'drawer.mdui');
+    var oldInst = $.getData(inst.drawer, 'inst.mdui.drawer');
     if(oldInst){
       return oldInst;
     }
@@ -41,11 +32,11 @@ mdui.Drawer = (function () {
     inst.options = $.extend(DEFAULT, (opts || {}));
 
     inst.overlay = false; // 是否显示着遮罩层
-    inst.position = inst.target.classList.contains('md-drawer-right') ? 'right' : 'left';
+    inst.position = inst.drawer.classList.contains('md-drawer-right') ? 'right' : 'left';
 
-    if (inst.target.classList.contains('md-drawer-close')) {
+    if (inst.drawer.classList.contains('md-drawer-close')) {
       inst.state = 'closed';
-    } else if (inst.target.classList.contains('md-drawer-open')) {
+    } else if (inst.drawer.classList.contains('md-drawer-open')) {
       inst.state = 'opened';
     } else if (mdui.screen.mdUp()) {
       inst.state = 'opened';
@@ -65,7 +56,7 @@ mdui.Drawer = (function () {
           mdui.unlockScreen();
         }
         // 没有强制关闭，则状态为打开状态
-        if(!inst.target.classList.contains('md-drawer-close')){
+        if(!inst.drawer.classList.contains('md-drawer-close')){
           inst.state = 'opened';
         }
       }
@@ -73,7 +64,7 @@ mdui.Drawer = (function () {
       else {
         if (!inst.overlay && inst.state === 'opened') {
           // 抽屉栏处于强制打开状态，添加遮罩
-          if (inst.target.classList.contains('md-drawer-open')) {
+          if (inst.drawer.classList.contains('md-drawer-open')) {
             mdui.showOverlay(100);
             inst.overlay = true;
 
@@ -92,8 +83,8 @@ mdui.Drawer = (function () {
 
     // 不支持 touch 的设备默认隐藏滚动条，鼠标移入时显示滚动条；支持 touch 的设备会自动隐藏滚动条
     if (!mdui.support.touch) {
-      inst.target.style['overflow-y'] = 'hidden';
-      inst.target.classList.add('md-drawer-scrollbar');
+      inst.drawer.style['overflow-y'] = 'hidden';
+      inst.drawer.classList.add('md-drawer-scrollbar');
     }
   }
 
@@ -107,19 +98,19 @@ mdui.Drawer = (function () {
       return;
     }
 
-    inst.target.classList.remove('md-drawer-close');
-    inst.target.classList.add('md-drawer-open');
+    inst.drawer.classList.remove('md-drawer-close');
+    inst.drawer.classList.add('md-drawer-open');
 
     inst.state = 'opening';
-    $.pluginEvent('opening', 'drawer', inst);
+    $.pluginEvent('open', 'drawer', inst, inst.drawer);
 
     if(!inst.options.overlay){
       document.body.classList.add('md-drawer-body-' + inst.position);
     }
 
-    $.transitionEnd(inst.target, function () {
+    $.transitionEnd(inst.drawer, function () {
       inst.state = 'opened';
-      $.pluginEvent('opened', 'drawer', inst);
+      $.pluginEvent('opened', 'drawer', inst, inst.drawer);
     });
 
     if (!mdui.screen.mdUp() || inst.options.overlay) {
@@ -144,18 +135,18 @@ mdui.Drawer = (function () {
       return;
     }
 
-    inst.target.classList.add('md-drawer-close');
-    inst.target.classList.remove('md-drawer-open');
+    inst.drawer.classList.add('md-drawer-close');
+    inst.drawer.classList.remove('md-drawer-open');
     inst.state = 'closing';
-    $.pluginEvent('closing', 'drawer', inst);
+    $.pluginEvent('close', 'drawer', inst, inst.drawer);
 
     if(!inst.options.overlay){
       document.body.classList.remove('md-drawer-body-' + inst.position);
     }
 
-    $.transitionEnd(inst.target, function () {
+    $.transitionEnd(inst.drawer, function () {
       inst.state = 'closed';
-      $.pluginEvent('closed', 'drawer', inst);
+      $.pluginEvent('closed', 'drawer', inst, inst.drawer);
     });
 
     if (inst.overlay) {

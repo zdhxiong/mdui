@@ -85,7 +85,7 @@ mdui.Dialog = (function () {
     inst.dialog = $.dom(selector)[0];
 
     // 已通过 data 属性实例化过，不再重复实例化
-    var oldInst = $.getData(inst.dialog, 'inst.mdui.dialog');
+    var oldInst = $.getData(inst.dialog, 'mdui.dialog');
     if (oldInst) {
       return oldInst;
     }
@@ -101,31 +101,35 @@ mdui.Dialog = (function () {
       }
     }
 
-    // 绑定事件
-    var cancel = $.query('[data-md-dialog-cancel]', inst.dialog);
-    var confirm = $.query('[data-md-dialog-confirm]', inst.dialog);
-    var close = $.query('[data-md-dialog-close]', inst.dialog);
-    if(cancel){
+    // 绑定取消按钮事件
+    var cancels = $.queryAll('[data-md-dialog-cancel]', inst.dialog);
+    $.each(cancels, function(i, cancel){
       $.on(cancel, 'click', function(){
         $.pluginEvent('cancel', 'dialog', inst, inst.dialog);
         if(inst.options.closeOnCancel){
           inst.close();
         }
       });
-    }
-    if(confirm){
+    });
+
+    // 绑定确认按钮事件
+    var confirms = $.queryAll('[data-md-dialog-confirm]', inst.dialog);
+    $.each(confirms, function(i, confirm){
       $.on(confirm, 'click', function(){
         $.pluginEvent('confirm', 'dialog', inst, inst.dialog);
         if(inst.options.closeOnConfirm){
           inst.close();
         }
       });
-    }
-    if(close){
+    });
+
+    // 绑定关闭按钮事件
+    var closes = $.queryAll('[data-md-dialog-close]', inst.dialog);
+    $.each(closes, function(i, close){
       $.on(close, 'click', function(){
         inst.close();
       });
-    }
+    });
   }
 
   /**

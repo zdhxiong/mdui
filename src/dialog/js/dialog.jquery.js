@@ -5,10 +5,10 @@
 
     this.each(function(){
       var $this = $(this);
-      var inst = $this.data('inst.mdui.dialog');
+      var inst = $this.data('mdui.dialog');
 
       if(!inst){
-        $this.data('inst.mdui.dialog', (inst = new mdui.Dialog(this, option)));
+        $this.data('mdui.dialog', (inst = new mdui.Dialog(this, option)));
       }
       if(typeof option === 'string'){
         value = inst[option]();

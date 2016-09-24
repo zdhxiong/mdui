@@ -8,10 +8,10 @@ $.ready(function () {
 
     var dialog = $.dom(selector)[0];
 
-    var inst = $.getData(dialog, 'inst.mdui.dialog');
+    var inst = $.getData(dialog, 'mdui.dialog');
     if(!inst){
       inst = new mdui.Dialog(dialog, options);
-      $.setData(dialog, 'inst.mdui.dialog', inst);
+      $.setData(dialog, 'mdui.dialog', inst);
     }
 
     inst.open();

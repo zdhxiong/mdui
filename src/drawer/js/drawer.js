@@ -24,7 +24,7 @@ mdui.Drawer = (function () {
 
     inst.drawer = $.dom(selector)[0];
 
-    var oldInst = $.getData(inst.drawer, 'inst.mdui.drawer');
+    var oldInst = $.getData(inst.drawer, 'mdui.drawer');
     if(oldInst){
       return oldInst;
     }
@@ -86,6 +86,14 @@ mdui.Drawer = (function () {
       inst.drawer.style['overflow-y'] = 'hidden';
       inst.drawer.classList.add('md-drawer-scrollbar');
     }
+
+    // 绑定关闭按钮事件
+    var closes = $.queryAll('[data-md-drawer-close]', inst.drawer);
+    $.each(closes, function(i, close){
+      $.on(close, 'click', function(){
+        inst.close();
+      });
+    });
   }
 
   /**

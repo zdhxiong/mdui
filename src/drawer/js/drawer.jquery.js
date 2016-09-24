@@ -5,10 +5,10 @@
 
     this.each(function(){
       var $this = $(this);
-      var inst = $this.data('drawer.mdui');
+      var inst = $this.data('mdui.drawer');
 
       if(!inst){
-        $this.data('drawer.mdui', (inst = new mdui.Drawer(this, option)));
+        $this.data('mdui.drawer', (inst = new mdui.Drawer(this, option)));
       }
       if(typeof option === 'string'){
         value = inst[option]();

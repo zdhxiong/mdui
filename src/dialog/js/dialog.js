@@ -159,7 +159,7 @@ mdui.Dialog = (function () {
     inst.dialog.classList.add('md-dialog-open');
 
     inst.state = 'opening';
-    $.pluginEvent('opening', 'dialog', inst, inst.dialog);
+    $.pluginEvent('open', 'dialog', inst, inst.dialog);
 
     $.transitionEnd(inst.dialog, function () {
       inst.state = 'opened';
@@ -208,7 +208,7 @@ mdui.Dialog = (function () {
 
     inst.dialog.classList.remove('md-dialog-open');
     inst.state = 'closing';
-    $.pluginEvent('closing', 'dialog', inst, inst.dialog);
+    $.pluginEvent('close', 'dialog', inst, inst.dialog);
 
     if ($.queue(queueName).length === 0) {
       mdui.hideOverlay(overlay);

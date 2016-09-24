@@ -2,17 +2,16 @@ $.ready(function () {
 
   $.on(document, 'click', '[data-md-dialog]', function(e){
     var target = e.target;
-    var inst;
+    var options = $.parseOptions(target.getAttribute('data-md-dialog'));
+    var selector = options.target;
+    delete options.target;
 
-    inst = $.getData(target, 'inst.mdui.dialog');
+    var dialog = $.dom(selector)[0];
+
+    var inst = $.getData(dialog, 'inst.mdui.dialog');
     if(!inst){
-      var options = $.parseOptions(target.getAttribute('data-md-dialog'));
-
-      var selector = options.target;
-      delete options.target;
-
-      inst = new mdui.Dialog(selector, options);
-      $.setData(target, 'inst.mdui.dialog', inst);
+      inst = new mdui.Dialog(dialog, options);
+      $.setData(dialog, 'inst.mdui.dialog', inst);
     }
 
     inst.open();

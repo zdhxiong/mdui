@@ -153,7 +153,9 @@ mdui.Dialog = (function () {
     inst.dialog.style.display = 'block';
 
     readjust();
-    $.on(window, 'resize', readjust);
+    $.on(window, 'resize', mdui.throttle(function(){
+      readjust();
+    }, 100));
 
     // 打开消息框
     inst.dialog.classList.add('md-dialog-open');

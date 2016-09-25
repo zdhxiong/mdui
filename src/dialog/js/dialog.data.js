@@ -1,8 +1,8 @@
 $.ready(function () {
 
   $.on(document, 'click', '[data-md-dialog]', function(e){
-    var target = e.target;
-    var options = $.parseOptions(target.getAttribute('data-md-dialog'));
+    var _this = this;
+    var options = $.parseOptions(_this.getAttribute('data-md-dialog'));
     var selector = options.target;
     delete options.target;
 

@@ -8,16 +8,7 @@ mdui.Fab = (function () {
    * @type {{}}
    */
   var DEFAULT = {
-    // 触发方式 ['hover', 'click']
-    trigger: 'hover',
-    onOpening: function (inst) {
-    },
-    onOpened: function (inst) {
-    },
-    onClosing: function (inst) {
-    },
-    onClosed: function (inst) {
-    }
+    trigger: 'hover'      // 触发方式 ['hover', 'click']
   };
 
   /**
@@ -29,14 +20,20 @@ mdui.Fab = (function () {
   function Fab(selector, opts) {
     var inst = this;
 
-    inst.target = $.dom(selector)[0];
+    inst.fab = $.dom(selector)[0];
+
+    // 已通过 data 属性实例化过，不再重复实例化
+    var oldInst = $.getData(inst.fab, 'mdui.fab');
+    if(oldInst){
+      return oldInst;
+    }
+
     inst.options = $.extend(DEFAULT, (opts || {}));
-
-    inst.btn = $.children(inst.target, '.md-btn', true);
-    inst.dial = $.children(inst.target, '.md-btn-fab-dial', true);
-    inst.dialBtns = $.queryAll('.md-btn', inst.dial);
-
     inst.state = 'closed';
+
+    inst.btn = $.children(inst.fab, '.md-btn', true);
+    inst.dial = $.children(inst.fab, '.md-btn-fab-dial', true);
+    inst.dialBtns = $.queryAll('.md-btn', inst.dial);
 
     // 支持 touch 时，始终在 touchstart 时切换，不受 trigger 参数影响
     if (mdui.support.touch) {
@@ -61,13 +58,13 @@ mdui.Fab = (function () {
         });
       }
 
-      // 鼠标悬浮血环
+      // 鼠标悬浮切换
       if (inst.options.trigger === 'hover') {
-        $.on(inst.target, 'mouseenter', function () {
+        $.on(inst.fab, 'mouseenter', function () {
           inst.open();
         });
 
-        $.on(inst.target, 'mouseleave', function () {
+        $.on(inst.fab, 'mouseleave', function () {
           inst.close();
         });
       }
@@ -91,12 +88,12 @@ mdui.Fab = (function () {
 
     inst.dial.classList.add('md-btn-fab-dial-show');
     inst.state = 'opening';
-    $.pluginEvent('opening', 'fab', inst);
+    $.pluginEvent('open', 'fab', inst, inst.fab);
 
     // 打开顺序为从下到上逐个打开，最上面的打开后才表示动画完成
     $.transitionEnd(inst.dialBtns[0], function () {
       inst.state = 'opened';
-      $.pluginEvent('opened', 'fab', inst);
+      $.pluginEvent('opened', 'fab', inst, inst.fab);
     });
   };
 
@@ -117,12 +114,12 @@ mdui.Fab = (function () {
 
     inst.dial.classList.remove('md-btn-fab-dial-show');
     inst.state = 'closing';
-    $.pluginEvent('closing', 'fab', inst);
+    $.pluginEvent('close', 'fab', inst, inst.fab);
 
     //从上往下依次关闭，最后一个关闭后才表示动画完成
     $.transitionEnd(inst.dialBtns[inst.dialBtns.length - 1], function () {
       inst.state = 'closed';
-      $.pluginEvent('closed', 'fab', inst);
+      $.pluginEvent('closed', 'fab', inst, inst.fab);
     });
   };
 

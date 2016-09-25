@@ -5,7 +5,9 @@
  * Inspired by https://github.com/nolimits4web/Framework7
  * https://github.com/nolimits4web/Framework7/blob/master/LICENSE
  */
-(function () {
+var $ = (function () {
+  var $ = {};
+
   /**
    * 是否是数组
    * @param arr
@@ -619,4 +621,6 @@
     // 原生js事件
     $.trigger(trigger, fullEventName, obj);
   };
+
+  return $;
 })();

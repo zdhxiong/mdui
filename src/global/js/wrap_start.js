@@ -3,4 +3,3 @@
   'use strict';
 /* jshint ignore:end */
   var mdui = {};
-  var $ = {};

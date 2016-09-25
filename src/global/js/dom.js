@@ -1,12 +1,11 @@
 /**
  * Dom 操作库
- * @type {Function}
  *
  * Inspired by https://github.com/nolimits4web/Framework7
  * https://github.com/nolimits4web/Framework7/blob/master/LICENSE
  */
-var $ = (function () {
-  var $ = {};
+var $ = {};
+(function () {
 
   /**
    * 是否是数组
@@ -622,5 +621,4 @@ var $ = (function () {
     $.trigger(trigger, fullEventName, obj);
   };
 
-  return $;
 })();

@@ -4,14 +4,15 @@ $.ready(function(){
   if(mdui.support.touch){
     event = 'touchstart';
   }else{
-    event = 'click mouseenter';
+    // mouseenter 不冒泡，无法进行事件委托，这里用 mouseover 代替
+    event = 'click mouseover';
   }
 
   $.on(document, event, '[data-md-fab]', function(e){
     var fab = this;
     var eventType = e.type;
 
-    // 不管是 click 、 mouseenter 还是 touchstart ，都先初始化
+    // 不管是 click 、 mouseover 还是 touchstart ，都先初始化。
     var inst = $.getData(fab, 'mdui.fab');
     if(!inst){
       var options = $.parseOptions(fab.getAttribute('data-md-fab'));
@@ -27,11 +28,10 @@ $.ready(function(){
         if(inst.options.trigger === 'click' && eventType === 'click'){
           inst.open();
         }
-        if(inst.options.trigger === 'hover' && eventType === 'mouseenter'){
+        if(inst.options.trigger === 'hover' && eventType === 'mouseover'){
           inst.open();
         }
       }
     }
-
   });
 });

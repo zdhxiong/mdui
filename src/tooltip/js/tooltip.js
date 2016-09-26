@@ -20,21 +20,29 @@ mdui.Tooltip = (function(){
    */
   function setPosition(inst){
     var marginLeft, marginTop, position;
+
+    // 触发的元素
     var targetProps = inst.target.getBoundingClientRect();
+
+    // 触发的元素和 Tooltip 之间的距离
     var targetMargin = (mdui.support.touch ? 24 : 14);
+
+    // Tooltip 的宽度和高度
+    var tooltipWidth = inst.tooltip.offsetWidth;
+    var tooltipHeight = inst.tooltip.offsetHeight;
 
     // Tooltip 的方向
     position = inst.options.position;
 
     // 自动判断位置，加 2px，使 Tooltip 距离窗口边框至少有 2px 的间距
     if(['bottom', 'top', 'left', 'right'].indexOf(position) === -1){
-      if(targetProps.top + targetProps.height + targetMargin + inst.tooltip.offsetHeight + 2 < document.documentElement.clientHeight){
+      if(targetProps.top + targetProps.height + targetMargin + tooltipHeight + 2 < document.documentElement.clientHeight){
         position = 'bottom';
-      }else if(targetMargin + inst.tooltip.offsetHeight + 2 < targetProps.top){
+      }else if(targetMargin + tooltipHeight + 2 < targetProps.top){
         position = 'top';
-      }else if(targetMargin + inst.tooltip.offsetWidth + 2 < targetProps.left){
+      }else if(targetMargin + tooltipWidth + 2 < targetProps.left){
         position = 'left';
-      }else if(targetProps.width + targetMargin + inst.tooltip.offsetWidth + 2 < document.documentElement.clientWidth - targetProps.left){
+      }else if(targetProps.width + targetMargin + tooltipWidth + 2 < document.documentElement.clientWidth - targetProps.left){
         position = 'right';
       }else{
         position = 'bottom';
@@ -44,20 +52,20 @@ mdui.Tooltip = (function(){
     // 设置位置
     switch(position){
       case 'bottom':
-        marginLeft = -1 * (inst.tooltip.offsetWidth / 2);
+        marginLeft = -1 * (tooltipWidth / 2);
         marginTop = (targetProps.height / 2) + targetMargin;
         break;
       case 'top':
-        marginLeft = -1 * (inst.tooltip.offsetWidth / 2);
-        marginTop = -1 * (inst.tooltip.offsetHeight + (targetProps.height / 2) + targetMargin);
+        marginLeft = -1 * (tooltipWidth / 2);
+        marginTop = -1 * (tooltipHeight + (targetProps.height / 2) + targetMargin);
         break;
       case 'left':
-        marginLeft = -1 * (inst.tooltip.offsetWidth + (targetProps.width / 2) + targetMargin);
-        marginTop = -1 * (inst.tooltip.offsetHeight / 2);
+        marginLeft = -1 * (tooltipWidth + (targetProps.width / 2) + targetMargin);
+        marginTop = -1 * (tooltipHeight / 2);
         break;
       case 'right':
         marginLeft = (targetProps.width / 2) + targetMargin;
-        marginTop = -1 * (inst.tooltip.offsetHeight / 2);
+        marginTop = -1 * (tooltipHeight / 2);
         break;
     }
 

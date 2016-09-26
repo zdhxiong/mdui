@@ -285,7 +285,10 @@ mdui.Dialog = (function () {
     var inst = this;
 
     inst.dialog.parentNode.removeChild(inst.dialog);
-    $.removeData(inst.dialog, 'dialog.mdui');
+    $.removeData(inst.dialog, 'mdui.dialog');
+    if(typeof jQuery !== 'undefined'){
+      jQuery(inst.dialog).removeData('mdui.dialog');
+    }
 
     if (current === inst) {
       mdui.unlockScreen();

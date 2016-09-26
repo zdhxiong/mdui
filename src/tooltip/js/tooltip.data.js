@@ -4,32 +4,19 @@
  */
 
 (function(){
-  var showEvent, hideEvent;
-  if(mdui.support.touch) {
-    showEvent = 'touchstart';
-    hideEvent = 'touchend';
-  }else{
-    showEvent = 'mouseenter';
-    hideEvent = 'mouseleave';
-  }
+  // mouseenter 不能冒泡，所以这里用 mouseover 代替
+  var event = mdui.support.touch ? 'touchstart' : 'mouseover';
 
-  $.on(document, 'mouseenter', '[data-md-tooltip]', function(e){
-    console.log(e);
-    var target = e.target;
-    var options = $.parseOptions(target.getAttribute('data-md-tooltip'));
+  $.on(document, event, '[data-md-tooltip]', function(e){
+    var target = this;
 
-    var inst = $.getData(target, 'tooltip.mdui');
+    var inst = $.getData(target, 'mdui.tooltip');
     if(!inst){
+      var options = $.parseOptions(target.getAttribute('data-md-tooltip'));
       inst = new mdui.Tooltip(target, options);
-      $.setData(target, 'tooltip.mdui', inst);
+      $.setData(target, 'mdui.tooltip', inst);
+
+      inst.open();
     }
-
-    inst.open(options);
-  });
-
-  $.on(document, hideEvent, '[data-md-tooltip]', function(e){
-    var target = e.target;
-    var inst = $.getData(target, 'tooltip.mdui');
-    inst.close();
   });
 })();

@@ -15,27 +15,26 @@
   transform-origin: top center;
   z-index: @tooltip-z-index;
   display: inline-block;
-  text-align: center;
-  position: fixed;
+  text-align: left;
+  position: absolute;
+  font-weight: 500;
 }
 
 /* 桌面版样式，由 js 检测后添加该类 */
 .md-tooltip-desktop {
   font-size: @tooltip-font-size-desktop;
-  margin-top: @tooltip-margin-top-desktop;
-  padding: 0 @tooltip-padding-x-desktop;
+  padding: @tooltip-padding-y-desktop @tooltip-padding-x-desktop;
   min-height: @tooltip-height-desktop;
-  line-height: @tooltip-font-size-desktop * 1.5;
+  line-height: @tooltip-line-height-desktop;
   max-width: @tooltip-max-width-desktop;
 }
 
 /* 触摸版样式，由 js 检测后添加该类 */
 .md-tooltip-mobile {
   font-size: @tooltip-font-size-mobile;
-  margin-top: @tooltip-margin-top-mobile;
-  padding: 0 @tooltip-padding-x-mobile;
+  padding: @tooltip-padding-y-mobile @tooltip-padding-x-mobile;
   min-height: @tooltip-height-mobile;
-  line-height: @tooltip-font-size-mobile * 1.5;
+  line-height: @tooltip-line-height-mobile;
   max-width: @tooltip-max-width-mobile;
 }
 

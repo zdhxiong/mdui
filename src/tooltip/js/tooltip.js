@@ -9,18 +9,9 @@ mdui.Tooltip = (function(){
    * 默认参数
    */
   var DEFAULT = {
-    // 提示位置
-    position: 'auto',
-    // 延迟，单位毫秒
-    delay: 0,
-    // 提示文本，允许包含 HTML
-    text: '',
-
-    // 回调
-    onOpening: function(inst){},
-    onOpened: function(inst){},
-    onClosing: function(inst){},
-    onClosed: function(inst){}
+    position: 'auto',     // 提示所在位置
+    delay: 0,             // 延迟，单位毫秒
+    content: ''           // 提示文本，允许包含 HTML
   };
 
   /**
@@ -28,11 +19,19 @@ mdui.Tooltip = (function(){
    * @param inst
    */
   function setPosition(inst){
-    var props = inst.target.getBoundingClientRect();
-    var left = props.left + (props.width / 2);
-    var top = props.top + (props.height / 2);
+    var targetOffset = $.offset(inst.target);
+    var targetProps = inst.target.getBoundingClientRect();
+
+    var left = targetOffset.left + (targetProps.width / 2);
+    var top = targetOffset.top + (targetProps.height / 2);
+
     var marginLeft = -1 * (inst.tooltip.offsetWidth / 2);
-    var marginTop = -1 * (inst.tooltip.offsetHeight / 2);
+    var marginTop = (targetProps.height / 2) + (mdui.support.touch ? 24 : 14);
+
+    inst.tooltip.style.top = top + 'px';
+    inst.tooltip.style.left = left + 'px';
+    inst.tooltip.style['margin-left'] = marginLeft + 'px';
+    inst.tooltip.style['margin-top'] = marginTop + 'px';
   }
 
   /**
@@ -48,7 +47,7 @@ mdui.Tooltip = (function(){
     inst.target = $.dom(selector)[0];
 
     // 已通过 data 属性实例化过，不再重复实例化
-    var oldInst = $.getData(inst.target, 'tooltip.mdui');
+    var oldInst = $.getData(inst.target, 'mdui.tooltip');
     if(oldInst){
       return oldInst;
     }
@@ -56,14 +55,25 @@ mdui.Tooltip = (function(){
     inst.options = $.extend(DEFAULT, (opts || {}));
     inst.state = 'closed';
 
+    // 创建 Tooltip HTML
     var guid = mdui.guid();
-    inst.tooltip = $.dom('<div class="md-tooltip ' + (mdui.support.touch ? 'md-tooltip-mobile' : 'md-tooltip-desktop') + '" id="md-tooltip-' + guid + '">' + inst.options.text + '</div>')[0];
+    inst.tooltip = $.dom('<div class="md-tooltip ' + (mdui.support.touch ? 'md-tooltip-mobile' : 'md-tooltip-desktop') + '" id="md-tooltip-' + guid + '">' + inst.options.content + '</div>')[0];
     document.body.appendChild(inst.tooltip);
+
+    // 绑定事件
+    var openEvent = mdui.support.touch ? 'touchstart' : 'mouseenter';
+    var closeEvent = mdui.support.touch ? 'touchend' : 'mouseleave';
+    $.on(inst.target, openEvent, function(){
+      inst.open();
+    });
+    $.on(inst.target, closeEvent, function(){
+      inst.close();
+    });
   }
 
   /**
    * 打开 Tooltip
-   * @param opts
+   * @param opts 允许每次打开时设置不同的参数
    */
   Tooltip.prototype.open = function (opts) {
     var inst = this;
@@ -73,12 +83,17 @@ mdui.Tooltip = (function(){
     }
 
     var oldOpts = inst.options;
+
+    // 合并 data 属性参数
+    var dataOpts = $.parseOptions(inst.target.getAttribute('data-md-tooltip'));
+    inst.options = $.extend(inst.options, dataOpts);
+
     if(opts) {
       inst.options = $.extend(inst.options, opts);
     }
 
-    if(oldOpts.text !== inst.options.text) {
-      inst.tooltip.innerHTML = inst.options.text;
+    if(oldOpts.content !== inst.options.content) {
+      inst.tooltip.innerHTML = inst.options.content;
     }
 
     setPosition(inst);
@@ -96,6 +111,41 @@ mdui.Tooltip = (function(){
 
     clearTimeout(inst.timeoutId);
     inst.tooltip.classList.remove('md-tooltip-open');
+  };
+
+  /**
+   * 切换 Tooltip 状态
+   */
+  Tooltip.prototype.toggle = function(){
+    var inst = this;
+
+    if(inst.state === 'opening' || inst.state === 'opened'){
+      inst.close();
+    }
+    if(inst.state === 'closing' || inst.state === 'closed'){
+      inst.open();
+    }
+  };
+
+  /**
+   * 获取 Tooltip 状态
+   * @returns {'opening'|'opened'|'closing'|'closed'}
+   */
+  Tooltip.prototype.getState = function(){
+    return this.state;
+  };
+
+  /**
+   * 销毁 Tooltip
+   */
+  Tooltip.prototype.destroy = function(){
+    var inst = this;
+    clearTimeout(inst.timeoutId);
+    $.removeData(inst.target, 'mdui.tooltip');
+    if(typeof jQuery !== 'undefined'){
+      jQuery(inst.target).removeData('mdui.tooltip');
+    }
+    inst.tooltip.parentNode.removeChild(inst.tooltip);
   };
 
   return Tooltip;

@@ -15,21 +15,55 @@ mdui.Tooltip = (function(){
   };
 
   /**
-   * 自动判断 Tooltip 位置
+   * 设置 Tooltip 的位置
    * @param inst
    */
   function setPosition(inst){
-    var targetOffset = $.offset(inst.target);
+    var marginLeft, marginTop, position;
     var targetProps = inst.target.getBoundingClientRect();
+    var targetMargin = (mdui.support.touch ? 24 : 14);
 
-    var left = targetOffset.left + (targetProps.width / 2);
-    var top = targetOffset.top + (targetProps.height / 2);
+    // Tooltip 的方向
+    position = inst.options.position;
 
-    var marginLeft = -1 * (inst.tooltip.offsetWidth / 2);
-    var marginTop = (targetProps.height / 2) + (mdui.support.touch ? 24 : 14);
+    // 自动判断位置，加 2px，使 Tooltip 距离窗口边框至少有 2px 的间距
+    if(['bottom', 'top', 'left', 'right'].indexOf(position) === -1){
+      if(targetProps.top + targetProps.height + targetMargin + inst.tooltip.offsetHeight + 2 < document.documentElement.clientHeight){
+        position = 'bottom';
+      }else if(targetMargin + inst.tooltip.offsetHeight + 2 < targetProps.top){
+        position = 'top';
+      }else if(targetMargin + inst.tooltip.offsetWidth + 2 < targetProps.left){
+        position = 'left';
+      }else if(targetProps.width + targetMargin + inst.tooltip.offsetWidth + 2 < document.documentElement.clientWidth - targetProps.left){
+        position = 'right';
+      }else{
+        position = 'bottom';
+      }
+    }
 
-    inst.tooltip.style.top = top + 'px';
-    inst.tooltip.style.left = left + 'px';
+    // 设置位置
+    switch(position){
+      case 'bottom':
+        marginLeft = -1 * (inst.tooltip.offsetWidth / 2);
+        marginTop = (targetProps.height / 2) + targetMargin;
+        break;
+      case 'top':
+        marginLeft = -1 * (inst.tooltip.offsetWidth / 2);
+        marginTop = -1 * (inst.tooltip.offsetHeight + (targetProps.height / 2) + targetMargin);
+        break;
+      case 'left':
+        marginLeft = -1 * (inst.tooltip.offsetWidth + (targetProps.width / 2) + targetMargin);
+        marginTop = -1 * (inst.tooltip.offsetHeight / 2);
+        break;
+      case 'right':
+        marginLeft = (targetProps.width / 2) + targetMargin;
+        marginTop = -1 * (inst.tooltip.offsetHeight / 2);
+        break;
+    }
+
+    var targetOffset = $.offset(inst.target);
+    inst.tooltip.style.top = targetOffset.top + (targetProps.height / 2) + 'px';
+    inst.tooltip.style.left = targetOffset.left + (targetProps.width / 2) + 'px';
     inst.tooltip.style['margin-left'] = marginLeft + 'px';
     inst.tooltip.style['margin-top'] = marginTop + 'px';
   }

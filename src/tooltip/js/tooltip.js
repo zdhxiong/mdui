@@ -142,6 +142,13 @@ mdui.Tooltip = (function(){
 
     inst.timeoutId = setTimeout(function(){
       inst.tooltip.classList.add('md-tooltip-open');
+      inst.state = 'opening';
+      $.pluginEvent('open', 'tooltip', inst, inst.target);
+
+      $.transitionEnd(inst.tooltip, function(){
+        inst.state = 'opened';
+        $.pluginEvent('opened', 'tooltip', inst, inst.target);
+      });
     }, inst.options.delay);
   };
 
@@ -153,6 +160,13 @@ mdui.Tooltip = (function(){
 
     clearTimeout(inst.timeoutId);
     inst.tooltip.classList.remove('md-tooltip-open');
+    inst.state = 'closing';
+    $.pluginEvent('close', 'tooltip', inst, inst.target);
+
+    $.transitionEnd(inst.tooltip, function(){
+      inst.state = 'closed';
+      $.pluginEvent('closed', 'tooltip', inst, inst.target);
+    });
   };
 
   /**

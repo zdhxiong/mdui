@@ -10,7 +10,7 @@ mdui.Dialog = (function () {
   var DEFAULT = {
     history: true,                // 监听 hashchange 事件
     overlay: true,                // 打开提示框时显示遮罩
-    closeOnClick: true,           // 点击提示框外面区域关闭提示框
+    modal: false,                 // 是否模态化提示框，为 false 时点击提示框外面区域关闭提示框，为 true 时不关闭
     closeOnEsc: true,             // 按下 esc 关闭提示框
     closeOnCancel: true,          // 按下取消按钮时关闭提示框
     closeOnConfirm: true,         // 按下确认按钮时关闭提示框
@@ -180,7 +180,7 @@ mdui.Dialog = (function () {
       }
 
       // 点击遮罩层关闭提示框
-      if (inst.options.closeOnClick) {
+      if (!inst.options.modal) {
         $.one(overlay, 'click', function (e) {
           if (e.target.classList.contains('md-overlay')) {
             inst.close();

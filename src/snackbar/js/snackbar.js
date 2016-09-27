@@ -17,13 +17,14 @@
 
   var DEFAULT = {
     massage: '',                    // 文本内容
-    hold: 4000,                     // 多长时间自动隐藏
-    minHold: 400,                   // 至少停留多长时间才自动关闭
+    timeout: 4000,                  // 在用户没有操作时多长时间自动隐藏
     buttonText: 'dismiss',          // 按钮的文本
-    buttonColor: '#90CAF9',         // 按钮的颜色
+    buttonColor: '#90CAF9',         // 按钮的颜色，支持 blue #90caf9 rgba(...)
     closeOnButtonClick: true,       // 点击按钮时关闭
+    closeOnOutsideClick: true,      // 触摸或点击屏幕其他地方时关闭
+    onClick: function(){},          // 在 Snackbar 上点击的回调
     onButtonClick: function(){},    // 点击按钮的回调
-    onClose: function(){}           // 关闭后的回调
+    onClose: function(){}           // 关闭动画开始时的回调
   };
 
   /**
@@ -95,11 +96,11 @@
     // 开始打开
     inst.snackbar.style['transform'] = 'translateY(0)';
 
-    // 动画结束后开始计时，hold 时间到后关闭
+    // 动画结束后开始计时，timeout 时间到后关闭
     $.transitionEnd(inst.snackbar, function(){
       inst.timeoutId = setTimeout(function(){
         inst.close();
-      }, inst.options.hold);
+      }, inst.options.timeout);
     });
   };
 
@@ -149,11 +150,8 @@
     if(typeof params.message !== 'undefined'){
       opts.message = params.message;
     }
-    if(typeof params.hold !== 'undefined'){
-      opts.hold = params.hold;
-    }
-    if(typeof params.minHold !== 'undefined'){
-      opts.minHold = params.minHold;
+    if(typeof params.timeout !== 'undefined'){
+      opts.timeout = params.timeout;
     }
 
     var inst = new Snackbar(opts);

@@ -67,6 +67,8 @@ module.exports = function (grunt) {
           'src/tooltip/js/tooltip.js',
           'src/tooltip/js/tooltip.data.js',
 
+          'src/snackbar/js/snackbar.js',
+
           'src/global/js/wrap_end.js'
         ],
         dest: 'dist/js/mdui.js'

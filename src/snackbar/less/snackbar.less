@@ -1,0 +1,39 @@
+/* Snackbar & toast
+   ========================================================================== */
+
+.md-snackbar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: @snackbar-padding;
+  font-size: @snackbar-font-size;
+  min-height: @snackbar-min-height;
+  line-height: @snackbar-line-height;
+  background-color: @snackbar-background;
+  color: @snackbar-text-color;
+  position: fixed;
+  bottom: 0;
+  z-index: @z-index-snackbar;
+  min-width: @snackbar-min-width;
+  max-width: @snackbar-max-width;
+  border-radius: @snackbar-radius;
+
+  will-change: transform;
+  //transition: transform @snackbar-transition-duration @snackbar-transition-timing-function;
+}
+
+/* 文本 */
+.md-snackbar-text {
+  padding: 14px 0 14px 0;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* 按钮 */
+.md-snackbar-action {
+  margin-right: -16px;
+  white-space: nowrap;
+}

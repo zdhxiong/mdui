@@ -15,12 +15,20 @@
   position: fixed;
   bottom: 0;
   z-index: @z-index-snackbar;
+  will-change: transform;
+  .md-shadow(6);
+}
+
+/* 手机和平板的样式 */
+.md-snackbar-mobile {
+  width: 100%;
+}
+
+/* 桌面版的样式 */
+.md-snackbar-desktop {
   min-width: @snackbar-min-width;
   max-width: @snackbar-max-width;
   border-radius: @snackbar-radius;
-
-  will-change: transform;
-  //transition: transform @snackbar-transition-duration @snackbar-transition-timing-function;
 }
 
 /* 文本 */

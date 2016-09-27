@@ -30,7 +30,7 @@
 
   //============= md-color-primary
   .md-color-@{colorName} {
-    .md-color(@colorName, 500) !important;
+    .md-color(@colorName, 500);
 
     @color-is-dark: 'color-@{colorName}-500-is-dark';
     & when (@@color-is-dark = false) {

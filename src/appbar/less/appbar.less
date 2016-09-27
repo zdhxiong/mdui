@@ -1,0 +1,127 @@
+/* Appbar 导航栏
+   ========================================================================== */
+
+body.md-loaded .md-appbar {
+  transition: all @appbar-transition-duration @animation-curve-default;
+}
+.md-appbar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-height: 1000px;
+  z-index: @z-index-appbar;
+  .md-shadow(4);
+
+  a {
+    transition: background-color @appbar-transition-duration @animation-curve-default;
+    user-select: none;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    margin: 0;
+    padding: 0 16px;
+    .md-text-truncate();
+  }
+
+  .md-btn-icon,
+  .md-btn-icon-mini {
+    .md-icon {
+      vertical-align: middle;
+      height: 24px;
+      line-height: 24px;
+      width: 24px;
+    }
+  }
+  .md-btn-icon {
+    width: @appbar-icon-width;
+    height: @appbar-icon-width;
+    min-width: @appbar-icon-width;
+  }
+  .md-btn-icon-mini {
+    width: @appbar-icon-mini-width;
+    height: @appbar-icon-mini-width;
+    min-width: @appbar-icon-mini-width;
+  }
+}
+
+/* appbar 固定在顶部时，为 body 添加 padding-top，避免 appbar 覆盖页面内容 */
+body.md-appbar-fixed{
+  .md-appbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  padding-top: @appbar-height-xs;
+  @media (min-width: @screen-sm-min) {
+    padding-top: @appbar-height-sm;
+  }
+  @media (min-width: @screen-md-min) {
+    padding-top: @appbar-height-md;
+  }
+}
+
+/* logo */
+.md-appbar-logo {
+  font-size: 24px;
+  img{
+    height: 24px;
+  }
+}
+
+/* 标题 */
+.md-appbar-title {
+  font-size: @appbar-title-font-size;
+  max-width: @appbar-title-max-width;
+  .md-text-truncate();
+}
+
+/* 搜索框 */
+.md-appbar-search {
+  margin: 0;
+}
+
+.md-appbar-search-field {
+  padding: 0;
+  line-height: 48px;
+  border: none;
+  border-radius: 2px;
+}
+
+// 响应式
+._appbar_responsive_mixed(@appbar-height){
+  .md-appbar {
+    &,
+    .md-icon {
+      height: @appbar-height;
+      line-height: @appbar-height;
+    }
+    .md-btn-icon {
+      margin: 0 (@appbar-height - @appbar-icon-width) / 2;
+      & + .md-btn-icon {
+        margin-left: 0;
+      }
+    }
+    .md-btn-icon-mini {
+      margin: 0 (@appbar-height - @appbar-icon-mini-width) / 2;
+      & + .md-btn-icon-mini {
+        margin-left: 0;
+      }
+    }
+  }
+  .md-appbar-logo{
+    img{
+      padding: (@appbar-height - 24px) / 2 0;
+    }
+  }
+}
+
+._appbar_responsive_mixed(@appbar-height-xs);
+@media (min-width: @screen-sm-min) {
+  ._appbar_responsive_mixed(@appbar-height-sm);
+}
+@media (min-width: @screen-md-min) {
+  ._appbar_responsive_mixed(@appbar-height-md);
+}

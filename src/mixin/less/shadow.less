@@ -3,3 +3,14 @@
   @shadow: 'shadow-depth-@{depth}';
   box-shadow: @@shadow;
 }
+
+// hover 时添加阴影
+.md-hoverable(@depth: @shadow-hover-depth) {
+  will-change: box-shadow;
+  transition: box-shadow @shadow-hover-transition-duration @shadow-hover-transition-timing-function;
+
+  &:hover,
+  &:focus {
+    .md-shadow(@depth);
+  }
+}

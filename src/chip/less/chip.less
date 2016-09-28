@@ -2,5 +2,69 @@
    ========================================================================== */
 
 .md-chip {
+  box-sizing: border-box;
+  display: inline-block;
+  height: @chip-height;
+  border-radius: @chip-height / 2;
+  white-space: nowrap;
+  background-color: #e0e0e0;
+  cursor: pointer;
+  user-select: none;
+  margin: 2px 0;
+  .md-hoverable(2);
+  &:active {
+    background-color: #d6d6d6;
+  }
+}
 
+/* 左侧的图标 */
+.md-chip-icon {
+  height: @chip-height;
+  width: @chip-height;
+  border-radius: 50%;
+  margin-right: -4px;
+  font-size: 18px;
+  line-height: @chip-height;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  text-align: center;
+  background-color: #989898;
+  color: #ffffff;
+  .md-icon {
+    color: #ffffff;
+  }
+}
+
+/* 文本 */
+.md-chip-title {
+  height: @chip-height;
+  line-height: @chip-height;
+  padding-left: 12px;
+  padding-right: 12px;
+  font-size: @chip-font-size;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+/* 删除按钮 */
+.md-chip-delete {
+  height: 24px;
+  width: 24px;
+  opacity: .54;
+  cursor: pointer;
+  margin-left: -8px;
+  margin-right: 4px;
+  text-decoration: none;
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 50%;
+  will-change: opacity;
+  transition: opacity .25s @animation-curve-default;
+  &:hover,
+  &:focus {
+    opacity: .87;
+  }
 }

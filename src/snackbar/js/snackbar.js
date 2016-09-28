@@ -72,9 +72,9 @@
     document.body.appendChild(inst.snackbar);
 
     // 设置位置
-    inst.snackbar.style['transform'] = 'translateY(' + inst.snackbar.clientHeight + 'px)';
+    $.transform(inst.snackbar, 'translateY(' + inst.snackbar.clientHeight + 'px)');
     inst.snackbar.style['left'] = (document.body.clientWidth - inst.snackbar.clientWidth) / 2 + 'px';
-    $.getStyle(inst.snackbar, 'transform');
+    $.getStyle(inst.snackbar);
     inst.snackbar.style['-webkit-transition'] = '-webkit-transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
     inst.snackbar.style['transition'] = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
   }
@@ -101,7 +101,7 @@
 
     // 开始打开
     inst.state = 'opening';
-    inst.snackbar.style['transform'] = 'translateY(0)';
+    $.transform(inst.snackbar, 'translateY(0)');
 
     $.transitionEnd(inst.snackbar, function(){
       inst.state = 'opened';
@@ -156,7 +156,7 @@
     }
 
     inst.state = 'closing';
-    inst.snackbar.style['transform'] = 'translateY(' + inst.snackbar.clientHeight + 'px)';
+    $.transform(inst.snackbar, 'translateY(' + inst.snackbar.clientHeight + 'px)');
     inst.options.onClose();
     current = null;
 

@@ -75,8 +75,7 @@
     $.transform(inst.snackbar, 'translateY(' + inst.snackbar.clientHeight + 'px)');
     inst.snackbar.style['left'] = (document.body.clientWidth - inst.snackbar.clientWidth) / 2 + 'px';
     $.getStyle(inst.snackbar);
-    inst.snackbar.style['-webkit-transition'] = '-webkit-transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-    inst.snackbar.style['transition'] = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+    inst.snackbar.classList.add('md-snackbar-transition');
   }
 
   /**

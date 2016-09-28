@@ -19,6 +19,11 @@
   .md-shadow(6);
 }
 
+/* 为 .md-snackbar 添加 transition 属性 */
+.md-snackbar-transition {
+  transition: transform @snackbar-transition-duration @snackbar-transition-timing-function;
+}
+
 /* 手机和平板的样式 */
 .md-snackbar-mobile {
   width: 100%;

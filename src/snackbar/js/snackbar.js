@@ -16,15 +16,25 @@
   var queueName = '__md_snackbar';
 
   var DEFAULT = {
-    massage: '',                    // 文本内容
+    message: '',                    // 文本内容
     timeout: 4000,                  // 在用户没有操作时多长时间自动隐藏
-    buttonText: 'dismiss',          // 按钮的文本
+    buttonText: '',                 // 按钮的文本
     buttonColor: '#90CAF9',         // 按钮的颜色，支持 blue #90caf9 rgba(...)
     closeOnButtonClick: true,       // 点击按钮时关闭
     closeOnOutsideClick: true,      // 触摸或点击屏幕其他地方时关闭
     onClick: function(){},          // 在 Snackbar 上点击的回调
     onButtonClick: function(){},    // 点击按钮的回调
     onClose: function(){}           // 关闭动画开始时的回调
+  };
+
+  /**
+   * 点击 Snackbar 外面的区域关闭
+   * @param e
+   */
+  var closeOnOutsideClick = function(e){
+    if(!e.target.classList.contains('md-snackbar') && !$.parents(e.target, '.md-snackbar').length){
+      current.close();
+    }
   };
 
   /**
@@ -41,8 +51,6 @@
     if(!inst.options.message){
       return;
     }
-
-    inst.state = 'closed';
 
     // 按钮颜色
     var buttonColorStyle = '', buttonColorClass = '';
@@ -67,14 +75,6 @@
     $.getStyle(inst.snackbar, 'transform');
     inst.snackbar.style['-webkit-transition'] = '-webkit-transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
     inst.snackbar.style['transition'] = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-
-    // 有按钮时绑定事件
-    var action = $.query('.md-snackbar-action', inst.snackbar);
-    if(inst.options.buttonText){
-      $.on(action, 'click', function(){
-        inst.close();
-      });
-    }
   }
 
   /**
@@ -96,11 +96,36 @@
     // 开始打开
     inst.snackbar.style['transform'] = 'translateY(0)';
 
-    // 动画结束后开始计时，timeout 时间到后关闭
     $.transitionEnd(inst.snackbar, function(){
+
+      // 有按钮时绑定事件
+      if(inst.options.buttonText){
+        var action = $.query('.md-snackbar-action', inst.snackbar);
+        $.on(action, 'click', function(){
+          inst.options.onButtonClick();
+          if(inst.options.closeOnButtonClick) {
+            inst.close();
+          }
+        });
+      }
+
+      // 点击 Snackbar 的事件
+      $.on(inst.snackbar, 'click', function(e){
+        if(!e.target.classList.contains('md-snackbar-action')){
+          inst.options.onClick();
+        }
+      });
+
+      // 点击 Snackbar 外面的区域关闭
+      if(inst.options.closeOnOutsideClick){
+        $.on(document, mdui.support.touch ? 'touchstart' : 'click', closeOnOutsideClick);
+      }
+
+      // 超时后自动关闭
       inst.timeoutId = setTimeout(function(){
         inst.close();
       }, inst.options.timeout);
+
     });
   };
 
@@ -110,19 +135,24 @@
   Snackbar.prototype.close = function(){
     var inst = this;
 
+    if(typeof inst.timeoutId !== 'undefined'){
+      clearTimeout(inst.timeoutId);
+    }
+
+    if(inst.options.closeOnOutsideClick){
+      $.off(document, mdui.support.touch ? 'touchstart' : 'click', closeOnOutsideClick);
+    }
+
     inst.snackbar.style['transform'] = 'translateY(' + inst.snackbar.clientHeight + 'px)';
+    inst.options.onClose();
+    current = null;
 
+    $.transitionEnd(inst.snackbar, function(){
+      inst.snackbar.parentNode.removeChild(inst.snackbar);
+
+      $.dequeue(queueName);
+    });
   };
-
-  /**
-   * 销毁 Snackbar
-   */
-  Snackbar.prototype.destroy = function(){
-    var inst = this;
-
-
-  };
-
 
   /**
    * 打开 Snackbar
@@ -130,31 +160,6 @@
    */
   mdui.snackbar = function(params){
     var inst = new Snackbar(params);
-
-    inst.open();
-  };
-
-  /**
-   * 打开 toast
-   * @param params
-   */
-  mdui.toast = function(params){
-    if(!params){
-      return;
-    }
-
-    var opts = {
-      buttonText: false
-    };
-
-    if(typeof params.message !== 'undefined'){
-      opts.message = params.message;
-    }
-    if(typeof params.timeout !== 'undefined'){
-      opts.timeout = params.timeout;
-    }
-
-    var inst = new Snackbar(opts);
 
     inst.open();
   };

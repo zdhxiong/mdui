@@ -1,5 +1,5 @@
 /**
- * snackbar 和 toast
+ * Snackbar
  * ============================================================================
  */
 (function(){
@@ -52,6 +52,8 @@
       return;
     }
 
+    inst.state = 'closed';
+
     // 按钮颜色
     var buttonColorStyle = '', buttonColorClass = '';
     if(inst.options.buttonColor.indexOf('#') === 0 || inst.options.buttonColor.indexOf('rgb') === 0) {
@@ -83,6 +85,10 @@
   Snackbar.prototype.open = function(){
     var inst = this;
 
+    if(inst.state === 'opening' || inst.state === 'opened'){
+      return;
+    }
+
     // 如果当前有正在显示的 Snackbar，则先加入队列，等旧 Snackbar 关闭后再打开
     if(current){
       $.queue(queueName, function(){
@@ -94,9 +100,11 @@
     current = inst;
 
     // 开始打开
+    inst.state = 'opening';
     inst.snackbar.style['transform'] = 'translateY(0)';
 
     $.transitionEnd(inst.snackbar, function(){
+      inst.state = 'opened';
 
       // 有按钮时绑定事件
       if(inst.options.buttonText){
@@ -135,6 +143,10 @@
   Snackbar.prototype.close = function(){
     var inst = this;
 
+    if(inst.state === 'closing' || inst.state === 'closed'){
+      return;
+    }
+
     if(typeof inst.timeoutId !== 'undefined'){
       clearTimeout(inst.timeoutId);
     }
@@ -143,11 +155,14 @@
       $.off(document, mdui.support.touch ? 'touchstart' : 'click', closeOnOutsideClick);
     }
 
+    inst.state = 'closing';
     inst.snackbar.style['transform'] = 'translateY(' + inst.snackbar.clientHeight + 'px)';
     inst.options.onClose();
     current = null;
 
     $.transitionEnd(inst.snackbar, function(){
+      inst.state = 'closed';
+
       inst.snackbar.parentNode.removeChild(inst.snackbar);
 
       $.dequeue(queueName);
@@ -162,6 +177,7 @@
     var inst = new Snackbar(params);
 
     inst.open();
+    return inst;
   };
 
 })();

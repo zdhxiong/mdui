@@ -59,10 +59,10 @@ module.exports = function (grunt) {
 
           'src/dialog/js/dialog.js',
           'src/dialog/js/dialog.data.js',
-          //'src/js/dialog/dialog.js',
-          //'src/js/dialog/alert.js',
-          //'src/js/dialog/confirm.js',
-          //'src/js/dialog/prompt.js',
+          'src/dialog/js/dialog.dialog.js',
+          'src/dialog/js/dialog.alert.js',
+          'src/dialog/js/dialog.confirm.js',
+          'src/dialog/js/dialog.prompt.js',
 
           'src/tooltip/js/tooltip.js',
           'src/tooltip/js/tooltip.data.js',
@@ -78,7 +78,8 @@ module.exports = function (grunt) {
           'dist/js/mdui.js',
 
           'src/fab/js/fab.jquery.js',
-          'src/drawer/js/drawer.jquery.js'
+          'src/drawer/js/drawer.jquery.js',
+          'src/dialog/js/dialog.jquery.js'
         ],
         dest: 'dist/js/mdui.jquery.js'
       }

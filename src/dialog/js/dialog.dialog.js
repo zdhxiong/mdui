@@ -55,6 +55,7 @@ mdui.dialog = function(options){
       buttonsHTML +
     '</div>';
 
+  // 实例化 Dialog
   var inst = new mdui.Dialog(HTML, {
     history: options.history,
     overlay: options.overlay,
@@ -63,15 +64,16 @@ mdui.dialog = function(options){
     destroyOnClosed: options.destroyOnClosed
   });
 
+  // 绑定按钮事件
   if(options.buttons.length){
     var buttons = $.queryAll('.md-dialog-actions .md-btn', inst.dialog);
     $.each(buttons, function(i, button){
       $.on(button, 'click', function(){
-        if(options.buttons[i].close) {
-          inst.close();
-        }
         if(typeof options.buttons[i].onClick === 'function'){
           options.buttons[i].onClick(inst);
+        }
+        if(options.buttons[i].close) {
+          inst.close();
         }
       });
     });

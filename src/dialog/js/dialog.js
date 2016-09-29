@@ -36,7 +36,7 @@ mdui.Dialog = (function () {
   /**
    * 窗口宽度变化，或提示框内容变化时，调整提示框位置和提示框内的滚动条
    */
-  function readjust() {
+  var readjust = function() {
     if(!current) {
       return;
     }
@@ -61,16 +61,26 @@ mdui.Dialog = (function () {
     if (dialogContent) {
       dialogContent.style.height = dialogHeight - dialogTitleHeight - dialogActionsHeight + 'px';
     }
-  }
+  };
 
   /**
-   * hashchange 事件
+   * hashchange 事件出发时关闭提示框
    */
-  function hashchangeEvent() {
+  var hashchangeEvent = function() {
     if (location.hash.substring(1).indexOf('&md-dialog') < 0) {
       current.close(true);
     }
-  }
+  };
+
+  /**
+   * 点击遮罩层关闭提示框
+   * @param e
+   */
+  var overlayClick = function(e){
+    if (e.target.classList.contains('md-overlay')) {
+      current.close();
+    }
+  };
 
   /**
    * 提示框实例
@@ -84,15 +94,16 @@ mdui.Dialog = (function () {
     // 提示框元素
     inst.dialog = $.dom(selector)[0];
 
-    if(!document.contains(inst.dialog)){
-      inst.append = true;
-      document.body.appendChild(inst.dialog);
-    }
-
     // 已通过 data 属性实例化过，不再重复实例化
     var oldInst = $.getData(inst.dialog, 'mdui.dialog');
     if (oldInst) {
       return oldInst;
+    }
+
+    // 如果提示框元素没有在当前文档中，则需要添加
+    if(!document.contains(inst.dialog)){
+      inst.append = true;
+      document.body.appendChild(inst.dialog);
     }
 
     inst.options = $.extend(DEFAULT, (opts || {}));
@@ -147,8 +158,8 @@ mdui.Dialog = (function () {
       return;
     }
 
-    // 如果当前有正在打开或已经打开的对话框，则先加入队列，等旧对话框开始关闭时再打开
-    if (current && (current.state === 'opening' || current.state === 'opened')) {
+    // 如果当前有正在打开或已经打开的对话框,或队列不为空，则先加入队列，等旧对话框开始关闭时再打开
+    if ((current && (current.state === 'opening' || current.state === 'opened')) || $.queue(queueName).length) {
       $.queue(queueName, function () {
         inst.open();
       });
@@ -158,7 +169,6 @@ mdui.Dialog = (function () {
     current = inst;
 
     mdui.lockScreen();
-
     inst.dialog.style.display = 'block';
 
     readjust();
@@ -168,31 +178,25 @@ mdui.Dialog = (function () {
 
     // 打开消息框
     inst.dialog.classList.add('md-dialog-open');
-
     inst.state = 'opening';
     $.pluginEvent('open', 'dialog', inst, inst.dialog);
 
+    // 打开提示框动画完成后
     $.transitionEnd(inst.dialog, function () {
       inst.state = 'opened';
       $.pluginEvent('opened', 'dialog', inst, inst.dialog);
     });
 
+    // 不存在遮罩层元素时，添加遮罩层
     if (!overlay) {
       overlay = mdui.showOverlay(300);
-
-      if(!inst.options.overlay) {
-        overlay.style.background = 'transparent';
-      }
-
-      // 点击遮罩层关闭提示框
-      if (!inst.options.modal) {
-        $.one(overlay, 'click', function (e) {
-          if (e.target.classList.contains('md-overlay')) {
-            inst.close();
-          }
-        });
-      }
     }
+
+    // 点击遮罩层时是否关闭提示框
+    $[inst.options.modal ? 'off' : 'on'](overlay, 'click', overlayClick);
+
+    // 是否显示遮罩层，不显示时，把遮罩层背景透明
+    overlay.style.opacity = inst.options.overlay ? '' : 0;
 
     if (inst.options.history) {
       // 如果 hash 中原来就有 &md-dialod，先删除，避免后退历史纪录后仍然有 &md-dialog 导致无法关闭
@@ -217,10 +221,12 @@ mdui.Dialog = (function () {
       return;
     }
 
+    current = null;
     inst.dialog.classList.remove('md-dialog-open');
     inst.state = 'closing';
     $.pluginEvent('close', 'dialog', inst, inst.dialog);
 
+    // 所有提示框都关闭，且当前没有打开的提示框时，隐藏遮罩
     if ($.queue(queueName).length === 0) {
       mdui.hideOverlay(overlay);
       overlay = null;
@@ -232,8 +238,8 @@ mdui.Dialog = (function () {
 
       inst.dialog.style.display = 'none';
 
-      // 所有提示框都关闭后
-      if ($.queue(queueName).length === 0) {
+      // 所有提示框都关闭，且当前没有打开的提示框时，解锁屏幕
+      if ($.queue(queueName).length === 0 && !current) {
         mdui.unlockScreen();
       }
 

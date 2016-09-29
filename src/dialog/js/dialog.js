@@ -84,6 +84,11 @@ mdui.Dialog = (function () {
     // 提示框元素
     inst.dialog = $.dom(selector)[0];
 
+    if(!document.contains(inst.dialog)){
+      inst.append = true;
+      document.body.appendChild(inst.dialog);
+    }
+
     // 已通过 data 属性实例化过，不再重复实例化
     var oldInst = $.getData(inst.dialog, 'mdui.dialog');
     if (oldInst) {
@@ -284,7 +289,9 @@ mdui.Dialog = (function () {
   Dialog.prototype.destroy = function () {
     var inst = this;
 
-    inst.dialog.parentNode.removeChild(inst.dialog);
+    if(inst.append){
+      inst.dialog.parentNode.removeChild(inst.dialog);
+    }
     $.removeData(inst.dialog, 'mdui.dialog');
     if(typeof jQuery !== 'undefined'){
       jQuery(inst.dialog).removeData('mdui.dialog');

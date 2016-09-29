@@ -11,7 +11,6 @@ mdui.dialog = function(options){
   var DEFAULT = {
     title: '',              // 标题
     content: '',            // 文本
-    customContent: '',      // 自定义内容
     buttons: [],            // 按钮
     stackedButtons: false,  // 垂直排列按钮
     cssClass: '',           // 在 Dialog 上添加的 CSS 类
@@ -29,7 +28,7 @@ mdui.dialog = function(options){
     text: '',               // 按钮文本
     bold: false,            // 按钮文本是否加粗
     close: true,            // 点击按钮后关闭提示框
-    onClick: function(){}   // 点击按钮的回调
+    onClick: function(inst){}   // 点击按钮的回调
   };
 
   // 合并参数
@@ -53,7 +52,6 @@ mdui.dialog = function(options){
     '<div class="md-dialog ' + options.cssClass + '">' +
       (options.title ? '<div class="md-dialog-title">' + options.title + '</div>' : '') +
       (options.content ? '<div class="md-dialog-content">' + options.content + '</div>' : '') +
-      options.customContent +
       buttonsHTML +
     '</div>';
 
@@ -73,7 +71,7 @@ mdui.dialog = function(options){
           inst.close();
         }
         if(typeof options.buttons[i].onClick === 'function'){
-          options.buttons[i].onClick();
+          options.buttons[i].onClick(inst);
         }
       });
     });

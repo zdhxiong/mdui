@@ -51,6 +51,8 @@ module.exports = function (grunt) {
           // PLUGINS
           'src/ripple/js/ripple.js',
 
+          'src/textfield/js/textfield.js',
+
           'src/fab/js/fab.js',
           'src/fab/js/fab.data.js',
 

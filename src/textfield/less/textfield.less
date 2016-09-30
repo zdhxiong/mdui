@@ -1,0 +1,70 @@
+/* Text Field
+   ========================================================================== */
+
+/* 文本框外层 */
+.md-textfield {
+  padding-top: 16px;
+  margin-bottom: 8px;
+}
+
+/* 输入框 */
+.md-textfield-input {
+  width: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  appearance: none;
+  box-sizing: border-box;
+  border: none;
+  background: none;
+  border-radius: 0 0 0 0;
+  box-shadow: none;
+  display: block;
+  margin: 0;
+  height: 36px;
+  color: #212121;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  transition: all .2s;
+  .md-divider-bottom();
+}
+
+/* 文本框 label */
+.md-textfield-label {
+  pointer-events: none;
+  font-size: 16px;
+  vertical-align: top;
+  width: 100%;
+  transform-origin: left;
+  transform: scale(1) translateY(21px);
+  color: rgba(0, 0, 0, 0.35);
+  transition: all .2s;
+}
+
+/* 聚焦状态的输入框 */
+.md-textfield-focus {
+
+  .md-textfield-input {
+    border-bottom: 1px solid @color-primary-500;
+    box-shadow: 0 1px 0 0 @color-primary-500;
+  }
+
+  .md-textfield-label {
+    transform: scale(0.75) translateY(0);
+    color: @color-primary-500;
+  }
+}
+
+/* 输入框不为空，且不聚焦 */
+.md-textfield-not-empty:not(.md-textfield-focus) {
+
+  .md-textfield-input {
+    .md-divider-bottom();
+    box-shadow: none;
+  }
+
+  .md-textfield-label {
+    transform: scale(0.75) translateY(0);
+    color: rgba(0, 0, 0, 0.65);
+  }
+}

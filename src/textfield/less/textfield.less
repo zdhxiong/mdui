@@ -25,8 +25,16 @@
   font-size: 16px;
   font-family: inherit;
   outline: none;
-  transition: all .2s;
+  transition: border-bottom-color .2s;
   .md-divider-bottom();
+
+  &::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.35);
+  }
+
+  &[disabled] {
+    color: rgba(0, 0, 0, @opacity-black-disabled);
+  }
 }
 
 /* 文本框 label */
@@ -36,35 +44,98 @@
   vertical-align: top;
   width: 100%;
   transform-origin: left;
-  transform: scale(1) translateY(21px);
-  color: rgba(0, 0, 0, 0.35);
+  color: rgba(0, 0, 0, 0.65);
   transition: all .2s;
+  transform: scale(0.75) translateY(0);
 }
 
-/* 聚焦状态的输入框 */
+/* 表单验证错误提示 */
+.md-textfield-error {
+  margin-top: 8px;
+  font-size: 12px;
+  color: @color-red-500;
+  .md-text-truncate();
+  visibility: hidden;
+}
+
+/* 聚焦状态的文本框
+   ============= */
 .md-textfield-focus {
 
   .md-textfield-input {
-    border-bottom: 1px solid @color-primary-500;
-    box-shadow: 0 1px 0 0 @color-primary-500;
+    border-bottom: 2px solid @color-primary-500;
   }
 
   .md-textfield-label {
-    transform: scale(0.75) translateY(0);
     color: @color-primary-500;
   }
 }
 
-/* 输入框不为空，且不聚焦 */
-.md-textfield-not-empty:not(.md-textfield-focus) {
+/* 含有浮动标签的文本框
+   ================ */
+.md-textfield-floating-label {
+
+  .md-textfield-label {
+    transform: scale(1) translateY(27px);
+    color: rgba(0, 0, 0, 0.35);
+  }
+
+  &.md-textfield-focus,
+  &.md-textfield-not-empty {
+    .md-textfield-label {
+      transform: scale(0.75) translateY(0);
+      color: rgba(0, 0, 0, 0.65);
+    }
+  }
+  &.md-textfield-focus {
+    .md-textfield-label {
+      color: @color-primary-500;
+    }
+  }
+}
+
+/* 表单验证不通过
+   =========== */
+.md-textfield-invalid {
 
   .md-textfield-input {
-    .md-divider-bottom();
-    box-shadow: none;
+    border-bottom: 1px solid @color-red-500;
+  }
+  &.md-textfield-focus {
+    .md-textfield-input {
+      border-bottom: 2px solid @color-red-500;
+    }
   }
 
   .md-textfield-label {
-    transform: scale(0.75) translateY(0);
-    color: rgba(0, 0, 0, 0.65);
+    color: @color-red-500;
+  }
+  &.md-textfield-floating-label {
+    .md-textfield-label {
+      color: rgba(red(@color-red-500), green(@color-red-500), blue(@color-red-500), 0.35);
+    }
+    &.md-textfield-focus,
+    &.md-textfield-not-empty {
+      .md-textfield-label {
+        color: @color-red-500;
+      }
+    }
+  }
+
+  .md-textfield-error {
+    visibility: visible;
+  }
+}
+
+/* 禁用表单
+   ====== */
+.md-textfield-disabled {
+  .md-textfield-label,
+  .md-textfield-input,
+  .md-textfield-input::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, @opacity-black-disabled) !important;
+  }
+  .md-textfield-input {
+    border-bottom: 1px dotted rgba(0, 0, 0, @opacity-black-disabled) !important;
   }
 }

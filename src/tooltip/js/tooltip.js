@@ -1,9 +1,10 @@
 /**
- * ToolTip 工具提示
+ * =============================================================================
+ * ************   ToolTip 工具提示   ************
  * =============================================================================
  */
 
-mdui.Tooltip = (function(){
+mdui.Tooltip = (function () {
 
   /**
    * 默认参数
@@ -18,8 +19,10 @@ mdui.Tooltip = (function(){
    * 设置 Tooltip 的位置
    * @param inst
    */
-  function setPosition(inst){
-    var marginLeft, marginTop, position;
+  function setPosition(inst) {
+    var marginLeft;
+    var marginTop;
+    var position;
 
     // 触发的元素
     var targetProps = inst.target.getBoundingClientRect();
@@ -35,22 +38,22 @@ mdui.Tooltip = (function(){
     position = inst.options.position;
 
     // 自动判断位置，加 2px，使 Tooltip 距离窗口边框至少有 2px 的间距
-    if(['bottom', 'top', 'left', 'right'].indexOf(position) === -1){
-      if(targetProps.top + targetProps.height + targetMargin + tooltipHeight + 2 < document.documentElement.clientHeight){
+    if (['bottom', 'top', 'left', 'right'].indexOf(position) === -1) {
+      if (targetProps.top + targetProps.height + targetMargin + tooltipHeight + 2 < document.documentElement.clientHeight) {
         position = 'bottom';
-      }else if(targetMargin + tooltipHeight + 2 < targetProps.top){
+      } else if (targetMargin + tooltipHeight + 2 < targetProps.top) {
         position = 'top';
-      }else if(targetMargin + tooltipWidth + 2 < targetProps.left){
+      } else if (targetMargin + tooltipWidth + 2 < targetProps.left) {
         position = 'left';
-      }else if(targetProps.width + targetMargin + tooltipWidth + 2 < document.documentElement.clientWidth - targetProps.left){
+      } else if (targetProps.width + targetMargin + tooltipWidth + 2 < document.documentElement.clientWidth - targetProps.left) {
         position = 'right';
-      }else{
+      } else {
         position = 'bottom';
       }
     }
 
     // 设置位置
-    switch(position){
+    switch (position) {
       case 'bottom':
         marginLeft = -1 * (tooltipWidth / 2);
         marginTop = (targetProps.height / 2) + targetMargin;
@@ -90,7 +93,7 @@ mdui.Tooltip = (function(){
 
     // 已通过 data 属性实例化过，不再重复实例化
     var oldInst = $.getData(inst.target, 'mdui.tooltip');
-    if(oldInst){
+    if (oldInst) {
       return oldInst;
     }
 
@@ -105,10 +108,10 @@ mdui.Tooltip = (function(){
     // 绑定事件
     var openEvent = mdui.support.touch ? 'touchstart' : 'mouseenter';
     var closeEvent = mdui.support.touch ? 'touchend' : 'mouseleave';
-    $.on(inst.target, openEvent, function(){
+    $.on(inst.target, openEvent, function () {
       inst.open();
     });
-    $.on(inst.target, closeEvent, function(){
+    $.on(inst.target, closeEvent, function () {
       inst.close();
     });
   }
@@ -120,7 +123,7 @@ mdui.Tooltip = (function(){
   Tooltip.prototype.open = function (opts) {
     var inst = this;
 
-    if(inst.state === 'opening' || inst.state === 'opened'){
+    if (inst.state === 'opening' || inst.state === 'opened') {
       return;
     }
 
@@ -130,22 +133,22 @@ mdui.Tooltip = (function(){
     var dataOpts = $.parseOptions(inst.target.getAttribute('data-md-tooltip'));
     inst.options = $.extend(inst.options, dataOpts);
 
-    if(opts) {
+    if (opts) {
       inst.options = $.extend(inst.options, opts);
     }
 
-    if(oldOpts.content !== inst.options.content) {
+    if (oldOpts.content !== inst.options.content) {
       inst.tooltip.innerHTML = inst.options.content;
     }
 
     setPosition(inst);
 
-    inst.timeoutId = setTimeout(function(){
+    inst.timeoutId = setTimeout(function () {
       inst.tooltip.classList.add('md-tooltip-open');
       inst.state = 'opening';
       $.pluginEvent('open', 'tooltip', inst, inst.target);
 
-      $.transitionEnd(inst.tooltip, function(){
+      $.transitionEnd(inst.tooltip, function () {
         inst.state = 'opened';
         $.pluginEvent('opened', 'tooltip', inst, inst.target);
       });
@@ -163,7 +166,7 @@ mdui.Tooltip = (function(){
     inst.state = 'closing';
     $.pluginEvent('close', 'tooltip', inst, inst.target);
 
-    $.transitionEnd(inst.tooltip, function(){
+    $.transitionEnd(inst.tooltip, function () {
       inst.state = 'closed';
       $.pluginEvent('closed', 'tooltip', inst, inst.target);
     });
@@ -172,13 +175,13 @@ mdui.Tooltip = (function(){
   /**
    * 切换 Tooltip 状态
    */
-  Tooltip.prototype.toggle = function(){
+  Tooltip.prototype.toggle = function () {
     var inst = this;
 
-    if(inst.state === 'opening' || inst.state === 'opened'){
+    if (inst.state === 'opening' || inst.state === 'opened') {
       inst.close();
     }
-    if(inst.state === 'closing' || inst.state === 'closed'){
+    if (inst.state === 'closing' || inst.state === 'closed') {
       inst.open();
     }
   };
@@ -187,18 +190,18 @@ mdui.Tooltip = (function(){
    * 获取 Tooltip 状态
    * @returns {'opening'|'opened'|'closing'|'closed'}
    */
-  Tooltip.prototype.getState = function(){
+  Tooltip.prototype.getState = function () {
     return this.state;
   };
 
   /**
    * 销毁 Tooltip
    */
-  Tooltip.prototype.destroy = function(){
+  Tooltip.prototype.destroy = function () {
     var inst = this;
     clearTimeout(inst.timeoutId);
     $.removeData(inst.target, 'mdui.tooltip');
-    if(typeof jQuery !== 'undefined'){
+    if (typeof jQuery !== 'undefined') {
       jQuery(inst.target).removeData('mdui.tooltip');
     }
     inst.tooltip.parentNode.removeChild(inst.tooltip);

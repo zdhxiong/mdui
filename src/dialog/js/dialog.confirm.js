@@ -1,24 +1,25 @@
 /**
- * mdui.confirm()
+ * =============================================================================
+ * ************   mdui.confirm(content, title, onConfirm, onCancel, options)   ************
  * =============================================================================
  */
 
-mdui.confirm = function(content, title, onConfirm, onCancel, options){
+mdui.confirm = function (content, title, onConfirm, onCancel, options) {
 
   // title 参数可选
-  if(typeof title === 'function'){
+  if (typeof title === 'function') {
     title = '';
     onConfirm = arguments[1];
     onCancel = arguments[2];
     options = arguments[3];
   }
-  if(typeof onConfirm === 'undefined'){
-    onConfirm = function(){}
+  if (typeof onConfirm === 'undefined') {
+    onConfirm = function () {};
   }
-  if(typeof onCancel === 'undefined'){
-    onCancel = function(){}
+  if (typeof onCancel === 'undefined') {
+    onCancel = function () {};
   }
-  if(typeof options === 'undefined'){
+  if (typeof options === 'undefined') {
     options = {};
   }
 

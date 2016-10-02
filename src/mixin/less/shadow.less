@@ -5,9 +5,9 @@
 }
 
 // hover 时添加阴影
-.md-hoverable(@depth: @shadow-hover-depth) {
+.md-hoverable(@depth: 8) {
   will-change: box-shadow;
-  transition: box-shadow @shadow-hover-transition-duration @shadow-hover-transition-timing-function;
+  transition: box-shadow .25s @animation-curve-default;
 
   &:hover,
   &:focus {

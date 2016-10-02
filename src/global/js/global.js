@@ -64,20 +64,20 @@ mdui.screen = {
 
 /**
  * 创建遮罩层并显示
- * @param z_index 遮罩层的 z_index
+ * @param zIndex 遮罩层的 z_index
  * @returns {Element}
  */
-mdui.showOverlay = function (z_index) {
+mdui.showOverlay = function (zIndex) {
   var overlay = $.dom('<div class="md-overlay">')[0];
   document.body.appendChild(overlay);
 
-  //使动态添加的元素的 transition 动画能生效
+  // 使动态添加的元素的 transition 动画能生效
   $.getStyle(overlay, 'opacity');
 
-  if (typeof z_index === 'undefined') {
-    z_index = 100;
+  if (typeof zIndex === 'undefined') {
+    zIndex = 100;
   }
-  overlay.style['z-index'] = z_index;
+  overlay.style['z-index'] = zIndex;
   overlay.classList.add('md-overlay-show');
 
   return overlay;
@@ -89,14 +89,14 @@ mdui.showOverlay = function (z_index) {
  */
 mdui.hideOverlay = function (overlay) {
   var overlays;
-  if(typeof overlay === 'undefined'){
+  if (typeof overlay === 'undefined') {
     overlays = $.queryAll('.md-overlay');
-  }else{
+  } else {
     overlays = [overlay];
   }
-  $.each(overlays, function(i, overlay){
+  $.each(overlays, function (i, overlay) {
     overlay.classList.remove('md-overlay-show');
-    $.transitionEnd(overlay, function(){
+    $.transitionEnd(overlay, function () {
       overlay.parentNode.removeChild(overlay);
     });
   });
@@ -135,7 +135,8 @@ mdui.throttle = function (fn, delay) {
   var timer = null;
 
   return function () {
-    var context = this, args = arguments;
+    var context = this;
+    var args = arguments;
 
     if (timer === null) {
       timer = setTimeout(function () {
@@ -151,14 +152,14 @@ mdui.throttle = function (fn, delay) {
  * @param pluginName 插件名，若传入该参数，guid 将以该参数作为前缀
  * @returns {string}
  */
-mdui.guid = function(pluginName){
+mdui.guid = function (pluginName) {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
       .toString(16)
       .substring(1);
   }
   var guid = s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-  if(pluginName){
+  if (pluginName) {
     guid = 'md-' + pluginName + '-' + guid;
   }
   return guid;
@@ -169,7 +170,7 @@ $.ready(function () {
   // 避免页面加载完后直接执行css动画
   // https://css-tricks.com/transitions-only-after-page-load/
 
-  setTimeout(function(){
+  setTimeout(function () {
     document.body.classList.add('md-loaded');
   }, 0);
 

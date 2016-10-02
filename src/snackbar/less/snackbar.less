@@ -1,17 +1,20 @@
-/* Snackbar & toast
-   ========================================================================== */
+/**
+ * =============================================================================
+ * ************   Snackbar   ************
+ * =============================================================================
+ */
 
 .md-snackbar {
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: @snackbar-padding;
-  font-size: @snackbar-font-size;
-  min-height: @snackbar-min-height;
-  line-height: @snackbar-line-height;
-  background-color: @snackbar-background;
-  color: @snackbar-text-color;
+  padding: 0 24px 0 24px;
+  font-size: 14px;
+  min-height: 48px;
+  line-height: 20px;
+  background-color: #323232;
+  color: #fff;
   position: fixed;
   bottom: 0;
   z-index: @z-index-snackbar;
@@ -21,7 +24,7 @@
 
 /* 为 .md-snackbar 添加 transition 属性 */
 .md-snackbar-transition {
-  transition: transform @snackbar-transition-duration @snackbar-transition-timing-function;
+  transition: transform .3s @animation-curve-default;
 }
 
 /* 手机和平板的样式 */
@@ -31,9 +34,9 @@
 
 /* 桌面版的样式 */
 .md-snackbar-desktop {
-  min-width: @snackbar-min-width;
-  max-width: @snackbar-max-width;
-  border-radius: @snackbar-radius;
+  min-width: 288px;
+  max-width: 568px;
+  border-radius: 2px;
 }
 
 /* 文本 */

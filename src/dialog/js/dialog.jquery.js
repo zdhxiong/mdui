@@ -1,16 +1,22 @@
-(function($){
+/**
+ * =============================================================================
+ * ************   Dialog jQuery   ************
+ * =============================================================================
+ */
 
-  function Plugin(option){
+(function ($) {
+
+  function Plugin(option) {
     var value;
 
-    this.each(function(){
+    this.each(function () {
       var $this = $(this);
       var inst = $this.data('mdui.dialog');
 
-      if(!inst){
+      if (!inst) {
         $this.data('mdui.dialog', (inst = new mdui.Dialog(this, option)));
       }
-      if(typeof option === 'string'){
+      if (typeof option === 'string') {
         value = inst[option]();
       }
     });
@@ -24,7 +30,7 @@
 
   // NO CONFLICT
   // ===========
-  $.fn.mdDialog.noConflict = function(){
+  $.fn.mdDialog.noConflict = function () {
     $.fn.mdDialog = old;
     return this;
   };

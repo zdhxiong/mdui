@@ -1,8 +1,11 @@
-/* Appbar 导航栏
-   ========================================================================== */
+/**
+ * =============================================================================
+ * ************   Appbar 应用栏   ************
+ * =============================================================================
+ */
 
 body.md-loaded .md-appbar {
-  transition: all @appbar-transition-duration @animation-curve-default;
+  transition: all .3s @animation-curve-default;
 }
 .md-appbar {
   box-sizing: border-box;
@@ -14,7 +17,7 @@ body.md-loaded .md-appbar {
   .md-shadow(4);
 
   a {
-    transition: background-color @appbar-transition-duration @animation-curve-default;
+    transition: background-color .3s @animation-curve-default;
     user-select: none;
     display: block;
     text-decoration: none;
@@ -73,8 +76,8 @@ body.md-appbar-fixed{
 
 /* 标题 */
 .md-appbar-title {
-  font-size: @appbar-title-font-size;
-  max-width: @appbar-title-max-width;
+  font-size: 18px;
+  max-width: 138px;
   .md-text-truncate();
 }
 

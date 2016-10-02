@@ -1,9 +1,15 @@
-/* Drawer 抽屉栏导航
-   ========================================================================== */
+/**
+ * =============================================================================
+ * ************   Drawer 抽屉栏导航   ************
+ * =============================================================================
+ */
 
 /* DOM 加载完后再添加 transition */
+body.md-loaded {
+  transition: padding .3s @animation-curve-linear-out-slow-in;
+}
 body.md-loaded .md-drawer {
-  transition: all @drawer-transition-duration @animation-curve-linear-out-slow-in;
+  transition: all .3s @animation-curve-linear-out-slow-in;
 }
 
 /* 抽屉栏外层，默认出现在左侧且隐藏 */
@@ -92,6 +98,7 @@ body.md-loaded .md-drawer {
 
 
 // 抽屉栏中的菜单
+@drawer-item-height: 48px;
 ul.md-drawer-items,
 .md-drawer-items ul {
   padding: 0;

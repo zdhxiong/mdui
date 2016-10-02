@@ -1,41 +1,119 @@
 module.exports = function (grunt) {
 
+  'use strict';
+
   grunt.initConfig({
 
-    //less 编译
+    // Metadata
+    pkg: grunt.file.readJSON('package.json'),
+    banner: '/*!\n' +
+            ' * mdui v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+            ' * Copyright 2016-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+            ' * Licensed under <%= pkg.license %>\n' +
+            ' */\n',
+
+    // Less 编译
     less: {
-      development: {
-        files: {
-          "dist/css/mdui.css": "src/mdui.less"
-        }
+      core: {
+        src: 'src/mdui.less',
+        dest: 'dist/css/<%= pkg.name %>.css'
       }
     },
 
-    //css 压缩
-    cssmin: {
-      target: {
-        files: {
-          'dist/css/mdui.min.css': ['dist/css/mdui.css']
-        }
-      }
-    },
-
-    //js 语法检查
-    jshint: {
+    // CSS 代码检查
+    csslint: {
       options: {
-        eqeqeq: true,
-        trailing: true,
-        ignores: [
-          'src/js/jquery.2.2.4.js'
-        ]
+        csslintrc: '.csslintrc'
       },
-      files: [
-        'src/js/**/*.js'
+      dist: [
+        '<%= less.core.dest %>'
       ]
     },
 
-    //js 文件合并
+    // CSS 自动加前缀
+    autoprefixer: {
+      options: {
+        browsers: [
+          'last 2 versions',
+          '> 1%',
+          'Chrome >= 30',
+          'Firefox >= 30',
+          'ie >= 10',
+          'Safari >= 8'
+        ]
+      },
+      mdui: {
+        src: ['dist/css/<%= pkg.name %>.css']
+      }
+    },
+
+    // CSS 属性排序
+    csscomb: {
+      options: {
+        config: '.csscomb.json'
+      },
+      dist: {
+        files: {
+          '<%= less.core.dest %>': ['<%= less.core.dest %>']
+        }
+      }
+    },
+
+    // CSS 压缩
+    cssmin: {
+      minifyCore: {
+        src: 'dist/css/<%= pkg.name %>.css',
+        dest: 'dist/css/<%= pkg.name %>.min.css'
+      }
+    },
+
+    // JavaScript 语法检查
+    jshint: {
+      options: {
+        jshintrc: '.jshintrc'
+      },
+      core: {
+        src: ['dist/js/<%= pkg.name %>.js', 'dist/js/<%= pkg.name %>.jquery.js']
+      }
+    },
+
+    // JavaScript 代码风格检查
+    jscs: {
+      options: {
+        config: '.jscsrc'
+      },
+      core: {
+        src: 'src/**/*.js'
+      }
+    },
+
+    // JavaScript 文件合并
     concat: {
+      options: {
+        banner: '<%= banner %>\n',
+
+        // 文件添加缩进
+        process: function (src, filepath) {
+          var addIndent = '  ';
+          var newFileContent = '';
+
+          if (filepath === 'src/global/js/wrap_start.js' || filepath === 'src/global/js/wrap_end.js') {
+            return src;
+          }
+
+          var fileLines = src.split('\n');
+          for (var i = 0; i < fileLines.length; i++) {
+            var lineFeed = (i === fileLines.length ? '' : '\n');
+            if (fileLines[i].replace(' ', '') === '') {
+              newFileContent += lineFeed;
+            } else {
+              newFileContent += addIndent + fileLines[i] + lineFeed;
+            }
+          }
+
+          return newFileContent;
+        }
+      },
       mdui: {
         src: [
           'src/global/js/wrap_start.js',
@@ -73,73 +151,52 @@ module.exports = function (grunt) {
 
           'src/global/js/wrap_end.js'
         ],
-        dest: 'dist/js/mdui.js'
+        dest: 'dist/js/<%= pkg.name %>.js'
       },
-      mdui_jquery: {
+      mduiJquery: {
         src: [
-          'dist/js/mdui.js',
+          'dist/js/<%= pkg.name %>.js',
 
           'src/fab/js/fab.jquery.js',
           'src/drawer/js/drawer.jquery.js',
           'src/dialog/js/dialog.jquery.js'
         ],
-        dest: 'dist/js/mdui.jquery.js'
+        dest: 'dist/js/<%= pkg.name %>.jquery.js'
       }
     },
 
-    //美化 js
-    jsbeautifier: {
-      options: {
-        js: {
-          indentSize: 2
-        }
-      },
-      files: [
-        'dist/js/mdui.js',
-        'dist/js/mdui.jquery.js'
-      ]
-    },
-
-    //压缩 js
+    // JavaScript 代码压缩
     uglify: {
-      app: {
-        files: {
-          'dist/js/mdui.jquery.mini.js': ['dist/js/mdui.jquery.js'],
-          'dist/js/mdui.min.js': ['dist/js/mdui.js']
-        }
-      }
-    },
-
-    //css 自动加前缀
-    autoprefixer: {
       options: {
-        browsers: [
-          'last 2 versions',
-          '> 1%',
-          'Chrome >= 30',
-          'Firefox >= 30',
-          'ie >= 10',
-          'Safari >= 8'
-        ]
+        compress: {
+          warnings: false
+        },
+        mangle: true,
+        preserveComments: /^!|@preserve|@license|@cc_on/i
       },
-      dist: {
-        src: ['dist/css/mdui.css']
+      mdui: {
+        src: '<%= concat.mdui.dest %>',
+        dest: 'dist/js/<%= pkg.name %>.min.js'
+      },
+      mduiJquery: {
+        src: '<%= concat.mduiJquery.dest %>',
+        dest: 'dist/js/<%= pkg.name %>.jquery.min.js'
       }
     },
 
-    //监视器
+    // 监视器
     watch: {
       css: {
         files: [
           'src/**/*.less'
         ],
-        tasks: ['less', 'autoprefixer']
+        tasks: ['less', 'autoprefixer', 'csscomb', 'csslint']
       },
       scripts: {
         files: [
           'src/**/*.js'
         ],
-        tasks: ['jshint', 'concat', 'jsbeautifier']
+        tasks: ['concat']
       }
     }
   });
@@ -148,17 +205,24 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-zip');
-  grunt.loadNpmTasks("grunt-jsbeautifier");
-  grunt.loadNpmTasks("grunt-autoprefixer");
+  grunt.loadNpmTasks('grunt-autoprefixer');
+  grunt.loadNpmTasks('grunt-jscs');
+  grunt.loadNpmTasks('grunt-contrib-csslint');
+  grunt.loadNpmTasks('grunt-csscomb');
 
-  //开发环境
-  grunt.registerTask('dev', ['less', 'autoprefixer', 'jshint', 'concat', 'jsbeautifier']);
+  // 输出当前版本
+  grunt.registerTask('version', '输出当前版本', function () {
+    grunt.log.writeln('当前版本为: ' + grunt.config.get('pkg').version);
+  });
 
-  //发布
-  grunt.registerTask('build', ['less', 'autoprefixer', 'cssmin', 'jshint', 'concat', 'jsbeautifier', 'uglify']);
+  // 构建 JavaScript 文件
+  grunt.registerTask('build-js', '构建 JavaScript 文件', ['jscs', 'concat', 'uglify', 'jshint']);
+
+  // 构建 CSS 文件
+  grunt.registerTask('build-css', '构建 CSS 文件', ['less', 'autoprefixer', 'csscomb', 'cssmin', 'csslint']);
+
+  // 构建所有文件
+  grunt.registerTask('build', '构建所有文件', ['build-css', 'build-js']);
 };

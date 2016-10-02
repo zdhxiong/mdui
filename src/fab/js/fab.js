@@ -1,6 +1,9 @@
 /**
- * 浮动操作按钮
+ * =============================================================================
+ * ************   Fab 浮动操作按钮   ************
+ * =============================================================================
  */
+
 mdui.Fab = (function () {
 
   /**
@@ -24,7 +27,7 @@ mdui.Fab = (function () {
 
     // 已通过 data 属性实例化过，不再重复实例化
     var oldInst = $.getData(inst.fab, 'mdui.fab');
-    if(oldInst){
+    if (oldInst) {
       return oldInst;
     }
 
@@ -51,7 +54,7 @@ mdui.Fab = (function () {
     // 不支持touch
     else {
 
-      //点击切换
+      // 点击切换
       if (inst.options.trigger === 'click') {
         $.on(inst.btn, 'click', function () {
           inst.toggle();
@@ -116,7 +119,7 @@ mdui.Fab = (function () {
     inst.state = 'closing';
     $.pluginEvent('close', 'fab', inst, inst.fab);
 
-    //从上往下依次关闭，最后一个关闭后才表示动画完成
+    // 从上往下依次关闭，最后一个关闭后才表示动画完成
     $.transitionEnd(inst.dialBtns[inst.dialBtns.length - 1], function () {
       inst.state = 'closed';
       $.pluginEvent('closed', 'fab', inst, inst.fab);
@@ -146,4 +149,3 @@ mdui.Fab = (function () {
 
   return Fab;
 })();
-

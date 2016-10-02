@@ -1,8 +1,12 @@
 /**
- * 抽屉栏
+ * =============================================================================
+ * ************   Drawer 抽屉栏   ************
+ * =============================================================================
+ *
  * 在桌面设备上默认显示抽屉栏，不显示遮罩层
  * 在手机和平板设备上默认不显示抽屉栏，始终显示遮罩层，且覆盖导航栏
  */
+
 mdui.Drawer = (function () {
 
   /**
@@ -25,7 +29,7 @@ mdui.Drawer = (function () {
     inst.drawer = $.dom(selector)[0];
 
     var oldInst = $.getData(inst.drawer, 'mdui.drawer');
-    if(oldInst){
+    if (oldInst) {
       return oldInst;
     }
 
@@ -46,7 +50,7 @@ mdui.Drawer = (function () {
 
     // 浏览器窗口大小调整时
     $.on(window, 'resize', mdui.throttle(function () {
-      //由手机平板切换到桌面时
+      // 由手机平板切换到桌面时
       if (mdui.screen.mdUp()) {
         // 如果显示着遮罩，则隐藏遮罩
         if (inst.overlay && !inst.options.overlay) {
@@ -56,11 +60,11 @@ mdui.Drawer = (function () {
           mdui.unlockScreen();
         }
         // 没有强制关闭，则状态为打开状态
-        if(!inst.drawer.classList.contains('md-drawer-close')){
+        if (!inst.drawer.classList.contains('md-drawer-close')) {
           inst.state = 'opened';
         }
       }
-      //由桌面切换到手机平板时。如果抽屉栏是打开着的且没有遮罩层，则关闭抽屉栏
+      // 由桌面切换到手机平板时。如果抽屉栏是打开着的且没有遮罩层，则关闭抽屉栏
       else {
         if (!inst.overlay && inst.state === 'opened') {
           // 抽屉栏处于强制打开状态，添加遮罩
@@ -70,10 +74,10 @@ mdui.Drawer = (function () {
 
             mdui.lockScreen();
 
-            $.one( $.query('.md-overlay'), 'click', function () {
+            $.one($.query('.md-overlay'), 'click', function () {
               inst.close();
             });
-          }else{
+          } else {
             inst.state = 'closed';
           }
         }
@@ -89,8 +93,8 @@ mdui.Drawer = (function () {
 
     // 绑定关闭按钮事件
     var closes = $.queryAll('[data-md-drawer-close]', inst.drawer);
-    $.each(closes, function(i, close){
-      $.on(close, 'click', function(){
+    $.each(closes, function (i, close) {
+      $.on(close, 'click', function () {
         inst.close();
       });
     });
@@ -112,7 +116,7 @@ mdui.Drawer = (function () {
     inst.state = 'opening';
     $.pluginEvent('open', 'drawer', inst, inst.drawer);
 
-    if(!inst.options.overlay){
+    if (!inst.options.overlay) {
       document.body.classList.add('md-drawer-body-' + inst.position);
     }
 
@@ -127,7 +131,7 @@ mdui.Drawer = (function () {
 
       mdui.lockScreen();
 
-      $.one( $.query('.md-overlay'), 'click', function () {
+      $.one($.query('.md-overlay'), 'click', function () {
         inst.close();
       });
     }
@@ -148,7 +152,7 @@ mdui.Drawer = (function () {
     inst.state = 'closing';
     $.pluginEvent('close', 'drawer', inst, inst.drawer);
 
-    if(!inst.options.overlay){
+    if (!inst.options.overlay) {
       document.body.classList.remove('md-drawer-body-' + inst.position);
     }
 

@@ -1,16 +1,22 @@
-(function(){
+/**
+ * =============================================================================
+ * ************   Fab jQuery   ************
+ * =============================================================================
+ */
 
-  function Plugin(option){
+(function () {
+
+  function Plugin(option) {
     var value;
 
-    this.each(function(){
+    this.each(function () {
       var $this = $(this);
       var inst = $this.data('mdui.fab');
 
-      if(!inst){
+      if (!inst) {
         $this.data('mdui.fab', (inst = new mdui.Fab(this, option)));
       }
-      if(typeof option === 'string'){
+      if (typeof option === 'string') {
         value = inst[option]();
       }
     });
@@ -24,9 +30,8 @@
 
   // NO CONFLICT
   // ===========
-  $.fn.mdFab.noConflict = function(){
+  $.fn.mdFab.noConflict = function () {
     $.fn.mdFab = old;
     return this;
   };
 })();
-

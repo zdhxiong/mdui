@@ -3,7 +3,7 @@
  * https://github.com/nolimits4web/Framework7/blob/master/src/js/proto-device.js
  * MIT LICENSE
  */
-(function(){
+(function () {
   var device = {};
   var ua = navigator.userAgent;
 

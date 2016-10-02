@@ -1,10 +1,16 @@
-/* Fab 浮动操作按钮
-   ========================================================================== */
+/**
+ * =============================================================================
+ * ************   Fab 浮动操作按钮   ************
+ * =============================================================================
+ */
+
+@button-fab-size: 56px;
+@button-fab-size-mini: 40px;
 
 .md-btn-fab,
 .md-btn-fab-mini {
   border-radius: 50%;
-  font-size: @button-fab-font-size;
+  font-size: 24px;
   margin: auto;
   padding: 0 !important;
   overflow: hidden;
@@ -50,13 +56,13 @@
   position: fixed !important;
 
   /* 手机平板上距离屏幕右下角 16px */
-  right: @button-fab-fixed-right-small;
-  bottom: @button-fab-fixed-bottom-small;
+  right: 16px;
+  bottom: 16px;
 
   @media (min-width: @screen-md-min) {
     /* 电脑上距离屏幕右下角 24px */
-    right: @button-fab-fixed-right-large;
-    bottom: @button-fab-fixed-bottom-large;
+    right: 24px;
+    bottom: 24px;
   }
 }
 

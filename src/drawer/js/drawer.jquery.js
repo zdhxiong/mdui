@@ -1,16 +1,22 @@
-(function($){
+/**
+ * =============================================================================
+ * ************   Drawer jQuery   ************
+ * =============================================================================
+ */
 
-  function Plugin(option){
+(function ($) {
+
+  function Plugin(option) {
     var value;
 
-    this.each(function(){
+    this.each(function () {
       var $this = $(this);
       var inst = $this.data('mdui.drawer');
 
-      if(!inst){
+      if (!inst) {
         $this.data('mdui.drawer', (inst = new mdui.Drawer(this, option)));
       }
-      if(typeof option === 'string'){
+      if (typeof option === 'string') {
         value = inst[option]();
       }
     });
@@ -24,7 +30,7 @@
 
   // NO CONFLICT
   // ===========
-  $.fn.mdDrawer.noConflict = function(){
+  $.fn.mdDrawer.noConflict = function () {
     $.fn.mdDrawer = old;
     return this;
   };

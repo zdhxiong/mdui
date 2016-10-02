@@ -1,4 +1,4 @@
-/* jshint ignore:start */
-window.mdui = mdui;
+  /* jshint ignore:start */
+  window.mdui = mdui;
 })(window, document);
 /* jshint ignore:end */

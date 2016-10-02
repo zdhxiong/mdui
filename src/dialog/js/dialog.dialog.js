@@ -1,9 +1,10 @@
 /**
- * mdui.dialog()
+ * =============================================================================
+ * ************   mdui.dialog(options)   ************
  * =============================================================================
  */
 
-mdui.dialog = function(options){
+mdui.dialog = function (options) {
 
   /**
    * 默认参数
@@ -28,20 +29,20 @@ mdui.dialog = function(options){
     text: '',               // 按钮文本
     bold: false,            // 按钮文本是否加粗
     close: true,            // 点击按钮后关闭提示框
-    onClick: function(inst){}   // 点击按钮的回调
+    onClick: function (inst) {}   // 点击按钮的回调
   };
 
   // 合并参数
   options = $.extend(DEFAULT, (options || {}));
-  $.each(options.buttons, function(i, button){
+  $.each(options.buttons, function (i, button) {
     options.buttons[i] = $.extend(DEFAULT_BUTTON, button);
   });
 
   // 按钮的 HTML
   var buttonsHTML = '';
-  if(options.buttons.length){
+  if (options.buttons.length) {
     buttonsHTML = '<div class="md-dialog-actions ' + (options.stackedButtons ? 'md-dialog-actions-stacked' : '') + '">';
-    $.each(options.buttons, function(i, button){
+    $.each(options.buttons, function (i, button) {
       buttonsHTML += '<a href="javascript:void(0)" class="md-btn md-ripple md-text-color-primary ' + (button.bold ? 'md-btn-bold' : '') + '">' + button.text + '</a>';
     });
     buttonsHTML += '</div>';
@@ -65,14 +66,14 @@ mdui.dialog = function(options){
   });
 
   // 绑定按钮事件
-  if(options.buttons.length){
+  if (options.buttons.length) {
     var buttons = $.queryAll('.md-dialog-actions .md-btn', inst.dialog);
-    $.each(buttons, function(i, button){
-      $.on(button, 'click', function(){
-        if(typeof options.buttons[i].onClick === 'function'){
+    $.each(buttons, function (i, button) {
+      $.on(button, 'click', function () {
+        if (typeof options.buttons[i].onClick === 'function') {
           options.buttons[i].onClick(inst);
         }
-        if(options.buttons[i].close) {
+        if (options.buttons[i].close) {
           inst.close();
         }
       });

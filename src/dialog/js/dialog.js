@@ -1,5 +1,7 @@
 /**
- 提示框
+ * =============================================================================
+ * ************   Dialog 提示框   ************
+ * =============================================================================
  */
 
 mdui.Dialog = (function () {
@@ -36,8 +38,8 @@ mdui.Dialog = (function () {
   /**
    * 窗口宽度变化，或提示框内容变化时，调整提示框位置和提示框内的滚动条
    */
-  var readjust = function() {
-    if(!current) {
+  var readjust = function () {
+    if (!current) {
       return;
     }
     var dialog = current.dialog;
@@ -48,7 +50,7 @@ mdui.Dialog = (function () {
 
     // 调整 dialog 的 top 和 height 值
     dialog.style.height = '';
-    if(dialogContent){
+    if (dialogContent) {
       dialogContent.style.height = '';
     }
     var dialogHeight = dialog.clientHeight;
@@ -66,7 +68,7 @@ mdui.Dialog = (function () {
   /**
    * hashchange 事件出发时关闭提示框
    */
-  var hashchangeEvent = function() {
+  var hashchangeEvent = function () {
     if (location.hash.substring(1).indexOf('&md-dialog') < 0) {
       current.close(true);
     }
@@ -76,7 +78,7 @@ mdui.Dialog = (function () {
    * 点击遮罩层关闭提示框
    * @param e
    */
-  var overlayClick = function(e){
+  var overlayClick = function (e) {
     if (e.target.classList.contains('md-overlay')) {
       current.close();
     }
@@ -101,7 +103,7 @@ mdui.Dialog = (function () {
     }
 
     // 如果提示框元素没有在当前文档中，则需要添加
-    if(!document.contains(inst.dialog)){
+    if (!document.contains(inst.dialog)) {
       inst.append = true;
       document.body.appendChild(inst.dialog);
     }
@@ -119,10 +121,10 @@ mdui.Dialog = (function () {
 
     // 绑定取消按钮事件
     var cancels = $.queryAll('[data-md-dialog-cancel]', inst.dialog);
-    $.each(cancels, function(i, cancel){
-      $.on(cancel, 'click', function(){
+    $.each(cancels, function (i, cancel) {
+      $.on(cancel, 'click', function () {
         $.pluginEvent('cancel', 'dialog', inst, inst.dialog);
-        if(inst.options.closeOnCancel){
+        if (inst.options.closeOnCancel) {
           inst.close();
         }
       });
@@ -130,10 +132,10 @@ mdui.Dialog = (function () {
 
     // 绑定确认按钮事件
     var confirms = $.queryAll('[data-md-dialog-confirm]', inst.dialog);
-    $.each(confirms, function(i, confirm){
-      $.on(confirm, 'click', function(){
+    $.each(confirms, function (i, confirm) {
+      $.on(confirm, 'click', function () {
         $.pluginEvent('confirm', 'dialog', inst, inst.dialog);
-        if(inst.options.closeOnConfirm){
+        if (inst.options.closeOnConfirm) {
           inst.close();
         }
       });
@@ -141,8 +143,8 @@ mdui.Dialog = (function () {
 
     // 绑定关闭按钮事件
     var closes = $.queryAll('[data-md-dialog-close]', inst.dialog);
-    $.each(closes, function(i, close){
-      $.on(close, 'click', function(){
+    $.each(closes, function (i, close) {
+      $.on(close, 'click', function () {
         inst.close();
       });
     });
@@ -172,7 +174,7 @@ mdui.Dialog = (function () {
     inst.dialog.style.display = 'block';
 
     readjust();
-    $.on(window, 'resize', mdui.throttle(function(){
+    $.on(window, 'resize', mdui.throttle(function () {
       readjust();
     }, 100));
 
@@ -295,11 +297,11 @@ mdui.Dialog = (function () {
   Dialog.prototype.destroy = function () {
     var inst = this;
 
-    if(inst.append){
+    if (inst.append) {
       inst.dialog.parentNode.removeChild(inst.dialog);
     }
     $.removeData(inst.dialog, 'mdui.dialog');
-    if(typeof jQuery !== 'undefined'){
+    if (typeof jQuery !== 'undefined') {
       jQuery(inst.dialog).removeData('mdui.dialog');
     }
 

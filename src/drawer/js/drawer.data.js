@@ -1,7 +1,13 @@
+/**
+ * =============================================================================
+ * ************   Drawer DATA API   ************
+ * =============================================================================
+ */
+
 $.ready(function () {
 
   // 实例化插件
-  $.each( $.queryAll('[data-md-drawer]'), function(i, target){
+  $.each($.queryAll('[data-md-drawer]'), function (i, target) {
     var options = $.parseOptions(target.getAttribute('data-md-drawer'));
     var selector = options.target;
     delete options.target;
@@ -9,14 +15,14 @@ $.ready(function () {
     var drawer = $.dom(selector)[0];
 
     var inst = $.getData(drawer, 'mdui.drawer');
-    if(!inst){
+    if (!inst) {
       inst = new mdui.Drawer(drawer, options);
       $.setData(drawer, 'mdui.drawer', inst);
     }
 
-    $.on(target, 'click', function(){
+    $.on(target, 'click', function () {
       inst.toggle();
-    })
+    });
   });
 
 });

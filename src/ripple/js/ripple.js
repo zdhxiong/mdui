@@ -1,13 +1,19 @@
 /**
- * 涟漪
+ * =============================================================================
+ * ************   涟漪   ************
+ * =============================================================================
  *
  * Inspired by https://github.com/nolimits4web/Framework7/blob/master/src/js/fast-clicks.js
  * https://github.com/nolimits4web/Framework7/blob/master/LICENSE
  */
+
 (function () {
 
-  var touchStartX, touchStartY;
-  var rippleWave, rippleTarget, rippleTransform;
+  var touchStartX;
+  var touchStartY;
+  var rippleWave;
+  var rippleTarget;
+  var rippleTransform;
 
   /**
    * 找到含 md-ripple 类的元素，如果当前元素不存在 md-ripple 类，则从父元素找
@@ -16,19 +22,20 @@
    * @returns {*}
    */
   function findRippleElement(el) {
-    var target, rippleParents;
+    var target;
+    var rippleParents;
 
-    if(el.classList.contains('md-ripple')){
+    if (el.classList.contains('md-ripple')) {
       target = el;
-    }else{
+    } else {
       rippleParents = $.parents(el, '.md-ripple');
-      if(rippleParents.length){
+      if (rippleParents.length) {
         target = rippleParents[0];
       }
     }
-    if(target && !target.classList.contains('md-disabled') && target.getAttribute('disabled') === null){
+    if (target && !target.classList.contains('md-disabled') && target.getAttribute('disabled') === null) {
       return target;
-    }else{
+    } else {
       return false;
     }
   }
@@ -38,11 +45,11 @@
    */
   function getThemeColorName() {
     var bodyClassStr = document.body.getAttribute('class');
-    if(bodyClassStr){
+    if (bodyClassStr) {
       var themeColorClassArray = bodyClassStr.match(/md-theme-(\w+)/g);
       if (themeColorClassArray) {
         var themeColorName = themeColorClassArray[themeColorClassArray.length - 1].replace('md-theme-', '');
-        if(mdui.isColorDark[themeColorName]){
+        if (mdui.isColorDark[themeColorName]) {
           return themeColorName;
         }
       }
@@ -82,7 +89,7 @@
           }
         } else if (colorClassTempArray.length === 2) {
           // md-color-red-200  md-color-primary-200
-          if (["50", "100", "200", "300", "400", "500", "600", "700", "800", "900", "a100", "a200", "a400", "a700"].indexOf(colorClassTempArray[1]) > -1) {
+          if (['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', 'a100', 'a200', 'a400', 'a700'].indexOf(colorClassTempArray[1]) > -1) {
             if (colorClassTempArray[0] === 'primary') {
               colorIsDark = mdui.isColorDark[getThemeColorName()][colorClassTempArray[1]];
             } else {
@@ -94,7 +101,7 @@
             colorIsDark = mdui.isColorDark[colorClassTempArray[0] + '-' + colorClassTempArray[1]][500];
           }
         } else if (colorClassTempArray.length === 3) {
-          //md-color-light-blue-200
+          // md-color-light-blue-200
           colorIsDark = mdui.isColorDark[colorClassTempArray[0] + '-' + colorClassTempArray[1]][colorClassTempArray[2]];
         }
 
@@ -114,9 +121,9 @@
     var center = {
           x: x - offset.left,
           y: y - offset.top
-        },
-        height = box.height,
-        width = box.width;
+        };
+    var height = box.height;
+    var width = box.width;
     var diameter = Math.max(
         Math.pow((Math.pow(height, 2) + Math.pow(width, 2)), 0.5), 48
     );
@@ -155,7 +162,7 @@
 
     rippleWave.classList.add('md-ripple-wave-fill');
     $.transform(rippleWave, rippleTransform.replace('scale(1)', 'scale(1.01)'));
-    $.transitionEnd(rippleWave, function(e){
+    $.transitionEnd(rippleWave, function (e) {
       clearTimeout(removeTimeout);
 
       var rippleWave = e.target;
@@ -167,7 +174,7 @@
       }, 700);
 
       setTimeout(function () {
-        $.transitionEnd(rippleWave, function(e){
+        $.transitionEnd(rippleWave, function (e) {
           clearTimeout(removeTimeout);
           e.target.parentNode.removeChild(e.target);
         });
@@ -196,17 +203,17 @@
 
   // 事件监听
   // ======
-  $.on(document, mdui.touchEvents.start, '.md-ripple', function(e){
+  $.on(document, mdui.touchEvents.start, '.md-ripple', function (e) {
     touchStartX = mdui.support.touch ? e.targetTouches[0].pageX : e.pageX;
     touchStartY = mdui.support.touch ? e.targetTouches[0].pageY : e.pageY;
     rippleTouchStart(e.target);
   });
 
-  $.on(document, mdui.touchEvents.move, '.md-ripple', function(e){
+  $.on(document, mdui.touchEvents.move, '.md-ripple', function () {
     rippleTouchMove();
   });
 
-  $.on(document, mdui.touchEvents.end, '.md-ripple', function(e){
+  $.on(document, mdui.touchEvents.end, '.md-ripple', function () {
     rippleTouchEnd();
   });
 })();

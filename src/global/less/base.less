@@ -1,5 +1,8 @@
-/* Base 公共样式
-   ========================================================================== */
+/**
+ * =============================================================================
+ * ************   公共样式   ************
+ * =============================================================================
+ */
 
 body {
   font-family: @font-family-base;
@@ -12,11 +15,6 @@ body {
   @media (min-width: @screen-md-min) {
     font-size: @screen-md-font-size;
   }
-}
-
-/* DOM 加载完毕后添加 transition */
-body.md-loaded {
-  transition: padding @drawer-transition-duration @animation-curve-linear-out-slow-in;
 }
 
 /* 锁定屏幕 */

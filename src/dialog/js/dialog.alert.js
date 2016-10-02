@@ -1,20 +1,21 @@
 /**
- * mdui.alert()
+ * =============================================================================
+ * ************   mdui.alert(content, title, onConfirm, options)   ************
  * =============================================================================
  */
 
-mdui.alert = function(content, title, onConfirm, options){
+mdui.alert = function (content, title, onConfirm, options) {
 
   // title 参数可选
-  if(typeof title === 'function'){
+  if (typeof title === 'function') {
     title = '';
     onConfirm = arguments[1];
     options = arguments[2];
   }
-  if(typeof onConfirm === 'undefined'){
-    onConfirm = function(){}
+  if (typeof onConfirm === 'undefined') {
+    onConfirm = function () {};
   }
-  if(typeof options === 'undefined'){
+  if (typeof options === 'undefined') {
     options = {};
   }
 

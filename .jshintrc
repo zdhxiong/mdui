@@ -1,0 +1,13 @@
+{
+  "node"      : true,
+  "browser"   : true,
+  "bitwise"   : true,
+  "curly"     : true,
+  "eqeqeq"    : true,
+  "jquery"    : true,
+  "immed"     : true,
+  "newcap"    : true,
+  "noarg"     : true,
+  "undef"     : true,
+  "unused"    : "vars"
+}

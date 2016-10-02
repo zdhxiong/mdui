@@ -1,24 +1,27 @@
-/* Button
-   ========================================================================== */
+/**
+ * =============================================================================
+ * ************   Button 按钮   ************
+ * =============================================================================
+ */
 
 /* 默认为 Flat 扁平按钮 */
 .md-btn {
   color: inherit;
   background: transparent;
   border: none;
-  border-radius: @button-border-radius;
+  border-radius: 2px;
 
   position: relative;
   height: @button-height;
   margin: 0;
-  min-width: @button-min-width;
-  padding: 0 @button-padding !important;
+  min-width: 88px;
+  padding: 0 16px !important;
   display: inline-block;
   overflow: hidden;
   will-change: box-shadow;
-  transition: box-shadow @button-transition-duration @animation-curve-fast-out-linear-in,
-    background-color @button-transition-duration @animation-curve-default,
-    color @button-transition-duration @animation-curve-default,
+  transition: box-shadow .2s @animation-curve-fast-out-linear-in,
+    background-color .2s @animation-curve-default,
+    color .2s @animation-curve-default,
 
     // fab
     transform 150ms @animation-curve-default,
@@ -29,8 +32,8 @@
   text-align: center;
   line-height: @button-height !important;
   vertical-align: middle;
-  font-size: @button-font-size;
-  font-weight: @button-font-weight;
+  font-size: 14px;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   -webkit-tap-highlight-color: transparent;
@@ -52,11 +55,11 @@
   }
 
   &:not(.md-ripple):not([disabled]):not(.md-disabled):hover {
-    background-color: @button-hover-color;
+    background-color: rgba(0, 0, 0, 0.1);
   }
 
   &:not(.md-ripple):not([disabled]):not(.md-disabled):active {
-    background-color: @button-active-color;
+    background-color: rgba(0, 0, 0, 0.165);
   }
 }
 
@@ -89,12 +92,12 @@
   &:active,
   &:focus,
   &.md-ripple:active {
-    background-color: @button-disabled-color !important;
-    color: @button-disabled-text-color !important;
+    background-color: rgba(0, 0, 0, .12) !important;
+    color: rgba(0, 0, 0, .26) !important;
     .md-shadow(0);
     cursor: default;
     .md-icon {
-      color: @button-disabled-text-color !important;
+      color: rgba(0, 0, 0, .26) !important;
     }
   }
 }
@@ -125,7 +128,7 @@ input.md-btn[type="submit"] {
 .md-btn-icon,
 .md-btn-icon-mini {
   border-radius: 50%;
-  font-size: @button-icon-font-size;
+  font-size: 24px;
   margin-left: 0;
   margin-right: 0;
   padding: 0 !important;
@@ -134,15 +137,15 @@ input.md-btn[type="submit"] {
 }
 
 .md-btn-icon {
-  height: @button-icon-size;
-  width: @button-icon-size;
-  min-width: @button-icon-size;
+  height: 32px;
+  width: 32px;
+  min-width: 32px;
 }
 
 .md-btn-icon-mini {
-  height: @button-icon-size-mini;
-  width: @button-icon-size-mini;
-  min-width: @button-icon-size-mini;
+  height: 24px;
+  width: 24px;
+  min-width: 24px;
 }
 
 /* 按钮内容的图标 */

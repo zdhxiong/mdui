@@ -1,0 +1,75 @@
+._md-color-primary-degree(@degree) {
+  .md-theme-primary-@{colorName} {
+    .md-color-theme-@{degree} {
+      .md-color(@colorName, @degree) !important;
+    }
+    .md-text-color-theme-@{degree} {
+      .md-text-color(@colorName, @degree) !important;
+    }
+    .md-border-color-theme-@{degree} {
+      .md-border-color(@colorName, @degree) !important;
+    }
+  }
+
+  .md-color-@{colorName}-@{degree} {
+    .md-color(@colorName, @degree) !important;
+  }
+  .md-text-color-@{colorName}-@{degree} {
+    .md-text-color(@colorName, @degree) !important;
+  }
+  .md-border-color-@{colorName}-@{degree} {
+    .md-border-color(@colorName, @degree) !important;
+  }
+}
+
+/* 50 */
+._md-color-primary-degree(50);
+
+/* 100 */
+._md-color-primary-degree(100);
+
+/* 200 */
+._md-color-primary-degree(200);
+
+/* 300 */
+._md-color-primary-degree(300);
+
+/* 400 */
+._md-color-primary-degree(400);
+
+/* 500 */
+._md-color-primary-degree(500);
+
+/* 600 */
+._md-color-primary-degree(600);
+
+/* 700 */
+._md-color-primary-degree(700);
+
+/* 800 */
+._md-color-primary-degree(800);
+
+/* 900 */
+._md-color-primary-degree(900);
+
+/* default: 500 */
+.md-theme-primary-@{colorName} {
+  .md-color-theme {
+    .md-color(@colorName) !important;
+  }
+  .md-text-color-theme {
+    .md-text-color(@colorName) !important;
+  }
+  .md-border-color-theme {
+    .md-border-color(@colorName) !important;
+  }
+}
+.md-color-@{colorName} {
+  .md-color(@colorName) !important;
+}
+.md-text-color-@{colorName} {
+  .md-text-color(@colorName) !important;
+}
+.md-border-color-@{colorName} {
+  .md-border-color(@colorName) !important;
+}

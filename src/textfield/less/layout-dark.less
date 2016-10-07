@@ -1,0 +1,31 @@
+/**
+ * =============================================================================
+ * ************   Text Field 文本框   ************
+ * =============================================================================
+ */
+
+.md-theme-layout-dark {
+  .md-textfield-input {
+    color: #fff;
+
+    .md-divider-bottom-reverse();
+
+    &::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    &[disabled] {
+      color: rgba(255, 255, 255, @opacity-white-disabled);
+    }
+  }
+
+  .md-textfield-label {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .md-textfield-floating-label {
+    .md-textfield-label {
+      color: rgba(255, 255, 255, 0.35);
+    }
+  }
+}

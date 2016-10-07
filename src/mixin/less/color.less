@@ -8,12 +8,6 @@
   }
 }
 
-// 仅设置背景色
-.md-background-color(@colorName, @degree: 500) {
-  @color: 'color-@{colorName}-@{degree}';
-  background-color: @@color;
-}
-
 // hover 状态背景色
 ._md-background-color-hover(@colorName) {
   @color-is-dark: 'color-@{colorName}-500-is-dark';
@@ -40,6 +34,12 @@
   }
 }
 
+// 仅设置背景色
+.md-background-color(@colorName, @degree: 500) {
+  @color: 'color-@{colorName}-@{degree}';
+  background-color: @@color;
+}
+
 // 背景色和文本色
 .md-color(@colorName, @degree: 500) {
   .md-background-color(@colorName, @degree);
@@ -49,8 +49,8 @@
 }
 
 // 文本色
-.md-text-color(@colorName, @opacity: 1) {
-  @color: 'color-@{colorName}-500';
+.md-text-color(@colorName, @degree: 500, @opacity: 1) {
+  @color: 'color-@{colorName}-@{degree}';
 
   & when (@opacity = 1) {
     color: @@color;

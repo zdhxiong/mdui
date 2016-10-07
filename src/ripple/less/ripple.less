@@ -12,7 +12,7 @@
   overflow: hidden;
 }
 
-// Ripple
+/* Ripple */
 .md-ripple-wave {
   left: 0;
   top: 0;
@@ -28,6 +28,23 @@
   transition-duration: 1400ms;
 }
 
+/* 有背景色的默认使用白色涟漪 */
+.md-ripple[class*="md-color-"] {
+  .md-ripple-wave {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* 白色涟漪 */
+.md-ripple-white .md-ripple-wave {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 黑色涟漪 */
+.md-ripple-black .md-ripple-wave {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
 .md-ripple-wave-fill {
   transition-duration: 300ms;
   opacity: 0.35;
@@ -36,17 +53,6 @@
 .md-ripple-wave-out {
   transition-duration: 600ms;
   opacity: 0;
-}
-
-// 涟漪颜色；其他颜色在 color/_mixin.less 中
-.md-ripple-white .md-ripple-wave,
-.md-ripple-white.md-ripple-wave {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
-.md-ripple-black .md-ripple-wave,
-.md-ripple-black.md-ripple-wave {
-  background-color: rgba(0, 0, 0, 0.1);
 }
 
 /* 圆形涟漪 */

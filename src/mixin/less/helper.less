@@ -86,13 +86,29 @@
 }
 
 // 美化滚动条样式
-.md-scrollbar-beautify() {
-  &::-webkit-scrollbar {
-    background: transparent;
-    width: 8px;
+.md-scrollbar-beautify(@layout: light) {
+  // 亮色主题
+  & when (@layout = light) {
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #bdbdbd;
+    }
   }
 
-  &::-webkit-scrollbar-thumb {
-    background: #bdbdbd;
+  // 暗色主题
+  & when (@layout = dark) {
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #666;
+    }
   }
+
 }

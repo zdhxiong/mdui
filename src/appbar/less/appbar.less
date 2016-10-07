@@ -4,8 +4,9 @@
  * =============================================================================
  */
 
-body.md-loaded .md-appbar {
-  transition: all .3s @animation-curve-default;
+.md-loaded .md-appbar {
+  transition: .3s @animation-curve-default;
+  transition-property: height, line-height, background-color;
 }
 .md-appbar {
   box-sizing: border-box;
@@ -14,10 +15,10 @@ body.md-loaded .md-appbar {
   width: 100%;
   max-height: 1000px;
   z-index: @z-index-appbar;
+  .md-color(@default-color-name);
   .md-shadow(4);
 
   a {
-    transition: background-color .3s @animation-curve-default;
     user-select: none;
     display: block;
     text-decoration: none;
@@ -30,21 +31,17 @@ body.md-loaded .md-appbar {
   .md-btn-icon,
   .md-btn-icon-mini {
     .md-icon {
-      vertical-align: middle;
       height: 24px;
       line-height: 24px;
-      width: 24px;
     }
   }
   .md-btn-icon {
     width: @appbar-icon-width;
     height: @appbar-icon-width;
-    min-width: @appbar-icon-width;
   }
   .md-btn-icon-mini {
     width: @appbar-icon-mini-width;
     height: @appbar-icon-mini-width;
-    min-width: @appbar-icon-mini-width;
   }
 }
 

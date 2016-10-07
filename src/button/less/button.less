@@ -15,7 +15,7 @@
   height: @button-height;
   margin: 0;
   min-width: 88px;
-  padding: 0 16px !important;
+  padding: 0 16px;
   display: inline-block;
   overflow: hidden;
   will-change: box-shadow;
@@ -30,7 +30,7 @@
   cursor: pointer;
   text-decoration: none;
   text-align: center;
-  line-height: @button-height !important;
+  line-height: @button-height;
   vertical-align: middle;
   font-size: 14px;
   font-weight: 500;
@@ -54,13 +54,14 @@
     border: 0;
   }
 
-  &:not(.md-ripple):not([disabled]):not(.md-disabled):hover {
+  &:not(.md-ripple):hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
 
-  &:not(.md-ripple):not([disabled]):not(.md-disabled):active {
+  &:not(.md-ripple):active {
     background-color: rgba(0, 0, 0, 0.165);
   }
+
 }
 
 /* 按钮内的图标 */
@@ -90,8 +91,7 @@
   &,
   &:hover,
   &:active,
-  &:focus,
-  &.md-ripple:active {
+  &:focus {
     background-color: rgba(0, 0, 0, .12) !important;
     color: rgba(0, 0, 0, .26) !important;
     .md-shadow(0);

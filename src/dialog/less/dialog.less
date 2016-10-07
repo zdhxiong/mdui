@@ -10,7 +10,7 @@
   left: 0;
   right: 0;
   color: #000;
-  background: #fff;
+  background-color: #fff;
   max-height: 90%;
   width: 92%;
   max-width: 728px;
@@ -37,13 +37,12 @@
   }
 
   .md-shadow(24);
+}
 
-
-  /* 打开提示框 */
-  &.md-dialog-open {
-    opacity: 1;
-    transform: scale(1);
-  }
+/* 打开提示框 */
+.md-dialog-open {
+  opacity: 1;
+  transform: scale(1);
 }
 
 // 美化滚动条
@@ -59,7 +58,7 @@
   font-weight: 500;
   text-align: left;
 }
-/* 标题固定 */
+/* 标题固定在顶部 */
 .md-dialog>.md-dialog-title {
   padding: 24px 24px 20px 24px;
 }
@@ -73,7 +72,7 @@
   line-height: 1.5;
   overflow-y: auto;
 }
-/* 标题滚动 */
+/* 标题随内容滚动 */
 .md-dialog-content>.md-dialog-title {
   padding-bottom: 20px;
 }
@@ -90,12 +89,13 @@
   .md-btn {
     min-width: 64px;
     margin-left: 8px;
+    .md-text-color(@default-color-name);
     &:first-child {
       margin-left: 0;
     }
   }
 }
-/* 底部按钮滚动 */
+/* 底部按钮滚随内容动 */
 .md-dialog-content>.md-dialog-actions {
   margin: 0 -24px -24px -24px;
   padding-top: 32px;

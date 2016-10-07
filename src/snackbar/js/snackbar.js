@@ -21,7 +21,7 @@
     message: '',                    // 文本内容
     timeout: 4000,                  // 在用户没有操作时多长时间自动隐藏
     buttonText: '',                 // 按钮的文本
-    buttonColor: '#90CAF9',         // 按钮的颜色，支持 blue #90caf9 rgba(...)
+    buttonColor: '',         // 按钮的颜色，支持 blue #90caf9 rgba(...)
     closeOnButtonClick: true,       // 点击按钮时关闭
     closeOnOutsideClick: true,      // 触摸或点击屏幕其他地方时关闭
     onClick: function () {},          // 在 Snackbar 上点击的回调

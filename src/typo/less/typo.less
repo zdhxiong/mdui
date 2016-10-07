@@ -126,13 +126,30 @@
 
   /* a */
   a {
-    color: #2196F3;
-    border-bottom: 1px solid #2196F3;
+    .md-text-color(@default-accent-color-name, a200);
     text-decoration: none;
-    &:hover {
-      border-bottom-color: #555;
-      color: #555;
-      text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+
+    &:before {
+      position: absolute;
+      top: auto;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      .md-background-color(@default-accent-color-name, a200);
+      content: ' ';
+      transition: all 0.2s;
+      backface-visibility: hidden;
+      transform: scaleX(0);
+    }
+
+    &:hover:before,
+    &:focus:before {
+      transform: scaleX(1);
     }
   }
 
@@ -257,6 +274,7 @@
     padding: 12px 16px;
     display: block;
     -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
   }
 
   /* kbd */

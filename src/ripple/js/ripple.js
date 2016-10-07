@@ -41,79 +41,12 @@
   }
 
   /**
-   * 获取 body 中的 md-theme-[color] 的颜色值
-   */
-  function getThemeColorName() {
-    var bodyClassStr = document.body.getAttribute('class');
-    if (bodyClassStr) {
-      var themeColorClassArray = bodyClassStr.match(/md-theme-(\w+)/g);
-      if (themeColorClassArray) {
-        var themeColorName = themeColorClassArray[themeColorClassArray.length - 1].replace('md-theme-', '');
-        if (mdui.isColorDark[themeColorName]) {
-          return themeColorName;
-        }
-      }
-    }
-    return 'primary';
-  }
-
-  /**
    * 创建涟漪动画
    * @param x
    * @param y
    * @param el
    */
   function createRipple(x, y, el) {
-    // 设置涟漪颜色
-    // ===========
-    var classStr = el.getAttribute('class') || '';
-    var rippleColorClass = '';
-
-    // md-ripple 元素上 md-ripple- 开头的类都是设置颜色的，不存在颜色类时，自动判断
-    if (classStr.indexOf('md-ripple-') < 0) {
-      var colorReg = /(md-color-\w+(-\w+)?(-\w+)?)/g;
-      var colorClassArray = classStr.match(colorReg);
-
-      // 存在背景色，根据背景色判断使用深色还是浅色涟漪
-      if (colorClassArray) {
-        var colorClass = colorClassArray[colorClassArray.length - 1];
-        var colorClassTempArray = colorClass.replace('md-color-', '').split('-');
-        var colorIsDark;
-
-        // md-color-red  md-color-primary
-        if (colorClassTempArray.length === 1) {
-          if (colorClassTempArray[0] === 'primary') {
-            colorIsDark = mdui.isColorDark[getThemeColorName()][500];
-          } else {
-            colorIsDark = mdui.isColorDark[colorClassTempArray[0]][500];
-          }
-        } else if (colorClassTempArray.length === 2) {
-          // md-color-red-200  md-color-primary-200
-          if (['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', 'a100', 'a200', 'a400', 'a700'].indexOf(colorClassTempArray[1]) > -1) {
-            if (colorClassTempArray[0] === 'primary') {
-              colorIsDark = mdui.isColorDark[getThemeColorName()][colorClassTempArray[1]];
-            } else {
-              colorIsDark = mdui.isColorDark[colorClassTempArray[0]][colorClassTempArray[1]];
-            }
-          }
-          // md-color-light-blue
-          else {
-            colorIsDark = mdui.isColorDark[colorClassTempArray[0] + '-' + colorClassTempArray[1]][500];
-          }
-        } else if (colorClassTempArray.length === 3) {
-          // md-color-light-blue-200
-          colorIsDark = mdui.isColorDark[colorClassTempArray[0] + '-' + colorClassTempArray[1]][colorClassTempArray[2]];
-        }
-
-        if (typeof colorIsDark !== 'undefined') {
-          rippleColorClass = colorIsDark ? 'md-ripple-white' : 'md-ripple-black';
-        }
-      }
-      if (!rippleColorClass) {
-        rippleColorClass = 'md-ripple-black';
-      }
-    }
-
     // 计算涟漪位置
     // ===========
     var box = el.getBoundingClientRect();
@@ -138,9 +71,6 @@
         'left:' + center.x + 'px; ' +
         'top:' + center.y + 'px;">' +
         '</div>')[0];
-    if (rippleColorClass) {
-      rippleWave.classList.add(rippleColorClass);
-    }
     el.insertBefore(rippleWave, el.childNodes[0]);
     $.getStyle(rippleWave, 'opacity');
     rippleTransform = 'translate3d(' + (-center.x + width / 2) + 'px, ' + (-center.y + height / 2) + 'px, 0) scale(1)';

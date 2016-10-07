@@ -19,18 +19,7 @@
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
-  // 默认图标为黑色 54%
-  .md-icon-color(black);
+  color: inherit;
 }
-
-/* 背景色中的图标继承背景色中定义的文本色 */
-[class*="md-color-"] {
-  .md-icon,
-  .md-icon::before {
-    color: inherit;
-  }
-}
-
-// 浅色背景中的图标为黑色 54%，相关代码在 color/_mixin.less
 
 @import "material-icons.less";

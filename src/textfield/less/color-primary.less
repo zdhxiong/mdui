@@ -1,0 +1,29 @@
+/**
+ * =============================================================================
+ * ************   Text Field 文本框   ************
+ * =============================================================================
+ */
+
+.md-theme-primary-@{colorName} {
+
+  @color: 'color-@{colorName}-500';
+
+  .md-textfield-focus {
+
+    .md-textfield-input {
+      border-bottom-color: @@color;
+    }
+
+    .md-textfield-label {
+      color: @@color;
+    }
+  }
+
+  .md-textfield-floating-label {
+    &.md-textfield-focus {
+      .md-textfield-label {
+        color: @@color;
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+// 文本色
+._md-text-color-primary-degree(@degree) {
+  .md-theme-primary-@{colorName} {
+    .md-text-color-theme-@{degree} {
+      .md-text-color(@colorName, @degree) !important;
+    }
+  }
+
+  .md-text-color-@{colorName}-@{degree} {
+    .md-text-color(@colorName, @degree) !important;
+  }
+}
+
+
+/* 文本色 */
+._md-text-color-primary-degree(50);
+._md-text-color-primary-degree(100);
+._md-text-color-primary-degree(200);
+._md-text-color-primary-degree(300);
+._md-text-color-primary-degree(400);
+._md-text-color-primary-degree(500);
+._md-text-color-primary-degree(600);
+._md-text-color-primary-degree(700);
+._md-text-color-primary-degree(800);
+._md-text-color-primary-degree(900);
+
+.md-theme-primary-@{colorName} {
+  .md-text-color-theme {
+    .md-text-color(@colorName) !important;
+  }
+}
+.md-text-color-@{colorName} {
+  .md-text-color(@colorName) !important;
+}

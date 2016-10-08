@@ -27,18 +27,18 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "grunt": "~1.0.0",
-    "grunt-autoprefixer": "~3.0.4",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-concat": "~1.0.1",
-    "grunt-contrib-csslint": "~2.0.0",
-    "grunt-contrib-cssmin": "~1.0.2",
-    "grunt-contrib-jshint": "~1.0.0",
-    "grunt-contrib-less": "~1.4.0",
-    "grunt-contrib-uglify": "~2.0.0",
-    "grunt-contrib-watch": "~1.0.0",
-    "grunt-csscomb": "~3.1.1",
-    "grunt-jscs": "~3.0.1"
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-csscomb": "^3.0.8",
+    "gulp-csslint": "^1.0.0",
+    "gulp-jscs": "^4.0.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-less": "^3.1.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-uglify": "^2.0.0",
+    "jshint": "^2.9.3"
   },
   "engines": {
     "node": ">=4.2.1"
@@ -46,7 +46,7 @@
   "fiels": [
     "dist",
     "src",
-    "Gruntfile.js",
+    "gulpfile.js",
     "LICENSE"
   ]
 }

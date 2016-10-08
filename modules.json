@@ -1,0 +1,212 @@
+{
+  "core_intro": {
+    "js": [
+      "src/global/js/wrap_start.js",
+      "src/global/js/dom.js",
+      "src/global/js/support",
+      "src/global/js/global.js"
+    ],
+    "less": [
+      "src/mixin/less/mixin.less",
+      "src/variable/less/variable.less",
+      "src/helper/less/helper.less",
+      "src/global/less/normalize.less",
+      "src/global/less/base.less",
+      "src/icon/less/icon.less"
+    ]
+  },
+  "color": {
+    "path": "src/color/",
+    "js": [],
+    "less": [
+      "color-primary.less",
+      "color-accent.less"
+    ],
+    "dependencies": []
+  },
+  "material-icons": {
+    "path": "src/icon/",
+    "js": [],
+    "less": [
+      "material-icons.less"
+    ],
+    "dependencies": []
+  },
+  "roboto": {
+    "path": "src/font/",
+    "js": [],
+    "less": [
+      "roboto.less"
+    ],
+    "dependencies": []
+  },
+  "typo": {
+    "path": "src/typo",
+    "js": [],
+    "less": [
+      "typo.less"
+    ],
+    "dependencies": []
+  },
+  "divider": {
+    "path": "src/divider/",
+    "js": [],
+    "less": [
+      "divider.less"
+    ],
+    "dependencies": []
+  },
+  "media": {
+    "path": "src/media/",
+    "js": [],
+    "less": [
+      "media.less"
+    ],
+    "dependencies": []
+  },
+  "ripple": {
+    "path": "src/ripple/",
+    "js": [
+      "ripple.js"
+    ],
+    "less": [
+      "ripple.less"
+    ],
+    "dependencies": []
+  },
+  "textfield": {
+    "path": "src/textfield/",
+    "js": [
+      "textfield.js"
+    ],
+    "less": [
+      "textfield.less"
+    ],
+    "dependencies": []
+  },
+  "button": {
+    "path": "src/button/",
+    "js": [],
+    "less": [
+      "button.less"
+    ],
+    "dependencies": []
+  },
+  "fab": {
+    "path": "src/fab/",
+    "js": [
+      "fab.js",
+      "fab.data.js"
+    ],
+    "less": [
+      "fab.less"
+    ],
+    "dependencies": [
+      "button"
+    ]
+  },
+  "grid": {
+    "path": "src/grid/",
+    "js": [],
+    "less": [
+      "grid.less"
+    ],
+    "dependencies": []
+  },
+  "appbar": {
+    "path": "src/appbar/",
+    "js": [],
+    "less": [
+      "appbar.less"
+    ],
+    "dependencies": []
+  },
+  "card": {
+    "path": "src/card/",
+    "js": [],
+    "less": [
+      "card.less"
+    ],
+    "dependencies": []
+  },
+  "grid_list": {
+    "path": "src/grid_list/",
+    "js": [],
+    "less": [
+      "grid_list.less"
+    ],
+    "dependencies": []
+  },
+  "drawer": {
+    "path": "src/drawer/",
+    "js": [
+      "drawer.js",
+      "drawer.data.js"
+    ],
+    "less": [
+      "drawer.less"
+    ],
+    "dependencies": []
+  },
+  "dialog": {
+    "path": "src/dialog/",
+    "js": [
+      "dialog.js",
+      "dialog.data.js",
+      "dialog.dialog.js",
+      "dialog.alert.js",
+      "dialog.confirm.js",
+      "dialog.prompt.js"
+    ],
+    "less": [
+      "dialog.less",
+      "alert.less",
+      "confirm.less",
+      "prompt.less"
+    ],
+    "dependencies": []
+  },
+  "shadow": {
+    "path": "src/shadow/",
+    "js": [],
+    "less": [
+      "shadow.less"
+    ],
+    "dependencies": []
+  },
+  "tooltip": {
+    "path": "src/tooltip/",
+    "js": [
+      "tooltip.js",
+      "tooltip.data.js"
+    ],
+    "less": [
+      "tooltip.less"
+    ],
+    "dependencies": []
+  },
+  "snackbar": {
+    "path": "src/snackbar/",
+    "js": [
+      "snackbar.js"
+    ],
+    "less": [
+      "snackbar.less"
+    ],
+    "dependencies": []
+  },
+  "chip": {
+    "path": "src/chip/",
+    "js": [],
+    "less": [
+      "chip.less"
+    ],
+    "dependencies": []
+  },
+  "core_outer": {
+    "js": [
+      "src/global/js/wrap_end.js"
+    ],
+    "less": []
+  }
+}

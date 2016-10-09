@@ -9,197 +9,179 @@
     "less": [
       "src/mixin/less/mixin.less",
       "src/variable/less/variable.less",
+      "src/color/less/color.less",
       "src/helper/less/helper.less",
       "src/global/less/normalize.less",
       "src/global/less/base.less",
       "src/icon/less/icon.less"
     ]
   },
-  "color": {
-    "path": "src/color/",
-    "js": [],
-    "less": [
-      "color-primary.less",
-      "color-accent.less"
-    ],
-    "dependencies": []
-  },
   "material-icons": {
-    "path": "src/icon/",
     "js": [],
     "less": [
-      "material-icons.less"
+      "src/icon/less/material-icons.less"
     ],
     "dependencies": []
   },
   "roboto": {
-    "path": "src/font/",
     "js": [],
     "less": [
-      "roboto.less"
+      "src/font/less/roboto.less"
     ],
     "dependencies": []
   },
   "typo": {
-    "path": "src/typo",
     "js": [],
     "less": [
-      "typo.less"
+      "src/typo/less/typo.less"
     ],
     "dependencies": []
   },
   "divider": {
-    "path": "src/divider/",
     "js": [],
     "less": [
-      "divider.less"
+      "src/divider/less/divider.less"
     ],
     "dependencies": []
   },
   "media": {
-    "path": "src/media/",
     "js": [],
     "less": [
-      "media.less"
+      "src/media/less/media.less"
     ],
     "dependencies": []
   },
   "ripple": {
-    "path": "src/ripple/",
     "js": [
-      "ripple.js"
+      "src/ripple/js/ripple.js"
     ],
     "less": [
-      "ripple.less"
+      "src/ripple/less/ripple.less"
     ],
     "dependencies": []
   },
   "textfield": {
-    "path": "src/textfield/",
     "js": [
-      "textfield.js"
+      "src/textfield/js/textfield.js"
     ],
     "less": [
-      "textfield.less"
+      "src/textfield/less/textfield.less"
     ],
     "dependencies": []
   },
   "button": {
-    "path": "src/button/",
     "js": [],
     "less": [
-      "button.less"
+      "src/button/less/button.less"
     ],
     "dependencies": []
   },
   "fab": {
-    "path": "src/fab/",
     "js": [
-      "fab.js",
-      "fab.data.js"
+      "src/fab/js/fab.js",
+      "src/fab/js/fab.data.js"
+    ],
+    "jquery": [
+      "src/fab/js/fab.jquery.js"
     ],
     "less": [
-      "fab.less"
+      "src/fab/less/fab.less"
     ],
     "dependencies": [
       "button"
     ]
   },
   "grid": {
-    "path": "src/grid/",
     "js": [],
     "less": [
-      "grid.less"
+      "src/grid/less/grid.less"
     ],
     "dependencies": []
   },
   "appbar": {
-    "path": "src/appbar/",
     "js": [],
     "less": [
-      "appbar.less"
+      "src/appbar/less/appbar.less"
     ],
     "dependencies": []
   },
   "card": {
-    "path": "src/card/",
     "js": [],
     "less": [
-      "card.less"
+      "src/card/less/card.less"
     ],
     "dependencies": []
   },
   "grid_list": {
-    "path": "src/grid_list/",
     "js": [],
     "less": [
-      "grid_list.less"
+      "src/grid_list/less/grid_list.less"
     ],
     "dependencies": []
   },
   "drawer": {
-    "path": "src/drawer/",
     "js": [
-      "drawer.js",
-      "drawer.data.js"
+      "src/drawer/js/drawer.js",
+      "src/drawer/js/drawer.data.js"
+    ],
+    "jquery": [
+      "src/drawer/js/drawer.jquery.js"
     ],
     "less": [
-      "drawer.less"
+      "src/drawer/less/drawer.less"
     ],
     "dependencies": []
   },
   "dialog": {
-    "path": "src/dialog/",
     "js": [
-      "dialog.js",
-      "dialog.data.js",
-      "dialog.dialog.js",
-      "dialog.alert.js",
-      "dialog.confirm.js",
-      "dialog.prompt.js"
+      "src/dialog/js/dialog.js",
+      "src/dialog/js/dialog.data.js",
+      "src/dialog/js/dialog.dialog.js",
+      "src/dialog/js/dialog.alert.js",
+      "src/dialog/js/dialog.confirm.js",
+      "src/dialog/js/dialog.prompt.js"
+    ],
+    "jquery": [
+      "src/dialog/js/dialog.jquery.js"
     ],
     "less": [
-      "dialog.less",
-      "alert.less",
-      "confirm.less",
-      "prompt.less"
+      "src/dialog/less/dialog.less",
+      "src/dialog/less/alert.less",
+      "src/dialog/less/confirm.less",
+      "src/dialog/less/prompt.less"
     ],
     "dependencies": []
   },
   "shadow": {
-    "path": "src/shadow/",
     "js": [],
     "less": [
-      "shadow.less"
+      "src/shadow/less/shadow.less"
     ],
     "dependencies": []
   },
   "tooltip": {
-    "path": "src/tooltip/",
     "js": [
-      "tooltip.js",
-      "tooltip.data.js"
+      "src/tooltip/js/tooltip.js",
+      "src/tooltip/js/tooltip.data.js"
     ],
     "less": [
-      "tooltip.less"
+      "src/tooltip/less/tooltip.less"
     ],
     "dependencies": []
   },
   "snackbar": {
-    "path": "src/snackbar/",
     "js": [
-      "snackbar.js"
+      "src/snackbar/js/snackbar.js"
     ],
     "less": [
-      "snackbar.less"
+      "src/snackbar/less/snackbar.less"
     ],
     "dependencies": []
   },
   "chip": {
-    "path": "src/chip/",
     "js": [],
     "less": [
-      "chip.less"
+      "src/chip/less/chip.less"
     ],
     "dependencies": []
   },

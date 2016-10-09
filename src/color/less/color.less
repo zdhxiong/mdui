@@ -1,3 +1,270 @@
-@import "black.less";
-@import "white.less";
-@import "transparent.less";
+/**
+ * =============================================================================
+ * ************   Color 颜色   ************
+ * =============================================================================
+ */
+
+@global-primary-color-degrees-length: length(@globalPrimaryColorDegrees);
+@global-primary-colors-length: length(@globalPrimaryColors);
+@global-accent-color-degrees-length: length(@globalAccentColorDegrees);
+@global-accent-colors-length: length(@globalAccentColors);
+
+
+/**
+ * .md-theme-primary-[color] .md-color-theme
+ * .md-theme-primary-[color] .md-color-theme-[degree]
+ */
+
+.loop-primary-background-color-theme(@counter-color) when (@counter-color > 0) {
+  .loop-primary-background-color-theme((@counter-color - 1));
+
+  @colorName: extract(@globalPrimaryColors, @counter-color);
+
+  .md-theme-primary-@{colorName} {
+
+    // .md-theme-primary-[color] .md-color-theme
+    .md-color-theme {
+      .md-color(@colorName) !important;
+    }
+
+    .loop-primary-background-color-degree-theme(@counter-degree) when (@counter-degree > 0) {
+      .loop-primary-background-color-degree-theme((@counter-degree - 1));
+
+      @degree: extract(@globalPrimaryColorDegrees, @counter-degree);
+
+      // .md-theme-primary-[color] .md-color-theme-[degree]
+      .md-color-theme-@{degree} {
+        .md-color(@colorName, @degree) !important;
+      }
+    }
+    .loop-primary-background-color-degree-theme(@global-primary-color-degrees-length);
+  }
+}
+.loop-primary-background-color-theme(@global-primary-colors-length);
+
+
+/**
+ * .md-theme-accent-[color] .md-color-theme-accent
+ * .md-theme-accent-[color] .md-color-theme-[degree]
+ */
+
+.loop-accent-background-color-theme(@counter-color) when (@counter-color > 0) {
+  .loop-accent-background-color-theme((@counter-color - 1));
+
+  @colorName: extract(@globalAccentColors, @counter-color);
+
+  .md-theme-accent-@{colorName} {
+
+    // .md-theme-accent-[color] .md-color-theme-accent
+    .md-color-theme-accent {
+      .md-color(@colorName, a200) !important;
+    }
+
+    .loop-accent-background-color-degree-theme(@counter-degree) when (@counter-degree > 0) {
+      .loop-accent-background-color-degree-theme((@counter-degree - 1));
+
+      @degree: extract(@globalAccentColorDegrees, @counter-degree);
+
+      // .md-theme-accent-[color] .md-color-theme-[degree]
+      .md-color-theme-@{degree} {
+        .md-color(@colorName, @degree) !important;
+      }
+    }
+    .loop-accent-background-color-degree-theme(@global-accent-color-degrees-length);
+  }
+}
+.loop-accent-background-color-theme(@global-accent-colors-length);
+
+
+/**
+ * .md-color-[color]
+ * .md-color-[color]-[degree]
+ */
+
+.loop-primary-background-color(@counter-color) when (@counter-color > 0) {
+  .loop-primary-background-color((@counter-color - 1));
+
+  @colorName: extract(@globalPrimaryColors, @counter-color);
+
+  &{
+    // .md-color-[color]
+    .md-color-@{colorName} {
+      .md-color(@colorName) !important;
+    }
+
+    .loop-primary-background-color-degree(@counter-degree) when (@counter-degree > 0) {
+      .loop-primary-background-color-degree((@counter-degree - 1));
+
+      @degree: extract(@globalPrimaryColorDegrees, @counter-degree);
+
+      // .md-color-[color]-[degree]
+      .md-color-@{colorName}-@{degree} {
+        .md-color(@colorName, @degree) !important;
+      }
+    }
+    .loop-primary-background-color-degree(@global-primary-color-degrees-length);
+  }
+}
+.loop-primary-background-color(@global-primary-colors-length);
+
+
+/**
+ * .md-color-[color]-accent
+ * .md-color-[color]-[degree]
+ */
+
+.loop-accent-background-color(@counter-color) when (@counter-color > 0) {
+  .loop-accent-background-color((@counter-color - 1));
+
+  @colorName: extract(@globalAccentColors, @counter-color);
+
+  &{
+    // .md-color-[color]-accent
+    .md-color-@{colorName}-accent {
+      .md-color(@colorName) !important;
+    }
+
+    .loop-accent-background-color-degree(@counter-degree) when (@counter-degree > 0) {
+      .loop-accent-background-color-degree((@counter-degree - 1));
+
+      @degree: extract(@globalAccentColorDegrees, @counter-degree);
+
+      // .md-color-[color]-[degree]
+      .md-color-@{colorName}-@{degree} {
+        .md-color(@colorName, @degree) !important;
+      }
+    }
+    .loop-accent-background-color-degree(@global-accent-color-degrees-length);
+  }
+}
+.loop-accent-background-color(@global-accent-colors-length);
+
+
+/**
+ * .md-theme-primary-[color] .md-text-color-theme
+ * .md-theme-primary-[color] .md-text-color-theme-[degree]
+ */
+
+.loop-primary-text-color-theme(@counter-color) when (@counter-color > 0) {
+  .loop-primary-text-color-theme((@counter-color - 1));
+
+  @colorName: extract(@globalPrimaryColors, @counter-color);
+
+  .md-theme-primary-@{colorName} {
+
+    // .md-theme-primary-[color] .md-text-color-theme
+    .md-text-color-theme {
+      .md-text-color(@colorName) !important;
+    }
+
+    .loop-primary-text-color-degree-theme(@counter-degree) when (@counter-degree > 0) {
+      .loop-primary-text-color-degree-theme((@counter-degree - 1));
+
+      @degree: extract(@globalPrimaryColorDegrees, @counter-degree);
+
+      // .md-theme-primary-[color] .md-text-color-theme-[degree]
+      .md-text-color-theme-@{degree} {
+        .md-text-color(@colorName, @degree) !important;
+      }
+    }
+    .loop-primary-text-color-degree-theme(@global-primary-color-degrees-length);
+  }
+}
+.loop-primary-text-color-theme(@global-primary-colors-length);
+
+
+/**
+ * .md-theme-accent-[color] .md-text-color-theme-accent
+ * .md-theme-accent-[color] .md-text-color-theme-[degree]
+ */
+
+.loop-accent-text-color-theme(@counter-color) when (@counter-color > 0) {
+  .loop-accent-text-color-theme((@counter-color - 1));
+
+  @colorName: extract(@globalAccentColors, @counter-color);
+
+  .md-theme-accent-@{colorName} {
+
+    // .md-theme-accent-[color] .md-text-color-theme-accent
+    .md-text-color-theme-accent {
+      .md-text-color(@colorName, a200) !important;
+    }
+
+    .loop-accent-text-color-degree-theme(@counter-degree) when (@counter-degree > 0) {
+      .loop-accent-text-color-degree-theme((@counter-degree - 1));
+
+      @degree: extract(@globalAccentColorDegrees, @counter-degree);
+
+      // .md-theme-accent-[color] .md-text-color-theme-[degree]
+      .md-text-color-theme-@{degree} {
+        .md-text-color(@colorName, @degree) !important;
+      }
+    }
+    .loop-accent-text-color-degree-theme(@global-accent-color-degrees-length);
+  }
+}
+.loop-accent-text-color-theme(@global-accent-colors-length);
+
+
+/**
+ * .md-text-color-[color]
+ * .md-text-color-[color]-[degree]
+ */
+
+.loop-primary-text-color(@counter-color) when (@counter-color > 0) {
+  .loop-primary-text-color((@counter-color - 1));
+
+  @colorName: extract(@globalPrimaryColors, @counter-color);
+
+  &{
+    // .md-text-color-[color]
+    .md-text-color-@{colorName} {
+      .md-text-color(@colorName) !important;
+    }
+
+    .loop-primary-text-color-degree(@counter-degree) when (@counter-degree > 0) {
+      .loop-primary-text-color-degree((@counter-degree - 1));
+
+      @degree: extract(@globalPrimaryColorDegrees, @counter-degree);
+
+      // .md-text-color-[color]-[degree]
+      .md-text-color-@{colorName}-@{degree} {
+        .md-text-color(@colorName, @degree) !important;
+      }
+    }
+    .loop-primary-text-color-degree(@global-primary-color-degrees-length);
+  }
+}
+.loop-primary-text-color(@global-primary-colors-length);
+
+
+/**
+ * .md-text-color-[color]-accent
+ * .md-text-color-[color]-[degree]
+ */
+
+.loop-accent-text-color(@counter-color) when (@counter-color > 0) {
+  .loop-accent-text-color((@counter-color - 1));
+
+  @colorName: extract(@globalAccentColors, @counter-color);
+
+  &{
+    // .md-text-color-[color]-accent
+    .md-text-color-@{colorName}-accent {
+      .md-text-color(@colorName) !important;
+    }
+
+    .loop-accent-text-color-degree(@counter-degree) when (@counter-degree > 0) {
+      .loop-accent-text-color-degree((@counter-degree - 1));
+
+      @degree: extract(@globalAccentColorDegrees, @counter-degree);
+
+      // .md-text-color-[color]-[degree]
+      .md-text-color-@{colorName}-@{degree} {
+        .md-text-color(@colorName, @degree) !important;
+      }
+    }
+    .loop-accent-text-color-degree(@global-accent-color-degrees-length);
+  }
+}
+.loop-accent-text-color(@global-accent-colors-length);

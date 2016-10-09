@@ -16,6 +16,7 @@
   var del = require('del');
   var tap = require('gulp-tap');
   var fs = require('fs');
+  var path = require('path');
 
   // 定义各种路径
   var paths = {
@@ -59,28 +60,6 @@
       day: new Date().getDate()
     },
 
-    // 默认模块
-    defaultModules: [
-      'material-icons',
-      'roboto',
-      'typo',
-      'divider',
-      'media',
-      'ripple',
-      'textfield',
-      'button',
-      'fab',
-      'grid',
-      'appbar',
-      'card',
-      'grid_list',
-      'drawer',
-      'dialog',
-      'shadow',
-      'tooltip',
-      'snackbar',
-      'chip'
-    ],
     // 主色颜色名
     primaryColors: [
       'amber',
@@ -143,49 +122,41 @@
       'a700'
     ],
     // 布局主题
-    layout: [
+    layoutColors: [
       'dark'
     ]
   };
 
-  // 模块名
-  mdui.moduleNames = (function () {
-    var moduleNames = [];
-  })();
+  // 模块名列表
+  mdui.moduleNames = [];
 
-  // JavaScript 文件列表
-  mdui.jsFiles = (function () {
-    var jsFiles = [];
-    for (var prop in mdui.modules) {
-      if (mdui.modules.hasOwnProperty(prop)) {
-        var module = mdui.modules[prop];
-        if (typeof module.js !== 'undefined') {
-          for (var i = 0; i < module.js.length; i++) {
-            jsFiles.push(module.js[i]);
-          }
-        }
+  // 所有 JavaScript 文件列表
+  mdui.jsFiles = [];
+
+  // jQuery 版的所有 JavaScript 文件列表
+  mdui.jsJQueryFiles = [];
+
+  for (var prop in mdui.modules) {
+    if (mdui.modules.hasOwnProperty(prop)) {
+      var module = mdui.modules[prop];
+
+      // 模块名列表，modules.json 文件中除了 core_intro 和 core_outro 之外，其他都是模块名
+      if (prop !== 'core_intro' && prop !== 'core_outro') {
+        mdui.moduleNames.push(prop);
+      }
+
+      // 所有 JavaScript 文件列表
+      if (typeof module.js !== 'undefined') {
+        mdui.jsFiles = mdui.jsFiles.concat(module.js);
+      }
+
+      // jQuery 版的所有 JavaScript 文件列表
+      if (typeof module.jquery !== 'undefined') {
+        mdui.jsJQueryFiles = mdui.jsJQueryFiles.concat(module.jquery);
       }
     }
-    return jsFiles;
-  })();
-
-  // jQuery 版 JavaScript 文件列表
-  mdui.jsJQueryFiles = (function () {
-    var jsFiles = mdui.jsFiles.concat();
-
-    for (var prop in mdui.modules) {
-      if (mdui.modules.hasOwnProperty(prop)) {
-        var module = mdui.modules[prop];
-        if (typeof module.jquery !== 'undefined') {
-          for (var i = 0; i < module.jquery.length; i++) {
-            jsFiles.push(module.jquery[i]);
-          }
-        }
-      }
-    }
-
-    return jsFiles;
-  })();
+  }
+  mdui.jsJQueryFiles = mdui.jsFiles.concat(mdui.jsJQueryFiles);
 
   // 插件的配置
   var configs = {
@@ -210,7 +181,7 @@
   };
 
   // JavaScript 文件添加缩进
-  function addJSIndent (file, t) {
+  function addJSIndent(file, t) {
     var addIndent = '  ';
     var filename = file.path.replace(file.base, '');
     if (filename === 'wrap_start.js' || filename === 'wrap_end.js' || filename.slice(-'jquery.js'.length) === 'jquery.js') {
@@ -247,14 +218,14 @@
   // 构建 CSS 文件
   gulp.task('build-css', ['clean-css'], function (cb) {
 
-    gulp.src(paths.src.root + 'mdui.less')
+    gulp.src(paths.src.root + mdui.filename + '.less')
       .pipe(less({
         globalVars:{
           globalPrimaryColors: mdui.primaryColors,
           globalPrimaryColorDegrees: mdui.primaryColorDegrees,
           globalAccentColors: mdui.accentColors,
           globalAccentColorDegrees: mdui.accentColorDegrees,
-          globalLayouts: mdui.layout
+          globalLayouts: mdui.layoutColors
         }
       }))
       .pipe(header(mdui.banner, configs.header))
@@ -265,7 +236,7 @@
 
       .pipe(minifyCSS(configs.minifyCSS))
       .pipe(rename(function (path) {
-        path.basename = 'mdui.min';
+        path.basename = mdui.filename + '.min';
       }))
       .pipe(gulp.dest(paths.dist.css));
   });
@@ -277,7 +248,7 @@
         addJSIndent(file, t);
       }))
       .pipe(jscs())
-      .pipe(concat('mdui.js'))
+      .pipe(concat(mdui.filename + '.js'))
       .pipe(header(mdui.banner, configs.header))
       .pipe(jshint())
       .pipe(gulp.dest(paths.dist.js))
@@ -285,7 +256,7 @@
       .pipe(uglify())
       .pipe(header(mdui.banner, configs.header))
       .pipe(rename(function (path) {
-        path.basename = 'mdui.min';
+        path.basename = mdui.filename + '.min';
       }))
       .pipe(gulp.dest(paths.dist.js));
   });
@@ -297,7 +268,7 @@
         addJSIndent(file, t);
       }))
       .pipe(jscs())
-      .pipe(concat('mdui.jquery.js'))
+      .pipe(concat(mdui.filename + '.jquery.js'))
       .pipe(header(mdui.banner, configs.header))
       .pipe(jshint())
       .pipe(gulp.dest(paths.dist.js))
@@ -305,7 +276,7 @@
       .pipe(uglify())
       .pipe(header(mdui.banner, configs.header))
       .pipe(rename(function (path) {
-        path.basename = 'mdui.jquery.min';
+        path.basename = mdui.filename + '.jquery.min';
       }))
       .pipe(gulp.dest(paths.dist.js));
   });
@@ -322,14 +293,25 @@
     gulp.watch(paths.src.root + '**/*.js', ['build-js']);
   });
 
-  // 自定义打包
-  // gulp custom -modules:material-icons,roboto -primary-colors:red,blue,indigo -accent-colors:blue,pink -color-degrees:500,600,700,a200,a400
+  // 自定义打包，当某一个参数不传或参数为空时，则打包所有模块
+  // gulp custom -modules:material-icons,roboto -primary-colors:red,blue,indigo -accent-colors:blue,pink -color-degrees:500,600,700,a200,a400 -layout-colors:dark
   gulp.task('custom', function () {
+    // 模块名列表
     var modules = [];
+    // 主色名列表
     var primaryColors = [];
+    // 强调色名列表
     var accentColors = [];
+    // 颜色饱和度列表
     var colorDegrees = [];
+    // 主色颜色饱和度列表
+    var primaryColorDegrees = [];
+    // 强调色颜色饱和度列表
+    var accentColorDegrees = [];
+    // 布局颜色列表
+    var layoutColors = [];
 
+    // 参数处理
     var argsDeal = function (arg) {
       arg = arg.replace(/ /g, '').replace(/,,/g, ',');
 
@@ -346,8 +328,12 @@
         accentColors = arg.split(',');
       }
       else if (arg.indexOf('-color-degrees') === 0) {
-        arg = arg.substr(15);
+        arg = arg.substring(15);
         colorDegrees = arg.split(',');
+      }
+      else if (arg.indexOf('-layout-colors') === 0) {
+        arg = arg.substring(15);
+        layoutColors = arg.split(',');
       }
     };
 
@@ -364,10 +350,165 @@
     if (args.length >= 7) {
       argsDeal(args[6]);
     }
+    if (args.length >= 8) {
+      argsDeal(args[7]);
+    }
+
+    // 过滤无效的模块名，为空时自动填充全部模块名
+    for (var i = 0; i < modules.length; i++) {
+      if (mdui.moduleNames.indexOf(modules[i]) === -1) {
+        delete modules[i];
+      }
+    }
+    if (modules.length === 0) {
+      modules = mdui.moduleNames;
+    }
+    // 添加依赖的模块
+    for (var prop in mdui.modules) {
+      if (mdui.modules.hasOwnProperty(prop)) {
+        var module = mdui.modules[prop];
+
+        if (modules.indexOf(prop) > -1 && typeof module.dependencies !== 'undefined' && module.dependencies.length > 0) {
+          for (var i = 0; i < module.dependencies.length; i++) {
+            if (modules.indexOf(module.dependencies[i]) < 0) {
+              modules.push(module.dependencies[i]);
+            }
+          }
+        }
+      }
+    }
+
+    // 过滤无效的主色名，为空时填充所有主色名
+    for (var i = 0; i < primaryColors.length; i++) {
+      if (mdui.primaryColors.indexOf(primaryColors[i]) === -1) {
+        delete primaryColors[i];
+      }
+    }
+    if (primaryColors.length === 0) {
+      primaryColors = mdui.primaryColors;
+    }
+
+    // 过滤无效的强调色名，为空时填充所有强调色
+    for (var i = 0; i < accentColors.length; i++) {
+      if (mdui.accentColors.indexOf(accentColors[i]) === -1) {
+        delete accentColors[i];
+      }
+    }
+    if (accentColors.length === 0) {
+      accentColors = mdui.accentColors;
+    }
+
+    // 过滤无效的饱和度名，为空时填充所有饱和度
+    for (var i = 0; i < colorDegrees.length; i++) {
+      if (mdui.primaryColorDegrees.indexOf(colorDegrees[i]) === -1 && mdui.accentColorDegrees.indexOf(colorDegrees[i]) === -1) {
+        delete colorDegrees[i];
+      }
+    }
+    if (colorDegrees.length === 0) {
+      colorDegrees = mdui.primaryColorDegrees.concat(mdui.accentColorDegrees);
+    }
+    // 主色饱和度和强调色饱和度
+    for (var i = 0; i < colorDegrees.length; i++) {
+      if (mdui.primaryColorDegrees.indexOf(colorDegrees[i]) > -1) {
+        primaryColorDegrees.push(colorDegrees[i]);
+      } else if (mdui.accentColorDegrees.indexOf(colorDegrees[i]) > -1) {
+        accentColorDegrees.push(colorDegrees[i]);
+      }
+    }
+
+    // 过滤无效的布局颜色，为空时填充所有布局颜色
+    for (var i = 0; i < layoutColors.length; i++) {
+      if (mdui.layoutColors.indexOf(layoutColors[i]) === -1) {
+        delete layoutColors[i];
+      }
+    }
+    if (layoutColors.length === 0) {
+      layoutColors = mdui.layoutColors;
+    }
+
+    var moduleJs = [];
+    var moduleJQuery = [];
+    var moduleLess = [];
+
+    for (var prop in mdui.modules) {
+      if (mdui.modules.hasOwnProperty(prop)) {
+        var module = mdui.modules[prop];
+
+        if (modules.indexOf(prop) > -1 || prop === 'core_intro' || prop === 'core_outro') {
+          if (typeof module.js !== 'undefined') {
+            moduleJs = moduleJs.concat(module.js);
+          }
+          if (typeof module.jquery !== 'undefined') {
+            moduleJQuery = moduleJQuery.concat(module.jquery);
+          }
+          if (typeof module.less !== 'undefined') {
+            moduleLess = moduleLess.concat(module.less);
+          }
+        }
+      }
+    }
+    moduleJQuery = moduleJs.concat(moduleJQuery);
 
 
+    // 构建原生 JavaScript 文件
+    gulp.src(moduleJs)
+      .pipe(tap(function (file, t) {
+        addJSIndent(file, t);
+      }))
+      .pipe(jscs())
+      .pipe(concat(mdui.filename + '.custom.js'))
+      .pipe(header(mdui.banner, configs.header))
+      .pipe(jshint())
+      .pipe(gulp.dest(paths.custom.js))
 
+      .pipe(uglify())
+      .pipe(header(mdui.banner, configs.header))
+      .pipe(rename(function (path) {
+        path.basename = mdui.filename + '.custom.min';
+      }))
+      .pipe(gulp.dest(paths.custom.js));
 
+    // 构建 jQuery 版 JavaScript 文件
+    gulp.src(moduleJQuery)
+      .pipe(tap(function (file, t) {
+        addJSIndent(file, t);
+      }))
+      .pipe(jscs())
+      .pipe(concat(mdui.filename + '.jquery.custom.js'))
+      .pipe(header(mdui.banner, configs.header))
+      .pipe(jshint())
+      .pipe(gulp.dest(paths.custom.js))
+
+      .pipe(uglify())
+      .pipe(header(mdui.banner, configs.header))
+      .pipe(rename(function (path) {
+        path.basename = mdui.filename + '.jquery.custom.min';
+      }))
+      .pipe(gulp.dest(paths.custom.js));
+
+    // 构建 CSS 文件
+    gulp.src(moduleLess)
+      .pipe(concat(mdui.filename + '.custom.less'))
+      .pipe(less({
+        globalVars: {
+          globalPrimaryColors: primaryColors,
+          globalPrimaryColorDegrees: primaryColorDegrees,
+          globalAccentColors: accentColors,
+          globalAccentColorDegrees: accentColorDegrees,
+          globalLayouts: mdui.layoutColors
+        }
+      }))
+      .pipe(header(mdui.banner, configs.header))
+      .pipe(autoprefixer(configs.autoprefixer))
+      .pipe(csscomb())
+      .pipe(csslint())
+      .pipe(gulp.dest(paths.custom.css))
+
+      .pipe(minifyCSS(configs.minifyCSS))
+      .pipe(rename(function (path) {
+        path.basename = mdui.filename + '.custom.min';
+      }))
+      .pipe(gulp.dest(paths.custom.css));
   });
 
 })();

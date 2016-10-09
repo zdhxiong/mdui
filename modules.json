@@ -14,7 +14,8 @@
       "src/global/less/normalize.less",
       "src/global/less/base.less",
       "src/icon/less/icon.less"
-    ]
+    ],
+    "dependencies": []
   },
   "material-icons": {
     "js": [],
@@ -185,10 +186,11 @@
     ],
     "dependencies": []
   },
-  "core_outer": {
+  "core_outro": {
     "js": [
       "src/global/js/wrap_end.js"
     ],
-    "less": []
+    "less": [],
+    "dependencies": []
   }
 }

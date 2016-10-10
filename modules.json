@@ -3,7 +3,7 @@
     "js": [
       "src/global/js/wrap_start.js",
       "src/global/js/dom.js",
-      "src/global/js/support",
+      "src/global/js/support.js",
       "src/global/js/global.js"
     ],
     "less": [

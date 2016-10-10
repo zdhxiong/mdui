@@ -185,3 +185,23 @@ ul.md-drawer-items,
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   margin: 8px 0 16px 0;
 }
+
+
+/**
+ * =============================================================================
+ * ************   Drawer dark   ************
+ * =============================================================================
+ */
+.md-theme-layout-dark when (@globalLayoutDark = true) {
+  /* 美化滚动条 */
+  .md-drawer-scrollbar {
+    .md-scrollbar-beautify(dark);
+  }
+
+  /* 手机平板上的样式 */
+  @media (max-width: @screen-sm-max) {
+    .md-drawer {
+      background-color: @layout-dark-color-4;
+    }
+  }
+}

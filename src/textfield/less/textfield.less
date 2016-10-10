@@ -66,7 +66,8 @@
 .md-textfield-focus {
 
   .md-textfield-input {
-    border-bottom: 2px solid @color-primary-500;
+    @color: 'color-@{default-color-name}-500';
+    border-bottom: 2px solid @@color;
   }
 
   .md-textfield-label {
@@ -140,5 +141,74 @@
   }
   .md-textfield-input {
     border-bottom: 1px dotted rgba(0, 0, 0, @opacity-black-disabled) !important;
+  }
+}
+
+
+/**
+ * =============================================================================
+ * ************   Textfield 主色   ************
+ * =============================================================================
+ */
+.loop-theme-primary-textfield(@counter-color) when (@counter-color > 0) {
+  .loop-theme-primary-textfield((@counter-color - 1));
+  @colorName: extract(@globalPrimaryColors, @counter-color);
+
+  .md-theme-primary-@{colorName} {
+
+    @color: 'color-@{colorName}-500';
+
+    .md-textfield-focus {
+
+      .md-textfield-input {
+        border-bottom-color: @@color;
+      }
+
+      .md-textfield-label {
+        color: @@color;
+      }
+    }
+
+    .md-textfield-floating-label {
+      &.md-textfield-focus {
+        .md-textfield-label {
+          color: @@color;
+        }
+      }
+    }
+  }
+
+}
+.loop-theme-primary-textfield(length(@globalPrimaryColors));
+
+
+/**
+ * =============================================================================
+ * ************   Textfield dark   ************
+ * =============================================================================
+ */
+.md-theme-layout-dark when (@globalLayoutDark = true) {
+  .md-textfield-input {
+    color: #fff;
+
+    .md-divider-bottom-reverse();
+
+    &::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    &[disabled] {
+      color: rgba(255, 255, 255, @opacity-white-disabled);
+    }
+  }
+
+  .md-textfield-label {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .md-textfield-floating-label {
+    .md-textfield-label {
+      color: rgba(255, 255, 255, 0.35);
+    }
   }
 }

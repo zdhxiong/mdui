@@ -113,3 +113,37 @@
     border-radius: 0;
   }
 }
+
+
+/**
+ * =============================================================================
+ * ************   Dialog 主色   ************
+ * =============================================================================
+ */
+.loop-theme-primary-dialog(@counter-color) when (@counter-color > 0) {
+  .loop-theme-primary-dialog((@counter-color - 1));
+  @colorName: extract(@globalPrimaryColors, @counter-color);
+
+  .md-theme-primary-@{colorName} {
+    .md-dialog-actions {
+      .md-btn {
+        .md-text-color(@colorName);
+      }
+    }
+  }
+
+}
+.loop-theme-primary-dialog(length(@globalPrimaryColors));
+
+
+/**
+ * =============================================================================
+ * ************   Dialog dark   ************
+ * =============================================================================
+ */
+.md-theme-layout-dark when (@globalLayoutDark = true) {
+  .md-dialog {
+    background-color: @layout-dark-color-4;
+    color: #fff;
+  }
+}

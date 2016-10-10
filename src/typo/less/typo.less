@@ -332,3 +332,63 @@
     border-bottom: none;
   }
 }
+
+
+/**
+ * =============================================================================
+ * ************   Typo 强调色   ************
+ * =============================================================================
+ */
+.loop-theme-accent-typo(@counter-color) when (@counter-color > 0) {
+  .loop-theme-accent-typo((@counter-color - 1));
+  @colorName: extract(@globalAccentColors, @counter-color);
+
+  .md-theme-accent-@{colorName} {
+    .md-typo {
+      a {
+        .md-text-color(@colorName, a200);
+
+        &:before {
+          .md-background-color(@colorName, a200);
+        }
+      }
+    }
+  }
+
+}
+.loop-theme-accent-typo(length(@globalAccentColors));
+
+
+/**
+ * =============================================================================
+ * ************   Typo dark   ************
+ * =============================================================================
+ */
+.md-theme-layout-dark when (@globalLayoutDark = true) {
+  .md-typo {
+
+    /* blockquote */
+    blockquote {
+      border-left-color: #666;
+    }
+
+    /* mark */
+    mark {
+      background: #aaa;
+      border-bottom-color: #bbb;
+    }
+
+    /* code */
+    code {
+      background-color: #424242;
+      color: @color-red-100;
+    }
+
+    /* pre */
+    pre {
+      background: #424242;
+      border-color: #666;
+    }
+
+  }
+}

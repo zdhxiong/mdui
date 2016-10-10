@@ -194,3 +194,24 @@
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0));
   }
 }
+
+
+/**
+ * =============================================================================
+ * ************   Card dark   ************
+ * =============================================================================
+ */
+.md-theme-layout-dark when (@globalLayoutDark = true) {
+  .md-card {
+    background-color: @layout-dark-color-4;
+    color: #fff;
+  }
+
+  .md-card-actions {
+    .md-divider-top-reverse();
+  }
+
+  .md-btn {
+    color: #fff;
+  }
+}

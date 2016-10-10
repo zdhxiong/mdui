@@ -125,3 +125,35 @@ body.md-appbar-fixed{
 @media (min-width: @screen-md-min) {
   ._appbar_responsive_mixed(@appbar-height-md);
 }
+
+
+/**
+ * =============================================================================
+ * ************   Appbar 主色   ************
+ * =============================================================================
+ */
+.loop-theme-primary-appbar(@counter-color) when (@counter-color > 0) {
+  .loop-theme-primary-appbar((@counter-color - 1));
+  @colorName: extract(@globalPrimaryColors, @counter-color);
+
+  .md-theme-primary-@{colorName} {
+    .md-appbar {
+      .md-color(@colorName);
+    }
+  }
+
+}
+.loop-theme-primary-appbar(length(@globalPrimaryColors));
+
+
+/**
+ * =============================================================================
+ * ************   Appbar dark   ************
+ * =============================================================================
+ */
+.md-theme-layout-dark when (@globalLayoutDark = true) {
+  .md-appbar {
+    background-color: @layout-dark-color-2;
+    color: #fff;
+  }
+}

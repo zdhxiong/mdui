@@ -54,3 +54,34 @@
   white-space: nowrap;
   .md-text-color(@default-accent-color-name, a100);
 }
+
+
+/**
+ * =============================================================================
+ * ************   Snackbar 强调色   ************
+ * =============================================================================
+ */
+.loop-theme-accent-snackbar(@counter-color) when (@counter-color > 0) {
+  .loop-theme-accent-snackbar((@counter-color - 1));
+  @colorName: extract(@globalAccentColors, @counter-color);
+
+  .md-theme-accent-@{colorName} {
+    .md-snackbar-action {
+      .md-text-color(@colorName, a100);
+    }
+  }
+
+}
+.loop-theme-accent-snackbar(length(@globalAccentColors));
+
+
+/**
+ * =============================================================================
+ * ************   Snackbar dark   ************
+ * =============================================================================
+ */
+.md-theme-layout-dark when (@globalLayoutDark = true) {
+  .md-snackbar {
+    background-color: #5d5d5d;
+  }
+}

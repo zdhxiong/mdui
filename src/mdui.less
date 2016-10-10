@@ -3,16 +3,52 @@
 // @globalPrimaryColorDegrees   主色饱和度列表
 // @globalAccentColors          强调色颜色名列表
 // @globalAccentColorDegrees    强调色饱和度列表
-// @globalLayout                布局主题列表，目前仅含 dark
+// @globalLayoutDark            是否包含深色布局主题
 
-@import "mixin/less/mixin.less";
-@import "variable/less/variable.less";
+// Mixin
+@import "mixin/less/color.less";
+@import "mixin/less/shadow.less";
+@import "mixin/less/helper.less";
+@import "mixin/less/icon.less";
+@import "mixin/less/media.less";
+@import "mixin/less/typo.less";
+@import "mixin/less/divider.less";
+
+// Variable
+@import "variable/less/global.less";
+@import "variable/less/color/black.less";
+@import "variable/less/color/white.less";
+@import "variable/less/color/transparent.less";
+@import "variable/less/color/red.less";
+@import "variable/less/color/pink.less";
+@import "variable/less/color/purple.less";
+@import "variable/less/color/deep-purple.less";
+@import "variable/less/color/indigo.less";
+@import "variable/less/color/blue.less";
+@import "variable/less/color/light-blue.less";
+@import "variable/less/color/cyan.less";
+@import "variable/less/color/teal.less";
+@import "variable/less/color/green.less";
+@import "variable/less/color/light-green.less";
+@import "variable/less/color/lime.less";
+@import "variable/less/color/yellow.less";
+@import "variable/less/color/amber.less";
+@import "variable/less/color/orange.less";
+@import "variable/less/color/deep-orange.less";
+@import "variable/less/color/brown.less";
+@import "variable/less/color/grey.less";
+@import "variable/less/color/blue-grey.less";
+@import "variable/less/animation.less";
+@import "variable/less/shadow.less";
+
+// Global
 @import "color/less/color.less";
 @import "helper/less/helper.less";
 @import "global/less/normalize.less";
 @import "global/less/base.less";
 @import "icon/less/icon.less";
 
+// Modules
 @import "icon/less/material-icons.less";
 @import "font/less/roboto.less";
 @import "typo/less/typo.less";

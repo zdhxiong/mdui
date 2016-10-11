@@ -121,7 +121,7 @@
   &{
     // .md-color-[color]-accent
     .md-color-@{colorName}-accent {
-      .md-color(@colorName) !important;
+      .md-color(@colorName, a200) !important;
     }
 
     .loop-accent-background-color-degree(@counter-degree) when (@counter-degree > 0) {
@@ -138,6 +138,26 @@
   }
 }
 .loop-accent-background-color(@global-accent-colors-length);
+
+/**
+ * .md-color-black
+ * .md-color-white
+ * .md-color-transparent
+ */
+
+.md-color-black {
+  background-color: @color-black !important;
+  color: @color-white-text !important;
+}
+
+.md-color-white {
+  background-color: @color-white !important;
+  color: @color-black-text !important;
+}
+
+.md-color-transparent {
+  background-color: @color-transparent !important;
+}
 
 
 /**
@@ -238,6 +258,7 @@
 .loop-primary-text-color(@global-primary-colors-length);
 
 
+
 /**
  * .md-text-color-[color]-accent
  * .md-text-color-[color]-[degree]
@@ -251,7 +272,7 @@
   &{
     // .md-text-color-[color]-accent
     .md-text-color-@{colorName}-accent {
-      .md-text-color(@colorName) !important;
+      .md-text-color(@colorName, a200) !important;
     }
 
     .loop-accent-text-color-degree(@counter-degree) when (@counter-degree > 0) {
@@ -268,3 +289,43 @@
   }
 }
 .loop-accent-text-color(@global-accent-colors-length);
+
+
+/**
+ * .md-text-color-black
+ * .md-text-color-black-[]
+ * .md-text-color-white
+ * .md-text-color-white-[]
+ */
+
+.md-text-color-black {
+  color: @color-black !important;
+}
+.md-text-color-black-text {
+  color: @color-black-text !important;
+}
+.md-text-color-black-secondary {
+  color: @color-black-secondary !important;
+}
+.md-text-color-black-disabled {
+  color: @color-black-disabled !important;
+}
+.md-text-color-black-divider {
+  color: @color-black-divider !important;
+}
+
+.md-text-color-white {
+  color: @color-white !important;
+}
+.md-text-color-white-text {
+  color: @color-white-text !important;
+}
+.md-text-color-white-secondary {
+  color: @color-white-secondary !important;
+}
+.md-text-color-white-disabled {
+  color: @color-white-disabled !important;
+}
+.md-text-color-white-divider {
+  color: @color-white-divider !important;
+}

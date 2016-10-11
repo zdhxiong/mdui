@@ -161,7 +161,7 @@
   /* blockquote */
   blockquote {
     font-weight: 400;
-    border-left: 4px solid #ddd;
+    border-left: 4px solid rgba(0, 0, 0, @opacity-black-divider);
     padding-left: 1em;
     margin: 1em 3em 1em 2em;
     @media only screen and ( max-width: @screen-xs-max ) {
@@ -261,7 +261,7 @@
   /* hr */
   hr {
     border: none;
-    border-bottom: 1px solid #cfcfcf;
+    border-bottom: 1px solid rgba(0, 0, 0, @opacity-black-divider);
     margin-bottom: 0.8em;
     height: 10px;
   }
@@ -369,7 +369,11 @@
 
     /* blockquote */
     blockquote {
-      border-left-color: #666;
+      border-left-color: rgba(255, 255, 255, @opacity-white-divider);
+
+      footer {
+        opacity: @opacity-white-secondary;
+      }
     }
 
     /* mark */
@@ -388,6 +392,16 @@
     pre {
       background: #424242;
       border-color: #666;
+    }
+
+    /* kbd */
+    kbd {
+      background: #424242;
+    }
+
+    /* hr */
+    hr {
+      border-color: rgba(255, 255, 255, @opacity-white-divider);
     }
 
   }

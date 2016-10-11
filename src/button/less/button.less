@@ -54,10 +54,10 @@
     border: 0;
   }
 
+  // 透明按钮 hover、active 时颜色加深
   &:not(.md-ripple):hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
-
   &:not(.md-ripple):active {
     background-color: rgba(0, 0, 0, 0.165);
   }
@@ -131,9 +131,9 @@ input.md-btn[type="submit"] {
   font-size: 24px;
   margin-left: 0;
   margin-right: 0;
-  padding: 0 !important;
+  padding: 0;
   overflow: hidden;
-  line-height: normal !important;
+  line-height: normal;
 }
 
 .md-btn-icon {
@@ -166,4 +166,23 @@ input.md-btn[type="submit"] {
 &.md-btn-block {
   display: block;
   width: 100%;
+}
+
+
+/**
+ * =============================================================================
+ * ************   Button dark   ************
+ * =============================================================================
+ */
+.md-theme-layout-dark when (@globalLayoutDark = true) {
+
+  // 透明按钮 hover、active 时颜色变浅
+  .md-btn {
+    &:not(.md-ripple):hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    &:not(.md-ripple):active {
+      background-color: rgba(255, 255, 255, 0.165);
+    }
+  }
 }

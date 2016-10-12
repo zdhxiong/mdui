@@ -132,18 +132,21 @@ body.md-appbar-fixed{
  * ************   Appbar 主色   ************
  * =============================================================================
  */
-.loop-theme-primary-appbar(@counter-color) when (@counter-color > 0) {
-  .loop-theme-primary-appbar((@counter-color - 1));
-  @colorName: extract(@globalPrimaryColors, @counter-color);
+& {
+  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
+    .loop-primary-theme((@counter-color - 1));
+    @colorName: extract(@globalPrimaryColors, @counter-color);
 
-  .md-theme-primary-@{colorName} {
-    .md-appbar {
-      .md-color(@colorName);
+    .md-theme-primary-@{colorName} {
+      .md-appbar {
+        .md-color(@colorName);
+      }
     }
-  }
 
+  }
+  .loop-primary-theme(length(@globalPrimaryColors));
 }
-.loop-theme-primary-appbar(length(@globalPrimaryColors));
+
 
 
 /**

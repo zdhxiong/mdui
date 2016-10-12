@@ -147,5 +147,19 @@ mdui.Fab = (function () {
     return this.state;
   };
 
+  /**
+   * 以动画的形式显示浮动操作按钮
+   */
+  Fab.prototype.show = function () {
+    this.fab.classList.remove('md-btn-fab-hide');
+  };
+
+  /**
+   * 以动画的形式隐藏浮动操作按钮
+   */
+  Fab.prototype.hide = function () {
+    this.fab.classList.add('md-btn-fab-hide');
+  };
+
   return Fab;
 })();

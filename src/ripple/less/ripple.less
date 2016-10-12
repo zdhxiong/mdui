@@ -55,37 +55,28 @@
   opacity: 0;
 }
 
-/* 圆形涟漪 */
-// uc浏览器无法产生圆形涟漪
-.md-ripple {
-  &.md-btn-fab,
-  &.md-btn-fab-mini,
-  &.md-btn-icon,
-  &.md-btn-icon-mini {
-    transform: translateZ(0);
-  }
-}
-
 
 /**
  * =============================================================================
  * ************   Ripple 颜色   ************
  * =============================================================================
  */
-.loop-theme-primary-ripple(@counter-color) when (@counter-color > 0) {
-  .loop-theme-primary-ripple((@counter-color - 1));
-  @colorName: extract(@globalPrimaryColors, @counter-color);
+& {
+  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
+    .loop-primary-theme((@counter-color - 1));
+    @colorName: extract(@globalPrimaryColors, @counter-color);
 
-  // 指定涟漪颜色
-  .md-ripple-@{colorName} {
-    .md-ripple-wave {
-      @color: 'color-@{colorName}-500';
-      background-color: rgba(red(@@color), green(@@color), blue(@@color), 0.3) !important;
+    // 指定涟漪颜色
+    .md-ripple-@{colorName} {
+      .md-ripple-wave {
+        @color: 'color-@{colorName}-500';
+        background-color: rgba(red(@@color), green(@@color), blue(@@color), 0.3) !important;
+      }
     }
-  }
 
+  }
+  .loop-primary-theme(length(@globalPrimaryColors));
 }
-.loop-theme-primary-ripple(length(@globalPrimaryColors));
 
 
 /**

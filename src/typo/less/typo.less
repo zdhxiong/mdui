@@ -339,24 +339,26 @@
  * ************   Typo 强调色   ************
  * =============================================================================
  */
-.loop-theme-accent-typo(@counter-color) when (@counter-color > 0) {
-  .loop-theme-accent-typo((@counter-color - 1));
-  @colorName: extract(@globalAccentColors, @counter-color);
+& {
+  .loop-accent-theme(@counter-color) when (@counter-color > 0) {
+    .loop-accent-theme((@counter-color - 1));
+    @colorName: extract(@globalAccentColors, @counter-color);
 
-  .md-theme-accent-@{colorName} {
-    .md-typo {
-      a {
-        .md-text-color(@colorName, a200);
+    .md-theme-accent-@{colorName} {
+      .md-typo {
+        a {
+          .md-text-color(@colorName, a200);
 
-        &:before {
-          .md-background-color(@colorName, a200);
+          &:before {
+            .md-background-color(@colorName, a200);
+          }
         }
       }
     }
-  }
 
+  }
+  .loop-accent-theme(length(@globalAccentColors));
 }
-.loop-theme-accent-typo(length(@globalAccentColors));
 
 
 /**

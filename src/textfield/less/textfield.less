@@ -150,36 +150,38 @@
  * ************   Textfield 主色   ************
  * =============================================================================
  */
-.loop-theme-primary-textfield(@counter-color) when (@counter-color > 0) {
-  .loop-theme-primary-textfield((@counter-color - 1));
-  @colorName: extract(@globalPrimaryColors, @counter-color);
+& {
+  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
+    .loop-primary-theme((@counter-color - 1));
+    @colorName: extract(@globalPrimaryColors, @counter-color);
 
-  .md-theme-primary-@{colorName} {
+    .md-theme-primary-@{colorName} {
 
-    @color: 'color-@{colorName}-500';
+      @color: 'color-@{colorName}-500';
 
-    .md-textfield-focus {
+      .md-textfield-focus {
 
-      .md-textfield-input {
-        border-bottom-color: @@color;
-      }
+        .md-textfield-input {
+          border-bottom-color: @@color;
+        }
 
-      .md-textfield-label {
-        color: @@color;
-      }
-    }
-
-    .md-textfield-floating-label {
-      &.md-textfield-focus {
         .md-textfield-label {
           color: @@color;
         }
       }
-    }
-  }
 
+      .md-textfield-floating-label {
+        &.md-textfield-focus {
+          .md-textfield-label {
+            color: @@color;
+          }
+        }
+      }
+    }
+
+  }
+  .loop-primary-theme(length(@globalPrimaryColors));
 }
-.loop-theme-primary-textfield(length(@globalPrimaryColors));
 
 
 /**

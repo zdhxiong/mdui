@@ -20,12 +20,8 @@
   overflow: hidden;
   will-change: box-shadow;
   transition: box-shadow .2s @animation-curve-fast-out-linear-in,
-    background-color .2s @animation-curve-default,
-    color .2s @animation-curve-default,
-
-    // fab
-    transform 150ms @animation-curve-default,
-    opacity 150ms @animation-curve-default;
+              //background-color .2s @animation-curve-default, // linear-gradient 实现的半透明无法实现过渡动画，所以按钮的背景统一没有过渡动画
+              color .2s @animation-curve-default;
   outline: none;
   cursor: pointer;
   text-decoration: none;
@@ -62,6 +58,13 @@
     background-color: rgba(0, 0, 0, 0.165);
   }
 
+  // 带背景色的按钮 hover、active 时颜色变浅
+  &:not(.md-ripple)[class*="md-color-"]:hover {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16));
+  }
+  &:not(.md-ripple)[class*="md-color-"]:active {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
+  }
 }
 
 /* 按钮内的图标 */
@@ -134,6 +137,10 @@ input.md-btn[type="submit"] {
   padding: 0;
   overflow: hidden;
   line-height: normal;
+
+  &.md-ripple {
+    transform: translateZ(0);
+  }
 }
 
 .md-btn-icon {

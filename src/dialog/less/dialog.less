@@ -67,7 +67,7 @@
 .md-dialog-content {
   box-sizing: border-box;
   font-size: 15px;
-  opacity: 0.7;
+  color: rgba(0, 0, 0, 0.7);
   padding: 24px;
   line-height: 1.5;
   overflow-y: auto;
@@ -120,20 +120,22 @@
  * ************   Dialog 主色   ************
  * =============================================================================
  */
-.loop-theme-primary-dialog(@counter-color) when (@counter-color > 0) {
-  .loop-theme-primary-dialog((@counter-color - 1));
-  @colorName: extract(@globalPrimaryColors, @counter-color);
+& {
+  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
+    .loop-primary-theme((@counter-color - 1));
+    @colorName: extract(@globalPrimaryColors, @counter-color);
 
-  .md-theme-primary-@{colorName} {
-    .md-dialog-actions {
-      .md-btn {
-        .md-text-color(@colorName);
+    .md-theme-primary-@{colorName} {
+      .md-dialog-actions {
+        .md-btn {
+          .md-text-color(@colorName);
+        }
       }
     }
-  }
 
+  }
+  .loop-primary-theme(length(@globalPrimaryColors));
 }
-.loop-theme-primary-dialog(length(@globalPrimaryColors));
 
 
 /**
@@ -145,5 +147,11 @@
   .md-dialog {
     background-color: @layout-dark-color-4;
     color: #fff;
+  }
+  .md-dialog-content {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .md-dialog-scrollbar {
+    .md-scrollbar-beautify(dark);
   }
 }

@@ -61,18 +61,20 @@
  * ************   Snackbar 强调色   ************
  * =============================================================================
  */
-.loop-theme-accent-snackbar(@counter-color) when (@counter-color > 0) {
-  .loop-theme-accent-snackbar((@counter-color - 1));
-  @colorName: extract(@globalAccentColors, @counter-color);
+& {
+  .loop-accent-theme(@counter-color) when (@counter-color > 0) {
+    .loop-accent-theme((@counter-color - 1));
+    @colorName: extract(@globalAccentColors, @counter-color);
 
-  .md-theme-accent-@{colorName} {
-    .md-snackbar-action {
-      .md-text-color(@colorName, a100);
+    .md-theme-accent-@{colorName} {
+      .md-snackbar-action {
+        .md-text-color(@colorName, a100);
+      }
     }
-  }
 
+  }
+  .loop-accent-theme(length(@globalAccentColors));
 }
-.loop-theme-accent-snackbar(length(@globalAccentColors));
 
 
 /**

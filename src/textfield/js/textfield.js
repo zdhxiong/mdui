@@ -71,4 +71,31 @@
   // 绑定事件
   var inputSelector = '.' + classNames.field + ' input, .' + classNames.field + ' textarea';
   $.on(document, 'input focus blur', inputSelector, inputEvent, true);
+
+
+  /**
+   * 通过 JS 更新了表单内容，需要重新进行表单处理
+   * @param dom 如果传入了 .md-textfield 所在的 DOM 元素，则更新该文本框；否则，更新所有文本框
+   */
+  mdui.updateTextFields = function () {
+    var textfields = [];
+
+    if (arguments.length === 1) {
+      textfields.push(arguments[0]);
+    } else {
+      textfields = $.queryAll('.md-textfield-input');
+    }
+
+    $.each(textfields, function (i, input) {
+      $.trigger(input, 'input');
+    });
+  };
+
+  $.ready(function () {
+
+    // 自动进行文本框处理
+    mdui.updateTextFields();
+
+  });
+
 })();

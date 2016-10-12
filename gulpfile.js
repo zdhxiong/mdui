@@ -336,7 +336,10 @@
       .pipe(rename(function (path) {
         path.basename = mdui.filename + '.min';
       }))
-      .pipe(gulp.dest(paths.dist.css));
+      .pipe(gulp.dest(paths.dist.css))
+      .on('end', function () {
+        cb();
+      });
   });
 
   // 构建原生 JavaScript 文件
@@ -356,7 +359,10 @@
       .pipe(rename(function (path) {
         path.basename = mdui.filename + '.min';
       }))
-      .pipe(gulp.dest(paths.dist.js));
+      .pipe(gulp.dest(paths.dist.js))
+      .on('end', function () {
+        cb();
+      });
   });
 
   // 构建 jQuery 版文件
@@ -376,7 +382,10 @@
       .pipe(rename(function (path) {
         path.basename = mdui.filename + '.jquery.min';
       }))
-      .pipe(gulp.dest(paths.dist.js));
+      .pipe(gulp.dest(paths.dist.js))
+      .on('end', function () {
+        cb();
+      });
   });
 
   /**

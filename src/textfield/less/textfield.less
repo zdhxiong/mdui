@@ -6,8 +6,10 @@
 
 /* 文本框外层 */
 .md-textfield {
+  position: relative;
   padding-top: 16px;
   margin-bottom: 8px;
+  overflow: hidden;
 }
 
 /* 输入框 */
@@ -61,17 +63,42 @@
   visibility: hidden;
 }
 
+
+/* 表单中的图标
+   ========== */
+.md-textfield {
+  .md-icon {
+    position: absolute;
+    bottom: 0;
+    color: rgba(0, 0, 0, @icon-opacity-black);
+    padding: 6px;
+
+    ~ .md-textfield-label,
+    ~ .md-textfield-input,
+    ~ .md-textfield-error {
+      margin-left: 56px;
+      width: calc(~"100% - 56px");
+    }
+  }
+}
+
 /* 聚焦状态的文本框
    ============= */
 .md-textfield-focus {
 
+  @color: 'color-@{default-color-name}-500';
+
   .md-textfield-input {
-    @color: 'color-@{default-color-name}-500';
-    border-bottom: 2px solid @@color;
+    border-bottom: 1px solid @@color;
+    box-shadow: 0 1px 0 0 @@color;
   }
 
   .md-textfield-label {
-    .md-text-color(@default-color-name);
+    color: @@color;
+  }
+
+  .md-icon {
+    color: @@color;
   }
 }
 
@@ -137,10 +164,10 @@
   .md-textfield-label,
   .md-textfield-input,
   .md-textfield-input::-webkit-input-placeholder {
-    color: rgba(0, 0, 0, @opacity-black-disabled) !important;
+    color: rgba(0, 0, 0, @opacity-black-disabled);
   }
   .md-textfield-input {
-    border-bottom: 1px dotted rgba(0, 0, 0, @opacity-black-disabled) !important;
+    border-bottom: 1px dotted rgba(0, 0, 0, @opacity-black-disabled);
   }
 }
 
@@ -163,10 +190,15 @@
 
         .md-textfield-input {
           border-bottom-color: @@color;
+          box-shadow: 0 1px 0 0 @@color;
         }
 
         .md-textfield-label {
           color: @@color;
+        }
+
+        .md-icon {
+          color: @@color !important;
         }
       }
 
@@ -190,6 +222,15 @@
  * =============================================================================
  */
 .md-theme-layout-dark when (@globalLayoutDark = true) {
+
+  // 图标颜色
+  .md-textfield {
+    .md-icon {
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
+
+  // 输入框颜色
   .md-textfield-input {
     color: #fff;
 
@@ -204,6 +245,7 @@
     }
   }
 
+  // 标签颜色
   .md-textfield-label {
     color: rgba(255, 255, 255, 0.65);
   }

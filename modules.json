@@ -70,6 +70,13 @@
     ],
     "dependencies": []
   },
+  "table": {
+    "js": [],
+    "less": [
+      "src/table/less/table.less"
+    ],
+    "dependencies": []
+  },
   "divider": {
     "js": [],
     "less": [

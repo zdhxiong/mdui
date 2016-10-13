@@ -1,4 +1,17 @@
-(function () {
+/**
+ * gulp clean-css         删除 dist/css 目录下的文件
+ * gulp clean-js          删除 dist/js 目录下的文件
+ * gulp clean-custom      删除 custom 目录下的文件
+ * gulp version           输出当前版本号
+ * gulp build-css         打包 CSS 文件
+ * gulp build-js-native   打包原生 JS 文件
+ * gulp build-js-jquery   打包 jQuery 版 JS 文件
+ * gulp build-js          打包 JS 文件
+ * gulp test-js-gulpfile  检查 gulpfile.js 文件的代码规范
+ * gulp custom            定制打包
+ */
+
+;(function () {
   'use strict';
 
   // 引入 gulp 模块
@@ -37,12 +50,13 @@
      * @param obj
      * @param callback
      */
-    each : function (obj, callback) {
+    each: function (obj, callback) {
       var i;
       var prop;
       if (!obj) {
         return;
       }
+
       if ($.isArray(obj)) {
         // Array
         for (i = 0; i < obj.length; i++) {
@@ -70,6 +84,7 @@
           unique.push(arr[i]);
         }
       }
+
       return unique;
     },
 
@@ -85,6 +100,7 @@
           result.push(arr[i]);
         }
       }
+
       return result;
     },
 
@@ -96,7 +112,7 @@
      */
     contains: function (arr, needle) {
       return arr.indexOf(needle) > -1;
-    }
+    },
 
   };
 
@@ -107,18 +123,18 @@
       css: 'dist/css/',
       js: 'dist/js/',
       fonts: 'dist/fonts/',
-      icons: 'dist/icons/'
+      icons: 'dist/icons/',
     },
     custom: {
       root: 'custom/',
       css: 'custom/css/',
       js: 'custom/js/',
       fonts: 'custom/fonts/',
-      icons: 'custom/icons/'
+      icons: 'custom/icons/',
     },
     src: {
-      root: 'src/'
-    }
+      root: 'src/',
+    },
   };
 
   var mdui = {
@@ -143,8 +159,10 @@
                   ' */\n',
     date: {
       year: new Date().getFullYear(),
-      month: ('January February March April May June July August September October November December').split(' ')[new Date().getMonth()],
-      day: new Date().getDate()
+      month: ('January February March April May June ' +
+              'July August September October November December')
+              .split(' ')[new Date().getMonth()],
+      day: new Date().getDate(),
     },
 
     // 主色颜色名
@@ -167,8 +185,9 @@
       'purple',
       'red',
       'teal',
-      'yellow'
+      'yellow',
     ],
+
     // 主色饱和度
     primaryColorDegrees: [
       '50',
@@ -180,8 +199,9 @@
       '600',
       '700',
       '800',
-      '900'
+      '900',
     ],
+
     // 强调色颜色名
     accentColors: [
       'amber',
@@ -199,19 +219,21 @@
       'purple',
       'red',
       'teal',
-      'yellow'
+      'yellow',
     ],
+
     // 强调色饱和度
     accentColorDegrees: [
       'a100',
       'a200',
       'a400',
-      'a700'
+      'a700',
     ],
+
     // 布局主题
     layoutColors: [
-      'dark'
-    ]
+      'dark',
+    ],
   };
 
   mdui.moduleNames = [];      // 模块名列表
@@ -236,6 +258,7 @@
     }
 
   });
+
   mdui.jsJQueryFiles = mdui.jsFiles.concat(mdui.jsJQueryFiles);
 
   // 插件的配置
@@ -247,56 +270,59 @@
         'Chrome >= 30',
         'Firefox >= 30',
         'ie >= 10',
-        'Safari >= 8'
-      ]
+        'Safari >= 8',
+      ],
     },
     minifyCSS: {
       advanced: false,
-      aggressiveMerging: false
+      aggressiveMerging: false,
     },
     header: {
       pkg: mdui.pkg,
-      date: mdui.date
-    }
+      date: mdui.date,
+    },
   };
 
   // JavaScript 文件添加缩进
   function addJSIndent(file, t) {
     var addIndent = '  ';
     var filename = file.path.replace(file.base, '');
-    if (filename === 'wrap_start.js' || filename === 'wrap_end.js' || filename.slice(-'jquery.js'.length) === 'jquery.js') {
+    if (
+      filename === 'wrap_start.js' ||
+      filename === 'wrap_end.js' ||
+      filename.slice(-'jquery.js'.length) === 'jquery.js'
+    ) {
       addIndent = '';
     }
+
     if (addIndent !== '') {
       var fileLines = fs.readFileSync(file.path).toString().split('\n');
       var newFileContents = '';
       $.each(fileLines, function (i, fileLine) {
-        newFileContents += addIndent + fileLine + (i === fileLines.length ? '' : '\n');
+        newFileContents +=
+          (fileLine ? addIndent : '') +
+          fileLine +
+          (i === fileLines.length ? '' : '\n');
       });
+
       file.contents = new Buffer(newFileContents);
     }
   }
 
   // 删除 dist 目录下的 CSS 文件
-  gulp.task('clean-dist-css', function (cb) {
+  gulp.task('clean-css', function (cb) {
     return del([paths.dist.css + '**/*'], cb);
   });
 
   // 删除 dist 目录下的 JavaScript 文件
-  gulp.task('clean-dist-js', function (cb) {
+  gulp.task('clean-js', function (cb) {
     return del([paths.dist.js + '**/*'], cb);
   });
 
-  // 删除 custom 目录下的 CSS 文件
-  gulp.task('clean-custom-css', function (cb) {
-    return del([paths.custom.css + '**/*'], cb);
+  // 删除 custom 目录下的文件
+  gulp.task('clean-custom', function (cb) {
+    return del([paths.custom.root + '**/*'], cb);
   });
-
-  // 删除 custom 目录下的 JavaScript 文件
-  gulp.task('clean-custom-js', function (cb) {
-    return del([paths.custom.js + '**/*'], cb);
-  });
-
 
   /**
    * ===========================================================================
@@ -314,17 +340,17 @@
   /**
    * 构建 CSS 文件
    */
-  gulp.task('build-css', ['clean-dist-css'], function (cb) {
+  gulp.task('build-css', ['clean-css'], function (cb) {
 
     gulp.src(paths.src.root + mdui.filename + '.less')
       .pipe(less({
-        globalVars:{
+        globalVars: {
           globalPrimaryColors: mdui.primaryColors,
           globalPrimaryColorDegrees: mdui.primaryColorDegrees,
           globalAccentColors: mdui.accentColors,
           globalAccentColorDegrees: mdui.accentColorDegrees,
-          globalLayoutDark: true
-        }
+          globalLayoutDark: true,
+        },
       }))
       .pipe(header(mdui.distBanner, configs.header))
       .pipe(autoprefixer(configs.autoprefixer))
@@ -344,13 +370,13 @@
   });
 
   // 构建原生 JavaScript 文件
-  gulp.task('build-js-native', ['clean-dist-js'], function (cb) {
+  gulp.task('build-js-native', ['clean-js'], function (cb) {
     gulp.src(mdui.jsFiles)
+      .pipe(jscs())
+      .pipe(jscs.reporter())
       .pipe(tap(function (file, t) {
         addJSIndent(file, t);
       }))
-      .pipe(jscs())
-      .pipe(jscs.reporter())
       .pipe(concat(mdui.filename + '.js'))
       .pipe(header(mdui.distBanner, configs.header))
       .pipe(jshint())
@@ -369,13 +395,13 @@
   });
 
   // 构建 jQuery 版文件
-  gulp.task('build-js-jquery', ['clean-dist-js'], function (cb) {
+  gulp.task('build-js-jquery', ['clean-js'], function (cb) {
     gulp.src(mdui.jsJQueryFiles)
+      .pipe(jscs())
+      .pipe(jscs.reporter())
       .pipe(tap(function (file, t) {
         addJSIndent(file, t);
       }))
-      .pipe(jscs())
-      .pipe(jscs.reporter())
       .pipe(concat(mdui.filename + '.jquery.js'))
       .pipe(header(mdui.distBanner, configs.header))
       .pipe(jshint())
@@ -388,6 +414,18 @@
         path.basename = mdui.filename + '.jquery.min';
       }))
       .pipe(gulp.dest(paths.dist.js))
+      .on('end', function () {
+        cb();
+      });
+  });
+
+  // 检查 gulpfile 的代码规范
+  gulp.task('test-js-gulpfile', function (cb) {
+    gulp.src('gulpfile.js')
+      .pipe(jscs())
+      .pipe(jscs.reporter())
+      .pipe(jshint())
+      .pipe(jshint.reporter('default'))
       .on('end', function () {
         cb();
       });
@@ -409,21 +447,32 @@
 
   /**
    * 自定义打包，当某一个参数不传或参数为空时，则打包所有模块
-   * gulp custom -modules:material-icons,roboto -primary-colors:red,blue,indigo -accent-colors:blue,pink -color-degrees:500,600,700,a200,a400 -layout-dark
+   * gulp custom
+   * -modules:material-icons,roboto
+   * -primary-colors:red,blue,indigo
+   * -accent-colors:blue,pink
+   * -color-degrees:500,600,700,a200,a400
+   * -layout-dark
    */
-  gulp.task('custom', ['clean-custom-css', 'clean-custom-js'], function () {
+  gulp.task('custom', ['clean-custom'], function () {
     // 模块名列表
     var customModules = [];
+
     // 主色名列表
     var customPrimaryColors = [];
+
     // 强调色名列表
     var customAccentColors = [];
+
     // 颜色饱和度列表
     var customColorDegrees = [];
+
     // 主色颜色饱和度列表
     var customPrimaryColorDegrees = [];
+
     // 强调色颜色饱和度列表
     var customAccentColorDegrees = [];
+
     // 是否包含深色布局主题
     var customLayoutDark = false;
 
@@ -433,17 +482,13 @@
 
       if (arg.indexOf('-modules') === 0) {
         customModules = arg.substring(9).split(',');
-      }
-      else if (arg.indexOf('-primary-colors') === 0) {
+      } else if (arg.indexOf('-primary-colors') === 0) {
         customPrimaryColors = arg.substring(16).split(',');
-      }
-      else if (arg.indexOf('-accent-colors') === 0) {
+      } else if (arg.indexOf('-accent-colors') === 0) {
         customAccentColors = arg.substring(15).split(',');
-      }
-      else if (arg.indexOf('-color-degrees') === 0) {
+      } else if (arg.indexOf('-color-degrees') === 0) {
         customColorDegrees = arg.substring(15).split(',');
-      }
-      else if (arg.indexOf('-layout-dark') === 0) {
+      } else if (arg.indexOf('-layout-dark') === 0) {
         customLayoutDark = true;
       }
     };
@@ -451,17 +496,13 @@
     var args = process.argv;
     if (args.length >= 4) {
       argsDeal(args[3]);
-    }
-    if (args.length >= 5) {
+    } else if (args.length >= 5) {
       argsDeal(args[4]);
-    }
-    if (args.length >= 6) {
+    } else if (args.length >= 6) {
       argsDeal(args[5]);
-    }
-    if (args.length >= 7) {
+    } else if (args.length >= 7) {
       argsDeal(args[6]);
-    }
-    if (args.length >= 8) {
+    } else if (args.length >= 8) {
       argsDeal(args[7]);
     }
 
@@ -471,13 +512,19 @@
         delete customModules[i];
       }
     });
+
     customModules = $.unique($.cleanEmpty(customModules));
     if (customModules.length === 0) {
       customModules = mdui.moduleNames;
     }
+
     // 添加依赖的模块
     $.each(mdui.modules, function (prop, module) {
-      if ($.contains(customModules, prop) && typeof module.dependencies !== 'undefined' && module.dependencies.length > 0) {
+      if (
+        $.contains(customModules, prop) &&
+        typeof module.dependencies !== 'undefined' &&
+        module.dependencies.length > 0
+      ) {
         $.each(module.dependencies, function (j, dependencie) {
           if (!$.contains(customModules, dependencie)) {
             customModules.push(dependencie);
@@ -492,6 +539,7 @@
         delete customPrimaryColors[i];
       }
     });
+
     customPrimaryColors = $.unique($.cleanEmpty(customPrimaryColors));
     if (customPrimaryColors.length === 0) {
       customPrimaryColors = mdui.primaryColors;
@@ -503,6 +551,7 @@
         delete customAccentColors[i];
       }
     });
+
     customAccentColors = $.unique($.cleanEmpty(customAccentColors));
     if (customAccentColors.length === 0) {
       customAccentColors = mdui.accentColors;
@@ -510,14 +559,19 @@
 
     // 过滤无效的饱和度名，为空时填充所有饱和度
     $.each(customColorDegrees, function (i, customColorDegree) {
-      if (!$.contains(mdui.primaryColorDegrees, customColorDegree) && !$.contains(mdui.accentColorDegrees, customColorDegree)) {
+      if (
+        !$.contains(mdui.primaryColorDegrees, customColorDegree) &&
+        !$.contains(mdui.accentColorDegrees, customColorDegree)
+      ) {
         delete customColorDegrees[i];
       }
     });
+
     customColorDegrees = $.unique($.cleanEmpty(customColorDegrees));
     if (customColorDegrees.length === 0) {
       customColorDegrees = mdui.primaryColorDegrees.concat(mdui.accentColorDegrees);
     }
+
     // 主色饱和度 和 强调色饱和度
     $.each(customColorDegrees, function (i, customColorDegree) {
       if ($.contains(mdui.primaryColorDegrees, customColorDegree)) {
@@ -537,17 +591,19 @@
         if (typeof module.js !== 'undefined') {
           moduleJs = moduleJs.concat(module.js);
         }
+
         if (typeof module.jquery !== 'undefined') {
           moduleJQuery = moduleJQuery.concat(module.jquery);
         }
+
         if (typeof module.less !== 'undefined') {
           moduleLess = moduleLess.concat(module.less);
         }
       }
 
     });
-    moduleJQuery = moduleJs.concat(moduleJQuery);
 
+    moduleJQuery = moduleJs.concat(moduleJQuery);
 
     var customBannerOptions = function () {
       return {
@@ -557,17 +613,17 @@
         customPrimaryColors: customPrimaryColors.join(','),
         customAccentColors: customAccentColors.join(','),
         customColorDegrees: customColorDegrees.join(','),
-        customLayoutDark: customLayoutDark ? 'dark' : ''
-      }
+        customLayoutDark: customLayoutDark ? 'dark' : '',
+      };
     };
 
     // 构建原生 JavaScript 文件
     gulp.src(moduleJs)
+      .pipe(jscs())
+      .pipe(jscs.reporter())
       .pipe(tap(function (file, t) {
         addJSIndent(file, t);
       }))
-      .pipe(jscs())
-      .pipe(jscs.reporter())
       .pipe(concat(mdui.filename + '.custom.js'))
       .pipe(header(mdui.customBanner, customBannerOptions()))
       .pipe(jshint())
@@ -583,11 +639,11 @@
 
     // 构建 jQuery 版 JavaScript 文件
     gulp.src(moduleJQuery)
+      .pipe(jscs())
+      .pipe(jscs.reporter())
       .pipe(tap(function (file, t) {
         addJSIndent(file, t);
       }))
-      .pipe(jscs())
-      .pipe(jscs.reporter())
       .pipe(concat(mdui.filename + '.jquery.custom.js'))
       .pipe(header(mdui.customBanner, customBannerOptions()))
       .pipe(jshint())
@@ -611,8 +667,8 @@
           globalPrimaryColorDegrees: customPrimaryColorDegrees,
           globalAccentColors: customAccentColors,
           globalAccentColorDegrees: customAccentColorDegrees,
-          globalLayoutDark: customLayoutDark
-        }
+          globalLayoutDark: customLayoutDark,
+        },
       }))
       .pipe(header(mdui.customBanner, customBannerOptions()))
       .pipe(autoprefixer(configs.autoprefixer))
@@ -631,17 +687,17 @@
     if ($.contains(customModules, 'roboto')) {
       gulp.src(paths.dist.fonts + 'roboto/**/*')
         .pipe(copy(paths.custom.root, {
-          prefix: 1
+          prefix: 1,
         }));
     }
+
     if ($.contains(customModules, 'material-icons')) {
       gulp.src(paths.dist.icons + 'material-icons/**/*')
         .pipe(copy(paths.custom.root, {
-          prefix: 1
+          prefix: 1,
         }));
     }
 
   });
 
 })();
-

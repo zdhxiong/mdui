@@ -1,30 +1,32 @@
 /**
  * 触摸或鼠标事件
- * @type {{start: string, move: string, end: string}}
  */
 mdui.touchEvents = {
   start: mdui.support.touch ? 'touchstart' : 'mousedown',
   move: mdui.support.touch ? 'touchmove' : 'mousemove',
-  end: mdui.support.touch ? 'touchend' : 'mouseup'
+  end: mdui.support.touch ? 'touchend' : 'mouseup',
 };
 
 /**
  * 判断窗口大小
- * @type {{xs: mdui.screen.xs, sm: mdui.screen.sm, md: mdui.screen.md, lg: mdui.screen.lg, xl: mdui.screen.xl, xsDown: mdui.screen.xsDown, smDown: mdui.screen.smDown, mdDown: mdui.screen.mdDown, lgDown: mdui.screen.lgDown, xlDown: mdui.screen.xlDown, xsUp: mdui.screen.xsUp, smUp: mdui.screen.smUp, mdUp: mdui.screen.mdUp, lgUp: mdui.screen.lgUp, xlUp: mdui.screen.xlUp}}
  */
 mdui.screen = {
   xs: function () {
     return window.innerWidth < 600;
   },
+
   sm: function () {
     return window.innerWidth >= 600 && window.innerWidth < 1024;
   },
+
   md: function () {
     return window.innerWidth >= 1024 && window.innerWidth < 1440;
   },
+
   lg: function () {
     return window.innerWidth >= 1440 && window.innerWidth < 1920;
   },
+
   xl: function () {
     return window.innerWidth >= 1920;
   },
@@ -32,15 +34,19 @@ mdui.screen = {
   xsDown: function () {
     return window.innerWidth < 600;
   },
+
   smDown: function () {
     return window.innerWidth < 1024;
   },
+
   mdDown: function () {
     return window.innerWidth < 1440;
   },
+
   lgDown: function () {
     return window.innerWidth < 1920;
   },
+
   xlDown: function () {
     return true;
   },
@@ -48,18 +54,23 @@ mdui.screen = {
   xsUp: function () {
     return true;
   },
+
   smUp: function () {
     return window.innerWidth >= 600;
   },
+
   mdUp: function () {
     return window.innerWidth >= 1024;
   },
+
   lgUp: function () {
     return window.innerWidth >= 1440;
   },
+
   xlUp: function () {
     return window.innerWidth >= 1920;
-  }
+  },
+
 };
 
 /**
@@ -77,6 +88,7 @@ mdui.showOverlay = function (zIndex) {
   if (typeof zIndex === 'undefined') {
     zIndex = 100;
   }
+
   overlay.style['z-index'] = zIndex;
   overlay.classList.add('md-overlay-show');
 
@@ -94,6 +106,7 @@ mdui.hideOverlay = function (overlay) {
   } else {
     overlays = [overlay];
   }
+
   $.each(overlays, function (i, overlay) {
     overlay.classList.remove('md-overlay-show');
     $.transitionEnd(overlay, function () {
@@ -135,12 +148,12 @@ mdui.throttle = function (fn, delay) {
   var timer = null;
 
   return function () {
-    var context = this;
+    var _this = this;
     var args = arguments;
 
     if (timer === null) {
       timer = setTimeout(function () {
-        fn.apply(context, args);
+        fn.apply(_this, args);
         timer = null;
       }, delay);
     }
@@ -158,13 +171,14 @@ mdui.guid = function (pluginName) {
       .toString(16)
       .substring(1);
   }
+
   var guid = s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   if (pluginName) {
     guid = 'md-' + pluginName + '-' + guid;
   }
+
   return guid;
 };
-
 
 $.ready(function () {
   // 避免页面加载完后直接执行css动画

@@ -16,6 +16,7 @@
       if (!inst) {
         $this.data('mdui.drawer', (inst = new mdui.Drawer(this, option)));
       }
+
       if (typeof option === 'string') {
         value = inst[option]();
       }

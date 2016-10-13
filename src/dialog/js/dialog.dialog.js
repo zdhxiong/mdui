@@ -19,17 +19,18 @@ mdui.dialog = function (options) {
     overlay: true,          // 是否显示遮罩
     modal: false,           // 是否模态化提示框
     closeOnEsc: true,       // 按下 esc 时关闭提示框
-    destroyOnClosed: true   // 关闭后销毁
+    destroyOnClosed: true,  // 关闭后销毁
   };
 
   /**
    * 按钮的默认参数
    */
   var DEFAULT_BUTTON = {
-    text: '',               // 按钮文本
-    bold: false,            // 按钮文本是否加粗
-    close: true,            // 点击按钮后关闭提示框
-    onClick: function (inst) {}   // 点击按钮的回调
+    text: '',                   // 按钮文本
+    bold: false,                // 按钮文本是否加粗
+    close: true,                // 点击按钮后关闭提示框
+    onClick: function (inst) {  // 点击按钮的回调
+    },
   };
 
   // 合并参数
@@ -41,10 +42,19 @@ mdui.dialog = function (options) {
   // 按钮的 HTML
   var buttonsHTML = '';
   if (options.buttons.length) {
-    buttonsHTML = '<div class="md-dialog-actions ' + (options.stackedButtons ? 'md-dialog-actions-stacked' : '') + '">';
+    buttonsHTML =
+      '<div class="md-dialog-actions ' +
+        (options.stackedButtons ? 'md-dialog-actions-stacked' : '') +
+      '">';
     $.each(options.buttons, function (i, button) {
-      buttonsHTML += '<a href="javascript:void(0)" class="md-btn md-ripple md-text-color-primary ' + (button.bold ? 'md-btn-bold' : '') + '">' + button.text + '</a>';
+      buttonsHTML +=
+        '<a href="javascript:void(0)" ' +
+          'class="md-btn md-ripple md-text-color-primary ' +
+          (button.bold ? 'md-btn-bold' : '') + '">' +
+          button.text +
+        '</a>';
     });
+
     buttonsHTML += '</div>';
   }
 
@@ -62,7 +72,7 @@ mdui.dialog = function (options) {
     overlay: options.overlay,
     modal: options.modal,
     closeOnEsc: options.closeOnEsc,
-    destroyOnClosed: options.destroyOnClosed
+    destroyOnClosed: options.destroyOnClosed,
   });
 
   // 绑定按钮事件
@@ -73,6 +83,7 @@ mdui.dialog = function (options) {
         if (typeof options.buttons[i].onClick === 'function') {
           options.buttons[i].onClick(inst);
         }
+
         if (options.buttons[i].close) {
           inst.close();
         }

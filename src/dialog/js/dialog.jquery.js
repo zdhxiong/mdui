@@ -16,6 +16,7 @@
       if (!inst) {
         $this.data('mdui.dialog', (inst = new mdui.Dialog(this, option)));
       }
+
       if (typeof option === 'string') {
         value = inst[option]();
       }

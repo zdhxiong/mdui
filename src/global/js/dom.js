@@ -31,6 +31,7 @@ var $ = {};
         arr.push(nodeList[i]);
       }
     }
+
     return arr;
   };
 
@@ -45,6 +46,7 @@ var $ = {};
     if (!obj) {
       return;
     }
+
     if ($.isArray(obj)) {
       // Array
       for (i = 0; i < obj.length; i++) {
@@ -72,6 +74,7 @@ var $ = {};
         unique.push(arr[i]);
       }
     }
+
     return unique;
   };
 
@@ -85,9 +88,11 @@ var $ = {};
     if (typeof _queueData[name] === 'undefined') {
       _queueData[name] = [];
     }
+
     if (typeof func === 'undefined') {
       return _queueData[name];
     }
+
     _queueData[name].push(func);
   };
 
@@ -113,6 +118,7 @@ var $ = {};
         params[def] = defaults[def];
       }
     }
+
     return params;
   };
 
@@ -140,6 +146,7 @@ var $ = {};
     if (!dom.mduiDomDataStorage) {
       dom.mduiDomDataStorage = {};
     }
+
     dom.mduiDomDataStorage[key] = value;
   };
 
@@ -166,6 +173,7 @@ var $ = {};
     if (arguments.length === 1) {
       return style;
     }
+
     return style.getPropertyValue(prop);
   };
 
@@ -192,6 +200,7 @@ var $ = {};
     if (typeof duration !== 'string') {
       duration = duration + 'ms';
     }
+
     dom.style.webkitTransitionDuration =
       dom.style.MsTransitionDuration =
         dom.style.msTransitionDuration =
@@ -210,6 +219,7 @@ var $ = {};
     if (arguments.length === 1) {
       parent = document;
     }
+
     return $.toArray(parent.querySelectorAll(selector));
   };
 
@@ -223,6 +233,7 @@ var $ = {};
     if (arguments.length === 1) {
       parent = document;
     }
+
     return parent.querySelector(selector);
   };
 
@@ -236,6 +247,7 @@ var $ = {};
     if (arguments.length === 1) {
       parent = document;
     }
+
     return parent.getElementById(id);
   };
 
@@ -251,9 +263,11 @@ var $ = {};
       if (dom === document) {
         return selector === document;
       }
+
       if (dom === window) {
         return selector === window;
       }
+
       if (dom.matches) {
         return dom.matches(selector);
       } else if (dom.webkitMatchesSelector) {
@@ -276,6 +290,7 @@ var $ = {};
       compareWith = $.toArray(selector);
       return (compareWith.indexOf(dom) !== -1);
     }
+
     return false;
   };
 
@@ -296,6 +311,7 @@ var $ = {};
         return parent;
       }
     }
+
     return undefined;
   };
 
@@ -316,8 +332,10 @@ var $ = {};
       } else {
         parents.push(parent);
       }
+
       parent = parent.parentNode;
     }
+
     return $.unique(parents);
   };
 
@@ -352,6 +370,7 @@ var $ = {};
         listener = arguments[2];
         capture = arguments[3] || false;
       }
+
       for (i = 0; i < events.length; i++) {
         dom.addEventListener(events[i], listener, capture);
       }
@@ -361,6 +380,7 @@ var $ = {};
         if (!dom.domLiveListeners) {
           dom.domLiveListeners = [];
         }
+
         dom.domLiveListeners.push({ listener: listener, liveListener: handleLiveEvent });
         dom.addEventListener(events[i], handleLiveEvent, capture);
       }
@@ -410,10 +430,12 @@ var $ = {};
       capture = arguments[3];
       targetSelector = false;
     }
+
     function proxy(e) {
       listener.call(e.target, e);
       $.off(dom, eventName, targetSelector, proxy, capture);
     }
+
     $.on(dom, eventName, targetSelector, proxy, capture);
   };
 
@@ -434,6 +456,7 @@ var $ = {};
         evt.initEvent(events[i], true, true);
         evt.detail = eventData;
       }
+
       dom.dispatchEvent(evt);
     }
   };
@@ -444,17 +467,25 @@ var $ = {};
    * @param callback
    */
   $.transitionEnd = function (dom, callback) {
-    var events = ['webkitTransitionEnd', 'transitionend', 'oTransitionEnd', 'MSTransitionEnd', 'msTransitionEnd'];
+    var events = [
+      'webkitTransitionEnd',
+      'transitionend',
+      'oTransitionEnd',
+      'MSTransitionEnd',
+      'msTransitionEnd',
+    ];
     var i;
     function fireCallback(e) {
       if (e.target !== dom) {
         return;
       }
+
       callback.call(dom, e);
       for (i = 0; i < events.length; i++) {
         $.off(dom, events[i], fireCallback);
       }
     }
+
     if (callback) {
       for (i = 0; i < events.length; i++) {
         $.on(dom, events[i], fireCallback);
@@ -476,7 +507,7 @@ var $ = {};
     var scrollLeft = window.pageXOffset || dom.scrollLeft;
     return {
       top: box.top  + scrollTop  - clientTop,
-      left: box.left + scrollLeft - clientLeft
+      left: box.left + scrollLeft - clientLeft,
     };
   };
 
@@ -501,18 +532,23 @@ var $ = {};
         if (selector.indexOf('<li') === 0) {
           toCreate = 'ul';
         }
+
         if (selector.indexOf('<tr') === 0) {
           toCreate = 'tbody';
         }
+
         if (selector.indexOf('<td') === 0 || selector.indexOf('<th') === 0) {
           toCreate = 'tr';
         }
+
         if (selector.indexOf('<tbody') === 0) {
           toCreate = 'table';
         }
+
         if (selector.indexOf('<option') === 0) {
           toCreate = 'select';
         }
+
         tempParent = document.createElement(toCreate);
         tempParent.innerHTML = selector;
         return $.toArray(tempParent.childNodes);
@@ -526,10 +562,12 @@ var $ = {};
         }
       }
     }
+
     // Node
     else if (selector.nodeType || selector === window || selector === document) {
       return [selector];
     }
+
     // Array of elements
     else if (selector.length > 0 && selector[0].nodeType) {
       return $.toArray(selector);
@@ -558,9 +596,11 @@ var $ = {};
         if (singleNode) {
           return childNodes[i];
         }
+
         children.push(childNodes[i]);
       }
     }
+
     return children.length ? children : null;
   };
 
@@ -614,6 +654,7 @@ var $ = {};
     if (typeof obj === 'undefined') {
       obj = {};
     }
+
     obj.inst = inst;
 
     var fullEventName = eventName + '.mdui.' + pluginName;

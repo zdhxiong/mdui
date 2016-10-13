@@ -33,7 +33,12 @@
         target = rippleParents[0];
       }
     }
-    if (target && !target.classList.contains('md-disabled') && target.getAttribute('disabled') === null) {
+
+    if (
+      target &&
+      !target.classList.contains('md-disabled') &&
+      target.getAttribute('disabled') === null
+    ) {
       return target;
     } else {
       return false;
@@ -53,7 +58,7 @@
     var offset = $.offset(el);
     var center = {
           x: x - offset.left,
-          y: y - offset.top
+          y: y - offset.top,
         };
     var height = box.height;
     var width = box.width;
@@ -73,7 +78,9 @@
         '</div>')[0];
     el.insertBefore(rippleWave, el.childNodes[0]);
     $.getStyle(rippleWave, 'opacity');
-    rippleTransform = 'translate3d(' + (-center.x + width / 2) + 'px, ' + (-center.y + height / 2) + 'px, 0) scale(1)';
+    rippleTransform =
+      'translate3d(' + (-center.x + width / 2) + 'px, ' + (-center.y + height / 2) + 'px, 0) ' +
+      'scale(1)';
     $.transform(rippleWave, rippleTransform);
   }
 
@@ -84,6 +91,7 @@
     if (!rippleWave) {
       return;
     }
+
     var toRemove = rippleWave;
 
     var removeTimeout = setTimeout(function () {
@@ -120,6 +128,7 @@
       rippleTarget = undefined;
       return;
     }
+
     createRipple(touchStartX, touchStartY, rippleTarget);
   }
 

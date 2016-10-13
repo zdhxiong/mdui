@@ -16,6 +16,7 @@
       if (!inst) {
         $this.data('mdui.fab', (inst = new mdui.Fab(this, option)));
       }
+
       if (typeof option === 'string') {
         value = inst[option]();
       }

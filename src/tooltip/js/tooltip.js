@@ -12,7 +12,7 @@ mdui.Tooltip = (function () {
   var DEFAULT = {
     position: 'auto',     // 提示所在位置
     delay: 0,             // 延迟，单位毫秒
-    content: ''           // 提示文本，允许包含 HTML
+    content: '',          // 提示文本，允许包含 HTML
   };
 
   /**
@@ -39,13 +39,19 @@ mdui.Tooltip = (function () {
 
     // 自动判断位置，加 2px，使 Tooltip 距离窗口边框至少有 2px 的间距
     if (['bottom', 'top', 'left', 'right'].indexOf(position) === -1) {
-      if (targetProps.top + targetProps.height + targetMargin + tooltipHeight + 2 < document.documentElement.clientHeight) {
+      if (
+        targetProps.top + targetProps.height + targetMargin + tooltipHeight + 2 <
+        document.documentElement.clientHeight
+      ) {
         position = 'bottom';
       } else if (targetMargin + tooltipHeight + 2 < targetProps.top) {
         position = 'top';
       } else if (targetMargin + tooltipWidth + 2 < targetProps.left) {
         position = 'left';
-      } else if (targetProps.width + targetMargin + tooltipWidth + 2 < document.documentElement.clientWidth - targetProps.left) {
+      } else if (
+        targetProps.width + targetMargin + tooltipWidth + 2 <
+        document.documentElement.clientWidth - targetProps.left
+      ) {
         position = 'right';
       } else {
         position = 'bottom';
@@ -87,32 +93,38 @@ mdui.Tooltip = (function () {
    * @constructor
    */
   function Tooltip(selector, opts) {
-    var inst = this;
+    var _this = this;
 
-    inst.target = $.dom(selector)[0];
+    _this.target = $.dom(selector)[0];
 
     // 已通过 data 属性实例化过，不再重复实例化
-    var oldInst = $.getData(inst.target, 'mdui.tooltip');
+    var oldInst = $.getData(_this.target, 'mdui.tooltip');
     if (oldInst) {
       return oldInst;
     }
 
-    inst.options = $.extend(DEFAULT, (opts || {}));
-    inst.state = 'closed';
+    _this.options = $.extend(DEFAULT, (opts || {}));
+    _this.state = 'closed';
 
     // 创建 Tooltip HTML
     var guid = mdui.guid();
-    inst.tooltip = $.dom('<div class="md-tooltip ' + (mdui.support.touch ? 'md-tooltip-mobile' : 'md-tooltip-desktop') + '" id="md-tooltip-' + guid + '">' + inst.options.content + '</div>')[0];
-    document.body.appendChild(inst.tooltip);
+    _this.tooltip = $.dom(
+      '<div class="md-tooltip ' +
+        (mdui.support.touch ? 'md-tooltip-mobile' : 'md-tooltip-desktop') +
+        '" id="md-tooltip-' + guid + '">' +
+        _this.options.content + '</div>'
+    )[0];
+    document.body.appendChild(_this.tooltip);
 
     // 绑定事件
     var openEvent = mdui.support.touch ? 'touchstart' : 'mouseenter';
     var closeEvent = mdui.support.touch ? 'touchend' : 'mouseleave';
-    $.on(inst.target, openEvent, function () {
-      inst.open();
+    $.on(_this.target, openEvent, function () {
+      _this.open();
     });
-    $.on(inst.target, closeEvent, function () {
-      inst.close();
+
+    $.on(_this.target, closeEvent, function () {
+      _this.close();
     });
   }
 
@@ -121,54 +133,54 @@ mdui.Tooltip = (function () {
    * @param opts 允许每次打开时设置不同的参数
    */
   Tooltip.prototype.open = function (opts) {
-    var inst = this;
+    var _this = this;
 
-    if (inst.state === 'opening' || inst.state === 'opened') {
+    if (_this.state === 'opening' || _this.state === 'opened') {
       return;
     }
 
-    var oldOpts = inst.options;
+    var oldOpts = _this.options;
 
     // 合并 data 属性参数
-    var dataOpts = $.parseOptions(inst.target.getAttribute('data-md-tooltip'));
-    inst.options = $.extend(inst.options, dataOpts);
+    var dataOpts = $.parseOptions(_this.target.getAttribute('data-md-tooltip'));
+    _this.options = $.extend(_this.options, dataOpts);
 
     if (opts) {
-      inst.options = $.extend(inst.options, opts);
+      _this.options = $.extend(_this.options, opts);
     }
 
-    if (oldOpts.content !== inst.options.content) {
-      inst.tooltip.innerHTML = inst.options.content;
+    if (oldOpts.content !== _this.options.content) {
+      _this.tooltip.innerHTML = _this.options.content;
     }
 
-    setPosition(inst);
+    setPosition(_this);
 
-    inst.timeoutId = setTimeout(function () {
-      inst.tooltip.classList.add('md-tooltip-open');
-      inst.state = 'opening';
-      $.pluginEvent('open', 'tooltip', inst, inst.target);
+    _this.timeoutId = setTimeout(function () {
+      _this.tooltip.classList.add('md-tooltip-open');
+      _this.state = 'opening';
+      $.pluginEvent('open', 'tooltip', _this, _this.target);
 
-      $.transitionEnd(inst.tooltip, function () {
-        inst.state = 'opened';
-        $.pluginEvent('opened', 'tooltip', inst, inst.target);
+      $.transitionEnd(_this.tooltip, function () {
+        _this.state = 'opened';
+        $.pluginEvent('opened', 'tooltip', _this, _this.target);
       });
-    }, inst.options.delay);
+    }, _this.options.delay);
   };
 
   /**
    * 关闭 Tooltip
    */
   Tooltip.prototype.close = function () {
-    var inst = this;
+    var _this = this;
 
-    clearTimeout(inst.timeoutId);
-    inst.tooltip.classList.remove('md-tooltip-open');
-    inst.state = 'closing';
-    $.pluginEvent('close', 'tooltip', inst, inst.target);
+    clearTimeout(_this.timeoutId);
+    _this.tooltip.classList.remove('md-tooltip-open');
+    _this.state = 'closing';
+    $.pluginEvent('close', 'tooltip', _this, _this.target);
 
-    $.transitionEnd(inst.tooltip, function () {
-      inst.state = 'closed';
-      $.pluginEvent('closed', 'tooltip', inst, inst.target);
+    $.transitionEnd(_this.tooltip, function () {
+      _this.state = 'closed';
+      $.pluginEvent('closed', 'tooltip', _this, _this.target);
     });
   };
 
@@ -176,13 +188,14 @@ mdui.Tooltip = (function () {
    * 切换 Tooltip 状态
    */
   Tooltip.prototype.toggle = function () {
-    var inst = this;
+    var _this = this;
 
-    if (inst.state === 'opening' || inst.state === 'opened') {
-      inst.close();
+    if (_this.state === 'opening' || _this.state === 'opened') {
+      _this.close();
     }
-    if (inst.state === 'closing' || inst.state === 'closed') {
-      inst.open();
+
+    if (_this.state === 'closing' || _this.state === 'closed') {
+      _this.open();
     }
   };
 
@@ -198,13 +211,14 @@ mdui.Tooltip = (function () {
    * 销毁 Tooltip
    */
   Tooltip.prototype.destroy = function () {
-    var inst = this;
-    clearTimeout(inst.timeoutId);
-    $.removeData(inst.target, 'mdui.tooltip');
+    var _this = this;
+    clearTimeout(_this.timeoutId);
+    $.removeData(_this.target, 'mdui.tooltip');
     if (typeof jQuery !== 'undefined') {
-      jQuery(inst.target).removeData('mdui.tooltip');
+      jQuery(_this.target).removeData('mdui.tooltip');
     }
-    inst.tooltip.parentNode.removeChild(inst.tooltip);
+
+    _this.tooltip.parentNode.removeChild(_this.tooltip);
   };
 
   return Tooltip;

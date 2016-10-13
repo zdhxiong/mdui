@@ -11,14 +11,14 @@ $.ready(function () {
   var event = mdui.support.touch ? 'touchstart' : 'click mouseover';
 
   $.on(document, event, '[data-md-fab]', function (e) {
-    var fab = this;
+    var _this = this;
     var eventType = e.type;
 
-    var inst = $.getData(fab, 'mdui.fab');
+    var inst = $.getData(_this, 'mdui.fab');
     if (!inst) {
-      var options = $.parseOptions(fab.getAttribute('data-md-fab'));
-      inst = new mdui.Fab(fab, options);
-      $.setData(fab, 'mdui.fab', inst);
+      var options = $.parseOptions(_this.getAttribute('data-md-fab'));
+      inst = new mdui.Fab(_this, options);
+      $.setData(_this, 'mdui.fab', inst);
 
       // 判断当前事件
       if (eventType === 'touchstart') {

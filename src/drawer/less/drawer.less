@@ -193,12 +193,13 @@ ul.md-drawer-items,
  * =============================================================================
  */
 .md-theme-layout-dark when (@globalLayoutDark = true) {
-  /* 美化滚动条 */
+
+  // 美化滚动条
   .md-drawer-scrollbar {
     .md-scrollbar-beautify(dark);
   }
 
-  /* 手机平板上的样式 */
+  // 手机平板上的样式
   @media (max-width: @screen-sm-max) {
     .md-drawer {
       background-color: @layout-dark-color-4;

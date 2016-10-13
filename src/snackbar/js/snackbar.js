@@ -21,12 +21,17 @@
     message: '',                    // 文本内容
     timeout: 4000,                  // 在用户没有操作时多长时间自动隐藏
     buttonText: '',                 // 按钮的文本
-    buttonColor: '',         // 按钮的颜色，支持 blue #90caf9 rgba(...)
+    buttonColor: '',                // 按钮的颜色，支持 blue #90caf9 rgba(...)
     closeOnButtonClick: true,       // 点击按钮时关闭
     closeOnOutsideClick: true,      // 触摸或点击屏幕其他地方时关闭
-    onClick: function () {},          // 在 Snackbar 上点击的回调
-    onButtonClick: function () {},    // 点击按钮的回调
-    onClose: function () {}           // 关闭动画开始时的回调
+    onClick: function () {          // 在 Snackbar 上点击的回调
+    },
+
+    onButtonClick: function () {    // 点击按钮的回调
+    },
+
+    onClose: function () {          // 关闭动画开始时的回调
+    },
   };
 
   /**
@@ -34,7 +39,10 @@
    * @param e
    */
   var closeOnOutsideClick = function (e) {
-    if (!e.target.classList.contains('md-snackbar') && !$.parents(e.target, '.md-snackbar').length) {
+    if (
+      !e.target.classList.contains('md-snackbar') &&
+      !$.parents(e.target, '.md-snackbar').length
+    ) {
       current.close();
     }
   };
@@ -45,96 +53,113 @@
    * @constructor
    */
   function Snackbar(opts) {
-    var inst = this;
+    var _this = this;
 
-    inst.options = $.extend(DEFAULT, (opts || {}));
+    _this.options = $.extend(DEFAULT, (opts || {}));
 
     // message 参数必须
-    if (!inst.options.message) {
+    if (!_this.options.message) {
       return;
     }
 
-    inst.state = 'closed';
+    _this.state = 'closed';
 
     // 按钮颜色
     var buttonColorStyle = '';
     var buttonColorClass = '';
-    if (inst.options.buttonColor.indexOf('#') === 0 || inst.options.buttonColor.indexOf('rgb') === 0) {
-      buttonColorStyle = 'style="color:' + inst.options.buttonColor + '"';
-    }else if (inst.options.buttonColor !== '') {
-      buttonColorClass = 'md-text-color-' + inst.options.buttonColor;
+
+    if (
+      _this.options.buttonColor.indexOf('#') === 0 ||
+      _this.options.buttonColor.indexOf('rgb') === 0
+    ) {
+      buttonColorStyle = 'style="color:' + _this.options.buttonColor + '"';
+    }else if (_this.options.buttonColor !== '') {
+      buttonColorClass = 'md-text-color-' + _this.options.buttonColor;
     }
 
     // 添加 HTML
     var tpl =
-      '<div class="md-snackbar ' + (mdui.screen.mdUp() ? 'md-snackbar-desktop' : 'md-snackbar-mobile') + '">' +
-        '<div class="md-snackbar-text">' + inst.options.message + '</div>' +
-        (inst.options.buttonText ? ('<a href="javascript:void(0)" class="md-snackbar-action md-btn md-ripple md-ripple-white ' + buttonColorClass + '" ' + buttonColorStyle + '>' + inst.options.buttonText + '</a>') : '') +
+      '<div class="md-snackbar ' +
+          (mdui.screen.mdUp() ? 'md-snackbar-desktop' : 'md-snackbar-mobile') +
+      '">' +
+        '<div class="md-snackbar-text">' +
+          _this.options.message +
+        '</div>' +
+        (_this.options.buttonText ?
+          ('<a href="javascript:void(0)" ' +
+          'class="md-snackbar-action md-btn md-ripple md-ripple-white ' +
+            buttonColorClass + '" ' +
+            buttonColorStyle + '>' +
+            _this.options.buttonText +
+          '</a>') :
+          ''
+        ) +
       '</div>';
-    inst.snackbar = $.dom(tpl)[0];
-    document.body.appendChild(inst.snackbar);
+    _this.snackbar = $.dom(tpl)[0];
+    document.body.appendChild(_this.snackbar);
 
     // 设置位置
-    $.transform(inst.snackbar, 'translateY(' + inst.snackbar.clientHeight + 'px)');
-    inst.snackbar.style.left = (document.body.clientWidth - inst.snackbar.clientWidth) / 2 + 'px';
-    $.getStyle(inst.snackbar);
-    inst.snackbar.classList.add('md-snackbar-transition');
+    $.transform(_this.snackbar, 'translateY(' + _this.snackbar.clientHeight + 'px)');
+    _this.snackbar.style.left = (document.body.clientWidth - _this.snackbar.clientWidth) / 2 + 'px';
+    $.getStyle(_this.snackbar);
+    _this.snackbar.classList.add('md-snackbar-transition');
   }
 
   /**
    * 打开 Snackbar
    */
   Snackbar.prototype.open = function () {
-    var inst = this;
+    var _this = this;
 
-    if (inst.state === 'opening' || inst.state === 'opened') {
+    if (_this.state === 'opening' || _this.state === 'opened') {
       return;
     }
 
     // 如果当前有正在显示的 Snackbar，则先加入队列，等旧 Snackbar 关闭后再打开
     if (current) {
       $.queue(queueName, function () {
-        inst.open();
+        _this.open();
       });
+
       return;
     }
 
-    current = inst;
+    current = _this;
 
     // 开始打开
-    inst.state = 'opening';
-    $.transform(inst.snackbar, 'translateY(0)');
+    _this.state = 'opening';
+    $.transform(_this.snackbar, 'translateY(0)');
 
-    $.transitionEnd(inst.snackbar, function () {
-      inst.state = 'opened';
+    $.transitionEnd(_this.snackbar, function () {
+      _this.state = 'opened';
 
       // 有按钮时绑定事件
-      if (inst.options.buttonText) {
-        var action = $.query('.md-snackbar-action', inst.snackbar);
+      if (_this.options.buttonText) {
+        var action = $.query('.md-snackbar-action', _this.snackbar);
         $.on(action, 'click', function () {
-          inst.options.onButtonClick();
-          if (inst.options.closeOnButtonClick) {
-            inst.close();
+          _this.options.onButtonClick();
+          if (_this.options.closeOnButtonClick) {
+            _this.close();
           }
         });
       }
 
       // 点击 Snackbar 的事件
-      $.on(inst.snackbar, 'click', function (e) {
+      $.on(_this.snackbar, 'click', function (e) {
         if (!e.target.classList.contains('md-snackbar-action')) {
-          inst.options.onClick();
+          _this.options.onClick();
         }
       });
 
       // 点击 Snackbar 外面的区域关闭
-      if (inst.options.closeOnOutsideClick) {
+      if (_this.options.closeOnOutsideClick) {
         $.on(document, mdui.support.touch ? 'touchstart' : 'click', closeOnOutsideClick);
       }
 
       // 超时后自动关闭
-      inst.timeoutId = setTimeout(function () {
-        inst.close();
-      }, inst.options.timeout);
+      _this.timeoutId = setTimeout(function () {
+        _this.close();
+      }, _this.options.timeout);
 
     });
   };
@@ -143,29 +168,29 @@
    * 关闭 Snackbar
    */
   Snackbar.prototype.close = function () {
-    var inst = this;
+    var _this = this;
 
-    if (inst.state === 'closing' || inst.state === 'closed') {
+    if (_this.state === 'closing' || _this.state === 'closed') {
       return;
     }
 
-    if (typeof inst.timeoutId !== 'undefined') {
-      clearTimeout(inst.timeoutId);
+    if (typeof _this.timeoutId !== 'undefined') {
+      clearTimeout(_this.timeoutId);
     }
 
-    if (inst.options.closeOnOutsideClick) {
+    if (_this.options.closeOnOutsideClick) {
       $.off(document, mdui.support.touch ? 'touchstart' : 'click', closeOnOutsideClick);
     }
 
-    inst.state = 'closing';
-    $.transform(inst.snackbar, 'translateY(' + inst.snackbar.clientHeight + 'px)');
-    inst.options.onClose();
+    _this.state = 'closing';
+    $.transform(_this.snackbar, 'translateY(' + _this.snackbar.clientHeight + 'px)');
+    _this.options.onClose();
     current = null;
 
-    $.transitionEnd(inst.snackbar, function () {
-      inst.state = 'closed';
+    $.transitionEnd(_this.snackbar, function () {
+      _this.state = 'closed';
 
-      inst.snackbar.parentNode.removeChild(inst.snackbar);
+      _this.snackbar.parentNode.removeChild(_this.snackbar);
 
       $.dequeue(queueName);
     });

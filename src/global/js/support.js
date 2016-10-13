@@ -6,6 +6,6 @@
 
 (function () {
   mdui.support = {
-    touch: !!('ontouchstart' in window)
+    touch: !!('ontouchstart' in window),
   };
 })();

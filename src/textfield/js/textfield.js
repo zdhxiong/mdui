@@ -13,7 +13,7 @@
     focus: 'md-textfield-focus',
     notEmpty: 'md-textfield-not-empty',
     disabled: 'md-textfield-disabled',
-    invalid: 'md-textfield-invalid'
+    invalid: 'md-textfield-invalid',
   };
 
   /**
@@ -47,6 +47,7 @@
     if (event === 'focus') {
       textField.classList.add(classNames.focus);
     }
+
     if (event === 'blur') {
       textField.classList.remove(classNames.focus);
     }
@@ -87,8 +88,9 @@
         wrap.appendChild(pre);
         wrap.appendChild(input);
       }
+
       var span = textField.querySelector('.md-textfield-flex-wrap pre span');
-      span.innerText = input.value.replace(/\r?\n/g, "\r\n");
+      span.innerText = input.value.replace(/\r?\n/g, '\r\n');
     }
 
   };
@@ -96,7 +98,6 @@
   // 绑定事件
   var inputSelector = '.' + classNames.field + ' input, .' + classNames.field + ' textarea';
   $.on(document, 'input focus blur', inputSelector, inputEvent, true);
-
 
   /**
    * 通过 JS 更新了表单内容，需要重新进行表单处理
@@ -121,7 +122,7 @@
     // DOM 加载完后自动执行
     $.each($.queryAll('.md-textfield-input'), function (i, input) {
       $.trigger(input, 'input', {
-        domLoadEvent: true
+        domLoadEvent: true,
       });
     });
 

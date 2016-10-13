@@ -8,15 +8,14 @@
 .md-textfield {
   position: relative;
   padding-top: 16px;
-  margin-bottom: 8px;
+  padding-bottom: 8px;
   overflow: hidden;
 }
 
 /* 输入框 */
 .md-textfield-input {
   width: 100%;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding: 8px 0 8px 0;
   appearance: none;
   box-sizing: border-box;
   border: none;
@@ -26,10 +25,12 @@
   display: block;
   margin: 0;
   height: 36px;
+  line-height: 20px;
   color: #212121;
   font-size: 16px;
   font-family: inherit;
   outline: none;
+  resize: none;
   transition: border-bottom-color .2s;
   .md-divider-bottom();
 
@@ -64,18 +65,46 @@
 }
 
 
+/* 多行文本框自动换行
+   ============== */
+.md-textfield-flex-wrap {
+  position: relative;
+
+  pre {
+    box-sizing: border-box;
+    display: block;
+    visibility: hidden;
+    margin: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-size: 16px;
+    line-height: 20px;
+    min-height: 76px;
+  }
+
+  .md-textfield-input {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    min-height: 76px;
+    overflow: hidden;
+  }
+}
+
+
 /* 表单中的图标
    ========== */
 .md-textfield {
   .md-icon {
     position: absolute;
-    bottom: 0;
+    bottom: 8px;
     color: rgba(0, 0, 0, @icon-opacity-black);
     padding: 6px;
 
     ~ .md-textfield-label,
     ~ .md-textfield-input,
-    ~ .md-textfield-error {
+    ~ .md-textfield-error,
+    ~ .md-textfield-flex-wrap {
       margin-left: 56px;
       width: calc(~"100% - 56px");
     }
@@ -130,25 +159,27 @@
 .md-textfield-invalid {
 
   .md-textfield-input {
-    border-bottom: 1px solid @color-red-500;
+    border-bottom: 1px solid @color-red-500 !important;
+    box-shadow: 0 1px 0 0 @color-red-500 !important;
   }
   &.md-textfield-focus {
     .md-textfield-input {
-      border-bottom: 2px solid @color-red-500;
+      border-bottom: 1px solid @color-red-500 !important;
+      box-shadow: 0 1px 0 0 @color-red-500 !important;
     }
   }
 
   .md-textfield-label {
-    color: @color-red-500;
+    color: @color-red-500 !important;
   }
   &.md-textfield-floating-label {
     .md-textfield-label {
-      color: rgba(red(@color-red-500), green(@color-red-500), blue(@color-red-500), 0.35);
+      color: rgba(red(@color-red-500), green(@color-red-500), blue(@color-red-500), 0.35) !important;
     }
     &.md-textfield-focus,
     &.md-textfield-not-empty {
       .md-textfield-label {
-        color: @color-red-500;
+        color: @color-red-500 !important;
       }
     }
   }

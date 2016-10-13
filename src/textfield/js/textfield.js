@@ -25,7 +25,18 @@
     var event = e.type;
     var value = input.value;
 
-    var type = input.getAttribute('type');
+    // 是否是 DOM 加载完后自动执行的操作
+    var domLoadEvent;
+    if (typeof e.detail === 'undefined') {
+      domLoadEvent = false;
+    } else if (typeof e.detail.domLoadEvent === 'undefined') {
+      domLoadEvent = false;
+    } else {
+      domLoadEvent = e.detail.domLoadEvent;
+    }
+
+    // 文本框类型
+    var type = input.getAttribute('type') || '';
     if (notInputs.indexOf(type) >= 0) {
       return;
     }
@@ -42,7 +53,7 @@
 
     // 输入框是否为空
     if (event === 'blur' || event === 'input') {
-      if (value && value.trim() !== '') {
+      if (value && value !== '') {
         textField.classList.add(classNames.notEmpty);
       } else {
         textField.classList.remove(classNames.notEmpty);
@@ -56,8 +67,8 @@
       textField.classList.remove(classNames.disabled);
     }
 
-    // 表单验证
-    if (event === 'input' || event === 'blur') {
+    // 表单验证，DOM 加载完后自动执行的操作不包括表单验证
+    if ((event === 'input' || event === 'blur') && !domLoadEvent) {
       if (input.validity) {
         if (input.validity.valid) {
           textField.classList.remove(classNames.invalid);
@@ -66,6 +77,20 @@
         }
       }
     }
+
+    // textarea 高度自动调整
+    if (e.target.nodeName.toLowerCase() === 'textarea') {
+      if (domLoadEvent) {
+        var wrap = $.dom('<div class="md-textfield-flex-wrap"></div>')[0];
+        var pre = $.dom('<pre><span></span><br/></pre>')[0];
+        input.parentNode.insertBefore(wrap, input);
+        wrap.appendChild(pre);
+        wrap.appendChild(input);
+      }
+      var span = textField.querySelector('.md-textfield-flex-wrap pre span');
+      span.innerText = input.value.replace(/\r?\n/g, "\r\n");
+    }
+
   };
 
   // 绑定事件
@@ -93,8 +118,12 @@
 
   $.ready(function () {
 
-    // 自动进行文本框处理
-    mdui.updateTextFields();
+    // DOM 加载完后自动执行
+    $.each($.queryAll('.md-textfield-input'), function (i, input) {
+      $.trigger(input, 'input', {
+        domLoadEvent: true
+      });
+    });
 
   });
 

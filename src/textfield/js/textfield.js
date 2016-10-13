@@ -27,7 +27,7 @@
 
     // 是否是 DOM 加载完后自动执行的操作
     var domLoadEvent;
-    if (typeof e.detail === 'undefined') {
+    if (e.detail === null) {
       domLoadEvent = false;
     } else if (typeof e.detail.domLoadEvent === 'undefined') {
       domLoadEvent = false;

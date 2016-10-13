@@ -330,6 +330,7 @@
       .pipe(autoprefixer(configs.autoprefixer))
       .pipe(csscomb())
       .pipe(csslint())
+      .pipe(csslint.formatter())
       .pipe(gulp.dest(paths.dist.css))
 
       .pipe(minifyCSS(configs.minifyCSS))
@@ -349,9 +350,11 @@
         addJSIndent(file, t);
       }))
       .pipe(jscs())
+      .pipe(jscs.reporter())
       .pipe(concat(mdui.filename + '.js'))
       .pipe(header(mdui.distBanner, configs.header))
       .pipe(jshint())
+      .pipe(jshint.reporter('default'))
       .pipe(gulp.dest(paths.dist.js))
 
       .pipe(uglify())
@@ -372,9 +375,11 @@
         addJSIndent(file, t);
       }))
       .pipe(jscs())
+      .pipe(jscs.reporter())
       .pipe(concat(mdui.filename + '.jquery.js'))
       .pipe(header(mdui.distBanner, configs.header))
       .pipe(jshint())
+      .pipe(jshint.reporter('default'))
       .pipe(gulp.dest(paths.dist.js))
 
       .pipe(uglify())
@@ -562,9 +567,11 @@
         addJSIndent(file, t);
       }))
       .pipe(jscs())
+      .pipe(jscs.reporter())
       .pipe(concat(mdui.filename + '.custom.js'))
       .pipe(header(mdui.customBanner, customBannerOptions()))
       .pipe(jshint())
+      .pipe(jshint.reporter('default'))
       .pipe(gulp.dest(paths.custom.js))
 
       .pipe(uglify())
@@ -580,9 +587,11 @@
         addJSIndent(file, t);
       }))
       .pipe(jscs())
+      .pipe(jscs.reporter())
       .pipe(concat(mdui.filename + '.jquery.custom.js'))
       .pipe(header(mdui.customBanner, customBannerOptions()))
       .pipe(jshint())
+      .pipe(jshint.reporter('default'))
       .pipe(gulp.dest(paths.custom.js))
 
       .pipe(uglify())
@@ -609,6 +618,7 @@
       .pipe(autoprefixer(configs.autoprefixer))
       .pipe(csscomb())
       .pipe(csslint())
+      .pipe(csslint.formatter())
       .pipe(gulp.dest(paths.custom.css))
 
       .pipe(minifyCSS(configs.minifyCSS))

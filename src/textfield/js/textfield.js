@@ -27,12 +27,14 @@
 
     // 是否是 DOM 加载完后自动执行的操作
     var domLoadEvent;
-    if (e.detail === null) {
-      domLoadEvent = false;
-    } else if (typeof e.detail.domLoadEvent === 'undefined') {
-      domLoadEvent = false;
-    } else {
+    if (
+      typeof e.detail === 'object' &&
+      typeof e.detail.domLoadEvent !== 'undefined' &&
+      e.detail.domLoadEvent
+    ) {
       domLoadEvent = e.detail.domLoadEvent;
+    } else {
+      domLoadEvent = false;
     }
 
     // 文本框类型

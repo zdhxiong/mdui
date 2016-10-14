@@ -95,16 +95,15 @@
 
     // textarea 高度自动调整
     if (e.target.nodeName.toLowerCase() === 'textarea') {
-      if ((reInit || domLoadedEvent) && !$.query('.md-textfield-flex-wrap', textField)) {
-        var wrap = $.dom('<div class="md-textfield-flex-wrap"></div>')[0];
-        var pre = $.dom('<pre><span></span><br/></pre>')[0];
-        input.parentNode.insertBefore(wrap, input);
-        wrap.appendChild(pre);
-        wrap.appendChild(input);
-      }
+      input.style.height = '';
+      var height = input.offsetHeight;
+      var diff = height - input.clientHeight;
+      var scrollHeight = input.scrollHeight;
 
-      var span = textField.querySelector('.md-textfield-flex-wrap pre span');
-      span.innerText = input.value.replace(/\r?\n/g, '\r\n');
+      if (scrollHeight + diff > height) {
+        var newAreaHeight = scrollHeight + diff;
+        input.style.height = newAreaHeight + 'px';
+      }
     }
 
     // 实时字数统计

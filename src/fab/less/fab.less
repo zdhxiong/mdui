@@ -45,11 +45,22 @@
 .md-btn-fab-mini {
   .md-icon {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-12px, -12px);
+    top: 0;
+    left: 0;
     line-height: 24px;
     width: 24px;
+  }
+}
+.md-btn-fab {
+  .md-icon {
+    margin-left: 16px;
+    margin-top: 16px;
+  }
+}
+.md-btn-fab-mini {
+  .md-icon {
+    margin-left: 8px;
+    margin-top: 8px;
   }
 }
 
@@ -76,6 +87,31 @@
   height: @button-fab-size;
   padding-top: 8px;
   z-index: @z-index-fab;
+
+  // 菜单打开前
+  &>.md-btn {
+    .md-icon:not(.md-btn-fab-opened) {
+      transition: all .2s @animation-curve-default;
+      opacity: 1;
+    }
+    .md-icon.md-btn-fab-opened {
+      transition: all .2s @animation-curve-default;
+      opacity: 0;
+      transform: rotate(225deg);
+    }
+  }
+
+  // 菜单打开后
+  &>.md-btn.md-btn-fab-opened {
+    .md-icon:not(.md-btn-fab-opened) {
+      opacity: 0;
+      transform: rotate(225deg);
+    }
+    .md-icon.md-btn-fab-opened {
+      opacity: 1;
+      transform: rotate(360deg);
+    }
+  }
 
   .md-btn-fab-dial {
     visibility: visible;

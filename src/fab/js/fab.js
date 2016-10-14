@@ -90,6 +90,12 @@ mdui.Fab = (function () {
     });
 
     _this.dial.classList.add('md-btn-fab-dial-show');
+
+    // 如果按钮中存在 .md-btn-fab-opened 的图标，则进行图标切换
+    if ($.query('.md-btn-fab-opened', _this.btn)) {
+      _this.btn.classList.add('md-btn-fab-opened');
+    }
+
     _this.state = 'opening';
     $.pluginEvent('open', 'fab', _this, _this.fab);
 
@@ -116,6 +122,7 @@ mdui.Fab = (function () {
     });
 
     _this.dial.classList.remove('md-btn-fab-dial-show');
+    _this.btn.classList.remove('md-btn-fab-opened');
     _this.state = 'closing';
     $.pluginEvent('close', 'fab', _this, _this.fab);
 

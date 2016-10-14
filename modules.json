@@ -109,6 +109,13 @@
     ],
     "dependencies": []
   },
+  "selection_control": {
+    "js": [],
+    "less": [
+      "src/selection_control/less/selection_control.less"
+    ],
+    "dependencies": []
+  },
   "button": {
     "js": [],
     "less": [

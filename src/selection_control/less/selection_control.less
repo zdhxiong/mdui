@@ -1,0 +1,67 @@
+/**
+ * =============================================================================
+ * ************   Selection controls 选择控制器   ************
+ * =============================================================================
+ */
+
+.md-checkbox,
+.md-radio {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  height: 36px;
+  line-height: 36px;
+  padding-left: 26px;
+}
+
+.md-checkbox,
+.md-radio,
+.md-switch {
+  input {
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    position: absolute;
+  }
+}
+
+.md-checkbox-icon {
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 18px;
+  height: 18px;
+  background: transparent;
+  border: 2px solid rgba(0, 0, 0, @icon-opacity-black);
+  border-radius: 2px;
+  transition-duration: 300ms;
+
+  &:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 2px solid transparent;
+    left: 6px;
+    top: 10px;
+    transform: rotateZ(37deg);
+    transform-origin: 100% 100%;
+  }
+}
+.md-checkbox input[type="checkbox"]:checked + .md-checkbox-icon {
+  @color: 'color-@{default-color-name}-500';
+  border-color: @@color;
+  background-color: @@color;
+
+  &:after {
+    top: 0;
+    left: 1px;
+    width: 8px;
+    height: 13px;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+  }
+}

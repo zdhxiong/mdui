@@ -8,12 +8,15 @@
 .md-radio {
   position: relative;
   display: inline-block;
-  cursor: pointer;
   height: 36px;
+  padding-left: 34px;
+  padding-right: 8px;
   line-height: 36px;
-  padding-left: 26px;
+  cursor: pointer;
 }
 
+/* 隐藏系统 input 标签，用自定义的图标代替
+   ================================= */
 .md-checkbox,
 .md-radio,
 .md-switch {
@@ -25,43 +28,229 @@
   }
 }
 
-.md-checkbox-icon {
-  box-sizing: border-box;
+/* 图标，用来显示涟漪
+   ================================= */
+.md-checkbox-icon,
+.md-radio-icon {
   position: absolute;
-  left: 0;
-  top: 9px;
+  left: -7px;
+  top: -6px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  transform: translateZ(0);
+}
+
+/* 图标背景
+   ================================= */
+.md-checkbox-icon:after,
+.md-radio-icon:after {
+  content: ' ';
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  box-sizing: border-box;
   width: 18px;
   height: 18px;
-  background: transparent;
-  border: 2px solid rgba(0, 0, 0, @icon-opacity-black);
-  border-radius: 2px;
-  transition-duration: 300ms;
-
-  &:after {
-    content: ' ';
-    position: absolute;
-    width: 0;
-    height: 0;
-    border: 2px solid transparent;
-    left: 6px;
-    top: 10px;
-    transform: rotateZ(37deg);
-    transform-origin: 100% 100%;
-  }
+  border: 2px solid rgba(0, 0, 0, 0.54);
+  transition: all .3s @animation-curve-default;
 }
-.md-checkbox input[type="checkbox"]:checked + .md-checkbox-icon {
+.md-checkbox-icon:after {
+  border-radius: 2px;
+}
+.md-radio-icon:after {
+  border-radius: 50%;
+}
+
+/* Checkbox
+   ========================================================================== */
+
+/* 图标样式 */
+.md-checkbox-icon:before {
+  position: absolute;
+  content: ' ';
+  top: 17px;
+  left: 15px;
+  box-sizing: border-box;
+  width: 8px;
+  height: 13px;
+  transform: rotateZ(37deg) scale(0);
+  transform-origin: 100% 100%;
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transition: all .3s @animation-curve-default;
+  z-index: 1;
+  opacity: 0;
+}
+
+/* 选中状态的图标背景 */
+.md-checkbox input[type="checkbox"]:checked + .md-checkbox-icon:after{
   @color: 'color-@{default-color-name}-500';
   border-color: @@color;
   background-color: @@color;
+}
 
-  &:after {
-    top: 0;
-    left: 1px;
-    width: 8px;
-    height: 13px;
-    border-top: 2px solid transparent;
-    border-left: 2px solid transparent;
-    border-right: 2px solid #fff;
-    border-bottom: 2px solid #fff;
+/* 选中状态的图标样式 */
+.md-checkbox input[type="checkbox"]:checked + .md-checkbox-icon:before {
+  opacity: 1;
+  transform: rotateZ(37deg) scale(1);
+}
+
+/* 禁用状态的图标背景 */
+.md-checkbox input[type="checkbox"]:disabled + .md-checkbox-icon:after {
+  border-color: rgba(0, 0, 0, 0.26);
+}
+
+/* 禁用且选中状态的图标背景 */
+.md-checkbox input[type="checkbox"]:disabled:checked + .md-checkbox-icon:after {
+  background-color: rgba(0, 0, 0, 0.26) !important;
+  border-color: transparent !important;
+}
+
+
+/* Radio
+   ========================================================================== */
+
+/* 图标样式 */
+.md-radio-icon:before {
+  @color: 'color-@{default-color-name}-500';
+  position: absolute;
+  content: ' ';
+  top: 16px;
+  left: 16px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  transition: all .3s @animation-curve-default;
+  background-color: @@color;
+  transform: scale(0);
+  opacity: 0;
+}
+
+/* 选中状态的图标背景 */
+.md-radio input[type="radio"]:checked + .md-radio-icon:after {
+  @color: 'color-@{default-color-name}-500';
+  border-color: @@color;
+}
+
+/* 选中状态的图标样式 */
+.md-radio input[type="radio"]:checked + .md-radio-icon:before {
+  opacity: 1;
+  transform: scale(0.56);
+}
+/* 禁用状态的图标背景 */
+.md-radio input[type="radio"]:disabled + .md-radio-icon:after {
+  border-color: rgba(0, 0, 0, 0.26) !important;
+}
+
+/* 禁用且选中状态的图标样式 */
+.md-radio input[type="radio"]:disabled:checked + .md-radio-icon:before {
+  background-color: rgba(0, 0, 0, 0.26) !important;
+}
+
+
+/**
+ * =============================================================================
+ * ************   Selection controls 主色   ************
+ * =============================================================================
+ */
+& {
+  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
+    .loop-primary-theme((@counter-color - 1));
+    @colorName: extract(@globalPrimaryColors, @counter-color);
+
+    @color: 'color-@{colorName}-500';
+
+    .md-theme-primary-@{colorName} {
+
+      // 涟漪的颜色
+      .md-checkbox-icon.md-ripple,
+      .md-radio-icon.md-ripple {
+        .md-ripple-wave {
+          background-color: rgba(red(@@color), green(@@color), blue(@@color), 0.3) !important;
+        }
+      }
+
+      // Checkbox
+      // =======================================================================
+
+      // 选中状态图标背景
+      .md-checkbox input[type="checkbox"]:checked + .md-checkbox-icon:after {
+        border-color: @@color;
+        background-color: @@color;
+      }
+
+
+      // Radio
+      // =======================================================================
+
+      // 选中状态图标背景
+      .md-radio input[type="radio"]:checked + .md-radio-icon:after {
+        border-color: @@color;
+      }
+
+      // 选中状态图标样式
+      .md-radio input[type="radio"]:checked + .md-radio-icon:before {
+        background-color: @@color;
+      }
+
+    }
+
   }
+  .loop-primary-theme(length(@globalPrimaryColors));
+}
+
+
+/**
+ * =============================================================================
+ * ************   selection control dark   ************
+ * =============================================================================
+ */
+.md-theme-layout-dark when (@globalLayoutDark = true) {
+
+  // Checkbox
+  // ===========================================================================
+
+
+  .md-checkbox-icon:after {
+    border-color: #fff;
+  }
+
+  .md-checkbox-icon:before {
+    border-right-color: @layout-dark-color-3;
+    border-bottom-color: @layout-dark-color-3;
+  }
+
+  // 禁用状态图标背景
+  .md-checkbox input[type="checkbox"]:disabled + .md-checkbox-icon:after {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  // 禁用且选中状态的背景色
+  .md-checkbox input[type="checkbox"]:disabled:checked + .md-checkbox-icon:after {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    border-color: transparent !important;
+  }
+
+
+  // Radio
+  // ===========================================================================
+
+  .md-radio-icon:after {
+    border-color: #fff;
+  }
+
+  // 禁用状态图标背景
+  .md-radio input[type="radio"]:disabled + .md-radio-icon:after {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+  }
+
+  // 禁用且选中状态图标样式
+  .md-radio input[type="radio"]:disabled:checked + .md-radio-icon:before {
+    background-color: rgba(255, 255, 255, 0.3) !important;
+  }
+
+
 }

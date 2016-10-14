@@ -91,10 +91,12 @@
   // 菜单打开前
   &>.md-btn {
     .md-icon:not(.md-btn-fab-opened) {
+      will-change: opacity, transform;
       transition: all .2s @animation-curve-default;
       opacity: 1;
     }
     .md-icon.md-btn-fab-opened {
+      will-change: opacity, transform;
       transition: all .2s @animation-curve-default;
       opacity: 0;
       transform: rotate(225deg);

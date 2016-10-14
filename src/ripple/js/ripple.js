@@ -56,10 +56,32 @@
     // ===========
     var box = el.getBoundingClientRect();
     var offset = $.offset(el);
-    var center = {
-          x: x - offset.left,
-          y: y - offset.top,
-        };
+    var center;
+
+    // 涟漪始终从中心扩散的元素
+    if (
+
+      // el.classList.contains('md-btn-icon') ||
+      // el.classList.contains('md-btn-icon-mini') ||
+      // el.classList.contains('md-btn-fab') ||
+      // el.classList.contains('md-btn-fab-mini') ||
+      el.classList.contains('md-checkbox-icon') ||
+      el.classList.contains('md-radio-icon')
+    ) {
+      center = {
+        x: box.width / 2,
+        y: box.height / 2,
+      };
+    }
+
+    // 其他元素上涟漪从鼠标点击位置开始扩散
+    else {
+      center = {
+        x: x - offset.left,
+        y: y - offset.top,
+      };
+    }
+
     var height = box.height;
     var width = box.width;
     var diameter = Math.max(

@@ -25,16 +25,28 @@
     var event = e.type;
     var value = input.value;
 
-    // 是否是 DOM 加载完后自动执行的操作
-    var domLoadEvent;
+    // reInit 为 true 时，需要重新初始化文本框
+    var reInit;
     if (
       typeof e.detail === 'object' &&
-      typeof e.detail.domLoadEvent !== 'undefined' &&
-      e.detail.domLoadEvent
+      typeof e.detail.reInit !== 'undefined' &&
+      e.detail.reInit
     ) {
-      domLoadEvent = e.detail.domLoadEvent;
+      reInit = e.detail.reInit;
     } else {
-      domLoadEvent = false;
+      reInit = false;
+    }
+
+    // domLoadedEvent 为 true 时，为 DOM 加载完毕后自动触发的事件
+    var domLoadedEvent;
+    if (
+      typeof e.detail === 'object' &&
+      typeof e.detail.domLoadedEvent !== 'undefined' &&
+      e.detail.domLoadedEvent
+    ) {
+      domLoadedEvent = e.detail.domLoadedEvent;
+    } else {
+      domLoadedEvent = false;
     }
 
     // 文本框类型
@@ -70,8 +82,8 @@
       textField.classList.remove(classNames.disabled);
     }
 
-    // 表单验证，DOM 加载完后自动执行的操作不包括表单验证
-    if ((event === 'input' || event === 'blur') && !domLoadEvent) {
+    // 表单验证
+    if ((event === 'input' || event === 'blur') && !domLoadedEvent) {
       if (input.validity) {
         if (input.validity.valid) {
           textField.classList.remove(classNames.invalid);
@@ -83,7 +95,7 @@
 
     // textarea 高度自动调整
     if (e.target.nodeName.toLowerCase() === 'textarea') {
-      if (domLoadEvent) {
+      if ((reInit || domLoadedEvent) && !$.query('.md-textfield-flex-wrap', textField)) {
         var wrap = $.dom('<div class="md-textfield-flex-wrap"></div>')[0];
         var pre = $.dom('<pre><span></span><br/></pre>')[0];
         input.parentNode.insertBefore(wrap, input);
@@ -93,6 +105,38 @@
 
       var span = textField.querySelector('.md-textfield-flex-wrap pre span');
       span.innerText = input.value.replace(/\r?\n/g, '\r\n');
+    }
+
+    // 实时字数统计
+    var counter;
+    if (reInit) {
+      textField.classList.remove('md-textfield-has-counter');
+      counter = $.query('.md-textfield-counter', textField);
+      if (counter) {
+        counter.parentNode.removeChild(counter);
+      }
+    }
+
+    var maxlength = input.getAttribute('maxlength');
+    if (maxlength) {
+      if (reInit || domLoadedEvent) {
+        counter = $.dom(
+          '<div class="md-textfield-counter">' +
+            '<span class="md-textfield-counter-inputed"></span> / ' + maxlength +
+          '</div>'
+        )[0];
+        textField.appendChild(counter);
+
+        // 如果没有 .md-textfield-error 作为占位，需要增加 .md-textfield 的下边距，
+        // 使 .md-textfield-counter 不会覆盖在文本框上
+        if (!$.query('.md-textfield-error', textField)) {
+          textField.classList.add('md-textfield-has-counter');
+        }
+      }
+
+      // 字符长度，确保统计方式和 maxlength 一致
+      var inputed = input.value.length + input.value.split('\n').length - 1;
+      $.query('.md-textfield-counter-inputed', textField).innerText = inputed.toString();
     }
 
   };
@@ -115,7 +159,9 @@
     }
 
     $.each(textfields, function (i, input) {
-      $.trigger(input, 'input');
+      $.trigger(input, 'input', {
+        reInit: true,
+      });
     });
   };
 
@@ -124,7 +170,7 @@
     // DOM 加载完后自动执行
     $.each($.queryAll('.md-textfield-input'), function (i, input) {
       $.trigger(input, 'input', {
-        domLoadEvent: true,
+        domLoadedEvent: true,
       });
     });
 

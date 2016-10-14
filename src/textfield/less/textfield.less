@@ -46,8 +46,8 @@
 /* 文本框 label */
 .md-textfield-label {
   pointer-events: none;
+  display: block;
   font-size: 16px;
-  vertical-align: top;
   width: 100%;
   transform-origin: left;
   color: rgba(0, 0, 0, 0.65);
@@ -62,6 +62,8 @@
   color: @color-red-500;
   .md-text-truncate();
   visibility: hidden;
+  height: 12px;
+  line-height: 12px;
 }
 
 
@@ -79,14 +81,14 @@
     padding-bottom: 8px;
     font-size: 16px;
     line-height: 20px;
-    min-height: 76px;
+    min-height: 56px;
   }
 
   .md-textfield-input {
     position: absolute;
     top: 0;
     height: 100%;
-    min-height: 76px;
+    min-height: 56px;
     overflow: hidden;
   }
 }
@@ -202,6 +204,22 @@
   }
 }
 
+/* 字数统计
+   ====== */
+.md-textfield-counter {
+  position: absolute;
+  right: 8px;
+  font-size: 12px;
+  bottom: 8px;
+  color: rgba(0, 0, 0, @opacity-black-secondary);
+  height: 12px;
+  line-height: 12px;
+}
+// 加载 .md-textfield 元素上
+.md-textfield-has-counter {
+  padding-bottom: 28px;
+}
+
 
 /**
  * =============================================================================
@@ -285,5 +303,10 @@
     .md-textfield-label {
       color: rgba(255, 255, 255, 0.35);
     }
+  }
+
+  // 字数统计颜色
+  .md-textfield-counter {
+    color: rgba(255, 255, 255, @opacity-white-secondary);
   }
 }

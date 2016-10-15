@@ -1,0 +1,206 @@
+/**
+ * =============================================================================
+ * ************   Switch 单选框   ************
+ * =============================================================================
+ */
+
+.md-switch {
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 8px;
+  cursor: pointer;
+  user-select: none;
+
+  // 隐藏系统 input 标签，用自定义的图标代替
+  input {
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    position: absolute;
+  }
+}
+
+/* 图标轨道 */
+.md-switch-icon {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 36px;
+  height: 14px;
+  margin: 0 8px;
+  border-radius: 14px;
+  background-color: rgba(0, 0, 0, 0.38);
+  transition: background-color .3s @animation-curve-default;
+
+  // 圆形图标
+  &:before {
+    position: absolute;
+    display: inline-block;
+    content: ' ';
+    width: 20px;
+    height: 20px;
+    top: -3px;
+    left: -3px;
+    border-radius: 20px;
+    background-color: @color-grey-50;
+    .md-shadow(1);
+    transition: box-shadow .14s @animation-curve-default,
+                background-color .3s @animation-curve-default,
+                left .3s @animation-curve-default;
+  }
+}
+
+/* 选中状态的图标 */
+.md-switch input[type="checkbox"]:checked + .md-switch-icon {
+  background-color: rgba(red(@color-default-500), green(@color-default-500), blue(@color-default-500), 0.5);
+
+  &:before {
+    left: 20px;
+    background-color: @color-default-500;
+  }
+}
+
+/* 未选中时、禁用时 按下的阴影 */
+.md-switch input[type="checkbox"]:active + .md-switch-icon {
+  &:before {
+    box-shadow:
+      // box-shadow(1)
+      0 2px 1px -1px rgba(0, 0, 0, .2),
+      0 1px 1px 0 rgba(0, 0, 0, .14),
+      0 1px 3px 0 rgba(0, 0, 0, .12),
+
+        // 颜色阴影
+      0 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* 已选中时按下的阴影 */
+.md-switch input[type="checkbox"]:checked:active:not(:disabled) + .md-switch-icon {
+  &:before {
+    box-shadow:
+      // box-shadow(1)
+      0 2px 1px -1px rgba(0, 0, 0, .2),
+      0 1px 1px 0 rgba(0, 0, 0, .14),
+      0 1px 3px 0 rgba(0, 0, 0, .12),
+
+        // 颜色阴影
+      0 0 0 15px rgba(red(@color-default-500), green(@color-default-500), blue(@color-default-500), 0.16);
+  }
+}
+
+/* 禁用状态 */
+.md-switch input[type="checkbox"]:disabled + .md-switch-icon {
+  background-color: rgba(0, 0, 0, 0.12) !important;
+
+  &:before {
+    background-color: @color-grey-400 !important;
+  }
+}
+
+
+/**
+ * =============================================================================
+ * ************   Switch 主色   ************
+ * =============================================================================
+ */
+
+& {
+  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
+    .loop-primary-theme((@counter-color - 1));
+    @colorName: extract(@globalPrimaryColors, @counter-color);
+
+    @color: 'color-@{colorName}-500';
+
+    .md-theme-primary-@{colorName} {
+
+      // 选中状态的图标
+      .md-switch input[type="checkbox"]:checked + .md-switch-icon {
+        background-color: rgba(red(@@color), green(@@color), blue(@@color), 0.5);
+
+        &:before {
+          background-color: @@color;
+        }
+      }
+
+      // 已选中时按下的阴影
+      .md-switch input[type="checkbox"]:checked:active:not(:disabled) + .md-switch-icon:before {
+        box-shadow:
+          // box-shadow(1)
+          0 2px 1px -1px rgba(0, 0, 0, .2),
+          0 1px 1px 0 rgba(0, 0, 0, .14),
+          0 1px 3px 0 rgba(0, 0, 0, .12),
+
+          // 颜色阴影
+          0 0 0 15px rgba(red(@@color), green(@@color), blue(@@color), 0.16);
+      }
+
+    }
+  }
+  .loop-primary-theme(length(@globalPrimaryColors));
+}
+
+
+/**
+ * =============================================================================
+ * ************   Radio dark   ************
+ * =============================================================================
+ */
+
+.md-theme-layout-dark when (@globalLayoutDark = true) {
+
+  // 默认状态
+  .md-switch-icon {
+    background-color: rgba(255, 255, 255, 0.3);
+
+    &:before {
+      background-color: @color-grey-400;
+    }
+  }
+
+  // 选中状态
+  & {
+    .loop-primary-theme(@counter-color) when (@counter-color > 0) {
+      .loop-primary-theme((@counter-color - 1));
+      @colorName: extract(@globalPrimaryColors, @counter-color);
+
+      @color: 'color-@{colorName}-500';
+      @color-200: 'color-@{colorName}-200';
+
+      &.md-theme-primary-@{colorName} {
+
+        .md-switch input[type="checkbox"]:checked + .md-switch-icon {
+          background-color: rgba(red(@@color-200), green(@@color-200), blue(@@color-200), 0.5);
+
+          &:before {
+            background-color: @@color-200;
+          }
+        }
+
+      }
+    }
+    .loop-primary-theme(length(@globalPrimaryColors));
+  }
+
+  // 未选中、禁用时 按下的阴影
+  .md-switch input[type="checkbox"]:active + .md-switch-icon:before {
+    box-shadow:
+      // box-shadow(1)
+      0 2px 1px -1px rgba(0, 0, 0, .2),
+      0 1px 1px 0 rgba(0, 0, 0, .14),
+      0 1px 3px 0 rgba(0, 0, 0, .12),
+
+        // 颜色阴影
+      0 0 0 15px rgba(255, 255, 255, 0.1);
+  }
+
+  // 禁用状态
+  .md-switch input[type="checkbox"]:disabled + .md-switch-icon {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+
+    &:before {
+      background-color: @color-grey-800 !important;
+    }
+  }
+
+}

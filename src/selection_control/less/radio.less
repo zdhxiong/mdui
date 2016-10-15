@@ -1,0 +1,151 @@
+/**
+ * =============================================================================
+ * ************   Radio 单选框   ************
+ * =============================================================================
+ */
+
+.md-radio {
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 8px;
+  cursor: pointer;
+  user-select: none;
+
+  // 隐藏系统 input 标签，用自定义的图标代替
+  input {
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    position: absolute;
+  }
+}
+
+/* 图标外圈 */
+.md-radio-icon {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  margin: 0 8px;
+  border-radius: 18px;
+  border: 2px solid rgba(0, 0, 0, 0.54);
+  transition: all .3s @animation-curve-default,
+              box-shadow .14s @animation-curve-default;
+
+  // 图标内部圆圈
+  &:before {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 14px;
+    transition: all .3s @animation-curve-default;
+    background-color: @color-default-500;
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+/* 选中状态的图标 */
+.md-radio input[type="radio"]:checked + .md-radio-icon {
+  border-color: @color-default-500;
+
+  &:before {
+    transform: scale(0.68);
+    opacity: 1;
+  }
+}
+
+/* 禁用状态的图标 */
+.md-radio input[type="radio"]:disabled + .md-radio-icon {
+  border-color: rgba(0, 0, 0, 0.26) !important;
+}
+
+/* 禁用且选中状态的图标 */
+.md-radio input[type="radio"]:disabled:checked + .md-radio-icon {
+  &:before {
+    background-color: rgba(0, 0, 0, 0.26) !important;
+  }
+}
+
+/* 未选中、禁用时 按下的阴影 */
+.md-radio input[type="radio"]:active + .md-radio-icon {
+  box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 已选中时按下的阴影 */
+.md-radio input[type="radio"]:checked:active:not(:disabled) + .md-radio-icon {
+  box-shadow: 0 0 0 15px rgba(red(@color-default-500), green(@color-default-500), blue(@color-default-500), 0.16);
+}
+
+/**
+ * =============================================================================
+ * ************   Radio 主色   ************
+ * =============================================================================
+ */
+
+& {
+  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
+    .loop-primary-theme((@counter-color - 1));
+    @colorName: extract(@globalPrimaryColors, @counter-color);
+
+    @color: 'color-@{colorName}-500';
+
+    .md-theme-primary-@{colorName} {
+
+      // 选中状态的图标
+      .md-radio input[type="radio"]:checked + .md-radio-icon {
+        border-color: @@color;
+
+        &:before {
+          background-color: @@color;
+        }
+      }
+
+      // 已选中时按下的阴影
+      .md-radio input[type="radio"]:checked:active:not(:disabled) + .md-radio-icon {
+        box-shadow: 0 0 0 15px rgba(red(@@color), green(@@color), blue(@@color), 0.16);
+      }
+
+    }
+  }
+  .loop-primary-theme(length(@globalPrimaryColors));
+}
+
+
+/**
+ * =============================================================================
+ * ************   Radio dark   ************
+ * =============================================================================
+ */
+
+.md-theme-layout-dark when (@globalLayoutDark = true) {
+
+  // 图标外圈
+  .md-radio-icon {
+    border-color: rgba(255, 255, 255, 0.7);
+  }
+
+  // 禁用状态
+  .md-radio input[type="radio"]:disabled + .md-radio-icon {
+    border-color: rgba(255, 255, 255, 0.3) !important;
+  }
+
+  // 禁用且选中状态
+  .md-radio input[type="radio"]:disabled:checked + .md-radio-icon {
+    &:before {
+      background-color: rgba(255, 255, 255, 0.3) !important;
+    }
+  }
+
+  // 未选中、禁用时 按下的阴影
+  .md-radio input[type="radio"]:active + .md-radio-icon {
+    box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.1);
+  }
+
+}

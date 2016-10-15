@@ -64,9 +64,8 @@
       // el.classList.contains('md-btn-icon') ||
       // el.classList.contains('md-btn-icon-mini') ||
       // el.classList.contains('md-btn-fab') ||
-      // el.classList.contains('md-btn-fab-mini') ||
-      el.classList.contains('md-checkbox-icon') ||
-      el.classList.contains('md-radio-icon')
+      // el.classList.contains('md-btn-fab-mini')
+      false
     ) {
       center = {
         x: box.width / 2,

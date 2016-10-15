@@ -5,12 +5,10 @@
  */
 
 .md-checkbox {
-  position: relative;
   display: inline-block;
   height: 36px;
-  padding-left: 34px;
-  padding-right: 8px;
   line-height: 36px;
+  padding: 0 8px;
   cursor: pointer;
   user-select: none;
 
@@ -23,38 +21,41 @@
   }
 }
 
-/* 图标 */
-// 用来显示涟漪
+/* 透明的圆形，用于生成圆形阴影 */
 .md-checkbox-icon {
-  position: absolute;
-  left: -7px;
-  top: -6px;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  transform: translateZ(0);
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  margin: 0 8px;
+  border-radius: 18px;
+  background-color: transparent;
+  border: none;
+  transition: box-shadow .14s @animation-curve-default;
 
-  // 图标背景
+  // 图标的边框和背景
   &:after {
     content: ' ';
     box-sizing: border-box;
     position: absolute;
-    top: 15px;
-    left: 15px;
+    top: 0;
+    left: 0;
     width: 18px;
     height: 18px;
     border: 2px solid rgba(0, 0, 0, 0.54);
     border-radius: 2px;
     transition: all .3s @animation-curve-default;
+    z-index: 0;
   }
 
-  // 图标样式
+  // 图标内部的勾
   &:before {
-    position: absolute;
     content: ' ';
-    top: 17px;
-    left: 15px;
     box-sizing: border-box;
+    position: absolute;
+    top: 2px;
+    left: 0;
     width: 8px;
     height: 13px;
     transform: rotateZ(37deg) scale(0);
@@ -64,20 +65,18 @@
     border-right: 2px solid #fff;
     border-bottom: 2px solid #fff;
     transition: all .3s @animation-curve-default;
-    z-index: 1;
     opacity: 0;
+    z-index: 1;
   }
 }
 
 /* 选中状态的图标 */
 .md-checkbox input[type="checkbox"]:checked + .md-checkbox-icon {
-  // 图标背景
   &:after {
     border-color: @color-default-500;
     background-color: @color-default-500;
   }
 
-  // 图标样式
   &:before {
     opacity: 1;
     transform: rotateZ(37deg) scale(1);
@@ -86,19 +85,27 @@
 
 /* 禁用状态的图标 */
 .md-checkbox input[type="checkbox"]:disabled + .md-checkbox-icon {
-  // 图标背景
   &:after {
     border-color: rgba(0, 0, 0, 0.26);
   }
 }
 
-/* 禁用且选中状态的图标背景 */
+/* 禁用且选中状态 */
 .md-checkbox input[type="checkbox"]:disabled:checked + .md-checkbox-icon {
-  // 图标背景
   &:after {
     background-color: rgba(0, 0, 0, 0.26) !important;
     border-color: transparent !important;
   }
+}
+
+/* 未选中、禁用时 按下的阴影 */
+.md-checkbox input[type="checkbox"]:active +.md-checkbox-icon {
+  box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 已选中时按下的阴影 */
+.md-checkbox input[type="checkbox"]:checked:active:not(:disabled) + .md-checkbox-icon {
+  box-shadow: 0 0 0 15px rgba(red(@color-default-500), green(@color-default-500), blue(@color-default-500), 0.16);
 }
 
 
@@ -117,19 +124,17 @@
 
     .md-theme-primary-@{colorName} {
 
-      // 涟漪的颜色
-      .md-checkbox-icon.md-ripple {
-        .md-ripple-wave {
-          background-color: rgba(red(@@color), green(@@color), blue(@@color), 0.3) !important;
-        }
-      }
-
       // 选中状态的图标
       .md-checkbox input[type="checkbox"]:checked + .md-checkbox-icon {
         &:after {
           border-color: @@color;
           background-color: @@color;
         }
+      }
+
+      // 已选中时按下的阴影
+      .md-checkbox input[type="checkbox"]:checked:active:not(:disabled) + .md-checkbox-icon {
+        box-shadow: 0 0 0 15px rgba(red(@@color), green(@@color), blue(@@color), 0.16);
       }
 
     }
@@ -157,14 +162,14 @@
     }
   }
 
-  // 禁用状态的图标
+  // 禁用状态
   .md-checkbox input[type="checkbox"]:disabled + .md-checkbox-icon {
     &:after {
       border-color: rgba(255, 255, 255, 0.3);
     }
   }
 
-  // 禁用且选中状态的图标
+  // 禁用且选中状态
   .md-checkbox input[type="checkbox"]:disabled:checked + .md-checkbox-icon {
     &:after {
       background-color: rgba(255, 255, 255, 0.3) !important;
@@ -172,4 +177,8 @@
     }
   }
 
+  // 未选中或禁用时 按下的阴影
+  .md-checkbox input[type="checkbox"]:active + .md-checkbox-icon {
+    box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.1);
+  }
 }

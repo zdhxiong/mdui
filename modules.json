@@ -38,6 +38,7 @@
       "src/variable/less/color/brown.less",
       "src/variable/less/color/grey.less",
       "src/variable/less/color/blue-grey.less",
+      "src/variable/less/color/default.less",
       "src/variable/less/animation.less",
       "src/variable/less/shadow.less",
 
@@ -109,10 +110,24 @@
     ],
     "dependencies": []
   },
-  "selection_control": {
+  "checkbox": {
     "js": [],
     "less": [
-      "src/selection_control/less/selection_control.less"
+      "src/selection_control/less/checkbox.less"
+    ],
+    "dependencies": []
+  },
+  "radio": {
+    "js": [],
+    "less": [
+      "src/selection_control/less/radio.less"
+    ],
+    "dependencies": []
+  },
+  "switch": {
+    "js": [],
+    "less": [
+      "src/selection_control/less/switch.less"
     ],
     "dependencies": []
   },

@@ -97,19 +97,17 @@ textarea.md-textfield-input {
    ============= */
 .md-textfield-focus {
 
-  @color: 'color-@{default-color-name}-500';
-
   .md-textfield-input {
-    border-bottom: 1px solid @@color;
-    box-shadow: 0 1px 0 0 @@color;
+    border-bottom: 1px solid @color-default-500;
+    box-shadow: 0 1px 0 0 @color-default-500;
   }
 
   .md-textfield-label {
-    color: @@color;
+    color: @color-default-500;
   }
 
   .md-icon {
-    color: @@color;
+    color: @color-default-500;
   }
 }
 
@@ -131,7 +129,7 @@ textarea.md-textfield-input {
   }
   &.md-textfield-focus {
     .md-textfield-label {
-      .md-text-color(@default-color-name);
+      .md-text-color(@color-default-name);
     }
   }
 }

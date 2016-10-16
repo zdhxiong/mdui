@@ -18,6 +18,7 @@
     width: 0;
     overflow: hidden;
     position: absolute;
+    visibility: hidden;
   }
 }
 
@@ -99,12 +100,12 @@
 }
 
 /* 未选中、禁用时 按下的阴影 */
-.md-checkbox input[type="checkbox"]:active +.md-checkbox-icon {
+.md-checkbox:active input[type="checkbox"] +.md-checkbox-icon {
   box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 /* 已选中时按下的阴影 */
-.md-checkbox input[type="checkbox"]:checked:active:not(:disabled) + .md-checkbox-icon {
+.md-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .md-checkbox-icon {
   box-shadow: 0 0 0 15px rgba(red(@color-default-500), green(@color-default-500), blue(@color-default-500), 0.16);
 }
 
@@ -133,7 +134,7 @@
       }
 
       // 已选中时按下的阴影
-      .md-checkbox input[type="checkbox"]:checked:active:not(:disabled) + .md-checkbox-icon {
+      .md-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .md-checkbox-icon {
         box-shadow: 0 0 0 15px rgba(red(@@color), green(@@color), blue(@@color), 0.16);
       }
 
@@ -178,7 +179,7 @@
   }
 
   // 未选中或禁用时 按下的阴影
-  .md-checkbox input[type="checkbox"]:active + .md-checkbox-icon {
+  .md-checkbox:active input[type="checkbox"] + .md-checkbox-icon {
     box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.1);
   }
 }

@@ -67,7 +67,7 @@
 }
 
 
-/* 多行文本框高度自动调整
+/* 多行文本框最小高度
    ============== */
 textarea.md-textfield-input {
   min-height: 57px;
@@ -98,16 +98,16 @@ textarea.md-textfield-input {
 .md-textfield-focus {
 
   .md-textfield-input {
-    border-bottom: 1px solid @color-default-500;
-    box-shadow: 0 1px 0 0 @color-default-500;
+    border-bottom: 1px solid @color-default-a200;
+    box-shadow: 0 1px 0 0 @color-default-a200;
   }
 
   .md-textfield-label {
-    color: @color-default-500;
+    color: @color-default-a200;
   }
 
   .md-icon {
-    color: @color-default-500;
+    color: @color-default-a200;
   }
 }
 
@@ -129,7 +129,7 @@ textarea.md-textfield-input {
   }
   &.md-textfield-focus {
     .md-textfield-label {
-      .md-text-color(@color-default-name);
+      .md-text-color(@color-accent-default-name);
     }
   }
 }
@@ -201,17 +201,17 @@ textarea.md-textfield-input {
 
 /**
  * =============================================================================
- * ************   Textfield 主色   ************
+ * ************   Textfield 强调色   ************
  * =============================================================================
  */
 & {
-  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
-    .loop-primary-theme((@counter-color - 1));
-    @colorName: extract(@globalPrimaryColors, @counter-color);
+  .loop-accent-theme(@counter-color) when (@counter-color > 0) {
+    .loop-accent-theme((@counter-color - 1));
+    @colorName: extract(@globalAccentColors, @counter-color);
 
-    .md-theme-primary-@{colorName} {
+    .md-theme-accent-@{colorName} {
 
-      @color: 'color-@{colorName}-500';
+      @color: 'color-@{colorName}-a200';
 
       .md-textfield-focus {
 
@@ -239,7 +239,7 @@ textarea.md-textfield-input {
     }
 
   }
-  .loop-primary-theme(length(@globalPrimaryColors));
+  .loop-accent-theme(length(@globalAccentColors));
 }
 
 

@@ -4,6 +4,53 @@
  * =============================================================================
  */
 
+.md-typo table,
 .md-table {
-  
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  display: table;
+
+  tr {
+    .md-divider-bottom();
+  }
+
+  th,
+  td {
+    display: table-cell;
+    border: none;
+    vertical-align: middle;
+    text-align: left;
+    padding-left: 28px;
+    padding-right: 28px;
+    line-height: 24px;
+    box-sizing: border-box;
+
+    &:last-child {
+      padding-right: 24px;
+    }
+    &:first-child {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    &:nth-child(2) {
+      padding-left: 0;
+    }
+  }
+
+  th {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.54);
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-weight: 700;
+    .md-text-truncate();
+  }
+
+  td {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.87);
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
 }

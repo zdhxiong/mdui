@@ -44,7 +44,7 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
   options = $.extend(DEFAULT, options);
 
   var content =
-    '<div class="md-textfield ' + (label ? 'md-textfield-floating-label' : '') + '">' +
+    '<div class="md-textfield">' +
       (label ? '<label class="md-textfield-label">' + label + '</label>' : '') +
       (options.type === 'text' ?
         '<input class="md-textfield-input" type="text" ' +

@@ -54,11 +54,11 @@
 
 /* 选中状态的图标 */
 .md-switch input[type="checkbox"]:checked + .md-switch-icon {
-  background-color: rgba(red(@color-default-500), green(@color-default-500), blue(@color-default-500), 0.5);
+  background-color: rgba(red(@color-default-a200), green(@color-default-a200), blue(@color-default-a200), 0.5);
 
   &:before {
     left: 20px;
-    background-color: @color-default-500;
+    background-color: @color-default-a200;
   }
 }
 
@@ -86,7 +86,7 @@
       0 1px 3px 0 rgba(0, 0, 0, .12),
 
         // 颜色阴影
-      0 0 0 15px rgba(red(@color-default-500), green(@color-default-500), blue(@color-default-500), 0.16);
+      0 0 0 15px rgba(red(@color-default-a200), green(@color-default-a200), blue(@color-default-a200), 0.16);
   }
 }
 
@@ -102,18 +102,18 @@
 
 /**
  * =============================================================================
- * ************   Switch 主色   ************
+ * ************   Switch 强调色   ************
  * =============================================================================
  */
 
 & {
-  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
-    .loop-primary-theme((@counter-color - 1));
-    @colorName: extract(@globalPrimaryColors, @counter-color);
+  .loop-accent-theme(@counter-color) when (@counter-color > 0) {
+    .loop-accent-theme((@counter-color - 1));
+    @colorName: extract(@globalAccentColors, @counter-color);
 
-    @color: 'color-@{colorName}-500';
+    @color: 'color-@{colorName}-a200';
 
-    .md-theme-primary-@{colorName} {
+    .md-theme-accent-@{colorName} {
 
       // 选中状态的图标
       .md-switch input[type="checkbox"]:checked + .md-switch-icon {
@@ -138,7 +138,7 @@
 
     }
   }
-  .loop-primary-theme(length(@globalPrimaryColors));
+  .loop-accent-theme(length(@globalAccentColors));
 }
 
 
@@ -161,26 +161,26 @@
 
   // 选中状态
   & {
-    .loop-primary-theme(@counter-color) when (@counter-color > 0) {
-      .loop-primary-theme((@counter-color - 1));
-      @colorName: extract(@globalPrimaryColors, @counter-color);
+    .loop-accent-theme(@counter-color) when (@counter-color > 0) {
+      .loop-accent-theme((@counter-color - 1));
+      @colorName: extract(@globalAccentColors, @counter-color);
 
-      @color: 'color-@{colorName}-500';
-      @color-200: 'color-@{colorName}-200';
+      @color: 'color-@{colorName}-a200';
+      @color-a100: 'color-@{colorName}-a100';
 
-      &.md-theme-primary-@{colorName} {
+      &.md-theme-accent-@{colorName} {
 
         .md-switch input[type="checkbox"]:checked + .md-switch-icon {
-          background-color: rgba(red(@@color-200), green(@@color-200), blue(@@color-200), 0.5);
+          background-color: rgba(red(@@color-a100), green(@@color-a100), blue(@@color-a100), 0.5);
 
           &:before {
-            background-color: @@color-200;
+            background-color: @@color-a100;
           }
         }
 
       }
     }
-    .loop-primary-theme(length(@globalPrimaryColors));
+    .loop-accent-theme(length(@globalAccentColors));
   }
 
   // 未选中或禁用时 按下的阴影

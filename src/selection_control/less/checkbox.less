@@ -74,8 +74,8 @@
 /* 选中状态的图标 */
 .md-checkbox input[type="checkbox"]:checked + .md-checkbox-icon {
   &:after {
-    border-color: @color-default-500;
-    background-color: @color-default-500;
+    border-color: @color-default-a200;
+    background-color: @color-default-a200;
   }
 
   &:before {
@@ -106,24 +106,24 @@
 
 /* 已选中时按下的阴影 */
 .md-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .md-checkbox-icon {
-  box-shadow: 0 0 0 15px rgba(red(@color-default-500), green(@color-default-500), blue(@color-default-500), 0.16);
+  box-shadow: 0 0 0 15px rgba(red(@color-default-a200), green(@color-default-a200), blue(@color-default-a200), 0.16);
 }
 
 
 /**
  * =============================================================================
- * ************   Checkbox 主色   ************
+ * ************   Checkbox 强调色   ************
  * =============================================================================
  */
 
 & {
-  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
-    .loop-primary-theme((@counter-color - 1));
-    @colorName: extract(@globalPrimaryColors, @counter-color);
+  .loop-accent-theme(@counter-color) when (@counter-color > 0) {
+    .loop-accent-theme((@counter-color - 1));
+    @colorName: extract(@globalAccentColors, @counter-color);
 
-    @color: 'color-@{colorName}-500';
+    @color: 'color-@{colorName}-a200';
 
-    .md-theme-primary-@{colorName} {
+    .md-theme-accent-@{colorName} {
 
       // 选中状态的图标
       .md-checkbox input[type="checkbox"]:checked + .md-checkbox-icon {
@@ -140,7 +140,7 @@
 
     }
   }
-  .loop-primary-theme(length(@globalPrimaryColors));
+  .loop-accent-theme(length(@globalAccentColors));
 }
 
 

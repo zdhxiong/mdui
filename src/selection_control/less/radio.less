@@ -46,7 +46,7 @@
     height: 14px;
     border-radius: 14px;
     transition: all .3s @animation-curve-default;
-    background-color: @color-default-500;
+    background-color: @color-default-a200;
     transform: scale(0);
     opacity: 0;
   }
@@ -54,7 +54,7 @@
 
 /* 选中状态的图标 */
 .md-radio input[type="radio"]:checked + .md-radio-icon {
-  border-color: @color-default-500;
+  border-color: @color-default-a200;
 
   &:before {
     transform: scale(0.68);
@@ -81,23 +81,23 @@
 
 /* 已选中时按下的阴影 */
 .md-radio:active input[type="radio"]:checked:not(:disabled) + .md-radio-icon {
-  box-shadow: 0 0 0 15px rgba(red(@color-default-500), green(@color-default-500), blue(@color-default-500), 0.16);
+  box-shadow: 0 0 0 15px rgba(red(@color-default-a200), green(@color-default-a200), blue(@color-default-a200), 0.16);
 }
 
 /**
  * =============================================================================
- * ************   Radio 主色   ************
+ * ************   Radio 强调色   ************
  * =============================================================================
  */
 
 & {
-  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
-    .loop-primary-theme((@counter-color - 1));
-    @colorName: extract(@globalPrimaryColors, @counter-color);
+  .loop-accent-theme(@counter-color) when (@counter-color > 0) {
+    .loop-accent-theme((@counter-color - 1));
+    @colorName: extract(@globalAccentColors, @counter-color);
 
-    @color: 'color-@{colorName}-500';
+    @color: 'color-@{colorName}-a200';
 
-    .md-theme-primary-@{colorName} {
+    .md-theme-accent-@{colorName} {
 
       // 选中状态的图标
       .md-radio input[type="radio"]:checked + .md-radio-icon {
@@ -115,7 +115,7 @@
 
     }
   }
-  .loop-primary-theme(length(@globalPrimaryColors));
+  .loop-accent-theme(length(@globalAccentColors));
 }
 
 

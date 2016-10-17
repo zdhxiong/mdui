@@ -38,7 +38,7 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
     closeOnEsc: true,         // 按下 esc 关闭提示框
     type: 'text',             // 输入框类型，text: 单行文本框 textarea: 多行文本框
     maxlength: '',            // 最大输入字符数
-    defaultText: '',          // 输入框中的默认文本
+    defaultValue: '',         // 输入框中的默认文本
   };
 
   options = $.extend(DEFAULT, options);
@@ -48,13 +48,13 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
       (label ? '<label class="md-textfield-label">' + label + '</label>' : '') +
       (options.type === 'text' ?
         '<input class="md-textfield-input" type="text" ' +
-          'value="' + options.defaultText + '" ' +
+          'value="' + options.defaultValue + '" ' +
           (options.maxlength ? ('maxlength="' + options.maxlength + '"') : '') + '/>' :
         '') +
       (options.type === 'textarea' ?
         '<textarea class="md-textfield-input" ' +
           (options.maxlength ? ('maxlength="' + options.maxlength + '"') : '') + '>' +
-            options.defaultText +
+            options.defaultValue +
         '</textarea>' :
         '') +
     '</div>';

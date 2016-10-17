@@ -1,11 +1,11 @@
 /**
  * =============================================================================
- * ************   mdui.confirm(content, title, onConfirm, onCancel, options)   ************
- * ************   mdui.confirm(content, onConfirm, onCancel, options)          ************
+ * ************   mdui.confirm(text, title, onConfirm, onCancel, options)   ************
+ * ************   mdui.confirm(text, onConfirm, onCancel, options)          ************
  * =============================================================================
  */
 
-mdui.confirm = function (content, title, onConfirm, onCancel, options) {
+mdui.confirm = function (text, title, onConfirm, onCancel, options) {
 
   // title 参数可选
   if (typeof title === 'function') {
@@ -42,7 +42,7 @@ mdui.confirm = function (content, title, onConfirm, onCancel, options) {
 
   return mdui.dialog({
     title: title,
-    content: content,
+    content: text,
     buttons: [
       {
         text: options.cancelText,

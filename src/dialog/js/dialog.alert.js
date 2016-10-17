@@ -1,11 +1,11 @@
 /**
  * =============================================================================
- * ************   mdui.alert(content, title, onConfirm, options)   ************
- * ************   mdui.alert(content, onConfirm, options)   ************
+ * ************   mdui.alert(text, title, onConfirm, options)   ************
+ * ************   mdui.alert(text, onConfirm, options)   ************
  * =============================================================================
  */
 
-mdui.alert = function (content, title, onConfirm, options) {
+mdui.alert = function (text, title, onConfirm, options) {
 
   // title 参数可选
   if (typeof title === 'function') {
@@ -36,7 +36,7 @@ mdui.alert = function (content, title, onConfirm, options) {
 
   return mdui.dialog({
     title: title,
-    content: content,
+    content: text,
     buttons: [
       {
         text: options.confirmText,

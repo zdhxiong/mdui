@@ -4,53 +4,94 @@
  * =============================================================================
  */
 
-.md-typo table,
 .md-table {
+  position: relative;
   border-collapse: collapse;
-  border-spacing: 0;
   width: 100%;
-  display: table;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, @opacity-black-divider);
+  .md-shadow(2);
 
-  tr {
-    .md-divider-bottom();
+  tbody {
+    tr {
+      position: relative;
+      height: 48px;
+      transition: background-color 0.28s @animation-curve-default;
+    }
   }
 
-  th,
-  td {
-    display: table-cell;
-    border: none;
+  th, td {
+    position: relative;
     vertical-align: middle;
     text-align: left;
-    padding-left: 28px;
-    padding-right: 28px;
-    line-height: 24px;
+    padding: 0 28px;
     box-sizing: border-box;
+    .md-divider-bottom();
 
     &:last-child {
       padding-right: 24px;
     }
     &:first-child {
       padding-left: 24px;
-      padding-right: 24px;
+      padding-right: 0
     }
     &:nth-child(2) {
-      padding-left: 0;
+      padding-left: 24px;
     }
   }
 
   th {
     font-size: 13px;
     color: rgba(0, 0, 0, 0.54);
-    padding-top: 16px;
-    padding-bottom: 16px;
     font-weight: 700;
     .md-text-truncate();
+    height: 56px;
   }
 
   td {
     font-size: 14px;
     color: rgba(0, 0, 0, 0.87);
-    padding-top: 12px;
-    padding-bottom: 12px;
+    height: 48px;
   }
+}
+
+.md-table-cell-checkbox {
+  padding-left: 8px !important;
+
+  & + td,
+  & + th {
+    padding-left: 8px !important;
+  }
+}
+
+/* 鼠标悬浮时行背景加深 */
+.md-table-hoverable {
+  tbody tr {
+    &:hover {
+      background-color: @color-grey-200;
+    }
+  }
+}
+
+/* 表格放到该元素内，使表格产生滚动条时只在该元素内滚动 */
+.md-table-fluid {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid rgba(0, 0, 0, @opacity-black-divider);
+  .md-shadow(2);
+
+  .md-table {
+    .md-shadow(0);
+    border: none;
+  }
+}
+
+/* 数字列，右对齐 */
+.md-table-col-numeric {
+  text-align: right !important;
+}
+
+/* 行处于选中状态 */
+.md-table-row-selected {
+  background-color: @color-grey-100;
 }

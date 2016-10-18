@@ -72,7 +72,9 @@
     "dependencies": []
   },
   "table": {
-    "js": [],
+    "js": [
+      "src/table/js/table.js"
+    ],
     "less": [
       "src/table/less/table.less"
     ],

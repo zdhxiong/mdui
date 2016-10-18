@@ -42,163 +42,82 @@
   };
 
   /**
+   * 更新表格行的 checkbox
+   */
+  Table.prototype.updateTdCheckbox = function () {
+    var _this = this;
+    var td;
+    var tdCheckbox;
+    _this.tdCheckboxs = [];
+
+    $.each(_this.tdRows, function (i, tdRow) {
+      // 移除旧的 checkbox
+      tdCheckbox = $.query('.md-table-cell-checkbox', tdRow);
+      if (tdCheckbox) {
+        tdCheckbox.parentNode.removeChild(tdCheckbox);
+      }
+
+      // 创建新的 checkbox
+      if (_this.selectable) {
+        // 创建 DOM
+        td = $.dom(checkboxTdHTML)[0];
+        tdRow.insertBefore(td, tdRow.childNodes[0]);
+
+        var checkbox = $.query('input[type="checkbox"]', td);
+
+        // 默认选中的行
+        if (tdRow.classList.contains('md-table-row-selected')) {
+          checkbox.checked = true;
+        }
+
+        // 绑定事件
+        $.on(checkbox, 'change', function () {
+          tdRow.classList[checkbox.checked ? 'add' : 'remove']('md-table-row-selected');
+        });
+
+        _this.tdCheckboxs.push(checkbox);
+      }
+    });
+  };
+
+  /**
    * 更新表头的 checkbox
    */
   Table.prototype.updateThCheckbox = function () {
     var _this = this;
     var thCheckbox;
 
-    if (_this.selectable) {
-      if (!$.query('.md-table-cell-checkbox', _this.thRow)) {
-        // 创建 DOM
-        var th = $.dom(checkboxThHTML)[0];
-        _this.thRow.insertBefore(th, _this.thRow.childNodes[0]);
-
-        // 绑定事件
-        thCheckbox = $.query('input[type="checkbox"]', th);
-        $.on(thCheckbox, 'change', function () {
-
-          $.each(_this.tdCheckboxs, function (i, checkbox) {
-            checkbox.checked = thCheckbox.checked;
-          });
-
-          $.each(_this.tdRows, function (i, row) {
-            row.classList[thCheckbox.checked ? 'add' : 'remove']('md-table-row-selected');
-          });
-
-        });
-      }
-    } else {
-      thCheckbox = $.query('.md-table-cell-checkbox', _this.thRow);
-      if (thCheckbox) {
-        thCheckbox.parentNode.removeChild(thCheckbox);
-      }
-    }
-  };
-
-  /**
-   * 更新表格行的 checkbox
-   */
-  Table.prototype.updateTdCheckbox = function () {
-    var _this = this;
-    var td;
-
-    if (_this.selectable) {
-      $.each(_this.tdRows, function (i, row) {
-
-        if (!$.query('.md-table-cell-checkbox', row)) {
-          // 创建 DOM
-          td = $.dom(checkboxTdHTML)[0];
-          row.insertBefore(td, row.childNodes[0]);
-
-          var checkbox = $.query('input[type="checkbox"]', td);
-
-          // 默认选中的行
-          if (row.classList.contains('md-table-row-selected')) {
-            checkbox.checked = true;
-          }
-
-          // 绑定事件
-          $.on(checkbox, 'change', function () {
-            row.classList[checkbox.checked ? 'add' : 'remove']('md-table-row-selected');
-          });
-
-          _this.tdCheckboxs.push(checkbox);
-        }
-
-      });
-    }
-  };
-
-  /**
-   * 创建表头的 checkbox
-   * @private
-   */
-  Table.prototype.createThCheckbox = function () {
-    var _this = this;
-
-    if (!$.query('.md-table-cell-checkbox', _this.thRow)) {
-      // 创建 DOM
-      var th = $.dom(checkboxThHTML)[0];
-      _this.thRow.insertBefore(th, _this.thRow.childNodes[0]);
-
-      // 绑定事件
-      var thCheckbox = $.query('input[type="checkbox"]', th);
-      $.on(thCheckbox, 'change', function () {
-
-        $.each(_this.tdCheckboxs, function (i, checkbox) {
-          checkbox.checked = thCheckbox.checked;
-        });
-
-        $.each(_this.tdRows, function (i, row) {
-          row.classList[thCheckbox.checked ? 'add' : 'remove']('md-table-row-selected');
-        });
-
-      });
-    }
-
-  };
-
-  /**
-   * 创建行的 checkbox
-   */
-  Table.prototype.createTdCheckbox = function () {
-    var _this = this;
-    var td;
-
-    $.each(_this.tdRows, function (i, row) {
-
-      if (!$.query('.md-table-cell-checkbox', row)) {
-        // 创建 DOM
-        td = $.dom(checkboxTdHTML)[0];
-        row.insertBefore(td, row.childNodes[0]);
-
-        // 默认选中的行
-        if (row.classList.contains('md-table-row-selected')) {
-          $.query('input[type="checkbox"]', td).checked = true;
-        }
-
-        // 绑定事件
-        var checkbox = $.query('input[type="checkbox"]', td);
-        $.on(checkbox, 'change', function () {
-          row.classList[checkbox.checked ? 'add' : 'remove']('md-table-row-selected');
-        });
-
-        _this.tdCheckboxs.push(checkbox);
-      }
-
-    });
-  };
-
-  /**
-   * 移除表头的 checkbox
-   */
-  Table.prototype.removeThCheckbox = function () {
-    var _this = this;
-    var thCheckbox = $.query('.md-table-cell-checkbox', _this.thRow);
+    // 移除旧的 checkbox
+    thCheckbox = $.query('.md-table-cell-checkbox', _this.thRow);
     if (thCheckbox) {
       thCheckbox.parentNode.removeChild(thCheckbox);
     }
-  };
 
-  /**
-   * 移除行的 checkbox
-   */
-  Table.prototype.removeTdCheckbox = function () {
-    var _this = this;
-    var tdCheckbox;
-    $.each(_this.tdRows, function (i, tdRow) {
-      tdCheckbox = $.query('.md-table-cell-checkbox', tdRow);
-      if (tdCheckbox) {
-        tdCheckbox.parentNode.removeChild(tdCheckbox);
-      }
+    if (!_this.selectable) {
+      return;
+    }
+
+    // 创建 DOM
+    var th = $.dom(checkboxThHTML)[0];
+    _this.thRow.insertBefore(th, _this.thRow.childNodes[0]);
+
+    // 绑定事件
+    thCheckbox = $.query('input[type="checkbox"]', th);
+    $.on(thCheckbox, 'change', function () {
+
+      $.each(_this.tdCheckboxs, function (i, checkbox) {
+        checkbox.checked = thCheckbox.checked;
+      });
+
+      $.each(_this.tdRows, function (i, row) {
+        row.classList[thCheckbox.checked ? 'add' : 'remove']('md-table-row-selected');
+      });
+
     });
-
-    _this.tdCheckboxs = [];
   };
 
   /**
-   * 处理数值列
+   * 更新数值列
    */
   Table.prototype.updateNumericCol = function () {
     var _this = this;
@@ -233,22 +152,7 @@
 
     $.each(tables, function (i, table) {
       var inst = $.getData(table, 'mdui.table');
-
-      // 更新复选框
-      if (inst.table.classList.contains('md-table-selectable')) {
-        if (inst.thRow) {
-          inst.createThCheckbox();
-        }
-
-        inst.createTdCheckbox();
-      } else {
-        inst.removeThCheckbox();
-        inst.removeTdCheckbox();
-      }
-
-      // 更新数值列对齐
-      inst.updateNumericCol();
-
+      inst.init();
     });
   };
 

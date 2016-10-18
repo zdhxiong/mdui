@@ -9,13 +9,13 @@
   border-collapse: collapse;
   width: 100%;
   background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, @opacity-black-divider);
+  border: 1px solid @color-black-divider;
+  margin-bottom: 1.2em;
   .md-shadow(2);
 
   tbody {
     tr {
       position: relative;
-      height: 48px;
       transition: background-color 0.28s @animation-curve-default;
     }
   }
@@ -24,7 +24,7 @@
     position: relative;
     vertical-align: middle;
     text-align: left;
-    padding: 0 28px;
+    padding: 12px 28px;
     box-sizing: border-box;
     .md-divider-bottom();
 
@@ -40,21 +40,33 @@
     }
   }
 
+  /* 最后一行没有下边框 */
+  tbody {
+    tr {
+      &:last-child {
+        td {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
   th {
     font-size: 13px;
-    color: rgba(0, 0, 0, 0.54);
+    color: @color-black-secondary;
     font-weight: 700;
     .md-text-truncate();
-    height: 56px;
+    line-height: 32px;
   }
 
   td {
     font-size: 14px;
-    color: rgba(0, 0, 0, 0.87);
-    height: 48px;
+    color: @color-black-text;
+    line-height: 24px;
   }
 }
 
+/* 每一行前面的复选框 */
 .md-table-cell-checkbox {
   padding-left: 8px !important;
 
@@ -77,12 +89,14 @@
 .md-table-fluid {
   width: 100%;
   overflow-x: auto;
-  border: 1px solid rgba(0, 0, 0, @opacity-black-divider);
+  border: 1px solid @color-black-divider;
+  margin-bottom: 1.2em;
   .md-shadow(2);
 
   .md-table {
     .md-shadow(0);
     border: none;
+    margin-bottom: 0;
   }
 }
 
@@ -94,4 +108,46 @@
 /* 行处于选中状态 */
 .md-table-row-selected {
   background-color: @color-grey-100;
+}
+
+
+/**
+ * =============================================================================
+ * ************   Table dark   ************
+ * =============================================================================
+ */
+.md-theme-layout-dark when (@globalLayoutDark = true) {
+  .md-table {
+    background-color: @layout-dark-color-3;
+    border: 1px solid @color-white-divider;
+
+    th {
+      color: @color-white-secondary;
+    }
+
+    td {
+      color: @color-white-text;
+    }
+  }
+
+  .md-table-hoverable {
+    tbody tr {
+      &:hover {
+        background-color: @color-grey-700;
+      }
+    }
+  }
+
+  .md-table-fluid {
+    border: 1px solid @color-white-divider;
+
+    .md-table {
+      .md-shadow(0);
+      border: none;
+    }
+  }
+
+  .md-table-row-selected {
+    background-color: @color-grey-800;
+  }
 }

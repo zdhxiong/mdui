@@ -10,7 +10,7 @@
   width: 100%;
   background-color: #fff;
   border: 1px solid @color-black-divider;
-  margin-bottom: 1.2em;
+  margin-bottom: 16px;
   .md-shadow(2);
 
   tbody {
@@ -69,6 +69,8 @@
 /* 每一行前面的复选框 */
 .md-table-cell-checkbox {
   padding-left: 8px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0!important;
 
   & + td,
   & + th {
@@ -90,7 +92,7 @@
   width: 100%;
   overflow-x: auto;
   border: 1px solid @color-black-divider;
-  margin-bottom: 1.2em;
+  margin-bottom: 16px;
   .md-shadow(2);
 
   .md-table {
@@ -110,6 +112,15 @@
   background-color: @color-grey-100;
 }
 
+/* 卡片中的表格去除下边距 */
+.md-card {
+  .md-table {
+    margin-bottom: 0;
+  }
+}
+
+
+
 
 /**
  * =============================================================================
@@ -120,6 +131,10 @@
   .md-table {
     background-color: @layout-dark-color-3;
     border: 1px solid @color-white-divider;
+
+    th, td {
+      .md-divider-bottom-reverse();
+    }
 
     th {
       color: @color-white-secondary;

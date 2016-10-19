@@ -126,7 +126,10 @@
     $.each(ths, function (i, th) {
       $.each(_this.tdRows, function (j, tdRow) {
         var method = th.classList.contains('md-table-col-numeric') ? 'add' : 'remove';
-        $.queryAll('td', tdRow)[i].classList[method]('md-table-col-numeric');
+        var td = $.queryAll('td', tdRow)[i];
+        if (td) {
+          td.classList[method]('md-table-col-numeric');
+        }
       });
     });
   };

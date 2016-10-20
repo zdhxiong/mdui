@@ -122,7 +122,7 @@ mdui.Dialog = (function () {
     }
 
     // 绑定取消按钮事件
-    var cancels = $.queryAll('[data-md-dialog-cancel]', _this.dialog);
+    var cancels = $.queryAll('[mdui-dialog-cancel]', _this.dialog);
     $.each(cancels, function (i, cancel) {
       $.on(cancel, 'click', function () {
         $.pluginEvent('cancel', 'dialog', _this, _this.dialog);
@@ -133,7 +133,7 @@ mdui.Dialog = (function () {
     });
 
     // 绑定确认按钮事件
-    var confirms = $.queryAll('[data-md-dialog-confirm]', _this.dialog);
+    var confirms = $.queryAll('[mdui-dialog-confirm]', _this.dialog);
     $.each(confirms, function (i, confirm) {
       $.on(confirm, 'click', function () {
         $.pluginEvent('confirm', 'dialog', _this, _this.dialog);
@@ -144,7 +144,7 @@ mdui.Dialog = (function () {
     });
 
     // 绑定关闭按钮事件
-    var closes = $.queryAll('[data-md-dialog-close]', _this.dialog);
+    var closes = $.queryAll('[mdui-dialog-close]', _this.dialog);
     $.each(closes, function (i, close) {
       $.on(close, 'click', function () {
         _this.close();

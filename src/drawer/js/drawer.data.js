@@ -7,8 +7,8 @@
 $.ready(function () {
 
   // 实例化插件
-  $.each($.queryAll('[data-md-drawer]'), function (i, target) {
-    var options = $.parseOptions(target.getAttribute('data-md-drawer'));
+  $.each($.queryAll('[mdui-drawer]'), function (i, target) {
+    var options = $.parseOptions(target.getAttribute('mdui-drawer'));
     var selector = options.target;
     delete options.target;
 

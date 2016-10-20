@@ -142,7 +142,7 @@ mdui.Tooltip = (function () {
     var oldOpts = _this.options;
 
     // 合并 data 属性参数
-    var dataOpts = $.parseOptions(_this.target.getAttribute('data-md-tooltip'));
+    var dataOpts = $.parseOptions(_this.target.getAttribute('mdui-tooltip'));
     _this.options = $.extend(_this.options, dataOpts);
 
     if (opts) {

@@ -95,7 +95,7 @@ mdui.Drawer = (function () {
     }
 
     // 绑定关闭按钮事件
-    var closes = $.queryAll('[data-md-drawer-close]', _this.drawer);
+    var closes = $.queryAll('[mdui-drawer-close]', _this.drawer);
     $.each(closes, function (i, close) {
       $.on(close, 'click', function () {
         _this.close();

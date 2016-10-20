@@ -6,9 +6,9 @@
 
 $.ready(function () {
 
-  $.on(document, 'click', '[data-md-dialog]', function () {
+  $.on(document, 'click', '[mdui-dialog]', function () {
     var _this = this;
-    var options = $.parseOptions(_this.getAttribute('data-md-dialog'));
+    var options = $.parseOptions(_this.getAttribute('mdui-dialog'));
     var selector = options.target;
     delete options.target;
 

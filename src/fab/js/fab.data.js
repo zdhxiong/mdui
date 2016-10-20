@@ -10,13 +10,13 @@ $.ready(function () {
   // 不管是 click 、 mouseover 还是 touchstart ，都先初始化。
   var event = mdui.support.touch ? 'touchstart' : 'click mouseover';
 
-  $.on(document, event, '[data-md-fab]', function (e) {
+  $.on(document, event, '[mdui-fab]', function (e) {
     var _this = this;
     var eventType = e.type;
 
     var inst = $.getData(_this, 'mdui.fab');
     if (!inst) {
-      var options = $.parseOptions(_this.getAttribute('data-md-fab'));
+      var options = $.parseOptions(_this.getAttribute('mdui-fab'));
       inst = new mdui.Fab(_this, options);
       $.setData(_this, 'mdui.fab', inst);
 

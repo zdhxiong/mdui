@@ -19,9 +19,8 @@
   display: inline-block;
   overflow: hidden;
   will-change: box-shadow;
-  transition: box-shadow .2s @animation-curve-fast-out-linear-in,
-              //background-color .2s @animation-curve-default, // linear-gradient 实现的半透明无法实现过渡动画，所以按钮的背景统一没有过渡动画
-              color .2s @animation-curve-default;
+  transition: all .2s @animation-curve-default,
+              box-shadow .2s @animation-curve-fast-out-linear-in;
   outline: none;
   cursor: pointer;
   text-decoration: none;
@@ -50,19 +49,19 @@
   }
 
   // 透明按钮 hover、active 时颜色加深
-  &:not(.md-ripple):hover {
+  &:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
   &:not(.md-ripple):active {
     background-color: rgba(0, 0, 0, 0.165);
   }
 
-  // 带背景色的按钮 hover、active 时颜色变浅
-  &:not(.md-ripple)[class*="md-color-"]:hover {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16));
+  // 带背景色的按钮 hover、active 时增加透明度
+  &[class*="md-color-"]:hover {
+    opacity: 0.87;
   }
   &:not(.md-ripple)[class*="md-color-"]:active {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3));
+    opacity: 0.76;
   }
 }
 
@@ -90,16 +89,28 @@
 /* 禁用按钮 */
 .md-btn[disabled],
 .md-btn.md-disabled {
+  // 扁平按钮
   &,
   &:hover,
   &:active,
   &:focus {
-    background-color: rgba(0, 0, 0, .12) !important;
+    background-color: transparent;
     color: rgba(0, 0, 0, .26) !important;
     .md-shadow(0);
     cursor: default;
     .md-icon {
       color: rgba(0, 0, 0, .26) !important;
+    }
+  }
+
+  // 浮动按钮
+  &.md-btn-raised,
+  &.md-btn-fab {
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: rgba(0, 0, 0, .12) !important;
     }
   }
 }
@@ -184,11 +195,47 @@ input.md-btn[type="submit"] {
 
   // 透明按钮 hover、active 时颜色变浅
   .md-btn {
-    &:not(.md-ripple):hover {
+    // 透明按钮 hover、active 时颜色变浅
+    &:hover {
       background-color: rgba(255, 255, 255, 0.1);
     }
     &:not(.md-ripple):active {
       background-color: rgba(255, 255, 255, 0.165);
+    }
+
+    // 带背景的按钮 hover、active 时增加透明度
+    &[class*="md-color-"]:hover {
+      opacity: 0.87;
+    }
+    &:not(.md-ripple)[class*="md-color-"]:active {
+      opacity: 0.76;
+    }
+
+    // 禁用按钮
+    &[disabled],
+    &.md-disabled {
+      // 扁平按钮
+      &,
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: transparent;
+        color: rgba(255, 255, 255, 0.3) !important;
+        .md-icon {
+          color: rgba(255, 255, 255, 0.3) !important;
+        }
+      }
+
+      // 浮动按钮
+      &.md-btn-raised,
+      &.md-btn-fab {
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+          background-color: rgba(255, 255, 255, .12) !important;
+        }
+      }
     }
   }
 }

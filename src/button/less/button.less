@@ -5,7 +5,8 @@
  */
 
 /* 默认为 Flat 扁平按钮 */
-.mdui-btn {
+.mdui-btn,
+.mdui-fab {
   color: inherit;
   background: transparent;
   border: none;
@@ -86,40 +87,6 @@
   }
 }
 
-/* 禁用按钮 */
-.mdui-btn[disabled],
-.mdui-btn.mdui-disabled {
-  // 扁平按钮
-  &,
-  &:hover,
-  &:active,
-  &:focus {
-    background-color: transparent;
-    color: rgba(0, 0, 0, .26) !important;
-    .mdui-shadow(0);
-    cursor: default;
-    .mdui-icon {
-      color: rgba(0, 0, 0, .26) !important;
-    }
-  }
-
-  // 浮动按钮
-  &.mdui-btn-raised,
-  &.mdui-btn-fab {
-    &,
-    &:hover,
-    &:active,
-    &:focus {
-      background-color: rgba(0, 0, 0, .12) !important;
-    }
-  }
-}
-
-/* 加粗按钮文本 */
-.mdui-btn-bold {
-  font-weight: bold;
-}
-
 input.mdui-btn[type="submit"] {
   -webkit-appearance: none;
 }
@@ -135,6 +102,46 @@ input.mdui-btn[type="submit"] {
   &:active {
     .mdui-shadow(8);
   }
+}
+
+/* 禁用按钮 */
+.mdui-btn,
+.mdui-fab {
+  &[disabled],
+  &.mdui-disabled {
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: transparent !important;
+      color: rgba(0, 0, 0, .26) !important;
+      .mdui-shadow(0) !important;
+      cursor: default !important;
+      .mdui-icon {
+        color: rgba(0, 0, 0, .26) !important;
+      }
+    }
+  }
+}
+
+/* 禁用状态浮动按钮和浮动操作按钮 */
+.mdui-btn-raised,
+.mdui-fab {
+  &[disabled],
+  &.mdui-disabled {
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: rgba(0, 0, 0, .12) !important;
+      .mdui-shadow(2) !important;
+    }
+  }
+}
+
+/* 加粗按钮文本 */
+.mdui-btn-bold {
+  font-weight: bold;
 }
 
 /* 图标按钮 */
@@ -194,7 +201,8 @@ input.mdui-btn[type="submit"] {
 .mdui-theme-layout-dark when (@globalLayoutDark = true) {
 
   // 透明按钮 hover、active 时颜色变浅
-  .mdui-btn {
+  .mdui-btn,
+  .mdui-fab {
     // 透明按钮 hover、active 时颜色变浅
     &:hover {
       background-color: rgba(255, 255, 255, 0.1);
@@ -210,31 +218,36 @@ input.mdui-btn[type="submit"] {
     &:not(.mdui-ripple)[class*="mdui-color-"]:active {
       opacity: 0.76;
     }
+  }
 
-    // 禁用按钮
+  // 禁用按钮
+  .mdui-btn,
+  .mdui-fab {
     &[disabled],
     &.mdui-disabled {
-      // 扁平按钮
       &,
       &:hover,
       &:active,
       &:focus {
-        background-color: transparent;
+        background-color: transparent !important;
         color: rgba(255, 255, 255, 0.3) !important;
         .mdui-icon {
           color: rgba(255, 255, 255, 0.3) !important;
         }
       }
+    }
+  }
 
-      // 浮动按钮
-      &.mdui-btn-raised,
-      &.mdui-btn-fab {
-        &,
-        &:hover,
-        &:active,
-        &:focus {
-          background-color: rgba(255, 255, 255, .12) !important;
-        }
+  // 禁用状态浮动按钮和浮动操作按钮
+  .mdui-btn-raised,
+  .mdui-fab {
+    &[disabled],
+    &.mdui-disabled {
+      &,
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: rgba(255, 255, 255, .12) !important;
       }
     }
   }

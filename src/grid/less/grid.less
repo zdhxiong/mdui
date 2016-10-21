@@ -44,26 +44,26 @@
   @widthName: '_screen-col-@{cols}';
 
   // 列宽度
-  .md-col-@{screen}-@{cols} {
+  .mdui-col-@{screen}-@{cols} {
     float: left;
     width: @@widthName;
   }
 
   // 列偏移
-  .md-col-offset-@{screen}-@{cols} {
+  .mdui-col-offset-@{screen}-@{cols} {
     margin-left: @@widthName;
   }
 
   // 等分列
   @averageName: '_screen-average-@{cols}';
-  .md-row-@{screen}-@{cols} .md-col {
+  .mdui-row-@{screen}-@{cols} .mdui-col {
     float: left;
     width: @@averageName;
   }
 }
 
-.md-container,
-.md-container-fluid {
+.mdui-container,
+.mdui-container-fluid {
   box-sizing: border-box;
   margin-left: auto;
   margin-right: auto;
@@ -76,7 +76,7 @@
   }
 }
 
-.md-container {
+.mdui-container {
   max-width: 1280px;
   width: 96%;
   @media (min-width: @screen-sm-min) {
@@ -87,8 +87,8 @@
   }
 }
 
-.md-row,
-[class*="md-row-"] {
+.mdui-row,
+[class*="mdui-row-"] {
   margin-left: -@grid-gap-16 / 2;
   margin-right: -@grid-gap-16 / 2;
   &:after {
@@ -98,12 +98,12 @@
   }
 }
 
-[class*="md-col-xs-"],
-[class*="md-col-sm-"],
-[class*="md-col-md-"],
-[class*="md-col-lg-"],
-[class*="md-col-xl-"],
-.md-col {
+[class*="mdui-col-xs-"],
+[class*="mdui-col-sm-"],
+[class*="mdui-col-md-"],
+[class*="mdui-col-lg-"],
+[class*="mdui-col-xl-"],
+.mdui-col {
   box-sizing: border-box;
   position: relative;
   min-height: 1px;
@@ -112,12 +112,12 @@
 }
 
 /* 取消列间距 */
-.md-col-gapless {
-  [class*="md-col-xs-"],
-  [class*="md-col-sm-"],
-  [class*="md-col-md-"],
-  [class*="md-col-lg-"],
-  [class*="md-col-xl-"] {
+.mdui-col-gapless {
+  [class*="mdui-col-xs-"],
+  [class*="mdui-col-sm-"],
+  [class*="mdui-col-md-"],
+  [class*="mdui-col-lg-"],
+  [class*="mdui-col-xl-"] {
     padding-left: 0;
     padding-right: 0;
   }

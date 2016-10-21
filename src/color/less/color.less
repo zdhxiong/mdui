@@ -11,8 +11,8 @@
 
 
 /**
- * .md-theme-primary-[color] .md-color-theme
- * .md-theme-primary-[color] .md-color-theme-[degree]
+ * .mdui-theme-primary-[color] .mdui-color-theme
+ * .mdui-theme-primary-[color] .mdui-color-theme-[degree]
  */
 
 & {
@@ -21,11 +21,11 @@
 
     @colorName: extract(@globalPrimaryColors, @counter-color);
 
-    .md-theme-primary-@{colorName} {
+    .mdui-theme-primary-@{colorName} {
 
-      // .md-theme-primary-[color] .md-color-theme
-      .md-color-theme {
-        .md-color(@colorName) !important;
+      // .mdui-theme-primary-[color] .mdui-color-theme
+      .mdui-color-theme {
+        .mdui-color(@colorName) !important;
       }
 
       .loop-primary-degree-theme(@counter-degree) when (@counter-degree > 0) {
@@ -33,9 +33,9 @@
 
         @degree: extract(@globalPrimaryColorDegrees, @counter-degree);
 
-        // .md-theme-primary-[color] .md-color-theme-[degree]
-        .md-color-theme-@{degree} {
-          .md-color(@colorName, @degree) !important;
+        // .mdui-theme-primary-[color] .mdui-color-theme-[degree]
+        .mdui-color-theme-@{degree} {
+          .mdui-color(@colorName, @degree) !important;
         }
       }
       .loop-primary-degree-theme(@global-primary-color-degrees-length);
@@ -46,8 +46,8 @@
 
 
 /**
- * .md-theme-accent-[color] .md-color-theme-accent
- * .md-theme-accent-[color] .md-color-theme-[degree]
+ * .mdui-theme-accent-[color] .mdui-color-theme-accent
+ * .mdui-theme-accent-[color] .mdui-color-theme-[degree]
  */
 
 & {
@@ -56,11 +56,11 @@
 
     @colorName: extract(@globalAccentColors, @counter-color);
 
-    .md-theme-accent-@{colorName} {
+    .mdui-theme-accent-@{colorName} {
 
-      // .md-theme-accent-[color] .md-color-theme-accent
-      .md-color-theme-accent {
-        .md-color(@colorName, a200) !important;
+      // .mdui-theme-accent-[color] .mdui-color-theme-accent
+      .mdui-color-theme-accent {
+        .mdui-color(@colorName, a200) !important;
       }
 
       .loop-accent-degree-theme(@counter-degree) when (@counter-degree > 0) {
@@ -68,9 +68,9 @@
 
         @degree: extract(@globalAccentColorDegrees, @counter-degree);
 
-        // .md-theme-accent-[color] .md-color-theme-[degree]
-        .md-color-theme-@{degree} {
-          .md-color(@colorName, @degree) !important;
+        // .mdui-theme-accent-[color] .mdui-color-theme-[degree]
+        .mdui-color-theme-@{degree} {
+          .mdui-color(@colorName, @degree) !important;
         }
       }
       .loop-accent-degree-theme(@global-accent-color-degrees-length);
@@ -81,8 +81,8 @@
 
 
 /**
- * .md-color-[color]
- * .md-color-[color]-[degree]
+ * .mdui-color-[color]
+ * .mdui-color-[color]-[degree]
  */
 
 & {
@@ -92,9 +92,9 @@
     @colorName: extract(@globalPrimaryColors, @counter-color);
 
     & {
-      // .md-color-[color]
-      .md-color-@{colorName} {
-        .md-color(@colorName) !important;
+      // .mdui-color-[color]
+      .mdui-color-@{colorName} {
+        .mdui-color(@colorName) !important;
       }
 
       .loop-primary-degree-theme(@counter-degree) when (@counter-degree > 0) {
@@ -102,9 +102,9 @@
 
         @degree: extract(@globalPrimaryColorDegrees, @counter-degree);
 
-        // .md-color-[color]-[degree]
-        .md-color-@{colorName}-@{degree} {
-          .md-color(@colorName, @degree) !important;
+        // .mdui-color-[color]-[degree]
+        .mdui-color-@{colorName}-@{degree} {
+          .mdui-color(@colorName, @degree) !important;
         }
       }
       .loop-primary-degree-theme(@global-primary-color-degrees-length);
@@ -115,8 +115,8 @@
 
 
 /**
- * .md-color-[color]-accent
- * .md-color-[color]-[degree]
+ * .mdui-color-[color]-accent
+ * .mdui-color-[color]-[degree]
  */
 
 & {
@@ -126,9 +126,9 @@
     @colorName: extract(@globalAccentColors, @counter-color);
 
     &{
-      // .md-color-[color]-accent
-      .md-color-@{colorName}-accent {
-        .md-color(@colorName, a200) !important;
+      // .mdui-color-[color]-accent
+      .mdui-color-@{colorName}-accent {
+        .mdui-color(@colorName, a200) !important;
       }
 
       .loop-accent-degree-theme(@counter-degree) when (@counter-degree > 0) {
@@ -136,9 +136,9 @@
 
         @degree: extract(@globalAccentColorDegrees, @counter-degree);
 
-        // .md-color-[color]-[degree]
-        .md-color-@{colorName}-@{degree} {
-          .md-color(@colorName, @degree) !important;
+        // .mdui-color-[color]-[degree]
+        .mdui-color-@{colorName}-@{degree} {
+          .mdui-color(@colorName, @degree) !important;
         }
       }
       .loop-accent-degree-theme(@global-accent-color-degrees-length);
@@ -149,29 +149,29 @@
 
 
 /**
- * .md-color-black
- * .md-color-white
- * .md-color-transparent
+ * .mdui-color-black
+ * .mdui-color-white
+ * .mdui-color-transparent
  */
 
-.md-color-black {
+.mdui-color-black {
   background-color: @color-black !important;
   color: @color-white-text !important;
 }
 
-.md-color-white {
+.mdui-color-white {
   background-color: @color-white !important;
   color: @color-black-text !important;
 }
 
-.md-color-transparent {
+.mdui-color-transparent {
   background-color: @color-transparent !important;
 }
 
 
 /**
- * .md-theme-primary-[color] .md-text-color-theme
- * .md-theme-primary-[color] .md-text-color-theme-[degree]
+ * .mdui-theme-primary-[color] .mdui-text-color-theme
+ * .mdui-theme-primary-[color] .mdui-text-color-theme-[degree]
  */
 
 & {
@@ -180,11 +180,11 @@
 
     @colorName: extract(@globalPrimaryColors, @counter-color);
 
-    .md-theme-primary-@{colorName} {
+    .mdui-theme-primary-@{colorName} {
 
-      // .md-theme-primary-[color] .md-text-color-theme
-      .md-text-color-theme {
-        .md-text-color(@colorName) !important;
+      // .mdui-theme-primary-[color] .mdui-text-color-theme
+      .mdui-text-color-theme {
+        .mdui-text-color(@colorName) !important;
       }
 
       .loop-primary-degree-theme(@counter-degree) when (@counter-degree > 0) {
@@ -192,9 +192,9 @@
 
         @degree: extract(@globalPrimaryColorDegrees, @counter-degree);
 
-        // .md-theme-primary-[color] .md-text-color-theme-[degree]
-        .md-text-color-theme-@{degree} {
-          .md-text-color(@colorName, @degree) !important;
+        // .mdui-theme-primary-[color] .mdui-text-color-theme-[degree]
+        .mdui-text-color-theme-@{degree} {
+          .mdui-text-color(@colorName, @degree) !important;
         }
       }
       .loop-primary-degree-theme(@global-primary-color-degrees-length);
@@ -205,8 +205,8 @@
 
 
 /**
- * .md-theme-accent-[color] .md-text-color-theme-accent
- * .md-theme-accent-[color] .md-text-color-theme-[degree]
+ * .mdui-theme-accent-[color] .mdui-text-color-theme-accent
+ * .mdui-theme-accent-[color] .mdui-text-color-theme-[degree]
  */
 
 & {
@@ -215,11 +215,11 @@
 
     @colorName: extract(@globalAccentColors, @counter-color);
 
-    .md-theme-accent-@{colorName} {
+    .mdui-theme-accent-@{colorName} {
 
-      // .md-theme-accent-[color] .md-text-color-theme-accent
-      .md-text-color-theme-accent {
-        .md-text-color(@colorName, a200) !important;
+      // .mdui-theme-accent-[color] .mdui-text-color-theme-accent
+      .mdui-text-color-theme-accent {
+        .mdui-text-color(@colorName, a200) !important;
       }
 
       .loop-accent-degree-theme(@counter-degree) when (@counter-degree > 0) {
@@ -227,9 +227,9 @@
 
         @degree: extract(@globalAccentColorDegrees, @counter-degree);
 
-        // .md-theme-accent-[color] .md-text-color-theme-[degree]
-        .md-text-color-theme-@{degree} {
-          .md-text-color(@colorName, @degree) !important;
+        // .mdui-theme-accent-[color] .mdui-text-color-theme-[degree]
+        .mdui-text-color-theme-@{degree} {
+          .mdui-text-color(@colorName, @degree) !important;
         }
       }
       .loop-accent-degree-theme(@global-accent-color-degrees-length);
@@ -240,8 +240,8 @@
 
 
 /**
- * .md-text-color-[color]
- * .md-text-color-[color]-[degree]
+ * .mdui-text-color-[color]
+ * .mdui-text-color-[color]-[degree]
  */
 
 & {
@@ -251,9 +251,9 @@
     @colorName: extract(@globalPrimaryColors, @counter-color);
 
     &{
-      // .md-text-color-[color]
-      .md-text-color-@{colorName} {
-        .md-text-color(@colorName) !important;
+      // .mdui-text-color-[color]
+      .mdui-text-color-@{colorName} {
+        .mdui-text-color(@colorName) !important;
       }
 
       .loop-primary-degree-theme(@counter-degree) when (@counter-degree > 0) {
@@ -261,9 +261,9 @@
 
         @degree: extract(@globalPrimaryColorDegrees, @counter-degree);
 
-        // .md-text-color-[color]-[degree]
-        .md-text-color-@{colorName}-@{degree} {
-          .md-text-color(@colorName, @degree) !important;
+        // .mdui-text-color-[color]-[degree]
+        .mdui-text-color-@{colorName}-@{degree} {
+          .mdui-text-color(@colorName, @degree) !important;
         }
       }
       .loop-primary-degree-theme(@global-primary-color-degrees-length);
@@ -274,8 +274,8 @@
 
 
 /**
- * .md-text-color-[color]-accent
- * .md-text-color-[color]-[degree]
+ * .mdui-text-color-[color]-accent
+ * .mdui-text-color-[color]-[degree]
  */
 
 & {
@@ -285,9 +285,9 @@
     @colorName: extract(@globalAccentColors, @counter-color);
 
     &{
-      // .md-text-color-[color]-accent
-      .md-text-color-@{colorName}-accent {
-        .md-text-color(@colorName, a200) !important;
+      // .mdui-text-color-[color]-accent
+      .mdui-text-color-@{colorName}-accent {
+        .mdui-text-color(@colorName, a200) !important;
       }
 
       .loop-accent-degree-theme(@counter-degree) when (@counter-degree > 0) {
@@ -295,9 +295,9 @@
 
         @degree: extract(@globalAccentColorDegrees, @counter-degree);
 
-        // .md-text-color-[color]-[degree]
-        .md-text-color-@{colorName}-@{degree} {
-          .md-text-color(@colorName, @degree) !important;
+        // .mdui-text-color-[color]-[degree]
+        .mdui-text-color-@{colorName}-@{degree} {
+          .mdui-text-color(@colorName, @degree) !important;
         }
       }
       .loop-accent-degree-theme(@global-accent-color-degrees-length);
@@ -308,40 +308,40 @@
 
 
 /**
- * .md-text-color-black
- * .md-text-color-black-[]
- * .md-text-color-white
- * .md-text-color-white-[]
+ * .mdui-text-color-black
+ * .mdui-text-color-black-[]
+ * .mdui-text-color-white
+ * .mdui-text-color-white-[]
  */
 
-.md-text-color-black {
+.mdui-text-color-black {
   color: @color-black !important;
 }
-.md-text-color-black-text {
+.mdui-text-color-black-text {
   color: @color-black-text !important;
 }
-.md-text-color-black-secondary {
+.mdui-text-color-black-secondary {
   color: @color-black-secondary !important;
 }
-.md-text-color-black-disabled {
+.mdui-text-color-black-disabled {
   color: @color-black-disabled !important;
 }
-.md-text-color-black-divider {
+.mdui-text-color-black-divider {
   color: @color-black-divider !important;
 }
 
-.md-text-color-white {
+.mdui-text-color-white {
   color: @color-white !important;
 }
-.md-text-color-white-text {
+.mdui-text-color-white-text {
   color: @color-white-text !important;
 }
-.md-text-color-white-secondary {
+.mdui-text-color-white-secondary {
   color: @color-white-secondary !important;
 }
-.md-text-color-white-disabled {
+.mdui-text-color-white-disabled {
   color: @color-white-disabled !important;
 }
-.md-text-color-white-divider {
+.mdui-text-color-white-divider {
   color: @color-white-divider !important;
 }

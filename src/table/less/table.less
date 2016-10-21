@@ -4,14 +4,14 @@
  * =============================================================================
  */
 
-.md-table {
+.mdui-table {
   position: relative;
   border-collapse: collapse;
   width: 100%;
   background-color: #fff;
   border: 1px solid @color-black-divider;
   margin-bottom: 16px;
-  .md-shadow(2);
+  .mdui-shadow(2);
 
   tbody {
     tr {
@@ -26,7 +26,7 @@
     text-align: left;
     padding: 12px 28px;
     box-sizing: border-box;
-    .md-divider-bottom();
+    .mdui-divider-bottom();
 
     &:last-child {
       padding-right: 24px;
@@ -55,7 +55,7 @@
     font-size: 13px;
     color: @color-black-secondary;
     font-weight: 700;
-    .md-text-truncate();
+    .mdui-text-truncate();
     line-height: 32px;
   }
 
@@ -67,7 +67,7 @@
 }
 
 /* 每一行前面的复选框 */
-.md-table-cell-checkbox {
+.mdui-table-cell-checkbox {
   padding-left: 8px !important;
   padding-top: 0 !important;
   padding-bottom: 0!important;
@@ -79,7 +79,7 @@
 }
 
 /* 鼠标悬浮时行背景加深 */
-.md-table-hoverable {
+.mdui-table-hoverable {
   tbody tr {
     &:hover {
       background-color: @color-grey-200;
@@ -88,33 +88,33 @@
 }
 
 /* 表格放到该元素内，使表格产生滚动条时只在该元素内滚动 */
-.md-table-fluid {
+.mdui-table-fluid {
   width: 100%;
   overflow-x: auto;
   border: 1px solid @color-black-divider;
   margin-bottom: 16px;
-  .md-shadow(2);
+  .mdui-shadow(2);
 
-  .md-table {
-    .md-shadow(0);
+  .mdui-table {
+    .mdui-shadow(0);
     border: none;
     margin-bottom: 0;
   }
 }
 
 /* 数字列，右对齐 */
-.md-table-col-numeric {
+.mdui-table-col-numeric {
   text-align: right !important;
 }
 
 /* 行处于选中状态 */
-.md-table-row-selected {
+.mdui-table-row-selected {
   background-color: @color-grey-100;
 }
 
 /* 卡片中的表格去除下边距 */
-.md-card {
-  .md-table {
+.mdui-card {
+  .mdui-table {
     margin-bottom: 0;
   }
 }
@@ -127,13 +127,13 @@
  * ************   Table dark   ************
  * =============================================================================
  */
-.md-theme-layout-dark when (@globalLayoutDark = true) {
-  .md-table {
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-table {
     background-color: @layout-dark-color-3;
     border: 1px solid @color-white-divider;
 
     th, td {
-      .md-divider-bottom-reverse();
+      .mdui-divider-bottom-reverse();
     }
 
     th {
@@ -145,7 +145,7 @@
     }
   }
 
-  .md-table-hoverable {
+  .mdui-table-hoverable {
     tbody tr {
       &:hover {
         background-color: @color-grey-700;
@@ -153,16 +153,16 @@
     }
   }
 
-  .md-table-fluid {
+  .mdui-table-fluid {
     border: 1px solid @color-white-divider;
 
-    .md-table {
-      .md-shadow(0);
+    .mdui-table {
+      .mdui-shadow(0);
       border: none;
     }
   }
 
-  .md-table-row-selected {
+  .mdui-table-row-selected {
     background-color: @color-grey-800;
   }
 }

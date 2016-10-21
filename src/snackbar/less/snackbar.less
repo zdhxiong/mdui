@@ -4,7 +4,7 @@
  * =============================================================================
  */
 
-.md-snackbar {
+.mdui-snackbar {
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -19,28 +19,28 @@
   bottom: 0;
   z-index: @z-index-snackbar;
   will-change: transform;
-  .md-shadow(6);
+  .mdui-shadow(6);
 }
 
-/* 为 .md-snackbar 添加 transition 属性 */
-.md-snackbar-transition {
+/* 为 .mdui-snackbar 添加 transition 属性 */
+.mdui-snackbar-transition {
   transition: transform .3s @animation-curve-default;
 }
 
 /* 手机和平板的样式 */
-.md-snackbar-mobile {
+.mdui-snackbar-mobile {
   width: 100%;
 }
 
 /* 桌面版的样式 */
-.md-snackbar-desktop {
+.mdui-snackbar-desktop {
   min-width: 288px;
   max-width: 568px;
   border-radius: 2px;
 }
 
 /* 文本 */
-.md-snackbar-text {
+.mdui-snackbar-text {
   padding: 14px 0 14px 0;
   position: relative;
   overflow: hidden;
@@ -49,10 +49,10 @@
 }
 
 /* 按钮 */
-.md-snackbar-action {
+.mdui-snackbar-action {
   margin-right: -16px;
   white-space: nowrap;
-  .md-text-color(@color-accent-default-name, a100);
+  .mdui-text-color(@color-accent-default-name, a100);
 }
 
 
@@ -66,9 +66,9 @@
     .loop-accent-theme((@counter-color - 1));
     @colorName: extract(@globalAccentColors, @counter-color);
 
-    .md-theme-accent-@{colorName} {
-      .md-snackbar-action {
-        .md-text-color(@colorName, a100);
+    .mdui-theme-accent-@{colorName} {
+      .mdui-snackbar-action {
+        .mdui-text-color(@colorName, a100);
       }
     }
 
@@ -82,8 +82,8 @@
  * ************   Snackbar dark   ************
  * =============================================================================
  */
-.md-theme-layout-dark when (@globalLayoutDark = true) {
-  .md-snackbar {
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-snackbar {
     background-color: #5d5d5d;
   }
 }

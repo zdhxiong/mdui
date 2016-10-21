@@ -34,9 +34,9 @@ mdui.Fab = (function () {
     _this.options = $.extend(DEFAULT, (opts || {}));
     _this.state = 'closed';
 
-    _this.btn = $.children(_this.fab, '.md-btn', true);
-    _this.dial = $.children(_this.fab, '.md-btn-fab-dial', true);
-    _this.dialBtns = $.queryAll('.md-btn', _this.dial);
+    _this.btn = $.children(_this.fab, '.mdui-btn', true);
+    _this.dial = $.children(_this.fab, '.mdui-btn-fab-dial', true);
+    _this.dialBtns = $.queryAll('.mdui-btn', _this.dial);
 
     // 支持 touch 时，始终在 touchstart 时切换，不受 trigger 参数影响
     if (mdui.support.touch) {
@@ -45,7 +45,7 @@ mdui.Fab = (function () {
       });
 
       $.on(document, 'touchend', function (e) {
-        if (!$.parents(e.target, '.md-btn-fab-wrapper').length) {
+        if (!$.parents(e.target, '.mdui-btn-fab-wrapper').length) {
           _this.close();
         }
       });
@@ -89,11 +89,11 @@ mdui.Fab = (function () {
       btn.style['transition-delay'] = 15 * (_this.dialBtns.length - index) + 'ms';
     });
 
-    _this.dial.classList.add('md-btn-fab-dial-show');
+    _this.dial.classList.add('mdui-btn-fab-dial-show');
 
-    // 如果按钮中存在 .md-btn-fab-opened 的图标，则进行图标切换
-    if ($.query('.md-btn-fab-opened', _this.btn)) {
-      _this.btn.classList.add('md-btn-fab-opened');
+    // 如果按钮中存在 .mdui-btn-fab-opened 的图标，则进行图标切换
+    if ($.query('.mdui-btn-fab-opened', _this.btn)) {
+      _this.btn.classList.add('mdui-btn-fab-opened');
     }
 
     _this.state = 'opening';
@@ -121,8 +121,8 @@ mdui.Fab = (function () {
       btn.style['transition-delay'] = 15 * index + 'ms';
     });
 
-    _this.dial.classList.remove('md-btn-fab-dial-show');
-    _this.btn.classList.remove('md-btn-fab-opened');
+    _this.dial.classList.remove('mdui-btn-fab-dial-show');
+    _this.btn.classList.remove('mdui-btn-fab-opened');
     _this.state = 'closing';
     $.pluginEvent('close', 'fab', _this, _this.fab);
 
@@ -158,14 +158,14 @@ mdui.Fab = (function () {
    * 以动画的形式显示浮动操作按钮
    */
   Fab.prototype.show = function () {
-    this.fab.classList.remove('md-btn-fab-hide');
+    this.fab.classList.remove('mdui-btn-fab-hide');
   };
 
   /**
    * 以动画的形式隐藏浮动操作按钮
    */
   Fab.prototype.hide = function () {
-    this.fab.classList.add('md-btn-fab-hide');
+    this.fab.classList.add('mdui-btn-fab-hide');
   };
 
   return Fab;

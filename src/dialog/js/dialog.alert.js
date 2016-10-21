@@ -45,7 +45,7 @@ mdui.alert = function (text, title, onConfirm, options) {
         onClick: onConfirm,
       },
     ],
-    cssClass: 'md-dialog-alert',
+    cssClass: 'mdui-dialog-alert',
     history: options.history,
     modal: options.modal,
     closeOnEsc: options.closeOnEsc,

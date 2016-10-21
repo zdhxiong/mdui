@@ -16,8 +16,8 @@
   var rippleTransform;
 
   /**
-   * 找到含 md-ripple 类的元素，如果当前元素不存在 md-ripple 类，则从父元素找
-   * 含 .md-disabled 类和 disabled 属性的元素不产生涟漪
+   * 找到含 mdui-ripple 类的元素，如果当前元素不存在 mdui-ripple 类，则从父元素找
+   * 含 .mdui-disabled 类和 disabled 属性的元素不产生涟漪
    * @param el
    * @returns {*}
    */
@@ -25,10 +25,10 @@
     var target;
     var rippleParents;
 
-    if (el.classList.contains('md-ripple')) {
+    if (el.classList.contains('mdui-ripple')) {
       target = el;
     } else {
-      rippleParents = $.parents(el, '.md-ripple');
+      rippleParents = $.parents(el, '.mdui-ripple');
       if (rippleParents.length) {
         target = rippleParents[0];
       }
@@ -36,7 +36,7 @@
 
     if (
       target &&
-      !target.classList.contains('md-disabled') &&
+      !target.classList.contains('mdui-disabled') &&
       target.getAttribute('disabled') === null
     ) {
       return target;
@@ -61,10 +61,10 @@
     // 涟漪始终从中心扩散的元素
     if (
 
-      // el.classList.contains('md-btn-icon') ||
-      // el.classList.contains('md-btn-icon-mini') ||
-      // el.classList.contains('md-btn-fab') ||
-      // el.classList.contains('md-btn-fab-mini')
+      // el.classList.contains('mdui-btn-icon') ||
+      // el.classList.contains('mdui-btn-icon-mini') ||
+      // el.classList.contains('mdui-btn-fab') ||
+      // el.classList.contains('mdui-btn-fab-mini')
       false
     ) {
       center = {
@@ -89,7 +89,7 @@
 
     // 添加涟漪
     // ========
-    rippleWave = $.dom('<div class="md-ripple-wave" style="' +
+    rippleWave = $.dom('<div class="mdui-ripple-wave" style="' +
         'width: ' + diameter + 'px; ' +
         'height: ' + diameter + 'px; ' +
         'margin-top:-' + diameter / 2 + 'px; ' +
@@ -119,13 +119,13 @@
       toRemove.parentNode.removeChild(toRemove);
     }, 400);
 
-    rippleWave.classList.add('md-ripple-wave-fill');
+    rippleWave.classList.add('mdui-ripple-wave-fill');
     $.transform(rippleWave, rippleTransform.replace('scale(1)', 'scale(1.01)'));
     $.transitionEnd(rippleWave, function (e) {
       clearTimeout(removeTimeout);
 
       var rippleWave = e.target;
-      rippleWave.classList.add('md-ripple-wave-out');
+      rippleWave.classList.add('mdui-ripple-wave-out');
       $.transform(rippleWave, rippleTransform.replace('scale(1)', 'scale(1.01)'));
 
       removeTimeout = setTimeout(function () {
@@ -163,17 +163,17 @@
 
   // 事件监听
   // ======
-  $.on(document, mdui.touchEvents.start, '.md-ripple', function (e) {
+  $.on(document, mdui.touchEvents.start, '.mdui-ripple', function (e) {
     touchStartX = mdui.support.touch ? e.targetTouches[0].pageX : e.pageX;
     touchStartY = mdui.support.touch ? e.targetTouches[0].pageY : e.pageY;
     rippleTouchStart(e.target);
   });
 
-  $.on(document, mdui.touchEvents.move, '.md-ripple', function () {
+  $.on(document, mdui.touchEvents.move, '.mdui-ripple', function () {
     rippleTouchMove();
   });
 
-  $.on(document, mdui.touchEvents.end, '.md-ripple', function () {
+  $.on(document, mdui.touchEvents.end, '.mdui-ripple', function () {
     rippleTouchEnd();
   });
 })();

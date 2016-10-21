@@ -9,11 +9,11 @@
   var notInputs = ['checkbox', 'button', 'submit', 'range', 'radio', 'image'];
 
   var classNames = {
-    field: 'md-textfield',
-    focus: 'md-textfield-focus',
-    notEmpty: 'md-textfield-not-empty',
-    disabled: 'md-textfield-disabled',
-    invalid: 'md-textfield-invalid',
+    field: 'mdui-textfield',
+    focus: 'mdui-textfield-focus',
+    notEmpty: 'mdui-textfield-not-empty',
+    disabled: 'mdui-textfield-disabled',
+    invalid: 'mdui-textfield-invalid',
   };
 
   /**
@@ -109,8 +109,8 @@
     // 实时字数统计
     var counter;
     if (reInit) {
-      textField.classList.remove('md-textfield-has-counter');
-      counter = $.query('.md-textfield-counter', textField);
+      textField.classList.remove('mdui-textfield-has-counter');
+      counter = $.query('.mdui-textfield-counter', textField);
       if (counter) {
         counter.parentNode.removeChild(counter);
       }
@@ -120,22 +120,22 @@
     if (maxlength) {
       if (reInit || domLoadedEvent) {
         counter = $.dom(
-          '<div class="md-textfield-counter">' +
-            '<span class="md-textfield-counter-inputed"></span> / ' + maxlength +
+          '<div class="mdui-textfield-counter">' +
+            '<span class="mdui-textfield-counter-inputed"></span> / ' + maxlength +
           '</div>'
         )[0];
         textField.appendChild(counter);
 
-        // 如果没有 .md-textfield-error 作为占位，需要增加 .md-textfield 的下边距，
-        // 使 .md-textfield-counter 不会覆盖在文本框上
-        if (!$.query('.md-textfield-error', textField)) {
-          textField.classList.add('md-textfield-has-counter');
+        // 如果没有 .mdui-textfield-error 作为占位，需要增加 .mdui-textfield 的下边距，
+        // 使 .mdui-textfield-counter 不会覆盖在文本框上
+        if (!$.query('.mdui-textfield-error', textField)) {
+          textField.classList.add('mdui-textfield-has-counter');
         }
       }
 
       // 字符长度，确保统计方式和 maxlength 一致
       var inputed = input.value.length + input.value.split('\n').length - 1;
-      $.query('.md-textfield-counter-inputed', textField).innerText = inputed.toString();
+      $.query('.mdui-textfield-counter-inputed', textField).innerText = inputed.toString();
     }
 
   };
@@ -146,7 +146,7 @@
 
   /**
    * 通过 JS 更新了表单内容，需要重新进行表单处理
-   * @param dom 如果传入了 .md-textfield 所在的 DOM 元素，则更新该文本框；否则，更新所有文本框
+   * @param dom 如果传入了 .mdui-textfield 所在的 DOM 元素，则更新该文本框；否则，更新所有文本框
    */
   mdui.updateTextFields = function () {
     var textfields = [];
@@ -154,7 +154,7 @@
     if (arguments.length === 1) {
       textfields.push(arguments[0]);
     } else {
-      textfields = $.queryAll('.md-textfield-input');
+      textfields = $.queryAll('.mdui-textfield-input');
     }
 
     $.each(textfields, function (i, input) {
@@ -167,7 +167,7 @@
   $.ready(function () {
 
     // DOM 加载完后自动执行
-    $.each($.queryAll('.md-textfield-input'), function (i, input) {
+    $.each($.queryAll('.mdui-textfield-input'), function (i, input) {
       $.trigger(input, 'input', {
         domLoadedEvent: true,
       });

@@ -5,7 +5,7 @@
  */
 
 /* 文本框外层 */
-.md-textfield {
+.mdui-textfield {
   position: relative;
   padding-top: 16px;
   padding-bottom: 8px;
@@ -13,7 +13,7 @@
 }
 
 /* 输入框 */
-.md-textfield-input {
+.mdui-textfield-input {
   width: 100%;
   padding: 8px 0 8px 0;
   appearance: none;
@@ -32,7 +32,7 @@
   outline: none;
   resize: none;
   transition: border-bottom-color .2s;
-  .md-divider-bottom();
+  .mdui-divider-bottom();
 
   &::-webkit-input-placeholder {
     color: rgba(0, 0, 0, 0.35);
@@ -44,7 +44,7 @@
 }
 
 /* 文本框 label */
-.md-textfield-label {
+.mdui-textfield-label {
   pointer-events: none;
   display: block;
   font-size: 16px;
@@ -56,11 +56,11 @@
 }
 
 /* 表单验证错误提示 */
-.md-textfield-error {
+.mdui-textfield-error {
   margin-top: 8px;
   font-size: 12px;
   color: @color-red-500;
-  .md-text-truncate();
+  .mdui-text-truncate();
   visibility: hidden;
   height: 12px;
   line-height: 12px;
@@ -69,24 +69,24 @@
 
 /* 多行文本框最小高度
    ============== */
-textarea.md-textfield-input {
+textarea.mdui-textfield-input {
   min-height: 57px;
 }
 
 
 /* 表单中的图标
    ========== */
-.md-textfield {
-  .md-icon {
+.mdui-textfield {
+  .mdui-icon {
     position: absolute;
     bottom: 8px;
     color: rgba(0, 0, 0, @icon-opacity-black);
     padding: 6px;
 
-    ~ .md-textfield-label,
-    ~ .md-textfield-input,
-    ~ .md-textfield-error,
-    ~ .md-textfield-flex-wrap {
+    ~ .mdui-textfield-label,
+    ~ .mdui-textfield-input,
+    ~ .mdui-textfield-error,
+    ~ .mdui-textfield-flex-wrap {
       margin-left: 56px;
       width: calc(~"100% - 56px");
     }
@@ -95,96 +95,96 @@ textarea.md-textfield-input {
 
 /* 聚焦状态的文本框
    ============= */
-.md-textfield-focus {
+.mdui-textfield-focus {
 
-  .md-textfield-input {
+  .mdui-textfield-input {
     border-bottom: 1px solid @color-default-a200;
     box-shadow: 0 1px 0 0 @color-default-a200;
   }
 
-  .md-textfield-label {
+  .mdui-textfield-label {
     color: @color-default-a200;
   }
 
-  .md-icon {
+  .mdui-icon {
     color: @color-default-a200;
   }
 }
 
 /* 含有浮动标签的文本框
    ================ */
-.md-textfield-floating-label {
+.mdui-textfield-floating-label {
 
-  .md-textfield-label {
+  .mdui-textfield-label {
     transform: scale(1) translateY(27px);
     color: rgba(0, 0, 0, 0.35);
   }
 
-  &.md-textfield-focus,
-  &.md-textfield-not-empty {
-    .md-textfield-label {
+  &.mdui-textfield-focus,
+  &.mdui-textfield-not-empty {
+    .mdui-textfield-label {
       transform: scale(0.75) translateY(0);
       color: rgba(0, 0, 0, 0.65);
     }
   }
-  &.md-textfield-focus {
-    .md-textfield-label {
-      .md-text-color(@color-accent-default-name);
+  &.mdui-textfield-focus {
+    .mdui-textfield-label {
+      .mdui-text-color(@color-accent-default-name);
     }
   }
 }
 
 /* 表单验证不通过
    =========== */
-.md-textfield-invalid {
+.mdui-textfield-invalid {
 
-  .md-textfield-input {
+  .mdui-textfield-input {
     border-bottom: 1px solid @color-red-500 !important;
     box-shadow: 0 1px 0 0 @color-red-500 !important;
   }
-  &.md-textfield-focus {
-    .md-textfield-input {
+  &.mdui-textfield-focus {
+    .mdui-textfield-input {
       border-bottom: 1px solid @color-red-500 !important;
       box-shadow: 0 1px 0 0 @color-red-500 !important;
     }
   }
 
-  .md-textfield-label {
+  .mdui-textfield-label {
     color: @color-red-500 !important;
   }
-  &.md-textfield-floating-label {
-    .md-textfield-label {
+  &.mdui-textfield-floating-label {
+    .mdui-textfield-label {
       color: rgba(red(@color-red-500), green(@color-red-500), blue(@color-red-500), 0.35) !important;
     }
-    &.md-textfield-focus,
-    &.md-textfield-not-empty {
-      .md-textfield-label {
+    &.mdui-textfield-focus,
+    &.mdui-textfield-not-empty {
+      .mdui-textfield-label {
         color: @color-red-500 !important;
       }
     }
   }
 
-  .md-textfield-error {
+  .mdui-textfield-error {
     visibility: visible;
   }
 }
 
 /* 禁用表单
    ====== */
-.md-textfield-disabled {
-  .md-textfield-label,
-  .md-textfield-input,
-  .md-textfield-input::-webkit-input-placeholder {
+.mdui-textfield-disabled {
+  .mdui-textfield-label,
+  .mdui-textfield-input,
+  .mdui-textfield-input::-webkit-input-placeholder {
     color: rgba(0, 0, 0, @opacity-black-disabled);
   }
-  .md-textfield-input {
+  .mdui-textfield-input {
     border-bottom: 1px dotted rgba(0, 0, 0, @opacity-black-disabled);
   }
 }
 
 /* 字数统计
    ====== */
-.md-textfield-counter {
+.mdui-textfield-counter {
   position: absolute;
   right: 8px;
   font-size: 12px;
@@ -193,8 +193,8 @@ textarea.md-textfield-input {
   height: 12px;
   line-height: 12px;
 }
-// 加载 .md-textfield 元素上
-.md-textfield-has-counter {
+// 加载 .mdui-textfield 元素上
+.mdui-textfield-has-counter {
   padding-bottom: 28px;
 }
 
@@ -209,29 +209,29 @@ textarea.md-textfield-input {
     .loop-accent-theme((@counter-color - 1));
     @colorName: extract(@globalAccentColors, @counter-color);
 
-    .md-theme-accent-@{colorName} {
+    .mdui-theme-accent-@{colorName} {
 
       @color: 'color-@{colorName}-a200';
 
-      .md-textfield-focus {
+      .mdui-textfield-focus {
 
-        .md-textfield-input {
+        .mdui-textfield-input {
           border-bottom-color: @@color;
           box-shadow: 0 1px 0 0 @@color;
         }
 
-        .md-textfield-label {
+        .mdui-textfield-label {
           color: @@color;
         }
 
-        .md-icon {
+        .mdui-icon {
           color: @@color !important;
         }
       }
 
-      .md-textfield-floating-label {
-        &.md-textfield-focus {
-          .md-textfield-label {
+      .mdui-textfield-floating-label {
+        &.mdui-textfield-focus {
+          .mdui-textfield-label {
             color: @@color;
           }
         }
@@ -248,20 +248,20 @@ textarea.md-textfield-input {
  * ************   Textfield dark   ************
  * =============================================================================
  */
-.md-theme-layout-dark when (@globalLayoutDark = true) {
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
 
   // 图标颜色
-  .md-textfield {
-    .md-icon {
+  .mdui-textfield {
+    .mdui-icon {
       color: rgba(255, 255, 255, 0.7);
     }
   }
 
   // 输入框颜色
-  .md-textfield-input {
+  .mdui-textfield-input {
     color: #fff;
 
-    .md-divider-bottom-reverse();
+    .mdui-divider-bottom-reverse();
 
     &::-webkit-input-placeholder {
       color: rgba(255, 255, 255, 0.35);
@@ -273,18 +273,18 @@ textarea.md-textfield-input {
   }
 
   // 标签颜色
-  .md-textfield-label {
+  .mdui-textfield-label {
     color: rgba(255, 255, 255, 0.65);
   }
 
-  .md-textfield-floating-label {
-    .md-textfield-label {
+  .mdui-textfield-floating-label {
+    .mdui-textfield-label {
       color: rgba(255, 255, 255, 0.35);
     }
   }
 
   // 字数统计颜色
-  .md-textfield-counter {
+  .mdui-textfield-counter {
     color: rgba(255, 255, 255, @opacity-white-secondary);
   }
 }

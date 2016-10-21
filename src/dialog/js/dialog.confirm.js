@@ -57,7 +57,7 @@ mdui.confirm = function (text, title, onConfirm, onCancel, options) {
         onClick: onConfirm,
       },
     ],
-    cssClass: 'md-dialog-confirm',
+    cssClass: 'mdui-dialog-confirm',
     history: options.history,
     modal: options.modal,
     closeOnEsc: options.closeOnEsc,

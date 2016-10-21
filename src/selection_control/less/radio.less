@@ -4,7 +4,7 @@
  * =============================================================================
  */
 
-.md-radio {
+.mdui-radio {
   display: inline-block;
   height: 36px;
   line-height: 36px;
@@ -23,7 +23,7 @@
 }
 
 /* 图标外圈 */
-.md-radio-icon {
+.mdui-radio-icon {
   position: relative;
   box-sizing: border-box;
   display: inline-block;
@@ -53,7 +53,7 @@
 }
 
 /* 选中状态的图标 */
-.md-radio input[type="radio"]:checked + .md-radio-icon {
+.mdui-radio input[type="radio"]:checked + .mdui-radio-icon {
   border-color: @color-default-a200;
 
   &:before {
@@ -63,24 +63,24 @@
 }
 
 /* 禁用状态的图标 */
-.md-radio input[type="radio"]:disabled + .md-radio-icon {
+.mdui-radio input[type="radio"]:disabled + .mdui-radio-icon {
   border-color: rgba(0, 0, 0, 0.26) !important;
 }
 
 /* 禁用且选中状态的图标 */
-.md-radio input[type="radio"]:disabled:checked + .md-radio-icon {
+.mdui-radio input[type="radio"]:disabled:checked + .mdui-radio-icon {
   &:before {
     background-color: rgba(0, 0, 0, 0.26) !important;
   }
 }
 
 /* 未选中、禁用时 按下的阴影 */
-.md-radio:active input[type="radio"] + .md-radio-icon {
+.mdui-radio:active input[type="radio"] + .mdui-radio-icon {
   box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 /* 已选中时按下的阴影 */
-.md-radio:active input[type="radio"]:checked:not(:disabled) + .md-radio-icon {
+.mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
   box-shadow: 0 0 0 15px rgba(red(@color-default-a200), green(@color-default-a200), blue(@color-default-a200), 0.16);
 }
 
@@ -97,10 +97,10 @@
 
     @color: 'color-@{colorName}-a200';
 
-    .md-theme-accent-@{colorName} {
+    .mdui-theme-accent-@{colorName} {
 
       // 选中状态的图标
-      .md-radio input[type="radio"]:checked + .md-radio-icon {
+      .mdui-radio input[type="radio"]:checked + .mdui-radio-icon {
         border-color: @@color;
 
         &:before {
@@ -109,7 +109,7 @@
       }
 
       // 已选中时按下的阴影
-      .md-radio:active input[type="radio"]:checked:not(:disabled) + .md-radio-icon {
+      .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
         box-shadow: 0 0 0 15px rgba(red(@@color), green(@@color), blue(@@color), 0.16);
       }
 
@@ -125,27 +125,27 @@
  * =============================================================================
  */
 
-.md-theme-layout-dark when (@globalLayoutDark = true) {
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
 
   // 图标外圈
-  .md-radio-icon {
+  .mdui-radio-icon {
     border-color: rgba(255, 255, 255, 0.7);
   }
 
   // 禁用状态
-  .md-radio input[type="radio"]:disabled + .md-radio-icon {
+  .mdui-radio input[type="radio"]:disabled + .mdui-radio-icon {
     border-color: rgba(255, 255, 255, 0.3) !important;
   }
 
   // 禁用且选中状态
-  .md-radio input[type="radio"]:disabled:checked + .md-radio-icon {
+  .mdui-radio input[type="radio"]:disabled:checked + .mdui-radio-icon {
     &:before {
       background-color: rgba(255, 255, 255, 0.3) !important;
     }
   }
 
   // 未选中或禁用时 按下的阴影
-  .md-radio:active input[type="radio"] + .md-radio-icon {
+  .mdui-radio:active input[type="radio"] + .mdui-radio-icon {
     box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.1);
   }
 

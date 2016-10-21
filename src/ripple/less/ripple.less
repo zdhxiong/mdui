@@ -4,7 +4,7 @@
  * =============================================================================
  */
 
-.md-ripple {
+.mdui-ripple {
   position: relative;
   cursor: pointer;
   user-select: none;
@@ -12,7 +12,7 @@
 }
 
 /* Ripple */
-.md-ripple-wave {
+.mdui-ripple-wave {
   left: 0;
   top: 0;
   position: absolute !important;
@@ -28,28 +28,28 @@
 }
 
 /* 有背景色的默认使用白色涟漪 */
-.md-ripple[class*="md-color-"] {
-  .md-ripple-wave {
+.mdui-ripple[class*="mdui-color-"] {
+  .mdui-ripple-wave {
     background-color: rgba(255, 255, 255, 0.3);
   }
 }
 
 /* 白色涟漪 */
-.md-ripple-white .md-ripple-wave {
+.mdui-ripple-white .mdui-ripple-wave {
   background-color: rgba(255, 255, 255, 0.3) !important;
 }
 
 /* 黑色涟漪 */
-.md-ripple-black .md-ripple-wave {
+.mdui-ripple-black .mdui-ripple-wave {
   background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
-.md-ripple-wave-fill {
+.mdui-ripple-wave-fill {
   transition-duration: 300ms;
   opacity: 0.35;
 }
 
-.md-ripple-wave-out {
+.mdui-ripple-wave-out {
   transition-duration: 600ms;
   opacity: 0;
 }
@@ -66,8 +66,8 @@
     @colorName: extract(@globalPrimaryColors, @counter-color);
 
     // 指定涟漪颜色
-    .md-ripple-@{colorName} {
-      .md-ripple-wave {
+    .mdui-ripple-@{colorName} {
+      .mdui-ripple-wave {
         @color: 'color-@{colorName}-500';
         background-color: rgba(red(@@color), green(@@color), blue(@@color), 0.3) !important;
       }
@@ -83,9 +83,9 @@
  * ************   Ripple dark   ************
  * =============================================================================
  */
-.md-theme-layout-dark when (@globalLayoutDark = true) {
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
   // 深色主题下使用白色涟漪
-  .md-ripple-wave {
+  .mdui-ripple-wave {
     background-color: rgba(255, 255, 255, 0.3);
   }
 }

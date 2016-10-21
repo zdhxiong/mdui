@@ -4,19 +4,19 @@
  * =============================================================================
  */
 
-.md-loaded .md-appbar {
+.mdui-loaded .mdui-appbar {
   transition: .3s @animation-curve-default;
   transition-property: height, line-height, background-color;
 }
-.md-appbar {
+.mdui-appbar {
   box-sizing: border-box;
   display: flex;
   align-items: center;
   width: 100%;
   max-height: 1000px;
   z-index: @z-index-appbar;
-  .md-color(@color-default-name);
-  .md-shadow(4);
+  .mdui-color(@color-default-name);
+  .mdui-shadow(4);
 
   a {
     user-select: none;
@@ -25,29 +25,29 @@
     color: inherit;
     margin: 0;
     padding: 0 16px;
-    .md-text-truncate();
+    .mdui-text-truncate();
   }
 
-  .md-btn-icon,
-  .md-btn-icon-mini {
-    .md-icon {
+  .mdui-btn-icon,
+  .mdui-btn-icon-mini {
+    .mdui-icon {
       height: 24px;
       line-height: 24px;
     }
   }
-  .md-btn-icon {
+  .mdui-btn-icon {
     width: @appbar-icon-width;
     height: @appbar-icon-width;
   }
-  .md-btn-icon-mini {
+  .mdui-btn-icon-mini {
     width: @appbar-icon-mini-width;
     height: @appbar-icon-mini-width;
   }
 }
 
 /* appbar 固定在顶部时，为 body 添加 padding-top，避免 appbar 覆盖页面内容 */
-body.md-appbar-fixed{
-  .md-appbar {
+body.mdui-appbar-fixed{
+  .mdui-appbar {
     position: fixed;
     top: 0;
     left: 0;
@@ -64,7 +64,7 @@ body.md-appbar-fixed{
 }
 
 /* logo */
-.md-appbar-logo {
+.mdui-appbar-logo {
   font-size: 24px;
   img{
     height: 24px;
@@ -72,18 +72,18 @@ body.md-appbar-fixed{
 }
 
 /* 标题 */
-.md-appbar-title {
+.mdui-appbar-title {
   font-size: 18px;
   max-width: 138px;
-  .md-text-truncate();
+  .mdui-text-truncate();
 }
 
 /* 搜索框 */
-.md-appbar-search {
+.mdui-appbar-search {
   margin: 0;
 }
 
-.md-appbar-search-field {
+.mdui-appbar-search-field {
   padding: 0;
   line-height: 48px;
   border: none;
@@ -92,26 +92,26 @@ body.md-appbar-fixed{
 
 // 响应式
 ._appbar_responsive_mixed(@appbar-height){
-  .md-appbar {
+  .mdui-appbar {
     &,
-    .md-icon {
+    .mdui-icon {
       height: @appbar-height;
       line-height: @appbar-height;
     }
-    .md-btn-icon {
+    .mdui-btn-icon {
       margin: 0 (@appbar-height - @appbar-icon-width) / 2;
-      & + .md-btn-icon {
+      & + .mdui-btn-icon {
         margin-left: 0;
       }
     }
-    .md-btn-icon-mini {
+    .mdui-btn-icon-mini {
       margin: 0 (@appbar-height - @appbar-icon-mini-width) / 2;
-      & + .md-btn-icon-mini {
+      & + .mdui-btn-icon-mini {
         margin-left: 0;
       }
     }
   }
-  .md-appbar-logo{
+  .mdui-appbar-logo{
     img{
       padding: (@appbar-height - 24px) / 2 0;
     }
@@ -137,9 +137,9 @@ body.md-appbar-fixed{
     .loop-primary-theme((@counter-color - 1));
     @colorName: extract(@globalPrimaryColors, @counter-color);
 
-    .md-theme-primary-@{colorName} {
-      .md-appbar {
-        .md-color(@colorName);
+    .mdui-theme-primary-@{colorName} {
+      .mdui-appbar {
+        .mdui-color(@colorName);
       }
     }
 
@@ -154,8 +154,8 @@ body.md-appbar-fixed{
  * ************   Appbar dark   ************
  * =============================================================================
  */
-.md-theme-layout-dark when (@globalLayoutDark = true) {
-  .md-appbar {
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-appbar {
     background-color: @layout-dark-color-2;
     color: #fff;
   }

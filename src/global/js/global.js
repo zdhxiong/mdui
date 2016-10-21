@@ -79,7 +79,7 @@ mdui.screen = {
  * @returns {Element}
  */
 mdui.showOverlay = function (zIndex) {
-  var overlay = $.dom('<div class="md-overlay">')[0];
+  var overlay = $.dom('<div class="mdui-overlay">')[0];
   document.body.appendChild(overlay);
 
   // 使动态添加的元素的 transition 动画能生效
@@ -90,7 +90,7 @@ mdui.showOverlay = function (zIndex) {
   }
 
   overlay.style['z-index'] = zIndex;
-  overlay.classList.add('md-overlay-show');
+  overlay.classList.add('mdui-overlay-show');
 
   return overlay;
 };
@@ -102,13 +102,13 @@ mdui.showOverlay = function (zIndex) {
 mdui.hideOverlay = function (overlay) {
   var overlays;
   if (typeof overlay === 'undefined') {
-    overlays = $.queryAll('.md-overlay');
+    overlays = $.queryAll('.mdui-overlay');
   } else {
     overlays = [overlay];
   }
 
   $.each(overlays, function (i, overlay) {
-    overlay.classList.remove('md-overlay-show');
+    overlay.classList.remove('mdui-overlay-show');
     $.transitionEnd(overlay, function () {
       overlay.parentNode.removeChild(overlay);
     });
@@ -126,7 +126,7 @@ mdui.lockScreen = function () {
   var oldBodyPaddingLeft = $.getStyle(body, 'padding-left').replace('px', '');
   var oldBodyPaddingRight = $.getStyle(body, 'padding-right').replace('px', '');
 
-  document.body.classList.add('md-locked');
+  document.body.classList.add('mdui-locked');
   document.body.style.width = oldWindowWidth - oldBodyPaddingLeft - oldBodyPaddingRight + 'px';
 };
 
@@ -134,7 +134,7 @@ mdui.lockScreen = function () {
  * 解除屏幕锁定
  */
 mdui.unlockScreen = function () {
-  document.body.classList.remove('md-locked');
+  document.body.classList.remove('mdui-locked');
   document.body.style.width = '';
 };
 
@@ -174,7 +174,7 @@ mdui.guid = function (pluginName) {
 
   var guid = s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   if (pluginName) {
-    guid = 'md-' + pluginName + '-' + guid;
+    guid = 'mdui-' + pluginName + '-' + guid;
   }
 
   return guid;
@@ -185,7 +185,7 @@ $.ready(function () {
   // https://css-tricks.com/transitions-only-after-page-load/
 
   setTimeout(function () {
-    document.body.classList.add('md-loaded');
+    document.body.classList.add('mdui-loaded');
   }, 0);
 
 });

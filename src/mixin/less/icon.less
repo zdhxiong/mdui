@@ -1,5 +1,5 @@
 // 图标颜色，纯黑色图标有 54% 不透明度，其他颜色保持原色
-.md-icon-color(@colorName) {
+.mdui-icon-color(@colorName) {
   @color: 'color-@{colorName}-500';
   & when (@colorName = black) {
     color: rgba(0, 0, 0, @icon-opacity-black);
@@ -10,7 +10,7 @@
 }
 
 // 禁用状态图标颜色，深色图标有 26% 不透明度，浅色图标有 30% 不透明度
-.md-icon-color-disabled(@colorName) {
+.mdui-icon-color-disabled(@colorName) {
   @color: 'color-@{colorName}-500';
   @color-is-dark: 'color-@{colorName}-500-is-dark';
 

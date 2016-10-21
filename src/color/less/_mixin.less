@@ -1,92 +1,92 @@
 //颜色深度
-._md-color-degree(@colorName, @degree) {
-  .md-color-@{colorName}-@{degree} {
-    .md-color(@colorName, @degree);
+._mdui-color-degree(@colorName, @degree) {
+  .mdui-color-@{colorName}-@{degree} {
+    .mdui-color(@colorName, @degree);
   }
-  .md-theme-@{colorName} {
-    .md-color-primary-@{degree} {
-      .md-color(@colorName, @degree);
+  .mdui-theme-@{colorName} {
+    .mdui-color-primary-@{degree} {
+      .mdui-color(@colorName, @degree);
     }
   }
 }
 
 .color-mixin(@colorName, @withAccent: true) {
-  ._md-color-degree(@colorName, 50);
-  ._md-color-degree(@colorName, 100);
-  ._md-color-degree(@colorName, 200);
-  ._md-color-degree(@colorName, 300);
-  ._md-color-degree(@colorName, 400);
-  ._md-color-degree(@colorName, 500);
-  ._md-color-degree(@colorName, 600);
-  ._md-color-degree(@colorName, 700);
-  ._md-color-degree(@colorName, 800);
-  ._md-color-degree(@colorName, 900);
+  ._mdui-color-degree(@colorName, 50);
+  ._mdui-color-degree(@colorName, 100);
+  ._mdui-color-degree(@colorName, 200);
+  ._mdui-color-degree(@colorName, 300);
+  ._mdui-color-degree(@colorName, 400);
+  ._mdui-color-degree(@colorName, 500);
+  ._mdui-color-degree(@colorName, 600);
+  ._mdui-color-degree(@colorName, 700);
+  ._mdui-color-degree(@colorName, 800);
+  ._mdui-color-degree(@colorName, 900);
   & when (@withAccent = true) {
-    ._md-color-degree(@colorName, a100);
-    ._md-color-degree(@colorName, a200);
-    ._md-color-degree(@colorName, a400);
-    ._md-color-degree(@colorName, a700);
+    ._mdui-color-degree(@colorName, a100);
+    ._mdui-color-degree(@colorName, a200);
+    ._mdui-color-degree(@colorName, a400);
+    ._mdui-color-degree(@colorName, a700);
   }
 
-  //============= md-color-primary
-  .md-color-@{colorName} {
-    .md-color(@colorName, 500);
+  //============= mdui-color-primary
+  .mdui-color-@{colorName} {
+    .mdui-color(@colorName, 500);
 
     @color-is-dark: 'color-@{colorName}-500-is-dark';
     & when (@@color-is-dark = false) {
-      .md-icon {
-        .md-icon-color(black);
+      .mdui-icon {
+        .mdui-icon-color(black);
       }
     }
   }
-  .md-text-color-@{colorName} {
+  .mdui-text-color-@{colorName} {
     &,
-    .md-icon {
-      .md-text-color(@colorName) !important;
+    .mdui-icon {
+      .mdui-text-color(@colorName) !important;
     }
   }
-  .md-theme-@{colorName} {
-    .md-color-primary {
-      .md-color(@colorName, 500);
+  .mdui-theme-@{colorName} {
+    .mdui-color-primary {
+      .mdui-color(@colorName, 500);
 
       @color-is-dark: 'color-@{colorName}-500-is-dark';
       & when (@@color-is-dark = false) {
-        .md-icon {
-          .md-icon-color(black);
+        .mdui-icon {
+          .mdui-icon-color(black);
         }
       }
     }
-    .md-text-color-primary {
+    .mdui-text-color-primary {
       &,
-      .md-icon {
-        .md-text-color(@colorName) !important;
+      .mdui-icon {
+        .mdui-text-color(@colorName) !important;
       }
     }
   }
 
-  ._md-color-hover-active() {
+  ._mdui-color-hover-active() {
     // 按钮 hover/active 状态颜色
-    &.md-btn {
-      &:not(.md-ripple):not([disabled]):not(.md-disabled):hover {
-        ._md-background-color-hover(@colorName) !important;
+    &.mdui-btn {
+      &:not(.mdui-ripple):not([disabled]):not(.mdui-disabled):hover {
+        ._mdui-background-color-hover(@colorName) !important;
       }
-      &:not(.md-ripple):not([disabled]):not(.md-disabled):active {
-        ._md-background-color-active(@colorName) !important;
+      &:not(.mdui-ripple):not([disabled]):not(.mdui-disabled):active {
+        ._mdui-background-color-active(@colorName) !important;
       }
     }
   }
-  .md-color-@{colorName} {
-    ._md-color-hover-active();
+  .mdui-color-@{colorName} {
+    ._mdui-color-hover-active();
   }
-  .md-theme-@{colorName} {
-    .md-color-primary {
-      ._md-color-hover-active();
+  .mdui-theme-@{colorName} {
+    .mdui-color-primary {
+      ._mdui-color-hover-active();
     }
   }
 
   // 涟漪的背景色
-  .md-ripple-@{colorName} .md-ripple-wave,
-  .md-ripple-@{colorName}.md-ripple-wave {
+  .mdui-ripple-@{colorName} .mdui-ripple-wave,
+  .mdui-ripple-@{colorName}.mdui-ripple-wave {
     @color: 'color-@{colorName}-500';
     background-color: rgba(red(@@color), green(@@color), blue(@@color), 0.3) !important;
   }

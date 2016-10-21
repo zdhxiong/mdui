@@ -4,93 +4,93 @@
  * =============================================================================
  */
 
-/* .md-typo-display-4 */
-.md-typo-display-4,
-.md-typo-display-4-opacity {
-  .md-typo-display-4();
+/* .mdui-typo-display-4 */
+.mdui-typo-display-4,
+.mdui-typo-display-4-opacity {
+  .mdui-typo-display-4();
 }
-.md-typo-display-4-opacity {
-  ._md-typo-display-4-opacity();
-}
-
-/* .md-typo-display-3 */
-.md-typo-display-3,
-.md-typo-display-3-opacity {
-  .md-typo-display-3();
-}
-.md-typo-display-3-opacity {
-  ._md-typo-display-3-opacity();
+.mdui-typo-display-4-opacity {
+  ._mdui-typo-display-4-opacity();
 }
 
-/* .md-typo-display-2 */
-.md-typo-display-2,
-.md-typo-display-2-opacity {
-  .md-typo-display-2();
+/* .mdui-typo-display-3 */
+.mdui-typo-display-3,
+.mdui-typo-display-3-opacity {
+  .mdui-typo-display-3();
 }
-.md-typo-display-2-opacity {
-  ._md-typo-display-2-opacity();
-}
-
-/* .md-typo-display-1 */
-.md-typo-display-1,
-.md-typo-display-1-opacity {
-  .md-typo-display-1();
-}
-.md-typo-display-1-opacity {
-  ._md-typo-display-1-opacity();
+.mdui-typo-display-3-opacity {
+  ._mdui-typo-display-3-opacity();
 }
 
-/* .md-typo-headline */
-.md-typo-headline,
-.md-typo-headline-opacity {
-  .md-typo-headline();
+/* .mdui-typo-display-2 */
+.mdui-typo-display-2,
+.mdui-typo-display-2-opacity {
+  .mdui-typo-display-2();
 }
-.md-typo-headline-opacity {
-  ._md-typo-headline-opacity();
-}
-
-/* .md-typo-title */
-.md-typo-title,
-.md-typo-title-opacity {
-  .md-typo-title();
-}
-.md-typo-title-opacity {
-  ._md-typo-title-opacity();
+.mdui-typo-display-2-opacity {
+  ._mdui-typo-display-2-opacity();
 }
 
-.md-typo-subheading,
-.md-typo-subheading-opacity {
-  .md-typo-subheading();
+/* .mdui-typo-display-1 */
+.mdui-typo-display-1,
+.mdui-typo-display-1-opacity {
+  .mdui-typo-display-1();
 }
-.md-typo-subheading-opacity {
-  ._md-typo-subheading-opacity();
-}
-
-.md-typo-body-2,
-.md-typo-body-2-opacity {
-  .md-typo-body-2();
-}
-.md-typo-body-2-opacity {
-  ._md-typo-body-2-opacity();
+.mdui-typo-display-1-opacity {
+  ._mdui-typo-display-1-opacity();
 }
 
-.md-typo-body-1,
-.md-typo-body-1-opacity {
-  .md-typo-body-1();
+/* .mdui-typo-headline */
+.mdui-typo-headline,
+.mdui-typo-headline-opacity {
+  .mdui-typo-headline();
 }
-.md-typo-body-1-opacity {
-  ._md-typo-body-1-opacity();
-}
-
-.md-typo-caption,
-.md-typo-caption-opacity {
-  .md-typo-caption();
-}
-.md-typo-caption-opacity {
-  ._md-typo-caption-opacity();
+.mdui-typo-headline-opacity {
+  ._mdui-typo-headline-opacity();
 }
 
-.md-typo {
+/* .mdui-typo-title */
+.mdui-typo-title,
+.mdui-typo-title-opacity {
+  .mdui-typo-title();
+}
+.mdui-typo-title-opacity {
+  ._mdui-typo-title-opacity();
+}
+
+.mdui-typo-subheading,
+.mdui-typo-subheading-opacity {
+  .mdui-typo-subheading();
+}
+.mdui-typo-subheading-opacity {
+  ._mdui-typo-subheading-opacity();
+}
+
+.mdui-typo-body-2,
+.mdui-typo-body-2-opacity {
+  .mdui-typo-body-2();
+}
+.mdui-typo-body-2-opacity {
+  ._mdui-typo-body-2-opacity();
+}
+
+.mdui-typo-body-1,
+.mdui-typo-body-1-opacity {
+  .mdui-typo-body-1();
+}
+.mdui-typo-body-1-opacity {
+  ._mdui-typo-body-1-opacity();
+}
+
+.mdui-typo-caption,
+.mdui-typo-caption-opacity {
+  .mdui-typo-caption();
+}
+.mdui-typo-caption-opacity {
+  ._mdui-typo-caption-opacity();
+}
+
+.mdui-typo {
   line-height: 1.8;
   word-wrap: break-word;
 
@@ -127,7 +127,7 @@
 
   /* a */
   a {
-    .md-text-color(@color-accent-default-name, a200);
+    .mdui-text-color(@color-accent-default-name, a200);
     text-decoration: none;
     position: relative;
     overflow: hidden;
@@ -140,7 +140,7 @@
       left: 0;
       width: 100%;
       height: 1px;
-      .md-background-color(@color-accent-default-name, a200);
+      .mdui-background-color(@color-accent-default-name, a200);
       content: ' ';
       transition: all 0.2s;
       backface-visibility: hidden;
@@ -320,13 +320,13 @@
     .loop-accent-theme((@counter-color - 1));
     @colorName: extract(@globalAccentColors, @counter-color);
 
-    .md-theme-accent-@{colorName} {
-      .md-typo {
+    .mdui-theme-accent-@{colorName} {
+      .mdui-typo {
         a {
-          .md-text-color(@colorName, a200);
+          .mdui-text-color(@colorName, a200);
 
           &:before {
-            .md-background-color(@colorName, a200);
+            .mdui-background-color(@colorName, a200);
           }
         }
       }
@@ -342,8 +342,8 @@
  * ************   Typo dark   ************
  * =============================================================================
  */
-.md-theme-layout-dark when (@globalLayoutDark = true) {
-  .md-typo {
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-typo {
 
     blockquote {
       border-left-color: rgba(255, 255, 255, @opacity-white-divider);

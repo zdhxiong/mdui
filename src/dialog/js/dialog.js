@@ -45,9 +45,9 @@ mdui.Dialog = (function () {
 
     var dialog = current.dialog;
 
-    var dialogTitle = $.children(dialog, '.md-dialog-title', true);
-    var dialogContent = $.children(dialog, '.md-dialog-content', true);
-    var dialogActions = $.children(dialog, '.md-dialog-actions', true);
+    var dialogTitle = $.children(dialog, '.mdui-dialog-title', true);
+    var dialogContent = $.children(dialog, '.mdui-dialog-content', true);
+    var dialogActions = $.children(dialog, '.mdui-dialog-actions', true);
 
     // 调整 dialog 的 top 和 height 值
     dialog.style.height = '';
@@ -59,7 +59,7 @@ mdui.Dialog = (function () {
     dialog.style.top = ((window.innerHeight - dialogHeight) / 2) + 'px';
     dialog.style.height = dialogHeight + 'px';
 
-    // 调整 md-dialog-content 的高度
+    // 调整 mdui-dialog-content 的高度
     var dialogTitleHeight = dialogTitle ? dialogTitle.scrollHeight : 0;
     var dialogActionsHeight = dialogActions ? dialogActions.scrollHeight : 0;
     if (dialogContent) {
@@ -71,7 +71,7 @@ mdui.Dialog = (function () {
    * hashchange 事件出发时关闭提示框
    */
   var hashchangeEvent = function () {
-    if (location.hash.substring(1).indexOf('&md-dialog') < 0) {
+    if (location.hash.substring(1).indexOf('&mdui-dialog') < 0) {
       current.close(true);
     }
   };
@@ -81,7 +81,7 @@ mdui.Dialog = (function () {
    * @param e
    */
   var overlayClick = function (e) {
-    if (e.target.classList.contains('md-overlay')) {
+    if (e.target.classList.contains('mdui-overlay')) {
       current.close();
     }
   };
@@ -115,9 +115,9 @@ mdui.Dialog = (function () {
 
     // 在不支持触摸的设备上美化滚动条
     if (!mdui.support.touch) {
-      var content = $.query('.md-dialog-content', _this.dialog);
+      var content = $.query('.mdui-dialog-content', _this.dialog);
       if (content) {
-        content.classList.add('md-dialog-scrollbar');
+        content.classList.add('mdui-dialog-scrollbar');
       }
     }
 
@@ -185,7 +185,7 @@ mdui.Dialog = (function () {
     }, 100));
 
     // 打开消息框
-    _this.dialog.classList.add('md-dialog-open');
+    _this.dialog.classList.add('mdui-dialog-open');
     _this.state = 'opening';
     $.pluginEvent('open', 'dialog', _this, _this.dialog);
 
@@ -207,14 +207,14 @@ mdui.Dialog = (function () {
     overlay.style.opacity = _this.options.overlay ? '' : 0;
 
     if (_this.options.history) {
-      // 如果 hash 中原来就有 &md-dialod，先删除，避免后退历史纪录后仍然有 &md-dialog 导致无法关闭
+      // 如果 hash 中原来就有 &mdui-dialog，先删除，避免后退历史纪录后仍然有 &mdui-dialog 导致无法关闭
       var hash = location.hash.substring(1);
-      if (hash.indexOf('&md-dialog') > -1) {
-        hash = hash.replace(/&md-dialog/g, '');
+      if (hash.indexOf('&mdui-dialog') > -1) {
+        hash = hash.replace(/&mdui-dialog/g, '');
       }
 
       // 后退按钮关闭对话框
-      location.hash = hash + '&md-dialog';
+      location.hash = hash + '&mdui-dialog';
       $.on(window, 'hashchange', hashchangeEvent);
     }
   };
@@ -230,7 +230,7 @@ mdui.Dialog = (function () {
     }
 
     current = null;
-    _this.dialog.classList.remove('md-dialog-open');
+    _this.dialog.classList.remove('mdui-dialog-open');
     _this.state = 'closing';
     $.pluginEvent('close', 'dialog', _this, _this.dialog);
 

@@ -4,7 +4,7 @@
  * =============================================================================
  */
 
-.md-switch {
+.mdui-switch {
   display: inline-block;
   height: 36px;
   line-height: 36px;
@@ -23,7 +23,7 @@
 }
 
 /* 图标轨道 */
-.md-switch-icon {
+.mdui-switch-icon {
   position: relative;
   display: inline-block;
   vertical-align: middle;
@@ -45,7 +45,7 @@
     left: -3px;
     border-radius: 20px;
     background-color: @color-grey-50;
-    .md-shadow(1);
+    .mdui-shadow(1);
     transition: box-shadow .14s @animation-curve-default,
                 background-color .3s @animation-curve-default,
                 left .3s @animation-curve-default;
@@ -53,7 +53,7 @@
 }
 
 /* 选中状态的图标 */
-.md-switch input[type="checkbox"]:checked + .md-switch-icon {
+.mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon {
   background-color: rgba(red(@color-default-a200), green(@color-default-a200), blue(@color-default-a200), 0.5);
 
   &:before {
@@ -63,7 +63,7 @@
 }
 
 /* 未选中时或禁用时 按下的阴影 */
-.md-switch:active input[type="checkbox"] + .md-switch-icon {
+.mdui-switch:active input[type="checkbox"] + .mdui-switch-icon {
   &:before {
     box-shadow:
       // box-shadow(1)
@@ -77,7 +77,7 @@
 }
 
 /* 已选中时按下的阴影 */
-.md-switch:active input[type="checkbox"]:checked:not(:disabled) + .md-switch-icon {
+.mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon {
   &:before {
     box-shadow:
       // box-shadow(1)
@@ -91,7 +91,7 @@
 }
 
 /* 禁用状态 */
-.md-switch input[type="checkbox"]:disabled + .md-switch-icon {
+.mdui-switch input[type="checkbox"]:disabled + .mdui-switch-icon {
   background-color: rgba(0, 0, 0, 0.12) !important;
 
   &:before {
@@ -113,10 +113,10 @@
 
     @color: 'color-@{colorName}-a200';
 
-    .md-theme-accent-@{colorName} {
+    .mdui-theme-accent-@{colorName} {
 
       // 选中状态的图标
-      .md-switch input[type="checkbox"]:checked + .md-switch-icon {
+      .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon {
         background-color: rgba(red(@@color), green(@@color), blue(@@color), 0.5);
 
         &:before {
@@ -125,7 +125,7 @@
       }
 
       // 已选中时按下的阴影
-      .md-switch:active input[type="checkbox"]:checked:not(:disabled) + .md-switch-icon:before {
+      .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
         box-shadow:
           // box-shadow(1)
           0 2px 1px -1px rgba(0, 0, 0, .2),
@@ -148,10 +148,10 @@
  * =============================================================================
  */
 
-.md-theme-layout-dark when (@globalLayoutDark = true) {
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
 
   // 默认状态
-  .md-switch-icon {
+  .mdui-switch-icon {
     background-color: rgba(255, 255, 255, 0.3);
 
     &:before {
@@ -168,9 +168,9 @@
       @color: 'color-@{colorName}-a200';
       @color-a100: 'color-@{colorName}-a100';
 
-      &.md-theme-accent-@{colorName} {
+      &.mdui-theme-accent-@{colorName} {
 
-        .md-switch input[type="checkbox"]:checked + .md-switch-icon {
+        .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon {
           background-color: rgba(red(@@color-a100), green(@@color-a100), blue(@@color-a100), 0.5);
 
           &:before {
@@ -184,7 +184,7 @@
   }
 
   // 未选中或禁用时 按下的阴影
-  .md-switch:active input[type="checkbox"] + .md-switch-icon:before {
+  .mdui-switch:active input[type="checkbox"] + .mdui-switch-icon:before {
     box-shadow:
       // box-shadow(1)
       0 2px 1px -1px rgba(0, 0, 0, .2),
@@ -196,7 +196,7 @@
   }
 
   // 禁用状态
-  .md-switch input[type="checkbox"]:disabled + .md-switch-icon {
+  .mdui-switch input[type="checkbox"]:disabled + .mdui-switch-icon {
     background-color: rgba(255, 255, 255, 0.1) !important;
 
     &:before {

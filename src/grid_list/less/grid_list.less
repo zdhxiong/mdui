@@ -5,22 +5,22 @@
  */
 
 /* 调整网格边距 */
-.md-grid-list {
+.mdui-grid-list {
   margin: 0 -@grid-list-gutter / 2;
 
-  .md-col,
-  [class*="md-col-xs-"],
-  [class*="md-col-sm-"],
-  [class*="md-col-md-"],
-  [class*="md-col-lg-"],
-  [class*="md-col-xl-"] {
+  .mdui-col,
+  [class*="mdui-col-xs-"],
+  [class*="mdui-col-sm-"],
+  [class*="mdui-col-md-"],
+  [class*="mdui-col-lg-"],
+  [class*="mdui-col-xl-"] {
     padding-left: @grid-list-gutter / 2;
     padding-right: @grid-list-gutter / 2;
   }
 }
 
 /* 单元格 */
-.md-grid-tile {
+.mdui-grid-tile {
   box-sizing: border-box;
   margin-bottom: @grid-list-gutter;
   overflow: hidden;
@@ -33,7 +33,7 @@
 }
 
 /* 操作栏 */
-.md-grid-tile-actions {
+.mdui-grid-tile-actions {
   display: flex;
   align-items: center;
 
@@ -48,50 +48,50 @@
   color: #fff;
   background: rgba(0, 0, 0, 0.2);
 
-  .md-icon {
+  .mdui-icon {
     color: #fff;
   }
 }
 
 /* 操作栏内的文本 */
-.md-grid-tile-text {
+.mdui-grid-tile-text {
   overflow: hidden;
   flex: 1;
 }
 
 /* 标题 */
-.md-grid-tile-title {
+.mdui-grid-tile-title {
   font-size: 16px;
   height: 16px;
   line-height: 16px;
-  .md-text-truncate();
+  .mdui-text-truncate();
 
-  .md-icon {
+  .mdui-icon {
     margin-right: 8px;
   }
 }
 
 /* 副标题 */
-.md-grid-tile-subtitle {
+.mdui-grid-tile-subtitle {
   margin-top: 4px;
   font-size: 12px;
   height: 18px;
   line-height: 18px;
-  .md-text-truncate();
+  .mdui-text-truncate();
 
-  .md-icon {
+  .mdui-icon {
     font-size: 18px;
     margin-right: 8px;
   }
 }
 
 /* 操作栏内的按钮 */
-.md-grid-tile-buttons {
+.mdui-grid-tile-buttons {
   white-space: nowrap;
   margin: -8px;
   flex: none;
 
-  .md-btn {
+  .mdui-btn {
     margin-left: 8px;
     &:first-child {
       margin-left: 0;
@@ -99,29 +99,29 @@
   }
 }
 
-.md-grid-tile-text + .md-grid-tile-buttons {
+.mdui-grid-tile-text + .mdui-grid-tile-buttons {
   margin-left: 8px;
 }
-.md-grid-tile-buttons + .md-grid-tile-text {
+.mdui-grid-tile-buttons + .mdui-grid-tile-text {
   margin-left: 16px;
 }
 
 /* 操作栏位于顶部 */
-.md-grid-tile-actions-top {
+.mdui-grid-tile-actions-top {
   bottom: auto;
   top: 0;
 }
 
 /* 操作栏背景透明 */
-.md-grid-tile-actions-transparent {
+.mdui-grid-tile-actions-transparent {
   background: transparent;
 }
 
 /* 操作栏背景渐变 */
-.md-grid-tile-actions-gradient {
+.mdui-grid-tile-actions-gradient {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0));
 
-  &.md-grid-tile-actions-top {
+  &.mdui-grid-tile-actions-top {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0));
   }
 }

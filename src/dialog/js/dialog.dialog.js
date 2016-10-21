@@ -54,14 +54,14 @@ mdui.dialog = function (options) {
   var buttonsHTML = '';
   if (options.buttons.length) {
     buttonsHTML =
-      '<div class="md-dialog-actions ' +
-        (options.stackedButtons ? 'md-dialog-actions-stacked' : '') +
+      '<div class="mdui-dialog-actions ' +
+        (options.stackedButtons ? 'mdui-dialog-actions-stacked' : '') +
       '">';
     $.each(options.buttons, function (i, button) {
       buttonsHTML +=
         '<a href="javascript:void(0)" ' +
-          'class="md-btn md-ripple md-text-color-primary ' +
-          (button.bold ? 'md-btn-bold' : '') + '">' +
+          'class="mdui-btn mdui-ripple mdui-text-color-primary ' +
+          (button.bold ? 'mdui-btn-bold' : '') + '">' +
           button.text +
         '</a>';
     });
@@ -71,9 +71,9 @@ mdui.dialog = function (options) {
 
   // Dialog 的 HTML
   var HTML =
-    '<div class="md-dialog ' + options.cssClass + '">' +
-      (options.title ? '<div class="md-dialog-title">' + options.title + '</div>' : '') +
-      (options.content ? '<div class="md-dialog-content">' + options.content + '</div>' : '') +
+    '<div class="mdui-dialog ' + options.cssClass + '">' +
+      (options.title ? '<div class="mdui-dialog-title">' + options.title + '</div>' : '') +
+      (options.content ? '<div class="mdui-dialog-content">' + options.content + '</div>' : '') +
       buttonsHTML +
     '</div>';
 
@@ -88,7 +88,7 @@ mdui.dialog = function (options) {
 
   // 绑定按钮事件
   if (options.buttons.length) {
-    var buttons = $.queryAll('.md-dialog-actions .md-btn', inst.dialog);
+    var buttons = $.queryAll('.mdui-dialog-actions .mdui-btn', inst.dialog);
     $.each(buttons, function (i, button) {
       $.on(button, 'click', function () {
         if (typeof options.buttons[i].onClick === 'function') {

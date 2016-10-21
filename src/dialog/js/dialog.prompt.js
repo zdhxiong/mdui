@@ -44,15 +44,15 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
   options = $.extend(DEFAULT, options);
 
   var content =
-    '<div class="md-textfield">' +
-      (label ? '<label class="md-textfield-label">' + label + '</label>' : '') +
+    '<div class="mdui-textfield">' +
+      (label ? '<label class="mdui-textfield-label">' + label + '</label>' : '') +
       (options.type === 'text' ?
-        '<input class="md-textfield-input" type="text" ' +
+        '<input class="mdui-textfield-input" type="text" ' +
           'value="' + options.defaultValue + '" ' +
           (options.maxlength ? ('maxlength="' + options.maxlength + '"') : '') + '/>' :
         '') +
       (options.type === 'textarea' ?
-        '<textarea class="md-textfield-input" ' +
+        '<textarea class="mdui-textfield-input" ' +
           (options.maxlength ? ('maxlength="' + options.maxlength + '"') : '') + '>' +
             options.defaultValue +
         '</textarea>' :
@@ -68,7 +68,7 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
         bold: false,
         close: true,
         onClick: function (inst) {
-          var value = $.query('.md-textfield-input', inst.dialog).value;
+          var value = $.query('.mdui-textfield-input', inst.dialog).value;
           onCancel(value, inst);
         },
       },
@@ -77,19 +77,19 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
         bold: false,
         close: true,
         onClick: function (inst) {
-          var value = $.query('.md-textfield-input', inst.dialog).value;
+          var value = $.query('.mdui-textfield-input', inst.dialog).value;
           onConfirm(value, inst);
         },
       },
     ],
-    cssClass: 'md-dialog-prompt',
+    cssClass: 'mdui-dialog-prompt',
     history: options.history,
     modal: options.modal,
     closeOnEsc: options.closeOnEsc,
     onOpen: function (inst) {
 
       // 初始化输入框
-      var input = $.query('.md-textfield-input', inst.dialog);
+      var input = $.query('.mdui-textfield-input', inst.dialog);
       mdui.updateTextFields(input);
 
       // 聚焦到输入框

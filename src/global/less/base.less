@@ -22,12 +22,12 @@ body {
 }
 
 /* 锁定屏幕 */
-body.md-locked {
+body.mdui-locked {
   overflow: hidden;
 }
 
 /* 遮罩层 */
-.md-overlay {
+.mdui-overlay {
   position: fixed;
   z-index: @z-index-overlay;
   top: -5000px;
@@ -43,13 +43,13 @@ body.md-locked {
   transition-duration: .3s;
 }
 /* 显示遮罩层 */
-.md-overlay-show {
+.mdui-overlay-show {
   opacity: 1;
   visibility: visible;
 }
 
 /* 取消 transition 过渡效果 */
-.md-no-transition {
+.mdui-no-transition {
   transition-property: none !important;
 }
 
@@ -59,7 +59,7 @@ body.md-locked {
  * ************   Global dark   ************
  * =============================================================================
  */
-.md-theme-layout-dark when (@globalLayoutDark = true) {
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
   background-color: @layout-dark-color-3;
   color: #fff;
 }

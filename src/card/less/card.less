@@ -5,20 +5,20 @@
  */
 
 /* 卡片 */
-.md-card {
+.mdui-card {
   box-sizing: border-box;
   border-radius: 2px;
   margin-bottom: 8px;
   overflow: hidden;
   color: #000;
   background-color: #fff;
-  .md-shadow(2);
+  .mdui-shadow(2);
 }
 
 /**
  * ===================== 头部，包含头像、标题、副标题
  */
-.md-card-header {
+.mdui-card-header {
   box-sizing: border-box;
   padding: 16px;
   position: relative;
@@ -26,7 +26,7 @@
 }
 
 /* 卡片头部头像 */
-.md-card-header-avatar {
+.mdui-card-header-avatar {
   height: 40px;
   width: 40px;
   border-radius: 50%;
@@ -34,37 +34,37 @@
 }
 
 /* 卡片头部标题 */
-.md-card-header-title {
+.mdui-card-header-title {
   display: block;
   font-size: 16px;
   line-height: 20px;
   font-weight: 500;
   margin-left: 52px;
-  .md-text-truncate();
+  .mdui-text-truncate();
   opacity: @opacity-black-text;
 }
 
 /* 卡片头部副标题 */
-.md-card-header-subtitle {
+.mdui-card-header-subtitle {
   display: block;
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
   margin-left: 52px;
-  .md-text-truncate();
+  .mdui-text-truncate();
   opacity: @opacity-black-secondary;
 }
 
 /**
  * =========================== 主标题区域
  */
-.md-card-primary {
+.mdui-card-primary {
   position: relative;
   padding: 24px 16px 16px 16px;
 }
 
 /* 主标题区域标题 */
-.md-card-primary-title {
+.mdui-card-primary-title {
   display: block;
   font-size: 24px;
   line-height: 36px;
@@ -72,7 +72,7 @@
 }
 
 /* 主标题区域副标题 */
-.md-card-primary-subtitle {
+.mdui-card-primary-subtitle {
   display: block;
   font-size: 14px;
   line-height: 24px;
@@ -82,7 +82,7 @@
 /**
  * ============================ 内容区域
  */
-.md-card-content {
+.mdui-card-content {
   position: relative;
   padding: 16px;
   line-height: 24px;
@@ -92,12 +92,12 @@
 /**
  * ============================ 卡片菜单
  */
-.md-card-menu {
+.mdui-card-menu {
   position: absolute;
   top: 16px;
   right: 16px;
 
-  .md-btn {
+  .mdui-btn {
     margin-left: 8px;
   }
 }
@@ -105,20 +105,20 @@
 /**
  * =========================== 按钮区域
  */
-.md-card-actions {
-  .md-clearfix();
+.mdui-card-actions {
+  .mdui-clearfix();
   position: relative;
   box-sizing: border-box;
   padding: 8px;
-  .md-divider-top();
+  .mdui-divider-top();
 
-  .md-btn {
+  .mdui-btn {
     margin: 0 8px 0 0;
     max-width: 100%;
-    .md-text-truncate();
+    .mdui-text-truncate();
   }
 
-  .md-btn-icon {
+  .mdui-btn-icon {
     width: @button-height;
     height: @button-height;
     margin: 0 8px;
@@ -126,8 +126,8 @@
 }
 
 /* 使按钮竖向排列 */
-.md-card-actions-stacked {
-  .md-btn {
+.mdui-card-actions-stacked {
+  .mdui-btn {
     margin: 0 0 4px 0;
     display: block;
     &:last-child {
@@ -139,7 +139,7 @@
 /**
  * ============================= 媒体元素区域
  */
-.md-card-media {
+.mdui-card-media {
   position: relative;
   img, video {
     display: block;
@@ -148,12 +148,12 @@
 }
 
 /* 按钮区域紧跟在媒体元素后面，则去除按钮区域的上边框 */
-.md-card-media + .md-card-actions {
+.mdui-card-media + .mdui-card-actions {
   border-top: none;
 }
 
 /* 覆盖在媒体元素上的内容 */
-.md-card-media-covered {
+.mdui-card-media-covered {
   position: absolute;
   left: 0;
   right: 0;
@@ -162,35 +162,35 @@
   color: #fff;
 
   /* 覆盖在媒体元素上的标题 */
-  .md-card-primary-title {
+  .mdui-card-primary-title {
     opacity: @opacity-white-text;
   }
-  .md-card-primary-subtitle {
+  .mdui-card-primary-subtitle {
     opacity: @opacity-white-secondary;
   }
 
   /* 覆盖在媒体元素上的按钮 */
-  .md-card-actions {
+  .mdui-card-actions {
     border: none;
   }
 }
 
 /* 覆盖在媒体元素顶部 */
-.md-card-media-covered-top {
+.mdui-card-media-covered-top {
   bottom: auto;
   top: 0;
 }
 
 /* 覆盖层透明 */
-.md-card-media-covered-transparent {
+.mdui-card-media-covered-transparent {
   background: transparent;
 }
 
 /* 覆盖层渐变 */
-.md-card-media-covered-gradient {
+.mdui-card-media-covered-gradient {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0));
 
-  &.md-card-media-covered-top {
+  &.mdui-card-media-covered-top {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0));
   }
 }
@@ -201,17 +201,17 @@
  * ************   Card dark   ************
  * =============================================================================
  */
-.md-theme-layout-dark when (@globalLayoutDark = true) {
-  .md-card {
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-card {
     background-color: @layout-dark-color-4;
     color: #fff;
   }
 
-  .md-card-actions {
-    .md-divider-top-reverse();
+  .mdui-card-actions {
+    .mdui-divider-top-reverse();
   }
 
-  .md-btn {
+  .mdui-btn {
     color: #fff;
   }
 }

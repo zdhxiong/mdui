@@ -7,12 +7,12 @@
 (function () {
 
   var checkboxHTML =
-    '<label class="md-checkbox">' +
+    '<label class="mdui-checkbox">' +
       '<input type="checkbox"/>' +
-      '<i class="md-checkbox-icon"></i>' +
+      '<i class="mdui-checkbox-icon"></i>' +
     '</label>';
-  var checkboxThHTML = '<th class="md-table-cell-checkbox">' + checkboxHTML + '</th>';
-  var checkboxTdHTML = '<td class="md-table-cell-checkbox">' + checkboxHTML + '</td>';
+  var checkboxThHTML = '<th class="mdui-table-cell-checkbox">' + checkboxHTML + '</th>';
+  var checkboxTdHTML = '<td class="mdui-table-cell-checkbox">' + checkboxHTML + '</td>';
 
   /**
    * Table 表格
@@ -34,7 +34,7 @@
     _this.thRow = $.query('thead tr', _this.table);
     _this.tdRows = $.queryAll('tbody tr', _this.table);
     _this.tdCheckboxs = [];
-    _this.selectable = _this.table.classList.contains('md-table-selectable');
+    _this.selectable = _this.table.classList.contains('mdui-table-selectable');
 
     _this.updateTdCheckbox();
     _this.updateThCheckbox();
@@ -52,7 +52,7 @@
 
     $.each(_this.tdRows, function (i, tdRow) {
       // 移除旧的 checkbox
-      tdCheckbox = $.query('.md-table-cell-checkbox', tdRow);
+      tdCheckbox = $.query('.mdui-table-cell-checkbox', tdRow);
       if (tdCheckbox) {
         tdCheckbox.parentNode.removeChild(tdCheckbox);
       }
@@ -66,13 +66,13 @@
         var checkbox = $.query('input[type="checkbox"]', td);
 
         // 默认选中的行
-        if (tdRow.classList.contains('md-table-row-selected')) {
+        if (tdRow.classList.contains('mdui-table-row-selected')) {
           checkbox.checked = true;
         }
 
         // 绑定事件
         $.on(checkbox, 'change', function () {
-          tdRow.classList[checkbox.checked ? 'add' : 'remove']('md-table-row-selected');
+          tdRow.classList[checkbox.checked ? 'add' : 'remove']('mdui-table-row-selected');
         });
 
         _this.tdCheckboxs.push(checkbox);
@@ -88,7 +88,7 @@
     var thCheckbox;
 
     // 移除旧的 checkbox
-    thCheckbox = $.query('.md-table-cell-checkbox', _this.thRow);
+    thCheckbox = $.query('.mdui-table-cell-checkbox', _this.thRow);
     if (thCheckbox) {
       thCheckbox.parentNode.removeChild(thCheckbox);
     }
@@ -110,7 +110,7 @@
       });
 
       $.each(_this.tdRows, function (i, row) {
-        row.classList[thCheckbox.checked ? 'add' : 'remove']('md-table-row-selected');
+        row.classList[thCheckbox.checked ? 'add' : 'remove']('mdui-table-row-selected');
       });
 
     });
@@ -125,17 +125,17 @@
     var ths = $.queryAll('th', _this.thRow);
     $.each(ths, function (i, th) {
       $.each(_this.tdRows, function (j, tdRow) {
-        var method = th.classList.contains('md-table-col-numeric') ? 'add' : 'remove';
+        var method = th.classList.contains('mdui-table-col-numeric') ? 'add' : 'remove';
         var td = $.queryAll('td', tdRow)[i];
         if (td) {
-          td.classList[method]('md-table-col-numeric');
+          td.classList[method]('mdui-table-col-numeric');
         }
       });
     });
   };
 
   // 实例化表格
-  var tables = $.queryAll('.md-table');
+  var tables = $.queryAll('.mdui-table');
   $.each(tables, function (i, table) {
     var inst = new Table(table);
     $.setData(table, 'mdui.table', inst);
@@ -150,7 +150,7 @@
     if (arguments.length === 1) {
       tables.push(arguments[0]);
     } else {
-      tables = $.queryAll('.md-table');
+      tables = $.queryAll('.mdui-table');
     }
 
     $.each(tables, function (i, table) {

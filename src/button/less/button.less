@@ -5,7 +5,7 @@
  */
 
 /* 默认为 Flat 扁平按钮 */
-.md-btn {
+.mdui-btn {
   color: inherit;
   background: transparent;
   border: none;
@@ -52,23 +52,23 @@
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
-  &:not(.md-ripple):active {
+  &:not(.mdui-ripple):active {
     background-color: rgba(0, 0, 0, 0.165);
   }
 
   // 带背景色的按钮 hover、active 时增加透明度
-  &[class*="md-color-"]:hover {
+  &[class*="mdui-color-"]:hover {
     opacity: 0.87;
   }
-  &:not(.md-ripple)[class*="md-color-"]:active {
+  &:not(.mdui-ripple)[class*="mdui-color-"]:active {
     opacity: 0.76;
   }
 }
 
 /* 按钮内的图标 */
-.md-btn {
-  .md-icon-left,
-  .md-icon-right {
+.mdui-btn {
+  .mdui-icon-left,
+  .mdui-icon-right {
     &,
     &::before {
       height: inherit;
@@ -76,19 +76,19 @@
       font-size: 1.3em;
     }
   }
-  .md-icon-left {
+  .mdui-icon-left {
     float: left;
     margin-right: 0.4em;
   }
-  .md-icon-right {
+  .mdui-icon-right {
     float: right;
     margin-left: 0.4em;
   }
 }
 
 /* 禁用按钮 */
-.md-btn[disabled],
-.md-btn.md-disabled {
+.mdui-btn[disabled],
+.mdui-btn.mdui-disabled {
   // 扁平按钮
   &,
   &:hover,
@@ -96,16 +96,16 @@
   &:focus {
     background-color: transparent;
     color: rgba(0, 0, 0, .26) !important;
-    .md-shadow(0);
+    .mdui-shadow(0);
     cursor: default;
-    .md-icon {
+    .mdui-icon {
       color: rgba(0, 0, 0, .26) !important;
     }
   }
 
   // 浮动按钮
-  &.md-btn-raised,
-  &.md-btn-fab {
+  &.mdui-btn-raised,
+  &.mdui-btn-fab {
     &,
     &:hover,
     &:active,
@@ -116,30 +116,30 @@
 }
 
 /* 加粗按钮文本 */
-.md-btn-bold {
+.mdui-btn-bold {
   font-weight: bold;
 }
 
-input.md-btn[type="submit"] {
+input.mdui-btn[type="submit"] {
   -webkit-appearance: none;
 }
 
 /* Raised button 浮动按钮 */
-.md-btn-raised {
-  .md-shadow(2);
+.mdui-btn-raised {
+  .mdui-shadow(2);
 
   &:hover {
-    .md-shadow(4);
+    .mdui-shadow(4);
   }
 
   &:active {
-    .md-shadow(8);
+    .mdui-shadow(8);
   }
 }
 
 /* 图标按钮 */
-.md-btn-icon,
-.md-btn-icon-mini {
+.mdui-btn-icon,
+.mdui-btn-icon-mini {
   border-radius: 50%;
   font-size: 24px;
   margin-left: 0;
@@ -148,27 +148,27 @@ input.md-btn[type="submit"] {
   overflow: hidden;
   line-height: normal;
 
-  &.md-ripple {
+  &.mdui-ripple {
     transform: translateZ(0);
   }
 }
 
-.md-btn-icon {
+.mdui-btn-icon {
   height: 32px;
   width: 32px;
   min-width: 32px;
 }
 
-.md-btn-icon-mini {
+.mdui-btn-icon-mini {
   height: 24px;
   width: 24px;
   min-width: 24px;
 }
 
 /* 按钮内容的图标 */
-.md-btn-icon,
-.md-btn-icon-mini {
-  .md-icon {
+.mdui-btn-icon,
+.mdui-btn-icon-mini {
+  .mdui-icon {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -180,7 +180,7 @@ input.md-btn[type="submit"] {
 
 
 /* 按钮 100% 宽度 */
-&.md-btn-block {
+&.mdui-btn-block {
   display: block;
   width: 100%;
 }
@@ -191,29 +191,29 @@ input.md-btn[type="submit"] {
  * ************   Button dark   ************
  * =============================================================================
  */
-.md-theme-layout-dark when (@globalLayoutDark = true) {
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
 
   // 透明按钮 hover、active 时颜色变浅
-  .md-btn {
+  .mdui-btn {
     // 透明按钮 hover、active 时颜色变浅
     &:hover {
       background-color: rgba(255, 255, 255, 0.1);
     }
-    &:not(.md-ripple):active {
+    &:not(.mdui-ripple):active {
       background-color: rgba(255, 255, 255, 0.165);
     }
 
     // 带背景的按钮 hover、active 时增加透明度
-    &[class*="md-color-"]:hover {
+    &[class*="mdui-color-"]:hover {
       opacity: 0.87;
     }
-    &:not(.md-ripple)[class*="md-color-"]:active {
+    &:not(.mdui-ripple)[class*="mdui-color-"]:active {
       opacity: 0.76;
     }
 
     // 禁用按钮
     &[disabled],
-    &.md-disabled {
+    &.mdui-disabled {
       // 扁平按钮
       &,
       &:hover,
@@ -221,14 +221,14 @@ input.md-btn[type="submit"] {
       &:focus {
         background-color: transparent;
         color: rgba(255, 255, 255, 0.3) !important;
-        .md-icon {
+        .mdui-icon {
           color: rgba(255, 255, 255, 0.3) !important;
         }
       }
 
       // 浮动按钮
-      &.md-btn-raised,
-      &.md-btn-fab {
+      &.mdui-btn-raised,
+      &.mdui-btn-fab {
         &,
         &:hover,
         &:active,

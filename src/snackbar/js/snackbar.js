@@ -40,8 +40,8 @@
    */
   var closeOnOutsideClick = function (e) {
     if (
-      !e.target.classList.contains('md-snackbar') &&
-      !$.parents(e.target, '.md-snackbar').length
+      !e.target.classList.contains('mdui-snackbar') &&
+      !$.parents(e.target, '.mdui-snackbar').length
     ) {
       current.close();
     }
@@ -74,20 +74,20 @@
     ) {
       buttonColorStyle = 'style="color:' + _this.options.buttonColor + '"';
     }else if (_this.options.buttonColor !== '') {
-      buttonColorClass = 'md-text-color-' + _this.options.buttonColor;
+      buttonColorClass = 'mdui-text-color-' + _this.options.buttonColor;
     }
 
     // 添加 HTML
     var tpl =
-      '<div class="md-snackbar ' +
-          (mdui.screen.mdUp() ? 'md-snackbar-desktop' : 'md-snackbar-mobile') +
+      '<div class="mdui-snackbar ' +
+          (mdui.screen.mdUp() ? 'mdui-snackbar-desktop' : 'mdui-snackbar-mobile') +
       '">' +
-        '<div class="md-snackbar-text">' +
+        '<div class="mdui-snackbar-text">' +
           _this.options.message +
         '</div>' +
         (_this.options.buttonText ?
           ('<a href="javascript:void(0)" ' +
-          'class="md-snackbar-action md-btn md-ripple md-ripple-white ' +
+          'class="mdui-snackbar-action mdui-btn mdui-ripple mdui-ripple-white ' +
             buttonColorClass + '" ' +
             buttonColorStyle + '>' +
             _this.options.buttonText +
@@ -102,7 +102,7 @@
     $.transform(_this.snackbar, 'translateY(' + _this.snackbar.clientHeight + 'px)');
     _this.snackbar.style.left = (document.body.clientWidth - _this.snackbar.clientWidth) / 2 + 'px';
     $.getStyle(_this.snackbar);
-    _this.snackbar.classList.add('md-snackbar-transition');
+    _this.snackbar.classList.add('mdui-snackbar-transition');
   }
 
   /**
@@ -135,7 +135,7 @@
 
       // 有按钮时绑定事件
       if (_this.options.buttonText) {
-        var action = $.query('.md-snackbar-action', _this.snackbar);
+        var action = $.query('.mdui-snackbar-action', _this.snackbar);
         $.on(action, 'click', function () {
           _this.options.onButtonClick();
           if (_this.options.closeOnButtonClick) {
@@ -146,7 +146,7 @@
 
       // 点击 Snackbar 的事件
       $.on(_this.snackbar, 'click', function (e) {
-        if (!e.target.classList.contains('md-snackbar-action')) {
+        if (!e.target.classList.contains('mdui-snackbar-action')) {
           _this.options.onClick();
         }
       });

@@ -37,11 +37,11 @@ mdui.Drawer = (function () {
     _this.options = $.extend(DEFAULT, (opts || {}));
 
     _this.overlay = false; // 是否显示着遮罩层
-    _this.position = _this.drawer.classList.contains('md-drawer-right') ? 'right' : 'left';
+    _this.position = _this.drawer.classList.contains('mdui-drawer-right') ? 'right' : 'left';
 
-    if (_this.drawer.classList.contains('md-drawer-close')) {
+    if (_this.drawer.classList.contains('mdui-drawer-close')) {
       _this.state = 'closed';
-    } else if (_this.drawer.classList.contains('md-drawer-open')) {
+    } else if (_this.drawer.classList.contains('mdui-drawer-open')) {
       _this.state = 'opened';
     } else if (mdui.screen.mdUp()) {
       _this.state = 'opened';
@@ -62,7 +62,7 @@ mdui.Drawer = (function () {
         }
 
         // 没有强制关闭，则状态为打开状态
-        if (!_this.drawer.classList.contains('md-drawer-close')) {
+        if (!_this.drawer.classList.contains('mdui-drawer-close')) {
           _this.state = 'opened';
         }
       }
@@ -71,13 +71,13 @@ mdui.Drawer = (function () {
       else {
         if (!_this.overlay && _this.state === 'opened') {
           // 抽屉栏处于强制打开状态，添加遮罩
-          if (_this.drawer.classList.contains('md-drawer-open')) {
+          if (_this.drawer.classList.contains('mdui-drawer-open')) {
             mdui.showOverlay(100);
             _this.overlay = true;
 
             mdui.lockScreen();
 
-            $.one($.query('.md-overlay'), 'click', function () {
+            $.one($.query('.mdui-overlay'), 'click', function () {
               _this.close();
             });
           } else {
@@ -91,7 +91,7 @@ mdui.Drawer = (function () {
     // 不支持 touch 的设备默认隐藏滚动条，鼠标移入时显示滚动条；支持 touch 的设备会自动隐藏滚动条
     if (!mdui.support.touch) {
       _this.drawer.style['overflow-y'] = 'hidden';
-      _this.drawer.classList.add('md-drawer-scrollbar');
+      _this.drawer.classList.add('mdui-drawer-scrollbar');
     }
 
     // 绑定关闭按钮事件
@@ -113,14 +113,14 @@ mdui.Drawer = (function () {
       return;
     }
 
-    _this.drawer.classList.remove('md-drawer-close');
-    _this.drawer.classList.add('md-drawer-open');
+    _this.drawer.classList.remove('mdui-drawer-close');
+    _this.drawer.classList.add('mdui-drawer-open');
 
     _this.state = 'opening';
     $.pluginEvent('open', 'drawer', _this, _this.drawer);
 
     if (!_this.options.overlay) {
-      document.body.classList.add('md-drawer-body-' + _this.position);
+      document.body.classList.add('mdui-drawer-body-' + _this.position);
     }
 
     $.transitionEnd(_this.drawer, function () {
@@ -134,7 +134,7 @@ mdui.Drawer = (function () {
 
       mdui.lockScreen();
 
-      $.one($.query('.md-overlay'), 'click', function () {
+      $.one($.query('.mdui-overlay'), 'click', function () {
         _this.close();
       });
     }
@@ -150,13 +150,13 @@ mdui.Drawer = (function () {
       return;
     }
 
-    _this.drawer.classList.add('md-drawer-close');
-    _this.drawer.classList.remove('md-drawer-open');
+    _this.drawer.classList.add('mdui-drawer-close');
+    _this.drawer.classList.remove('mdui-drawer-open');
     _this.state = 'closing';
     $.pluginEvent('close', 'drawer', _this, _this.drawer);
 
     if (!_this.options.overlay) {
-      document.body.classList.remove('md-drawer-body-' + _this.position);
+      document.body.classList.remove('mdui-drawer-body-' + _this.position);
     }
 
     $.transitionEnd(_this.drawer, function () {

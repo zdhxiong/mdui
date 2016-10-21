@@ -109,9 +109,9 @@ mdui.Tooltip = (function () {
     // 创建 Tooltip HTML
     var guid = mdui.guid();
     _this.tooltip = $.dom(
-      '<div class="md-tooltip ' +
-        (mdui.support.touch ? 'md-tooltip-mobile' : 'md-tooltip-desktop') +
-        '" id="md-tooltip-' + guid + '">' +
+      '<div class="mdui-tooltip ' +
+        (mdui.support.touch ? 'mdui-tooltip-mobile' : 'mdui-tooltip-desktop') +
+        '" id="mdui-tooltip-' + guid + '">' +
         _this.options.content + '</div>'
     )[0];
     document.body.appendChild(_this.tooltip);
@@ -156,7 +156,7 @@ mdui.Tooltip = (function () {
     setPosition(_this);
 
     _this.timeoutId = setTimeout(function () {
-      _this.tooltip.classList.add('md-tooltip-open');
+      _this.tooltip.classList.add('mdui-tooltip-open');
       _this.state = 'opening';
       $.pluginEvent('open', 'tooltip', _this, _this.target);
 
@@ -174,7 +174,7 @@ mdui.Tooltip = (function () {
     var _this = this;
 
     clearTimeout(_this.timeoutId);
-    _this.tooltip.classList.remove('md-tooltip-open');
+    _this.tooltip.classList.remove('mdui-tooltip-open');
     _this.state = 'closing';
     $.pluginEvent('close', 'tooltip', _this, _this.target);
 

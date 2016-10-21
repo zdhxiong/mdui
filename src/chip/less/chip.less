@@ -6,7 +6,7 @@
 
 @chip-height: 32px;
 
-.md-chip {
+.mdui-chip {
   box-sizing: border-box;
   display: inline-block;
   height: @chip-height;
@@ -16,7 +16,7 @@
   cursor: pointer;
   user-select: none;
   margin: 2px 0;
-  .md-hoverable(2);
+  .mdui-hoverable(2);
 
   &:active {
     background-color: #d6d6d6;
@@ -24,7 +24,7 @@
 }
 
 /* 左侧的图标 */
-.md-chip-icon {
+.mdui-chip-icon {
   height: @chip-height;
   width: @chip-height;
   border-radius: 50%;
@@ -37,13 +37,13 @@
   text-align: center;
   background-color: #989898;
   color: #ffffff;
-  .md-icon {
+  .mdui-icon {
     color: #ffffff;
   }
 }
 
 /* 文本 */
-.md-chip-title {
+.mdui-chip-title {
   height: @chip-height;
   line-height: @chip-height;
   padding-left: 12px;
@@ -54,7 +54,7 @@
 }
 
 /* 删除按钮 */
-.md-chip-delete {
+.mdui-chip-delete {
   height: 24px;
   width: 24px;
   opacity: .54;
@@ -81,8 +81,8 @@
  * ************   Chip dark   ************
  * =============================================================================
  */
-.md-theme-layout-dark when (@globalLayoutDark = true) {
-  .md-chip {
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-chip {
     background-color: #484848;
     &:active {
       background-color: #5d5d5d;

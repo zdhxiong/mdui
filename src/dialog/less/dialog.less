@@ -4,7 +4,7 @@
  * =============================================================================
  */
 
-.md-dialog {
+.mdui-dialog {
   box-sizing: border-box;
   position: fixed;
   left: 0;
@@ -36,22 +36,22 @@
     width: 80%;
   }
 
-  .md-shadow(24);
+  .mdui-shadow(24);
 }
 
 /* 打开提示框 */
-.md-dialog-open {
+.mdui-dialog-open {
   opacity: 1;
   transform: scale(1);
 }
 
 // 美化滚动条
-.md-dialog-scrollbar {
-  .md-scrollbar-beautify();
+.mdui-dialog-scrollbar {
+  .mdui-scrollbar-beautify();
 }
 
 /* 提示框标题 */
-.md-dialog-title {
+.mdui-dialog-title {
   box-sizing: border-box;
   font-size: 20px;
   line-height: 24px;
@@ -59,12 +59,12 @@
   text-align: left;
 }
 /* 标题固定在顶部 */
-.md-dialog>.md-dialog-title {
+.mdui-dialog>.mdui-dialog-title {
   padding: 24px 24px 20px 24px;
 }
 
 /* 提示框内容 */
-.md-dialog-content {
+.mdui-dialog-content {
   box-sizing: border-box;
   font-size: 15px;
   color: rgba(0, 0, 0, 0.7);
@@ -73,38 +73,38 @@
   overflow-y: auto;
 }
 /* 标题随内容滚动 */
-.md-dialog-content>.md-dialog-title {
+.mdui-dialog-content>.mdui-dialog-title {
   padding-bottom: 20px;
 }
 
-.md-dialog-title + .md-dialog-content {
+.mdui-dialog-title + .mdui-dialog-content {
   padding-top: 0;
 }
 
 /* 提示框底部按钮 */
-.md-dialog-actions {
+.mdui-dialog-actions {
   box-sizing: border-box;
   padding: 8px;
   text-align: right;
-  .md-btn {
+  .mdui-btn {
     min-width: 64px;
     margin-left: 8px;
-    .md-text-color(@color-accent-default-name);
+    .mdui-text-color(@color-accent-default-name);
     &:first-child {
       margin-left: 0;
     }
   }
 }
 /* 底部按钮滚随内容动 */
-.md-dialog-content>.md-dialog-actions {
+.mdui-dialog-content>.mdui-dialog-actions {
   margin: 0 -24px -24px -24px;
   padding-top: 32px;
 }
 
 /* 使提示框底部按钮竖排 */
-.md-dialog-actions-stacked {
+.mdui-dialog-actions-stacked {
   padding: 8px 0 8px 0;
-  .md-btn {
+  .mdui-btn {
     height: 48px;
     line-height: 48px !important;
     margin: 0;
@@ -125,10 +125,10 @@
     .loop-accent-theme((@counter-color - 1));
     @colorName: extract(@globalAccentColors, @counter-color);
 
-    .md-theme-accent-@{colorName} {
-      .md-dialog-actions {
-        .md-btn {
-          .md-text-color(@colorName);
+    .mdui-theme-accent-@{colorName} {
+      .mdui-dialog-actions {
+        .mdui-btn {
+          .mdui-text-color(@colorName);
         }
       }
     }
@@ -143,15 +143,15 @@
  * ************   Dialog dark   ************
  * =============================================================================
  */
-.md-theme-layout-dark when (@globalLayoutDark = true) {
-  .md-dialog {
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-dialog {
     background-color: @layout-dark-color-4;
     color: #fff;
   }
-  .md-dialog-content {
+  .mdui-dialog-content {
     color: rgba(255, 255, 255, 0.7);
   }
-  .md-dialog-scrollbar {
-    .md-scrollbar-beautify(dark);
+  .mdui-dialog-scrollbar {
+    .mdui-scrollbar-beautify(dark);
   }
 }

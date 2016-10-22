@@ -6,9 +6,10 @@
 
 .mdui-radio {
   display: inline-block;
+  position: relative;
+  padding-left: 36px;
   height: 36px;
   line-height: 36px;
-  padding: 0 8px;
   cursor: pointer;
   user-select: none;
 
@@ -24,13 +25,14 @@
 
 /* 图标外圈 */
 .mdui-radio-icon {
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: 9px;
   box-sizing: border-box;
   display: inline-block;
   vertical-align: middle;
   width: 18px;
   height: 18px;
-  margin: 0 8px;
   border-radius: 18px;
   border: 2px solid rgba(0, 0, 0, 0.54);
   transition: all .3s @animation-curve-default,

@@ -6,9 +6,10 @@
 
 .mdui-checkbox {
   display: inline-block;
+  position: relative;
+  padding-left: 36px;
   height: 36px;
   line-height: 36px;
-  padding: 0 8px;
   cursor: pointer;
   user-select: none;
 
@@ -24,12 +25,13 @@
 
 /* 透明的圆形，用于生成圆形阴影 */
 .mdui-checkbox-icon {
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: 9px;
   display: inline-block;
   vertical-align: middle;
   width: 18px;
   height: 18px;
-  margin: 0 8px;
   border-radius: 18px;
   background-color: transparent;
   border: none;

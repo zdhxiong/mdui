@@ -145,8 +145,7 @@ input.mdui-btn[type="submit"] {
 }
 
 /* 图标按钮 */
-.mdui-btn-icon,
-.mdui-btn-icon-mini {
+.mdui-btn-icon {
   border-radius: 50%;
   font-size: 24px;
   margin-left: 0;
@@ -154,27 +153,10 @@ input.mdui-btn[type="submit"] {
   padding: 0;
   overflow: hidden;
   line-height: normal;
+  height: 36px;
+  width: 36px;
+  min-width: 36px;
 
-  &.mdui-ripple {
-    transform: translateZ(0);
-  }
-}
-
-.mdui-btn-icon {
-  height: 32px;
-  width: 32px;
-  min-width: 32px;
-}
-
-.mdui-btn-icon-mini {
-  height: 24px;
-  width: 24px;
-  min-width: 24px;
-}
-
-/* 按钮内容的图标 */
-.mdui-btn-icon,
-.mdui-btn-icon-mini {
   .mdui-icon {
     position: absolute;
     top: 50%;
@@ -183,8 +165,11 @@ input.mdui-btn[type="submit"] {
     line-height: 24px;
     width: 24px;
   }
-}
 
+  &.mdui-ripple {
+    transform: translateZ(0);
+  }
+}
 
 /* 按钮 100% 宽度 */
 &.mdui-btn-block {

@@ -10,7 +10,6 @@
   width: 100%;
   background-color: #fff;
   border: 1px solid @color-black-divider;
-  margin-bottom: 16px;
   .mdui-shadow(2);
 
   tbody {
@@ -26,7 +25,7 @@
     text-align: left;
     padding: 12px 28px;
     box-sizing: border-box;
-    .mdui-divider-bottom();
+    .mdui-divider-bottom-light();
 
     &:last-child {
       padding-right: 24px;
@@ -92,13 +91,11 @@
   width: 100%;
   overflow-x: auto;
   border: 1px solid @color-black-divider;
-  margin-bottom: 16px;
   .mdui-shadow(2);
 
   .mdui-table {
     .mdui-shadow(0);
     border: none;
-    margin-bottom: 0;
   }
 }
 
@@ -112,15 +109,6 @@
   background-color: @color-grey-100;
 }
 
-/* 卡片中的表格去除下边距 */
-.mdui-card {
-  .mdui-table {
-    margin-bottom: 0;
-  }
-}
-
-
-
 
 /**
  * =============================================================================
@@ -133,7 +121,7 @@
     border: 1px solid @color-white-divider;
 
     th, td {
-      .mdui-divider-bottom-reverse();
+      .mdui-divider-bottom-dark();
     }
 
     th {

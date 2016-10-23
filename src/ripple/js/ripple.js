@@ -62,7 +62,6 @@
     if (
 
       // el.classList.contains('mdui-btn-icon') ||
-      // el.classList.contains('mdui-btn-icon-mini') ||
       // el.classList.contains('mdui-btn-fab') ||
       // el.classList.contains('mdui-btn-fab-mini')
       false

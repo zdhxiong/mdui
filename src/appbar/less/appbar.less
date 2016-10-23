@@ -18,9 +18,24 @@
   .mdui-color(@color-default-name);
   .mdui-shadow(4);
 
+  &>* {
+    display: flex;
+  }
+
+  // 应用栏默认有背景色，应用栏中的按钮，hover 和 active 时颜色变浅
+  &:not(.mdui-color-transparent) {
+    .mdui-btn {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      &:active {
+        background-color: rgba(255, 255, 255, 0.165);
+      }
+    }
+  }
+
   a {
     user-select: none;
-    display: block;
     text-decoration: none;
     color: inherit;
     margin: 0;
@@ -28,20 +43,14 @@
     .mdui-text-truncate();
   }
 
-  .mdui-btn-icon,
-  .mdui-btn-icon-mini {
+  .mdui-btn-icon {
+    width: @appbar-icon-width;
+    height: @appbar-icon-width;
+
     .mdui-icon {
       height: 24px;
       line-height: 24px;
     }
-  }
-  .mdui-btn-icon {
-    width: @appbar-icon-width;
-    height: @appbar-icon-width;
-  }
-  .mdui-btn-icon-mini {
-    width: @appbar-icon-mini-width;
-    height: @appbar-icon-mini-width;
   }
 }
 
@@ -104,12 +113,6 @@ body.mdui-appbar-fixed{
         margin-left: 0;
       }
     }
-    .mdui-btn-icon-mini {
-      margin: 0 (@appbar-height - @appbar-icon-mini-width) / 2;
-      & + .mdui-btn-icon-mini {
-        margin-left: 0;
-      }
-    }
   }
   .mdui-appbar-logo{
     img{
@@ -147,6 +150,12 @@ body.mdui-appbar-fixed{
   .loop-primary-theme(length(@globalPrimaryColors));
 }
 
+
+/* 透明背景应用栏 */
+.mdui-appbar.mdui-color-transparent {
+  .mdui-shadow(0);
+  .mdui-text-color('black');
+}
 
 
 /**

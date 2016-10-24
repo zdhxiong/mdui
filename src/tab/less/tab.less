@@ -4,7 +4,54 @@
  * =============================================================================
  */
 
+/* 选项卡 */
 .mdui-tab {
-  display: block;
-  width: 100%;
+  display: flex;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-height: 48px;
+  max-height: 72px;
+  padding: 0;
+  margin: 0 auto;
+  .mdui-color(indigo);
+  white-space: nowrap;
+  .mdui-scrollbar-beautify(dark);
+
+  li {
+    display: block;
+    text-align: center;
+    min-height: 48px;
+    max-height: 72px;
+    line-height: 48px;
+    cursor: pointer;
+    list-style-type: none;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-width: 80px;
+    user-select: none;
+    padding: 0 24px;
+
+    @media (max-width: @screen-xs-max) {
+      padding: 0 12px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+/* 可横向滚动的选项卡 */
+.mdui-tab-scrollable {
+  padding-left: 56px;
+
+  @media (max-width: @screen-xs-max) {
+    padding-left: 60px;
+  }
+
 }

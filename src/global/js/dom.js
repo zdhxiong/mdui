@@ -101,7 +101,7 @@ var $ = {};
    * @param name 队列名
    */
   $.dequeue = function (name) {
-    if (_queueData[name].length) {
+    if (typeof _queueData[name] !== 'undefined' && _queueData[name].length) {
       (_queueData[name].shift())();
     }
   };

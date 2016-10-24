@@ -188,4 +188,9 @@ $.ready(function () {
     document.body.classList.add('mdui-loaded');
   }, 0);
 
+  // 支持触摸时在 body 添加 mdui-support-touch
+  if (mdui.support.touch) {
+    document.body.classList.add('mdui-support-touch');
+  }
+
 });

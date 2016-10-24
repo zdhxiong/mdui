@@ -2,9 +2,11 @@
  * =============================================================================
  * ************   Tab   ************
  * =============================================================================
+ *
+ * 在手机上选项卡始终平分或可滚动，在平板以上的设备上默认左对齐，可以选择居中对齐，或全宽等分
  */
 
-/* 选项卡 */
+/* 选项卡，默认的选项卡为全宽 */
 .mdui-tab {
   display: flex;
   position: relative;
@@ -16,39 +18,107 @@
   margin: 0 auto;
   .mdui-color(indigo);
   white-space: nowrap;
-  .mdui-scrollbar-beautify(dark);
+
+  body:not(.mdui-support-touch) & {
+    .mdui-scrollbar-beautify(dark);
+  }
 
   li {
-    display: block;
+    box-sizing: border-box;
+    display: flex;
     text-align: center;
     min-height: 48px;
     max-height: 72px;
-    line-height: 48px;
     cursor: pointer;
     list-style-type: none;
     text-transform: uppercase;
     text-overflow: ellipsis;
     overflow: hidden;
-    min-width: 80px;
     user-select: none;
-    padding: 0 24px;
+    padding: 12px;
+    min-width: 72px;
+    // 手机上始终等分选项卡
+    flex: 1;
 
-    @media (max-width: @screen-xs-max) {
-      padding: 0 12px;
+    // 使图标和文本垂直排列
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    // 平板或以上设备
+    @media (min-width: @screen-sm-min) {
+      min-width: 99px;
+      max-width: 264px;
+
+      // 手机上 padding 12px，平板/pc上 padding 24px
+      padding: 12px 24px;
+
+      // 平板/pc上选项卡左对齐
+      flex: none;
+    }
+
+    @media (min-width: @screen-md-min) {
+      min-width: 112px;
+    }
+
+    @media (min-width: @screen-lg-min) {
+      min-width: 136px;
+    }
+
+    @media (min-width: @screen-xl-min) {
+      min-width: 160px;
     }
 
     a {
+      display: flex;
       color: inherit;
       text-decoration: none;
       width: 100%;
       height: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .mdui-icon {
+      margin-bottom: 8px;
     }
   }
 }
 
+/* 选项卡居中 */
+.mdui-tab-centered {
+  @media (min-width: @screen-sm-min) {
+    &:before {
+      content: ' ';
+      flex-grow: 1;
+    }
+    &:after {
+      content: ' ';
+      flex-grow: 1;
+    }
+    li {
+      flex: none;
+    }
+  }
+}
+
+/* 选项卡始终全宽等分 */
+.mdui-tab-full-width {
+  li {
+    max-width: none;
+    flex: 1;
+  }
+}
+
+
 /* 可横向滚动的选项卡 */
 .mdui-tab-scrollable {
   padding-left: 56px;
+
+  li {
+    flex: none;
+  }
 
   @media (max-width: @screen-xs-max) {
     padding-left: 60px;

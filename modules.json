@@ -176,6 +176,15 @@
     ],
     "dependencies": []
   },
+  "tab": {
+    "js": [
+      "src/tab/js/tab.js"
+    ],
+    "less": [
+      "src/tab/less/tab.less"
+    ],
+    "dependencies": []
+  },
   "grid_list": {
     "js": [],
     "less": [

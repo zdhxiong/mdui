@@ -23,18 +23,21 @@
     .mdui-scrollbar-beautify(dark);
   }
 
-  li {
-    box-sizing: border-box;
+  a {
     display: flex;
+    color: inherit;
+    text-decoration: none;
+
+    box-sizing: border-box;
     text-align: center;
     min-height: 48px;
     max-height: 72px;
     cursor: pointer;
-    list-style-type: none;
     text-transform: uppercase;
     text-overflow: ellipsis;
     overflow: hidden;
     user-select: none;
+    opacity: 0.7;
     padding: 12px;
     min-width: 72px;
     // 手机上始终等分选项卡
@@ -44,6 +47,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    &.mdui-tab-active {
+      opacity: 1;
+    }
+
+    &.mdui-tab-disabled {
+      opacity: 0.38;
+      cursor: default;
+    }
 
     // 平板或以上设备
     @media (min-width: @screen-sm-min) {
@@ -69,19 +81,12 @@
       min-width: 160px;
     }
 
-    a {
-      display: flex;
-      color: inherit;
-      text-decoration: none;
-      width: 100%;
-      height: 100%;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+    label {
+      cursor: pointer;
     }
 
-    .mdui-icon {
-      margin-bottom: 8px;
+    .mdui-icon + label {
+      margin-top: 8px;
     }
   }
 }
@@ -97,7 +102,7 @@
       content: ' ';
       flex-grow: 1;
     }
-    li {
+    a {
       flex: none;
     }
   }
@@ -105,7 +110,7 @@
 
 /* 选项卡始终全宽等分 */
 .mdui-tab-full-width {
-  li {
+  a {
     max-width: none;
     flex: 1;
   }
@@ -116,7 +121,7 @@
 .mdui-tab-scrollable {
   padding-left: 56px;
 
-  li {
+  a {
     flex: none;
   }
 
@@ -124,4 +129,14 @@
     padding-left: 60px;
   }
 
+}
+
+/* 下划线指示器 */
+.mdui-tab-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background-color: @color-default-a200;
+  will-change: left, right;
+  transition: all .2s;
 }

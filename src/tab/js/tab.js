@@ -9,7 +9,7 @@ mdui.Tab = (function () {
   var DEFAULT = {
     trigget: 'click',       // 触发方式 click: 鼠标点击切换 hover: 鼠标悬浮切换
     animation: false,       // 切换时是否显示动画
-    loop: false,             // 为true时，在最后一个选项卡时调用 next() 方法会回到第一个选项卡
+    loop: false,            // 为true时，在最后一个选项卡时调用 next() 方法会回到第一个选项卡
   };
 
   /**
@@ -68,10 +68,15 @@ mdui.Tab = (function () {
   Tab.prototype._setIndicatorPosition = function () {
     var _this = this;
 
-    _this.indicator.style.left = _this.tabs[_this.activeIndex].offsetLeft + 'px';
+    var tabOffset = $.offset(_this.tab);
+    var activeTabOffset = $.offset(_this.tabs[_this.activeIndex]);
+    console.log(tabOffset);
+    console.log(activeTabOffset);
+
+    _this.indicator.style.left = activeTabOffset.left - tabOffset.left + 'px';
     _this.indicator.style.right =
       parseFloat($.getStyle(_this.tab, 'width').replace('px', '')) -
-      _this.tabs[_this.activeIndex].offsetLeft -
+      activeTabOffset.left + tabOffset.left -
       parseFloat($.getStyle(_this.tabs[_this.activeIndex], 'width').replace('px', '')) + 'px';
   };
 
@@ -90,8 +95,8 @@ mdui.Tab = (function () {
   };
 
   /**
-   * 显示指定需要的选项卡
-   * @param index 从0开始的序号
+   * 显示指定序号或指定id的选项卡
+   * @param index 从0开始的序号，或以#开头的id
    */
   Tab.prototype.show = function (index) {
 

@@ -21,12 +21,9 @@ mdui.Tab = (function () {
    */
   function Tab(selector, opts) {
     var _this = this;
-    _this.indicator = $.dom('<div class="mdui-tab-indicator"></div>')[0];
+    var trigger;
 
     _this.tab = $.dom(selector)[0];
-
-    // 选项卡下面添加的指示符
-    _this.tab.appendChild(_this.indicator);
 
     // 已通过自定义属性实例化过，不再重复实例化
     var oldInst = $.getData(_this.tab, 'mdui.tab');
@@ -36,6 +33,20 @@ mdui.Tab = (function () {
 
     _this.options = $.extend(DEFAULT, (opts || {}));
     _this.tabs = $.children(_this.tab, 'a');
+
+    _this.indicator = $.dom('<div class="mdui-tab-indicator"></div>')[0];
+
+    // 选项卡下面添加的指示符
+    _this.tab.appendChild(_this.indicator);
+
+    // 触发方式
+    if (mdui.support.touch) {
+      trigger = 'touchend';
+    } else if (_this.options.trigger === 'hover') {
+      trigger = 'mouseenter';
+    } else {
+      trigger = 'click';
+    }
 
     // 根据 url hash 获取默认激活的选项卡
     var hash = location.hash;
@@ -73,7 +84,7 @@ mdui.Tab = (function () {
 
     // 监听点击选项卡事件
     $.each(_this.tabs, function (i, tab) {
-      $.on(tab, _this.options.trigger, function (e) {
+      $.on(tab, trigger, function (e) {
         if (tab.classList.contains('mdui-tab-disabled')) {
           e.preventDefault();
           return;
@@ -113,7 +124,10 @@ mdui.Tab = (function () {
 
       // 选项卡激活状态
       if (i === _this.activeIndex) {
-        $.pluginEvent('change', 'tab', _this, _this.tab);
+        $.pluginEvent('change', 'tab', _this, _this.tab, {
+          index: _this.activeIndex,
+          id: targetId.indexOf('#') === 0 ? targetId.substr(0, 1) : null,
+        });
         $.pluginEvent('show', 'tab', _this, tab);
 
         if (!tab.classList.contains('mdui-tab-active')) {

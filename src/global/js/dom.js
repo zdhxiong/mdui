@@ -50,13 +50,17 @@ var $ = {};
     if ($.isArray(obj)) {
       // Array
       for (i = 0; i < obj.length; i++) {
-        callback(i, obj[i]);
+        if (callback(i, obj[i]) === false) {
+          break;
+        }
       }
     } else {
       // Object
       for (prop in obj) {
         if (obj.hasOwnProperty(prop)) {
-          callback(prop, obj[prop]);
+          if (callback(prop, obj[prop]) === false) {
+            break;
+          }
         }
       }
     }

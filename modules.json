@@ -178,7 +178,11 @@
   },
   "tab": {
     "js": [
-      "src/tab/js/tab.js"
+      "src/tab/js/tab.js",
+      "src/tab/js/tab.data.js"
+    ],
+    "jquery": [
+      "src/tab/js/tab.jquery.js"
     ],
     "less": [
       "src/tab/less/tab.less"

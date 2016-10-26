@@ -16,17 +16,17 @@
   max-height: 72px;
   padding: 0;
   margin: 0 auto;
-  .mdui-color(indigo);
   white-space: nowrap;
 
   body:not(.mdui-support-touch) & {
-    .mdui-scrollbar-beautify(dark);
+    .mdui-scrollbar-beautify();
   }
 
   a {
     display: flex;
     color: inherit;
     text-decoration: none;
+    font-size: 14px;
 
     box-sizing: border-box;
     text-align: center;
@@ -48,8 +48,16 @@
     justify-content: center;
     align-items: center;
 
+    .mdui-icon {
+      opacity: 0.7;
+    }
+
     &.mdui-tab-active {
+      color: @color-default-500;
       opacity: 1;
+      .mdui-icon {
+        opacity: 1;
+      }
     }
 
     &.mdui-tab-disabled {
@@ -138,7 +146,17 @@
   position: absolute;
   bottom: 0;
   height: 2px;
-  background-color: @color-default-a200;
-  will-change: left, right;
-  transition: all .2s;
+  background-color: @color-default-500;
+  will-change: left, width;
+  transition: all .35s @animation-curve-default;
+}
+
+/* 带背景色的选项卡 */
+.mdui-tab[class*="mdui-color-"] {
+  .mdui-tab-active {
+    color: inherit;
+  }
+  .mdui-tab-indicator {
+    background-color: @color-default-a200;
+  }
 }

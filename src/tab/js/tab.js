@@ -92,7 +92,9 @@ mdui.Tab = (function () {
 
         _this.activeIndex = i;
         _this._setActive();
+      });
 
+      $.on(tab, 'click', function (e) {
         // 阻止链接的默认点击动作
         if (tab.getAttribute('href').indexOf('#') === 0) {
           e.preventDefault();

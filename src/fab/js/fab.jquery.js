@@ -25,14 +25,14 @@
     return typeof value === 'undefined' ? this : value;
   }
 
-  var old = $.fn.mdFab;
+  var old = $.fn.mduiFab;
 
-  $.fn.mdFab = Plugin;
+  $.fn.mduiFab = Plugin;
 
   // NO CONFLICT
   // ===========
-  $.fn.mdFab.noConflict = function () {
-    $.fn.mdFab = old;
+  $.fn.mduiFab.noConflict = function () {
+    $.fn.mduiFab = old;
     return this;
   };
 })();

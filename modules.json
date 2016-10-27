@@ -241,6 +241,9 @@
       "src/tooltip/js/tooltip.js",
       "src/tooltip/js/tooltip.data.js"
     ],
+    "jquery": [
+      "src/tooltip/js/tooltip.jquery.js"
+    ],
     "less": [
       "src/tooltip/less/tooltip.less"
     ],

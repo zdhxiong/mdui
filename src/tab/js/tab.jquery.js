@@ -1,6 +1,6 @@
 /**
  * =============================================================================
- * ************   Drawer jQuery   ************
+ * ************   Tab jQuery   ************
  * =============================================================================
  */
 
@@ -11,10 +11,10 @@
 
     this.each(function () {
       var $this = $(this);
-      var inst = $this.data('mdui.drawer');
+      var inst = $this.data('mdui.tab');
 
       if (!inst) {
-        $this.data('mdui.drawer', (inst = new mdui.Drawer(this, option)));
+        $this.data('mdui.tab', (inst = new mdui.Dialog(this, option)));
       }
 
       if (typeof option === 'string') {
@@ -25,14 +25,14 @@
     return typeof value === 'undefined' ? this : value;
   }
 
-  var old = $.fn.mduiDrawer;
+  var old = $.fn.mduiTab;
 
-  $.fn.mduiDrawer = Plugin;
+  $.fn.mduiTab = Plugin;
 
   // NO CONFLICT
   // ===========
-  $.fn.mduiDrawer.noConflict = function () {
-    $.fn.mduiDrawer = old;
+  $.fn.mduiTab.noConflict = function () {
+    $.fn.mduiTab = old;
     return this;
   };
 })(jQuery);

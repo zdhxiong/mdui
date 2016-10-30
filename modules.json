@@ -265,6 +265,15 @@
     ],
     "dependencies": []
   },
+  "bottom_nav": {
+    "js": [
+      "src/bottom_nav/js/bottom_nav.js"
+    ],
+    "less": [
+      "src/bottom_nav/less/bottom_nav.less"
+    ],
+    "dependencies": []
+  },
   "core_outro": {
     "js": [
       "src/global/js/wrap_end.js"

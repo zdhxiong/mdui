@@ -59,7 +59,7 @@ mdui.Tab = (function () {
       });
     }
 
-    // li 元素含 mdui-tab-active 的默认激活
+    // 含 mdui-tab-active 的元素默认激活
     if (typeof _this.activeIndex === 'undefined') {
       $.each(_this.tabs, function (i, tab) {
         if (tab.classList.contains('mdui-tab-active')) {

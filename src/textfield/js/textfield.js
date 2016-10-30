@@ -150,17 +150,21 @@
    */
   mdui.updateTextFields = function () {
     var textfields = [];
+    var input;
 
     if (arguments.length === 1) {
       textfields.push(arguments[0]);
     } else {
-      textfields = $.queryAll('.mdui-textfield-input');
+      textfields = $.queryAll('.mdui-textfield');
     }
 
-    $.each(textfields, function (i, input) {
-      $.trigger(input, 'input', {
-        reInit: true,
-      });
+    $.each(textfields, function (i, textfield) {
+      input = $.query('.mdui-textfield-input', textfield);
+      if (input) {
+        $.trigger(input, 'input', {
+          reInit: true,
+        });
+      }
     });
   };
 

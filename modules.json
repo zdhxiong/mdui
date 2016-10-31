@@ -274,6 +274,14 @@
     ],
     "dependencies": []
   },
+  "progress": {
+    "js": [],
+    "less": [
+      "src/progress/less/linear.less",
+      "src/progress/less/circular.less"
+    ],
+    "dependencies": []
+  },
   "core_outro": {
     "js": [
       "src/global/js/wrap_end.js"

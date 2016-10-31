@@ -1,0 +1,112 @@
+/**
+ * =============================================================================
+ * ************   Progress Linear 线性进度条   ************
+ * =============================================================================
+ */
+
+/* 线性进度条 */
+.mdui-progress-linear {
+  position: relative;
+  height: 4px;
+  display: block;
+  width: 100%;
+  background-color: rgba(red(@color-default-500), green(@color-default-500), blue(@color-default-500), .2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+/* 确定进度的线性进度条 */
+.mdui-progress-linear-determinate {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: @color-default-500;
+  transition: width .3s linear;
+}
+
+/* 不确定进度的线性进度条 */
+.mdui-progress-linear-indeterminate {
+  background-color: @color-default-500;
+
+  &:before {
+    content: ' ';
+    position: absolute;
+    background-color: inherit;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    will-change: left, width;
+    animation: mdui-progress-linear-indeterminate 2s linear infinite;
+  }
+
+  &:after {
+    content: ' ';
+    position: absolute;
+    background-color: inherit;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    will-change: left, width;
+    animation: mdui-progress-linear-indeterminate-short 2s linear infinite;
+  }
+}
+
+@keyframes mdui-progress-linear-indeterminate {
+  0% {
+    left: 0;
+    width: 0;
+  }
+  50% {
+    left: 30%;
+    width: 70%;
+  }
+  75% {
+    left: 100%;
+    width: 0;
+  }
+}
+
+@keyframes mdui-progress-linear-indeterminate-short {
+  0% {
+    left: 0;
+    width: 0;
+  }
+  50% {
+    left: 0;
+    width: 0;
+  }
+  75% {
+    left: 0;
+    width: 25%;
+  }
+  100% {
+    left: 100%;
+    width: 0;
+  }
+}
+
+
+/**
+ * =============================================================================
+ * ************   Dialog 强调色   ************
+ * =============================================================================
+ */
+& {
+  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
+    .loop-primary-theme((@counter-color - 1));
+    @colorName: extract(@globalPrimaryColors, @counter-color);
+
+    .mdui-theme-primary-@{colorName} {
+      .mdui-progress-linear {
+        background-color: rgba(red(@colorName), green(@colorName), blue(@colorName), .2);
+      }
+      .mdui-progress-linear-determinate,
+      .mdui-progress-linear-indeterminate {
+        .mdui-background-color(@colorName);
+      }
+    }
+
+  }
+  .loop-primary-theme(length(@globalPrimaryColors));
+}

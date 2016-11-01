@@ -67,13 +67,22 @@
 
 /* 每一行前面的复选框 */
 .mdui-table-cell-checkbox {
-  padding-left: 8px !important;
+  padding-left: 24px !important;
   padding-top: 0 !important;
   padding-bottom: 0!important;
 
+  .mdui-checkbox {
+    margin-top: 7px;
+  }
+
   & + td,
   & + th {
-    padding-left: 8px !important;
+    padding-left: 6px !important;
+  }
+}
+th.mdui-table-cell-checkbox {
+  .mdui-checkbox {
+    margin-top: 11px;
   }
 }
 

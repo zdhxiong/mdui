@@ -13,7 +13,7 @@
 }
 
 /* 面板 */
-.mdui-expansion-panel-collapsed {
+.mdui-expansion-panel-item {
   .mdui-divider-bottom-dark();
 
   &:last-child {
@@ -31,9 +31,8 @@
   padding: 0 24px;
   font-size: 15px;
   cursor: pointer;
-  transition-property: height, line-height;
-  transition-duration: .3s;
-  transition-timing-function: @animation-curve-default;
+  will-change: height, line-height, background-color;
+  transition: all .3s @animation-curve-default;
 
   &:active {
     background-color: @color-grey-200;

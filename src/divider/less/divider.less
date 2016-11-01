@@ -6,61 +6,61 @@
 
 /* 添加边框作为分割线，在亮色和深色背景时自动切换颜色 */
 .mdui-divider-top {
-  .mdui-divider-top-light();
+  .mdui-divider-top-dark();
 
   .mdui-theme-layout-dark & {
-    .mdui-divider-top-dark();
+    .mdui-divider-top-light();
   }
 }
 .mdui-divider-bottom {
-  .mdui-divider-bottom-light();
+  .mdui-divider-bottom-dark();
 
   .mdui-theme-layout-dark & {
-    .mdui-divider-bottom-dark();
+    .mdui-divider-bottom-light();
   }
 }
 .mdui-divider-left {
-  .mdui-divider-left-light();
+  .mdui-divider-left-dark();
 
   .mdui-theme-layout-dark & {
-    .mdui-divider-left-dark();
+    .mdui-divider-left-light();
   }
 }
 .mdui-divider-right {
-  .mdui-divider-right-light();
+  .mdui-divider-right-dark();
 
   .mdui-theme-layout-dark & {
-    .mdui-divider-right-dark();
+    .mdui-divider-right-light();
   }
 }
 
 
 /* 添加边框作为分割线，用于亮色背景 */
 .mdui-divider-top-light {
-  .mdui-divider-top-light();
+  .mdui-divider-top-dark();
 }
 .mdui-divider-bottom-light {
-  .mdui-divider-bottom-light();
+  .mdui-divider-bottom-dark();
 }
 .mdui-divider-left-light {
-  .mdui-divider-left-light();
+  .mdui-divider-left-dark();
 }
 .mdui-divider-right-light {
-  .mdui-divider-right-light();
+  .mdui-divider-right-dark();
 }
 
 /* 添加边框作为分割线，用于深色背景 */
 .mdui-divider-top-dark {
-  .mdui-divider-top-dark();
+  .mdui-divider-top-light();
 }
 .mdui-divider-bottom-dark {
-  .mdui-divider-bottom-dark();
+  .mdui-divider-bottom-light();
 }
 .mdui-divider-left-dark {
-  .mdui-divider-left-dark();
+  .mdui-divider-left-light();
 }
 .mdui-divider-right-dark {
-  .mdui-divider-right-dark();
+  .mdui-divider-right-light();
 }
 
 /* 分割线元素 */
@@ -72,15 +72,16 @@
   border: none;
 }
 .mdui-divider {
-  background-color: rgb(0, 0, 0, @opacity-black-divider);
+  background-color: rgba(0, 0, 0, @opacity-black-divider);
 
   .mdui-theme-layout-dark & {
-    background-color: rgb(255, 255, 255, @opacity-white-divider);
+    background-color: rgba(255, 255, 255, @opacity-white-divider);
   }
 }
 .mdui-divider-light {
-  background-color: rgb(0, 0, 0, @opacity-black-divider);
+  background-color: rgba(255, 255, 255, @opacity-white-divider);
 }
 .mdui-divider-dark {
-  background-color: rgb(255, 255, 255, @opacity-white-divider);
+  background-color: rgba(0, 0, 0, @opacity-black-divider);
 }
+

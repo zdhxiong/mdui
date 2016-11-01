@@ -2,10 +2,11 @@
  * =============================================================================
  * ************   Progress Linear 线性进度条   ************
  * =============================================================================
+ * 注：UC 浏览器不支持在伪元素上使用动画，只能新建DOM元素，为避免手动编写的 HTML 太复杂，使用 JS 来生成
  */
 
 /* 线性进度条 */
-.mdui-progress-linear {
+.mdui-progress {
   position: relative;
   height: 4px;
   display: block;
@@ -16,7 +17,7 @@
 }
 
 /* 确定进度的线性进度条 */
-.mdui-progress-linear-determinate {
+.mdui-progress-determinate {
   position: absolute;
   top: 0;
   left: 0;
@@ -26,7 +27,7 @@
 }
 
 /* 不确定进度的线性进度条 */
-.mdui-progress-linear-indeterminate {
+.mdui-progress-indeterminate {
   background-color: @color-default-500;
 
   &:before {
@@ -37,7 +38,7 @@
     left: 0;
     bottom: 0;
     will-change: left, width;
-    animation: mdui-progress-linear-indeterminate 2s linear infinite;
+    animation: mdui-progress-indeterminate 2s linear infinite;
   }
 
   &:after {
@@ -48,11 +49,11 @@
     left: 0;
     bottom: 0;
     will-change: left, width;
-    animation: mdui-progress-linear-indeterminate-short 2s linear infinite;
+    animation: mdui-progress-indeterminate-short 2s linear infinite;
   }
 }
 
-@keyframes mdui-progress-linear-indeterminate {
+@keyframes mdui-progress-indeterminate {
   0% {
     left: 0;
     width: 0;
@@ -67,7 +68,7 @@
   }
 }
 
-@keyframes mdui-progress-linear-indeterminate-short {
+@keyframes mdui-progress-indeterminate-short {
   0% {
     left: 0;
     width: 0;
@@ -89,20 +90,21 @@
 
 /**
  * =============================================================================
- * ************   Dialog 强调色   ************
+ * ************   Progress linear 主色   ************
  * =============================================================================
  */
 & {
   .loop-primary-theme(@counter-color) when (@counter-color > 0) {
     .loop-primary-theme((@counter-color - 1));
     @colorName: extract(@globalPrimaryColors, @counter-color);
+    @color: 'color-@{colorName}-500';
 
     .mdui-theme-primary-@{colorName} {
-      .mdui-progress-linear {
-        background-color: rgba(red(@colorName), green(@colorName), blue(@colorName), .2);
+      .mdui-progress {
+        background-color: rgba(red(@@color), green(@@color), blue(@@color), .2);
       }
-      .mdui-progress-linear-determinate,
-      .mdui-progress-linear-indeterminate {
+      .mdui-progress-determinate,
+      .mdui-progress-indeterminate {
         .mdui-background-color(@colorName);
       }
     }

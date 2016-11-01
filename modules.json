@@ -277,8 +277,8 @@
   "progress": {
     "js": [],
     "less": [
-      "src/progress/less/linear.less",
-      "src/progress/less/circular.less"
+      "src/progress/less/progress.less",
+      "src/progress/less/spinner.less"
     ],
     "dependencies": []
   },

@@ -282,6 +282,15 @@
     ],
     "dependencies": []
   },
+  "expansion_panel": {
+    "js": [
+      "src/expansion_panel/js/expansion_panel.js"
+    ],
+    "less": [
+      "src/expansion_panel/less/expansion_panel.less"
+    ],
+    "dependencies": []
+  },
   "core_outro": {
     "js": [
       "src/global/js/wrap_end.js"

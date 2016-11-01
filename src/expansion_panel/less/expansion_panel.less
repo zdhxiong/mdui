@@ -1,0 +1,72 @@
+/**
+ * =============================================================================
+ * ************   Expansion panel 可扩展面板   ************
+ * =============================================================================
+ */
+
+/* 可扩展面板 */
+.mdui-expansion-panel {
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #fff;
+  .mdui-shadow(2);
+}
+
+/* 面板 */
+.mdui-expansion-panel-collapsed {
+  .mdui-divider-bottom-dark();
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+/* 面板头部 */
+.mdui-expansion-panel-header {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  height: 48px;
+  line-height: 48px;
+  padding: 0 24px;
+  font-size: 15px;
+  cursor: pointer;
+  transition-property: height, line-height;
+  transition-duration: .3s;
+  transition-timing-function: @animation-curve-default;
+
+  &:active {
+    background-color: @color-grey-200;
+  }
+
+  .mdui-expansion-panel-open & {
+    height: 64px;
+    line-height: 64px;
+  }
+}
+
+/* 展开收起的图标 */
+.mdui-expansion-panel-icon {
+  position: absolute;
+  right: 24px;
+  top: 12px;
+  color: rgba(0, 0, 0, 0.38);
+  user-select: none;
+  will-change: transform, top;
+  transform: rotate(0);
+  transition: all .3s @animation-curve-default;
+
+  .mdui-expansion-panel-open & {
+    transform: rotate(180deg);
+    top: 20px;
+  }
+}
+
+/* 面板内容 */
+.mdui-expansion-panel-content {
+  display: none;
+
+  .mdui-expansion-panel-open & {
+    display: block;
+  }
+}

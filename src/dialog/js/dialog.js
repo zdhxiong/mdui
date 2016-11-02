@@ -45,9 +45,9 @@ mdui.Dialog = (function () {
 
     var dialog = current.dialog;
 
-    var dialogTitle = $.children(dialog, '.mdui-dialog-title', true);
-    var dialogContent = $.children(dialog, '.mdui-dialog-content', true);
-    var dialogActions = $.children(dialog, '.mdui-dialog-actions', true);
+    var dialogTitle = $.child(dialog, '.mdui-dialog-title');
+    var dialogContent = $.child(dialog, '.mdui-dialog-content');
+    var dialogActions = $.child(dialog, '.mdui-dialog-actions');
 
     // 调整 dialog 的 top 和 height 值
     dialog.style.height = '';

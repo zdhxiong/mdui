@@ -584,28 +584,45 @@ var $ = {};
    * 获取含指定 css 的直接子元素数组
    * @param dom
    * @param selector
-   * @param singleNode 是否只返回第一个元素
    * @returns {Array}
    */
-  $.children = function (dom, selector, singleNode) {
+  $.children = function (dom, selector) {
     var children = [];
     var childNodes = dom.childNodes;
 
     if (!selector) {
-      return singleNode ? childNodes[0] : $.toArray(childNodes);
+      return $.toArray(childNodes);
     }
 
     for (var i = 0; i < childNodes.length; i++) {
       if (childNodes[i].nodeType === 1 && $.is(childNodes[i], selector)) {
-        if (singleNode) {
-          return childNodes[i];
-        }
-
         children.push(childNodes[i]);
       }
     }
 
     return children.length ? children : null;
+  };
+
+  /**
+   * 获取含指定 css 的第一个直接子元素
+   * @param dom
+   * @param selector
+   * @returns {*}
+   */
+  $.child = function (dom, selector) {
+    var childNodes = dom.childNodes;
+
+    if (!selector) {
+      return childNodes[0];
+    }
+
+    for (var i = 0; i < childNodes.length; i++) {
+      if (childNodes[i].nodeType === 1 && $.is(childNodes[i], selector)) {
+        return childNodes[i];
+      }
+    }
+
+    return null;
   };
 
   /**

@@ -34,8 +34,8 @@ mdui.Fab = (function () {
     _this.options = $.extend(DEFAULT, (opts || {}));
     _this.state = 'closed';
 
-    _this.btn = $.children(_this.fab, '.mdui-fab', true);
-    _this.dial = $.children(_this.fab, '.mdui-fab-dial', true);
+    _this.btn = $.child(_this.fab, '.mdui-fab');
+    _this.dial = $.child(_this.fab, '.mdui-fab-dial');
     _this.dialBtns = $.queryAll('.mdui-fab', _this.dial);
 
     // 支持 touch 时，始终在 touchstart 时切换，不受 trigger 参数影响

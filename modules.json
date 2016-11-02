@@ -287,6 +287,9 @@
       "src/expansion_panel/js/expansion_panel.js",
       "src/expansion_panel/js/expansion_panel.data.js"
     ],
+    "jquery": [
+      "src/expansion_panel/js/expansion_panel.jquery.js"
+    ],
     "less": [
       "src/expansion_panel/less/expansion_panel.less"
     ],

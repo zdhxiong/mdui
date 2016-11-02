@@ -4,26 +4,42 @@
  * =============================================================================
  */
 
+// 普通菜单宽度基数
+@menu-simple-x: 56px;
+
+// 级联菜单宽度基数
+@menu-cascade-x: 64px;
+
+/* 菜单 */
 .mdui-menu {
   box-sizing: border-box;
   padding: 8px 0;
   font-size: 16px;
+  .mdui-shadow(8);
+  border-radius: 2px;
+  width: @menu-simple-x * 3;
+  background-color: #fff;
 }
 
+/* 菜单条目 */
 .mdui-menu-item {
+  position: relative;
+  display: block;
+  color: inherit;
+  text-decoration: none;
   height: 48px;
   line-height: 48px;
-  padding-left: 16px;
+  padding: 0 16px;
+  transition: background-color .2s @animation-curve-fast-out-linear-in;
+  .mdui-text-truncate();
+
+  &:hover {
+    background-color: @color-grey-200;
+  }
 }
 
+/* 菜单中的图标 */
 .mdui-menu-item-icon {
-
-}
-
-.mdui-menu-item-title {
-
-}
-
-.mdui-menu-item-helper {
-
+  color: @color-black-icon;
+  padding-right: 18px;
 }

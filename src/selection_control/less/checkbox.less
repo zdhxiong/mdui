@@ -46,7 +46,7 @@
     left: 0;
     width: 18px;
     height: 18px;
-    border: 2px solid rgba(0, 0, 0, 0.54);
+    border: 2px solid @color-black-icon;
     border-radius: 2px;
     transition: all .3s @animation-curve-default;
     z-index: 0;
@@ -89,14 +89,14 @@
 /* 禁用状态的图标 */
 .mdui-checkbox input[type="checkbox"]:disabled + .mdui-checkbox-icon {
   &:after {
-    border-color: rgba(0, 0, 0, 0.26);
+    border-color: @color-black-icon-disabled;
   }
 }
 
 /* 禁用且选中状态 */
 .mdui-checkbox input[type="checkbox"]:disabled:checked + .mdui-checkbox-icon {
   &:after {
-    background-color: rgba(0, 0, 0, 0.26) !important;
+    background-color: @color-black-icon-disabled !important;
     border-color: transparent !important;
   }
 }
@@ -168,14 +168,14 @@
   // 禁用状态
   .mdui-checkbox input[type="checkbox"]:disabled + .mdui-checkbox-icon {
     &:after {
-      border-color: rgba(255, 255, 255, 0.3);
+      border-color: @color-white-icon-disabled;
     }
   }
 
   // 禁用且选中状态
   .mdui-checkbox input[type="checkbox"]:disabled:checked + .mdui-checkbox-icon {
     &:after {
-      background-color: rgba(255, 255, 255, 0.3) !important;
+      background-color: @color-white-icon-disabled !important;
       border-color: transparent !important;
     }
   }

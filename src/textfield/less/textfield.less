@@ -39,7 +39,7 @@
   }
 
   &[disabled] {
-    color: rgba(0, 0, 0, @opacity-black-disabled);
+    color: @color-black-disabled;
   }
 }
 
@@ -80,7 +80,7 @@ textarea.mdui-textfield-input {
   .mdui-icon {
     position: absolute;
     bottom: 8px;
-    color: rgba(0, 0, 0, @icon-opacity-black);
+    color: @color-black-icon;
     padding: 6px;
 
     ~ .mdui-textfield-label,
@@ -175,10 +175,10 @@ textarea.mdui-textfield-input {
   .mdui-textfield-label,
   .mdui-textfield-input,
   .mdui-textfield-input::-webkit-input-placeholder {
-    color: rgba(0, 0, 0, @opacity-black-disabled);
+    color: @color-black-disabled;
   }
   .mdui-textfield-input {
-    border-bottom: 1px dotted rgba(0, 0, 0, @opacity-black-disabled);
+    border-bottom: 1px dotted @color-black-disabled;
   }
 }
 
@@ -189,7 +189,7 @@ textarea.mdui-textfield-input {
   right: 8px;
   font-size: 12px;
   bottom: 8px;
-  color: rgba(0, 0, 0, @opacity-black-secondary);
+  color: @color-black-secondary;
   height: 12px;
   line-height: 12px;
 }
@@ -268,7 +268,7 @@ textarea.mdui-textfield-input {
     }
 
     &[disabled] {
-      color: rgba(255, 255, 255, @opacity-white-disabled);
+      color: @color-white-disabled;
     }
   }
 
@@ -285,6 +285,6 @@ textarea.mdui-textfield-input {
 
   // 字数统计颜色
   .mdui-textfield-counter {
-    color: rgba(255, 255, 255, @opacity-white-secondary);
+    color: @color-white-secondary;
   }
 }

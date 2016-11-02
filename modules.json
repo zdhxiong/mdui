@@ -295,6 +295,12 @@
     ],
     "dependencies": []
   },
+  "menu": {
+    "js": [],
+    "less": [
+      "src/menu/less/menu.less"
+    ]
+  },
   "core_outro": {
     "js": [
       "src/global/js/wrap_end.js"

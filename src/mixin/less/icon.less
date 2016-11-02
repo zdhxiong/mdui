@@ -2,7 +2,7 @@
 .mdui-icon-color(@colorName) {
   @color: 'color-@{colorName}-500';
   & when (@colorName = black) {
-    color: rgba(0, 0, 0, @icon-opacity-black);
+    color: @color-black-icon;
   }
   & when not (@colorName = black) {
     color: @@color;
@@ -15,9 +15,9 @@
   @color-is-dark: 'color-@{colorName}-500-is-dark';
 
   & when (@@color-is-dark = true) {
-    color: rgba(red(@@color), green(@@color), blue(@@color), @icon-opacity-black-disabled);
+    color: rgba(red(@@color), green(@@color), blue(@@color), @opacity-black-icon-disabled);
   }
   & when (@@color-is-dark = false) {
-    color: rgba(red(@@color), green(@@color), blue(@@color), @icon-opacity-white-disabled);
+    color: rgba(red(@@color), green(@@color), blue(@@color), @opacity-white-icon-disabled);
   }
 }

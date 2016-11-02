@@ -8,12 +8,13 @@
 .mdui-expansion-panel {
   box-sizing: border-box;
   width: 100%;
-  background-color: #fff;
   .mdui-shadow(2);
 }
 
 /* 面板项 */
 .mdui-expansion-panel-item {
+  background-color: #fff;
+  color: @color-black-text;
   height: 48px;
   overflow: hidden;
   .mdui-divider-bottom-dark();
@@ -42,9 +43,9 @@
   padding: 0 24px;
   font-size: 15px;
   cursor: pointer;
-  background-color: #fff;
   will-change: height, line-height, background-color;
-  transition: all .3s @animation-curve-default;
+  transition: all .3s @animation-curve-default,
+              background-color .2s @animation-curve-fast-out-linear-in;
 
   &:active {
     background-color: @color-grey-200;
@@ -61,7 +62,6 @@
 .mdui-expansion-panel-header-title {
   width: 36%;
   float: left;
-  color: rgba(0, 0, 0, @opacity-black-text);
   font-weight: 500;
 }
 
@@ -69,7 +69,7 @@
 .mdui-expansion-panel-header-summary {
   width: 56%;
   float: left;
-  color: rgba(0, 0, 0, @opacity-black-secondary);
+  color: @color-black-secondary;
 }
 
 /* 展开收起的图标 */
@@ -77,7 +77,7 @@
   position: absolute;
   right: 24px;
   top: 12px;
-  color: rgba(0, 0, 0, @opacity-black-disabled);
+  color: @color-black-icon;
   user-select: none;
   will-change: transform, top;
   transform: rotate(0);
@@ -124,5 +124,33 @@
   .mdui-expansion-panel-item-open {
     margin-top: 16px;
     margin-bottom: 16px;
+  }
+}
+
+
+/**
+ * =============================================================================
+ * ************   Expansion panel dark   ************
+ * =============================================================================
+ */
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-expansion-panel-item {
+    background-color: @layout-dark-color-3;
+    color: #fff;
+    .mdui-divider-bottom-light();
+  }
+  .mdui-expansion-panel-header {
+    &:active {
+      background-color: @color-grey-800;
+    }
+  }
+  .mdui-expansion-panel-header-summary {
+    color: @color-white-secondary;
+  }
+  .mdui-expansion-panel-header-icon {
+    color: @color-white-icon;
+  }
+  .mdui-expansion-panel-actions {
+    .mdui-divider-top-light();
   }
 }

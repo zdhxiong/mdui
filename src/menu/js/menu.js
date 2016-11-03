@@ -14,8 +14,8 @@ mdui.Menu = (function () {
     delay: 0,                 // 菜单的触发延时，仅在 trigger 为 hover 时有效
     position: 'bottom',       // 菜单位置 top、bottom
     align: 'left',            // 菜单和触发它的元素的对齐方式
-    submenuTrigger: 'hover',  // 子菜单的触发方式
-    submenuDelay: 200,        // 子菜单的触发延时，仅在 submenuTrigger 为 hover 有效
+    subMenuTrigger: 'hover',  // 子菜单的触发方式
+    subMenuDelay: 200,        // 子菜单的触发延时，仅在 submenuTrigger 为 hover 有效
   };
 
   /**

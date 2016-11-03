@@ -20,6 +20,7 @@
   width: @menu-simple-x * 3;
   background-color: #fff;
   list-style: none;
+  display: none;
 
   // 菜单项目
   &>li>a {
@@ -42,6 +43,12 @@
   .mdui-menu {
     display: none;
     .mdui-shadow(9);
+  }
+
+  // 菜单中的分隔线，默认上下有 8px 的外边距
+  .mdui-divider {
+    margin-top: 8px;
+    margin-bottom: 8px;
   }
 }
 
@@ -69,6 +76,16 @@
 /* 菜单中的辅助文本或图标 */
 .mdui-menu-helper {
   float: right;
+}
+
+/* 有子菜单的条目的图标 */
+.mdui-menu-more {
+  float: right;
+  &:before {
+    content: '►';
+    font-size: 70%;
+    color: @color-black-icon;
+  }
 }
 
 

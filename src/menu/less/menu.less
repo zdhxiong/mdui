@@ -19,27 +19,144 @@
   border-radius: 2px;
   width: @menu-simple-x * 3;
   background-color: #fff;
+  list-style: none;
+
+  // 菜单项目
+  &>li>a {
+    position: relative;
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 16px;
+    user-select: none;
+    .mdui-text-truncate();
+
+    &:hover {
+      background-color: @color-grey-200;
+    }
+  }
+
+  // 子菜单默认隐藏，阴影更深
+  .mdui-menu {
+    display: none;
+    .mdui-shadow(9);
+  }
 }
 
-/* 菜单条目 */
-.mdui-menu-item {
-  position: relative;
-  display: block;
-  color: inherit;
-  text-decoration: none;
-  height: 48px;
-  line-height: 48px;
-  padding: 0 16px;
-  transition: background-color .2s @animation-curve-fast-out-linear-in;
-  .mdui-text-truncate();
+/* 禁用菜单条目 */
+.mdui-menu-disabled {
+  cursor: default;
+  color: @color-black-disabled !important;
 
   &:hover {
-    background-color: @color-grey-200;
+    background-color: inherit !important;
+  }
+
+  .mdui-icon {
+    color: @color-black-icon-disabled;
   }
 }
 
 /* 菜单中的图标 */
-.mdui-menu-item-icon {
+.mdui-menu-icon {
   color: @color-black-icon;
-  padding-right: 18px;
+  width: 42px;
+  display: inline-block;
+}
+
+/* 菜单中的辅助文本或图标 */
+.mdui-menu-helper {
+  float: right;
+}
+
+
+/* 级联菜单 */
+.mdui-menu-cascade {
+  padding: 16px 0;
+  font-size: 15px;
+  width: @menu-cascade-x * 5;
+
+  &>li>a {
+    height: 32px;
+    line-height: 32px;
+    padding: 0 24px;
+  }
+
+  .mdui-menu-icon {
+    width: 40px;
+  }
+}
+
+/* 菜单宽度 */
+.mdui-menu-1x {
+  width: @menu-simple-x * 1;
+
+  .mdui-menu-cascade & {
+    width: @menu-cascade-x * 1;
+  }
+}
+.mdui-menu-2x {
+  width: @menu-simple-x * 2;
+
+  .mdui-menu-cascade & {
+    width: @menu-cascade-x * 2;
+  }
+}
+.mdui-menu-3x {
+  width: @menu-simple-x * 3;
+
+  .mdui-menu-cascade & {
+    width: @menu-cascade-x * 3;
+  }
+}
+.mdui-menu-4x {
+  width: @menu-simple-x * 4;
+
+  .mdui-menu-cascade & {
+    width: @menu-cascade-x * 4;
+  }
+}
+.mdui-menu-5x {
+  width: @menu-simple-x * 5;
+
+  .mdui-menu-cascade & {
+    width: @menu-cascade-x * 5;
+  }
+}
+.mdui-menu-6x {
+  width: @menu-simple-x * 6;
+
+  .mdui-menu-cascade & {
+    width: @menu-cascade-x * 6;
+  }
+}
+.mdui-menu-7x {
+  width: @menu-simple-x * 7;
+
+  .mdui-menu-cascade & {
+    width: @menu-cascade-x * 7;
+  }
+}
+.mdui-menu-8x {
+  width: @menu-simple-x * 8;
+
+  .mdui-menu-cascade & {
+    width: @menu-cascade-x * 8;
+  }
+}
+.mdui-menu-9x {
+  width: @menu-simple-x * 9;
+
+  .mdui-menu-cascade & {
+    width: @menu-cascade-x * 9;
+  }
+}
+.mdui-menu-10x {
+  width: @menu-simple-x * 10;
+
+  .mdui-menu-cascade & {
+    width: @menu-cascade-x * 10;
+  }
 }

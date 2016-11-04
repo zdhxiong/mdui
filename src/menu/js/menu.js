@@ -18,26 +18,6 @@ mdui.Menu = (function () {
   };
 
   /**
-   * 当前显示着的菜单
-   */
-  var current;
-
-  var documentClickEvent = function (e) {
-    if (!$.is(e.target, current.menu) && !$.is(e.target, current.anchor)) {
-      current.close();
-    }
-  };
-
-  /**
-   * hashchange 事件触发时关闭菜单
-   */
-  /*var hashchangeEvent = function () {
-    if (location.hash.substring(1).indexOf('&mdui-menu') < 0) {
-      current.close(true);
-    }
-  };*/
-
-  /**
    * 菜单
    * @param anchorSelector 点击该元素触发菜单
    * @param menuSelector 菜单
@@ -62,8 +42,19 @@ mdui.Menu = (function () {
 
     // 点击触发
     $.on(_this.anchor, 'click', function () {
-      console.log(_this.state);
       _this.toggle();
+    });
+
+    // 点击除了菜单本身以外的地方都关闭菜单
+    $.on(document, 'click', function (e) {
+      console.log(e.target);
+      if (
+        !$.is(e.target, _this.menu) &&
+        !$.is(e.target, _this.anchor) &&
+        !$.child(e.target, '.mdui-menu-more')
+      ) {
+        _this.close();
+      }
     });
   }
 
@@ -90,13 +81,6 @@ mdui.Menu = (function () {
       return;
     }
 
-    // 有打开着的菜单时，先关闭
-    if (current && (current.state === 'opening' || current.state === 'opened')) {
-      current.close();
-    }
-
-    current = _this;
-
     var anchorOffset = $.offset(_this.anchor);
 
     // var menuOffset = $.offset(_this.menu);
@@ -116,16 +100,11 @@ mdui.Menu = (function () {
     _this.menu.classList.add('mdui-menu-open');
     _this.state = 'opening';
     $.pluginEvent('open', 'menu', _this, _this.menu);
-    console.log('open');
 
     // 打开动画完成后
     $.transitionEnd(_this.menu, function () {
       _this.state = 'opened';
       $.pluginEvent('opened', 'menu', _this, _this.menu);
-      console.log('opened');
-
-      // 点击除了菜单本身以外的地方都关闭菜单
-      $.on(document, 'click', documentClickEvent);
     });
   };
 
@@ -134,7 +113,6 @@ mdui.Menu = (function () {
    */
   Menu.prototype.close = function () {
     var _this = this;
-    console.log('trigger close');
     if (_this.state === 'closing' || _this.state === 'closed') {
       return;
     }
@@ -142,14 +120,10 @@ mdui.Menu = (function () {
     _this.menu.classList.remove('mdui-menu-open');
     _this.state = 'closing';
     $.pluginEvent('close', 'menu', _this, _this.menu);
-    console.log('close');
 
     $.transitionEnd(_this.menu, function () {
       _this.state = 'closed';
       $.pluginEvent('closed', 'menu', _this, _this.menu);
-      console.log('closed');
-
-      $.off(document, 'click', documentClickEvent);
     });
   };
 

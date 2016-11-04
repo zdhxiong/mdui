@@ -296,7 +296,10 @@
     "dependencies": []
   },
   "menu": {
-    "js": [],
+    "js": [
+      "src/menu/js/menu.js",
+      "src/menu/js/menu.data.js"
+    ],
     "less": [
       "src/menu/less/menu.less"
     ]

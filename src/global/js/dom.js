@@ -498,7 +498,7 @@ var $ = {};
   };
 
   /**
-   * 获取元素的偏移
+   * 获取元素相对于 document 的偏移
    * @param dom
    * @returns {{top: number, left: number}}
    */

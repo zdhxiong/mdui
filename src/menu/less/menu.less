@@ -14,13 +14,21 @@
 .mdui-menu {
   box-sizing: border-box;
   padding: 8px 0;
+  margin: 0;
   font-size: 16px;
   .mdui-shadow(8);
   border-radius: 2px;
   width: @menu-simple-x * 3;
   background-color: #fff;
   list-style: none;
-  display: none;
+  display: block;
+  z-index: 99999;
+  transition: all .3s @animation-curve-default;
+  transform-origin: 0 0;
+
+  visibility: hidden;
+  transform: scale(0);
+  position: absolute;
 
   // 菜单项目
   &>li>a {
@@ -50,6 +58,12 @@
     margin-top: 8px;
     margin-bottom: 8px;
   }
+}
+
+/* 打开状态的菜单 */
+.mdui-menu-open {
+  visibility: visible;
+  transform: scale(1);
 }
 
 /* 禁用菜单条目 */

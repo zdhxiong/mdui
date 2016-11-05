@@ -498,7 +498,7 @@ var $ = {};
   };
 
   /**
-   * 获取元素相对于 document 的偏移
+   * 获取元素的偏移
    * @param dom
    * @returns {{top: number, left: number}}
    */
@@ -512,8 +512,6 @@ var $ = {};
     return {
       top: box.top  + scrollTop  - clientTop,       // 相对 document 的上偏移
       left: box.left + scrollLeft - clientLeft,     // 相对 document 的左偏移
-      height: box.height,                           // 元素的高度
-      width: box.width,                             // 元素的宽度
       offsetTop: box.top,                           // 相对当前窗口的上偏移
       offsetLeft: box.left,                         // 相对当前窗口的左便宜
     };

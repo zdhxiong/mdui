@@ -23,6 +23,8 @@
   list-style: none;
   display: block;
   z-index: 99999;
+  overflow-y: auto;
+  opacity: 0;
   transition: all .3s @animation-curve-linear-out-slow-in;
   transform-origin: 0 0;
 
@@ -64,6 +66,7 @@
 .mdui-menu-open {
   visibility: visible;
   transform: scale(1);
+  opacity: 1;
 }
 
 /* 禁用菜单条目 */

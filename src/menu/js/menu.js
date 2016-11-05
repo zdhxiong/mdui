@@ -29,27 +29,34 @@ mdui.Menu = (function () {
     var position;
     var align;
     var windowHeight = window.innerHeight;
-    var windowWidth = window.innerWidth;
+    var windowWidth = document.body.clientWidth;
+    var gutter = _this.options.gutter;
 
-    var menuStyleTemp = $.getStyle(_this.menu);
-    var menuWidth = parseFloat(menuStyleTemp.width.replace('px', ''));
-    var menuHeight = parseFloat(menuStyleTemp.height.replace('px', ''));
+    // 菜单宽度高度
+    var menuWidth = parseFloat($.getStyle(_this.menu, 'width'));
+    var menuHeight = parseFloat($.getStyle(_this.menu, 'height'));
 
+    // 触发元素的宽度高度
+    var anchorWidth = parseFloat($.getStyle(_this.anchor, 'width'));
+    var anchorHeight = parseFloat($.getStyle(_this.anchor, 'height'));
+
+    // 触发元素的位置
     var anchorOffset = $.offset(_this.anchor);
-    var menuOffset = $.offset(_this.menu);
 
-    // 自动判断菜单位置
+    // ===============================
+    // ================= 自动判断菜单位置
+    // ===============================
     if (_this.options.position === 'auto') {
-      var bottomHeightTemp = windowHeight - anchorOffset.offsetTop - anchorOffset.height;
+      var bottomHeightTemp = windowHeight - anchorOffset.offsetTop - anchorHeight;
       var topHeightTemp = anchorOffset.offsetTop;
 
       // 判断下方是否放得下菜单
-      if (bottomHeightTemp + (_this.isCovered ? anchorOffset.height : 0) > menuHeight + _this.options.gutter) {
+      if (bottomHeightTemp + (_this.isCovered ? anchorHeight : 0) > menuHeight + gutter) {
         position = 'bottom';
       }
 
       // 判断上方是否放得下菜单
-      else if (topHeightTemp + (_this.isCovered ? anchorOffset.height : 0) > menuOffset.height + _this.options.gutter) {
+      else if (topHeightTemp + (_this.isCovered ? anchorHeight : 0) > menuHeight + gutter) {
         position = 'top';
       }
 
@@ -61,18 +68,20 @@ mdui.Menu = (function () {
       position = _this.options.position;
     }
 
-    // 自动判断菜单对齐方式
+    // ===============================
+    // ============== 自动判断菜单对齐方式
+    // ===============================
     if (_this.options.align === 'auto') {
       var leftWidthTemp = anchorOffset.offsetLeft;
-      var rightWidthTemp = windowWidth - anchorOffset.offsetLeft - anchorOffset.width;
+      var rightWidthTemp = windowWidth - anchorOffset.offsetLeft - anchorWidth;
 
       // 判断右侧是否放得下菜单
-      if (rightWidthTemp + anchorOffset.width > menuOffset.width + _this.options.gutter) {
+      if (rightWidthTemp + anchorWidth > menuWidth + gutter) {
         align = 'left';
       }
 
       // 判断左侧是否放得下菜单
-      else if (leftWidthTemp + anchorOffset.width > menuOffset.width + _this.options.gutter) {
+      else if (leftWidthTemp + anchorWidth > menuWidth + gutter) {
         align = 'right';
       }
 
@@ -84,43 +93,56 @@ mdui.Menu = (function () {
       align = _this.options.align;
     }
 
-    // 设置菜单位置
+    // ===============================
+    // ==================== 设置菜单位置
+    // ===============================
     if (position === 'bottom') {
-      menuTop = anchorOffset.top + (_this.isCovered ? 0 : anchorOffset.height);
+      menuTop = anchorOffset.top + (_this.isCovered ? 0 : anchorHeight);
     } else if (position === 'top') {
-      menuTop = anchorOffset.top - menuOffset.height + (_this.isCovered ? anchorOffset.height : 0);
+      menuTop = anchorOffset.top - menuHeight + (_this.isCovered ? anchorHeight : 0);
     } else {
-      // =====================居中
+      // =====================在窗口中居中
       // 显示的菜单高度，菜单高度不能超过窗口高度
       var menuHeightTemp;
 
       // 菜单比窗口高，限制菜单高度
-      if (menuOffset.height + _this.options.gutter*2 > window.innerHeight) {
-        menuHeightTemp = windowHeight - _this.options.gutter*2;
+      if (menuHeight + gutter * 2 > windowHeight) {
+        menuHeightTemp = windowHeight - gutter * 2;
         _this.menu.style.height = menuHeightTemp + 'px';
       } else {
-        menuHeightTemp = menuOffset.height;
+        menuHeightTemp = menuHeight;
       }
 
-      menuTop = (windowHeight - menuHeightTemp) / 2;
+      menuTop = anchorOffset.top - anchorOffset.offsetTop + (windowHeight - menuHeightTemp) / 2;
     }
+
     _this.menu.style.top = menuTop + 'px';
 
-    // 设置菜单对齐方式
-    console.log(align);
+    // ===============================
+    // ================= 设置菜单对齐方式
+    // ===============================
     if (align === 'left') {
       menuLeft = anchorOffset.left;
     } else if (align === 'right') {
-      menuLeft = anchorOffset.width + anchorOffset.left - menuOffset.width;
+      menuLeft = anchorWidth + anchorOffset.left - menuWidth;
     } else {
-      //=======================居中
+      //=======================在窗口中居中
+      // 显示的菜单的宽度，菜单宽度不能超过窗口宽度
+      var menuWidthTemp;
+
+      // 菜单比窗口宽，限制菜单宽度
+      if (menuWidth + gutter * 2 > windowWidth) {
+        menuWidthTemp = windowWidth - gutter * 2;
+        _this.menu.style.width = menuWidthTemp + 'px';
+      } else {
+        menuWidthTemp = menuWidth;
+      }
+
+      menuLeft = anchorOffset.left - anchorOffset.offsetLeft + (windowWidth - menuWidthTemp) / 2;
     }
+
     _this.menu.style.left = menuLeft + 'px';
-
-
-
-
-  }
+  };
 
   /**
    * 菜单
@@ -170,6 +192,11 @@ mdui.Menu = (function () {
         _this.close();
       }
     });
+
+    // 窗口大小变化时，重新调整菜单位置
+    $.on(window, 'resize', mdui.throttle(function () {
+      readjust(_this);
+    }, 100));
   }
 
   /**
@@ -223,9 +250,15 @@ mdui.Menu = (function () {
     _this.state = 'closing';
     $.pluginEvent('close', 'menu', _this, _this.menu);
 
+    // 关闭动画完成后
     $.transitionEnd(_this.menu, function () {
       _this.state = 'closed';
       $.pluginEvent('closed', 'menu', _this, _this.menu);
+
+      // 关闭后，恢复菜单样式到默认状态
+      _this.menu.style.top = '';
+      _this.menu.style.left = '';
+      _this.menu.style.width = '';
     });
   };
 

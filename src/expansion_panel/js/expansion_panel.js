@@ -75,7 +75,7 @@ mdui.ExpansionPanel = (function () {
     var content = _this.contents[index];
 
     // 计算元素的高度
-    contentHeight = content ? parseFloat($.getStyle(content, 'height').replace('px', '')) : 0;
+    contentHeight = content ? parseFloat($.getStyle(content, 'height')) : 0;
 
     $.pluginEvent('open', 'expansion-panel', _this, item);
 

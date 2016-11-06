@@ -188,29 +188,22 @@ var $ = {};
    */
   $.transform = function (dom, transform) {
     dom.style.webkitTransform =
-      dom.style.MsTransform =
-        dom.style.msTransform =
-          dom.style.MozTransform =
-            dom.style.OTransform =
+
+    //  dom.style.MsTransform =
+    //    dom.style.msTransform =
+    //      dom.style.MozTransform =
+    //        dom.style.OTransform =
               dom.style.transform = transform;
   };
 
   /**
-   * 设置 transition 过渡时间
+   * 设置 transform-origin 属性
    * @param dom
-   * @param duration
+   * @param transformOrigin
    */
-  $.transition = function (dom, duration) {
-    if (typeof duration !== 'string') {
-      duration = duration + 'ms';
-    }
-
-    dom.style.webkitTransitionDuration =
-      dom.style.MsTransitionDuration =
-        dom.style.msTransitionDuration =
-          dom.style.MozTransitionDuration =
-            dom.style.OTransitionDuration =
-              dom.style.transitionDuration = duration;
+  $.transformOrigin = function (dom, transformOrigin) {
+    dom.style.webkitTransformOrigin =
+      dom.style.transformOrigin = transformOrigin;
   };
 
   /**

@@ -32,6 +32,9 @@ mdui.Menu = (function () {
     var windowWidth = document.body.clientWidth;
     var gutter = _this.options.gutter;
 
+    var transformOriginX;
+    var transformOriginY;
+
     // 菜单宽度高度
     var menuWidth = parseFloat($.getStyle(_this.menu, 'width'));
     var menuHeight = parseFloat($.getStyle(_this.menu, 'height'));
@@ -97,10 +100,14 @@ mdui.Menu = (function () {
     // ==================== 设置菜单位置
     // ===============================
     if (position === 'bottom') {
+      transformOriginY = '0';
       menuTop = anchorOffset.top + (_this.isCovered ? 0 : anchorHeight);
     } else if (position === 'top') {
+      transformOriginY = '100%';
       menuTop = anchorOffset.top - menuHeight + (_this.isCovered ? anchorHeight : 0);
     } else {
+      transformOriginY = '50%';
+
       // =====================在窗口中居中
       // 显示的菜单高度，菜单高度不能超过窗口高度
       var menuHeightTemp;
@@ -122,10 +129,14 @@ mdui.Menu = (function () {
     // ================= 设置菜单对齐方式
     // ===============================
     if (align === 'left') {
+      transformOriginX = '0';
       menuLeft = anchorOffset.left;
     } else if (align === 'right') {
+      transformOriginX = '100%';
       menuLeft = anchorWidth + anchorOffset.left - menuWidth;
     } else {
+      transformOriginX = '50%';
+
       //=======================在窗口中居中
       // 显示的菜单的宽度，菜单宽度不能超过窗口宽度
       var menuWidthTemp;
@@ -142,6 +153,18 @@ mdui.Menu = (function () {
     }
 
     _this.menu.style.left = menuLeft + 'px';
+
+    // 设置菜单动画方向
+    $.transformOrigin(_this.menu, transformOriginX + ' ' + transformOriginY);
+  };
+
+  /**
+   * hashchange 事件触发时关闭菜单
+   */
+  var hashchangeEvent = function () {
+    if (location.hash.substring(1).indexOf('&mdui-menu') < 0) {
+      current
+    }
   };
 
   /**
@@ -235,6 +258,18 @@ mdui.Menu = (function () {
       _this.state = 'opened';
       $.pluginEvent('opened', 'menu', _this, _this.menu);
     });
+
+    if (_this.options.history) {
+      // 如果 hash 中原来就有 &mdui-menu，先删除，避免后退历史纪录后仍然有 &mdui-menu 导致无法关闭
+      var hash = location.hash.substring(1);
+      if (hash.indexOf('&mdui-menu') > -1) {
+        hash = hash.replace(/&mdui-menu/g, '');
+      }
+
+      // 后退按钮关闭菜单
+      location.hash = hash + '&mdui-menu';
+      $.on(window, 'hashchange', hashchangeEvent);
+    }
   };
 
   /**

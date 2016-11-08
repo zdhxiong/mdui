@@ -27,6 +27,8 @@ mdui.Menu = (function () {
     cascade: 'mdui-menu-cascade',     // 级联菜单
     open: 'mdui-menu-open',           // 打开状态的菜单
     item: 'mdui-menu-item',           // 菜单条目
+    active: 'mdui-menu-item-active',  // 激活状态的菜单
+    divider: 'mdui-divider',          // 分隔线
   };
 
   /**
@@ -270,6 +272,10 @@ mdui.Menu = (function () {
   var openSubMenu = function (submenu) {
     readjustSubmenu(submenu);
     submenu.classList.add(CLASS.open);
+
+    // 菜单项上添加激活状态的样式
+    var item = $.parent(submenu, '.' + CLASS.item);
+    item.classList.add(CLASS.active);
   };
 
   /**
@@ -277,11 +283,23 @@ mdui.Menu = (function () {
    * @param submenu
    */
   var closeSubMenu = function (submenu) {
+    var item;
+
+    // 关闭子菜单
     submenu.classList.remove(CLASS.open);
 
+    // 移除激活状态的样式
+    item = $.parent(submenu, '.' + CLASS.item);
+    item.classList.remove(CLASS.active);
+
+    // 循环关闭嵌套的子菜单
     var submenus = $.queryAll('.' + CLASS.menu, submenu);
     $.each(submenus, function (i, tmp) {
       tmp.classList.remove(CLASS.open);
+
+      // 移除激活状态的样式
+      item = $.parent(tmp, '.' + CLASS.item);
+      item.classList.remove(CLASS.active);
     });
   };
 
@@ -322,7 +340,12 @@ mdui.Menu = (function () {
       $.on(inst.menu, trigger, '.' + CLASS.item, function (e) {
         var _this = this;
 
-        // 阻止冒泡
+        // 没有点击在子菜单的菜单项上时，不操作（点在了子菜单的空白区域、或分隔线上）
+        if ($.is(e.target, '.' + CLASS.menu) || $.is(e.target, '.' + CLASS.divider)) {
+          return;
+        }
+
+        // 阻止冒泡，点击菜单项时只在最后一级的 mdui-menu-item 上生效，不向上冒泡
         if ($.parents(e.target, '.' + CLASS.item)[0] !== _this) {
           return;
         }
@@ -334,12 +357,11 @@ mdui.Menu = (function () {
         var items = $.children(menu, '.' + CLASS.item);
         $.each(items, function (i, item) {
           var tmpSubmenu = $.child(item, '.' + CLASS.menu);
-          if (tmpSubmenu) {
-            if (!submenu) {
-              closeSubMenu(tmpSubmenu);
-            } else if (!$.is(tmpSubmenu, submenu)) {
-              closeSubMenu(tmpSubmenu);
-            }
+          if (
+            tmpSubmenu &&
+            (!submenu || !$.is(tmpSubmenu, submenu))
+          ) {
+            closeSubMenu(tmpSubmenu);
           }
         });
 
@@ -349,11 +371,34 @@ mdui.Menu = (function () {
         }
       });
     } else if (trigger === 'mouseover') {
+      var timeoutOpen;
+      var timeoutClose;
+
       $.on(inst.menu, trigger, '.' + CLASS.item, function () {
         var _this = this;
         var submenu = $.child(_this, '.' + CLASS.menu);
 
-        console.log(submenu);
+        // 关闭除当前子菜单外的所有同级子菜单
+        var menu = $.parent(_this, '.' + CLASS.menu);
+        var items = $.children(menu, '.' + CLASS.item);
+        $.each(items, function (i, item) {
+          var tmpSubmenu = $.child(item, '.' + CLASS.menu);
+          if (
+            tmpSubmenu &&
+            (!submenu || !$.is(tmpSubmenu, submenu))
+          ) {
+            timeoutClose = setTimeout(function () {
+              closeSubMenu(tmpSubmenu);
+            }, delay);
+          }
+        });
+
+        // 打开当前子菜单
+        if (submenu) {
+          timeoutOpen = setTimeout(function () {
+            openSubMenu(submenu);
+          }, delay);
+        }
       });
     }
   };

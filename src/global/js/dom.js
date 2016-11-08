@@ -188,12 +188,7 @@ var $ = {};
    */
   $.transform = function (dom, transform) {
     dom.style.webkitTransform =
-
-    //  dom.style.MsTransform =
-    //    dom.style.msTransform =
-    //      dom.style.MozTransform =
-    //        dom.style.OTransform =
-              dom.style.transform = transform;
+      dom.style.transform = transform;
   };
 
   /**
@@ -204,6 +199,20 @@ var $ = {};
   $.transformOrigin = function (dom, transformOrigin) {
     dom.style.webkitTransformOrigin =
       dom.style.transformOrigin = transformOrigin;
+  };
+
+  /**
+   * 设置 transition 过渡时间
+   * @param dom
+   * @param duration
+   */
+  $.transition = function (dom, duration) {
+    if (typeof duration !== 'string') {
+      duration = duration + 'ms';
+    }
+
+    dom.style.webkitTransitionDuration =
+      dom.style.transitionDuration = duration;
   };
 
   /**
@@ -334,6 +343,25 @@ var $ = {};
     }
 
     return $.unique(parents);
+  };
+
+  /**
+   * dom 是否是 parent 的子元素
+   * @param dom
+   * @param parent
+   * @returns {boolean}
+   */
+  $.isChild = function (dom, parent) {
+    var tmp = dom.parentNode;
+    while (tmp) {
+      if ($.is(tmp, parent)) {
+        return true;
+      }
+
+      tmp = tmp.parentNode;
+    }
+
+    return false;
   };
 
   /**

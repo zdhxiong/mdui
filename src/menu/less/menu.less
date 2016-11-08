@@ -23,16 +23,34 @@
   list-style: none;
   display: block;
   z-index: 99999;
-  overflow-y: auto;
   opacity: 0;
-  transition: all .3s @animation-curve-linear-out-slow-in;
+  transition-property: transform, opacity, visibility;
+  transition-duration: .3s;
+  transition-timing-function: @animation-curve-linear-out-slow-in;
 
   visibility: hidden;
   transform: scale(0);
   position: absolute;
 
-  // 菜单项目
-  &>li>a {
+  // 菜单中的分隔线，默认上下有 8px 的外边距
+  .mdui-divider {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+}
+
+/* 打开状态的菜单 */
+.mdui-menu-open {
+  visibility: visible;
+  transform: scale(1);
+  opacity: 1;
+}
+
+// 菜单项目
+.mdui-menu-item {
+  position: relative;
+
+  &>a {
     position: relative;
     display: block;
     color: inherit;
@@ -49,53 +67,41 @@
   }
 
   // 子菜单默认隐藏，阴影更深
-  .mdui-menu {
-    display: none;
+  &>.mdui-menu {
     .mdui-shadow(9);
   }
-
-  // 菜单中的分隔线，默认上下有 8px 的外边距
-  .mdui-divider {
-    margin-top: 8px;
-    margin-bottom: 8px;
-  }
-}
-
-/* 打开状态的菜单 */
-.mdui-menu-open {
-  visibility: visible;
-  transform: scale(1);
-  opacity: 1;
 }
 
 /* 禁用菜单条目 */
-.mdui-menu-disabled {
-  cursor: default;
-  color: @color-black-disabled !important;
+.mdui-menu-item-disabled {
+  &>a {
+    cursor: default;
+    color: @color-black-disabled !important;
 
-  &:hover {
-    background-color: inherit !important;
-  }
+    &:hover {
+      background-color: inherit !important;
+    }
 
-  .mdui-icon {
-    color: @color-black-icon-disabled;
+    .mdui-icon {
+      color: @color-black-icon-disabled;
+    }
   }
 }
 
 /* 菜单中的图标 */
-.mdui-menu-icon {
+.mdui-menu-item-icon {
   color: @color-black-icon;
   width: 42px;
   display: inline-block;
 }
 
 /* 菜单中的辅助文本或图标 */
-.mdui-menu-helper {
+.mdui-menu-item-helper {
   float: right;
 }
 
 /* 有子菜单的条目的图标 */
-.mdui-menu-more {
+.mdui-menu-item-more {
   float: right;
   &:before {
     content: '►';
@@ -111,14 +117,16 @@
   font-size: 15px;
   width: @menu-cascade-x * 5;
 
-  &>li>a {
-    height: 32px;
-    line-height: 32px;
-    padding: 0 24px;
-  }
+  &>.mdui-menu-item {
+    &>a {
+      height: 32px;
+      line-height: 32px;
+      padding: 0 24px;
+    }
 
-  .mdui-menu-icon {
-    width: 40px;
+    .mdui-menu-item-icon {
+      width: 40px;
+    }
   }
 }
 

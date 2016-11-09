@@ -346,12 +346,12 @@ var $ = {};
   };
 
   /**
-   * dom 是否是 parent 的子元素
-   * @param dom
+   * dom 元素是否包含在 parent 元素内
    * @param parent
+   * @param dom
    * @returns {boolean}
    */
-  $.isChild = function (dom, parent) {
+  $.contains = function (parent, dom) {
     var tmp = dom.parentNode;
     while (tmp) {
       if ($.is(tmp, parent)) {

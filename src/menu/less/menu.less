@@ -20,6 +20,7 @@
   border-radius: 2px;
   width: @menu-simple-x * 3;
   background-color: #fff;
+  color: @color-black-text;
   list-style: none;
   display: block;
   z-index: 99999;
@@ -32,10 +33,19 @@
   transform: scale(0);
   position: absolute;
 
+  // 简单菜单高度超出窗口高度时，使菜单边框和窗口保持一定距离，菜单内出现滚动条
+  overflow-y: auto;
+
   // 菜单中的分隔线，默认上下有 8px 的外边距
   .mdui-divider {
     margin-top: 8px;
     margin-bottom: 8px;
+  }
+}
+
+body:not(.mdui-support-touch) {
+  .mdui-menu {
+    .mdui-scrollbar-beautify();
   }
 }
 
@@ -122,6 +132,9 @@
   font-size: 15px;
   width: @menu-cascade-x * 5;
 
+  // 级联菜单内部不出现滚动条
+  overflow-y: visible;
+
   &>.mdui-menu-item {
     &>a {
       height: 32px;
@@ -204,5 +217,56 @@
 
   .mdui-menu-cascade & {
     width: @menu-cascade-x * 10;
+  }
+}
+
+
+/**
+ * =============================================================================
+ * ************   Menu dark   ************
+ * =============================================================================
+ */
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-menu {
+    background-color: @layout-dark-color-4;
+    color: #fff;
+  }
+
+  &:not(.mdui-support-touch) {
+    .mdui-menu {
+      .mdui-scrollbar-beautify(dark);
+    }
+  }
+
+  .mdui-menu-item {
+    &>a {
+      &:hover {
+        background-color: @color-grey-700;
+      }
+    }
+  }
+
+  .mdui-menu-item-active {
+    background-color: @color-grey-700;
+  }
+
+  .mdui-menu-item-disabled {
+    &>a {
+      color: @color-white-disabled !important;
+
+      .mdui-icon {
+        color: @color-white-icon-disabled;
+      }
+    }
+  }
+
+  .mdui-menu-item-icon {
+    color: @color-white-icon;
+  }
+
+  .mdui-menu-item-more {
+    &:before {
+      color: @color-white-icon;
+    }
   }
 }

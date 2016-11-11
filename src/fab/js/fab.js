@@ -26,7 +26,7 @@ mdui.Fab = (function () {
     _this.fab = $.dom(selector)[0];
 
     // 已通过 data 属性实例化过，不再重复实例化
-    var oldInst = $.getData(_this.fab, 'mdui.fab');
+    var oldInst = $.data(_this.fab, 'mdui.fab');
     if (oldInst) {
       return oldInst;
     }

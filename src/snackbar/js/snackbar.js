@@ -190,7 +190,7 @@
     $.transitionEnd(_this.snackbar, function () {
       _this.state = 'closed';
 
-      _this.snackbar.parentNode.removeChild(_this.snackbar);
+      $.remove(_this.snackbar);
 
       $.dequeue(queueName);
     });

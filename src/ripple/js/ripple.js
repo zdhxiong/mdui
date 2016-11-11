@@ -96,7 +96,7 @@
         'left:' + center.x + 'px; ' +
         'top:' + center.y + 'px;">' +
         '</div>')[0];
-    el.insertBefore(rippleWave, el.childNodes[0]);
+    $.prepend(el, rippleWave);
     $.getStyle(rippleWave, 'opacity');
     rippleTransform =
       'translate3d(' + (-center.x + width / 2) + 'px, ' + (-center.y + height / 2) + 'px, 0) ' +
@@ -115,7 +115,7 @@
     var toRemove = rippleWave;
 
     var removeTimeout = setTimeout(function () {
-      toRemove.parentNode.removeChild(toRemove);
+      $.remove(toRemove);
     }, 400);
 
     rippleWave.classList.add('mdui-ripple-wave-fill');
@@ -128,13 +128,13 @@
       $.transform(rippleWave, rippleTransform.replace('scale(1)', 'scale(1.01)'));
 
       removeTimeout = setTimeout(function () {
-        rippleWave.parentNode.removeChild(rippleWave);
+        $.remove(rippleWave);
       }, 700);
 
       setTimeout(function () {
         $.transitionEnd(rippleWave, function (e) {
           clearTimeout(removeTimeout);
-          e.target.parentNode.removeChild(e.target);
+          $.remove(e.target);
         });
       }, 0);
     });

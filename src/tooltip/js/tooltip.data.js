@@ -11,11 +11,11 @@
   $.on(document, event, '[mdui-tooltip]', function () {
     var _this = this;
 
-    var inst = $.getData(_this, 'mdui.tooltip');
+    var inst = $.data(_this, 'mdui.tooltip');
     if (!inst) {
       var options = $.parseOptions(_this.getAttribute('mdui-tooltip'));
       inst = new mdui.Tooltip(_this, options);
-      $.setData(_this, 'mdui.tooltip', inst);
+      $.data(_this, 'mdui.tooltip', inst);
 
       inst.open();
     }

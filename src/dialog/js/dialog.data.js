@@ -14,10 +14,10 @@ $.ready(function () {
 
     var dialog = $.dom(selector)[0];
 
-    var inst = $.getData(dialog, 'mdui.dialog');
+    var inst = $.data(dialog, 'mdui.dialog');
     if (!inst) {
       inst = new mdui.Dialog(dialog, options);
-      $.setData(dialog, 'mdui.dialog', inst);
+      $.data(dialog, 'mdui.dialog', inst);
     }
 
     inst.open();

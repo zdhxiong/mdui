@@ -29,7 +29,7 @@ mdui.Drawer = (function () {
 
     _this.drawer = $.dom(selector)[0];
 
-    var oldInst = $.getData(_this.drawer, 'mdui.drawer');
+    var oldInst = $.data(_this.drawer, 'mdui.drawer');
     if (oldInst) {
       return oldInst;
     }

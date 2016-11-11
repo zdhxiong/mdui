@@ -14,10 +14,10 @@ $.ready(function () {
 
     var drawer = $.dom(selector)[0];
 
-    var inst = $.getData(drawer, 'mdui.drawer');
+    var inst = $.data(drawer, 'mdui.drawer');
     if (!inst) {
       inst = new mdui.Drawer(drawer, options);
-      $.setData(drawer, 'mdui.drawer', inst);
+      $.data(drawer, 'mdui.drawer', inst);
     }
 
     $.on(target, 'click', function () {

@@ -26,7 +26,7 @@ mdui.Tab = (function () {
     _this.tab = $.dom(selector)[0];
 
     // 已通过自定义属性实例化过，不再重复实例化
-    var oldInst = $.getData(_this.tab, 'mdui.tab');
+    var oldInst = $.data(_this.tab, 'mdui.tab');
     if (oldInst) {
       return oldInst;
     }

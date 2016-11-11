@@ -10,10 +10,10 @@ $.ready(function () {
   $.each($.queryAll('[mdui-tab]'), function (i, target) {
     var options = $.parseOptions(target.getAttribute('mdui-tab'));
 
-    var inst = $.getData(target, 'mdui.tab');
+    var inst = $.data(target, 'mdui.tab');
     if (!inst) {
       inst = new mdui.Tab(target, options);
-      $.setData(target, 'mdui.tab', inst);
+      $.data(target, 'mdui.tab', inst);
     }
   });
 });

@@ -110,7 +110,7 @@ mdui.hideOverlay = function (overlay) {
   $.each(overlays, function (i, overlay) {
     overlay.classList.remove('mdui-overlay-show');
     $.transitionEnd(overlay, function () {
-      overlay.parentNode.removeChild(overlay);
+      $.remove(overlay);
     });
   });
 };
@@ -123,8 +123,8 @@ mdui.lockScreen = function () {
   var oldWindowWidth = body.clientWidth;
 
   // 不直接把 body 设为 box-sizing: border-box，避免污染全局样式
-  var oldBodyPaddingLeft = $.getStyle(body, 'padding-left').replace('px', '');
-  var oldBodyPaddingRight = $.getStyle(body, 'padding-right').replace('px', '');
+  var oldBodyPaddingLeft = parseFloat($.getStyle(body, 'padding-left'));
+  var oldBodyPaddingRight = parseFloat($.getStyle(body, 'padding-right'));
 
   document.body.classList.add('mdui-locked');
   document.body.style.width = oldWindowWidth - oldBodyPaddingLeft - oldBodyPaddingRight + 'px';

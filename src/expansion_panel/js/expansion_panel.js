@@ -30,7 +30,7 @@ mdui.ExpansionPanel = (function () {
     _this.expansion_panel = $.dom(selector)[0];
 
     // 已通过自定义属性实例化过，不再重复实例化
-    var oldInst = $.getData(_this.expansion_panel, 'mdui.expansion_panel');
+    var oldInst = $.data(_this.expansion_panel, 'mdui.expansion_panel');
     if (oldInst) {
       return oldInst;
     }

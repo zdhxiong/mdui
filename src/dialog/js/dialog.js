@@ -99,7 +99,7 @@ mdui.Dialog = (function () {
     _this.dialog = $.dom(selector)[0];
 
     // 已通过 data 属性实例化过，不再重复实例化
-    var oldInst = $.getData(_this.dialog, 'mdui.dialog');
+    var oldInst = $.data(_this.dialog, 'mdui.dialog');
     if (oldInst) {
       return oldInst;
     }
@@ -306,10 +306,10 @@ mdui.Dialog = (function () {
     var _this = this;
 
     if (_this.append) {
-      _this.dialog.parentNode.removeChild(_this.dialog);
+      $.remove(_this.dialog);
     }
 
-    $.removeData(_this.dialog, 'mdui.dialog');
+    $.data(_this.dialog, 'mdui.dialog', null);
     if (typeof jQuery !== 'undefined') {
       jQuery(_this.dialog).removeData('mdui.dialog');
     }

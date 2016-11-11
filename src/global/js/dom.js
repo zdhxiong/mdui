@@ -117,52 +117,52 @@ var $ = {};
    * @returns {*}
    */
   $.extend = function (defaults, params) {
-    for (var def in defaults) {
-      if (defaults.hasOwnProperty(def) && typeof params[def] === 'undefined') {
-        params[def] = defaults[def];
+    $.each(defaults, function (key, value) {
+      if (typeof params[key] === 'undefined') {
+        params[key] = value;
       }
-    }
+    });
 
     return params;
   };
 
   /**
-   * 从元素获取数据
-   * @param dom
-   * @param key
-   * @returns {*}
-   */
-  $.getData = function (dom, key) {
-    if (dom.mduiDomDataStorage && (key in dom.mduiDomDataStorage)) {
-      return dom.mduiDomDataStorage[key];
-    } else {
-      return null;
-    }
-  };
-
-  /**
-   * 将数据附加到元素上
+   * 在 dom 元素上存储、读取数据
    * @param dom
    * @param key
    * @param value
+   *
+   * $.data(dom, key);          读取指定键名的数据
+   * $.data(dom, key, value);   写入指定键名的数据
+   * $.data(dom, key, null);    删除指定键名的数据
    */
-  $.setData = function (dom, key, value) {
+  $.data = function (dom, key, value) {
     if (!dom.mduiDomDataStorage) {
       dom.mduiDomDataStorage = {};
     }
 
-    dom.mduiDomDataStorage[key] = value;
-  };
+    var dataStorage = dom.mduiDomDataStorage;
 
-  /**
-   * 删除元素上的数据
-   * @param dom
-   * @param key
-   */
-  $.removeData = function (dom, key) {
-    if (dom.mduiDomDataStorage && dom.mduiDomDataStorage[key]) {
-      dom.mduiDomDataStorage[key] = null;
-      delete dom.mduiDomDataStorage[key];
+    // 读取数据
+    if (typeof value === 'undefined') {
+      if (key in dataStorage) {
+        return dataStorage[key];
+      } else {
+        return null;
+      }
+    }
+
+    // 删除数据
+    else if (value === null) {
+      if (dataStorage[key]) {
+        dataStorage[key] = null;
+        delete dataStorage[key];
+      }
+    }
+
+    // 写入数据
+    else {
+      dataStorage[key] = value;
     }
   };
 
@@ -179,6 +179,24 @@ var $ = {};
     }
 
     return style.getPropertyValue(prop);
+  };
+
+  /**
+   * 获取元素相对于 document 的偏移
+   * @param dom
+   * @returns {{top: number, left: number}}
+   */
+  $.offset = function (dom) {
+    var box = dom.getBoundingClientRect();
+    var body = document.body;
+    var clientTop  = dom.clientTop  || body.clientTop  || 0;
+    var clientLeft = dom.clientLeft || body.clientLeft || 0;
+    var scrollTop  = window.pageYOffset || dom.scrollTop;
+    var scrollLeft = window.pageXOffset || dom.scrollLeft;
+    return {
+      top: box.top  + scrollTop  - clientTop,
+      left: box.left + scrollLeft - clientLeft,
+    };
   };
 
   /**
@@ -495,9 +513,6 @@ var $ = {};
     var events = [
       'webkitTransitionEnd',
       'transitionend',
-      'oTransitionEnd',
-      'MSTransitionEnd',
-      'msTransitionEnd',
     ];
     var i;
     function fireCallback(e) {
@@ -516,24 +531,6 @@ var $ = {};
         $.on(dom, events[i], fireCallback);
       }
     }
-  };
-
-  /**
-   * 获取元素相对于 document 的偏移
-   * @param dom
-   * @returns {{top: number, left: number}}
-   */
-  $.offset = function (dom) {
-    var box = dom.getBoundingClientRect();
-    var body = document.body;
-    var clientTop  = dom.clientTop  || body.clientTop  || 0;
-    var clientLeft = dom.clientLeft || body.clientLeft || 0;
-    var scrollTop  = window.pageYOffset || dom.scrollTop;
-    var scrollLeft = window.pageXOffset || dom.scrollLeft;
-    return {
-      top: box.top  + scrollTop  - clientTop,
-      left: box.left + scrollLeft - clientLeft,
-    };
   };
 
   /**
@@ -644,6 +641,23 @@ var $ = {};
     }
 
     return null;
+  };
+
+  /**
+   * 移除 dom 元素
+   * @param dom
+   */
+  $.remove = function (dom) {
+    dom.parentNode.removeChild(dom);
+  };
+
+  /**
+   * 把 newChild 添加到 dom 元素内的最前面
+   * @param dom
+   * @param newChild
+   */
+  $.prepend = function (dom, newChild) {
+    dom.insertBefore(newChild, dom.childNodes[0]);
   };
 
   /**

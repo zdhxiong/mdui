@@ -112,7 +112,7 @@
       textField.classList.remove('mdui-textfield-has-counter');
       counter = $.query('.mdui-textfield-counter', textField);
       if (counter) {
-        counter.parentNode.removeChild(counter);
+        $.remove(counter);
       }
     }
 

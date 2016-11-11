@@ -6,13 +6,19 @@
 
 (function () {
 
-  var checkboxHTML =
-    '<label class="mdui-checkbox">' +
-      '<input type="checkbox"/>' +
-      '<i class="mdui-checkbox-icon"></i>' +
-    '</label>';
-  var checkboxThHTML = '<th class="mdui-table-cell-checkbox">' + checkboxHTML + '</th>';
-  var checkboxTdHTML = '<td class="mdui-table-cell-checkbox">' + checkboxHTML + '</td>';
+  /**
+   * 生成 checkbox 的 HTML 结构
+   * @param tag
+   * @returns {string}
+   */
+  var checkboxHTML = function (tag) {
+    return '<' + tag + ' class="mdui-table-cell-checkbox">' +
+             '<label class="mdui-checkbox">' +
+               '<input type="checkbox"/>' +
+               '<i class="mdui-checkbox-icon"></i>' +
+             '</label>' +
+           '</' + tag + '>';
+  };
 
   /**
    * Table 表格
@@ -54,14 +60,14 @@
       // 移除旧的 checkbox
       tdCheckbox = $.query('.mdui-table-cell-checkbox', tdRow);
       if (tdCheckbox) {
-        tdCheckbox.parentNode.removeChild(tdCheckbox);
+        $.remove(tdCheckbox);
       }
 
       // 创建新的 checkbox
       if (_this.selectable) {
         // 创建 DOM
-        td = $.dom(checkboxTdHTML)[0];
-        tdRow.insertBefore(td, tdRow.childNodes[0]);
+        td = $.dom(checkboxHTML('td'))[0];
+        $.prepend(tdRow, td);
 
         var checkbox = $.query('input[type="checkbox"]', td);
 
@@ -90,7 +96,7 @@
     // 移除旧的 checkbox
     thCheckbox = $.query('.mdui-table-cell-checkbox', _this.thRow);
     if (thCheckbox) {
-      thCheckbox.parentNode.removeChild(thCheckbox);
+      $.remove(thCheckbox);
     }
 
     if (!_this.selectable) {
@@ -98,8 +104,8 @@
     }
 
     // 创建 DOM
-    var th = $.dom(checkboxThHTML)[0];
-    _this.thRow.insertBefore(th, _this.thRow.childNodes[0]);
+    var th = $.dom(checkboxHTML('th'))[0];
+    $.prepend(_this.thRow, th);
 
     // 绑定事件
     thCheckbox = $.query('input[type="checkbox"]', th);
@@ -138,7 +144,7 @@
   var tables = $.queryAll('.mdui-table');
   $.each(tables, function (i, table) {
     var inst = new Table(table);
-    $.setData(table, 'mdui.table', inst);
+    $.data(table, 'mdui.table', inst);
   });
 
   /**
@@ -154,7 +160,7 @@
     }
 
     $.each(tables, function (i, table) {
-      var inst = $.getData(table, 'mdui.table');
+      var inst = $.data(table, 'mdui.table');
       inst.init();
     });
   };

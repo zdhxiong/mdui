@@ -10,10 +10,10 @@ $.ready(function () {
   $.each($.queryAll('[mdui-expansion-panel]'), function (i, target) {
     var options = $.parseOptions(target.getAttribute('mdui-expansion-panel'));
 
-    var inst = $.getData(target, 'mdui-expansion-panel');
+    var inst = $.data(target, 'mdui-expansion-panel');
     if (!inst) {
       inst = new mdui.ExpansionPanel(target, options);
-      $.setData(target, 'mdui.expansion_panel', inst);
+      $.data(target, 'mdui.expansion_panel', inst);
     }
   });
 });

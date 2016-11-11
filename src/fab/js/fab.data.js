@@ -14,11 +14,11 @@ $.ready(function () {
     var _this = this;
     var eventType = e.type;
 
-    var inst = $.getData(_this, 'mdui.fab');
+    var inst = $.data(_this, 'mdui.fab');
     if (!inst) {
       var options = $.parseOptions(_this.getAttribute('mdui-fab'));
       inst = new mdui.Fab(_this, options);
-      $.setData(_this, 'mdui.fab', inst);
+      $.data(_this, 'mdui.fab', inst);
 
       // 判断当前事件
       if (eventType === 'touchstart') {

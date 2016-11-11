@@ -98,7 +98,7 @@ mdui.Tooltip = (function () {
     _this.target = $.dom(selector)[0];
 
     // 已通过 data 属性实例化过，不再重复实例化
-    var oldInst = $.getData(_this.target, 'mdui.tooltip');
+    var oldInst = $.data(_this.target, 'mdui.tooltip');
     if (oldInst) {
       return oldInst;
     }
@@ -213,12 +213,12 @@ mdui.Tooltip = (function () {
   Tooltip.prototype.destroy = function () {
     var _this = this;
     clearTimeout(_this.timeoutId);
-    $.removeData(_this.target, 'mdui.tooltip');
+    $.data(_this.target, 'mdui.tooltip', null);
     if (typeof jQuery !== 'undefined') {
       jQuery(_this.target).removeData('mdui.tooltip');
     }
 
-    _this.tooltip.parentNode.removeChild(_this.tooltip);
+    $.remove(_this.tooltip);
   };
 
   return Tooltip;

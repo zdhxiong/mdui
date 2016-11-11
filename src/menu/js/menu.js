@@ -455,7 +455,7 @@ mdui.Menu = (function () {
           if (submenu) {
 
             // 当前子菜单准备打开时，如果当前子菜单正准备着关闭，不用再关闭了
-            var tmpClose = $.getData(submenu, 'timeoutClose.mdui.menu');
+            var tmpClose = $.data(submenu, 'timeoutClose.mdui.menu');
             if (tmpClose) {
               clearTimeout(tmpClose);
             }
@@ -473,7 +473,7 @@ mdui.Menu = (function () {
               openSubMenu(submenu);
             }, delay);
 
-            $.setData(submenu, 'timeoutOpen.mdui.menu', timeout);
+            $.data(submenu, 'timeoutOpen.mdui.menu', timeout);
           }
         }
 
@@ -482,7 +482,7 @@ mdui.Menu = (function () {
           if (submenu) {
 
             // 鼠标移出菜单项时，如果当前菜单项下的子菜单正准备打开，不用再打开了
-            var tmpOpen = $.getData(submenu, 'timeoutOpen.mdui.menu');
+            var tmpOpen = $.data(submenu, 'timeoutOpen.mdui.menu');
             if (tmpOpen) {
               clearTimeout(tmpOpen);
             }
@@ -492,7 +492,7 @@ mdui.Menu = (function () {
               closeSubMenu(submenu);
             }, delay);
 
-            $.setData(submenu, 'timeoutClose.mdui.menu', timeout);
+            $.data(submenu, 'timeoutClose.mdui.menu', timeout);
           }
         }
       });
@@ -513,7 +513,7 @@ mdui.Menu = (function () {
     _this.anchor = $.dom(anchorSelector)[0];
 
     // 已通过自定义属性实例化过，不再重复实例化
-    var oldInst = $.getData(_this.anchor, 'mdui.menu');
+    var oldInst = $.data(_this.anchor, 'mdui.menu');
     if (oldInst) {
       return oldInst;
     }
@@ -548,7 +548,7 @@ mdui.Menu = (function () {
     });
 
     // 点击菜单外面区域关闭菜单
-    $.on(document, 'click', function (e) {
+    $.on(document, 'click touchstart', function (e) {
       if (
         (_this.state === 'opening' || _this.state === 'opened') &&
         !$.is(e.target, _this.menu) &&

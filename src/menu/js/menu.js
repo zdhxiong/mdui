@@ -10,11 +10,11 @@ mdui.Menu = (function () {
    * 默认参数
    */
   var DEFAULT = {
-    fixed: false,             // 是否使菜单固定在窗口，不随滚动条滚动
-    covered: 'auto',          // 菜单是否覆盖在触发它的元素上，true、false。auto 时简单菜单覆盖，级联菜单不覆盖
     position: 'auto',         // 菜单位置 top、bottom、center、auto
     align: 'auto',            // 菜单和触发它的元素的对齐方式 left、right、center、auto
     gutter: 16,               // 菜单距离窗口边缘的最小距离，单位 px
+    fixed: false,             // 是否使菜单固定在窗口，不随滚动条滚动
+    covered: 'auto',          // 菜单是否覆盖在触发它的元素上，true、false。auto 时简单菜单覆盖，级联菜单不覆盖
     subMenuTrigger: 'hover',  // 子菜单的触发方式 hover、click
     subMenuDelay: 200,        // 子菜单的触发延时，仅在 submenuTrigger 为 hover 有效
   };
@@ -528,10 +528,6 @@ mdui.Menu = (function () {
     _this.options = $.extend(DEFAULT, (opts || {}));
     _this.state = 'closed';
 
-    if (_this.options.fixed) {
-      _this.menu.style.position = 'fixed';
-    }
-
     // 是否是级联菜单
     _this.isCascade = !!_this.menu.classList.contains(CLASS.cascade);
 
@@ -602,6 +598,9 @@ mdui.Menu = (function () {
     // 调整菜单位置
     readjust(_this);
 
+    // 菜单隐藏状态使用使用 fixed 定位。
+    _this.menu.style.position = _this.options.fixed ? 'fixed' : 'absolute';
+
     // 打开菜单
     _this.menu.classList.add(CLASS.open);
     _this.state = 'opening';
@@ -653,6 +652,9 @@ mdui.Menu = (function () {
       _this.menu.style.top = '';
       _this.menu.style.left = '';
       _this.menu.style.width = '';
+
+      // 关闭后，恢复 fixed 定位
+      _this.menu.style.position = 'fixed';
     });
   };
 

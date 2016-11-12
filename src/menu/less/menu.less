@@ -31,7 +31,7 @@
 
   visibility: hidden;
   transform: scale(0);
-  position: absolute;
+  position: fixed;
 
   // 简单菜单高度超出窗口高度时，使菜单边框和窗口保持一定距离，菜单内出现滚动条
   overflow-y: auto;
@@ -78,6 +78,7 @@ body:not(.mdui-support-touch) {
 
   // 子菜单默认隐藏，阴影更深
   &>.mdui-menu {
+    position: absolute;
     .mdui-shadow(9);
   }
 }

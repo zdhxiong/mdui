@@ -4,7 +4,7 @@
  * =============================================================================
  */
 
-mdui.ExpansionPanel = (function () {
+mdui.Panel = (function () {
 
   /**
    * 默认参数
@@ -23,26 +23,26 @@ mdui.ExpansionPanel = (function () {
    * @returns {*}
    * @constructor
    */
-  function ExpansionPanel(selector, opts) {
+  function Panel(selector, opts) {
     var _this = this;
 
     // 可扩展面板元素
-    _this.expansion_panel = $.dom(selector)[0];
+    _this.panel = $.dom(selector)[0];
 
     // 已通过自定义属性实例化过，不再重复实例化
-    var oldInst = $.data(_this.expansion_panel, 'mdui.expansion_panel');
+    var oldInst = $.data(_this.panel, 'mdui.panel');
     if (oldInst) {
       return oldInst;
     }
 
     _this.options = $.extend(DEFAULT, (opts || {}));
-    _this.items = $.children(_this.expansion_panel, '.mdui-expansion-panel-item');
+    _this.items = $.children(_this.panel, '.mdui-panel-item');
     _this.headers = [];
     _this.contents = [];
 
     $.each(_this.items, function (i, item) {
-      _this.headers[i] = $.child(item, '.mdui-expansion-panel-header');
-      _this.contents[i] = $.child(item, '.mdui-expansion-panel-content');
+      _this.headers[i] = $.child(item, '.mdui-panel-item-header');
+      _this.contents[i] = $.child(item, '.mdui-panel-item-body');
 
       // 绑定触发事件
       $.on(_this.headers[i], 'click', function () {
@@ -55,7 +55,7 @@ mdui.ExpansionPanel = (function () {
    * 打开指定项
    * @param index 面板项的索引号或 DOM 元素
    */
-  ExpansionPanel.prototype.open = function (index) {
+  Panel.prototype.open = function (index) {
     var _this = this;
     var contentHeight;
     var item;
@@ -77,26 +77,26 @@ mdui.ExpansionPanel = (function () {
     // 计算元素的高度
     contentHeight = content ? parseFloat($.getStyle(content, 'height')) : 0;
 
-    $.pluginEvent('open', 'expansion-panel', _this, item);
+    $.pluginEvent('open', 'panel', _this, item);
 
-    item.classList.add('mdui-expansion-panel-item-open');
+    item.classList.add('mdui-panel-item-open');
 
     // 设置 item 的高度，header + content
     item.style.height = headerHeight + contentHeight + 'px';
 
     // 动画结束后重新设置高度。打开后设置为自动高度。有可能计算的高度不正确，让浏览器自动调整
     $.transitionEnd(item, function () {
-      if (item.classList.contains('mdui-expansion-panel-item-open')) {
+      if (item.classList.contains('mdui-panel-item-open')) {
         item.style.height = 'auto';
 
-        $.pluginEvent('opened', 'expansion-panel', _this, item);
+        $.pluginEvent('opened', 'panel', _this, item);
       }
     });
 
     // 关闭其他项
     if (_this.options.accordion) {
       $.each(_this.items, function (i, item) {
-        if (i !== index && item.classList.contains('mdui-expansion-panel-item-open')) {
+        if (i !== index && item.classList.contains('mdui-panel-item-open')) {
           _this.close(i);
         }
       });
@@ -107,7 +107,7 @@ mdui.ExpansionPanel = (function () {
    * 关闭指定项
    * @param index
    */
-  ExpansionPanel.prototype.close = function (index) {
+  Panel.prototype.close = function (index) {
     var _this = this;
     var item;
 
@@ -127,14 +127,14 @@ mdui.ExpansionPanel = (function () {
     item.style.height = $.getStyle(item, 'height');
     $.getStyle(item, 'height');
 
-    $.pluginEvent('close', 'expansion-panel', _this, item);
+    $.pluginEvent('close', 'panel', _this, item);
 
-    item.classList.remove('mdui-expansion-panel-item-open');
+    item.classList.remove('mdui-panel-item-open');
 
     item.style.height = itemHeight + 'px';
 
     $.transitionEnd(item, function () {
-      $.pluginEvent('closed', 'expansion-panel', _this, item);
+      $.pluginEvent('closed', 'panel', _this, item);
     });
   };
 
@@ -142,7 +142,7 @@ mdui.ExpansionPanel = (function () {
    * 切换指定项的状态
    * @param index
    */
-  ExpansionPanel.prototype.toggle = function (index) {
+  Panel.prototype.toggle = function (index) {
     var _this = this;
     var item;
 
@@ -158,7 +158,7 @@ mdui.ExpansionPanel = (function () {
       });
     }
 
-    if (item.classList.contains('mdui-expansion-panel-item-open')) {
+    if (item.classList.contains('mdui-panel-item-open')) {
       _this.close(index);
     } else {
       _this.open(index);
@@ -168,11 +168,11 @@ mdui.ExpansionPanel = (function () {
   /**
    * 打开所有项
    */
-  ExpansionPanel.prototype.openAll = function () {
+  Panel.prototype.openAll = function () {
     var _this = this;
 
     $.each(_this.items, function (i, item) {
-      if (!item.classList.contains('mdui-expansion-panel-item-open')) {
+      if (!item.classList.contains('mdui-panel-item-open')) {
         _this.open(i);
       }
     });
@@ -181,16 +181,16 @@ mdui.ExpansionPanel = (function () {
   /**
    * 关闭所有项
    */
-  ExpansionPanel.prototype.closeAll = function () {
+  Panel.prototype.closeAll = function () {
     var _this = this;
 
     $.each(_this.items, function (i, item) {
-      if (item.classList.contains('mdui-expansion-panel-item-open')) {
+      if (item.classList.contains('mdui-panel-item-open')) {
         _this.close(i);
       }
     });
   };
 
-  return ExpansionPanel;
+  return Panel;
 
 })();

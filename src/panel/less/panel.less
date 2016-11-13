@@ -5,14 +5,14 @@
  */
 
 /* 可扩展面板 */
-.mdui-expansion-panel {
+.mdui-panel {
   box-sizing: border-box;
   width: 100%;
   .mdui-shadow(2);
 }
 
 /* 面板项 */
-.mdui-expansion-panel-item {
+.mdui-panel-item {
   background-color: #fff;
   color: @color-black-text;
   height: 48px;
@@ -29,12 +29,12 @@
 }
 
 /* 打开状态的面板项 */
-.mdui-expansion-panel-item-open {
+.mdui-panel-item-open {
   height: auto;
 }
 
 /* 面板头部 */
-.mdui-expansion-panel-header {
+.mdui-panel-item-header {
   box-sizing: border-box;
   position: relative;
   width: 100%;
@@ -52,28 +52,28 @@
   }
 
   // 打开状态的面板头部更高
-  .mdui-expansion-panel-item-open & {
+  .mdui-panel-item-open & {
     height: 64px;
     line-height: 64px;
   }
 }
 
 /* 面板项标题 */
-.mdui-expansion-panel-header-title {
+.mdui-panel-item-title {
   width: 36%;
   float: left;
   font-weight: 500;
 }
 
 /* 面板项内容 */
-.mdui-expansion-panel-header-summary {
+.mdui-panel-item-summary {
   width: 56%;
   float: left;
   color: @color-black-secondary;
 }
 
 /* 展开收起的图标 */
-.mdui-expansion-panel-header-icon {
+.mdui-panel-item-icon {
   position: absolute;
   right: 24px;
   top: 12px;
@@ -83,20 +83,20 @@
   transform: rotate(0);
   transition: all .3s @animation-curve-default;
 
-  .mdui-expansion-panel-item-open & {
+  .mdui-panel-item-open & {
     transform: rotate(180deg);
     top: 20px;
   }
 }
 
 /* 面板项内容 */
-.mdui-expansion-panel-content {
+.mdui-panel-item-body {
   box-sizing: border-box;
   padding: 0 24px 16px 24px;
 }
 
 /* 面板项操作栏 */
-.mdui-expansion-panel-actions {
+.mdui-panel-item-actions {
   display: block;
   width: 100%;
   text-align: right;
@@ -114,14 +114,14 @@
 }
 
 /* 使打开项拥有上下边距 */
-.mdui-expansion-panel-popout {
+.mdui-panel-popout {
   .mdui-shadow(0);
 
-  .mdui-expansion-panel-item {
+  .mdui-panel-item {
     .mdui-shadow(2);
   }
 
-  .mdui-expansion-panel-item-open {
+  .mdui-panel-item-open {
     margin-top: 16px;
     margin-bottom: 16px;
   }
@@ -134,23 +134,23 @@
  * =============================================================================
  */
 .mdui-theme-layout-dark when (@globalLayoutDark = true) {
-  .mdui-expansion-panel-item {
+  .mdui-panel-item {
     background-color: @layout-dark-color-3;
     color: #fff;
     .mdui-divider-bottom-light();
   }
-  .mdui-expansion-panel-header {
+  .mdui-panel-item-header {
     &:active {
       background-color: @color-grey-800;
     }
   }
-  .mdui-expansion-panel-header-summary {
+  .mdui-panel-item-summary {
     color: @color-white-secondary;
   }
-  .mdui-expansion-panel-header-icon {
+  .mdui-panel-item-icon {
     color: @color-white-icon;
   }
-  .mdui-expansion-panel-actions {
+  .mdui-panel-item-actions {
     .mdui-divider-top-light();
   }
 }

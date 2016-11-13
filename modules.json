@@ -282,16 +282,16 @@
     ],
     "dependencies": []
   },
-  "expansion_panel": {
+  "panel": {
     "js": [
-      "src/expansion_panel/js/expansion_panel.js",
-      "src/expansion_panel/js/expansion_panel.data.js"
+      "src/panel/js/panel.js",
+      "src/panel/js/panel.data.js"
     ],
     "jquery": [
-      "src/expansion_panel/js/expansion_panel.jquery.js"
+      "src/panel/js/panel.jquery.js"
     ],
     "less": [
-      "src/expansion_panel/less/expansion_panel.less"
+      "src/panel/less/panel.less"
     ],
     "dependencies": []
   },

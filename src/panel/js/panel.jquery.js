@@ -11,10 +11,10 @@
 
     this.each(function () {
       var $this = $(this);
-      var inst = $this.data('mdui.expansion_panel');
+      var inst = $this.data('mdui.panel');
 
       if (!inst) {
-        $this.data('mdui.expansion_panel', (inst = new mdui.ExpansionPanel(this, option)));
+        $this.data('mdui.panel', (inst = new mdui.Panel(this, option)));
       }
 
       if (typeof option === 'string') {
@@ -25,14 +25,14 @@
     return typeof value === 'undefined' ? this : value;
   }
 
-  var old = $.fn.mduiExpansionPanel;
+  var old = $.fn.mduiPanel;
 
-  $.fn.mduiExpansionPanel = Plugin;
+  $.fn.mduiPanel = Plugin;
 
   // NO CONFLICT
   // ===========
-  $.fn.mduiExpansionPanel.noConflict = function () {
-    $.fn.mduiExpansionPanel = old;
+  $.fn.mduiPanel.noConflict = function () {
+    $.fn.mduiPanel = old;
     return this;
   };
 })(jQuery);

@@ -28,7 +28,7 @@
    * 默认参数
    */
   var DEFAULT = {
-    colorful: false,
+    colorful: true,
     active: true,
   };
 
@@ -47,7 +47,7 @@
 
     spinner.classList[options.active ? 'add' : 'remove']('mdui-spinner-active');
 
-    spinner.innerHTML(layer);
+    spinner.innerHTML = layer;
   };
 
   /**
@@ -56,7 +56,7 @@
   $.ready(function () {
     var spinners = $.queryAll('[mdui-spinner]');
     $.each(spinners, function (i, spinner) {
-      var options = $.parseOptions(spinner.getAttribute('[mdui-spinner]'));
+      var options = $.parseOptions(spinner.getAttribute('mdui-spinner'));
       options = $.extend(DEFAULT, options);
 
       fillHTML(spinner, options);
@@ -73,7 +73,7 @@
     if (arguments.length === 0) {
       spinners = $.queryAll('.mdui-spinner');
     } else if (arguments.length <= 2) {
-      spinners = $.dom(arguments[0]);
+      spinners = arguments[0] ? $.dom(arguments[0]) : $.queryAll('.mdui-spinner');
 
       if (arguments.length === 2) {
         opts = arguments[1];

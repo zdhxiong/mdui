@@ -275,7 +275,9 @@
     "dependencies": []
   },
   "progress": {
-    "js": [],
+    "js": [
+      "src/progress/js/spinner.js"
+    ],
     "less": [
       "src/progress/less/progress.less",
       "src/progress/less/spinner.less"

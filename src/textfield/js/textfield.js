@@ -149,11 +149,11 @@
    * @param dom 如果传入了 .mdui-textfield 所在的 DOM 元素，则更新该文本框；否则，更新所有文本框
    */
   mdui.updateTextFields = function () {
-    var textfields = [];
+    var textfields;
     var input;
 
     if (arguments.length === 1) {
-      textfields.push(arguments[0]);
+      textfields = $.dom(arguments[0]);
     } else {
       textfields = $.queryAll('.mdui-textfield');
     }

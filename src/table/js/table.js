@@ -140,21 +140,23 @@
     });
   };
 
-  // 实例化表格
-  var tables = $.queryAll('.mdui-table');
-  $.each(tables, function (i, table) {
-    var inst = new Table(table);
-    $.data(table, 'mdui.table', inst);
+  $.ready(function () {
+    // 实例化表格
+    var tables = $.queryAll('.mdui-table');
+    $.each(tables, function (i, table) {
+      var inst = new Table(table);
+      $.data(table, 'mdui.table', inst);
+    });
   });
 
   /**
    * 更新表格
    */
   mdui.updateTables = function () {
-    var tables = [];
+    var tables;
 
     if (arguments.length === 1) {
-      tables.push(arguments[0]);
+      tables = $.dom(arguments[0]);
     } else {
       tables = $.queryAll('.mdui-table');
     }

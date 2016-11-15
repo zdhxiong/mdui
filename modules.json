@@ -133,6 +133,15 @@
     ],
     "dependencies": []
   },
+  "slider": {
+    "js": [
+      "src/slider/js/slider.js"
+    ],
+    "less": [
+      "src/slider/less/slider.less"
+    ],
+    "dependencies": []
+  },
   "button": {
     "js": [],
     "less": [

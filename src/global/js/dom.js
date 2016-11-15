@@ -135,6 +135,7 @@ var $ = {};
    * $.data(dom, key);          读取指定键名的数据
    * $.data(dom, key, value);   写入指定键名的数据
    * $.data(dom, key, null);    删除指定键名的数据
+   * $.data(dom, object);       批量写入数据
    */
   $.data = function (dom, key, value) {
     if (!dom.mduiDomDataStorage) {
@@ -143,12 +144,22 @@ var $ = {};
 
     var dataStorage = dom.mduiDomDataStorage;
 
-    // 读取数据
     if (typeof value === 'undefined') {
-      if (key in dataStorage) {
-        return dataStorage[key];
-      } else {
-        return null;
+
+      // 读取单个数据
+      if (typeof key === 'string') {
+        if (key in dataStorage) {
+          return dataStorage[key];
+        } else {
+          return null;
+        }
+      }
+
+      // 批量写入数据
+      else if (typeof key === 'object') {
+        $.each(key, function (k, v) {
+          dataStorage[k] = v;
+        });
       }
     }
 
@@ -648,7 +659,10 @@ var $ = {};
    * @param dom
    */
   $.remove = function (dom) {
-    dom.parentNode.removeChild(dom);
+    if (dom) {
+      dom.parentNode.removeChild(dom);
+    }
+
   };
 
   /**

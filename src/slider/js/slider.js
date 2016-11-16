@@ -19,6 +19,7 @@
     var max = $.data(slider, 'max');
     var isDisabled = $.data(slider, 'disabled');
     var isDiscrete = $.data(slider, 'discrete');
+    var thumbText = $.data(slider, 'thumbText');
     var percent = (input.value - min) / (max - min) * 100;
 
     if (isDisabled) {
@@ -32,7 +33,7 @@
     thumb.style.left = percent + '%';
 
     if (isDiscrete) {
-      thumb.textContent = input.value;
+      thumbText.textContent = input.value;
     }
 
     slider.classList[parseFloat(percent) === 0 ? 'add' : 'remove']('mdui-slider-zero');
@@ -46,10 +47,10 @@
     var track = $.dom('<div class="mdui-slider-track"></div>')[0];
     var fill = $.dom('<div class="mdui-slider-fill"></div>')[0];
     var thumb = $.dom('<div class="mdui-slider-thumb"></div>')[0];
-
     var input = $.query('input[type="range"]', slider);
-    var isDisabled = input.disabled;
 
+    // 禁用状态
+    var isDisabled = input.disabled;
     slider.classList[isDisabled ? 'add' : 'remove']('mdui-slider-disabled');
 
     // 重新填充 HTML
@@ -62,15 +63,27 @@
     $.remove($.query('.mdui-slider-thumb', slider));
     slider.appendChild(thumb);
 
+    // 间续型滑块
+    var isDiscrete = slider.classList.contains('mdui-slider-discrete');
+
+    var thumbText;
+    if (isDiscrete) {
+      thumbText = $.dom('<span></span>')[0];
+
+      $.empty(thumb);
+      thumb.appendChild(thumbText);
+    }
+
     $.data(slider, {
       track: track,
       fill: fill,
       thumb: thumb,
       input: input,
-      min: input.getAttribute('min'),                               // 滑块最小值
-      max: input.getAttribute('max'),                               // 滑块最大值
-      disabled: slider.classList.contains('mdui-slider-disabled'),  // 是否禁用状态
-      discrete: slider.classList.contains('mdui-slider-discrete'),  // 是否是间续型滑块
+      min: input.getAttribute('min'),   // 滑块最小值
+      max: input.getAttribute('max'),   // 滑块最大值
+      disabled: isDisabled,             // 是否禁用状态
+      discrete: isDiscrete,             // 是否是间续型滑块
+      thumbText: thumbText,             // 间续型滑块的数值
     });
 
     // 设置默认值
@@ -80,8 +93,7 @@
   /**
    * 滑动滑块事件
    */
-  $.on(document, 'input change', '.mdui-slider input[type="range"]', function (e) {
-    console.log(e);
+  $.on(document, 'input change', '.mdui-slider input[type="range"]', function () {
     var slider = $.parent(this, '.mdui-slider');
     updateValueStyle(slider);
   });
@@ -91,7 +103,9 @@
    */
   $.on(document, mdui.touchEvents.start, '.mdui-slider input[type="range"]', function () {
     var slider = $.parent(this, '.mdui-slider');
-    slider.classList.add('mdui-slider-focus');
+    if (!this.disabled) {
+      slider.classList.add('mdui-slider-focus');
+    }
   });
 
   /**
@@ -99,7 +113,9 @@
    */
   $.on(document, mdui.touchEvents.end, '.mdui-slider input[type="range"]', function () {
     var slider = $.parent(this, '.mdui-slider');
-    slider.classList.remove('mdui-slider-focus');
+    if (!this.disabled) {
+      slider.classList.remove('mdui-slider-focus');
+    }
   });
 
   /**

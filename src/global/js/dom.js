@@ -662,7 +662,26 @@ var $ = {};
     if (dom) {
       dom.parentNode.removeChild(dom);
     }
+  };
 
+  /**
+   * 移除 dom 元素中所有的子元素
+   * @param dom
+   */
+  $.empty = function (dom) {
+    if (!dom) {
+      return;
+    }
+
+    if (dom.nodeType !== 1) {
+      return;
+    }
+
+    for (var i = 0; i < dom.childNodes.length; i++) {
+      $.remove(dom.childNodes[i]);
+    }
+
+    dom.textContent = '';
   };
 
   /**

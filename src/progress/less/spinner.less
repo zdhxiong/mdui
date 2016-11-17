@@ -9,9 +9,6 @@
   position: relative;
   width: 28px;
   height: 28px;
-}
-
-.mdui-spinner-active {
   animation: mdui-spinner 1568ms linear infinite;
 }
 
@@ -27,53 +24,36 @@
   height: 100%;
   opacity: 0;
   border-color: @color-default-500;
+  opacity: 1;
+  animation: mdui-spinner-layer-fill-unfill-rotate 5332ms @animation-curve-default infinite both;
 }
 
 .mdui-spinner-layer-1 {
   border-color: @color-blue-400 !important;
+  animation:
+    mdui-spinner-layer-fill-unfill-rotate 5332ms @animation-curve-default infinite both,
+    mdui-spinner-layer-1-fade-in-out 5332ms @animation-curve-default infinite both;
 }
 
 .mdui-spinner-layer-2 {
   border-color: @color-red-500 !important;
+  animation:
+    mdui-spinner-layer-fill-unfill-rotate 5332ms @animation-curve-default infinite both,
+    mdui-spinner-layer-2-fade-in-out 5332ms @animation-curve-default infinite both;
 }
 
 .mdui-spinner-layer-3 {
   border-color: @color-yellow-600 !important;
+  animation:
+    mdui-spinner-layer-fill-unfill-rotate 5332ms @animation-curve-default infinite both,
+    mdui-spinner-layer-3-fade-in-out 5332ms @animation-curve-default infinite both;
 }
 
 .mdui-spinner-layer-4 {
   border-color: @color-green-500 !important;
-}
-
-.mdui-spinner-active {
-  .mdui-spinner-layer {
-    opacity: 1;
-    animation: mdui-spinner-layer-fill-unfill-rotate 5332ms @animation-curve-default infinite both;
-  }
-
-  .mdui-spinner-layer-1 {
-    animation:
-      mdui-spinner-layer-fill-unfill-rotate 5332ms @animation-curve-default infinite both,
-      mdui-spinner-layer-1-fade-in-out 5332ms @animation-curve-default infinite both;
-  }
-
-  .mdui-spinner-layer-2 {
-    animation:
-      mdui-spinner-layer-fill-unfill-rotate 5332ms @animation-curve-default infinite both,
-      mdui-spinner-layer-2-fade-in-out 5332ms @animation-curve-default infinite both;
-  }
-
-  .mdui-spinner-layer-3 {
-    animation:
-      mdui-spinner-layer-fill-unfill-rotate 5332ms @animation-curve-default infinite both,
-      mdui-spinner-layer-3-fade-in-out 5332ms @animation-curve-default infinite both;
-  }
-
-  .mdui-spinner-layer-4 {
-    animation:
-      mdui-spinner-layer-fill-unfill-rotate 5332ms @animation-curve-default infinite both,
-      mdui-spinner-layer-4-fade-in-out 5332ms @animation-curve-default infinite both;
-  }
+  animation:
+    mdui-spinner-layer-fill-unfill-rotate 5332ms @animation-curve-default infinite both,
+    mdui-spinner-layer-4-fade-in-out 5332ms @animation-curve-default infinite both;
 }
 
 @keyframes mdui-spinner-layer-fill-unfill-rotate {
@@ -167,6 +147,7 @@
       left: 0;
       border-right-color: transparent !important;
       transform: rotate(129deg);
+      animation: mdui-spinner-left-spin 1333ms @animation-curve-default infinite both;
     }
   }
 
@@ -177,17 +158,6 @@
       left: -100%;
       border-left-color: transparent !important;
       transform: rotate(-129deg);
-    }
-  }
-}
-
-.mdui-spinner-active {
-  .mdui-spinner-circle-clipper {
-    &.mdui-spinner-left .mdui-spinner-circle {
-      animation: mdui-spinner-left-spin 1333ms @animation-curve-default infinite both;
-    }
-
-    &.mdui-spinner-right .mdui-spinner-circle {
       animation: mdui-spinner-right-spin 1333ms @animation-curve-default infinite both;
     }
   }

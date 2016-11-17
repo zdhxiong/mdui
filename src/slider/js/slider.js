@@ -22,12 +22,12 @@
     var thumbText = $.data(slider, 'thumbText');
     var percent = (input.value - min) / (max - min) * 100;
 
+    fill.style.width = percent + '%';
+    track.style.width = 100 - percent + '%';
+
     if (isDisabled) {
-      fill.style.width = 'calc(' + percent + '% - 6px)';
-      track.style.width = 'calc(' + (100 - percent) + '% - 6px)';
-    } else {
-      fill.style.width = percent + '%';
-      track.style.width = 100 - percent + '%';
+      fill.style['padding-right'] = '6px';
+      track.style['padding-left'] = '6px';
     }
 
     thumb.style.left = percent + '%';

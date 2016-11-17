@@ -33,23 +33,37 @@
 
 .mdui-slider-track,
 .mdui-slider-fill {
+  box-sizing: border-box;
   position: absolute;
   height: 2px;
   top: 50%;
   margin-top: -1px;
+
+  &:before {
+    content: ' ';
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
 }
 
 /* 轨道 */
 .mdui-slider-track {
   right: 0;
-  background-color: @slider-light-color;
-  transition: background-color .3s @animation-curve-default;
+
+  &:before {
+    background-color: @slider-light-color;
+    transition: background-color .3s @animation-curve-default;
+  }
 }
 
 /* 已滑动部分 */
 .mdui-slider-fill {
   left: 0;
-  background-color: @color-default-a200;
+
+  &:before {
+    background-color: @color-default-a200;
+  }
 }
 
 /* 滑块 */
@@ -88,7 +102,10 @@
     .mdui-theme-accent-@{colorName} {
 
       .mdui-slider-fill {
-        background-color: @@color;
+
+        &:before {
+          background-color: @@color;
+        }
       }
 
       .mdui-slider-thumb {
@@ -109,7 +126,10 @@
 /* 鼠标按下状态 */
 .mdui-slider-focus {
   .mdui-slider-track {
-    background-color: @slider-light-color-focus;
+
+    &:before {
+      background-color: @slider-light-color-focus;
+    }
   }
 
   .mdui-slider-thumb {
@@ -139,11 +159,17 @@
   }
 
   .mdui-slider-track {
-    background-color: @slider-light-color-disabled;
+
+    &:before {
+      background-color: @slider-light-color-disabled;
+    }
   }
 
   .mdui-slider-fill {
-    background-color: @slider-light-color-disabled;
+
+    &:before {
+      background-color: @slider-light-color-disabled;
+    }
   }
 
   .mdui-slider-thumb {
@@ -234,13 +260,19 @@
 
   // 轨道
   .mdui-slider-track {
-    background-color: @slider-dark-color;
+
+    &:before {
+      background-color: @slider-dark-color;
+    }
   }
 
   // 鼠标按下状态
   .mdui-slider-focus {
     .mdui-slider-track {
-      background-color: @slider-dark-color-focus;
+
+      &:before {
+        background-color: @slider-dark-color-focus;
+      }
     }
   }
 
@@ -262,11 +294,17 @@
   // 禁用状态
   .mdui-slider-disabled {
     .mdui-slider-track {
-      background-color: @slider-dark-color-disabled;
+
+      &:before {
+        background-color: @slider-dark-color-disabled;
+      }
     }
 
     .mdui-slider-fill {
-      background-color: @slider-dark-color-disabled;
+
+      &:before {
+        background-color: @slider-dark-color-disabled;
+      }
     }
 
     .mdui-slider-thumb {

@@ -25,27 +25,16 @@
   };
 
   /**
-   * 默认参数
-   */
-  var DEFAULT = {
-    colorful: true,
-    active: true,
-  };
-
-  /**
    * 填充 HTML
    * @param spinner
-   * @param options
    */
-  var fillHTML = function (spinner, options) {
+  var fillHTML = function (spinner) {
     var layer;
-    if (options.colorful) {
+    if (spinner.classList.contains('mdui-spinner-colorful')) {
       layer = layerHTML('1') + layerHTML('2') + layerHTML('3') + layerHTML('4');
     } else {
       layer = layerHTML();
     }
-
-    spinner.classList[options.active ? 'add' : 'remove']('mdui-spinner-active');
 
     spinner.innerHTML = layer;
   };
@@ -54,12 +43,9 @@
    * 页面加载完后自动填充 HTML 结构
    */
   $.ready(function () {
-    var spinners = $.queryAll('[mdui-spinner]');
+    var spinners = $.queryAll('.mdui-spinner');
     $.each(spinners, function (i, spinner) {
-      var options = $.parseOptions(spinner.getAttribute('mdui-spinner'));
-      options = $.extend(DEFAULT, options);
-
-      fillHTML(spinner, options);
+      fillHTML(spinner);
     });
   });
 
@@ -68,24 +54,16 @@
    */
   mdui.updateSpinners = function () {
     var spinners;
-    var opts = {};
 
-    if (arguments.length === 0) {
+    if (arguments.length === 1) {
+      spinners = $.dom(arguments[0]);
+    } else {
       spinners = $.queryAll('.mdui-spinner');
-    } else if (arguments.length <= 2) {
-      spinners = arguments[0] ? $.dom(arguments[0]) : $.queryAll('.mdui-spinner');
-
-      if (arguments.length === 2) {
-        opts = arguments[1];
-      }
     }
 
     $.each(spinners, function (i, spinner) {
-      var options = $.extend(DEFAULT, opts);
-
-      fillHTML(spinner, options);
+      fillHTML(spinner);
     });
-
   };
 
 })();

@@ -7,7 +7,6 @@
 /* 列表 */
 .mdui-list {
   padding: 8px 0;
-  font-size: 16px;
   background-color: #fff;
 
   &>.mdui-divider {
@@ -43,6 +42,8 @@
   min-width: 40px;
   max-width: 40px;
   height: 40px;
+  margin-top: 8px;
+  margin-bottom: 8px;
   img {
     width: 100%;
     height: 100%;
@@ -55,17 +56,26 @@
   flex-grow: 1;
   color: @color-black-text;
   font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  padding-top: 14px;
+  padding-bottom: 14px;
 }
 
 /* 列表项内容的主内容 */
 .mdui-list-item-title {
-  color: inherit;
   .mdui-text-truncate();
 }
 
 /* 列表项内容的副内容 */
-.mdui-list-item-subtitle {
+.mdui-list-item-text {
   color: @color-black-secondary;
+  font-size: 14px;
+}
+.mdui-list-item-title {
+  ~ .mdui-list-item-text {
+    margin-top: 8px;
+  }
 }
 
 /* 列表项内的元素间添加间距 */

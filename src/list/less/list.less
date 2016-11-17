@@ -4,11 +4,102 @@
  * =============================================================================
  */
 
+/* 列表 */
 .mdui-list {
+  padding: 8px 0;
+  font-size: 16px;
+  background-color: #fff;
 
+  &>.mdui-divider {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
 }
 
+/* 列表项 */
 .mdui-list-item {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 16px;
+  min-height: 48px;
+  cursor: pointer;
+  transition: background-color .3s @animation-curve-default;
 
+  &:hover {
+    background-color: #eee;
+  }
 }
 
+/* 列表项图标 */
+.mdui-list-item-icon {
+  width: 24px;
+  height: 24px;
+  color: @color-black-icon;
+}
+
+/* 列表项头像 */
+.mdui-list-item-avatar {
+  min-width: 40px;
+  max-width: 40px;
+  height: 40px;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+}
+
+/* 列表项内容 */
+.mdui-list-item-content {
+  flex-grow: 1;
+  color: @color-black-text;
+  font-weight: 400;
+}
+
+/* 列表项内容的主内容 */
+.mdui-list-item-title {
+  color: inherit;
+  .mdui-text-truncate();
+}
+
+/* 列表项内容的副内容 */
+.mdui-list-item-subtitle {
+  color: @color-black-secondary;
+}
+
+/* 列表项内的元素间添加间距 */
+.mdui-list-item-icon {
+  ~ .mdui-list-item-content {
+    margin-left: 36px;
+  }
+}
+.mdui-list-item-avatar {
+  ~ .mdui-list-item-content {
+    margin-left: 16px;
+  }
+}
+.mdui-list-item-content {
+  ~ .mdui-list-item-icon,
+  ~ .mdui-list-item-avatar {
+    margin-left: 16px;
+  }
+}
+
+
+/* 密集型列表 */
+.mdui-list-dense {
+  padding: 4px 0;
+  min-height: 40px;
+  font-size: 13px;
+
+  &>.mdui-divider {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  // 密集型列表项
+  .mdui-list-item {
+
+  }
+}

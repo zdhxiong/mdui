@@ -205,6 +205,13 @@
     ],
     "dependencies": []
   },
+  "list": {
+    "js": [],
+    "less": [
+      "src/list/less/list.less"
+    ],
+    "dependencies": []
+  },
   "drawer": {
     "js": [
       "src/drawer/js/drawer.js",

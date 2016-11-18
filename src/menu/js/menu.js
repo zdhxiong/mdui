@@ -557,11 +557,11 @@ mdui.Menu = (function () {
     });
 
     // 点击不含子菜单的菜单条目关闭菜单
-    /*$.on(document, 'click', '.' + CLASS.item, function () {
-     if (!$.query('.' + CLASS.menu, this)) {
-     _this.close();
-     }
-     });*/
+    $.on(document, mdui.touchEvents.end, '.' + CLASS.item, function () {
+      if (!$.query('.' + CLASS.menu, this) && !this.classList.contains(CLASS.disabled)) {
+        _this.close();
+      }
+    });
 
     // 绑定点击或鼠标移入含子菜单的条目的事件
     bindSubMenuEvent(_this);

@@ -8,6 +8,7 @@
 .mdui-list {
   padding: 8px 0;
   background-color: #fff;
+  list-style: none;
 
   &>.mdui-divider {
     margin-top: 8px;
@@ -22,7 +23,9 @@
   box-sizing: border-box;
   padding: 0 16px;
   min-height: 48px;
+  color: @color-black-text;
   cursor: pointer;
+  text-decoration: none;
   transition: background-color .3s @animation-curve-default;
 
   &:hover {
@@ -54,17 +57,11 @@
 /* 列表项内容 */
 .mdui-list-item-content {
   flex-grow: 1;
-  color: @color-black-text;
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
   padding-top: 14px;
   padding-bottom: 14px;
-}
-
-/* 列表项内容的主内容 */
-.mdui-list-item-title {
-  .mdui-text-truncate();
 }
 
 /* 列表项内容的副内容 */
@@ -76,6 +73,28 @@
   ~ .mdui-list-item-text {
     margin-top: 8px;
   }
+}
+
+/* 限制文本高度 */
+.mdui-list-item-one-line,
+.mdui-list-item-two-line,
+.mdui-list-item-three-line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.mdui-list-item-one-line {
+  -webkit-line-clamp: 1;
+  height: 20px;
+}
+.mdui-list-item-two-line {
+  -webkit-line-clamp: 2;
+  height: 40px;
+}
+.mdui-list-item-three-line {
+  -webkit-line-clamp: 3;
+  height: 60px;
 }
 
 /* 列表项内的元素间添加间距 */
@@ -95,7 +114,6 @@
     margin-left: 16px;
   }
 }
-
 
 /* 密集型列表 */
 .mdui-list-dense {

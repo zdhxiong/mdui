@@ -4,84 +4,38 @@
  * =============================================================================
  */
 
-/* 添加边框作为分割线，在亮色和深色背景时自动切换颜色 */
-.mdui-divider-top {
-  .mdui-divider-top-dark();
-
-  .mdui-theme-layout-dark & {
-    .mdui-divider-top-light();
-  }
-}
-.mdui-divider-bottom {
-  .mdui-divider-bottom-dark();
-
-  .mdui-theme-layout-dark & {
-    .mdui-divider-bottom-light();
-  }
-}
-.mdui-divider-left {
-  .mdui-divider-left-dark();
-
-  .mdui-theme-layout-dark & {
-    .mdui-divider-left-light();
-  }
-}
-.mdui-divider-right {
-  .mdui-divider-right-dark();
-
-  .mdui-theme-layout-dark & {
-    .mdui-divider-right-light();
-  }
-}
-
-
-/* 添加边框作为分割线，用于亮色背景 */
-.mdui-divider-top-light {
-  .mdui-divider-top-dark();
-}
-.mdui-divider-bottom-light {
-  .mdui-divider-bottom-dark();
-}
-.mdui-divider-left-light {
-  .mdui-divider-left-dark();
-}
-.mdui-divider-right-light {
-  .mdui-divider-right-dark();
-}
-
-/* 添加边框作为分割线，用于深色背景 */
-.mdui-divider-top-dark {
-  .mdui-divider-top-light();
-}
-.mdui-divider-bottom-dark {
-  .mdui-divider-bottom-light();
-}
-.mdui-divider-left-dark {
-  .mdui-divider-left-light();
-}
-.mdui-divider-right-dark {
-  .mdui-divider-right-light();
-}
-
-/* 分割线元素 */
 .mdui-divider,
 .mdui-divider-light,
-.mdui-divider-dark {
+.mdui-divider-dark,
+.mdui-divider-inset,
+.mdui-divider-inset-light,
+.mdui-divider-inset-dark {
   margin: -1px 0 0 0;
   height: 1px;
   border: none;
 }
-.mdui-divider {
+
+.mdui-divider-inset,
+.mdui-divider-inset-light,
+.mdui-divider-inset-dark {
+  margin-left: 72px;
+}
+
+.mdui-divider,
+.mdui-divider-inset {
   background-color: @color-black-divider;
 
   .mdui-theme-layout-dark & {
     background-color: @color-white-divider;
   }
 }
-.mdui-divider-light {
+
+.mdui-divider-light,
+.mdui-divider-inset-light {
   background-color: @color-white-divider;
 }
-.mdui-divider-dark {
+
+.mdui-divider-dark,
+.mdui-divider-inset-dark {
   background-color: @color-black-divider;
 }
-

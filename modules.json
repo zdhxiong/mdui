@@ -198,6 +198,13 @@
     ],
     "dependencies": []
   },
+  "subheader": {
+    "js": [],
+    "less": [
+      "src/subheader/less/subheader.less"
+    ],
+    "dependencies": []
+  },
   "grid_list": {
     "js": [],
     "less": [

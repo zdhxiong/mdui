@@ -8,6 +8,7 @@
 
 .mdui-subheader,
 .mdui-subheader-inset {
+  position: relative;
   box-sizing: border-box;
   font-size: 14px;
   font-weight: 500;
@@ -24,3 +25,15 @@
   padding-left: 72px;
 }
 
+/**
+ * =============================================================================
+ * ************   Subheader dark   ************
+ * =============================================================================
+ */
+
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-subheader,
+  .mdui-subheader-inset {
+    color: @color-white-secondary;
+  }
+}

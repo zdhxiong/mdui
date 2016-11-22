@@ -63,18 +63,22 @@ mdui.Tooltip = (function () {
       case 'bottom':
         marginLeft = -1 * (tooltipWidth / 2);
         marginTop = (targetProps.height / 2) + targetMargin;
+        $.transformOrigin(inst.tooltip, 'top center');
         break;
       case 'top':
         marginLeft = -1 * (tooltipWidth / 2);
         marginTop = -1 * (tooltipHeight + (targetProps.height / 2) + targetMargin);
+        $.transformOrigin(inst.tooltip, 'bottom center');
         break;
       case 'left':
         marginLeft = -1 * (tooltipWidth + (targetProps.width / 2) + targetMargin);
         marginTop = -1 * (tooltipHeight / 2);
+        $.transformOrigin(inst.tooltip, 'center right');
         break;
       case 'right':
         marginLeft = (targetProps.width / 2) + targetMargin;
         marginTop = -1 * (tooltipHeight / 2);
+        $.transformOrigin(inst.tooltip, 'center left');
         break;
     }
 

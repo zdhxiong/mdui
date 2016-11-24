@@ -310,32 +310,41 @@
 /**
  * .mdui-text-color-black
  * .mdui-text-color-black-[]
- * .mdui-text-color-white
- * .mdui-text-color-white-[]
+ * .mdui-text-color-theme-[]
  */
 
 .mdui-text-color-black {
   color: @color-black !important;
 }
-.mdui-text-color-black-text {
+.mdui-text-color-black-text,
+.mdui-text-color-theme-text {
   color: @color-black-text !important;
 }
-.mdui-text-color-black-secondary {
+.mdui-text-color-black-secondary,
+.mdui-text-color-theme-secondary {
   color: @color-black-secondary !important;
 }
-.mdui-text-color-black-disabled {
+.mdui-text-color-black-disabled,
+.mdui-text-color-theme-disabled {
   color: @color-black-disabled !important;
 }
-.mdui-text-color-black-divider {
+.mdui-text-color-black-divider,
+.mdui-text-color-theme-divider {
   color: @color-black-divider !important;
 }
-.mdui-text-color-black-icon {
+.mdui-text-color-black-icon,
+.mdui-text-color-theme-icon {
   color: @color-black-icon !important;
 }
-.mdui-text-color-black-icon-disabled {
+.mdui-text-color-black-icon-disabled,
+.mdui-text-color-theme-icon-disabled {
   color: @color-black-icon-disabled !important;
 }
 
+/**
+ * .mdui-text-color-white
+ * .mdui-text-color-white-[]
+ */
 .mdui-text-color-white {
   color: @color-white !important;
 }
@@ -356,4 +365,28 @@
 }
 .mdui-text-color-white-icon-disabled {
   color: @color-white-icon-disabled !important;
+}
+
+/**
+ * .mdui-text-color-theme-[] 深色主题
+ */
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-text-color-theme-text {
+    color: @color-white-text !important;
+  }
+  .mdui-text-color-theme-secondary {
+    color: @color-white-secondary !important;
+  }
+  .mdui-text-color-theme-disabled {
+    color: @color-white-disabled !important;
+  }
+  .mdui-text-color-theme-divider {
+    color: @color-white-divider !important;
+  }
+  .mdui-text-color-theme-icon {
+    color: @color-white-icon !important;
+  }
+  .mdui-text-color-theme-icon-disabled {
+    color: @color-white-icon-disabled !important;
+  }
 }

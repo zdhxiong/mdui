@@ -76,6 +76,7 @@
 
 /* 列表项图标 */
 .mdui-list-item-icon {
+  min-width: 24px;
   width: 24px;
   height: 24px;
   color: @color-black-icon;
@@ -86,6 +87,11 @@
   min-width: 40px;
   max-width: 40px;
   height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: @color-grey-400;
+  color: @color-white;
   margin-top: 8px;
   margin-bottom: 8px;
   img {
@@ -112,7 +118,7 @@
 }
 .mdui-list-item-title {
   ~ .mdui-list-item-text {
-    margin-top: 8px;
+    margin-top: 4px;
   }
 }
 
@@ -228,7 +234,7 @@
   }
   .mdui-list-item-title {
     ~ .mdui-list-item-text {
-      margin-top: 4px;
+      margin-top: 2px;
     }
   }
 

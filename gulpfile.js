@@ -7,6 +7,7 @@
  * gulp build-js-native   打包原生 JS 文件
  * gulp build-js-jquery   打包 jQuery 版 JS 文件
  * gulp build-js          打包 JS 文件
+ * gulp build             打包所有文件
  * gulp test-js-gulpfile  检查 gulpfile.js 文件的代码规范
  * gulp custom            定制打包
  */
@@ -496,13 +497,21 @@
     var args = process.argv;
     if (args.length >= 4) {
       argsDeal(args[3]);
-    } else if (args.length >= 5) {
+    }
+
+    if (args.length >= 5) {
       argsDeal(args[4]);
-    } else if (args.length >= 6) {
+    }
+
+    if (args.length >= 6) {
       argsDeal(args[5]);
-    } else if (args.length >= 7) {
+    }
+
+    if (args.length >= 7) {
       argsDeal(args[6]);
-    } else if (args.length >= 8) {
+    }
+
+    if (args.length >= 8) {
       argsDeal(args[7]);
     }
 

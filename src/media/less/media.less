@@ -41,18 +41,28 @@
 /**
  * Figure
  */
-
 .mdui-figure {
   display: inline-block;
   margin: 0 0 1.2em 0;
+
+  figcaption {
+    margin-top: @spacing-base;
+    font-size: 90%;
+    color: @color-black-secondary;
+  }
 }
 
-.mdui-figure-img {
-  margin-bottom: @spacing-base;
-  line-height: 1;
-}
 
-.mdui-figure-caption {
-  font-size: 90%;
-  opacity: 0.54;
+/**
+ * =============================================================================
+ * ************   Slider dark   ************
+ * =============================================================================
+ */
+
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-figure {
+    figcaption {
+      color: @color-white-secondary;
+    }
+  }
 }

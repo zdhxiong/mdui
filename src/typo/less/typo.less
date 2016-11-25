@@ -120,10 +120,9 @@
     cursor: move;
   }
 
-  p, pre, ul, ol, dl, form, hr, figure {
+  p, pre, ul, ol, dl, form, hr, figure, table, .mdui-table, .mdui-table-fluid {
     margin: 0 0 1.2em 0;
   }
-
 
   /* a */
   a {
@@ -232,6 +231,7 @@
     color: inherit;
     background-color: transparent;
     border-radius: 0;
+    line-height: 1.42;
   }
 
   /* abbr */
@@ -269,7 +269,7 @@
   /* pre */
   pre {
     border-radius: 2px;
-    border: 1px solid #ddd;
+    border: 1px solid @color-black-divider;
     padding: 12px 16px;
     -webkit-overflow-scrolling: touch;
     overflow-x: auto;
@@ -363,7 +363,7 @@
 
     pre {
       background: #424242;
-      border-color: #666;
+      border-color: @color-white-divider;
     }
 
     kbd {

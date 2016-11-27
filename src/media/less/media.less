@@ -37,32 +37,3 @@
     height: 100%
   }
 }
-
-/**
- * Figure
- */
-.mdui-figure {
-  display: inline-block;
-  margin: 0 0 1.2em 0;
-
-  figcaption {
-    margin-top: @spacing-base;
-    font-size: 90%;
-    color: @color-black-secondary;
-  }
-}
-
-
-/**
- * =============================================================================
- * ************   Slider dark   ************
- * =============================================================================
- */
-
-.mdui-theme-layout-dark when (@globalLayoutDark = true) {
-  .mdui-figure {
-    figcaption {
-      color: @color-white-secondary;
-    }
-  }
-}

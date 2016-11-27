@@ -113,7 +113,7 @@
 
   figcaption {
     font-size: 80%;
-    opacity: @opacity-black-secondary;
+    color: @color-black-secondary;
   }
 
   [draggable] {
@@ -168,7 +168,7 @@
     }
 
     footer {
-      opacity: @opacity-black-secondary;
+      color: @color-black-secondary;
       font-size: 86%;
     }
   }
@@ -194,7 +194,7 @@
       font-size: 65%;
       line-height: 1;
       font-weight: 400;
-      opacity: @opacity-black-secondary;
+      color: @color-black-secondary;
     }
   }
   h1 {
@@ -231,7 +231,7 @@
     color: inherit;
     background-color: transparent;
     border-radius: 0;
-    line-height: 1.42;
+    line-height: 1.7;
   }
 
   /* abbr */
@@ -347,13 +347,23 @@
       border-left-color: @color-white-divider;
 
       footer {
-        opacity: @opacity-white-secondary;
+        color: @color-white-secondary;
       }
+    }
+
+    figcaption {
+      color: @color-white-secondary;
     }
 
     mark {
       background: #aaa;
       border-bottom-color: #bbb;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      small {
+        color: @color-white-secondary;
+      }
     }
 
     code {

@@ -82,27 +82,27 @@ body:not(.mdui-support-touch) {
     position: absolute;
     .mdui-shadow(9);
   }
+
+  // 禁用的菜单条目
+  &[disabled] {
+    &>a {
+      cursor: default;
+      color: @color-black-disabled !important;
+
+      &:hover {
+        background-color: inherit !important;
+      }
+
+      .mdui-icon {
+        color: @color-black-icon-disabled;
+      }
+    }
+  }
 }
 
 /* 激活状态的菜单项 */
 .mdui-menu-item-active {
   background-color: @color-grey-200;
-}
-
-/* 禁用菜单条目 */
-.mdui-menu-item-disabled {
-  &>a {
-    cursor: default;
-    color: @color-black-disabled !important;
-
-    &:hover {
-      background-color: inherit !important;
-    }
-
-    .mdui-icon {
-      color: @color-black-icon-disabled;
-    }
-  }
 }
 
 /* 菜单中的图标 */
@@ -246,20 +246,20 @@ body:not(.mdui-support-touch) {
         background-color: @color-grey-700;
       }
     }
+
+    &[disabled] {
+      &>a {
+        color: @color-white-disabled !important;
+
+        .mdui-icon {
+          color: @color-white-icon-disabled;
+        }
+      }
+    }
   }
 
   .mdui-menu-item-active {
     background-color: @color-grey-700;
-  }
-
-  .mdui-menu-item-disabled {
-    &>a {
-      color: @color-white-disabled !important;
-
-      .mdui-icon {
-        color: @color-white-icon-disabled;
-      }
-    }
   }
 
   .mdui-menu-item-icon {

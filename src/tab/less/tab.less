@@ -52,19 +52,6 @@
       opacity: 0.7;
     }
 
-    &.mdui-tab-active {
-      color: @color-default-500;
-      opacity: 1;
-      .mdui-icon {
-        opacity: 1;
-      }
-    }
-
-    &.mdui-tab-disabled {
-      opacity: 0.38;
-      cursor: default;
-    }
-
     // 平板或以上设备
     @media (min-width: @screen-sm-min) {
       min-width: 99px;
@@ -97,6 +84,23 @@
 
     .mdui-icon + label {
       margin-top: 8px;
+    }
+
+    &.mdui-tab-active {
+      color: @color-default-500;
+      opacity: 1;
+      .mdui-icon {
+        opacity: 1;
+      }
+    }
+
+    &[disabled] {
+      opacity: 0.38;
+      cursor: default;
+
+      label {
+        cursor: default;
+      }
     }
   }
 }

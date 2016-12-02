@@ -28,7 +28,6 @@ mdui.Menu = (function () {
     open: 'mdui-menu-open',               // 打开状态的菜单
     item: 'mdui-menu-item',               // 菜单条目
     active: 'mdui-menu-item-active',      // 激活状态的菜单
-    disabled: 'mdui-menu-item-disabled',  // 禁用状态的菜单
     divider: 'mdui-divider',              // 分隔线
   };
 
@@ -378,7 +377,7 @@ mdui.Menu = (function () {
         var _this = this;
 
         // 禁用状态菜单不操作
-        if (_this.classList.contains(CLASS.disabled)) {
+        if (_this.getAttribute('disabled') !== null) {
           return;
         }
 
@@ -429,7 +428,7 @@ mdui.Menu = (function () {
         var relatedTarget = e.relatedTarget;
 
         // 禁用状态的菜单不操作
-        if (_this.classList.contains(CLASS.disabled)) {
+        if (_this.getAttribute('disabled') !== null) {
           return;
         }
 
@@ -558,7 +557,7 @@ mdui.Menu = (function () {
 
     // 点击不含子菜单的菜单条目关闭菜单
     $.on(document, mdui.touchEvents.end, '.' + CLASS.item, function () {
-      if (!$.query('.' + CLASS.menu, this) && !this.classList.contains(CLASS.disabled)) {
+      if (!$.query('.' + CLASS.menu, this) && this.getAttribute('disabled') === null) {
         _this.close();
       }
     });

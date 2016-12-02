@@ -85,7 +85,7 @@ mdui.Tab = (function () {
     // 监听点击选项卡事件
     $.each(_this.tabs, function (i, tab) {
       $.on(tab, trigger, function (e) {
-        if (tab.classList.contains('mdui-tab-disabled')) {
+        if (tab.getAttribute('disabled') !== null) {
           e.preventDefault();
           return;
         }
@@ -113,7 +113,7 @@ mdui.Tab = (function () {
       var targetId = tab.getAttribute('href');
       var targetContent;
 
-      if (tab.classList.contains('mdui-tab-disabled')) {
+      if (tab.getAttribute('disabled') !== null) {
         if (targetId.indexOf('#') === 0) {
           targetContent = $.query(targetId);
           if (targetContent) {
@@ -165,7 +165,7 @@ mdui.Tab = (function () {
     var _this = this;
 
     var activeTab = _this.tabs[_this.activeIndex];
-    if (activeTab.classList.contains('mdui-tab-disabled')) {
+    if (activeTab.getAttribute('disabled') !== null) {
       return;
     }
 

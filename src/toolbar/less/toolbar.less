@@ -1,0 +1,77 @@
+/**
+ * =============================================================================
+ * ************   Toolbar 工具栏   ************
+ * =============================================================================
+ */
+
+.mdui-toolbar {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  &>* {
+    display: flex;
+    margin: 0 16px;
+  }
+
+  // 工具栏默认有背景色时，工具栏中的按钮，hover 和 active 时颜色变浅
+  &[class*="mdui-color-"]:not(.mdui-color-transparent) {
+    .mdui-btn {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      &:active {
+        background-color: rgba(255, 255, 255, 0.165);
+      }
+    }
+  }
+
+  &>a {
+    user-select: none;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &>.mdui-btn-icon {
+    width: @appbar-icon-width;
+    height: @appbar-icon-width;
+
+    .mdui-icon {
+      height: 24px;
+      line-height: 24px;
+    }
+  }
+}
+
+.mdui-toolbar-spacer {
+  flex-grow: 1;
+}
+
+// 响应式
+._toolbar_responsive_mixed(@toolbar-height) {
+  .mdui-toolbar {
+    height: @toolbar-height;
+    line-height: @toolbar-height;
+
+    &>.mdui-btn {
+      margin: 0 (@toolbar-height - @appbar-icon-width) / 2;
+
+      & + .mdui-btn {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+/* 手机 */
+._toolbar_responsive_mixed(@appbar-height-xs);
+
+/* 平板 */
+@media (min-width: @screen-sm-min) {
+  ._toolbar_responsive_mixed(@appbar-height-sm);
+}
+
+/* PC */
+@media (min-width: @screen-md-min) {
+  ._toolbar_responsive_mixed(@appbar-height-md);
+}

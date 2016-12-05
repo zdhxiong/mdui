@@ -6,63 +6,24 @@
 
 .mdui-loaded .mdui-appbar {
   transition: .3s @animation-curve-default;
-  transition-property: height, line-height, background-color;
+  transition-property: height;
 }
 .mdui-appbar {
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
   width: 100%;
-  max-height: 1000px;
   z-index: @z-index-appbar;
-  .mdui-color(@color-default-name);
   .mdui-shadow(4);
-
-  &>* {
-    display: flex;
-  }
-
-  // 应用栏默认有背景色，应用栏中的按钮，hover 和 active 时颜色变浅
-  &:not(.mdui-color-transparent) {
-    .mdui-btn {
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-      }
-      &:active {
-        background-color: rgba(255, 255, 255, 0.165);
-      }
-    }
-  }
-
-  a {
-    user-select: none;
-    text-decoration: none;
-    color: inherit;
-    margin: 0;
-    padding: 0 16px;
-    .mdui-text-truncate();
-  }
-
-  .mdui-btn-icon {
-    width: @appbar-icon-width;
-    height: @appbar-icon-width;
-
-    .mdui-icon {
-      height: 24px;
-      line-height: 24px;
-    }
-  }
 }
 
 /* appbar 固定在顶部时，为 body 添加 padding-top，避免 appbar 覆盖页面内容 */
-body.mdui-appbar-fixed{
-  .mdui-appbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
+.mdui-appbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
 
+/* 含工具栏 */
+.mdui-appbar-with-toolbar {
   padding-top: @appbar-height-xs;
   @media (min-width: @screen-sm-min) {
     padding-top: @appbar-height-sm;
@@ -72,89 +33,36 @@ body.mdui-appbar-fixed{
   }
 }
 
-/* logo */
-.mdui-appbar-logo {
-  font-size: 24px;
-  img{
-    height: 24px;
+/* 含 Tab */
+.mdui-appbar-with-tab {
+  padding-top: 48px;
+}
+
+/* 含大 Tab  */
+.mdui-appbar-with-tab-larger {
+  padding-top: 72px;
+}
+
+/* 含工具栏和 Tab */
+.mdui-appbar-with-toolbar.mdui-appbar-with-tab {
+  padding-top: @appbar-height-xs + 48px;
+  @media (min-width: @screen-sm-min) {
+    padding-top: @appbar-height-sm + 48px;
+  }
+  @media (min-width: @screen-md-min) {
+    padding-top: @appbar-height-md + 48px;
   }
 }
 
-/* 标题 */
-.mdui-appbar-title {
-  font-size: 18px;
-  max-width: 138px;
-  .mdui-text-truncate();
-}
-
-/* 搜索框 */
-.mdui-appbar-search {
-  margin: 0;
-}
-
-.mdui-appbar-search-field {
-  padding: 0;
-  line-height: 48px;
-  border: none;
-  border-radius: 2px;
-}
-
-// 响应式
-._appbar_responsive_mixed(@appbar-height){
-  .mdui-appbar {
-    &,
-    .mdui-icon {
-      height: @appbar-height;
-      line-height: @appbar-height;
-    }
-    .mdui-btn-icon {
-      margin: 0 (@appbar-height - @appbar-icon-width) / 2;
-      & + .mdui-btn-icon {
-        margin-left: 0;
-      }
-    }
+/* 含工具栏和大 Tab */
+.mdui-appbar-with-toolbar.mdui-appbar-with-tab-larger {
+  padding-top: @appbar-height-xs + 72px;
+  @media (min-width: @screen-sm-min) {
+    padding-top: @appbar-height-sm + 72px;
   }
-  .mdui-appbar-logo{
-    img{
-      padding: (@appbar-height - 24px) / 2 0;
-    }
+  @media (min-width: @screen-md-min) {
+    padding-top: @appbar-height-md + 72px;
   }
-}
-
-._appbar_responsive_mixed(@appbar-height-xs);
-@media (min-width: @screen-sm-min) {
-  ._appbar_responsive_mixed(@appbar-height-sm);
-}
-@media (min-width: @screen-md-min) {
-  ._appbar_responsive_mixed(@appbar-height-md);
-}
-
-
-/**
- * =============================================================================
- * ************   Appbar 主色   ************
- * =============================================================================
- */
-& {
-  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
-    .loop-primary-theme((@counter-color - 1));
-    @colorName: extract(@globalPrimaryColors, @counter-color);
-
-    .mdui-theme-primary-@{colorName} {
-      .mdui-appbar {
-        .mdui-color(@colorName);
-      }
-    }
-
-  }
-  .loop-primary-theme(length(@globalPrimaryColors));
-}
-
-
-/* 透明背景应用栏 */
-.mdui-appbar.mdui-color-transparent {
-  .mdui-shadow(0);
-  .mdui-text-color('black');
 }
 
 
@@ -165,7 +73,9 @@ body.mdui-appbar-fixed{
  */
 .mdui-theme-layout-dark when (@globalLayoutDark = true) {
   .mdui-appbar {
-    background-color: @layout-dark-color-2;
-    color: #fff;
+    &>[class*="mdui-color-"]:not(.mdui-color-transparent) {
+      background-color: @layout-dark-color-2 !important;
+      color: #fff !important;
+    }
   }
 }

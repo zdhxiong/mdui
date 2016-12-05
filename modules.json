@@ -171,12 +171,21 @@
     ],
     "dependencies": []
   },
+  "toolbar": {
+    "js": [],
+    "less": [
+      "src/toolbar/less/toolbar.less"
+    ],
+    "dependencies": []
+  },
   "appbar": {
     "js": [],
     "less": [
       "src/appbar/less/appbar.less"
     ],
-    "dependencies": []
+    "dependencies": [
+      "toolbar"
+    ]
   },
   "card": {
     "js": [],

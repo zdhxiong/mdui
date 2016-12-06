@@ -17,12 +17,10 @@ body.mdui-loaded .mdui-drawer {
   width: @drawer-width;
   box-sizing: border-box;
   position: fixed;
-  top: @appbar-height-md;
   left: 0;
   bottom: 0;
   z-index: @z-index-drawer;
   will-change: transform;
-  //padding: 12px 0 52px 0;
   margin: 0;
   white-space: nowrap;
   overflow-x: hidden;
@@ -30,7 +28,28 @@ body.mdui-loaded .mdui-drawer {
   &:hover {
     overflow-y: auto!important;
   }
+
+  .mdui-appbar-with-toolbar & {
+    top: @appbar-height-md;
+  }
+
+  .mdui-appbar-with-tab & {
+    top: 48px;
+  }
+
+  .mdui-appbar-with-tab-larger & {
+    top: 72px;
+  }
+
+  .mdui-appbar-with-toolbar.mdui-appbar-with-tab & {
+    top: @appbar-height-md + 48px;
+  }
+
+  .mdui-appbar-with-toolbar.mdui-appbar-with-tab-larger & {
+    top: @appbar-height-md + 72px;
+  }
 }
+
 
 /* 美化滚动条 */
 .mdui-drawer-scrollbar {

@@ -25,28 +25,10 @@ body.mdui-loaded .mdui-drawer {
   white-space: nowrap;
   overflow-x: hidden;
   overflow-y: auto;
+  top: 0;
+
   &:hover {
     overflow-y: auto!important;
-  }
-
-  .mdui-appbar-with-toolbar & {
-    top: @appbar-height-md;
-  }
-
-  .mdui-appbar-with-tab & {
-    top: 48px;
-  }
-
-  .mdui-appbar-with-tab-larger & {
-    top: 72px;
-  }
-
-  .mdui-appbar-with-toolbar.mdui-appbar-with-tab & {
-    top: @appbar-height-md + 48px;
-  }
-
-  .mdui-appbar-with-toolbar.mdui-appbar-with-tab-larger & {
-    top: @appbar-height-md + 72px;
   }
 }
 
@@ -65,9 +47,6 @@ body.mdui-loaded .mdui-drawer {
 /* 手机平板上的样式 */
 @media (max-width: @screen-sm-max) {
   .mdui-drawer {
-    /* 始终覆盖导航栏 */
-    top: 0;
-
     /* 默认隐藏 */
     transform: translateX(-@drawer-width - 10);
 
@@ -95,6 +74,7 @@ body.mdui-loaded .mdui-drawer {
   transform: translateX(0) !important;
 }
 
+/* PC 上的样式 */
 @media (min-width: @screen-md-min) {
   /* 使 body 获得 padding-left 或 padding-right，避免被抽屉栏覆盖住页面 */
   body.mdui-drawer-body-left {
@@ -102,6 +82,29 @@ body.mdui-loaded .mdui-drawer {
   }
   body.mdui-drawer-body-right {
     padding-right: @drawer-width;
+  }
+
+  /* PC 上默认有上边距 */
+  .mdui-drawer {
+    .mdui-appbar-with-toolbar & {
+      top: @appbar-height-md;
+    }
+
+    .mdui-appbar-with-tab & {
+      top: 48px;
+    }
+
+    .mdui-appbar-with-tab-larger & {
+      top: 72px;
+    }
+
+    .mdui-appbar-with-toolbar.mdui-appbar-with-tab & {
+      top: @appbar-height-md + 48px;
+    }
+
+    .mdui-appbar-with-toolbar.mdui-appbar-with-tab-larger & {
+      top: @appbar-height-md + 72px;
+    }
   }
 }
 
@@ -112,7 +115,7 @@ body.mdui-loaded .mdui-drawer {
 
 /* 抽屉栏 100% 高度，覆盖在导航栏上面 */
 .mdui-drawer-full-height {
-  top: 0;
+  top: 0 !important;
 }
 
 

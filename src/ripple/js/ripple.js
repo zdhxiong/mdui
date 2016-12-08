@@ -17,7 +17,6 @@
 
   /**
    * 找到含 mdui-ripple 类的元素，如果当前元素不存在 mdui-ripple 类，则从父元素找
-   * 含 .mdui-disabled 类和 disabled 属性的元素不产生涟漪
    * @param el
    * @returns {*}
    */
@@ -36,7 +35,6 @@
 
     if (
       target &&
-      !target.classList.contains('mdui-disabled') &&
       target.getAttribute('disabled') === null
     ) {
       return target;

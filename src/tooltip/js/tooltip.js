@@ -218,10 +218,6 @@ mdui.Tooltip = (function () {
     var _this = this;
     clearTimeout(_this.timeoutId);
     $.data(_this.target, 'mdui.tooltip', null);
-    if (typeof jQuery !== 'undefined') {
-      jQuery(_this.target).removeData('mdui.tooltip');
-    }
-
     $.remove(_this.tooltip);
   };
 

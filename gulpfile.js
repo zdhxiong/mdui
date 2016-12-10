@@ -4,8 +4,6 @@
  * gulp clean-custom      删除 custom 目录下的文件
  * gulp version           输出当前版本号
  * gulp build-css         打包 CSS 文件
- * gulp build-js-native   打包原生 JS 文件
- * gulp build-js-jquery   打包 jQuery 版 JS 文件
  * gulp build-js          打包 JS 文件
  * gulp build             打包所有文件
  * gulp test-js-gulpfile  检查 gulpfile.js 文件的代码规范
@@ -239,7 +237,6 @@
 
   mdui.moduleNames = [];      // 模块名列表
   mdui.jsFiles = [];          // 所有 JavaScript 文件列表
-  mdui.jsJQueryFiles = [];    // jQuery 版的所有 JavaScript 文件列表
 
   $.each(mdui.modules, function (prop, module) {
 
@@ -252,15 +249,7 @@
     if (typeof module.js !== 'undefined') {
       mdui.jsFiles = mdui.jsFiles.concat(module.js);
     }
-
-    // jQuery 版的所有 JavaScript 文件列表
-    if (typeof module.jquery !== 'undefined') {
-      mdui.jsJQueryFiles = mdui.jsJQueryFiles.concat(module.jquery);
-    }
-
   });
-
-  mdui.jsJQueryFiles = mdui.jsFiles.concat(mdui.jsJQueryFiles);
 
   // 插件的配置
   var configs = {
@@ -290,8 +279,7 @@
     var filename = file.path.replace(file.base, '');
     if (
       filename === 'wrap_start.js' ||
-      filename === 'wrap_end.js' ||
-      filename.slice(-'jquery.js'.length) === 'jquery.js'
+      filename === 'wrap_end.js'
     ) {
       addIndent = '';
     }
@@ -370,8 +358,10 @@
       });
   });
 
-  // 构建原生 JavaScript 文件
-  gulp.task('build-js-native', ['clean-js'], function (cb) {
+  /**
+   * 构建 JavaScript 文件
+   */
+  gulp.task('build-js', ['clean-js'], function (cb) {
     gulp.src(mdui.jsFiles)
       .pipe(jscs())
       .pipe(jscs.reporter())
@@ -395,31 +385,6 @@
       });
   });
 
-  // 构建 jQuery 版文件
-  gulp.task('build-js-jquery', ['clean-js'], function (cb) {
-    gulp.src(mdui.jsJQueryFiles)
-      .pipe(jscs())
-      .pipe(jscs.reporter())
-      .pipe(tap(function (file, t) {
-        addJSIndent(file, t);
-      }))
-      .pipe(concat(mdui.filename + '.jquery.js'))
-      .pipe(header(mdui.distBanner, configs.header))
-      .pipe(jshint())
-      .pipe(jshint.reporter('default'))
-      .pipe(gulp.dest(paths.dist.js))
-
-      .pipe(uglify())
-      .pipe(header(mdui.distBanner, configs.header))
-      .pipe(rename(function (path) {
-        path.basename = mdui.filename + '.jquery.min';
-      }))
-      .pipe(gulp.dest(paths.dist.js))
-      .on('end', function () {
-        cb();
-      });
-  });
-
   // 检查 gulpfile 的代码规范
   gulp.task('test-js-gulpfile', function (cb) {
     gulp.src('gulpfile.js')
@@ -431,11 +396,6 @@
         cb();
       });
   });
-
-  /**
-   * 构建 JavaScript 文件
-   */
-  gulp.task('build-js', ['build-js-native', 'build-js-jquery']);
 
   // 构建所有文件
   gulp.task('build', ['build-css', 'build-js']);
@@ -591,7 +551,6 @@
     });
 
     var moduleJs = [];
-    var moduleJQuery = [];
     var moduleLess = [];
 
     $.each(mdui.modules, function (prop, module) {
@@ -601,18 +560,12 @@
           moduleJs = moduleJs.concat(module.js);
         }
 
-        if (typeof module.jquery !== 'undefined') {
-          moduleJQuery = moduleJQuery.concat(module.jquery);
-        }
-
         if (typeof module.less !== 'undefined') {
           moduleLess = moduleLess.concat(module.less);
         }
       }
 
     });
-
-    moduleJQuery = moduleJs.concat(moduleJQuery);
 
     var customBannerOptions = function () {
       return {
@@ -626,7 +579,7 @@
       };
     };
 
-    // 构建原生 JavaScript 文件
+    // 构建 JavaScript 文件
     gulp.src(moduleJs)
       .pipe(jscs())
       .pipe(jscs.reporter())
@@ -643,26 +596,6 @@
       .pipe(header(mdui.customBanner, customBannerOptions()))
       .pipe(rename(function (path) {
         path.basename = mdui.filename + '.custom.min';
-      }))
-      .pipe(gulp.dest(paths.custom.js));
-
-    // 构建 jQuery 版 JavaScript 文件
-    gulp.src(moduleJQuery)
-      .pipe(jscs())
-      .pipe(jscs.reporter())
-      .pipe(tap(function (file, t) {
-        addJSIndent(file, t);
-      }))
-      .pipe(concat(mdui.filename + '.jquery.custom.js'))
-      .pipe(header(mdui.customBanner, customBannerOptions()))
-      .pipe(jshint())
-      .pipe(jshint.reporter('default'))
-      .pipe(gulp.dest(paths.custom.js))
-
-      .pipe(uglify())
-      .pipe(header(mdui.customBanner, customBannerOptions()))
-      .pipe(rename(function (path) {
-        path.basename = mdui.filename + '.jquery.custom.min';
       }))
       .pipe(gulp.dest(paths.custom.js));
 

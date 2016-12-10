@@ -154,9 +154,6 @@
       "src/fab/js/fab.js",
       "src/fab/js/fab.data.js"
     ],
-    "jquery": [
-      "src/fab/js/fab.jquery.js"
-    ],
     "less": [
       "src/fab/less/fab.less"
     ],
@@ -199,9 +196,6 @@
       "src/tab/js/tab.js",
       "src/tab/js/tab.data.js"
     ],
-    "jquery": [
-      "src/tab/js/tab.jquery.js"
-    ],
     "less": [
       "src/tab/less/tab.less"
     ],
@@ -233,9 +227,6 @@
       "src/drawer/js/drawer.js",
       "src/drawer/js/drawer.data.js"
     ],
-    "jquery": [
-      "src/drawer/js/drawer.jquery.js"
-    ],
     "less": [
       "src/drawer/less/drawer.less"
     ],
@@ -249,9 +240,6 @@
       "src/dialog/js/dialog.alert.js",
       "src/dialog/js/dialog.confirm.js",
       "src/dialog/js/dialog.prompt.js"
-    ],
-    "jquery": [
-      "src/dialog/js/dialog.jquery.js"
     ],
     "less": [
       "src/dialog/less/dialog.less",
@@ -272,9 +260,6 @@
     "js": [
       "src/tooltip/js/tooltip.js",
       "src/tooltip/js/tooltip.data.js"
-    ],
-    "jquery": [
-      "src/tooltip/js/tooltip.jquery.js"
     ],
     "less": [
       "src/tooltip/less/tooltip.less"
@@ -320,9 +305,6 @@
     "js": [
       "src/panel/js/panel.js",
       "src/panel/js/panel.data.js"
-    ],
-    "jquery": [
-      "src/panel/js/panel.jquery.js"
     ],
     "less": [
       "src/panel/less/panel.less"

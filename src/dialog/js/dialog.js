@@ -310,9 +310,6 @@ mdui.Dialog = (function () {
     }
 
     $.data(_this.dialog, 'mdui.dialog', null);
-    if (typeof jQuery !== 'undefined') {
-      jQuery(_this.dialog).removeData('mdui.dialog');
-    }
 
     if (current === _this) {
       mdui.unlockScreen();

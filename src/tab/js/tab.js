@@ -226,5 +226,12 @@ mdui.Tab = (function () {
     _this._setActive();
   };
 
+  /**
+   * 在父元素的宽度变化时，需要调用该方法重新调整指示器位置
+   */
+  Tab.prototype.handleUpdate = function () {
+    this._setIndicatorPosition();
+  };
+
   return Tab;
 })();

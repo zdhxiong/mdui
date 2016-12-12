@@ -748,6 +748,11 @@ var $ = {};
 
     var fullEventName = eventName + '.mdui.' + pluginName;
 
+    // jQuery 事件
+    if (typeof jQuery !== 'undefined') {
+      jQuery(trigger).trigger(fullEventName, obj);
+    }
+
     // 原生js事件
     $.trigger(trigger, fullEventName, obj);
   };

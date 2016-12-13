@@ -178,7 +178,6 @@
 /* 密集型列表 */
 .mdui-list-dense {
   padding: 4px 0;
-  min-height: 40px;
   font-size: 13px;
 
   &>.mdui-divider,
@@ -247,6 +246,30 @@
   }
   .mdui-list-item-three-line {
     height: 54px;
+  }
+}
+
+/* 子列表 */
+.mdui-list-sub {
+  transition: height .3s @animation-curve-default;
+  overflow: hidden;
+  .mdui-list {
+    padding: 0;
+
+    visibility: hidden;
+    position: absolute;
+
+    .mdui-list-item {
+      padding-left: 72px;
+    }
+  }
+}
+
+/* 打开状态的子列表 */
+.mdui-list-sub-open {
+  .mdui-list {
+    visibility: visible;
+    position: relative;
   }
 }
 

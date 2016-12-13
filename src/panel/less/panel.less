@@ -74,7 +74,7 @@
 }
 
 /* 展开收起的图标 */
-.mdui-panel-item-icon {
+.mdui-panel-item-arrow {
   position: absolute;
   right: 24px;
   top: 12px;
@@ -94,6 +94,7 @@
 .mdui-panel-item-body {
   box-sizing: border-box;
   padding: 0 24px 16px 24px;
+  .mdui-clearfix();
 }
 
 /* 面板项操作栏 */
@@ -160,7 +161,7 @@
   .mdui-panel-item-summary {
     color: @color-white-secondary;
   }
-  .mdui-panel-item-icon {
+  .mdui-panel-item-arrow {
     color: @color-white-icon;
   }
   .mdui-panel-item-actions {

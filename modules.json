@@ -218,7 +218,9 @@
     "dependencies": []
   },
   "list": {
-    "js": [],
+    "js": [
+      "src/list/js/list.js"
+    ],
     "less": [
       "src/list/less/list.less"
     ],

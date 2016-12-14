@@ -10,11 +10,8 @@ mdui.Panel = (function () {
    * 默认参数
    */
   var DEFAULT = {
-    accordion: false,      // 是否使用手风情效果，打开一个项目时，自动关闭其他项目
+    accordion: false,      // 是否使用手风琴效果，打开一个项目时，自动关闭其他项目
   };
-
-  var itemHeight = 48;
-  var headerHeight = 64;
 
   /**
    * 可扩展面板
@@ -36,68 +33,73 @@ mdui.Panel = (function () {
     }
 
     _this.options = $.extend(DEFAULT, (opts || {}));
-    _this.items = $.children(_this.panel, '.mdui-panel-item');
-    _this.headers = [];
-    _this.contents = [];
 
-    $.each(_this.items, function (i, item) {
-      _this.headers[i] = $.child(item, '.mdui-panel-item-header');
-      _this.contents[i] = $.child(item, '.mdui-panel-item-body');
-
-      // 绑定触发事件
-      $.on(_this.headers[i], 'click', function () {
-        _this.toggle(i);
-      });
+    $.on(_this.panel, 'click', '.mdui-panel-item-header', function () {
+      var item = $.parent(this, '.mdui-panel-item');
+      _this.toggle(item);
     });
   }
 
   /**
-   * 打开指定项
-   * @param index 面板项的索引号或 DOM 元素
+   * 指定 item 是否处于打开状态
+   * @param item
+   * @returns {boolean}
+   * @private
    */
-  Panel.prototype.open = function (index) {
-    var _this = this;
-    var contentHeight;
-    var item;
+  var _isOpen = function (item) {
+    return item.classList.contains('mdui-panel-item-open');
+  };
 
-    if (parseInt(index) === index) {
-      item = _this.items[index];
-    } else {
-      $.each(_this.items, function (i, temp) {
-        if (index === temp) {
-          item = temp;
-          index = i;
-          return false;
-        }
-      });
+  /**
+   * 获取指定 item
+   * @param item
+   * @returns {*}
+   * @private
+   */
+  Panel.prototype._getItem = function (item) {
+    var _this = this;
+
+    if (parseInt(item) === item) {
+      var items = $.children(_this.panel, '.mdui-panel-item');
+      return items[item];
     }
 
-    var content = _this.contents[index];
+    return $.dom(item)[0];
+  };
 
-    // 计算元素的高度
-    contentHeight = content ? parseFloat($.getStyle(content, 'height')) : 0;
+  /**
+   * 打开指定项
+   * @param item 面板项的索引号或 DOM 元素或 CSS 选择器
+   */
+  Panel.prototype.open = function (item) {
+    var _this = this;
+    item = _this._getItem(item);
+
+    if (_isOpen(item)) {
+      return;
+    }
+
+    var content = $.child(item, '.mdui-panel-item-body');
+    var contentHeight = content.scrollHeight;
 
     $.pluginEvent('open', 'panel', _this, item);
 
     item.classList.add('mdui-panel-item-open');
-
-    // 设置 item 的高度，header + content
-    item.style.height = headerHeight + contentHeight + 'px';
+    content.style.height = contentHeight + 'px';
 
     // 动画结束后重新设置高度。打开后设置为自动高度。有可能计算的高度不正确，让浏览器自动调整
     $.transitionEnd(item, function () {
-      if (item.classList.contains('mdui-panel-item-open')) {
-        item.style.height = 'auto';
-
+      if (_isOpen(item)) {
+        content.style.height = 'auto';
         $.pluginEvent('opened', 'panel', _this, item);
       }
     });
 
     // 关闭其他项
     if (_this.options.accordion) {
-      $.each(_this.items, function (i, item) {
-        if (i !== index && item.classList.contains('mdui-panel-item-open')) {
-          _this.close(i);
+      $.each($.children(_this.panel, '.mdui-panel-item-open'), function (i, temp) {
+        if (temp !== item) {
+          _this.close(temp);
         }
       });
     }
@@ -105,63 +107,45 @@ mdui.Panel = (function () {
 
   /**
    * 关闭指定项
-   * @param index
+   * @param item 面板项的索引号或 DOM 元素或 CSS 选择器
    */
-  Panel.prototype.close = function (index) {
+  Panel.prototype.close = function (item) {
     var _this = this;
-    var item;
+    item = _this._getItem(item);
 
-    if (parseInt(index) === index) {
-      item = _this.items[index];
-    } else {
-      $.each(_this.items, function (i, temp) {
-        if (index === temp) {
-          item = temp;
-          index = i;
-          return false;
-        }
-      });
+    if (!_isOpen(item)) {
+      return;
     }
 
-    // 设置打开状态的 item 的高度
-    item.style.height = $.getStyle(item, 'height');
-    $.getStyle(item, 'height');
+    var content = $.child(item, '.mdui-panel-item-body');
+    var contentHeight = parseFloat($.getStyle(content, 'height'));
+    content.style.height = contentHeight + 'px';
+    $.getStyle(content, 'height');
 
     $.pluginEvent('close', 'panel', _this, item);
 
     item.classList.remove('mdui-panel-item-open');
-
-    item.style.height = itemHeight + 'px';
+    content.style.height = 0;
 
     $.transitionEnd(item, function () {
-      $.pluginEvent('closed', 'panel', _this, item);
+      if (!_isOpen(item)) {
+        $.pluginEvent('closed', 'panel', _this, item);
+      }
     });
   };
 
   /**
    * 切换指定项的状态
-   * @param index
+   * @param item 面板项的索引号或 DOM 元素或 CSS 选择器
    */
-  Panel.prototype.toggle = function (index) {
+  Panel.prototype.toggle = function (item) {
     var _this = this;
-    var item;
+    item = _this._getItem(item);
 
-    if (parseInt(index) === index) {
-      item = _this.items[index];
+    if (_isOpen(item)) {
+      _this.close(item);
     } else {
-      $.each(_this.items, function (i, temp) {
-        if (index === temp) {
-          item = temp;
-          index = i;
-          return false;
-        }
-      });
-    }
-
-    if (item.classList.contains('mdui-panel-item-open')) {
-      _this.close(index);
-    } else {
-      _this.open(index);
+      _this.open(item);
     }
   };
 
@@ -171,9 +155,9 @@ mdui.Panel = (function () {
   Panel.prototype.openAll = function () {
     var _this = this;
 
-    $.each(_this.items, function (i, item) {
-      if (!item.classList.contains('mdui-panel-item-open')) {
-        _this.open(i);
+    $.each($.children(_this.panel, '.mdui-panel-item'), function (i, item) {
+      if (!_isOpen(item)) {
+        _this.open(item);
       }
     });
   };
@@ -184,9 +168,9 @@ mdui.Panel = (function () {
   Panel.prototype.closeAll = function () {
     var _this = this;
 
-    $.each(_this.items, function (i, item) {
-      if (item.classList.contains('mdui-panel-item-open')) {
-        _this.close(i);
+    $.each($.children(_this.panel, '.mdui-panel-item'), function (i, item) {
+      if (_isOpen(item)) {
+        _this.close(item);
       }
     });
   };

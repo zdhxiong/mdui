@@ -163,6 +163,15 @@
     margin-left: 32px;
   }
 }
+.mdui-checkbox,
+.mdui-radio,
+.mdui-switch {
+  ~ .mdui-list-item-content {
+    margin-left: 20px;
+  }
+}
+
+
 .mdui-list-item-avatar {
   ~ .mdui-list-item-content {
     margin-left: 16px;
@@ -170,8 +179,16 @@
 }
 .mdui-list-item-content {
   ~ .mdui-list-item-icon,
-  ~ .mdui-list-item-avatar {
+  ~ .mdui-list-item-avatar,
+  ~ .mdui-checkbox,
+  ~ .mdui-radio,
+  ~ .mdui-switch {
     margin-left: 16px;
+  }
+
+  ~ .mdui-checkbox,
+  ~ .mdui-radio {
+    padding-left: 24px;
   }
 }
 
@@ -251,25 +268,33 @@
 
 /* 子列表 */
 .mdui-list-sub {
-  transition: height .3s @animation-curve-default;
-  overflow: hidden;
   .mdui-list {
     padding: 0;
-
-    visibility: hidden;
-    position: absolute;
+    height: 0;
+    overflow: hidden;
+    will-change: height;
+    transition: height .3s @animation-curve-default;
 
     .mdui-list-item {
       padding-left: 72px;
     }
+  }
+
+  .mdui-list-item-arrow {
+    will-change: transform;
+    transform: rotate(0);
+    transition: all .3s @animation-curve-default;
   }
 }
 
 /* 打开状态的子列表 */
 .mdui-list-sub-open {
   .mdui-list {
-    visibility: visible;
-    position: relative;
+    height: auto;
+  }
+
+  .mdui-list-item-arrow {
+    transform: rotate(180deg);
   }
 }
 

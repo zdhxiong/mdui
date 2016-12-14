@@ -394,6 +394,19 @@ var $ = {};
   };
 
   /**
+   * 设置 transition 动画时间
+   * @param dom
+   * @param duration
+   */
+  $.transition = function (dom, duration) {
+    if (typeof duration !== 'string') {
+      duration = duration + 'ms';
+    }
+
+    dom.style.webkitTransitionDuration = dom.style.transitionDuration = duration;
+  };
+
+  /**
    * 事件绑定
    * @param dom
    * @param eventName 多个事件用空格分割

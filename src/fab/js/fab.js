@@ -101,8 +101,10 @@ mdui.Fab = (function () {
 
     // 打开顺序为从下到上逐个打开，最上面的打开后才表示动画完成
     $.transitionEnd(_this.dialBtns[0], function () {
-      _this.state = 'opened';
-      $.pluginEvent('opened', 'fab', _this, _this.fab);
+      if (_this.btn.classList.contains('mdui-fab-opened')) {
+        _this.state = 'opened';
+        $.pluginEvent('opened', 'fab', _this, _this.fab);
+      }
     });
   };
 
@@ -128,8 +130,10 @@ mdui.Fab = (function () {
 
     // 从上往下依次关闭，最后一个关闭后才表示动画完成
     $.transitionEnd(_this.dialBtns[_this.dialBtns.length - 1], function () {
-      _this.state = 'closed';
-      $.pluginEvent('closed', 'fab', _this, _this.fab);
+      if (!_this.btn.classList.contains('mdui-fab-opened')) {
+        _this.state = 'closed';
+        $.pluginEvent('closed', 'fab', _this, _this.fab);
+      }
     });
   };
 

@@ -558,6 +558,15 @@ var $ = {};
   };
 
   /**
+   * 重绘
+   * @param dom
+   * @returns {number}
+   */
+  $.relayout = function (dom) {
+    return dom.clientLeft;
+  };
+
+  /**
    * 创建 Node 数组
    * @param selector 选择器或 html 字符串
    * @returns {Array}
@@ -722,13 +731,14 @@ var $ = {};
    * @returns {{}}
    */
   $.parseOptions = function (str) {
-    if (typeof str === 'object') {
-      return str;
+    var options = {};
+
+    if (str === null || !str) {
+      return options;
     }
 
-    var options = {};
-    if (!str) {
-      return options;
+    if (typeof str === 'object') {
+      return str;
     }
 
     /* jshint ignore:start */

@@ -528,7 +528,7 @@ mdui.Menu = (function () {
     _this.state = 'closed';
 
     // 是否是级联菜单
-    _this.isCascade = !!_this.menu.classList.contains(CLASS.cascade);
+    _this.isCascade = _this.menu.classList.contains(CLASS.cascade);
 
     // covered 参数处理
     if (_this.options.covered === 'auto') {
@@ -556,7 +556,7 @@ mdui.Menu = (function () {
     });
 
     // 点击不含子菜单的菜单条目关闭菜单
-    $.on(document, mdui.touchEvents.end, '.' + CLASS.item, function () {
+    $.on(document, 'click touchend', '.' + CLASS.item, function () {
       if (!$.query('.' + CLASS.menu, this) && this.getAttribute('disabled') === null) {
         _this.close();
       }
@@ -594,6 +594,8 @@ mdui.Menu = (function () {
       return;
     }
 
+    _this.state = 'opening';
+
     // 调整菜单位置
     readjust(_this);
 
@@ -602,7 +604,6 @@ mdui.Menu = (function () {
 
     // 打开菜单
     _this.menu.classList.add(CLASS.open);
-    _this.state = 'opening';
     $.pluginEvent('open', 'menu', _this, _this.menu);
 
     // 打开动画完成后

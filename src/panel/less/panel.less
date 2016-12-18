@@ -15,8 +15,8 @@
   background-color: #fff;
   color: @color-black-text;
   .mdui-divider-bottom-dark();
-  will-change: margin;
-  transition-property: margin;
+  will-change: margin-top, margin-bottom;
+  transition-property: margin-top, margin-bottom;
   transition-duration: .3s;
   transition-timing-function: @animation-curve-default;
   .mdui-shadow(2);
@@ -94,11 +94,14 @@
   height: 0;
   overflow: hidden;
   .mdui-clearfix();
-  will-change: height, padding;
-  transition: all .3s @animation-curve-default;
+  will-change: height;
+  transition: height .3s @animation-curve-default;
+
+  &:after {
+    height: 16px;
+  }
 
   .mdui-panel-item-open & {
-    padding-bottom: 16px;
     height: auto;
   }
 }

@@ -95,7 +95,7 @@
         'top:' + center.y + 'px;">' +
         '</div>')[0];
     $.prepend(el, rippleWave);
-    $.getStyle(rippleWave, 'opacity');
+    $.relayout(rippleWave);
     rippleTransform =
       'translate3d(' + (-center.x + width / 2) + 'px, ' + (-center.y + height / 2) + 'px, 0) ' +
       'scale(1)';

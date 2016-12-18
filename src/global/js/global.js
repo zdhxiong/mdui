@@ -82,8 +82,7 @@ mdui.showOverlay = function (zIndex) {
   var overlay = $.dom('<div class="mdui-overlay">')[0];
   document.body.appendChild(overlay);
 
-  // 使动态添加的元素的 transition 动画能生效
-  $.getStyle(overlay, 'opacity');
+  $.relayout(overlay);
 
   if (typeof zIndex === 'undefined') {
     zIndex = 100;

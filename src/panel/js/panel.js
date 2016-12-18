@@ -79,22 +79,6 @@ mdui.Panel = (function () {
       return;
     }
 
-    var content = $.child(item, '.mdui-panel-item-body');
-    var contentHeight = content.scrollHeight;
-
-    $.pluginEvent('open', 'panel', _this, item);
-
-    item.classList.add('mdui-panel-item-open');
-    content.style.height = contentHeight + 'px';
-
-    // 动画结束后重新设置高度。打开后设置为自动高度。有可能计算的高度不正确，让浏览器自动调整
-    $.transitionEnd(item, function () {
-      if (_isOpen(item)) {
-        content.style.height = 'auto';
-        $.pluginEvent('opened', 'panel', _this, item);
-      }
-    });
-
     // 关闭其他项
     if (_this.options.accordion) {
       $.each($.children(_this.panel, '.mdui-panel-item-open'), function (i, temp) {
@@ -103,6 +87,24 @@ mdui.Panel = (function () {
         }
       });
     }
+
+    var content = $.child(item, '.mdui-panel-item-body');
+    content.style.height = content.scrollHeight + 'px';
+
+    $.transitionEnd(content, function () {
+      if (_isOpen(item)) {
+        $.transition(content, 0);
+        content.style.height = 'auto';
+        $.relayout(content);
+        $.transition(content, '');
+        $.pluginEvent('opened', 'panel', _this, item);
+      } else {
+        content.style.height = '';
+      }
+    });
+
+    $.pluginEvent('open', 'panel', _this, item);
+    item.classList.add('mdui-panel-item-open');
   };
 
   /**
@@ -118,17 +120,23 @@ mdui.Panel = (function () {
     }
 
     var content = $.child(item, '.mdui-panel-item-body');
-    var contentHeight = parseFloat($.getStyle(content, 'height'));
-    content.style.height = contentHeight + 'px';
-    $.getStyle(content, 'height');
+    item.classList.remove('mdui-panel-item-open');
+    $.transition(content, 0);
+    content.style.height = content.scrollHeight + 'px';
+    $.relayout(content);
 
+    $.transition(content, '');
+    content.style.height = '';
     $.pluginEvent('close', 'panel', _this, item);
 
-    item.classList.remove('mdui-panel-item-open');
-    content.style.height = 0;
-
-    $.transitionEnd(item, function () {
-      if (!_isOpen(item)) {
+    $.transitionEnd(content, function () {
+      if (_isOpen(item)) {
+        $.transition(content, 0);
+        content.style.height = 'auto';
+        $.relayout(content);
+        $.transition(content, '');
+      } else {
+        content.style.height = '';
         $.pluginEvent('closed', 'panel', _this, item);
       }
     });

@@ -165,8 +165,10 @@ mdui.Tooltip = (function () {
       $.pluginEvent('open', 'tooltip', _this, _this.target);
 
       $.transitionEnd(_this.tooltip, function () {
-        _this.state = 'opened';
-        $.pluginEvent('opened', 'tooltip', _this, _this.target);
+        if (_this.tooltip.classList.contains('mdui-tooltip-open')) {
+          _this.state = 'opened';
+          $.pluginEvent('opened', 'tooltip', _this, _this.target);
+        }
       });
     }, _this.options.delay);
   };
@@ -177,14 +179,20 @@ mdui.Tooltip = (function () {
   Tooltip.prototype.close = function () {
     var _this = this;
 
+    if (_this.state === 'closing' || _this.state === 'closed') {
+      return;
+    }
+
     clearTimeout(_this.timeoutId);
     _this.tooltip.classList.remove('mdui-tooltip-open');
     _this.state = 'closing';
     $.pluginEvent('close', 'tooltip', _this, _this.target);
 
     $.transitionEnd(_this.tooltip, function () {
-      _this.state = 'closed';
-      $.pluginEvent('closed', 'tooltip', _this, _this.target);
+      if (!_this.tooltip.classList.contains('mdui-tooltip-open')) {
+        _this.state = 'closed';
+        $.pluginEvent('closed', 'tooltip', _this, _this.target);
+      }
     });
   };
 
@@ -196,9 +204,7 @@ mdui.Tooltip = (function () {
 
     if (_this.state === 'opening' || _this.state === 'opened') {
       _this.close();
-    }
-
-    if (_this.state === 'closing' || _this.state === 'closed') {
+    } else if (_this.state === 'closing' || _this.state === 'closed') {
       _this.open();
     }
   };
@@ -214,12 +220,12 @@ mdui.Tooltip = (function () {
   /**
    * 销毁 Tooltip
    */
-  Tooltip.prototype.destroy = function () {
+  /*Tooltip.prototype.destroy = function () {
     var _this = this;
     clearTimeout(_this.timeoutId);
     $.data(_this.target, 'mdui.tooltip', null);
     $.remove(_this.tooltip);
-  };
+  };*/
 
   return Tooltip;
 

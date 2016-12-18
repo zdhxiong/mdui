@@ -101,7 +101,6 @@
     // 设置位置
     $.transform(_this.snackbar, 'translateY(' + _this.snackbar.clientHeight + 'px)');
     _this.snackbar.style.left = (document.body.clientWidth - _this.snackbar.clientWidth) / 2 + 'px';
-    $.getStyle(_this.snackbar);
     _this.snackbar.classList.add('mdui-snackbar-transition');
   }
 
@@ -131,6 +130,10 @@
     $.transform(_this.snackbar, 'translateY(0)');
 
     $.transitionEnd(_this.snackbar, function () {
+      if (_this.state !== 'opening') {
+        return;
+      }
+
       _this.state = 'opened';
 
       // 有按钮时绑定事件
@@ -185,13 +188,15 @@
     _this.state = 'closing';
     $.transform(_this.snackbar, 'translateY(' + _this.snackbar.clientHeight + 'px)');
     _this.options.onClose();
-    current = null;
 
     $.transitionEnd(_this.snackbar, function () {
+      if (_this.state !== 'closing') {
+        return;
+      }
+
+      current = null;
       _this.state = 'closed';
-
       $.remove(_this.snackbar);
-
       $.dequeue(queueName);
     });
   };

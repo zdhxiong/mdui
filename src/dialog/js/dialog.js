@@ -105,7 +105,7 @@ mdui.Dialog = (function () {
     }
 
     // 如果提示框元素没有在当前文档中，则需要添加
-    if (!document.contains(_this.dialog)) {
+    if (!document.body.contains(_this.dialog)) {
       _this.append = true;
       document.body.appendChild(_this.dialog);
     }
@@ -191,8 +191,10 @@ mdui.Dialog = (function () {
 
     // 打开提示框动画完成后
     $.transitionEnd(_this.dialog, function () {
-      _this.state = 'opened';
-      $.pluginEvent('opened', 'dialog', _this, _this.dialog);
+      if (_this.dialog.classList.contains('mdui-dialog-open')) {
+        _this.state = 'opened';
+        $.pluginEvent('opened', 'dialog', _this, _this.dialog);
+      }
     });
 
     // 不存在遮罩层元素时，添加遮罩层
@@ -229,7 +231,6 @@ mdui.Dialog = (function () {
       return;
     }
 
-    current = null;
     _this.dialog.classList.remove('mdui-dialog-open');
     _this.state = 'closing';
     $.pluginEvent('close', 'dialog', _this, _this.dialog);
@@ -241,20 +242,23 @@ mdui.Dialog = (function () {
     }
 
     $.transitionEnd(_this.dialog, function () {
-      _this.state = 'closed';
-      $.pluginEvent('closed', 'dialog', _this, _this.dialog);
+      if (!_this.dialog.classList.contains('mdui-dialog-open')) {
+        current = null;
+        _this.state = 'closed';
+        $.pluginEvent('closed', 'dialog', _this, _this.dialog);
 
-      _this.dialog.style.display = 'none';
+        _this.dialog.style.display = 'none';
 
-      // 所有提示框都关闭，且当前没有打开的提示框时，解锁屏幕
-      if ($.queue(queueName).length === 0 && !current) {
-        mdui.unlockScreen();
-      }
+        // 所有提示框都关闭，且当前没有打开的提示框时，解锁屏幕
+        if ($.queue(queueName).length === 0 && !current) {
+          mdui.unlockScreen();
+        }
 
-      $.off(window, 'resize', readjust);
+        $.off(window, 'resize', readjust);
 
-      if (_this.options.destroyOnClosed) {
-        _this.destroy();
+        if (_this.options.destroyOnClosed) {
+          _this.destroy();
+        }
       }
     });
 
@@ -284,9 +288,7 @@ mdui.Dialog = (function () {
 
     if (_this.state === 'opening' || _this.state === 'opened') {
       _this.close();
-    }
-
-    if (_this.state === 'closing' || _this.state === 'closed') {
+    } else if (_this.state === 'closing' || _this.state === 'closed') {
       _this.open();
     }
   };

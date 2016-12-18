@@ -124,8 +124,10 @@ mdui.Drawer = (function () {
     }
 
     $.transitionEnd(_this.drawer, function () {
-      _this.state = 'opened';
-      $.pluginEvent('opened', 'drawer', _this, _this.drawer);
+      if (_this.drawer.classList.contains('mdui-drawer-open')) {
+        _this.state = 'opened';
+        $.pluginEvent('opened', 'drawer', _this, _this.drawer);
+      }
     });
 
     if (!mdui.screen.mdUp() || _this.options.overlay) {
@@ -160,8 +162,10 @@ mdui.Drawer = (function () {
     }
 
     $.transitionEnd(_this.drawer, function () {
-      _this.state = 'closed';
-      $.pluginEvent('closed', 'drawer', _this, _this.drawer);
+      if (!_this.drawer.classList.contains('mdui-drawer-open')) {
+        _this.state = 'closed';
+        $.pluginEvent('closed', 'drawer', _this, _this.drawer);
+      }
     });
 
     if (_this.overlay) {

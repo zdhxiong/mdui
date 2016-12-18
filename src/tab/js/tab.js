@@ -128,7 +128,7 @@ mdui.Tab = (function () {
       if (i === _this.activeIndex) {
         $.pluginEvent('change', 'tab', _this, _this.tab, {
           index: _this.activeIndex,
-          id: targetId.indexOf('#') === 0 ? targetId.substr(0, 1) : null,
+          target: tab,
         });
         $.pluginEvent('show', 'tab', _this, tab);
 
@@ -212,15 +212,15 @@ mdui.Tab = (function () {
   Tab.prototype.show = function (index) {
     var _this = this;
 
-    if (index.indexOf('#') === 0) {
+    if (parseInt(index) === index) {
+      _this.activeIndex = index;
+    } else {
       $.each(_this.tabs, function (i, tab) {
-        if (tab.getAttribute('href') === index) {
+        if (tab.id === index) {
           _this.activeIndex = i;
           return false;
         }
       });
-    } else {
-      _this.activeIndex = index;
     }
 
     _this._setActive();

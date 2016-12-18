@@ -72,6 +72,13 @@
   &:hover {
     background-color: @color-hover-black;
   }
+
+  // http://stackoverflow.com/a/31915203
+  &:after {
+    content: ' ';
+    height: 48px;
+    visibility: hidden;
+  }
 }
 
 /* 列表项图标 */
@@ -222,6 +229,10 @@
   // 密集型列表项
   .mdui-list-item {
     min-height: 40px;
+
+    &:after {
+      height: 40px;
+    }
   }
 
   // 图标
@@ -268,7 +279,7 @@
 
 /* 子列表 */
 .mdui-list-sub {
-  .mdui-list {
+  &>.mdui-list {
     padding: 0;
     height: 0;
     overflow: hidden;
@@ -280,21 +291,25 @@
     }
   }
 
-  .mdui-list-item-arrow {
-    will-change: transform;
-    transform: rotate(0);
-    transition: all .3s @animation-curve-default;
+  &>.mdui-list-item {
+    .mdui-list-item-arrow {
+      will-change: transform;
+      transform: rotate(0);
+      transition: all .3s @animation-curve-default;
+    }
   }
 }
 
 /* 打开状态的子列表 */
 .mdui-list-sub-open {
-  .mdui-list {
+  &>.mdui-list {
     height: auto;
   }
 
-  .mdui-list-item-arrow {
-    transform: rotate(180deg);
+  &>.mdui-list-item {
+    .mdui-list-item-arrow {
+      transform: rotate(180deg);
+    }
   }
 }
 

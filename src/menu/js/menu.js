@@ -358,21 +358,16 @@ mdui.Menu = (function () {
     var trigger;
     var delay;
 
-    if (mdui.support.touch) {
-      trigger = 'touchstart';
-      delay = 0;
+    if (inst.options.subMenuTrigger === 'hover' && !mdui.support.touch) {
+      trigger = 'mouseover mouseout';
+      delay = inst.options.subMenuDelay;
     } else {
-      if (inst.options.subMenuTrigger === 'hover') {
-        trigger = 'mouseover mouseout';
-        delay = inst.options.subMenuDelay;
-      } else {
-        trigger = 'click';
-        delay = 0;
-      }
+      trigger = 'click';
+      delay = 0;
     }
 
     // subMneuTrigger: 'click'
-    if (trigger === 'click' || trigger === 'touchstart') {
+    if (trigger === 'click') {
       $.on(inst.menu, trigger, '.' + CLASS.item, function (e) {
         var _this = this;
 
@@ -556,7 +551,7 @@ mdui.Menu = (function () {
     });
 
     // 点击不含子菜单的菜单条目关闭菜单
-    $.on(document, 'click touchend', '.' + CLASS.item, function () {
+    $.on(document, 'click', '.' + CLASS.item, function () {
       if (!$.query('.' + CLASS.menu, this) && this.getAttribute('disabled') === null) {
         _this.close();
       }

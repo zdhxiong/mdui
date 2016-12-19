@@ -15,10 +15,8 @@
   background-color: #fff;
   color: @color-black-text;
   .mdui-divider-bottom-dark();
-  will-change: margin-top, margin-bottom;
-  transition-property: margin-top, margin-bottom;
-  transition-duration: .3s;
-  transition-timing-function: @animation-curve-default;
+  will-change: margin;
+  transition: margin .3s @animation-curve-default;
   .mdui-shadow(2);
 
   &:last-child {

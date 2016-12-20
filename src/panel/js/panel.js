@@ -25,6 +25,9 @@ mdui.Panel = (function () {
 
     // 可扩展面板元素
     _this.panel = $.dom(selector)[0];
+    if (typeof _this.panel === 'undefined') {
+      return;
+    }
 
     // 已通过自定义属性实例化过，不再重复实例化
     var oldInst = $.data(_this.panel, 'mdui.panel');

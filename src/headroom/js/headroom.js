@@ -11,7 +11,7 @@ mdui.Headroom = (function () {
    * @type {{}}
    */
   var DEFAULT = {
-    tolerance: 5,                             // 滚动条滚动多少距离开始隐藏或显示元素，{down: num, up: num}，或数字
+    tolerance: 10,                             // 滚动条滚动多少距离开始隐藏或显示元素，{down: num, up: num}，或数字
     offset: 0,                               // 在页面顶部多少距离内滚动不会隐藏元素
     initialClass: 'mdui-headroom',               // 初始化时添加的类
     pinnedClass: 'mdui-headroom-pinned-top',     // 元素固定时添加的类
@@ -28,6 +28,9 @@ mdui.Headroom = (function () {
     var _this = this;
 
     _this.headroom = $.dom(selector)[0];
+    if (typeof _this.headroom === 'undefined') {
+      return;
+    }
 
     // 已通过自定义属性实例化过，不再重复实例化
     var oldInst = $.data(_this.headroom, 'mdui.headroom');
@@ -45,6 +48,8 @@ mdui.Headroom = (function () {
         up: tolerance,
       };
     }
+
+    _this._init();
   }
 
   /**
@@ -90,7 +95,6 @@ mdui.Headroom = (function () {
   Headroom.prototype._scroll = function () {
     var _this = this;
     _this.animationFrameId = $.requestAnimationFrame(function () {
-      var _this = this;
       var currentScrollY = window.pageYOffset;
       var direction = currentScrollY > _this.lastScrollY ? 'down' : 'up';
       var toleranceExceeded =
@@ -110,8 +114,6 @@ mdui.Headroom = (function () {
       }
 
       _this.lastScrollY = currentScrollY;
-
-      _this._scroll();
     });
   };
 

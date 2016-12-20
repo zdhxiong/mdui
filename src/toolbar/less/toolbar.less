@@ -49,7 +49,7 @@
   margin: 0;
 }
 
-// 响应式
+// 响应式。只有在应用栏中的工具栏，才具有响应式特性，不在应用栏中，则使用手机样式
 ._toolbar_responsive_mixed(@toolbar-height) {
   .mdui-toolbar {
     height: @toolbar-height;
@@ -68,12 +68,14 @@
 /* 手机 */
 ._toolbar_responsive_mixed(@appbar-height-xs);
 
-/* 平板 */
-@media (min-width: @screen-sm-min) {
-  ._toolbar_responsive_mixed(@appbar-height-sm);
-}
+.mdui-appbar {
+  // 平板
+  @media (min-width: @screen-sm-min) {
+    ._toolbar_responsive_mixed(@appbar-height-sm);
+  }
 
-/* PC */
-@media (min-width: @screen-md-min) {
-  ._toolbar_responsive_mixed(@appbar-height-md);
+  // PC
+  @media (min-width: @screen-md-min) {
+    ._toolbar_responsive_mixed(@appbar-height-md);
+  }
 }

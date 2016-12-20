@@ -505,6 +505,9 @@ mdui.Menu = (function () {
 
     // 触发菜单的元素
     _this.anchor = $.dom(anchorSelector)[0];
+    if (typeof _this.anchor === 'undefined') {
+      return;
+    }
 
     // 已通过自定义属性实例化过，不再重复实例化
     var oldInst = $.data(_this.anchor, 'mdui.menu');

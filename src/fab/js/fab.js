@@ -24,6 +24,9 @@ mdui.Fab = (function () {
     var _this = this;
 
     _this.fab = $.dom(selector)[0];
+    if (typeof _this.fab === 'undefined') {
+      return;
+    }
 
     // 已通过 data 属性实例化过，不再重复实例化
     var oldInst = $.data(_this.fab, 'mdui.fab');

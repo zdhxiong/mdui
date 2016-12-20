@@ -97,6 +97,9 @@ mdui.Dialog = (function () {
 
     // 提示框元素
     _this.dialog = $.dom(selector)[0];
+    if (typeof _this.dialog === 'undefined') {
+      return;
+    }
 
     // 已通过 data 属性实例化过，不再重复实例化
     var oldInst = $.data(_this.dialog, 'mdui.dialog');

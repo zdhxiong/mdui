@@ -93,13 +93,15 @@ mdui.Tooltip = (function () {
    * Tooltip 实例
    * @param selector
    * @param opts
-   * @returns {*|string}
    * @constructor
    */
   function Tooltip(selector, opts) {
     var _this = this;
 
     _this.target = $.dom(selector)[0];
+    if (typeof _this.target === 'undefined') {
+      return;
+    }
 
     // 已通过 data 属性实例化过，不再重复实例化
     var oldInst = $.data(_this.target, 'mdui.tooltip');

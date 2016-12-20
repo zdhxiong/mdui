@@ -21,11 +21,30 @@
 
 /* 固定在底部时 */
 .mdui-headroom-pinned-down {
-  transform: translate3d(0, 100%, 0) !important;
+  transform: translate3d(0, 0, 0) !important;
 }
 
 /* 在底部隐藏时 */
 .mdui-headroom-unpinned-down {
-  transform: translate3d(0, 0, 0) !important;
+  transform: translate3d(0, 100%, 0) !important;
   .mdui-shadow(0) !important;
+}
+
+
+/* 固定应用栏中的工具栏 */
+.mdui-headroom-pinned-toolbar {
+  transform: translate3d(0, 0, 0) !important;
+}
+
+/* 隐藏应用栏中的工具栏 */
+.mdui-headroom-unpinned-toolbar {
+  transform: translate3d(0, -@appbar-height-xs, 0) !important;
+
+  @media (min-width: @screen-sm-min) {
+    transform: translate3d(0, -@appbar-height-sm, 0) !important;
+  }
+
+  @media (min-width: @screen-md-min) {
+    transform: translate3d(0, -@appbar-height-md, 0) !important;
+  }
 }

@@ -6,6 +6,7 @@
 
 (function () {
 
+  // 切换导航项
   $.on(document, 'click', '.mdui-bottom-nav>a', function () {
     var _this = this;
     var bottomNav = $.parent(_this, '.mdui-bottom-nav');
@@ -22,6 +23,15 @@
         curItem.classList.remove('mdui-bottom-nav-active');
       }
     });
+  });
+
+  // 滚动时隐藏 mdui-bottom-nav-scroll-hide
+  $.each($.queryAll('.mdui-bottom-nav-scroll-hide'), function (i, bottomNav) {
+    var inst = new mdui.Headroom('.mdui-bottom-nav-scroll-hide', {
+      pinnedClass: 'mdui-headroom-pinned-down',
+      unpinnedClass: 'mdui-headroom-unpinned-down',
+    });
+    $.data(bottomNav, 'mdui.headroom', inst);
   });
 
 })();

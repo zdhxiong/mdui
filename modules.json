@@ -188,12 +188,14 @@
     "dependencies": []
   },
   "appbar": {
-    "js": [],
+    "js": [
+      "src/appbar/js/appbar.js"
+    ],
     "less": [
       "src/appbar/less/appbar.less"
     ],
     "dependencies": [
-      "toolbar"
+      "toolbar", "headroom"
     ]
   },
   "card": {
@@ -308,7 +310,9 @@
     "less": [
       "src/bottom_nav/less/bottom_nav.less"
     ],
-    "dependencies": []
+    "dependencies": [
+      "headroom"
+    ]
   },
   "progress": {
     "js": [

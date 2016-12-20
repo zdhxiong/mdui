@@ -28,6 +28,9 @@ mdui.Drawer = (function () {
     var _this = this;
 
     _this.drawer = $.dom(selector)[0];
+    if (typeof _this.drawer === 'undefined') {
+      return;
+    }
 
     var oldInst = $.data(_this.drawer, 'mdui.drawer');
     if (oldInst) {

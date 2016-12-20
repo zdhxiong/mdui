@@ -25,6 +25,9 @@ mdui.Sublist = (function () {
 
     // 子列表元素
     _this.sublist = $.dom(selector)[0];
+    if (typeof _this.sublist === 'undefined') {
+      return;
+    }
 
     // 已通过自定义属性实例化过，不再重复实例化
     var oldInst = $.data(_this.sublist, 'mdui.sublist');

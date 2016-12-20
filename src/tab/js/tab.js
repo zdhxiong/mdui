@@ -24,6 +24,9 @@ mdui.Tab = (function () {
     var trigger;
 
     _this.tab = $.dom(selector)[0];
+    if (typeof _this.tab === 'undefined') {
+      return;
+    }
 
     // 已通过自定义属性实例化过，不再重复实例化
     var oldInst = $.data(_this.tab, 'mdui.tab');

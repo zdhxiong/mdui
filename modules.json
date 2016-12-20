@@ -71,6 +71,16 @@
     ],
     "dependencies": []
   },
+  "headroom": {
+    "js": [
+      "src/headroom/js/headroom.js",
+      "src/headroom/js/headroom.data.js"
+    ],
+    "less": [
+      "src/headroom/less/headroom.less"
+    ],
+    "dependencies": []
+  },
   "table": {
     "js": [
       "src/table/js/table.js"

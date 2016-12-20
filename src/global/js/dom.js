@@ -566,6 +566,28 @@ var $ = {};
     return dom.clientLeft;
   };
 
+  $.requestAnimationFrame = function (callback) {
+    var raf = window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame;
+    if (raf) {
+      return raf(callback);
+    } else {
+      return window.setTimeout(callback, 1000 / 60);
+    }
+  };
+
+  $.cancelAnimationFrame = function (id) {
+    var caf = window.cancelAnimationFrame ||
+      window.webkitCancelAnimationFrame ||
+      window.mozCancelAnimationFrame;
+    if (caf) {
+      return caf(id);
+    } else {
+      return window.clearTimeout(id);
+    }
+  };
+
   /**
    * 创建 Node 数组
    * @param selector 选择器或 html 字符串

@@ -1,0 +1,31 @@
+/**
+ * =============================================================================
+ * ************   Headroom   ************
+ * =============================================================================
+ */
+
+.mdui-headroom {
+  transition: all .3s @animation-curve-default !important;
+}
+
+/* 固定在顶部时 */
+.mdui-headroom-pinned-top {
+  transform: translate3d(0, 0, 0) !important;
+}
+
+/* 在顶部隐藏时 */
+.mdui-headroom-unpinned-top {
+  transform: translate3d(0, -100%, 0) !important;
+  .mdui-shadow(0) !important;
+}
+
+/* 固定在底部时 */
+.mdui-headroom-pinned-down {
+  transform: translate3d(0, 100%, 0) !important;
+}
+
+/* 在底部隐藏时 */
+.mdui-headroom-unpinned-down {
+  transform: translate3d(0, 0, 0) !important;
+  .mdui-shadow(0) !important;
+}

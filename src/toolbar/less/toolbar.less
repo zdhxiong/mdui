@@ -10,7 +10,6 @@
   align-items: center;
   width: 100%;
   &>* {
-    display: flex;
     margin: 0 16px;
     .mdui-text-truncate();
   }
@@ -35,6 +34,7 @@
 
   &>.mdui-btn-icon {
     width: @appbar-icon-width;
+    min-width: @appbar-icon-width;
     height: @appbar-icon-width;
 
     .mdui-icon {
@@ -46,6 +46,7 @@
 
 .mdui-toolbar-spacer {
   flex-grow: 1;
+  margin: 0;
 }
 
 // 响应式

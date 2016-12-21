@@ -1,0 +1,37 @@
+/**
+ * =============================================================================
+ * ************   Collapsible 折叠插件   ************
+ * =============================================================================
+ */
+
+.mdui-collapsible-item {
+  &>.mdui-collapsible-item-header {
+
+    // 图标，打开时翻转 180 度
+    .mdui-collapsible-item-arrow {
+      will-change: transform;
+      transform: rotate(0);
+      transition: transform .3s @animation-curve-default;
+    }
+
+  }
+
+  &>.mdui-collapsible-item-body {
+    height: 0;
+    overflow: hidden;
+    will-change: height;
+    transition: height .3s @animation-curve-default;
+  }
+}
+
+.mdui-collapsible-item-open {
+  &>.mdui-collapsible-item-header {
+    .mdui-collapsible-item-arrow {
+      transform: rotate(180deg);
+    }
+  }
+
+  &>.mdui-collapsible-item-body {
+    height: auto;
+  }
+}

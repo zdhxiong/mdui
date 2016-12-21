@@ -11,8 +11,8 @@ mdui.Headroom = (function () {
    * @type {{}}
    */
   var DEFAULT = {
-    tolerance: 10,                             // 滚动条滚动多少距离开始隐藏或显示元素，{down: num, up: num}，或数字
-    offset: 0,                               // 在页面顶部多少距离内滚动不会隐藏元素
+    tolerance: 5,                                // 滚动条滚动多少距离开始隐藏或显示元素，{down: num, up: num}，或数字
+    offset: 0,                                   // 在页面顶部多少距离内滚动不会隐藏元素
     initialClass: 'mdui-headroom',               // 初始化时添加的类
     pinnedClass: 'mdui-headroom-pinned-top',     // 元素固定时添加的类
     unpinnedClass: 'mdui-headroom-unpinned-top', // 元素隐藏时添加的类
@@ -123,6 +123,14 @@ mdui.Headroom = (function () {
   Headroom.prototype.pin = function () {
     var _this = this;
 
+    if (
+      _this.state === 'pinning' ||
+      _this.state === 'pinned' ||
+      !_this.headroom.classList.contains(_this.options.initialClass)
+    ) {
+      return;
+    }
+
     _this.state = 'pinning';
     _this.headroom.classList.remove(_this.options.unpinnedClass);
     _this.headroom.classList.add(_this.options.pinnedClass);
@@ -141,6 +149,14 @@ mdui.Headroom = (function () {
    */
   Headroom.prototype.unpin = function () {
     var _this = this;
+
+    if (
+      _this.state === 'unpinning' ||
+      _this.state === 'unpinned' ||
+      !_this.headroom.classList.contains(_this.options.initialClass)
+    ) {
+      return;
+    }
 
     _this.state = 'unpinning';
     _this.headroom.classList.remove(_this.options.pinnedClass);
@@ -185,6 +201,13 @@ mdui.Headroom = (function () {
 
       $.cancelAnimationFrame(_this.animationFrameId);
     }
+  };
+
+  /**
+   * 获取当前状态 pinning | pinned | unpinning | unpinned
+   */
+  Headroom.prototype.getState = function () {
+    return this.state;
   };
 
   return Headroom;

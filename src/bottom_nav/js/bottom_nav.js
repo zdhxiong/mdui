@@ -27,7 +27,7 @@
 
   // 滚动时隐藏 mdui-bottom-nav-scroll-hide
   $.each($.queryAll('.mdui-bottom-nav-scroll-hide'), function (i, bottomNav) {
-    var inst = new mdui.Headroom('.mdui-bottom-nav-scroll-hide', {
+    var inst = new mdui.Headroom(bottomNav, {
       pinnedClass: 'mdui-headroom-pinned-down',
       unpinnedClass: 'mdui-headroom-unpinned-down',
     });

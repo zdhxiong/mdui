@@ -111,7 +111,6 @@
   position: relative;
   box-sizing: border-box;
   padding: 8px;
-  .mdui-divider-top-dark();
 
   .mdui-btn {
     margin: 0 8px 0 0;
@@ -148,11 +147,6 @@
   }
 }
 
-/* 按钮区域紧跟在媒体元素后面，则去除按钮区域的上边框 */
-.mdui-card-media + .mdui-card-actions {
-  border-top: none;
-}
-
 /* 覆盖在媒体元素上的内容 */
 .mdui-card-media-covered {
   position: absolute;
@@ -168,11 +162,6 @@
   }
   .mdui-card-primary-subtitle {
     opacity: @opacity-white-secondary;
-  }
-
-  /* 覆盖在媒体元素上的按钮 */
-  .mdui-card-actions {
-    border: none;
   }
 }
 
@@ -206,9 +195,5 @@
   .mdui-card {
     background-color: @layout-dark-color-4;
     color: #fff;
-  }
-
-  .mdui-card-actions {
-    .mdui-divider-top-light();
   }
 }

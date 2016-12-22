@@ -11,6 +11,11 @@
   background-color: transparent;
   list-style: none;
 
+  // 子列表没有上下间距
+  .mdui-list {
+    padding: 0;
+  }
+
   // 分割线上下边距
   &>.mdui-divider,
   &>.mdui-divider-light,
@@ -277,41 +282,6 @@
   }
 }
 
-/* 子列表 */
-.mdui-list-sub {
-  &>.mdui-list {
-    padding: 0;
-    height: 0;
-    overflow: hidden;
-    will-change: height;
-    transition: height .3s @animation-curve-default;
-
-    .mdui-list-item {
-      padding-left: 72px;
-    }
-  }
-
-  &>.mdui-list-item {
-    .mdui-list-item-arrow {
-      will-change: transform;
-      transform: rotate(0);
-      transition: all .3s @animation-curve-default;
-    }
-  }
-}
-
-/* 打开状态的子列表 */
-.mdui-list-sub-open {
-  &>.mdui-list {
-    height: auto;
-  }
-
-  &>.mdui-list-item {
-    .mdui-list-item-arrow {
-      transform: rotate(180deg);
-    }
-  }
-}
 
 /**
  * =============================================================================

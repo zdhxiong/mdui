@@ -81,13 +81,13 @@
     ],
     "dependencies": []
   },
-  "collapsible": {
+  "collapse": {
     "js": [
-      "src/collapsible/js/collapsible.js",
-      "src/collapsible/js/collapsible.data.js"
+      "src/collapse/js/collapse.js",
+      "src/collapse/js/collapse.data.js"
     ],
     "less": [
-      "src/collapsible/less/collapsible.less"
+      "src/collapse/less/collapse.less"
     ],
     "dependencies": []
   },
@@ -247,9 +247,7 @@
     "less": [
       "src/list/less/list.less"
     ],
-    "dependencies": [
-      "collapsible"
-    ]
+    "dependencies": []
   },
   "drawer": {
     "js": [
@@ -345,7 +343,7 @@
       "src/panel/less/panel.less"
     ],
     "dependencies": [
-      "collapsible"
+      "collapse"
     ]
   },
   "menu": {

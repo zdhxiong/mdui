@@ -1,48 +1,61 @@
 /**
  * =============================================================================
- * ************   供 Collapsible、 Panel、 Sublist 调用的折叠内容块插件   ************
+ * ************   供 Collapse、 Panel 调用的折叠内容块插件   ************
  * =============================================================================
  */
-$.Collapsible = (function () {
+$.Collapse = (function () {
 
   /**
    * 默认参数
    */
   var DEFAULT = {
     accordion: false,                             // 是否使用手风琴效果
-    itemClass: 'mdui-collapsible-item',           // item 类名
-    itemOpenClass: 'mdui-collapsible-item-open',  // 打开状态的 item
-    headerClass: 'mdui-collapsible-item-header',  // item 中的 header 类名
-    bodyClass: 'mdui-collapsible-item-body',      // item 中的 body 类名
-    namespace: 'collapsible',                     // 命名空间
   };
 
+  // 类名
+  var CLASS = {
+    item: 'mdui-collapse-item',           // item 类名
+    itemOpen: 'mdui-collapse-item-open',  // 打开状态的 item
+    header: 'mdui-collapse-item-header',  // item 中的 header 类名
+    body: 'mdui-collapse-item-body',      // item 中的 body 类名
+  };
+
+  // 命名空间
+  var NAMESPACE = 'collapse';
+
   /**
-   * 折叠面板
+   * 折叠内容块
    * @param selector
    * @param opts
+   * @param classes
+   * @param namespace
    * @constructor
    */
-  function Collapsible(selector, opts) {
+  function Collapse(selector, opts, classes, namespace) {
     var _this = this;
 
+    _this.classes = $.extend(CLASS, classes || {});
+    _this.namespace = (typeof namespace === 'undefined' || !namespace) ? NAMESPACE : namespace;
+
     // 折叠面板元素
-    _this.collapsible = $.dom(selector)[0];
-    if (typeof _this.collapsible === 'undefined') {
+    _this.collapse = $.dom(selector)[0];
+    if (typeof _this.collapse === 'undefined') {
       return;
     }
 
     _this.options = $.extend(DEFAULT, (opts || {}));
 
     // 已通过自定义属性实例化过，不再重复实例化
-    var oldInst = $.data(_this.collapsible, 'mdui.' + _this.options.collapsible);
+    var oldInst = $.data(_this.collapse, 'mdui.' + _this.namespace);
     if (oldInst) {
       return oldInst;
     }
 
-    $.on(_this.collapsible, 'click', '.' + _this.options.headerClass, function () {
-      var item = $.parent(this, '.' + _this.options.itemClass);
-      _this.toggle(item);
+    $.on(_this.collapse, 'click', '.' + _this.classes.header, function (e) {
+      var item = $.parent(this, '.' + _this.classes.item);
+      if ($.child(_this.collapse, item)) {
+        _this.toggle(item);
+      }
     });
   }
 
@@ -52,9 +65,8 @@ $.Collapsible = (function () {
    * @returns {boolean}
    * @private
    */
-  Collapsible.prototype._isOpen = function (item) {
-    var _this = this;
-    return item.classList.contains(_this.options.itemOpenClass);
+  Collapse.prototype._isOpen = function (item) {
+    return item.classList.contains(this.classes.itemOpen);
   };
 
   /**
@@ -63,11 +75,11 @@ $.Collapsible = (function () {
    * @returns {*}
    * @private
    */
-  Collapsible.prototype._getItem = function (item) {
+  Collapse.prototype._getItem = function (item) {
     var _this = this;
 
     if (parseInt(item) === item) {
-      var items = $.children(_this.collapsible, '.' + _this.options.itemClass);
+      var items = $.children(_this.collapse, '.' + _this.classes.item);
       return items[item];
     }
 
@@ -78,7 +90,7 @@ $.Collapsible = (function () {
    * 打开指定面板项
    * @param item 面板项的索引号或 DOM 元素或 CSS 选择器
    */
-  Collapsible.prototype.open = function (item) {
+  Collapse.prototype.open = function (item) {
     var _this = this;
     item = _this._getItem(item);
 
@@ -88,14 +100,14 @@ $.Collapsible = (function () {
 
     // 关闭其他项
     if (_this.options.accordion) {
-      $.each($.children(_this.collapsible, '.' + _this.options.itemOpenClass), function (i, temp) {
+      $.each($.children(_this.collapse, '.' + _this.classes.itemOpen), function (i, temp) {
         if (temp !== item) {
           _this.close(temp);
         }
       });
     }
 
-    var content = $.child(item, '.' + _this.options.bodyClass);
+    var content = $.child(item, '.' + _this.classes.body);
     content.style.height = content.scrollHeight + 'px';
 
     $.transitionEnd(content, function () {
@@ -104,21 +116,21 @@ $.Collapsible = (function () {
         content.style.height = 'auto';
         $.relayout(content);
         $.transition(content, '');
-        $.pluginEvent('opened', _this.options.namespace, _this, item);
+        $.pluginEvent('opened', _this.namespace, _this, item);
       } else {
         content.style.height = '';
       }
     });
 
-    $.pluginEvent('open', _this.options.namespace, _this, item);
-    item.classList.add(_this.options.itemOpenClass);
+    $.pluginEvent('open', _this.namespace, _this, item);
+    item.classList.add(_this.classes.itemOpen);
   };
 
   /**
    * 关闭指定项
    * @param item 面板项的索引号或 DOM 元素或 CSS 选择器
    */
-  Collapsible.prototype.close = function (item) {
+  Collapse.prototype.close = function (item) {
     var _this = this;
     item = _this._getItem(item);
 
@@ -126,15 +138,15 @@ $.Collapsible = (function () {
       return;
     }
 
-    var content = $.child(item, '.' + _this.options.bodyClass);
-    item.classList.remove(_this.options.itemOpenClass);
+    var content = $.child(item, '.' + _this.classes.body);
+    item.classList.remove(_this.classes.itemOpen);
     $.transition(content, 0);
     content.style.height = content.scrollHeight + 'px';
     $.relayout(content);
 
     $.transition(content, '');
     content.style.height = '';
-    $.pluginEvent('close', _this.options.namespace, _this, item);
+    $.pluginEvent('close', _this.namespace, _this, item);
 
     $.transitionEnd(content, function () {
       if (_this._isOpen(item)) {
@@ -144,7 +156,7 @@ $.Collapsible = (function () {
         $.transition(content, '');
       } else {
         content.style.height = '';
-        $.pluginEvent('closed', _this.options.namespace, _this, item);
+        $.pluginEvent('closed', _this.namespace, _this, item);
       }
     });
   };
@@ -153,7 +165,7 @@ $.Collapsible = (function () {
    * 切换指定项的状态
    * @param item 面板项的索引号或 DOM 元素或 CSS 选择器
    */
-  Collapsible.prototype.toggle = function (item) {
+  Collapse.prototype.toggle = function (item) {
     var _this = this;
     item = _this._getItem(item);
 
@@ -167,10 +179,10 @@ $.Collapsible = (function () {
   /**
    * 打开所有项
    */
-  Collapsible.prototype.openAll = function () {
+  Collapse.prototype.openAll = function () {
     var _this = this;
 
-    $.each($.children(_this.collapsible, '.' + _this.options.itemClass), function (i, item) {
+    $.each($.children(_this.collapse, '.' + _this.classes.item), function (i, item) {
       if (!_this._isOpen(item)) {
         _this.open(item);
       }
@@ -180,29 +192,29 @@ $.Collapsible = (function () {
   /**
    * 关闭所有项
    */
-  Collapsible.prototype.closeAll = function () {
+  Collapse.prototype.closeAll = function () {
     var _this = this;
 
-    $.each($.children(_this.collapsible, '.' + _this.options.itemClass), function (i, item) {
+    $.each($.children(_this.collapse, '.' + _this.classes.item), function (i, item) {
       if (_this._isOpen(item)) {
         _this.close(item);
       }
     });
   };
 
-  return Collapsible;
+  return Collapse;
 })();
 
 /**
  * =============================================================================
- * ************   Collapsible 折叠内容块插件   ************
+ * ************   Collapse 折叠内容块插件   ************
  * =============================================================================
  */
-mdui.Collapsible = (function () {
+mdui.Collapse = (function () {
 
-  function Collapsible(selector, opts) {
-    new $.Collapsible(selector, opts);
+  function Collapse(selector, opts) {
+    return new $.Collapse(selector, opts);
   }
 
-  return Collapsible;
+  return Collapse;
 })();

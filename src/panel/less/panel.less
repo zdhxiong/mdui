@@ -24,13 +24,6 @@
   }
 }
 
-/* 打开状态的面板项 */
-.mdui-panel-item-open {
-  height: auto;
-  margin-top: 16px;
-  margin-bottom: 16px;
-}
-
 /* 面板头部 */
 .mdui-panel-item-header {
   box-sizing: border-box;
@@ -46,12 +39,6 @@
 
   &:active {
     background-color: @color-grey-200;
-  }
-
-  // 打开状态的面板头部更高
-  .mdui-panel-item-open & {
-    height: 64px;
-    line-height: 64px;
   }
 }
 
@@ -79,11 +66,6 @@
   will-change: transform, top;
   transform: rotate(0);
   transition: all .3s @animation-curve-default;
-
-  .mdui-panel-item-open & {
-    transform: rotate(180deg);
-    top: 20px;
-  }
 }
 
 /* 面板项内容 */
@@ -97,10 +79,6 @@
 
   &:after {
     height: 16px;
-  }
-
-  .mdui-panel-item-open & {
-    height: auto;
   }
 }
 
@@ -141,6 +119,29 @@
   .mdui-panel-item-open {
     margin-left: -16px;
     margin-right: -16px;
+  }
+}
+
+/* 打开状态的面板项 */
+.mdui-panel-item-open {
+  height: auto;
+  margin-top: 16px;
+  margin-bottom: 16px;
+
+  // 打开状态的面板头部更高
+  &>.mdui-panel-item-header {
+    height: 64px;
+    line-height: 64px;
+
+    .mdui-panel-item-arrow,
+    &.mdui-panel-item-arrow {
+      transform: rotate(180deg);
+      top: 20px;
+    }
+  }
+
+  &>.mdui-panel-item-body {
+    height: auto;
   }
 }
 

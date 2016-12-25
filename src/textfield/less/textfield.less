@@ -20,22 +20,23 @@
   box-sizing: border-box;
   border: none;
   background: none;
+  color: inherit;
   border-radius: 0 0 0 0;
   box-shadow: none;
   display: block;
   margin: 0;
   height: 36px;
   line-height: 20px;
-  color: #212121;
   font-size: 16px;
   font-family: inherit;
   outline: none;
   resize: none;
-  transition: border-bottom-color .2s;
+  transition: all .2s @animation-curve-default;
   .mdui-divider-bottom-dark();
 
   &::-webkit-input-placeholder {
-    color: rgba(0, 0, 0, 0.35);
+    color: inherit;
+    opacity: 0.35;
   }
 
   &[disabled] {
@@ -130,6 +131,51 @@ textarea.mdui-textfield-input {
   &.mdui-textfield-focus {
     .mdui-textfield-label {
       .mdui-text-color(@color-accent-default-name);
+    }
+  }
+}
+
+/* 可展开文本框，默认向右展开
+   ========== */
+.mdui-textfield-expandable {
+  width: 36px;
+  padding: 1px 0;
+  min-height: 36px;
+  transition: width .3s @animation-curve-default;
+
+  .mdui-icon {
+    bottom: 0;
+    padding: 0;
+  }
+
+  .mdui-textfield-input {
+    margin-left: 36px;
+    width: calc(~"100% - 36px");
+    padding-right: 0;
+  }
+
+  .mdui-textfield-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .mdui-textfield-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: scale(0);
+  }
+
+  &.mdui-textfield-expanded {
+    width: 100%;
+
+    .mdui-textfield-input {
+      padding-right: 36px;
+    }
+
+    .mdui-textfield-close {
+      transform: scale(1);
     }
   }
 }
@@ -259,8 +305,6 @@ textarea.mdui-textfield-input {
 
   // 输入框颜色
   .mdui-textfield-input {
-    color: #fff;
-
     .mdui-divider-bottom-light();
 
     &::-webkit-input-placeholder {

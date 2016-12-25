@@ -68,7 +68,7 @@ mdui.Dialog = (function () {
   };
 
   /**
-   * hashchange 事件出发时关闭提示框
+   * hashchange 事件触发时关闭提示框
    */
   var hashchangeEvent = function () {
     if (location.hash.substring(1).indexOf('&mdui-dialog') < 0) {
@@ -234,6 +234,7 @@ mdui.Dialog = (function () {
       return;
     }
 
+    current = null;
     _this.dialog.classList.remove('mdui-dialog-open');
     _this.state = 'closing';
     $.pluginEvent('close', 'dialog', _this, _this.dialog);
@@ -246,7 +247,7 @@ mdui.Dialog = (function () {
 
     $.transitionEnd(_this.dialog, function () {
       if (!_this.dialog.classList.contains('mdui-dialog-open')) {
-        current = null;
+
         _this.state = 'closed';
         $.pluginEvent('closed', 'dialog', _this, _this.dialog);
 

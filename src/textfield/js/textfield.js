@@ -10,10 +10,12 @@
 
   var classNames = {
     field: 'mdui-textfield',
+    input: 'mdui-textfield-input',
     focus: 'mdui-textfield-focus',
     notEmpty: 'mdui-textfield-not-empty',
     disabled: 'mdui-textfield-disabled',
     invalid: 'mdui-textfield-invalid',
+    expanded: 'mdui-textfield-expanded',
   };
 
   /**
@@ -143,6 +145,26 @@
   // 绑定事件
   var inputSelector = '.' + classNames.field + ' input, .' + classNames.field + ' textarea';
   $.on(document, 'input focus blur', inputSelector, inputEvent, true);
+
+  // 可展开文本框展开
+  $.on(document, 'click', '.mdui-textfield-expandable .mdui-textfield-icon', function () {
+    var _this = this;
+    var textField = $.parents(_this, '.' + classNames.field)[0];
+    var input = $.query('.' + classNames.input, textField);
+
+    textField.classList.add(classNames.expanded);
+    input.focus();
+  });
+
+  // 可展开文本框关闭
+  $.on(document, 'click', '.mdui-textfield-expandable .mdui-textfield-close', function () {
+    var _this = this;
+    var textField = $.parents(_this, '.' + classNames.field)[0];
+    var input = $.query('.' + classNames.input, textField);
+
+    textField.classList.remove(classNames.expanded);
+    input.value = '';
+  });
 
   /**
    * 通过 JS 更新了表单内容，需要重新进行表单处理

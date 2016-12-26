@@ -1,4 +1,4 @@
-# [MDUI](https://mdui.org)
+# [MDUI](http://mdui.org)
 
 [![GitHub version](https://badge.fury.io/gh/zdhxiong%2Fmdui.svg)](https://badge.fury.io/gh/zdhxiong%2Fmdui)
 ![Bower version](https://img.shields.io/bower/v/mdui.svg)
@@ -8,7 +8,7 @@
 
 MDUI 是一个基于 Material Design 的前端框架。
 
-## [中文文档](#http://mdui.org/docs)
+## [中文文档](http://mdui.org/docs)
 
 ## 特性
 

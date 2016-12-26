@@ -1,0 +1,29 @@
+{
+  "name": "mdui",
+  "description": "a CSS Framework based on material design",
+  "main": [
+    "dist/js/mdui.min.js",
+    "dist/css/mdui.min.css"
+  ],
+  "authors": [
+    "zdhxiong"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "material",
+    "design",
+    "responsive",
+    "framework",
+    "front-end",
+    "mobile-first",
+    "web"
+  ],
+  "homepage": "http://mdui.org",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

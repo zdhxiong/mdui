@@ -1,7 +1,7 @@
 {
   "name": "mdui",
   "description": "a CSS Framework based on material design",
-  "version": "0.0.1",
+  "version": "0.1",
   "keywords": [
     "material design",
     "responsive",
@@ -10,14 +10,14 @@
     "mobile-first",
     "web"
   ],
-  "homepage": "http://www.mdui.org",
+  "homepage": "http://mdui.org",
   "author": "zdhxiong",
   "scripts": {
     "test": "grunt test"
   },
   "style": "dist/css/mdui.css",
   "less": "src/mdui.less",
-  "main": "dist/js/mdui.min.js",
+  "main": "dist/js/mdui",
   "repository": {
     "type": "git",
     "url": "https://github.com/zdhxiong/mdui.git"

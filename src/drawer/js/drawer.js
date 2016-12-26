@@ -75,7 +75,7 @@ mdui.Drawer = (function () {
         if (!_this.overlay && _this.state === 'opened') {
           // 抽屉栏处于强制打开状态，添加遮罩
           if (_this.drawer.classList.contains('mdui-drawer-open')) {
-            mdui.showOverlay(100);
+            mdui.showOverlay();
             _this.overlay = true;
 
             mdui.lockScreen();
@@ -134,7 +134,7 @@ mdui.Drawer = (function () {
     });
 
     if (!mdui.screen.mdUp() || _this.options.overlay) {
-      mdui.showOverlay(100);
+      mdui.showOverlay();
       _this.overlay = true;
 
       mdui.lockScreen();

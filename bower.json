@@ -2,8 +2,8 @@
   "name": "mdui",
   "description": "a CSS Framework based on material design",
   "main": [
-    "dist/js/mdui.min.js",
-    "dist/css/mdui.min.css"
+    "dist/js/mdui.js",
+    "dist/css/mdui.css"
   ],
   "authors": [
     "zdhxiong"
@@ -20,10 +20,10 @@
   ],
   "homepage": "http://mdui.org",
   "ignore": [
-    "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "custom"
   ]
 }

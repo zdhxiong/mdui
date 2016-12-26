@@ -240,10 +240,6 @@
     "dependencies": []
   },
   "list": {
-    "js": [
-      "src/list/js/sublist.js",
-      "src/list/js/sublist.data.js"
-    ],
     "less": [
       "src/list/less/list.less"
     ],

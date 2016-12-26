@@ -1,7 +1,7 @@
 {
   "name": "mdui",
   "description": "a CSS Framework based on material design",
-  "version": "0.1",
+  "version": "0.1.0",
   "keywords": [
     "material design",
     "responsive",
@@ -47,11 +47,5 @@
   },
   "engines": {
     "node": ">=4.2.1"
-  },
-  "fiels": [
-    "dist",
-    "src",
-    "gulpfile.js",
-    "LICENSE"
-  ]
+  }
 }

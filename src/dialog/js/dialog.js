@@ -202,7 +202,7 @@ mdui.Dialog = (function () {
 
     // 不存在遮罩层元素时，添加遮罩层
     if (!overlay) {
-      overlay = mdui.showOverlay(300);
+      overlay = mdui.showOverlay();
     }
 
     // 点击遮罩层时是否关闭提示框

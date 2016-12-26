@@ -1,5 +1,5 @@
 /*!
- * mdui v0.1 (http://mdui.org)
+ * mdui v0.1.0 (http://mdui.org)
  * Copyright 2016-2016 zdhxiong
  * Licensed under MIT
  */
@@ -5079,7 +5079,7 @@ body.mdui-locked {
   right: -5000px;
   bottom: -5000px;
   left: -5000px;
-  z-index: 100;
+  z-index: 2000;
   visibility: hidden;
   background: rgba(0, 0, 0, .4);
   opacity: 0;
@@ -8001,7 +8001,7 @@ input.mdui-btn[type="submit"] {
 /* 含菜单的浮动操作按钮 */
 .mdui-fab-wrapper {
   position: relative;
-  z-index: 8888;
+  z-index: 8000;
   width: 56px;
   height: 56px;
   padding-top: 8px;
@@ -8906,7 +8906,7 @@ input.mdui-btn[type="submit"] {
  * =============================================================================
  */
 .mdui-appbar {
-  z-index: 10;
+  z-index: 1000;
   width: 100%;
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
 }
@@ -9842,7 +9842,7 @@ body.mdui-loaded .mdui-drawer {
   top: 0;
   bottom: 0;
   left: 0;
-  z-index: 200;
+  z-index: 5000;
   width: 240px;
   box-sizing: border-box;
   margin: 0;
@@ -9960,7 +9960,7 @@ body.mdui-loaded .mdui-drawer {
   position: fixed;
   right: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 6000;
   display: none;
   width: 92%;
   min-width: 180px;
@@ -10268,7 +10268,7 @@ body.mdui-loaded .mdui-drawer {
  */
 .mdui-tooltip {
   position: absolute;
-  z-index: 9999;
+  z-index: 9000;
   display: inline-block;
   box-sizing: border-box;
   font-weight: 500;
@@ -10320,7 +10320,7 @@ body.mdui-loaded .mdui-drawer {
 .mdui-snackbar {
   position: fixed;
   bottom: 0;
-  z-index: 2000;
+  z-index: 7000;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

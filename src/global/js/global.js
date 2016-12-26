@@ -85,7 +85,7 @@ mdui.showOverlay = function (zIndex) {
   $.relayout(overlay);
 
   if (typeof zIndex === 'undefined') {
-    zIndex = 100;
+    zIndex = 2000;
   }
 
   overlay.style['z-index'] = zIndex;

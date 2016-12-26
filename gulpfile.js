@@ -401,7 +401,7 @@
   // 构建所有文件，并压缩成 zip 文件
   gulp.task('build', ['build-css', 'build-js'], function (cb) {
     gulp.src('dist/**/*')
-      .pipe(zip('mdui-' + mdui.pkg.version + '.zip'))
+      .pipe(zip('mdui-v' + mdui.pkg.version + '.zip'))
       .pipe(gulp.dest('./'))
       .on('end', function () {
         cb();

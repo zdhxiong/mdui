@@ -1,5 +1,5 @@
 /*!
- * mdui v0.1.0 (http://mdui.org)
+ * mdui v0.1.1 (http://mdui.org)
  * Copyright 2016-2016 zdhxiong
  * Licensed under MIT
  */

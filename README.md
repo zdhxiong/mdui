@@ -31,9 +31,9 @@ MDUI 使用纯 JavaScript 编写，没有任何依赖。
 
 ## 安装
 
-- [下载压缩包](https://github.com/zdhxiong/mdui/archive/v0.1.0.zip)
-- 通过 npm 安装: `npm install mdui --save`
-- 通过 Bower 安装: `bower install mdui --save`
+- [下载压缩包](https://github.com/zdhxiong/mdui/releases/download/v0.1.1/mdui-v0.1.1.zip)
+- 通过 npm 安装: `npm install mdui`
+- 通过 Bower 安装: `bower install mdui`
 - 从 Github 下载源码: `git clone https://github.com/zdhxiong/mdui.git`
 
 ### 目录结构

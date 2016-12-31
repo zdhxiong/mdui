@@ -31,7 +31,9 @@
   font-family: inherit;
   outline: none;
   resize: none;
-  transition: all .2s @animation-curve-default;
+  transition-property: border-bottom-color, padding-right;
+  transition-duration: .2s;
+  transition-timing-function: @animation-curve-default;
   .mdui-divider-bottom-dark();
 
   &::-webkit-input-placeholder {

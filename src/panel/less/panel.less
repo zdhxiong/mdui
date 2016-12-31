@@ -26,16 +26,18 @@
 
 /* 面板头部 */
 .mdui-panel-item-header {
+  display: flex;
+  align-items: center;
   box-sizing: border-box;
   position: relative;
   width: 100%;
   height: 48px;
-  line-height: 48px;
   padding: 0 24px;
   font-size: 15px;
   cursor: pointer;
-  will-change: height, line-height, background-color;
+  will-change: height, background-color;
   transition: all .3s @animation-curve-default;
+  .mdui-text-truncate();
 
   &:active {
     background-color: @color-grey-200;
@@ -44,16 +46,20 @@
 
 /* 面板项标题 */
 .mdui-panel-item-title {
-  width: 36%;
-  float: left;
+  box-sizing: border-box;
+  width: 26%;
   font-weight: 500;
+  padding-right: 16px;
+  .mdui-text-truncate();
 }
 
 /* 面板项内容 */
 .mdui-panel-item-summary {
-  width: 56%;
-  float: left;
+  flex-grow: 1;
+  box-sizing: border-box;
+  padding-right: 16px;
   color: @color-black-secondary;
+  .mdui-text-truncate();
 }
 
 /* 展开收起的图标 */
@@ -66,6 +72,12 @@
   will-change: transform, top;
   transform: rotate(0);
   transition: all .3s @animation-curve-default;
+}
+
+.mdui-panel-item-summary + .mdui-panel-item-arrow {
+  position: relative;
+  right: 0;
+  top: 0 !important;
 }
 
 /* 面板项内容 */
@@ -131,10 +143,8 @@
   // 打开状态的面板头部更高
   &>.mdui-panel-item-header {
     height: 64px;
-    line-height: 64px;
 
-    .mdui-panel-item-arrow,
-    &.mdui-panel-item-arrow {
+    .mdui-panel-item-arrow {
       transform: rotate(180deg);
       top: 20px;
     }

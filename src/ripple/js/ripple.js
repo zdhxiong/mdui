@@ -14,6 +14,7 @@
   var rippleWave;
   var rippleTarget;
   var rippleTransform;
+  var isRunning = false;
 
   /**
    * 找到含 mdui-ripple 类的元素，如果当前元素不存在 mdui-ripple 类，则从父元素找
@@ -140,8 +141,32 @@
     rippleWave = rippleTarget = undefined;
   }
 
-  function rippleTouchStart(el) {
-    rippleTarget = findRippleElement(el);
+  function rippleTouchStart(e) {
+
+    // 在手机上点击时会同时触发 touchstart 和 mousedown
+    // 这里避免同时触发这两个事件
+    if (isRunning) {
+      return;
+    }
+
+    isRunning = true;
+
+    setTimeout(function () {
+      isRunning = false;
+    }, 175);
+
+    // 点击位置坐标
+    var tmp;
+    if (e.type === 'touchstart') {
+      tmp = e.targetTouches[0];
+    } else if (e.type === 'mousedown') {
+      tmp = e;
+    }
+
+    touchStartX = tmp.pageX;
+    touchStartY = tmp.pageY;
+
+    rippleTarget = findRippleElement(e.target);
     if (!rippleTarget) {
       rippleTarget = undefined;
       return;
@@ -160,17 +185,13 @@
 
   // 事件监听
   // ======
-  $.on(document, mdui.touchEvents.start, '.mdui-ripple', function (e) {
-    touchStartX = mdui.support.touch ? e.targetTouches[0].pageX : e.pageX;
-    touchStartY = mdui.support.touch ? e.targetTouches[0].pageY : e.pageY;
-    rippleTouchStart(e.target);
-  });
+  if (mdui.support.touch) {
+    $.on(document, 'touchstart', '.mdui-ripple', rippleTouchStart);
+    $.on(document, 'touchmove', '.mdui-ripple', rippleTouchMove);
+    $.on(document, 'touchend touchcancel', '.mdui-ripple', rippleTouchEnd);
+  }
 
-  $.on(document, mdui.touchEvents.move, '.mdui-ripple', function () {
-    rippleTouchMove();
-  });
-
-  $.on(document, mdui.touchEvents.end, '.mdui-ripple', function () {
-    rippleTouchEnd();
-  });
+  $.on(document, 'mousedown', '.mdui-ripple', rippleTouchStart);
+  $.on(document, 'mousemove', '.mdui-ripple', rippleTouchMove);
+  $.on(document, 'mouseup', '.mdui-ripple', rippleTouchEnd);
 })();

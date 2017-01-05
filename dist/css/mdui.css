@@ -1,6 +1,6 @@
 /*!
- * mdui v0.1.1 (http://mdui.org)
- * Copyright 2016-2016 zdhxiong
+ * mdui v0.1.2 (http://mdui.org)
+ * Copyright 2016-2017 zdhxiong
  * Licensed under MIT
  */
 /**
@@ -6172,8 +6172,12 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   border-radius: 0 0 0 0;
   outline: none;
   box-shadow: none;
-  -webkit-transition: all .2s cubic-bezier(.4, 0, .2, 1);
-          transition: all .2s cubic-bezier(.4, 0, .2, 1);
+  -webkit-transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+          transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+  -webkit-transition-duration: .2s;
+          transition-duration: .2s;
+  -webkit-transition-property: border-bottom-color, padding-right;
+          transition-property: border-bottom-color, padding-right;
 
      -moz-appearance: none;
           appearance: none;
@@ -6647,10 +6651,8 @@ textarea.mdui-textfield-input {
   height: 13px;
   box-sizing: border-box;
   content: ' ';
-  border-top: 2px solid transparent;
   border-right: 2px solid #fff;
   border-bottom: 2px solid #fff;
-  border-left: 2px solid transparent;
   opacity: 0;
   -webkit-transition: all .3s cubic-bezier(.4, 0, .2, 1);
           transition: all .3s cubic-bezier(.4, 0, .2, 1);
@@ -7886,6 +7888,16 @@ input.mdui-btn[type="submit"] {
 .mdui-btn-block {
   display: block;
   width: 100%;
+}
+/* 密集型按钮 */
+.mdui-btn-dense {
+  height: 32px;
+  font-size: 13px;
+  line-height: 32px;
+}
+.mdui-btn-dense.mdui-btn-icon {
+  width: 32px;
+  min-width: 32px;
 }
 /**
  * =============================================================================
@@ -11407,32 +11419,55 @@ body.mdui-bottom-nav-fixed .mdui-bottom-nav {
 /* 面板头部 */
 .mdui-panel-item-header {
   position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
   width: 100%;
   height: 48px;
   box-sizing: border-box;
   padding: 0 24px;
+  overflow: hidden;
   font-size: 15px;
-  line-height: 48px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   cursor: pointer;
   -webkit-transition: all .3s cubic-bezier(.4, 0, .2, 1);
           transition: all .3s cubic-bezier(.4, 0, .2, 1);
 
-  will-change: height, line-height, background-color;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+          align-items: center;
+  will-change: height, background-color;
 }
 .mdui-panel-item-header:active {
   background-color: #eee;
 }
 /* 面板项标题 */
 .mdui-panel-item-title {
-  float: left;
   width: 36%;
+  min-width: 36%;
+  box-sizing: border-box;
+  padding-right: 16px;
+  overflow: hidden;
   font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 /* 面板项内容 */
 .mdui-panel-item-summary {
-  float: left;
-  width: 56%;
+  box-sizing: border-box;
+  padding-right: 16px;
+  overflow: hidden;
   color: rgba(0, 0, 0, .54);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+          flex-grow: 1;
 }
 /* 展开收起的图标 */
 .mdui-panel-item-arrow {
@@ -11450,6 +11485,11 @@ body.mdui-bottom-nav-fixed .mdui-bottom-nav {
           transform: rotate(0);
 
   will-change: transform, top;
+}
+.mdui-panel-item-summary + .mdui-panel-item-arrow {
+  position: relative;
+  top: 0 !important;
+  right: 0;
 }
 /* 面板项内容 */
 .mdui-panel-item-body {
@@ -11519,10 +11559,8 @@ body.mdui-bottom-nav-fixed .mdui-bottom-nav {
 }
 .mdui-panel-item-open > .mdui-panel-item-header {
   height: 64px;
-  line-height: 64px;
 }
-.mdui-panel-item-open > .mdui-panel-item-header .mdui-panel-item-arrow,
-.mdui-panel-item-open > .mdui-panel-item-header.mdui-panel-item-arrow {
+.mdui-panel-item-open > .mdui-panel-item-header .mdui-panel-item-arrow {
   top: 20px;
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);

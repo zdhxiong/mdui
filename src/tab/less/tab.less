@@ -86,14 +86,6 @@
       margin-top: 8px;
     }
 
-    &.mdui-tab-active {
-      color: @color-default-500;
-      opacity: 1;
-      .mdui-icon {
-        opacity: 1;
-      }
-    }
-
     &[disabled] {
       opacity: 0.38;
       cursor: default;
@@ -101,6 +93,15 @@
       label {
         cursor: default;
       }
+    }
+  }
+
+  // 激活状态的选项
+  .mdui-tab-active {
+    color: @color-default-500;
+    opacity: 1;
+    .mdui-icon {
+      opacity: 1;
     }
   }
 }
@@ -155,6 +156,32 @@
   transition: all .35s @animation-curve-default;
 }
 
+/**
+ * =============================================================================
+ * ************   Tab 主色   ************
+ * =============================================================================
+ */
+
+& {
+  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
+    .loop-primary-theme((@counter-color - 1));
+    @colorName: extract(@globalPrimaryColors, @counter-color);
+    @color: 'color-@{colorName}-500';
+
+    .mdui-theme-primary-@{colorName} {
+      .mdui-tab .mdui-tab-active {
+        color: @@color;
+      }
+
+      .mdui-tab-indicator {
+        background-color: @@color;
+      }
+    }
+
+  }
+  .loop-primary-theme(length(@globalPrimaryColors));
+}
+
 /* 带背景色的选项卡 */
 .mdui-tab[class*="mdui-color-"] {
   .mdui-tab-active {
@@ -169,7 +196,6 @@
     .mdui-scrollbar-beautify(dark);
   }
 }
-
 
 /**
  * =============================================================================

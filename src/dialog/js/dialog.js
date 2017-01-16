@@ -156,26 +156,11 @@ mdui.Dialog = (function () {
   }
 
   /**
-   * 打开提示框
+   * 打开指定提示框
+   * @private
    */
-  Dialog.prototype.open = function () {
+  Dialog.prototype._doOpen = function () {
     var _this = this;
-
-    if (_this.state === 'opening' || _this.state === 'opened') {
-      return;
-    }
-
-    // 如果当前有正在打开或已经打开的对话框,或队列不为空，则先加入队列，等旧对话框开始关闭时再打开
-    if (
-      (current && (current.state === 'opening' || current.state === 'opened')) ||
-      $.queue(queueName).length
-    ) {
-      $.queue(queueName, function () {
-        _this.open();
-      });
-
-      return;
-    }
 
     current = _this;
 
@@ -222,6 +207,31 @@ mdui.Dialog = (function () {
       location.hash = hash + '&mdui-dialog';
       $.on(window, 'hashchange', hashchangeEvent);
     }
+  };
+
+  /**
+   * 打开提示框
+   */
+  Dialog.prototype.open = function () {
+    var _this = this;
+
+    if (_this.state === 'opening' || _this.state === 'opened') {
+      return;
+    }
+
+    // 如果当前有正在打开或已经打开的对话框,或队列不为空，则先加入队列，等旧对话框开始关闭时再打开
+    if (
+      (current && (current.state === 'opening' || current.state === 'opened')) ||
+      $.queue(queueName).length
+    ) {
+      $.queue(queueName, function () {
+        _this._doOpen();
+      });
+
+      return;
+    }
+
+    _this._doOpen();
   };
 
   /**

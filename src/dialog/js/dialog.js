@@ -25,6 +25,11 @@ mdui.Dialog = (function () {
   var overlay;
 
   /**
+   * 窗口是否已锁定
+   */
+  var isLockScreen;
+
+  /**
    * 当前提示框
    */
   var current;
@@ -164,7 +169,11 @@ mdui.Dialog = (function () {
 
     current = _this;
 
-    mdui.lockScreen();
+    if (!isLockScreen) {
+      mdui.lockScreen();
+      isLockScreen = true;
+    }
+
     _this.dialog.style.display = 'block';
 
     readjust();
@@ -250,8 +259,8 @@ mdui.Dialog = (function () {
     $.pluginEvent('close', 'dialog', _this, _this.dialog);
 
     // 所有提示框都关闭，且当前没有打开的提示框时，隐藏遮罩
-    if ($.queue(queueName).length === 0) {
-      mdui.hideOverlay(overlay);
+    if ($.queue(queueName).length === 0 && overlay) {
+      mdui.hideOverlay();
       overlay = null;
     }
 
@@ -264,8 +273,9 @@ mdui.Dialog = (function () {
         _this.dialog.style.display = 'none';
 
         // 所有提示框都关闭，且当前没有打开的提示框时，解锁屏幕
-        if ($.queue(queueName).length === 0 && !current) {
+        if ($.queue(queueName).length === 0 && !current && isLockScreen) {
           mdui.unlockScreen();
+          isLockScreen = false;
         }
 
         $.off(window, 'resize', readjust);
@@ -327,9 +337,16 @@ mdui.Dialog = (function () {
 
     $.data(_this.dialog, 'mdui.dialog', null);
 
-    if (current === _this) {
-      mdui.unlockScreen();
-      mdui.hideOverlay();
+    if ($.queue(queueName).length === 0 && !current) {
+      if (overlay) {
+        mdui.hideOverlay();
+        overlay = null;
+      }
+
+      if (isLockScreen) {
+        mdui.unlockScreen();
+        isLockScreen = false;
+      }
     }
   };
 

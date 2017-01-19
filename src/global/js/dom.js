@@ -703,7 +703,7 @@ var $ = {};
    * @param dom
    */
   $.remove = function (dom) {
-    if (dom) {
+    if (dom && dom.parentNode) {
       dom.parentNode.removeChild(dom);
     }
   };

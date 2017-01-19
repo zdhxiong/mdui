@@ -79,16 +79,32 @@ mdui.screen = {
  * @returns {Element}
  */
 mdui.showOverlay = function (zIndex) {
-  var overlay = $.dom('<div class="mdui-overlay">')[0];
-  document.body.appendChild(overlay);
+  var overlay = $.query('.mdui-overlay');
+  if (overlay) {
+    if ($.data(overlay, 'isDeleted')) {
+      $.data(overlay, 'isDeleted', 0);
+    }
 
-  $.relayout(overlay);
+    if (zIndex !== undefined) {
+      overlay.style['z-index'] = zIndex;
+    }
+  } else {
+    overlay = $.dom('<div class="mdui-overlay">')[0];
+    document.body.appendChild(overlay);
 
-  if (typeof zIndex === 'undefined') {
-    zIndex = 2000;
+    $.relayout(overlay);
+
+    if (zIndex === undefined) {
+      zIndex = 2000;
+    }
+
+    overlay.style['z-index'] = zIndex;
   }
 
-  overlay.style['z-index'] = zIndex;
+  var level = $.data(overlay, 'overlay-level') || 0;
+
+  $.data(overlay, 'overlay-level', ++level);
+
   overlay.classList.add('mdui-overlay-show');
 
   return overlay;
@@ -96,21 +112,29 @@ mdui.showOverlay = function (zIndex) {
 
 /**
  * 隐藏遮罩层
- * @param overlay 指定遮罩层元素，若没有该参数，则移除所有遮罩层
+ * @param force 是否强制隐藏遮罩
  */
-mdui.hideOverlay = function (overlay) {
-  var overlays;
-  if (typeof overlay === 'undefined') {
-    overlays = $.queryAll('.mdui-overlay');
-  } else {
-    overlays = [overlay];
+mdui.hideOverlay = function (force) {
+  var overlay = $.query('.mdui-overlay');
+  if (!overlay) {
+    return;
   }
 
-  $.each(overlays, function (i, overlay) {
-    overlay.classList.remove('mdui-overlay-show');
-    $.transitionEnd(overlay, function () {
+  var level = force ? 1 : $.data(overlay, 'overlay-level');
+  if (level > 1) {
+    $.data(overlay, 'overlay-level', --level);
+    return false;
+  }
+
+  $.data(overlay, 'overlay-level', 0);
+
+  overlay.classList.remove('mdui-overlay-show');
+  $.data(overlay, 'isDeleted', 1);
+
+  $.transitionEnd(overlay, function () {
+    if ($.data(overlay, 'isDeleted')) {
       $.remove(overlay);
-    });
+    }
   });
 };
 
@@ -125,16 +149,34 @@ mdui.lockScreen = function () {
   var oldBodyPaddingLeft = parseFloat($.getStyle(body, 'padding-left'));
   var oldBodyPaddingRight = parseFloat($.getStyle(body, 'padding-right'));
 
-  document.body.classList.add('mdui-locked');
-  document.body.style.width = oldWindowWidth - oldBodyPaddingLeft - oldBodyPaddingRight + 'px';
+  body.classList.add('mdui-locked');
+  body.style.width = oldWindowWidth - oldBodyPaddingLeft - oldBodyPaddingRight + 'px';
+
+  var level = $.data(body, 'lockscreen-level');
+  if (!level) {
+    level = 0;
+  }
+
+  $.data(body, 'lockscreen-level', ++level);
 };
 
 /**
  * 解除屏幕锁定
+ * @param force 是否强制解锁屏幕
  */
-mdui.unlockScreen = function () {
-  document.body.classList.remove('mdui-locked');
-  document.body.style.width = '';
+mdui.unlockScreen = function (force) {
+  var body = document.body;
+
+  var level = force ? 1 : $.data(body, 'lockscreen-level');
+  if (level > 1) {
+    $.data(body, 'lockscreen-level', --level);
+    return false;
+  }
+
+  $.data(body, 'lockscreen-level', 0);
+
+  body.classList.remove('mdui-locked');
+  body.style.width = '';
 };
 
 /**

@@ -134,12 +134,12 @@ mdui.Drawer = (function () {
     });
 
     if (!mdui.screen.mdUp() || _this.options.overlay) {
-      mdui.showOverlay();
+      var overlay = mdui.showOverlay();
       _this.overlay = true;
 
       mdui.lockScreen();
 
-      $.one($.query('.mdui-overlay'), 'click', function () {
+      $.one(overlay, 'click', function () {
         _this.close();
       });
     }

@@ -34,8 +34,8 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
     confirmText: 'ok',        // 确认按钮的文本
     cancelText: 'cancel',     // 取消按钮的文本
     history: true,            // 监听 hashchange 事件
-    modal: false,             // 是否模态化提示框，为 false 时点击提示框外面区域关闭提示框，为 true 时不关闭
-    closeOnEsc: true,         // 按下 esc 关闭提示框
+    modal: false,             // 是否模态化对话框，为 false 时点击对话框外面区域关闭对话框，为 true 时不关闭
+    closeOnEsc: true,         // 按下 esc 关闭对话框
     type: 'text',             // 输入框类型，text: 单行文本框 textarea: 多行文本框
     maxlength: '',            // 最大输入字符数
     defaultValue: '',         // 输入框中的默认文本
@@ -95,14 +95,14 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
       // 聚焦到输入框
       input.focus();
 
-      // 如果是多行输入框，监听输入框的 input 事件，更新提示框高度
+      // 如果是多行输入框，监听输入框的 input 事件，更新对话框高度
       if (options.type === 'textarea') {
         $.on(input, 'input', function () {
           inst.handleUpdate();
         });
       }
 
-      // 有字符数限制时，加载完文本框后 DOM 会变化，需要更新提示框高度
+      // 有字符数限制时，加载完文本框后 DOM 会变化，需要更新对话框高度
       if (options.maxlength) {
         inst.handleUpdate();
       }

@@ -1,6 +1,6 @@
 /**
  * =============================================================================
- * ************   Dialog 提示框   ************
+ * ************   Dialog 对话框   ************
  * =============================================================================
  */
 
@@ -11,11 +11,11 @@ mdui.Dialog = (function () {
    */
   var DEFAULT = {
     history: true,                // 监听 hashchange 事件
-    overlay: true,                // 打开提示框时显示遮罩
-    modal: false,                 // 是否模态化提示框，为 false 时点击提示框外面区域关闭提示框，为 true 时不关闭
-    closeOnEsc: true,             // 按下 esc 关闭提示框
-    closeOnCancel: true,          // 按下取消按钮时关闭提示框
-    closeOnConfirm: true,         // 按下确认按钮时关闭提示框
+    overlay: true,                // 打开对话框时显示遮罩
+    modal: false,                 // 是否模态化对话框，为 false 时点击对话框外面区域关闭对话框，为 true 时不关闭
+    closeOnEsc: true,             // 按下 esc 关闭对话框
+    closeOnCancel: true,          // 按下取消按钮时关闭对话框
+    closeOnConfirm: true,         // 按下确认按钮时关闭对话框
     destroyOnClosed: false,        // 关闭后销毁
   };
 
@@ -30,7 +30,7 @@ mdui.Dialog = (function () {
   var isLockScreen;
 
   /**
-   * 当前提示框
+   * 当前对话框
    */
   var current;
 
@@ -41,7 +41,7 @@ mdui.Dialog = (function () {
   var queueName = '__md_dialog';
 
   /**
-   * 窗口宽度变化，或提示框内容变化时，调整提示框位置和提示框内的滚动条
+   * 窗口宽度变化，或对话框内容变化时，调整对话框位置和对话框内的滚动条
    */
   var readjust = function () {
     if (!current) {
@@ -73,7 +73,7 @@ mdui.Dialog = (function () {
   };
 
   /**
-   * hashchange 事件触发时关闭提示框
+   * hashchange 事件触发时关闭对话框
    */
   var hashchangeEvent = function () {
     if (location.hash.substring(1).indexOf('&mdui-dialog') < 0) {
@@ -82,7 +82,7 @@ mdui.Dialog = (function () {
   };
 
   /**
-   * 点击遮罩层关闭提示框
+   * 点击遮罩层关闭对话框
    * @param e
    */
   var overlayClick = function (e) {
@@ -92,7 +92,7 @@ mdui.Dialog = (function () {
   };
 
   /**
-   * 提示框实例
+   * 对话框实例
    * @param selector 选择器或 HTML 字符串或 DOM 元素
    * @param opts
    * @constructor
@@ -100,7 +100,7 @@ mdui.Dialog = (function () {
   function Dialog(selector, opts) {
     var _this = this;
 
-    // 提示框元素
+    // 对话框元素
     _this.dialog = $.dom(selector)[0];
     if (typeof _this.dialog === 'undefined') {
       return;
@@ -112,7 +112,7 @@ mdui.Dialog = (function () {
       return oldInst;
     }
 
-    // 如果提示框元素没有在当前文档中，则需要添加
+    // 如果对话框元素没有在当前文档中，则需要添加
     if (!document.body.contains(_this.dialog)) {
       _this.append = true;
       document.body.appendChild(_this.dialog);
@@ -161,7 +161,7 @@ mdui.Dialog = (function () {
   }
 
   /**
-   * 打开指定提示框
+   * 打开指定对话框
    * @private
    */
   Dialog.prototype._doOpen = function () {
@@ -186,7 +186,7 @@ mdui.Dialog = (function () {
     _this.state = 'opening';
     $.pluginEvent('open', 'dialog', _this, _this.dialog);
 
-    // 打开提示框动画完成后
+    // 打开对话框动画完成后
     $.transitionEnd(_this.dialog, function () {
       if (_this.dialog.classList.contains('mdui-dialog-open')) {
         _this.state = 'opened';
@@ -199,7 +199,7 @@ mdui.Dialog = (function () {
       overlay = mdui.showOverlay(5100);
     }
 
-    // 点击遮罩层时是否关闭提示框
+    // 点击遮罩层时是否关闭对话框
     $[_this.options.modal ? 'off' : 'on'](overlay, 'click', overlayClick);
 
     // 是否显示遮罩层，不显示时，把遮罩层背景透明
@@ -219,7 +219,7 @@ mdui.Dialog = (function () {
   };
 
   /**
-   * 打开提示框
+   * 打开对话框
    */
   Dialog.prototype.open = function () {
     var _this = this;
@@ -244,7 +244,7 @@ mdui.Dialog = (function () {
   };
 
   /**
-   * 关闭提示框
+   * 关闭对话框
    */
   Dialog.prototype.close = function () {
     var _this = this;
@@ -258,7 +258,7 @@ mdui.Dialog = (function () {
     _this.state = 'closing';
     $.pluginEvent('close', 'dialog', _this, _this.dialog);
 
-    // 所有提示框都关闭，且当前没有打开的提示框时，隐藏遮罩
+    // 所有对话框都关闭，且当前没有打开的对话框时，隐藏遮罩
     if ($.queue(queueName).length === 0 && overlay) {
       mdui.hideOverlay();
       overlay = null;
@@ -272,7 +272,7 @@ mdui.Dialog = (function () {
 
         _this.dialog.style.display = 'none';
 
-        // 所有提示框都关闭，且当前没有打开的提示框时，解锁屏幕
+        // 所有对话框都关闭，且当前没有打开的对话框时，解锁屏幕
         if ($.queue(queueName).length === 0 && !current && isLockScreen) {
           mdui.unlockScreen();
           isLockScreen = false;
@@ -305,7 +305,7 @@ mdui.Dialog = (function () {
   };
 
   /**
-   * 切换提示框打开/关闭状态
+   * 切换对话框打开/关闭状态
    */
   Dialog.prototype.toggle = function () {
     var _this = this;
@@ -318,7 +318,7 @@ mdui.Dialog = (function () {
   };
 
   /**
-   * 获取提示框状态
+   * 获取对话框状态
    * @returns {'opening'|'opened'|'closing'|'closed'}
    */
   Dialog.prototype.getState = function () {
@@ -326,7 +326,7 @@ mdui.Dialog = (function () {
   };
 
   /**
-   * 销毁提示框
+   * 销毁对话框
    */
   Dialog.prototype.destroy = function () {
     var _this = this;
@@ -351,7 +351,7 @@ mdui.Dialog = (function () {
   };
 
   /**
-   * 提示框内容变化时，需要调用该方法来调整提示框位置和滚动条高度
+   * 对话框内容变化时，需要调用该方法来调整对话框位置和滚动条高度
    */
   Dialog.prototype.handleUpdate = function () {
     readjust();

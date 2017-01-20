@@ -34,8 +34,8 @@ mdui.confirm = function (text, title, onConfirm, onCancel, options) {
     confirmText: 'ok',            // 确认按钮的文本
     cancelText: 'cancel',         // 取消按钮的文本
     history: true,                // 监听 hashchange 事件
-    modal: false,                 // 是否模态化提示框，为 false 时点击提示框外面区域关闭提示框，为 true 时不关闭
-    closeOnEsc: true,             // 按下 esc 关闭提示框
+    modal: false,                 // 是否模态化对话框，为 false 时点击对话框外面区域关闭对话框，为 true 时不关闭
+    closeOnEsc: true,             // 按下 esc 关闭对话框
   };
 
   options = $.extend(DEFAULT, options);

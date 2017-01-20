@@ -17,8 +17,8 @@ mdui.dialog = function (options) {
     cssClass: '',             // 在 Dialog 上添加的 CSS 类
     history: true,            // 监听 hashchange 事件
     overlay: true,            // 是否显示遮罩
-    modal: false,             // 是否模态化提示框
-    closeOnEsc: true,         // 按下 esc 时关闭提示框
+    modal: false,             // 是否模态化对话框
+    closeOnEsc: true,         // 按下 esc 时关闭对话框
     destroyOnClosed: true,    // 关闭后销毁
     onOpen: function () {     // 打开动画开始时的回调
     },
@@ -39,7 +39,7 @@ mdui.dialog = function (options) {
   var DEFAULT_BUTTON = {
     text: '',                   // 按钮文本
     bold: false,                // 按钮文本是否加粗
-    close: true,                // 点击按钮后关闭提示框
+    close: true,                // 点击按钮后关闭对话框
     onClick: function (inst) {  // 点击按钮的回调
     },
   };

@@ -144,8 +144,9 @@
     // 实例化表格
     var tables = $.queryAll('.mdui-table');
     $.each(tables, function (i, table) {
-      var inst = new Table(table);
-      $.data(table, 'mdui.table', inst);
+      if (!$.data(table, 'mdui.table')) {
+        $.data(table, 'mdui.table', new Table(table));
+      }
     });
   });
 
@@ -163,7 +164,11 @@
 
     $.each(tables, function (i, table) {
       var inst = $.data(table, 'mdui.table');
-      inst.init();
+      if (inst) {
+        inst.init();
+      } else {
+        $.data(table, 'mdui.table', new Table(table));
+      }
     });
   };
 

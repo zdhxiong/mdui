@@ -45,7 +45,9 @@ mdui.Fab = (function () {
       _this.$btn
         .on('touchstart mouseenter', function () {
           _this.open();
-        })
+        });
+
+      _this.$fab
         .on('mouseleave', function () {
           _this.close();
         });

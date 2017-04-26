@@ -130,10 +130,10 @@ mdui.Tab = (function () {
           componentEvent('show', 'tab', _this, $tab);
 
           $tab.addClass('mdui-tab-active');
-          $(targetId).show();
-
-          _this._setIndicatorPosition();
         }
+
+        $(targetId).show();
+        _this._setIndicatorPosition();
       } else {
         $tab.removeClass('mdui-tab-active');
         $(targetId).hide();

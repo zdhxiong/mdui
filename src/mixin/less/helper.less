@@ -85,3 +85,33 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+// 美化滚动条样式
+.mdui-scrollbar-beautify(@layout: light) {
+  // 亮色主题
+  & when (@layout = light) {
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: 8px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // 暗色主题
+  & when (@layout = dark) {
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: 8px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+}

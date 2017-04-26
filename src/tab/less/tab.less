@@ -183,13 +183,12 @@
 }
 
 /* 带背景色的选项卡 */
-.mdui-tab[class*="mdui-color-"]:not(.mdui-color-white) {
+.mdui-tab[class*="mdui-color-"] {
   .mdui-tab-active {
     color: inherit;
   }
-
   .mdui-tab-indicator {
-    background-color: @color-white-500;
+    background-color: @color-default-a200;
   }
 
   // 带背景色的选项卡中使用浅色滚动条

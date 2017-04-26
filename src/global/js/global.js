@@ -1,237 +1,145 @@
 /**
- * 触摸或鼠标事件
+ * =============================================================================
+ * ************   定义全局变量   ************
+ * =============================================================================
  */
-mdui.touchEvents = {
-  start: mdui.support.touch ? 'touchstart' : 'mousedown',
-  move: mdui.support.touch ? 'touchmove' : 'mousemove',
-  end: mdui.support.touch ? 'touchend' : 'mouseup',
-};
+
+var $body = $('body');
+var $document = $(document);
+var $window = $(window);
 
 /**
- * 判断窗口大小
+ * 队列 -- 当前队列的 api 和 jquery 不一样，所以不打包进 mdui.JQ 里
  */
-mdui.screen = {
-  xs: function () {
-    return window.innerWidth < 600;
-  },
+var queue = {};
+(function () {
+  var queueData = [];
 
-  sm: function () {
-    return window.innerWidth >= 600 && window.innerWidth < 1024;
-  },
-
-  md: function () {
-    return window.innerWidth >= 1024 && window.innerWidth < 1440;
-  },
-
-  lg: function () {
-    return window.innerWidth >= 1440 && window.innerWidth < 1920;
-  },
-
-  xl: function () {
-    return window.innerWidth >= 1920;
-  },
-
-  xsDown: function () {
-    return window.innerWidth < 600;
-  },
-
-  smDown: function () {
-    return window.innerWidth < 1024;
-  },
-
-  mdDown: function () {
-    return window.innerWidth < 1440;
-  },
-
-  lgDown: function () {
-    return window.innerWidth < 1920;
-  },
-
-  xlDown: function () {
-    return true;
-  },
-
-  xsUp: function () {
-    return true;
-  },
-
-  smUp: function () {
-    return window.innerWidth >= 600;
-  },
-
-  mdUp: function () {
-    return window.innerWidth >= 1024;
-  },
-
-  lgUp: function () {
-    return window.innerWidth >= 1440;
-  },
-
-  xlUp: function () {
-    return window.innerWidth >= 1920;
-  },
-
-};
-
-/**
- * 创建遮罩层并显示
- * @param zIndex 遮罩层的 z_index
- * @returns {Element}
- */
-mdui.showOverlay = function (zIndex) {
-  var overlay = $.query('.mdui-overlay');
-  if (overlay) {
-    if ($.data(overlay, 'isDeleted')) {
-      $.data(overlay, 'isDeleted', 0);
+  /**
+   * 写入队列
+   * @param queueName 对列名
+   * @param func 函数名，该参数为空时，返回所有队列
+   */
+  queue.queue = function (queueName, func) {
+    if (queueData[queueName] === undefined) {
+      queueData[queueName] = [];
     }
 
-    if (zIndex !== undefined) {
-      overlay.style['z-index'] = zIndex;
-    }
-  } else {
-    overlay = $.dom('<div class="mdui-overlay">')[0];
-    document.body.appendChild(overlay);
-
-    $.relayout(overlay);
-
-    if (zIndex === undefined) {
-      zIndex = 2000;
+    if (func === undefined) {
+      return queueData[queueName];
     }
 
-    overlay.style['z-index'] = zIndex;
-  }
+    queueData[queueName].push(func);
+  };
 
-  var level = $.data(overlay, 'overlay-level') || 0;
-
-  $.data(overlay, 'overlay-level', ++level);
-
-  overlay.classList.add('mdui-overlay-show');
-
-  return overlay;
-};
-
-/**
- * 隐藏遮罩层
- * @param force 是否强制隐藏遮罩
- */
-mdui.hideOverlay = function (force) {
-  var overlay = $.query('.mdui-overlay');
-  if (!overlay) {
-    return;
-  }
-
-  var level = force ? 1 : $.data(overlay, 'overlay-level');
-  if (level > 1) {
-    $.data(overlay, 'overlay-level', --level);
-    return false;
-  }
-
-  $.data(overlay, 'overlay-level', 0);
-
-  overlay.classList.remove('mdui-overlay-show');
-  $.data(overlay, 'isDeleted', 1);
-
-  $.transitionEnd(overlay, function () {
-    if ($.data(overlay, 'isDeleted')) {
-      $.remove(overlay);
-    }
-  });
-};
-
-/**
- * 锁定屏幕
- */
-mdui.lockScreen = function () {
-  var body = document.body;
-  var oldWindowWidth = body.clientWidth;
-
-  // 不直接把 body 设为 box-sizing: border-box，避免污染全局样式
-  var oldBodyPaddingLeft = parseFloat($.getStyle(body, 'padding-left'));
-  var oldBodyPaddingRight = parseFloat($.getStyle(body, 'padding-right'));
-
-  body.classList.add('mdui-locked');
-  body.style.width = oldWindowWidth - oldBodyPaddingLeft - oldBodyPaddingRight + 'px';
-
-  var level = $.data(body, 'lockscreen-level');
-  if (!level) {
-    level = 0;
-  }
-
-  $.data(body, 'lockscreen-level', ++level);
-};
-
-/**
- * 解除屏幕锁定
- * @param force 是否强制解锁屏幕
- */
-mdui.unlockScreen = function (force) {
-  var body = document.body;
-
-  var level = force ? 1 : $.data(body, 'lockscreen-level');
-  if (level > 1) {
-    $.data(body, 'lockscreen-level', --level);
-    return false;
-  }
-
-  $.data(body, 'lockscreen-level', 0);
-
-  body.classList.remove('mdui-locked');
-  body.style.width = '';
-};
-
-/**
- * 函数节流
- * @param fn
- * @param delay
- * @returns {Function}
- */
-mdui.throttle = function (fn, delay) {
-  var timer = null;
-
-  return function () {
-    var _this = this;
-    var args = arguments;
-
-    if (timer === null) {
-      timer = setTimeout(function () {
-        fn.apply(_this, args);
-        timer = null;
-      }, delay);
+  /**
+   * 从队列中移除第一个函数，并执行该函数
+   * @param queueName
+   */
+  queue.dequeue = function (queueName) {
+    if (queueData[queueName] !== undefined && queueData[queueName].length) {
+      (queueData[queueName].shift())();
     }
   };
-};
+
+})();
 
 /**
- * 生成唯一 id
- * @param pluginName 插件名，若传入该参数，guid 将以该参数作为前缀
- * @returns {string}
+ * touch 事件后的 500ms 内禁用 mousedown 事件
+ *
+ * 不支持触控的屏幕上事件顺序为 mousedown -> mouseup -> click
+ * 支持触控的屏幕上事件顺序为 touchstart -> touchend -> mousedown -> mouseup -> click
  */
-mdui.guid = function (pluginName) {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
+var TouchHandler = {
+  touches: 0,
 
-  var guid = s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-  if (pluginName) {
-    guid = 'mdui-' + pluginName + '-' + guid;
-  }
+  /**
+   * 该事件是否被允许
+   * 在执行事件前调用该方法判断事件是否可以执行
+   * @param e
+   * @returns {boolean}
+   */
+  isAllow: function (e) {
+    var allow = true;
 
-  return guid;
+    if (
+      TouchHandler.touches &&
+      [
+        'mousedown',
+        'mouseup',
+        'mousemove',
+        'click',
+        'mouseover',
+        'mouseout',
+        'mouseenter',
+        'mouseleave',
+      ].indexOf(e.type) > -1
+    ) {
+      // 触发了 touch 事件后阻止鼠标事件
+      allow = false;
+    }
+
+    return allow;
+  },
+
+  /**
+   * 在 touchstart 和 touchmove、touchend、touchcancel 事件中调用该方法注册事件
+   * @param e
+   */
+  register: function (e) {
+    if (e.type === 'touchstart') {
+      // 触发了 touch 事件
+      TouchHandler.touches += 1;
+    } else if (['touchmove', 'touchend', 'touchcancel'].indexOf(e.type) > -1) {
+      // touch 事件结束 500ms 后解除对鼠标事件的阻止
+      setTimeout(function () {
+        if (TouchHandler.touches) {
+          TouchHandler.touches -= 1;
+        }
+      }, 500);
+    }
+  },
+
+  start: 'touchstart mousedown',
+  move: 'touchmove mousemove',
+  end: 'touchend mouseup',
+  cancel: 'touchcancel mouseleave',
+  unlock: 'touchend touchmove touchcancel',
 };
 
-$.ready(function () {
+// 测试事件
+// 在每一个事件中都使用 TouchHandler.isAllow(e) 判断事件是否可执行
+// 在 touchstart 和 touchmove、touchend、touchcancel
+// (function () {
+//
+//   $document
+//     .on(TouchHandler.start, function (e) {
+//       if (!TouchHandler.isAllow(e)) {
+//         return;
+//       }
+//       TouchHandler.register(e);
+//       console.log(e.type);
+//     })
+//     .on(TouchHandler.move, function (e) {
+//       if (!TouchHandler.isAllow(e)) {
+//         return;
+//       }
+//       console.log(e.type);
+//     })
+//     .on(TouchHandler.end, function (e) {
+//       if (!TouchHandler.isAllow(e)) {
+//         return;
+//       }
+//       console.log(e.type);
+//     })
+//     .on(TouchHandler.unlock, TouchHandler.register);
+// })();
+
+$(function () {
   // 避免页面加载完后直接执行css动画
   // https://css-tricks.com/transitions-only-after-page-load/
 
   setTimeout(function () {
-    document.body.classList.add('mdui-loaded');
+    $body.addClass('mdui-loaded');
   }, 0);
-
-  // 支持触摸时在 body 添加 mdui-support-touch
-  if (mdui.support.touch) {
-    document.body.classList.add('mdui-support-touch');
-  }
-
 });

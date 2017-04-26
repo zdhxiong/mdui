@@ -1,6 +1,11 @@
 {
   "preset": "airbnb",
 
-  "excludeFiles": ["src/global/js/wrap_start.js", "src/global/js/wrap_end.js"],
+  "excludeFiles": [
+    "src/global/js/wrap_start.js",
+    "src/global/js/wrap_end.js",
+    "src/jq/js/jq_start.js",
+    "src/jq/js/jq_end.js"
+  ],
   "maxErrors": 50
 }

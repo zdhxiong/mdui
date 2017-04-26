@@ -4,16 +4,15 @@
  * =============================================================================
  */
 
-$.ready(function () {
+$(function () {
+  $('[mdui-collapse]').each(function () {
+    var $this = $(this);
+    var options = parseOptions($this.attr('mdui-collapse'));
 
-  // 实例化插件
-  $.each($.queryAll('[mdui-collapse]'), function (i, target) {
-    var options = $.parseOptions(target.getAttribute('mdui-collapse'));
-
-    var inst = $.data(target, 'mdui.collapse');
+    var inst = $this.data('mdui.collapse');
     if (!inst) {
-      inst = new mdui.Collapse(target, options);
-      $.data(target, 'mdui.collapse', inst);
+      inst = new mdui.Collapse($this, options);
+      $this.data('mdui.collapse', inst);
     }
   });
 });

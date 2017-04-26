@@ -4,16 +4,15 @@
  * =============================================================================
  */
 
-$.ready(function () {
+$(function () {
+  $('[mdui-panel]').each(function () {
+    var $target = $(this);
 
-  // 实例化插件
-  $.each($.queryAll('[mdui-panel]'), function (i, target) {
-    var options = $.parseOptions(target.getAttribute('mdui-panel'));
-
-    var inst = $.data(target, 'mdui.panel');
+    var inst = $target.data('mdui.panel');
     if (!inst) {
-      inst = new mdui.Panel(target, options);
-      $.data(target, 'mdui.panel', inst);
+      var options = parseOptions($target.attr('mdui-panel'));
+      inst = new mdui.Panel($target, options);
+      $target.data('mdui.panel', inst);
     }
   });
 });

@@ -12,6 +12,11 @@ mdui.Tab = (function () {
     loop: false,            // 为true时，在最后一个选项卡时调用 next() 方法会回到第一个选项卡
   };
 
+  // 元素是否已禁用
+  var isDisabled = function ($ele) {
+    return $ele[0].disabled || $ele.attr('disabled') !== null;
+  };
+
   /**
    * 选项卡
    * @param selector
@@ -21,41 +26,28 @@ mdui.Tab = (function () {
    */
   function Tab(selector, opts) {
     var _this = this;
-    var trigger;
 
-    _this.tab = $.dom(selector)[0];
-    if (typeof _this.tab === 'undefined') {
+    _this.$tab = $(selector).eq(0);
+    if (!_this.$tab.length) {
       return;
     }
 
     // 已通过自定义属性实例化过，不再重复实例化
-    var oldInst = $.data(_this.tab, 'mdui.tab');
+    var oldInst = _this.$tab.data('mdui.tab');
     if (oldInst) {
       return oldInst;
     }
 
-    _this.options = $.extend(DEFAULT, (opts || {}));
-    _this.tabs = $.children(_this.tab, 'a');
-
-    _this.indicator = $.dom('<div class="mdui-tab-indicator"></div>')[0];
-
-    // 选项卡下面添加的指示符
-    _this.tab.appendChild(_this.indicator);
-
-    // 触发方式
-    if (mdui.support.touch) {
-      trigger = 'touchend';
-    } else if (_this.options.trigger === 'hover') {
-      trigger = 'mouseenter';
-    } else {
-      trigger = 'click';
-    }
+    _this.options = $.extend({}, DEFAULT, (opts || {}));
+    _this.$tabs = _this.$tab.children('a');
+    _this.$indicator = $('<div class="mdui-tab-indicator"></div>').appendTo(_this.$tab);
+    _this.activeIndex = false;
 
     // 根据 url hash 获取默认激活的选项卡
     var hash = location.hash;
     if (hash) {
-      $.each(_this.tabs, function (i, tab) {
-        if (tab.getAttribute('href') === hash) {
+      _this.$tabs.each(function (i, tab) {
+        if ($(tab).attr('href') === hash) {
           _this.activeIndex = i;
           return false;
         }
@@ -63,9 +55,9 @@ mdui.Tab = (function () {
     }
 
     // 含 mdui-tab-active 的元素默认激活
-    if (typeof _this.activeIndex === 'undefined') {
-      $.each(_this.tabs, function (i, tab) {
-        if (tab.classList.contains('mdui-tab-active')) {
+    if (_this.activeIndex === false) {
+      _this.$tabs.each(function (i, tab) {
+        if ($(tab).hasClass('mdui-tab-active')) {
           _this.activeIndex = i;
           return false;
         }
@@ -73,7 +65,7 @@ mdui.Tab = (function () {
     }
 
     // 默认激活第一个选项卡
-    if (typeof _this.activeIndex === 'undefined') {
+    if (_this.activeIndex === false) {
       _this.activeIndex = 0;
     }
 
@@ -81,25 +73,37 @@ mdui.Tab = (function () {
     _this._setActive();
 
     // 监听窗口大小变化事件，调整指示器位置
-    $.on(window, 'resize', mdui.throttle(function () {
+    $window.on('resize', $.throttle(function () {
       _this._setIndicatorPosition();
     }, 100));
 
     // 监听点击选项卡事件
-    $.each(_this.tabs, function (i, tab) {
-      $.on(tab, trigger, function (e) {
-        if (tab.getAttribute('disabled') !== null) {
+    _this.$tabs.each(function (i, tab) {
+      var $tab = $(tab);
+
+      // 点击或鼠标移入触发的事件
+      var clickEvent = function (e) {
+        // 禁用状态的选项无法选中
+        if (isDisabled($tab)) {
           e.preventDefault();
           return;
         }
 
         _this.activeIndex = i;
         _this._setActive();
-      });
+      };
 
-      $.on(tab, 'click', function (e) {
+      // 无论 trigger 是 click 还是 hover，都会响应 click 事件
+      $tab.on('click', clickEvent);
+
+      // trigger 为 hover 时，额外响应 mouseenter 事件
+      if (_this.options.trigger === 'hover') {
+        $tab.on('mouseenter', clickEvent);
+      }
+
+      $tab.on('click', function (e) {
         // 阻止链接的默认点击动作
-        if (tab.getAttribute('href').indexOf('#') === 0) {
+        if ($tab.attr('href').indexOf('#') === 0) {
           e.preventDefault();
         }
       });
@@ -112,53 +116,29 @@ mdui.Tab = (function () {
   Tab.prototype._setActive = function () {
     var _this = this;
 
-    $.each(_this.tabs, function (i, tab) {
-      var targetId = tab.getAttribute('href');
-      var targetContent;
+    _this.$tabs.each(function (i, tab) {
+      var $tab = $(tab);
+      var targetId = $tab.attr('href');
 
-      if (tab.getAttribute('disabled') !== null) {
-        if (targetId.indexOf('#') === 0) {
-          targetContent = $.query(targetId);
-          if (targetContent) {
-            targetContent.style.display = 'none';
-          }
-        }
+      // 设置选项卡激活状态
+      if (i === _this.activeIndex && !isDisabled($tab)) {
+        if (!$tab.hasClass('mdui-tab-active')) {
+          componentEvent('change', 'tab', _this, _this.$tab, {
+            index: _this.activeIndex,
+            target: tab,
+          });
+          componentEvent('show', 'tab', _this, $tab);
 
-        return;
-      }
+          $tab.addClass('mdui-tab-active');
+          $(targetId).show();
 
-      // 选项卡激活状态
-      if (i === _this.activeIndex) {
-        $.pluginEvent('change', 'tab', _this, _this.tab, {
-          index: _this.activeIndex,
-          target: tab,
-        });
-        $.pluginEvent('show', 'tab', _this, tab);
-
-        if (!tab.classList.contains('mdui-tab-active')) {
-          tab.classList.add('mdui-tab-active');
+          _this._setIndicatorPosition();
         }
       } else {
-        if (tab.classList.contains('mdui-tab-active')) {
-          tab.classList.remove('mdui-tab-active');
-        }
+        $tab.removeClass('mdui-tab-active');
+        $(targetId).hide();
       }
-
-      // 选项卡内容显示切换
-      if (targetId.indexOf('#') === 0) {
-        targetContent = $.query(targetId);
-        if (targetContent) {
-          if (i === _this.activeIndex) {
-            targetContent.style.display = 'block';
-          } else {
-            targetContent.style.display = 'none';
-          }
-        }
-      }
-
     });
-
-    _this._setIndicatorPosition();
   };
 
   /**
@@ -167,15 +147,17 @@ mdui.Tab = (function () {
   Tab.prototype._setIndicatorPosition = function () {
     var _this = this;
 
-    var activeTab = _this.tabs[_this.activeIndex];
-    if (activeTab.getAttribute('disabled') !== null) {
+    var $activeTab = _this.$tabs.eq(_this.activeIndex);
+    if (isDisabled($activeTab)) {
       return;
     }
 
-    var activeTabOffset = $.offset(activeTab);
-    _this.indicator.style.left =
-      activeTabOffset.left + _this.tab.scrollLeft - _this.tab.getBoundingClientRect().left + 'px';
-    _this.indicator.style.width = $.getStyle(activeTab, 'width');
+    var activeTabOffset = $activeTab.offset();
+    _this.$indicator.css({
+      left: activeTabOffset.left + _this.$tab[0].scrollLeft -
+            _this.$tab[0].getBoundingClientRect().left + 'px',
+      width: $activeTab.width() + 'px',
+    });
   };
 
   /**
@@ -184,7 +166,7 @@ mdui.Tab = (function () {
   Tab.prototype.next = function () {
     var _this = this;
 
-    if (_this.tabs.length > _this.activeIndex + 1) {
+    if (_this.$tabs.length > _this.activeIndex + 1) {
       _this.activeIndex++;
     } else if (_this.options.loop) {
       _this.activeIndex = 0;
@@ -202,7 +184,7 @@ mdui.Tab = (function () {
     if (_this.activeIndex > 0) {
       _this.activeIndex--;
     } else if (_this.options.loop) {
-      _this.activeIndex = _this.tabs.length - 1;
+      _this.activeIndex = _this.$tabs.length - 1;
     }
 
     _this._setActive();
@@ -218,7 +200,7 @@ mdui.Tab = (function () {
     if (parseInt(index) === index) {
       _this.activeIndex = index;
     } else {
-      $.each(_this.tabs, function (i, tab) {
+      _this.$tabs.each(function (i, tab) {
         if (tab.id === index) {
           _this.activeIndex = i;
           return false;

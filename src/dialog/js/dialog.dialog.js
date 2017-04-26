@@ -45,9 +45,9 @@ mdui.dialog = function (options) {
   };
 
   // 合并参数
-  options = $.extend(DEFAULT, (options || {}));
+  options = $.extend({}, DEFAULT, (options || {}));
   $.each(options.buttons, function (i, button) {
-    options.buttons[i] = $.extend(DEFAULT_BUTTON, button);
+    options.buttons[i] = $.extend({}, DEFAULT_BUTTON, button);
   });
 
   // 按钮的 HTML
@@ -88,9 +88,8 @@ mdui.dialog = function (options) {
 
   // 绑定按钮事件
   if (options.buttons.length) {
-    var buttons = $.queryAll('.mdui-dialog-actions .mdui-btn', inst.dialog);
-    $.each(buttons, function (i, button) {
-      $.on(button, 'click', function () {
+    inst.$dialog.find('.mdui-dialog-actions .mdui-btn').each(function (i, button) {
+      $(button).on('click', function () {
         if (typeof options.buttons[i].onClick === 'function') {
           options.buttons[i].onClick(inst);
         }
@@ -104,21 +103,19 @@ mdui.dialog = function (options) {
 
   // 绑定打开关闭事件
   if (typeof options.onOpen === 'function') {
-    $.on(inst.dialog, 'open.mdui.dialog', function () {
-      options.onOpen(inst);
-    });
-
-    $.on(inst.dialog, 'opened.mdui.dialog', function () {
-      options.onOpened(inst);
-    });
-
-    $.on(inst.dialog, 'close.mdui.dialog', function () {
-      options.onClose(inst);
-    });
-
-    $.on(inst.dialog, 'closed.mdui.dialog', function () {
-      options.onClosed(inst);
-    });
+    inst.$dialog
+      .on('open.mdui.dialog', function () {
+        options.onOpen(inst);
+      })
+      .on('opened.mdui.dialog', function () {
+        options.onOpened(inst);
+      })
+      .on('close.mdui.dialog', function () {
+        options.onClose(inst);
+      })
+      .on('closed.mdui.dialog', function () {
+        options.onClosed(inst);
+      });
   }
 
   inst.open();

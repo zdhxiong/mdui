@@ -21,24 +21,22 @@
   transform: scale(0);
 
   will-change: opacity, transform;
-}
 
-/* 桌面版样式，在不支持 touch 事件的设备上由 js 添加该类 */
-.mdui-tooltip-desktop {
-  font-size: 12px;
-  padding: 4px 8px;
-  min-height: 24px;
-  line-height: 18px;
-  max-width: 200px;
-}
-
-/* 触摸版样式，在支持 touch 事件的设备上由 js 添加该类 */
-.mdui-tooltip-mobile {
+  // 移动端样式
   font-size: 14px;
   padding: 8px 16px;
   min-height: 32px;
   line-height: 22px;
   max-width: 180px;
+
+  // 桌面端样式
+  @media (min-width: @screen-md-min) {
+    font-size: 12px;
+    padding: 4px 8px;
+    min-height: 24px;
+    line-height: 18px;
+    max-width: 200px;
+  }
 }
 
 /* 显示工具提示 */

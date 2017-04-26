@@ -8,6 +8,7 @@
  * gulp build             打包所有文件
  * gulp test-js-gulpfile  检查 gulpfile.js 文件的代码规范
  * gulp custom            定制打包
+ * gulp build-jq          仅打包 jq 库
  */
 
 ;(function () {
@@ -38,11 +39,11 @@
 
     /**
      * 是否是数组
-     * @param arr
+     * @param value
      * @returns {boolean}
      */
-    isArray: function (arr) {
-      return Object.prototype.toString.apply(arr) === '[object Array]';
+    isArray: function (value) {
+      return Object.prototype.toString.apply(value) === '[object Array]';
     },
 
     /**
@@ -239,10 +240,13 @@
   mdui.moduleNames = [];      // 模块名列表
   mdui.jsFiles = [];          // 所有 JavaScript 文件列表
 
+  // 必须的模块名
+  mdui.moduleNamesRequire = ['core_intro', 'core_outro', 'jq', 'global'];
+
   $.each(mdui.modules, function (prop, module) {
 
-    // 模块名列表，modules.json 文件中除了 core_intro 和 core_outro 之外，其他都是模块名
-    if (prop !== 'core_intro' && prop !== 'core_outro') {
+    // 模块名列表
+    if (!$.contains(mdui.moduleNamesRequire, prop)) {
       mdui.moduleNames.push(prop);
     }
 
@@ -274,15 +278,29 @@
     },
   };
 
+  // str 字符串是否以 needle 字符串结尾
+  function endWith(str, needle) {
+    return str.slice(-needle.length) === needle;
+  }
+
   // JavaScript 文件添加缩进
-  function addJSIndent(file, t) {
-    var addIndent = '  ';
-    var filename = file.path.replace(file.base, '');
+  function addJSIndent(file, t, onlyJQ) {
+    var addIndent = onlyJQ ? '' : '  ';
+    var filepath = file.path.replace(/\\/g, '/');
     if (
-      filename === 'wrap_start.js' ||
-      filename === 'wrap_end.js'
+      endWith(filepath, '/global/js/wrap_start.js') ||
+      endWith(filepath, '/global/js/wrap_end.js')
     ) {
       addIndent = '';
+    } else if (
+      endWith(filepath, '/jq/js/function.js') ||
+      endWith(filepath, '/jq/js/ajax.js') ||
+      endWith(filepath, '/jq/js/core.js') ||
+      endWith(filepath, '/jq/js/data.js') ||
+      endWith(filepath, '/jq/js/event.js') ||
+      endWith(filepath, '/jq/js/queue.js')
+    ) {
+      addIndent = onlyJQ ? '  ' : '    ';
     }
 
     if (addIndent !== '') {
@@ -563,7 +581,7 @@
 
     $.each(mdui.modules, function (prop, module) {
 
-      if ($.contains(customModules, prop) || prop === 'core_intro' || prop === 'core_outro') {
+      if ($.contains(customModules, prop) || mdui.moduleNamesRequire.indexOf(prop) > -1) {
         if (typeof module.js !== 'undefined') {
           moduleJs = moduleJs.concat(module.js);
         }
@@ -592,7 +610,7 @@
       .pipe(jscs())
       .pipe(jscs.reporter())
       .pipe(tap(function (file, t) {
-        addJSIndent(file, t);
+        addJSIndent(file, t, false);
       }))
       .pipe(concat(mdui.filename + '.custom.js'))
       .pipe(header(mdui.customBanner, customBannerOptions()))
@@ -648,6 +666,31 @@
         }));
     }
 
+  });
+
+  /**
+   * 打包生成 jq.js
+   */
+  gulp.task('build-jq', function (cb) {
+    gulp.src(mdui.modules.jq.js)
+      .pipe(jscs())
+      .pipe(jscs.reporter())
+      .pipe(tap(function (file, t) {
+        addJSIndent(file, t, true);
+      }))
+      .pipe(concat('jq.js'))
+      .pipe(jshint())
+      .pipe(jshint.reporter('default'))
+      .pipe(gulp.dest(paths.dist.js))
+
+      .pipe(uglify())
+      .pipe(rename(function (path) {
+        path.basename = 'jq.min';
+      }))
+      .pipe(gulp.dest(paths.dist.js))
+      .on('end', function () {
+        cb();
+      })
   });
 
 })();

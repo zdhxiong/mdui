@@ -20,23 +20,22 @@
   z-index: @z-index-snackbar;
   will-change: transform;
   .mdui-shadow(6);
+
+  // 手机端的样式
+  width: 100%;
+
+  // 平板、桌面端样式
+  @media (min-width: @screen-sm-min) {
+    width: auto;
+    min-width: 288px;
+    max-width: 568px;
+    border-radius: 2px;
+  }
 }
 
 /* 为 .mdui-snackbar 添加 transition 属性 */
 .mdui-snackbar-transition {
   transition: transform .3s @animation-curve-default;
-}
-
-/* 手机和平板的样式 */
-.mdui-snackbar-mobile {
-  width: 100%;
-}
-
-/* 桌面版的样式 */
-.mdui-snackbar-desktop {
-  min-width: 288px;
-  max-width: 568px;
-  border-radius: 2px;
 }
 
 /* 文本 */

@@ -7,19 +7,20 @@
  * mdui-appbar-scroll-toolbar-hide
  */
 
-$.ready(function () {
-
+$(function () {
   // 滚动时隐藏应用栏
-  $.each($.queryAll('.mdui-appbar-scroll-hide'), function (i, appbar) {
-    $.data(appbar, 'mdui.headroom', new mdui.Headroom(appbar));
+  $('.mdui-appbar-scroll-hide').each(function () {
+    var $this = $(this);
+    $this.data('mdui.headroom', new mdui.Headroom($this));
   });
 
   // 滚动时只隐藏应用栏中的工具栏
-  $.each($.queryAll('.mdui-appbar-scroll-toolbar-hide'), function (i, appbar) {
-    var inst = new mdui.Headroom('.mdui-appbar-scroll-toolbar-hide', {
+  $('.mdui-appbar-scroll-toolbar-hide').each(function () {
+    var $this = $(this);
+    var inst = new mdui.Headroom($this, {
       pinnedClass: 'mdui-headroom-pinned-toolbar',
       unpinnedClass: 'mdui-headroom-unpinned-toolbar',
     });
-    $.data(appbar, 'mdui.headroom', inst);
+    $this.data('mdui.headroom', inst);
   });
 });

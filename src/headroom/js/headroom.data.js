@@ -4,15 +4,15 @@
  * =============================================================================
  */
 
-$.ready(function () {
+$(function () {
+  $('[mdui-headroom]').each(function () {
+    var $this = $(this);
+    var options = parseOptions($this.attr('mdui-headroom'));
 
-  $.each($.queryAll('[mdui-headroom]'), function (i, target) {
-    var options = $.parseOptions(target.getAttribute('mdui-headroom'));
-
-    var inst = $.data(target, 'mdui.headroom');
+    var inst = $this.data('mdui.headroom');
     if (!inst) {
-      inst = new mdui.Headroom(target, options);
-      $.data(target, 'mdui.headroom', inst);
+      inst = new mdui.Headroom($this, options);
+      $this.data('mdui.headroom', inst);
     }
   });
 });

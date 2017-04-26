@@ -2,9 +2,7 @@
   "core_intro": {
     "js": [
       "src/global/js/wrap_start.js",
-      "src/global/js/dom.js",
-      "src/global/js/support.js",
-      "src/global/js/global.js"
+      "src/global/js/polyfill.js"
     ],
     "less": [
       "src/mixin/less/color.less",
@@ -48,6 +46,27 @@
       "src/global/less/base.less",
       "src/icon/less/icon.less"
     ],
+    "dependencies": []
+  },
+  "jq": {
+    "js": [
+      "src/jq/js/jq_start.js",
+      "src/jq/js/function.js",
+      "src/jq/js/core.js",
+      "src/jq/js/data.js",
+      "src/jq/js/event.js",
+      "src/jq/js/jq_end.js"
+    ],
+    "less": [],
+    "dependencies": []
+  },
+  "global": {
+    "js": [
+      "src/global/js/global.js",
+      "src/global/js/function.js",
+      "src/global/js/jq_extend.js"
+    ],
+    "less": [],
     "dependencies": []
   },
   "material-icons": {

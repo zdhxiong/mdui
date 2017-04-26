@@ -16,65 +16,54 @@ mdui.Fab = (function () {
 
   /**
    * 浮动操作按钮实例
-   * @param selector 选择器或 HTML 字符串或 DOM 元素
+   * @param selector 选择器或 HTML 字符串或 DOM 元素或 JQ 对象
    * @param opts
    * @constructor
    */
   function Fab(selector, opts) {
     var _this = this;
 
-    _this.fab = $.dom(selector)[0];
-    if (typeof _this.fab === 'undefined') {
+    _this.$fab = $(selector).eq(0);
+    if (!_this.$fab.length) {
       return;
     }
 
     // 已通过 data 属性实例化过，不再重复实例化
-    var oldInst = $.data(_this.fab, 'mdui.fab');
+    var oldInst = _this.$fab.data('mdui.fab');
     if (oldInst) {
       return oldInst;
     }
 
-    _this.options = $.extend(DEFAULT, (opts || {}));
+    _this.options = $.extend({}, DEFAULT, (opts || {}));
     _this.state = 'closed';
 
-    _this.btn = $.child(_this.fab, '.mdui-fab');
-    _this.dial = $.child(_this.fab, '.mdui-fab-dial');
-    _this.dialBtns = $.queryAll('.mdui-fab', _this.dial);
+    _this.$btn = _this.$fab.find('.mdui-fab');
+    _this.$dial = _this.$fab.find('.mdui-fab-dial');
+    _this.$dialBtns = _this.$dial.find('.mdui-fab');
 
-    // 支持 touch 时，始终在 touchstart 时切换，不受 trigger 参数影响
-    if (mdui.support.touch) {
-      $.on(_this.btn, 'touchstart', function () {
-        _this.open();
-      });
-
-      $.on(document, 'touchend', function (e) {
-        if (!$.parents(e.target, '.mdui-fab-wrapper').length) {
+    if (_this.options.trigger === 'hover') {
+      _this.$btn
+        .on('touchstart mouseenter', function () {
+          _this.open();
+        })
+        .on('mouseleave', function () {
           _this.close();
-        }
-      });
+        });
     }
 
-    // 不支持touch
-    else {
-
-      // 点击切换
-      if (_this.options.trigger === 'click') {
-        $.on(_this.btn, 'click', function () {
-          _this.toggle();
-        });
-      }
-
-      // 鼠标悬浮切换
-      if (_this.options.trigger === 'hover') {
-        $.on(_this.fab, 'mouseenter', function () {
+    if (_this.options.trigger === 'click') {
+      _this.$btn
+        .on(TouchHandler.start, function () {
           _this.open();
         });
-
-        $.on(_this.fab, 'mouseleave', function () {
-          _this.close();
-        });
-      }
     }
+
+    // 触摸屏幕其他地方关闭快速拨号
+    $document.on(TouchHandler.start, function (e) {
+      if (!$(e.target).parents('.mdui-fab-wrapper').length) {
+        _this.close();
+      }
+    });
   }
 
   /**
@@ -88,25 +77,26 @@ mdui.Fab = (function () {
     }
 
     // 为菜单中的按钮添加不同的 transition-delay
-    $.each(_this.dialBtns, function (index, btn) {
-      btn.style['transition-delay'] = 15 * (_this.dialBtns.length - index) + 'ms';
+    _this.$dialBtns.each(function (index, btn) {
+      btn.style['transition-delay'] = btn.style['-webkit-transition-delay'] =
+        15 * (_this.$dialBtns.length - index) + 'ms';
     });
 
-    _this.dial.classList.add('mdui-fab-dial-show');
+    _this.$dial.addClass('mdui-fab-dial-show');
 
     // 如果按钮中存在 .mdui-fab-opened 的图标，则进行图标切换
-    if ($.query('.mdui-fab-opened', _this.btn)) {
-      _this.btn.classList.add('mdui-fab-opened');
+    if (_this.$btn.find('.mdui-fab-opened').length) {
+      _this.$btn.addClass('mdui-fab-opened');
     }
 
     _this.state = 'opening';
-    $.pluginEvent('open', 'fab', _this, _this.fab);
+    componentEvent('open', 'fab', _this, _this.$fab);
 
     // 打开顺序为从下到上逐个打开，最上面的打开后才表示动画完成
-    $.transitionEnd(_this.dialBtns[0], function () {
-      if (_this.btn.classList.contains('mdui-fab-opened')) {
+    _this.$dialBtns.eq(0).transitionEnd(function () {
+      if (_this.$btn.hasClass('mdui-fab-opened')) {
         _this.state = 'opened';
-        $.pluginEvent('opened', 'fab', _this, _this.fab);
+        componentEvent('opened', 'fab', _this, _this.$fab);
       }
     });
   };
@@ -122,20 +112,20 @@ mdui.Fab = (function () {
     }
 
     // 为菜单中的按钮添加不同的 transition-delay
-    $.each(_this.dialBtns, function (index, btn) {
-      btn.style['transition-delay'] = 15 * index + 'ms';
+    _this.$dialBtns.each(function (index, btn) {
+      btn.style['transition-delay'] = btn.style['-webkit-transition-delay'] = 15 * index + 'ms';
     });
 
-    _this.dial.classList.remove('mdui-fab-dial-show');
-    _this.btn.classList.remove('mdui-fab-opened');
+    _this.$dial.removeClass('mdui-fab-dial-show');
+    _this.$btn.removeClass('mdui-fab-opened');
     _this.state = 'closing';
-    $.pluginEvent('close', 'fab', _this, _this.fab);
+    componentEvent('close', 'fab', _this, _this.$fab);
 
     // 从上往下依次关闭，最后一个关闭后才表示动画完成
-    $.transitionEnd(_this.dialBtns[_this.dialBtns.length - 1], function () {
-      if (!_this.btn.classList.contains('mdui-fab-opened')) {
+    _this.$dialBtns.eq(-1).transitionEnd(function () {
+      if (!_this.$btn.hasClass('mdui-fab-opened')) {
         _this.state = 'closed';
-        $.pluginEvent('closed', 'fab', _this, _this.fab);
+        componentEvent('closed', 'fab', _this, _this.$fab);
       }
     });
   };
@@ -165,14 +155,14 @@ mdui.Fab = (function () {
    * 以动画的形式显示浮动操作按钮
    */
   Fab.prototype.show = function () {
-    this.fab.classList.remove('mdui-fab-hide');
+    this.$fab.removeClass('mdui-fab-hide');
   };
 
   /**
    * 以动画的形式隐藏浮动操作按钮
    */
   Fab.prototype.hide = function () {
-    this.fab.classList.add('mdui-fab-hide');
+    this.$fab.addClass('mdui-fab-hide');
   };
 
   return Fab;

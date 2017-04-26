@@ -27,7 +27,13 @@
    */
   function Table(selector) {
     var _this = this;
-    _this.table = $.dom(selector)[0];
+
+    _this.$table = $(selector).eq(0);
+
+    if (!_this.$table.length) {
+      return;
+    }
+
     _this.init();
   }
 
@@ -37,115 +43,122 @@
   Table.prototype.init = function () {
     var _this = this;
 
-    _this.thRow = $.query('thead tr', _this.table);
-    _this.tdRows = $.queryAll('tbody tr', _this.table);
-    _this.tdCheckboxs = [];
-    _this.selectable = _this.table.classList.contains('mdui-table-selectable');
+    _this.$thRow = _this.$table.find('thead tr');
+    _this.$tdRows = _this.$table.find('tbody tr');
+    _this.$tdCheckboxs = $();
+    _this.selectable = _this.$table.hasClass('mdui-table-selectable');
+    _this.selectedRow = 0;
 
-    _this.updateTdCheckbox();
-    _this.updateThCheckbox();
-    _this.updateNumericCol();
+    _this._updateThCheckbox();
+    _this._updateTdCheckbox();
+    _this._updateNumericCol();
   };
 
   /**
    * 更新表格行的 checkbox
    */
-  Table.prototype.updateTdCheckbox = function () {
+  Table.prototype._updateTdCheckbox = function () {
     var _this = this;
-    var td;
-    var tdCheckbox;
-    _this.tdCheckboxs = [];
 
-    $.each(_this.tdRows, function (i, tdRow) {
+    _this.$tdRows.each(function () {
+      var $tdRow = $(this);
+
       // 移除旧的 checkbox
-      tdCheckbox = $.query('.mdui-table-cell-checkbox', tdRow);
-      if (tdCheckbox) {
-        $.remove(tdCheckbox);
+      $tdRow.find('.mdui-table-cell-checkbox').remove();
+
+      if (!_this.selectable) {
+        return;
       }
 
-      // 创建新的 checkbox
-      if (_this.selectable) {
-        // 创建 DOM
-        td = $.dom(checkboxHTML('td'))[0];
-        $.prepend(tdRow, td);
+      // 创建 DOM
+      var $checkbox = $(checkboxHTML('td'))
+        .prependTo($tdRow)
+        .find('input[type="checkbox"]');
 
-        var checkbox = $.query('input[type="checkbox"]', td);
+      // 默认选中的行
+      if ($tdRow.hasClass('mdui-table-row-selected')) {
+        $checkbox[0].checked = true;
+        _this.selectedRow++;
+      }
 
-        // 默认选中的行
-        if (tdRow.classList.contains('mdui-table-row-selected')) {
-          checkbox.checked = true;
+      // 所有行都选中后，选中表头；否则，不选中表头
+      _this.$thCheckbox[0].checked = _this.selectedRow === _this.$tdRows.length;
+
+      // 绑定事件
+      $checkbox.on('change', function () {
+        if ($checkbox[0].checked) {
+          $tdRow.addClass('mdui-table-row-selected');
+          _this.selectedRow++;
+        } else {
+          $tdRow.removeClass('mdui-table-row-selected');
+          _this.selectedRow--;
         }
 
-        // 绑定事件
-        $.on(checkbox, 'change', function () {
-          tdRow.classList[checkbox.checked ? 'add' : 'remove']('mdui-table-row-selected');
-        });
+        // 所有行都选中后，选中表头；否则，不选中表头
+        _this.$thCheckbox[0].checked = _this.selectedRow === _this.$tdRows.length;
+      });
 
-        _this.tdCheckboxs.push(checkbox);
-      }
+      _this.$tdCheckboxs = _this.$tdCheckboxs.add($checkbox);
     });
   };
 
   /**
    * 更新表头的 checkbox
    */
-  Table.prototype.updateThCheckbox = function () {
+  Table.prototype._updateThCheckbox = function () {
     var _this = this;
-    var thCheckbox;
 
     // 移除旧的 checkbox
-    thCheckbox = $.query('.mdui-table-cell-checkbox', _this.thRow);
-    if (thCheckbox) {
-      $.remove(thCheckbox);
-    }
+    _this.$thRow.find('.mdui-table-cell-checkbox').remove();
 
     if (!_this.selectable) {
       return;
     }
 
-    // 创建 DOM
-    var th = $.dom(checkboxHTML('th'))[0];
-    $.prepend(_this.thRow, th);
+    _this.$thCheckbox = $(checkboxHTML('th'))
+      .prependTo(_this.$thRow)
+      .find('input[type="checkbox"]')
+      .on('change', function () {
 
-    // 绑定事件
-    thCheckbox = $.query('input[type="checkbox"]', th);
-    $.on(thCheckbox, 'change', function () {
+        var isCheckedAll = _this.$thCheckbox[0].checked;
+        _this.selectedRow = isCheckedAll ? _this.$tdRows.length : 0;
 
-      $.each(_this.tdCheckboxs, function (i, checkbox) {
-        checkbox.checked = thCheckbox.checked;
+        _this.$tdCheckboxs.each(function (i, checkbox) {
+          checkbox.checked = isCheckedAll;
+        });
+
+        _this.$tdRows.each(function (i, row) {
+          $(row)[isCheckedAll ? 'addClass' : 'removeClass']('mdui-table-row-selected');
+        });
+
       });
-
-      $.each(_this.tdRows, function (i, row) {
-        row.classList[thCheckbox.checked ? 'add' : 'remove']('mdui-table-row-selected');
-      });
-
-    });
   };
 
   /**
    * 更新数值列
    */
-  Table.prototype.updateNumericCol = function () {
+  Table.prototype._updateNumericCol = function () {
     var _this = this;
+    var $th;
+    var $tdRow;
 
-    var ths = $.queryAll('th', _this.thRow);
-    $.each(ths, function (i, th) {
-      $.each(_this.tdRows, function (j, tdRow) {
-        var method = th.classList.contains('mdui-table-col-numeric') ? 'add' : 'remove';
-        var td = $.queryAll('td', tdRow)[i];
-        if (td) {
-          td.classList[method]('mdui-table-col-numeric');
-        }
+    _this.$thRow.find('th').each(function (i, th) {
+      $th = $(th);
+
+      _this.$tdRows.each(function () {
+        $tdRow = $(this);
+        var method = $th.hasClass('mdui-table-col-numeric') ? 'addClass' : 'removeClass';
+        $tdRow.find('td').eq(i)[method]('mdui-table-col-numeric');
       });
     });
   };
 
-  $.ready(function () {
+  $(function () {
     // 实例化表格
-    var tables = $.queryAll('.mdui-table');
-    $.each(tables, function (i, table) {
-      if (!$.data(table, 'mdui.table')) {
-        $.data(table, 'mdui.table', new Table(table));
+    $('.mdui-table').each(function () {
+      var $table = $(this);
+      if (!$table.data('mdui.table')) {
+        $table.data('mdui.table', new Table($table));
       }
     });
   });
@@ -154,20 +167,14 @@
    * 更新表格
    */
   mdui.updateTables = function () {
-    var tables;
+    $(arguments.length ? arguments[0] : '.mdui-table').each(function () {
+      var $table = $(this);
+      var inst = $table.data('mdui.table');
 
-    if (arguments.length === 1) {
-      tables = $.dom(arguments[0]);
-    } else {
-      tables = $.queryAll('.mdui-table');
-    }
-
-    $.each(tables, function (i, table) {
-      var inst = $.data(table, 'mdui.table');
       if (inst) {
         inst.init();
       } else {
-        $.data(table, 'mdui.table', new Table(table));
+        $table.data('mdui.table', new Table($table));
       }
     });
   };

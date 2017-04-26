@@ -26,16 +26,6 @@ body.mdui-loaded .mdui-drawer {
   overflow-x: hidden;
   overflow-y: auto;
   top: 0;
-
-  &:hover {
-    overflow-y: auto!important;
-  }
-}
-
-
-/* 美化滚动条 */
-.mdui-drawer-scrollbar {
-  .mdui-scrollbar-beautify();
 }
 
 /* 出现在右侧的抽屉栏 */
@@ -125,11 +115,6 @@ body.mdui-loaded .mdui-drawer {
  * =============================================================================
  */
 .mdui-theme-layout-dark when (@globalLayoutDark = true) {
-
-  // 美化滚动条
-  .mdui-drawer-scrollbar {
-    .mdui-scrollbar-beautify(dark);
-  }
 
   // 手机平板上的样式
   @media (max-width: @screen-sm-max) {

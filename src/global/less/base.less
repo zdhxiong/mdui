@@ -15,6 +15,34 @@ body {
   @media (min-width: @screen-md-min) {
     font-size: @screen-md-font-size;
   }
+
+  // 滚动条样式
+  * {
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: 8px;
+      height: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // 夜间模式滚动条样式
+  &.mdui-theme-layout-dark {
+    * {
+      &::-webkit-scrollbar {
+        background: transparent;
+        width: 8px;
+        height: 8px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
 }
 
 * {

@@ -4,16 +4,13 @@
  * =============================================================================
  */
 
-$.ready(function () {
-
-  // 实例化插件
-  $.each($.queryAll('[mdui-tab]'), function (i, target) {
-    var options = $.parseOptions(target.getAttribute('mdui-tab'));
-
-    var inst = $.data(target, 'mdui.tab');
+$(function () {
+  $('[mdui-tab]').each(function () {
+    var $this = $(this);
+    var inst = $this.data('mdui.tab');
     if (!inst) {
-      inst = new mdui.Tab(target, options);
-      $.data(target, 'mdui.tab', inst);
+      inst = new mdui.Tab($this, parseOptions($this.attr('mdui-tab')));
+      $this.data('mdui.tab', inst);
     }
   });
 });

@@ -1,5 +1,5 @@
 /*!
- * mdui v0.1.2 (http://mdui.org)
+ * mdui v0.2.0 (http://mdui.org)
  * Copyright 2016-2017 zdhxiong
  * Licensed under MIT
  */
@@ -4638,23 +4638,21 @@
     display: none !important;
   }
 }
-/*! normalize.css v4.2.0 | MIT License | github.com/necolas/normalize.css */
-/**
- * 1. Change the default font family in all browsers (opinionated).
- * 2. Correct the line height in all browsers.
- * 3. Prevent adjustments of font size after orientation changes in IE and iOS.
- */
+/*! normalize.css v6.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in
+ *    IE on Windows Phone and in iOS.
+ */
 html {
-  font-family: sans-serif;
-  /* 1 */
   line-height: 1.15;
-  /* 3 */
-  -webkit-text-size-adjust: 100%;
   /* 2 */
+  -webkit-text-size-adjust: 100%;
+  /* 1 */
       -ms-text-size-adjust: 100%;
-  /* 3 */
+  /* 2 */
 }
 /* Sections
    ========================================================================== */
@@ -4737,15 +4735,7 @@ a {
   /* 2 */
 }
 /**
- * Remove the outline on focused links when they are also active or hovered
- * in all browsers (opinionated).
- */
-a:active,
-a:hover {
-  outline-width: 0;
-}
-/**
- * 1. Remove the bottom border in Firefox 39-.
+ * 1. Remove the bottom border in Chrome 57- and Firefox 39-.
  * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
  */
 abbr[title] {
@@ -4849,24 +4839,14 @@ svg:not(:root) {
 /* Forms
    ========================================================================== */
 /**
- * 1. Change font properties to `inherit` in all browsers (opinionated).
- * 2. Remove the margin in Firefox and Safari.
+ * Remove the margin in Firefox and Safari.
  */
 button,
 input,
 optgroup,
 select,
 textarea {
-  /* 1 */
   margin: 0;
-  font: inherit;
-  /* 2 */
-}
-/**
- * Restore the font weight unset by the previous rule.
- */
-optgroup {
-  font-weight: bold;
 }
 /**
  * Show the overflow in IE.
@@ -4916,14 +4896,6 @@ button:-moz-focusring,
 [type="reset"]:-moz-focusring,
 [type="submit"]:-moz-focusring {
   outline: 1px dotted ButtonText;
-}
-/**
- * Change the border, margin, and padding in all browsers (opinionated).
- */
-fieldset {
-  padding: .35em .625em .75em;
-  margin: 0 2px;
-  border: 1px solid #c0c0c0;
 }
 /**
  * 1. Correct the text wrapping in Edge and IE.
@@ -4990,7 +4962,7 @@ textarea {
   /* 2 */
 }
 /**
- * Remove the inner padding and cancel buttons in Chrome and Safari on OS X.
+ * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
  */
 [type="search"]::-webkit-search-cancel-button,
 [type="search"]::-webkit-search-decoration {
@@ -5064,6 +5036,22 @@ body {
   body {
     font-size: 15px;
   }
+}
+body *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+body *::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, .2);
+}
+body.mdui-theme-layout-dark *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+body.mdui-theme-layout-dark *::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, .3);
 }
 * {
   -webkit-tap-highlight-color: transparent;
@@ -5139,16 +5127,14 @@ body.mdui-locked {
  * =============================================================================
  *
  * https://github.com/google/material-design-icons/
- * v2.2.3
+ * v3.0.1
  */
 @font-face {
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
 
-  src: url(../icons/material-icons/MaterialIcons-Regular.eot);
-  /* For IE6-8 */
-  src: url(../icons/material-icons/MaterialIcons-Regular.woff2) format('woff2'), url(../icons/material-icons/MaterialIcons-Regular.woff) format('woff'), url(../icons/material-icons/MaterialIcons-Regular.ttf) format('truetype');
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(../icons/material-icons/MaterialIcons-Regular.woff2) format('woff2'), url(../icons/material-icons/MaterialIcons-Regular.woff) format('woff');
 }
 .material-icons {
   font-family: 'Material Icons';
@@ -5174,84 +5160,84 @@ body.mdui-locked {
   font-style: normal;
   font-weight: 100;
 
-  src: local('Roboto Thin'), local('Roboto-Thin'), url('../fonts/roboto/Roboto-Thin.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Thin.woff2') format('woff2'), url('../fonts/roboto/Roboto-Thin.woff') format('woff'), url('../fonts/roboto/Roboto-Thin.ttf') format('truetype');
+  src: local('Roboto Thin'), local('Roboto-Thin'), url('../fonts/roboto/Roboto-Thin.woff2') format('woff2'), url('../fonts/roboto/Roboto-Thin.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: italic;
   font-weight: 100;
 
-  src: local('Roboto ThinItalic'), local('Roboto-ThinItalic'), url('../fonts/roboto/Roboto-ThinItalic.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-ThinItalic.woff2') format('woff2'), url('../fonts/roboto/Roboto-ThinItalic.woff') format('woff'), url('../fonts/roboto/Roboto-ThinItalic.ttf') format('truetype');
+  src: local('Roboto ThinItalic'), local('Roboto-ThinItalic'), url('../fonts/roboto/Roboto-ThinItalic.woff2') format('woff2'), url('../fonts/roboto/Roboto-ThinItalic.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
 
-  src: local('Roboto Light'), local('Roboto-Light'), url('../fonts/roboto/Roboto-Light.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Light.woff2') format('woff2'), url('../fonts/roboto/Roboto-Light.woff') format('woff'), url('../fonts/roboto/Roboto-Light.ttf') format('truetype');
+  src: local('Roboto Light'), local('Roboto-Light'), url('../fonts/roboto/Roboto-Light.woff2') format('woff2'), url('../fonts/roboto/Roboto-Light.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: italic;
   font-weight: 300;
 
-  src: local('Roboto LightItalic'), local('Roboto-LightItalic'), url('../fonts/roboto/Roboto-LightItalic.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-LightItalic.woff2') format('woff2'), url('../fonts/roboto/Roboto-LightItalic.woff') format('woff'), url('../fonts/roboto/Roboto-LightItalic.ttf') format('truetype');
+  src: local('Roboto LightItalic'), local('Roboto-LightItalic'), url('../fonts/roboto/Roboto-LightItalic.woff2') format('woff2'), url('../fonts/roboto/Roboto-LightItalic.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
 
-  src: local('Roboto Regular'), local('Roboto-Regular'), url('../fonts/roboto/Roboto-Regular.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Regular.woff2') format('woff2'), url('../fonts/roboto/Roboto-Regular.woff') format('woff'), url('../fonts/roboto/Roboto-Regular.ttf') format('truetype');
+  src: local('Roboto Regular'), local('Roboto-Regular'), url('../fonts/roboto/Roboto-Regular.woff2') format('woff2'), url('../fonts/roboto/Roboto-Regular.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: italic;
   font-weight: 400;
 
-  src: local('Roboto RegularItalic'), local('Roboto-RegularItalic'), url('../fonts/roboto/Roboto-RegularItalic.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-RegularItalic.woff2') format('woff2'), url('../fonts/roboto/Roboto-RegularItalic.woff') format('woff'), url('../fonts/roboto/Roboto-RegularItalic.ttf') format('truetype');
+  src: local('Roboto RegularItalic'), local('Roboto-RegularItalic'), url('../fonts/roboto/Roboto-RegularItalic.woff2') format('woff2'), url('../fonts/roboto/Roboto-RegularItalic.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
 
-  src: local('Roboto Medium'), local('Roboto-Medium'), url('../fonts/roboto/Roboto-Medium.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Medium.woff2') format('woff2'), url('../fonts/roboto/Roboto-Medium.woff') format('woff'), url('../fonts/roboto/Roboto-Medium.ttf') format('truetype');
+  src: local('Roboto Medium'), local('Roboto-Medium'), url('../fonts/roboto/Roboto-Medium.woff2') format('woff2'), url('../fonts/roboto/Roboto-Medium.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: italic;
   font-weight: 500;
 
-  src: local('Roboto MediumItalic'), local('Roboto-MediumItalic'), url('../fonts/roboto/Roboto-MediumItalic.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-MediumItalic.woff2') format('woff2'), url('../fonts/roboto/Roboto-MediumItalic.woff') format('woff'), url('../fonts/roboto/Roboto-MediumItalic.ttf') format('truetype');
+  src: local('Roboto MediumItalic'), local('Roboto-MediumItalic'), url('../fonts/roboto/Roboto-MediumItalic.woff2') format('woff2'), url('../fonts/roboto/Roboto-MediumItalic.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
 
-  src: local('Roboto Bold'), local('Roboto-Bold'), url('../fonts/roboto/Roboto-Bold.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Bold.woff2') format('woff2'), url('../fonts/roboto/Roboto-Bold.woff') format('woff'), url('../fonts/roboto/Roboto-Bold.ttf') format('truetype');
+  src: local('Roboto Bold'), local('Roboto-Bold'), url('../fonts/roboto/Roboto-Bold.woff2') format('woff2'), url('../fonts/roboto/Roboto-Bold.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: italic;
   font-weight: 700;
 
-  src: local('Roboto BoldItalic'), local('Roboto-BoldItalic'), url('../fonts/roboto/Roboto-BoldItalic.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-BoldItalic.woff2') format('woff2'), url('../fonts/roboto/Roboto-BoldItalic.woff') format('woff'), url('../fonts/roboto/Roboto-BoldItalic.ttf') format('truetype');
+  src: local('Roboto BoldItalic'), local('Roboto-BoldItalic'), url('../fonts/roboto/Roboto-BoldItalic.woff2') format('woff2'), url('../fonts/roboto/Roboto-BoldItalic.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 900;
 
-  src: local('Roboto Black'), local('Roboto-Black'), url('../fonts/roboto/Roboto-Black.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-Black.woff2') format('woff2'), url('../fonts/roboto/Roboto-Black.woff') format('woff'), url('../fonts/roboto/Roboto-Black.ttf') format('truetype');
+  src: local('Roboto Black'), local('Roboto-Black'), url('../fonts/roboto/Roboto-Black.woff2') format('woff2'), url('../fonts/roboto/Roboto-Black.woff') format('woff');
 }
 @font-face {
   font-family: 'Roboto';
   font-style: italic;
   font-weight: 900;
 
-  src: local('Roboto BlackItalic'), local('Roboto-BlackItalic'), url('../fonts/roboto/Roboto-BlackItalic.eot?#iefix') format('embedded-opentype'), url('../fonts/roboto/Roboto-BlackItalic.woff2') format('woff2'), url('../fonts/roboto/Roboto-BlackItalic.woff') format('woff'), url('../fonts/roboto/Roboto-BlackItalic.ttf') format('truetype');
+  src: local('Roboto BlackItalic'), local('Roboto-BlackItalic'), url('../fonts/roboto/Roboto-BlackItalic.woff2') format('woff2'), url('../fonts/roboto/Roboto-BlackItalic.woff') format('woff');
 }
 /**
  * =============================================================================
@@ -9205,14 +9191,6 @@ input.mdui-btn[type="submit"] {
   overflow-y: hidden;
   white-space: nowrap;
 }
-body:not(.mdui-support-touch) .mdui-tab::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background: transparent;
-}
-body:not(.mdui-support-touch) .mdui-tab::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, .2);
-}
 .mdui-tab a {
   display: -webkit-box;
   display: -webkit-flex;
@@ -9293,19 +9271,19 @@ body:not(.mdui-support-touch) .mdui-tab::-webkit-scrollbar-thumb {
 .mdui-tab a .mdui-icon + label {
   margin-top: 8px;
 }
-.mdui-tab a.mdui-tab-active {
-  color: #3f51b5;
-  opacity: 1;
-}
-.mdui-tab a.mdui-tab-active .mdui-icon {
-  opacity: 1;
-}
 .mdui-tab a[disabled] {
   cursor: default;
   opacity: .38;
 }
 .mdui-tab a[disabled] label {
   cursor: default;
+}
+.mdui-tab .mdui-tab-active {
+  color: #3f51b5;
+  opacity: 1;
+}
+.mdui-tab .mdui-tab-active .mdui-icon {
+  opacity: 1;
 }
 /* 选项卡居中 */
 @media (min-width: 600px) {
@@ -9367,32 +9345,138 @@ body:not(.mdui-support-touch) .mdui-tab::-webkit-scrollbar-thumb {
 
   will-change: left, width;
 }
-/* 带背景色的选项卡 */
-.mdui-tab[class*="mdui-color-"] .mdui-tab-active {
-  color: inherit;
-}
-.mdui-tab[class*="mdui-color-"] .mdui-tab-indicator {
-  background-color: #ff4081;
-}
-body:not(.mdui-support-touch) .mdui-tab[class*="mdui-color-"]::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background: transparent;
-}
-body:not(.mdui-support-touch) .mdui-tab[class*="mdui-color-"]::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, .3);
-}
 /**
  * =============================================================================
- * ************   Tab dark   ************
+ * ************   Tab 主色   ************
  * =============================================================================
  */
-body:not(.mdui-support-touch).mdui-theme-layout-dark .mdui-tab::-webkit-scrollbar {
+.mdui-theme-primary-amber .mdui-tab .mdui-tab-active {
+  color: #ffc107;
+}
+.mdui-theme-primary-amber .mdui-tab-indicator {
+  background-color: #ffc107;
+}
+.mdui-theme-primary-blue .mdui-tab .mdui-tab-active {
+  color: #2196f3;
+}
+.mdui-theme-primary-blue .mdui-tab-indicator {
+  background-color: #2196f3;
+}
+.mdui-theme-primary-blue-grey .mdui-tab .mdui-tab-active {
+  color: #607d8b;
+}
+.mdui-theme-primary-blue-grey .mdui-tab-indicator {
+  background-color: #607d8b;
+}
+.mdui-theme-primary-brown .mdui-tab .mdui-tab-active {
+  color: #795548;
+}
+.mdui-theme-primary-brown .mdui-tab-indicator {
+  background-color: #795548;
+}
+.mdui-theme-primary-cyan .mdui-tab .mdui-tab-active {
+  color: #00bcd4;
+}
+.mdui-theme-primary-cyan .mdui-tab-indicator {
+  background-color: #00bcd4;
+}
+.mdui-theme-primary-deep-orange .mdui-tab .mdui-tab-active {
+  color: #ff5722;
+}
+.mdui-theme-primary-deep-orange .mdui-tab-indicator {
+  background-color: #ff5722;
+}
+.mdui-theme-primary-deep-purple .mdui-tab .mdui-tab-active {
+  color: #673ab7;
+}
+.mdui-theme-primary-deep-purple .mdui-tab-indicator {
+  background-color: #673ab7;
+}
+.mdui-theme-primary-green .mdui-tab .mdui-tab-active {
+  color: #4caf50;
+}
+.mdui-theme-primary-green .mdui-tab-indicator {
+  background-color: #4caf50;
+}
+.mdui-theme-primary-grey .mdui-tab .mdui-tab-active {
+  color: #9e9e9e;
+}
+.mdui-theme-primary-grey .mdui-tab-indicator {
+  background-color: #9e9e9e;
+}
+.mdui-theme-primary-indigo .mdui-tab .mdui-tab-active {
+  color: #3f51b5;
+}
+.mdui-theme-primary-indigo .mdui-tab-indicator {
+  background-color: #3f51b5;
+}
+.mdui-theme-primary-light-blue .mdui-tab .mdui-tab-active {
+  color: #03a9f4;
+}
+.mdui-theme-primary-light-blue .mdui-tab-indicator {
+  background-color: #03a9f4;
+}
+.mdui-theme-primary-light-green .mdui-tab .mdui-tab-active {
+  color: #8bc34a;
+}
+.mdui-theme-primary-light-green .mdui-tab-indicator {
+  background-color: #8bc34a;
+}
+.mdui-theme-primary-lime .mdui-tab .mdui-tab-active {
+  color: #cddc39;
+}
+.mdui-theme-primary-lime .mdui-tab-indicator {
+  background-color: #cddc39;
+}
+.mdui-theme-primary-orange .mdui-tab .mdui-tab-active {
+  color: #ff9800;
+}
+.mdui-theme-primary-orange .mdui-tab-indicator {
+  background-color: #ff9800;
+}
+.mdui-theme-primary-pink .mdui-tab .mdui-tab-active {
+  color: #e91e63;
+}
+.mdui-theme-primary-pink .mdui-tab-indicator {
+  background-color: #e91e63;
+}
+.mdui-theme-primary-purple .mdui-tab .mdui-tab-active {
+  color: #9c27b0;
+}
+.mdui-theme-primary-purple .mdui-tab-indicator {
+  background-color: #9c27b0;
+}
+.mdui-theme-primary-red .mdui-tab .mdui-tab-active {
+  color: #f44336;
+}
+.mdui-theme-primary-red .mdui-tab-indicator {
+  background-color: #f44336;
+}
+.mdui-theme-primary-teal .mdui-tab .mdui-tab-active {
+  color: #009688;
+}
+.mdui-theme-primary-teal .mdui-tab-indicator {
+  background-color: #009688;
+}
+.mdui-theme-primary-yellow .mdui-tab .mdui-tab-active {
+  color: #ffeb3b;
+}
+.mdui-theme-primary-yellow .mdui-tab-indicator {
+  background-color: #ffeb3b;
+}
+/* 带背景色的选项卡 */
+.mdui-tab[class*="mdui-color-"]:not(.mdui-color-white) .mdui-tab-active {
+  color: inherit;
+}
+.mdui-tab[class*="mdui-color-"]:not(.mdui-color-white) .mdui-tab-indicator {
+  background-color: #fff;
+}
+.mdui-tab[class*="mdui-color-"]:not(.mdui-color-white)::-webkit-scrollbar {
   width: 8px;
   height: 8px;
   background: transparent;
 }
-body:not(.mdui-support-touch).mdui-theme-layout-dark .mdui-tab::-webkit-scrollbar-thumb {
+.mdui-tab[class*="mdui-color-"]:not(.mdui-color-white)::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, .3);
 }
 /**
@@ -9621,7 +9705,6 @@ body:not(.mdui-support-touch).mdui-theme-layout-dark .mdui-tab::-webkit-scrollba
   min-height: 48px;
   box-sizing: border-box;
   padding: 0 16px;
-  color: rgba(0, 0, 0, .87);
   text-decoration: none;
   cursor: pointer;
   -webkit-transition: background-color .3s cubic-bezier(.4, 0, .2, 1);
@@ -9835,6 +9918,17 @@ body:not(.mdui-support-touch).mdui-theme-layout-dark .mdui-tab::-webkit-scrollba
   background-color: rgba(255, 255, 255, .08);
 }
 /**
+ * ==============================================================================
+ * ************   List inner theme   ************
+ * ==============================================================================
+ */
+[class*="mdui-color-"] .mdui-list-item {
+  color: inherit;
+}
+[class*="mdui-color-"] .mdui-list-item-icon {
+  color: inherit;
+}
+/**
  * =============================================================================
  * ************   Drawer 抽屉栏导航   ************
  * =============================================================================
@@ -9863,18 +9957,6 @@ body.mdui-loaded .mdui-drawer {
   white-space: nowrap;
 
   will-change: transform;
-}
-.mdui-drawer:hover {
-  overflow-y: auto!important;
-}
-/* 美化滚动条 */
-.mdui-drawer-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background: transparent;
-}
-.mdui-drawer-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, .2);
 }
 /* 出现在右侧的抽屉栏 */
 .mdui-drawer-right {
@@ -9950,14 +10032,6 @@ body.mdui-loaded .mdui-drawer {
  * ************   Drawer dark   ************
  * =============================================================================
  */
-.mdui-theme-layout-dark .mdui-drawer-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background: transparent;
-}
-.mdui-theme-layout-dark .mdui-drawer-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, .3);
-}
 @media (max-width: 1023px) {
   .mdui-theme-layout-dark .mdui-drawer {
     background-color: #424242;
@@ -10014,14 +10088,6 @@ body.mdui-loaded .mdui-drawer {
   opacity: 1;
   -webkit-transform: scale(1);
           transform: scale(1);
-}
-.mdui-dialog-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background: transparent;
-}
-.mdui-dialog-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, .2);
 }
 /* 提示框标题 */
 .mdui-dialog-title {
@@ -10146,14 +10212,6 @@ body.mdui-loaded .mdui-drawer {
 }
 .mdui-theme-layout-dark .mdui-dialog-content {
   color: rgba(255, 255, 255, .7);
-}
-.mdui-theme-layout-dark .mdui-dialog-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background: transparent;
-}
-.mdui-theme-layout-dark .mdui-dialog-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, .3);
 }
 /**
  * =============================================================================
@@ -10282,8 +10340,13 @@ body.mdui-loaded .mdui-drawer {
   position: absolute;
   z-index: 9000;
   display: inline-block;
+  max-width: 180px;
+  min-height: 32px;
   box-sizing: border-box;
+  padding: 8px 16px;
+  font-size: 14px;
   font-weight: 500;
+  line-height: 22px;
   color: #fff;
   text-align: left;
   background-color: rgba(97, 97, 97, .9);
@@ -10302,21 +10365,14 @@ body.mdui-loaded .mdui-drawer {
 
   will-change: opacity, transform;
 }
-/* 桌面版样式，在不支持 touch 事件的设备上由 js 添加该类 */
-.mdui-tooltip-desktop {
-  max-width: 200px;
-  min-height: 24px;
-  padding: 4px 8px;
-  font-size: 12px;
-  line-height: 18px;
-}
-/* 触摸版样式，在支持 touch 事件的设备上由 js 添加该类 */
-.mdui-tooltip-mobile {
-  max-width: 180px;
-  min-height: 32px;
-  padding: 8px 16px;
-  font-size: 14px;
-  line-height: 22px;
+@media (min-width: 1024px) {
+  .mdui-tooltip {
+    max-width: 200px;
+    min-height: 24px;
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 18px;
+  }
 }
 /* 显示工具提示 */
 .mdui-tooltip-open {
@@ -10337,6 +10393,7 @@ body.mdui-loaded .mdui-drawer {
   display: -webkit-flex;
   display: -ms-flexbox;
   display:         flex;
+  width: 100%;
   min-height: 48px;
   box-sizing: border-box;
   padding: 0 24px 0 24px;
@@ -10356,22 +10413,20 @@ body.mdui-loaded .mdui-drawer {
           justify-content: space-between;
   will-change: transform;
 }
+@media (min-width: 600px) {
+  .mdui-snackbar {
+    width: auto;
+    min-width: 288px;
+    max-width: 568px;
+    border-radius: 2px;
+  }
+}
 /* 为 .mdui-snackbar 添加 transition 属性 */
 .mdui-snackbar-transition {
   -webkit-transition: -webkit-transform .3s cubic-bezier(.4, 0, .2, 1);
           transition: -webkit-transform .3s cubic-bezier(.4, 0, .2, 1);
           transition:         transform .3s cubic-bezier(.4, 0, .2, 1);
           transition:         transform .3s cubic-bezier(.4, 0, .2, 1), -webkit-transform .3s cubic-bezier(.4, 0, .2, 1);
-}
-/* 手机和平板的样式 */
-.mdui-snackbar-mobile {
-  width: 100%;
-}
-/* 桌面版的样式 */
-.mdui-snackbar-desktop {
-  min-width: 288px;
-  max-width: 568px;
-  border-radius: 2px;
 }
 /* 文本 */
 .mdui-snackbar-text {
@@ -10680,10 +10735,6 @@ body.mdui-loaded .mdui-drawer {
   -webkit-transform: scale(1);
           transform: scale(1);
 }
-/* 带背景色的底部导航栏 */
-.mdui-bottom-nav[class*="mdui-color-"] .mdui-bottom-nav-active {
-  color: inherit;
-}
 /* 固定到页面底部 */
 body.mdui-bottom-nav-fixed {
   padding-bottom: 56px;
@@ -10693,6 +10744,72 @@ body.mdui-bottom-nav-fixed .mdui-bottom-nav {
   right: 0;
   bottom: 0;
   left: 0;
+}
+/**
+ * =============================================================================
+ * ************   Bottom Nav 主色   ************
+ * =============================================================================
+ */
+.mdui-theme-primary-amber .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #ffc107;
+}
+.mdui-theme-primary-blue .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #2196f3;
+}
+.mdui-theme-primary-blue-grey .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #607d8b;
+}
+.mdui-theme-primary-brown .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #795548;
+}
+.mdui-theme-primary-cyan .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #00bcd4;
+}
+.mdui-theme-primary-deep-orange .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #ff5722;
+}
+.mdui-theme-primary-deep-purple .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #673ab7;
+}
+.mdui-theme-primary-green .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #4caf50;
+}
+.mdui-theme-primary-grey .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #9e9e9e;
+}
+.mdui-theme-primary-indigo .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #3f51b5;
+}
+.mdui-theme-primary-light-blue .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #03a9f4;
+}
+.mdui-theme-primary-light-green .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #8bc34a;
+}
+.mdui-theme-primary-lime .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #cddc39;
+}
+.mdui-theme-primary-orange .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #ff9800;
+}
+.mdui-theme-primary-pink .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #e91e63;
+}
+.mdui-theme-primary-purple .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #9c27b0;
+}
+.mdui-theme-primary-red .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #f44336;
+}
+.mdui-theme-primary-teal .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #009688;
+}
+.mdui-theme-primary-yellow .mdui-bottom-nav a.mdui-bottom-nav-active {
+  color: #ffeb3b;
+}
+/* 带背景色的底部导航栏 */
+.mdui-bottom-nav[class*="mdui-color-"] .mdui-bottom-nav-active {
+  color: inherit;
 }
 /**
  * =============================================================================
@@ -11633,14 +11750,6 @@ body.mdui-bottom-nav-fixed .mdui-bottom-nav {
   margin-top: 8px;
   margin-bottom: 8px;
 }
-body:not(.mdui-support-touch) .mdui-menu::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background: transparent;
-}
-body:not(.mdui-support-touch) .mdui-menu::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, .2);
-}
 /* 打开状态的菜单 */
 .mdui-menu-open {
   visibility: visible;
@@ -11792,14 +11901,6 @@ body:not(.mdui-support-touch) .mdui-menu::-webkit-scrollbar-thumb {
 .mdui-theme-layout-dark .mdui-menu {
   color: #fff;
   background-color: #424242;
-}
-.mdui-theme-layout-dark:not(.mdui-support-touch) .mdui-menu::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background: transparent;
-}
-.mdui-theme-layout-dark:not(.mdui-support-touch) .mdui-menu::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, .3);
 }
 .mdui-theme-layout-dark .mdui-menu-item > a:hover {
   background-color: #616161;

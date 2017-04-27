@@ -5,6 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/mdui.svg)](https://www.npmjs.com/package/mdui)
 [![dependencies Status](https://david-dm.org/zdhxiong/mdui/status.svg)](https://david-dm.org/zdhxiong/mdui)
 [![devDependencies Status](https://david-dm.org/zdhxiong/mdui/dev-status.svg)](https://david-dm.org/zdhxiong/mdui?type=dev)
+[![Build Status](https://travis-ci.org/zdhxiong/mdui.svg?branch=master)](https://travis-ci.org/zdhxiong/mdui)
 
 MDUI 是一个基于 Material Design 的前端框架。
 
@@ -14,8 +15,8 @@ MDUI 是一个基于 Material Design 的前端框架。
 
 ### 轻量级
 
-- CSS 文件仅 **26.4KB minified + gzip**
-- JavaScript 文件仅 **12KB minified + gzip**
+- CSS 文件仅 **26.7KB minified + gzip**
+- JavaScript 文件仅 **14KB minified + gzip**
 
 ### 多主题
 

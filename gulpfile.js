@@ -9,6 +9,7 @@
  * gulp test-js-gulpfile  检查 gulpfile.js 文件的代码规范
  * gulp custom            定制打包
  * gulp build-jq          仅打包 jq 库
+ * gulp test              测试
  */
 
 ;(function () {
@@ -425,6 +426,9 @@
         cb();
       });
   });
+
+  // 测试
+  gulp.task('test', ['build']);
 
   // 监视文件
   gulp.task('watch', function () {

@@ -6,6 +6,7 @@
 [![dependencies Status](https://david-dm.org/zdhxiong/mdui/status.svg)](https://david-dm.org/zdhxiong/mdui)
 [![devDependencies Status](https://david-dm.org/zdhxiong/mdui/dev-status.svg)](https://david-dm.org/zdhxiong/mdui?type=dev)
 [![Build Status](https://travis-ci.org/zdhxiong/mdui.svg?branch=master)](https://travis-ci.org/zdhxiong/mdui)
+[![CDNJS](https://img.shields.io/cdnjs/v/mdui.svg)](https://cdnjs.com/libraries/mdui)
 
 MDUI 是一个基于 Material Design 的前端框架。
 

@@ -353,7 +353,7 @@
 
     gulp.src(paths.src.root + mdui.filename + '.less')
       .pipe(less({
-        globalVars: {
+        modifyVars: {
           globalPrimaryColors: mdui.primaryColors,
           globalPrimaryColorDegrees: mdui.primaryColorDegrees,
           globalAccentColors: mdui.accentColors,
@@ -634,7 +634,7 @@
       .pipe(concat(mdui.filename + '.custom.less'))
       .pipe(less({
         paths: [path.join(__dirname, 'less', 'includes')],
-        globalVars: {
+        modifyVars: {
           globalPrimaryColors: customPrimaryColors,
           globalPrimaryColorDegrees: customPrimaryColorDegrees,
           globalAccentColors: customAccentColors,

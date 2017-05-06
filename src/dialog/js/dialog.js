@@ -113,9 +113,9 @@ mdui.Dialog = (function () {
     }
 
     // 如果对话框元素没有在当前文档中，则需要添加
-    if (!$.contains($body[0], _this.$dialog[0])) {
+    if (!$.contains(document.body, _this.$dialog[0])) {
       _this.append = true;
-      $body.append(_this.$dialog);
+      $('body').append(_this.$dialog);
     }
 
     _this.options = $.extend({}, DEFAULT, (opts || {}));

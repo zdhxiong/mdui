@@ -4,7 +4,6 @@
  * =============================================================================
  */
 
-var $body = $('body');
 var $document = $(document);
 var $window = $(window);
 
@@ -140,6 +139,6 @@ $(function () {
   // https://css-tricks.com/transitions-only-after-page-load/
 
   setTimeout(function () {
-    $body.addClass('mdui-loaded');
+    $('body').addClass('mdui-loaded');
   }, 0);
 });

@@ -93,7 +93,7 @@
           ''
         ) +
       '</div>')
-      .appendTo($body);
+      .appendTo(document.body);
 
     // 设置位置
     _this.$snackbar

@@ -128,7 +128,7 @@ mdui.Tooltip = (function () {
       '<div class="mdui-tooltip" id="mdui-tooltip-' + guid + '">' +
         _this.options.content +
       '</div>'
-    ).appendTo($body);
+    ).appendTo(document.body);
 
     // 绑定事件
     _this.$target

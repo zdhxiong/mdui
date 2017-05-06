@@ -108,7 +108,7 @@ $.extend({
       }
 
       $overlay = $('<div class="mdui-overlay">')
-        .appendTo($body)
+        .appendTo(document.body)
         .reflow()
         .css('z-index', zIndex);
     }
@@ -151,6 +151,8 @@ $.extend({
    * 锁定屏幕
    */
   lockScreen: function () {
+    var $body = $('body');
+
     // 不直接把 body 设为 box-sizing: border-box，避免污染全局样式
     var newBodyWidth = $body.width();
 
@@ -167,6 +169,8 @@ $.extend({
    * @param force 是否强制解锁屏幕
    */
   unlockScreen: function (force) {
+    var $body = $('body');
+
     var level = force ? 1 : $body.data('lockscreen-level');
     if (level > 1) {
       $body.data('lockscreen-level', --level);

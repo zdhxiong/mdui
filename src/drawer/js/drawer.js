@@ -128,7 +128,7 @@ mdui.Drawer = (function () {
     componentEvent('open', 'drawer', _this, _this.$drawer);
 
     if (!_this.options.overlay) {
-      $body.addClass('mdui-drawer-body-' + _this.position);
+      $('body').addClass('mdui-drawer-body-' + _this.position);
     }
 
     _this.$drawer
@@ -162,7 +162,7 @@ mdui.Drawer = (function () {
     componentEvent('close', 'drawer', _this, _this.$drawer);
 
     if (!_this.options.overlay) {
-      $body.removeClass('mdui-drawer-body-' + _this.position);
+      $('body').removeClass('mdui-drawer-body-' + _this.position);
     }
 
     _this.$drawer

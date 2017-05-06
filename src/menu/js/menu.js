@@ -309,6 +309,10 @@ mdui.Menu = (function () {
     // 关闭子菜单
     $submenu
       .removeClass('mdui-menu-open')
+      .addClass('mdui-menu-closing')
+      .transitionEnd(function () {
+        $submenu.removeClass('mdui-menu-closing');
+      })
 
       // 移除激活状态的样式
       .parent('.mdui-menu-item')
@@ -316,8 +320,13 @@ mdui.Menu = (function () {
 
     // 循环关闭嵌套的子菜单
     $submenu.find('.mdui-menu').each(function () {
-      $(this)
+      var $subSubmenu = $(this);
+      $subSubmenu
         .removeClass('mdui-menu-open')
+        .addClass('mdui-menu-closing')
+        .transitionEnd(function () {
+          $subSubmenu.removeClass('mdui-menu-closing');
+        })
         .parent('.mdui-menu-item')
         .removeClass('mdui-menu-item-active');
     });
@@ -559,6 +568,8 @@ mdui.Menu = (function () {
    * @param inst
    */
   var transitionEnd = function (inst) {
+    inst.$menu.removeClass('mdui-menu-closing');
+
     if (inst.state === 'opening') {
       inst.state = 'opened';
       componentEvent('opened', 'menu', inst, inst.$menu);
@@ -627,6 +638,7 @@ mdui.Menu = (function () {
 
     _this.$menu
       .removeClass('mdui-menu-open')
+      .addClass('mdui-menu-closing')
       .transitionEnd(function () {
         transitionEnd(_this);
       });

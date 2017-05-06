@@ -92,8 +92,13 @@
   & when (@layout = light) {
     &::-webkit-scrollbar {
       background: transparent;
-      width: 8px;
-      height: 8px;
+      width: 5px;
+      height: 5px;
+      // 桌面端
+      @media (min-width: @screen-md-min) {
+        width: 8px;
+        height: 8px;
+      }
     }
 
     &::-webkit-scrollbar-thumb {
@@ -105,8 +110,13 @@
   & when (@layout = dark) {
     &::-webkit-scrollbar {
       background: transparent;
-      width: 8px;
-      height: 8px;
+      width: 5px;
+      height: 5px;
+      // 桌面端
+      @media (min-width: @screen-md-min) {
+        width: 8px;
+        height: 8px;
+      }
     }
 
     &::-webkit-scrollbar-thumb {

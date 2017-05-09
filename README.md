@@ -31,9 +31,12 @@ CSS 文件中已经包含了 **19种主色主题**、**16种强调色主题**、
 
 MDUI 使用纯 JavaScript 编写，没有任何依赖。
 
-## 安装
+## 获取 MDUI
+
+可以通过下列方式获取 MDUI：
 
 - [下载压缩包](https://github.com/zdhxiong/mdui/releases)
+- 从 CDN 获取：[https://cdnjs.com/libraries/mdui](https://cdnjs.com/libraries/mdui)
 - 通过 npm 安装: `npm install mdui`
 - 通过 Bower 安装: `bower install mdui`
 - 从 Github 下载源码: `git clone https://github.com/zdhxiong/mdui.git`
@@ -64,3 +67,11 @@ MDUI 在下列浏览器中经过测试
 
 - IE 10+
 - 最新版的 Firefox、Chrome、Safari、Edge
+
+## 赞助
+
+赞助以帮助 MDUI 持续更新
+
+![通过支付宝赞助](http://ww1.sinaimg.cn/large/63f511e3gy1fff5uk4hyyj205k06w3yr.jpg)
+![通过微信赞助](http://ww1.sinaimg.cn/large/63f511e3gy1fff5vr8x40j205k06waab.jpg)
+[![通过 Paypal 赞助](http://ww1.sinaimg.cn/large/63f511e3gy1fff6937xzbj203w00y3yc.jpg)](https://www.paypal.me/zdhxiong/5)

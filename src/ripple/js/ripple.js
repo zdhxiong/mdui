@@ -14,6 +14,11 @@
   var Ripple = {
 
     /**
+     * 延时，避免手指滑动时也触发涟漪（单位：毫秒）
+     */
+    delay: 200,
+
+    /**
      * 显示涟漪动画
      * @param e
      * @param $ripple
@@ -75,8 +80,8 @@
     /**
      * 隐藏涟漪动画
      */
-    hide: function () {
-      var $ripple = $(this);
+    hide: function (e, element) {
+      var $ripple = $(element || this);
 
       $ripple.children('.mdui-ripple-wave').each(function () {
         removeRipple($(this));
@@ -154,9 +159,47 @@
         return;
       }
 
-      Ripple.show(e, $ripple);
+      if (e.type === 'touchstart') {
+        var hidden = false;
 
-      $ripple.on('touchmove touchend touchcancel mousemove mouseup mouseleave', Ripple.hide);
+        // toucstart 触发指定时间后开始涟漪动画
+        var timer = setTimeout(function () {
+          timer = null;
+          Ripple.show(e, $ripple);
+        }, Ripple.delay);
+
+        var hideRipple = function (hideEvent) {
+          // 如果手指没有移动，且涟漪动画还没有开始，则开始涟漪动画
+          if (timer) {
+            clearTimeout(timer);
+            timer = null;
+            Ripple.show(e, $ripple);
+          }
+
+          if (!hidden) {
+            hidden = true;
+            Ripple.hide(hideEvent, $ripple);
+          }
+        };
+
+        // 手指移动后，移除涟漪动画
+        var touchMove = function (moveEvent) {
+          if (timer) {
+            clearTimeout(timer);
+            timer = null;
+          }
+
+          hideRipple(moveEvent);
+        };
+
+        $ripple
+          .on('touchmove', touchMove)
+          .on('touchend touchcancel', hideRipple);
+
+      } else {
+        Ripple.show(e, $ripple);
+        $ripple.on('touchmove touchend touchcancel mousemove mouseup mouseleave', Ripple.hide);
+      }
     }
   }
 

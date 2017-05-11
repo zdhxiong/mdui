@@ -72,6 +72,6 @@ MDUI 在下列浏览器中经过测试
 
 赞助以帮助 MDUI 持续更新
 
-![通过支付宝赞助](http://ww1.sinaimg.cn/large/63f511e3gy1fff5uk4hyyj205k06w3yr.jpg)
-![通过微信赞助](http://ww1.sinaimg.cn/large/63f511e3gy1fff5vr8x40j205k06waab.jpg)
+![通过支付宝赞助](http://ww1.sinaimg.cn/large/63f511e3gy1ffhw0jj5n4j206o089dge.jpg)
+![通过微信赞助](http://ww1.sinaimg.cn/large/63f511e3gy1ffhw0vkaeaj206o0890ta.jpg)
 [![通过 Paypal 赞助](http://ww1.sinaimg.cn/large/63f511e3gy1fff6937xzbj203w00y3yc.jpg)](https://www.paypal.me/zdhxiong/5)

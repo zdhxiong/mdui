@@ -11,6 +11,7 @@
   width: 100%;
   background-color: #fff;
   border: 1px solid @color-black-divider;
+  border-top: none;
   .mdui-shadow(2);
 
   tbody {
@@ -26,7 +27,7 @@
     text-align: left;
     padding: 12px 28px;
     box-sizing: border-box;
-    .mdui-divider-bottom-dark();
+    .mdui-divider-top-dark();
 
     &:last-child {
       padding-right: 24px;
@@ -37,17 +38,6 @@
     }
     &:nth-child(2) {
       padding-left: 24px;
-    }
-  }
-
-  /* 最后一行没有下边框 */
-  tbody {
-    tr {
-      &:last-child {
-        td {
-          border-bottom: none;
-        }
-      }
     }
   }
 
@@ -101,6 +91,7 @@ th.mdui-table-cell-checkbox {
   width: 100%;
   overflow-x: auto;
   border: 1px solid @color-black-divider;
+  border-top: none;
   .mdui-shadow(2);
 
   .mdui-table {
@@ -130,6 +121,7 @@ th.mdui-table-cell-checkbox {
   .mdui-table {
     background-color: @layout-dark-color-3;
     border: 1px solid @color-white-divider;
+    border-top: none;
 
     th, td {
       .mdui-divider-bottom-light();
@@ -154,6 +146,7 @@ th.mdui-table-cell-checkbox {
 
   .mdui-table-fluid {
     border: 1px solid @color-white-divider;
+    border-top: none;
 
     .mdui-table {
       .mdui-shadow(0);

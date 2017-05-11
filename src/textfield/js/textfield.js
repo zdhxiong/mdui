@@ -59,7 +59,8 @@
     // 表单验证
     if ((event === 'input' || event === 'blur') && !domLoadedEvent) {
       if (input.validity) {
-        $textField[input.validity.valid ? 'removeClass' : 'addClass']('mdui-textfield-invalid');
+        var method = input.validity.valid ? 'removeClass' : 'addClass';
+        $textField[method]('mdui-textfield-invalid-html5');
       }
     }
 

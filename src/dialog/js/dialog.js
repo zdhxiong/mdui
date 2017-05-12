@@ -267,43 +267,47 @@ mdui.Dialog = (function () {
   Dialog.prototype.close = function () {
     var _this = this;
 
-    if (_this.state === 'closing' || _this.state === 'closed') {
-      return;
-    }
-
-    currentInst = null;
-
-    _this.state = 'closing';
-    componentEvent('close', 'dialog', _this, _this.$dialog);
-
-    // 所有对话框都关闭，且当前没有打开的对话框时，隐藏遮罩
-    if (queue.queue(queueName).length === 0 && $overlay) {
-      $.hideOverlay();
-      $overlay = null;
-    }
-
-    _this.$dialog
-      .removeClass('mdui-dialog-open')
-      .transitionEnd(function () {
-        transitionEnd(_this);
-      });
-
-    if (_this.options.history && queue.queue(queueName).length === 0) {
-      // 是否需要后退历史纪录，默认为 false。
-      // 为 false 时是通过 js 关闭，需要后退一个历史记录
-      // 为 true 时是通过后退按钮关闭，不需要后退历史记录
-      if (!arguments[0]) {
-        window.history.back();
+    // setTimeout 的作用是：
+    // 当同时关闭一个对话框，并打开另一个对话框时，使打开对话框的操作先执行，以使需要打开的对话框先加入队列
+    setTimeout(function () {
+      if (_this.state === 'closing' || _this.state === 'closed') {
+        return;
       }
 
-      $window.off('hashchange', hashchangeEvent);
-    }
+      currentInst = null;
 
-    // 关闭旧对话框，打开新对话框。
-    // 加一点延迟，仅仅为了视觉效果更好。不加延时也不影响功能
-    setTimeout(function () {
-      queue.dequeue(queueName);
-    }, 100);
+      _this.state = 'closing';
+      componentEvent('close', 'dialog', _this, _this.$dialog);
+
+      // 所有对话框都关闭，且当前没有打开的对话框时，隐藏遮罩
+      if (queue.queue(queueName).length === 0 && $overlay) {
+        $.hideOverlay();
+        $overlay = null;
+      }
+
+      _this.$dialog
+        .removeClass('mdui-dialog-open')
+        .transitionEnd(function () {
+          transitionEnd(_this);
+        });
+
+      if (_this.options.history && queue.queue(queueName).length === 0) {
+        // 是否需要后退历史纪录，默认为 false。
+        // 为 false 时是通过 js 关闭，需要后退一个历史记录
+        // 为 true 时是通过后退按钮关闭，不需要后退历史记录
+        if (!arguments[0]) {
+          window.history.back();
+        }
+
+        $window.off('hashchange', hashchangeEvent);
+      }
+
+      // 关闭旧对话框，打开新对话框。
+      // 加一点延迟，仅仅为了视觉效果更好。不加延时也不影响功能
+      setTimeout(function () {
+        queue.dequeue(queueName);
+      }, 100);
+    }, 0);
   };
 
   /**

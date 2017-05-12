@@ -86,7 +86,7 @@ mdui.Dialog = (function () {
    * @param e
    */
   var overlayClick = function (e) {
-    if ($(e.target).hasClass('mdui-overlay')) {
+    if ($(e.target).hasClass('mdui-overlay') && currentInst) {
       currentInst.close();
     }
   };
@@ -150,6 +150,36 @@ mdui.Dialog = (function () {
   }
 
   /**
+   * 动画结束回调
+   * @param inst
+   */
+  var transitionEnd = function (inst) {
+    if (inst.$dialog.hasClass('mdui-dialog-open')) {
+      inst.state = 'opened';
+      componentEvent('opened', 'dialog', inst, inst.$dialog);
+    } else {
+      inst.state = 'closed';
+      componentEvent('closed', 'dialog', inst, inst.$dialog);
+
+      inst.$dialog.hide();
+
+      // 所有对话框都关闭，且当前没有打开的对话框时，解锁屏幕
+      if (queue.queue(queueName).length === 0 && !currentInst && isLockScreen) {
+        $.unlockScreen();
+        isLockScreen = false;
+      }
+
+      $window.off('resize', $.throttle(function () {
+        readjust();
+      }, 100));
+
+      if (inst.options.destroyOnClosed) {
+        inst.destroy();
+      }
+    }
+  };
+
+  /**
    * 打开指定对话框
    * @private
    */
@@ -177,13 +207,7 @@ mdui.Dialog = (function () {
     _this.$dialog
       .addClass('mdui-dialog-open')
       .transitionEnd(function () {
-        if (_this.$dialog.hasClass('mdui-dialog-open')) {
-          _this.state = 'opened';
-          componentEvent('opened', 'dialog', _this, _this.$dialog);
-        } else {
-          _this.state = 'closed';
-          componentEvent('closed', 'dialog', _this, _this.$dialog);
-        }
+        transitionEnd(_this);
       });
 
     // 不存在遮罩层元素时，添加遮罩层
@@ -261,29 +285,7 @@ mdui.Dialog = (function () {
     _this.$dialog
       .removeClass('mdui-dialog-open')
       .transitionEnd(function () {
-        if (!_this.$dialog.hasClass('mdui-dialog-open')) {
-          _this.state = 'closed';
-          componentEvent('closed', 'dialog', _this, _this.$dialog);
-
-          _this.$dialog.hide();
-
-          // 所有对话框都关闭，且当前没有打开的对话框时，解锁屏幕
-          if (queue.queue(queueName).length === 0 && !currentInst && isLockScreen) {
-            $.unlockScreen();
-            isLockScreen = false;
-          }
-
-          $window.off('resize', $.throttle(function () {
-            readjust();
-          }, 100));
-
-          if (_this.options.destroyOnClosed) {
-            _this.destroy();
-          }
-        } else {
-          _this.state = 'opened';
-          componentEvent('opened', 'dialog', _this, _this.$dialog);
-        }
+        transitionEnd(_this);
       });
 
     if (_this.options.history && queue.queue(queueName).length === 0) {

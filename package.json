@@ -31,7 +31,7 @@
     "chai": "3.5.0",
     "del": "2.2.2",
     "gulp": "3.9.1",
-    "gulp-autoprefixer": "3.1.1",
+    "gulp-autoprefixer": "4.0.0",
     "gulp-concat": "2.6.1",
     "gulp-copy": "1.0.0",
     "gulp-csscomb": "3.0.8",
@@ -42,12 +42,12 @@
     "gulp-less": "3.3.0",
     "gulp-minify-css": "1.2.4",
     "gulp-rename": "1.2.2",
-    "gulp-tap": "0.4.2",
+    "gulp-tap": "1.0.1",
     "gulp-uglify": "2.1.2",
     "gulp-zip": "4.0.0",
     "jquery": "3.2.1",
     "jshint": "2.9.4",
-    "mocha": "3.3.0"
+    "mocha": "3.4.1"
   },
   "engines": {
     "node": ">=6.10.0"

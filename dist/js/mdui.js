@@ -1,5 +1,5 @@
 /*!
- * mdui v0.2.0 (http://mdui.org)
+ * mdui v0.2.1 (http://mdui.org)
  * Copyright 2016-2017 zdhxiong
  * Licensed under MIT
  */
@@ -1818,7 +1818,6 @@
    * =============================================================================
    */
 
-  var $body = $('body');
   var $document = $(document);
   var $window = $(window);
 
@@ -1954,7 +1953,7 @@
     // https://css-tricks.com/transitions-only-after-page-load/
 
     setTimeout(function () {
-      $body.addClass('mdui-loaded');
+      $('body').addClass('mdui-loaded');
     }, 0);
   });
 
@@ -2131,7 +2130,7 @@
         }
 
         $overlay = $('<div class="mdui-overlay">')
-          .appendTo($body)
+          .appendTo(document.body)
           .reflow()
           .css('z-index', zIndex);
       }
@@ -2174,6 +2173,8 @@
      * 锁定屏幕
      */
     lockScreen: function () {
+      var $body = $('body');
+
       // 不直接把 body 设为 box-sizing: border-box，避免污染全局样式
       var newBodyWidth = $body.width();
 
@@ -2190,6 +2191,8 @@
      * @param force 是否强制解锁屏幕
      */
     unlockScreen: function (force) {
+      var $body = $('body');
+
       var level = force ? 1 : $body.data('lockscreen-level');
       if (level > 1) {
         $body.data('lockscreen-level', --level);
@@ -2960,6 +2963,11 @@
     var Ripple = {
 
       /**
+       * 延时，避免手指滑动时也触发涟漪（单位：毫秒）
+       */
+      delay: 200,
+
+      /**
        * 显示涟漪动画
        * @param e
        * @param $ripple
@@ -3021,8 +3029,8 @@
       /**
        * 隐藏涟漪动画
        */
-      hide: function () {
-        var $ripple = $(this);
+      hide: function (e, element) {
+        var $ripple = $(element || this);
 
         $ripple.children('.mdui-ripple-wave').each(function () {
           removeRipple($(this));
@@ -3100,9 +3108,47 @@
           return;
         }
 
-        Ripple.show(e, $ripple);
+        if (e.type === 'touchstart') {
+          var hidden = false;
 
-        $ripple.on('touchmove touchend touchcancel mousemove mouseup mouseleave', Ripple.hide);
+          // toucstart 触发指定时间后开始涟漪动画
+          var timer = setTimeout(function () {
+            timer = null;
+            Ripple.show(e, $ripple);
+          }, Ripple.delay);
+
+          var hideRipple = function (hideEvent) {
+            // 如果手指没有移动，且涟漪动画还没有开始，则开始涟漪动画
+            if (timer) {
+              clearTimeout(timer);
+              timer = null;
+              Ripple.show(e, $ripple);
+            }
+
+            if (!hidden) {
+              hidden = true;
+              Ripple.hide(hideEvent, $ripple);
+            }
+          };
+
+          // 手指移动后，移除涟漪动画
+          var touchMove = function (moveEvent) {
+            if (timer) {
+              clearTimeout(timer);
+              timer = null;
+            }
+
+            hideRipple(moveEvent);
+          };
+
+          $ripple
+            .on('touchmove', touchMove)
+            .on('touchend touchcancel', hideRipple);
+
+        } else {
+          Ripple.show(e, $ripple);
+          $ripple.on('touchmove touchend touchcancel mousemove mouseup mouseleave', Ripple.hide);
+        }
       }
     }
 
@@ -3174,7 +3220,8 @@
       // 表单验证
       if ((event === 'input' || event === 'blur') && !domLoadedEvent) {
         if (input.validity) {
-          $textField[input.validity.valid ? 'removeClass' : 'addClass']('mdui-textfield-invalid');
+          var method = input.validity.valid ? 'removeClass' : 'addClass';
+          $textField[method]('mdui-textfield-invalid-html5');
         }
       }
 
@@ -4017,7 +4064,7 @@
       componentEvent('open', 'drawer', _this, _this.$drawer);
 
       if (!_this.options.overlay) {
-        $body.addClass('mdui-drawer-body-' + _this.position);
+        $('body').addClass('mdui-drawer-body-' + _this.position);
       }
 
       _this.$drawer
@@ -4051,7 +4098,7 @@
       componentEvent('close', 'drawer', _this, _this.$drawer);
 
       if (!_this.options.overlay) {
-        $body.removeClass('mdui-drawer-body-' + _this.position);
+        $('body').removeClass('mdui-drawer-body-' + _this.position);
       }
 
       _this.$drawer
@@ -4210,7 +4257,7 @@
      * @param e
      */
     var overlayClick = function (e) {
-      if ($(e.target).hasClass('mdui-overlay')) {
+      if ($(e.target).hasClass('mdui-overlay') && currentInst) {
         currentInst.close();
       }
     };
@@ -4237,9 +4284,9 @@
       }
 
       // 如果对话框元素没有在当前文档中，则需要添加
-      if (!$.contains($body[0], _this.$dialog[0])) {
+      if (!$.contains(document.body, _this.$dialog[0])) {
         _this.append = true;
-        $body.append(_this.$dialog);
+        $('body').append(_this.$dialog);
       }
 
       _this.options = $.extend({}, DEFAULT, (opts || {}));
@@ -4274,6 +4321,36 @@
     }
 
     /**
+     * 动画结束回调
+     * @param inst
+     */
+    var transitionEnd = function (inst) {
+      if (inst.$dialog.hasClass('mdui-dialog-open')) {
+        inst.state = 'opened';
+        componentEvent('opened', 'dialog', inst, inst.$dialog);
+      } else {
+        inst.state = 'closed';
+        componentEvent('closed', 'dialog', inst, inst.$dialog);
+
+        inst.$dialog.hide();
+
+        // 所有对话框都关闭，且当前没有打开的对话框时，解锁屏幕
+        if (queue.queue(queueName).length === 0 && !currentInst && isLockScreen) {
+          $.unlockScreen();
+          isLockScreen = false;
+        }
+
+        $window.off('resize', $.throttle(function () {
+          readjust();
+        }, 100));
+
+        if (inst.options.destroyOnClosed) {
+          inst.destroy();
+        }
+      }
+    };
+
+    /**
      * 打开指定对话框
      * @private
      */
@@ -4301,13 +4378,7 @@
       _this.$dialog
         .addClass('mdui-dialog-open')
         .transitionEnd(function () {
-          if (_this.$dialog.hasClass('mdui-dialog-open')) {
-            _this.state = 'opened';
-            componentEvent('opened', 'dialog', _this, _this.$dialog);
-          } else {
-            _this.state = 'closed';
-            componentEvent('closed', 'dialog', _this, _this.$dialog);
-          }
+          transitionEnd(_this);
         });
 
       // 不存在遮罩层元素时，添加遮罩层
@@ -4367,65 +4438,47 @@
     Dialog.prototype.close = function () {
       var _this = this;
 
-      if (_this.state === 'closing' || _this.state === 'closed') {
-        return;
-      }
-
-      currentInst = null;
-
-      _this.state = 'closing';
-      componentEvent('close', 'dialog', _this, _this.$dialog);
-
-      // 所有对话框都关闭，且当前没有打开的对话框时，隐藏遮罩
-      if (queue.queue(queueName).length === 0 && $overlay) {
-        $.hideOverlay();
-        $overlay = null;
-      }
-
-      _this.$dialog
-        .removeClass('mdui-dialog-open')
-        .transitionEnd(function () {
-          if (!_this.$dialog.hasClass('mdui-dialog-open')) {
-            _this.state = 'closed';
-            componentEvent('closed', 'dialog', _this, _this.$dialog);
-
-            _this.$dialog.hide();
-
-            // 所有对话框都关闭，且当前没有打开的对话框时，解锁屏幕
-            if (queue.queue(queueName).length === 0 && !currentInst && isLockScreen) {
-              $.unlockScreen();
-              isLockScreen = false;
-            }
-
-            $window.off('resize', $.throttle(function () {
-              readjust();
-            }, 100));
-
-            if (_this.options.destroyOnClosed) {
-              _this.destroy();
-            }
-          } else {
-            _this.state = 'opened';
-            componentEvent('opened', 'dialog', _this, _this.$dialog);
-          }
-        });
-
-      if (_this.options.history && queue.queue(queueName).length === 0) {
-        // 是否需要后退历史纪录，默认为 false。
-        // 为 false 时是通过 js 关闭，需要后退一个历史记录
-        // 为 true 时是通过后退按钮关闭，不需要后退历史记录
-        if (!arguments[0]) {
-          window.history.back();
+      // setTimeout 的作用是：
+      // 当同时关闭一个对话框，并打开另一个对话框时，使打开对话框的操作先执行，以使需要打开的对话框先加入队列
+      setTimeout(function () {
+        if (_this.state === 'closing' || _this.state === 'closed') {
+          return;
         }
 
-        $window.off('hashchange', hashchangeEvent);
-      }
+        currentInst = null;
 
-      // 关闭旧对话框，打开新对话框。
-      // 加一点延迟，仅仅为了视觉效果更好。不加延时也不影响功能
-      setTimeout(function () {
-        queue.dequeue(queueName);
-      }, 100);
+        _this.state = 'closing';
+        componentEvent('close', 'dialog', _this, _this.$dialog);
+
+        // 所有对话框都关闭，且当前没有打开的对话框时，隐藏遮罩
+        if (queue.queue(queueName).length === 0 && $overlay) {
+          $.hideOverlay();
+          $overlay = null;
+        }
+
+        _this.$dialog
+          .removeClass('mdui-dialog-open')
+          .transitionEnd(function () {
+            transitionEnd(_this);
+          });
+
+        if (_this.options.history && queue.queue(queueName).length === 0) {
+          // 是否需要后退历史纪录，默认为 false。
+          // 为 false 时是通过 js 关闭，需要后退一个历史记录
+          // 为 true 时是通过后退按钮关闭，不需要后退历史记录
+          if (!arguments[0]) {
+            window.history.back();
+          }
+
+          $window.off('hashchange', hashchangeEvent);
+        }
+
+        // 关闭旧对话框，打开新对话框。
+        // 加一点延迟，仅仅为了视觉效果更好。不加延时也不影响功能
+        setTimeout(function () {
+          queue.dequeue(queueName);
+        }, 100);
+      }, 0);
     };
 
     /**
@@ -5016,7 +5069,7 @@
         '<div class="mdui-tooltip" id="mdui-tooltip-' + guid + '">' +
           _this.options.content +
         '</div>'
-      ).appendTo($body);
+      ).appendTo(document.body);
 
       // 绑定事件
       _this.$target
@@ -5183,6 +5236,8 @@
         var options = parseOptions($this.attr('mdui-tooltip'));
         inst = new mdui.Tooltip($this, options);
         $this.data('mdui.tooltip', inst);
+
+        inst.open();
       }
     });
   });
@@ -5283,7 +5338,7 @@
             ''
           ) +
         '</div>')
-        .appendTo($body);
+        .appendTo(document.body);
 
       // 设置位置
       _this.$snackbar
@@ -5859,6 +5914,10 @@
       // 关闭子菜单
       $submenu
         .removeClass('mdui-menu-open')
+        .addClass('mdui-menu-closing')
+        .transitionEnd(function () {
+          $submenu.removeClass('mdui-menu-closing');
+        })
 
         // 移除激活状态的样式
         .parent('.mdui-menu-item')
@@ -5866,8 +5925,13 @@
 
       // 循环关闭嵌套的子菜单
       $submenu.find('.mdui-menu').each(function () {
-        $(this)
+        var $subSubmenu = $(this);
+        $subSubmenu
           .removeClass('mdui-menu-open')
+          .addClass('mdui-menu-closing')
+          .transitionEnd(function () {
+            $subSubmenu.removeClass('mdui-menu-closing');
+          })
           .parent('.mdui-menu-item')
           .removeClass('mdui-menu-item-active');
       });
@@ -6109,6 +6173,8 @@
      * @param inst
      */
     var transitionEnd = function (inst) {
+      inst.$menu.removeClass('mdui-menu-closing');
+
       if (inst.state === 'opening') {
         inst.state = 'opened';
         componentEvent('opened', 'menu', inst, inst.$menu);
@@ -6177,6 +6243,7 @@
 
       _this.$menu
         .removeClass('mdui-menu-open')
+        .addClass('mdui-menu-closing')
         .transitionEnd(function () {
           transitionEnd(_this);
         });

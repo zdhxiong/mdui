@@ -1,5 +1,5 @@
 /*!
- * mdui v0.2.0 (http://mdui.org)
+ * mdui v0.2.1 (http://mdui.org)
  * Copyright 2016-2017 zdhxiong
  * Licensed under MIT
  */
@@ -5038,17 +5038,29 @@ body {
   }
 }
 body *::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 5px;
+  height: 5px;
   background: transparent;
+}
+@media (min-width: 1024px) {
+  body *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
 }
 body *::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, .2);
 }
 body.mdui-theme-layout-dark *::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 5px;
+  height: 5px;
   background: transparent;
+}
+@media (min-width: 1024px) {
+  body.mdui-theme-layout-dark *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
 }
 body.mdui-theme-layout-dark *::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, .3);
@@ -5813,8 +5825,8 @@ body.mdui-locked {
   border-collapse: separate;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, .12);
+  border-top: none;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
-  /* 最后一行没有下边框 */
 }
 .mdui-table tbody tr {
   position: relative;
@@ -5828,7 +5840,7 @@ body.mdui-locked {
   padding: 12px 28px;
   text-align: left;
   vertical-align: middle;
-  border-bottom: 1px solid rgba(0, 0, 0, .12);
+  border-top: 1px solid rgba(0, 0, 0, .12);
 }
 .mdui-table th:last-child,
 .mdui-table td:last-child {
@@ -5842,9 +5854,6 @@ body.mdui-locked {
 .mdui-table th:nth-child(2),
 .mdui-table td:nth-child(2) {
   padding-left: 24px;
-}
-.mdui-table tbody tr:last-child td {
-  border-bottom: none;
 }
 .mdui-table th {
   overflow: hidden;
@@ -5885,6 +5894,7 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   width: 100%;
   overflow-x: auto;
   border: 1px solid rgba(0, 0, 0, .12);
+  border-top: none;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
 }
 .mdui-table-fluid .mdui-table {
@@ -5908,6 +5918,7 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-layout-dark .mdui-table {
   background-color: #303030;
   border: 1px solid rgba(255, 255, 255, .12);
+  border-top: none;
 }
 .mdui-theme-layout-dark .mdui-table th,
 .mdui-theme-layout-dark .mdui-table td {
@@ -5924,6 +5935,7 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 }
 .mdui-theme-layout-dark .mdui-table-fluid {
   border: 1px solid rgba(255, 255, 255, .12);
+  border-top: none;
 }
 .mdui-theme-layout-dark .mdui-table-fluid .mdui-table {
   border: none;
@@ -6291,25 +6303,32 @@ textarea.mdui-textfield-input {
 }
 /* 表单验证不通过
    =========== */
-.mdui-textfield-invalid .mdui-textfield-input {
+.mdui-textfield-invalid .mdui-textfield-input,
+.mdui-textfield-invalid-html5 .mdui-textfield-input {
   border-bottom: 1px solid #f44336 !important;
   box-shadow: 0 1px 0 0 #f44336 !important;
 }
-.mdui-textfield-invalid.mdui-textfield-focus .mdui-textfield-input {
+.mdui-textfield-invalid.mdui-textfield-focus .mdui-textfield-input,
+.mdui-textfield-invalid-html5.mdui-textfield-focus .mdui-textfield-input {
   border-bottom: 1px solid #f44336 !important;
   box-shadow: 0 1px 0 0 #f44336 !important;
 }
-.mdui-textfield-invalid .mdui-textfield-label {
+.mdui-textfield-invalid .mdui-textfield-label,
+.mdui-textfield-invalid-html5 .mdui-textfield-label {
   color: #f44336 !important;
 }
-.mdui-textfield-invalid.mdui-textfield-floating-label .mdui-textfield-label {
+.mdui-textfield-invalid.mdui-textfield-floating-label .mdui-textfield-label,
+.mdui-textfield-invalid-html5.mdui-textfield-floating-label .mdui-textfield-label {
   color: rgba(244, 67, 54, .35) !important;
 }
 .mdui-textfield-invalid.mdui-textfield-floating-label.mdui-textfield-focus .mdui-textfield-label,
-.mdui-textfield-invalid.mdui-textfield-floating-label.mdui-textfield-not-empty .mdui-textfield-label {
+.mdui-textfield-invalid-html5.mdui-textfield-floating-label.mdui-textfield-focus .mdui-textfield-label,
+.mdui-textfield-invalid.mdui-textfield-floating-label.mdui-textfield-not-empty .mdui-textfield-label,
+.mdui-textfield-invalid-html5.mdui-textfield-floating-label.mdui-textfield-not-empty .mdui-textfield-label {
   color: #f44336 !important;
 }
-.mdui-textfield-invalid .mdui-textfield-error {
+.mdui-textfield-invalid .mdui-textfield-error,
+.mdui-textfield-invalid-html5 .mdui-textfield-error {
   visibility: visible;
 }
 /* 禁用表单
@@ -7999,7 +8018,7 @@ input.mdui-btn[type="submit"] {
 /* 含菜单的浮动操作按钮 */
 .mdui-fab-wrapper {
   position: relative;
-  z-index: 8000;
+  z-index: 4000;
   width: 56px;
   height: 56px;
   padding-top: 8px;
@@ -8129,6 +8148,7 @@ input.mdui-btn[type="submit"] {
   padding-left: 8px;
 }
 /* 取消列间距 */
+.mdui-row-gapless .mdui-col,
 .mdui-row-gapless [class*="mdui-col-xs-"],
 .mdui-row-gapless [class*="mdui-col-sm-"],
 .mdui-row-gapless [class*="mdui-col-md-"],
@@ -8136,6 +8156,11 @@ input.mdui-btn[type="submit"] {
 .mdui-row-gapless [class*="mdui-col-xl-"] {
   padding-right: 0;
   padding-left: 0;
+}
+.mdui-row-gapless .mdui-row,
+.mdui-row-gapless [class*="mdui-row-"] {
+  margin-right: 0;
+  margin-left: 0;
 }
 .mdui-col-xs-1 {
   float: left;
@@ -9472,9 +9497,15 @@ input.mdui-btn[type="submit"] {
   background-color: #fff;
 }
 .mdui-tab[class*="mdui-color-"]:not(.mdui-color-white)::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 5px;
+  height: 5px;
   background: transparent;
+}
+@media (min-width: 1024px) {
+  .mdui-tab[class*="mdui-color-"]:not(.mdui-color-white)::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
 }
 .mdui-tab[class*="mdui-color-"]:not(.mdui-color-white)::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, .3);
@@ -9846,6 +9877,7 @@ input.mdui-btn[type="submit"] {
 .mdui-list-dense .mdui-subheader-inset {
   height: 40px;
   margin-top: 4px;
+  font-size: 12px;
   line-height: 40px;
 }
 .mdui-list-dense .mdui-subheader:first-child,
@@ -10809,7 +10841,7 @@ body.mdui-bottom-nav-fixed .mdui-bottom-nav {
 }
 /* 带背景色的底部导航栏 */
 .mdui-bottom-nav[class*="mdui-color-"] .mdui-bottom-nav-active {
-  color: inherit;
+  color: inherit !important;
 }
 /**
  * =============================================================================
@@ -11754,6 +11786,13 @@ body.mdui-bottom-nav-fixed .mdui-bottom-nav {
 .mdui-menu-open {
   visibility: visible;
   opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+/* 关闭中的菜单 */
+.mdui-menu-closing {
+  visibility: visible;
+  opacity: 0;
   -webkit-transform: scale(1);
           transform: scale(1);
 }

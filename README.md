@@ -36,7 +36,9 @@ MDUI 使用纯 JavaScript 编写，没有任何依赖。
 可以通过下列方式获取 MDUI：
 
 - [下载压缩包](https://github.com/zdhxiong/mdui/releases)
-- 从 CDN 获取：[https://cdnjs.com/libraries/mdui](https://cdnjs.com/libraries/mdui)
+- 从 CDN 获取：
+  - cdnjs: [https://cdnjs.com/libraries/mdui](https://cdnjs.com/libraries/mdui) （国外访问较快）
+  - bootcdn: [http://www.bootcdn.cn/mdui/](http://www.bootcdn.cn/mdui/) （国内访问较快）
 - 通过 npm 安装: `npm install mdui`
 - 通过 Bower 安装: `bower install mdui`
 - 从 Github 下载源码: `git clone https://github.com/zdhxiong/mdui.git`

@@ -10,7 +10,7 @@
     "mobile-first",
     "web"
   ],
-  "homepage": "http://mdui.org",
+  "homepage": "https://mdui.org",
   "author": "zdhxiong",
   "scripts": {
     "test": "gulp test"

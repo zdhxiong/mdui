@@ -1,0 +1,59 @@
+/**
+ * =============================================================================
+ * ************   pagination 分页   ************
+ * =============================================================================
+ */
+
+.mdui-pagination {
+
+  // 去除 ul 的padding和头标志,
+  padding-left: 0;
+  list-style-type: none;
+
+  // 将 li 转为行内块元素
+  li {
+    display: inline-block;
+    border-radius: 2px;
+    text-align: center;
+    vertical-align: top;
+    height: 30px;
+
+    a {
+      text-decoration: none;
+      display: inline-block;
+      font-size: 1.2rem;
+      padding: 0 10px;
+      line-height: 30px;
+      color: inherit;
+    }
+
+    i {
+
+      color: inherit;
+
+    }
+
+    // 当前页样式
+    &.active a {
+
+      color: #fff;
+
+    }
+
+    &.active { 
+
+      background-color:black;
+
+    }
+
+   // 禁用样式
+    &.disabled a {
+
+      cursor: default;
+      color: @color-black-icon-disabled;
+
+    }
+
+  }
+
+}

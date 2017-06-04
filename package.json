@@ -24,7 +24,7 @@
   },
   "bugs": {
     "url": "https://github.com/zdhxiong/mdui/issues",
-    "email" : "zdhxiong@gmail.com"
+    "email": "zdhxiong@gmail.com"
   },
   "license": "MIT",
   "devDependencies": {
@@ -51,5 +51,6 @@
   },
   "engines": {
     "node": ">=6.10.0"
-  }
+  },
+  "types": "./types/mdui.d.ts"
 }

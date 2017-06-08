@@ -84,7 +84,9 @@ mdui.Fab = (function () {
         15 * (_this.$dialBtns.length - index) + 'ms';
     });
 
-    _this.$dial.addClass('mdui-fab-dial-show');
+    _this.$dial
+      .css('height', 'auto')
+      .addClass('mdui-fab-dial-show');
 
     // 如果按钮中存在 .mdui-fab-opened 的图标，则进行图标切换
     if (_this.$btn.find('.mdui-fab-opened').length) {
@@ -128,6 +130,7 @@ mdui.Fab = (function () {
       if (!_this.$btn.hasClass('mdui-fab-opened')) {
         _this.state = 'closed';
         componentEvent('closed', 'fab', _this, _this.$fab);
+        _this.$dial.css('height', 0);
       }
     });
   };

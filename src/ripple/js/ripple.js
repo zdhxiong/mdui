@@ -142,6 +142,11 @@
 
     TouchHandler.register(e);
 
+    // Chrome 59 点击滚动条时，会在 document 上触发事件
+    if (e.target === document) {
+      return;
+    }
+
     var $ripple;
     var $target = $(e.target);
 

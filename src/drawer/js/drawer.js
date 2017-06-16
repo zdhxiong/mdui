@@ -16,8 +16,8 @@ mdui.Drawer = (function () {
   var DEFAULT = {
     // 在桌面设备上是否显示遮罩层。手机和平板不受这个参数影响，始终会显示遮罩层
     overlay: false,
-    // 手势的触发范围 (px)
-    swipeAreaWidth: 30
+    // 是否开启手势
+    swipe: false
   };
 
   var isDesktop = function () {
@@ -108,6 +108,8 @@ mdui.Drawer = (function () {
     var swipeStartX;
     var swiping = false;
     var maybeSwiping = false;
+    // 手势触发的范围
+    var swipeAreaWidth = 30;
 
     _this.enableSwipeHandling = function () {
       if (!openNavEventHandler) {
@@ -150,8 +152,8 @@ mdui.Drawer = (function () {
         event.touches[0].pageX;
       var touchY = event.touches[0].pageY;
 
-      if (_this.options.swipeAreaWidth !== null && _this.state !== 'opened') {
-        if (touchX > _this.options.swipeAreaWidth) {
+      if (swipeAreaWidth !== null && _this.state !== 'opened') {
+        if (touchX > swipeAreaWidth) {
           return;
         }
       }
@@ -230,6 +232,10 @@ mdui.Drawer = (function () {
       document.body.removeEventListener('touchmove', onBodyTouchMove);
       document.body.removeEventListener('touchend', onBodyTouchEnd);
       document.body.removeEventListener('touchcancel', onBodyTouchMove);
+    }
+
+    if (_this.options.swipe) {
+      _this.enableSwipeHandling();
     }
   }
 

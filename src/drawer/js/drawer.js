@@ -16,8 +16,9 @@ mdui.Drawer = (function () {
   var DEFAULT = {
     // 在桌面设备上是否显示遮罩层。手机和平板不受这个参数影响，始终会显示遮罩层
     overlay: false,
+
     // 是否开启手势
-    swipe: false
+    swipe: false,
   };
 
   var isDesktop = function () {
@@ -108,6 +109,7 @@ mdui.Drawer = (function () {
     var swipeStartX;
     var swiping = false;
     var maybeSwiping = false;
+
     // 手势触发的范围
     var swipeAreaWidth = 30;
 
@@ -121,8 +123,10 @@ mdui.Drawer = (function () {
     function setPosition(translateX, closeTransform) {
       var rtlTranslateMultiplier = _this.position === 'right' ? -1 : 1;
       var drawer = _this.$drawer;
-      var transformCSS = 'translate(' + (-1 * rtlTranslateMultiplier * translateX) + 'px, 0) !important;';
-      drawer.css('cssText', 'transform:' + transformCSS + (closeTransform ? 'transition: initial !important;' : ''));
+      var transformCSS =
+        'translate(' + (-1 * rtlTranslateMultiplier * translateX) + 'px, 0) !important;';
+      drawer.css('cssText',
+        'transform:' + transformCSS + (closeTransform ? 'transition: initial !important;' : ''));
     }
 
     function cleanPosition() {

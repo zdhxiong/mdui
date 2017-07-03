@@ -10,7 +10,7 @@
     return (
       typeof obj === 'object' &&
       obj !== null &&
-      typeof obj[prop] !== 'undefined' &&
+      obj[prop] !== undefined &&
       obj[prop]
     ) ? obj[prop] : false;
   };

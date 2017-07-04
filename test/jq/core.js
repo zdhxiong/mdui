@@ -227,10 +227,20 @@ describe('核心', function () {
   });
 
   it('$.param() - 将表单元素数组或者对象序列化', function () {
-    assert.equal( decodeURI($.param({width:1680, height:1050})), 'width=1680&height=1050');
-    assert.equal( decodeURI($.param({foo: {one: 1,two: 2 } })), 'foo[one]=1&foo[two]=2');
-    assert.equal( decodeURI($.param({ids:["a1","b2","c3"], c:{g:23,e:[567]}, a:3 })), 'ids[]=a1&ids[]=b2&ids[]=c3&c[g]=23&c[e][]=567&a=3');
-    assert.equal( decodeURI($.param({ids:[1,2,3] })), 'ids[]=1&ids[]=2&ids[]=3');
+    assert.equal( $.param({width:1680, height:1050}), 'width=1680&height=1050');
+    assert.equal( decodeURIComponent($.param({width:1680, height:1050})), 'width=1680&height=1050');
+
+    assert.equal( $.param({foo: {one: 1,two: 2 } }), 'foo%5Bone%5D=1&foo%5Btwo%5D=2');
+    assert.equal( decodeURIComponent($.param({foo: {one: 1,two: 2 } })), 'foo[one]=1&foo[two]=2');
+
+    assert.equal( $.param({ids:["a1","b2","c3"], c:{g:23,e:[567]}, a:3 }), 'ids%5B%5D=a1&ids%5B%5D=b2&ids%5B%5D=c3&c%5Bg%5D=23&c%5Be%5D%5B%5D=567&a=3');
+    assert.equal( decodeURIComponent($.param({ids:["a1","b2","c3"], c:{g:23,e:[567]}, a:3 })), 'ids[]=a1&ids[]=b2&ids[]=c3&c[g]=23&c[e][]=567&a=3');
+
+    assert.equal( $.param({ids:[1,2,3] }), 'ids%5B%5D=1&ids%5B%5D=2&ids%5B%5D=3');
+    assert.equal( decodeURIComponent($.param({ids:[1,2,3] })), 'ids[]=1&ids[]=2&ids[]=3');
+
+    assert.equal( $.param({a: 'a+b', b: 'b c'}), 'a=a%2Bb&b=b%20c');
+    assert.equal( decodeURIComponent($.param({a: 'a+b', b: 'b c'})), 'a=a+b&b=b c' );
   });
 
   it('.length - 对象中元素的个数', function () {

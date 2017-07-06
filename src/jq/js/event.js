@@ -191,16 +191,11 @@
         return;
       }
 
-      var evt;
-      try {
-        evt = new CustomEvent(eventName, { detail: data, bubbles: true, cancelable: true });
-      } catch (e) {
-        evt = document.createEvent('Event');
-        evt.initEvent(eventName, true, true);
-        evt.detail = data;
-      }
-
-      evt._data = data;
+      var evt = new CustomEvent(eventName, {
+        detail: data,
+        bubbles: true,
+        cancelable: true,
+      });
 
       return this.each(function () {
         this.dispatchEvent(evt);
@@ -238,7 +233,8 @@
       };
 
       var callFn = function (e, ele) {
-        var result = func.apply(ele, e._data === undefined ? [e] : [e].concat(e._data));
+        var result = func.apply(ele, e.detail === undefined ? [e] : [e].concat(e.detail));
+
         if (result === false) {
           e.preventDefault();
           e.stopPropagation();

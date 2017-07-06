@@ -151,6 +151,21 @@ describe('事件', function () {
     assert.equal(eventCount, 18);
 
     // =====================================
+    // ===================== 触发事件时传入参数
+    // =====================================
+    $button.on('click', function (event, data) {
+      var originalData = {key1: 'value1', key2: 'value2'};
+      assert.deepEqual(data, originalData);
+
+      // mdui.JQ 的事件也会在 event.detail 存储参数，以便通过 addEventListener 监听事件时可以读取参数
+      if (!isJquery) {
+        assert.deepEqual(event.detail, originalData);
+      }
+    });
+    $button.trigger('click', {key1: 'value1', key2: 'value2'});
+    $button.off('click');
+
+    // =====================================
     // ============================= 回调参数
     // =====================================
     $button.on('click', function (e) {

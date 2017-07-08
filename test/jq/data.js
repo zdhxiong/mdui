@@ -5,7 +5,7 @@ describe('数据存储', function () {
     var intro = test.querySelector('.intro');
 
     // jQuery 的 jQuery.data 不会检索 data-* 属性，但 JQ 会检索该属性
-    if (typeof jQuery === 'undefined') {
+    if (!isJquery) {
       // 读取 data 属性
       assert.equal($.data(intro, 'key'), 'val');
       assert.equal($.data(intro, 'key-sub'), 'val-sub');
@@ -31,7 +31,7 @@ describe('数据存储', function () {
 
     // 删除了数据后，恢复为 data 属性数据
     $.removeData(intro, 'key-sub');
-    if (typeof jQuery === 'undefined') {
+    if (!isJquery) {
       assert.equal($.data(intro, 'key-sub'), 'val-sub');
     } else {
       assert.isUndefined($.data(intro, 'key-sub'));
@@ -51,7 +51,7 @@ describe('数据存储', function () {
     assert.equal($.data(intro, 'objkey2'), 'objval2');
 
     // 获取所有数据
-    if (typeof jQuery === 'undefined') {
+    if (!isJquery) {
       assert.deepEqual($.data(intro), {
         array: [1, 2, 3, 4],
         key: 'val',

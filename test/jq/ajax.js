@@ -26,9 +26,20 @@ describe('Ajax', function () {
     // ==============================================
     // 事件监听，这 4 个事件仅支持 mdui.JQ，不支持 jQuery
     // ==============================================
-    $(document).on('start.mdui.ajax', function (event, xhr) {
-      assert.equal(xhr.constructor, XMLHttpRequest);
-      assert.equal(event.detail.constructor, XMLHttpRequest);
+    // event: 事件对象
+    // params: {
+    //   xhr: XMLHttpRequest 对象
+    //   options: AJAX 请求的配置参数
+    //   data: AJAX 请求返回的数据
+    // }
+    $(document).on('start.mdui.ajax', function (event, params) {
+      assert.equal(params.xhr.constructor, XMLHttpRequest);
+      assert.equal(event.detail.xhr.constructor, XMLHttpRequest);
+
+      assert.equal(typeof params.options, 'object');
+      assert.equal(params.options.method, 'GET');
+
+      assert.equal(params.data, null);
 
       eventStart++;
       assert.equal(eventStart, 1);
@@ -37,9 +48,14 @@ describe('Ajax', function () {
       assert.equal(eventComplete, 0);
     });
 
-    $(document).on('success.mdui.ajax', function (event, xhr) {
-      assert.equal(xhr.constructor, XMLHttpRequest);
-      assert.equal(event.detail.constructor, XMLHttpRequest);
+    $(document).on('success.mdui.ajax', function (event, params) {
+      assert.equal(params.xhr.constructor, XMLHttpRequest);
+      assert.equal(event.detail.xhr.constructor, XMLHttpRequest);
+
+      assert.equal(typeof params.options, 'object');
+      assert.equal(params.options.method, 'GET');
+
+      assert.equal(params.data, 'is a text');
 
       eventSuccess++;
       assert.equal(eventStart, 1);
@@ -48,16 +64,26 @@ describe('Ajax', function () {
       assert.equal(eventComplete, 0);
     });
 
-    $(document).on('error.mdui.ajax', function (event, xhr) {
-      assert.equal(xhr.constructor, XMLHttpRequest);
-      assert.equal(event.detail.constructor, XMLHttpRequest);
+    $(document).on('error.mdui.ajax', function (event, params) {
+      assert.equal(params.xhr.constructor, XMLHttpRequest);
+      assert.equal(event.detail.xhr.constructor, XMLHttpRequest);
+
+      assert.equal(typeof params.options, 'object');
+      assert.equal(params.options.method, 'GET');
+
+      assert.equal(params.data, null);
 
       eventError++;
     });
 
-    $(document).on('complete.mdui.ajax', function (event, xhr) {
-      assert.equal(xhr.constructor, XMLHttpRequest);
-      assert.equal(event.detail.constructor, XMLHttpRequest);
+    $(document).on('complete.mdui.ajax', function (event, params) {
+      assert.equal(params.xhr.constructor, XMLHttpRequest);
+      assert.equal(event.detail.xhr.constructor, XMLHttpRequest);
+
+      assert.equal(typeof params.options, 'object');
+      assert.equal(params.options.method, 'GET');
+
+      assert.equal(params.data, 'is a text');
 
       eventComplete++;
       assert.equal(eventStart, 1);
@@ -69,51 +95,67 @@ describe('Ajax', function () {
     // =========================
     // ============== 原生事件监听
     // =========================
+    // event: 事件对象
+    // event.detail: {
+    //   xhr: XMLHttpRequest 对象
+    //   options: AJAX 请求的配置参数
+    //   data: AJAX 请求返回的数据
+    // }
     document.addEventListener('start.mdui.ajax', function (event) {
-      assert.equal(event.detail.constructor, XMLHttpRequest);
+      assert.equal(event.detail.xhr.constructor, XMLHttpRequest);
     });
 
     document.addEventListener('success.mdui.ajax', function (event) {
-      assert.equal(event.detail.constructor, XMLHttpRequest);
+      assert.equal(event.detail.xhr.constructor, XMLHttpRequest);
     });
 
     document.addEventListener('error.mdui.ajax', function (event) {
-      assert.equal(event.detail.constructor, XMLHttpRequest);
+      assert.equal(event.detail.xhr.constructor, XMLHttpRequest);
     });
 
     document.addEventListener('complete.mdui.ajax', function (event) {
-      assert.equal(event.detail.constructor, XMLHttpRequest);
+      assert.equal(event.detail.xhr.constructor, XMLHttpRequest);
     });
 
     // ==========================
     // =============事件监听快捷方法
     // ==========================
-    $(document).ajaxStart(function (event, xhr) {
-      if (!isJquery){
+    // event: 事件对象
+    // xhr: XMLHttpRequest 对象
+    // options: AJAX 请求的配置参数
+    // data: AJAX 请求返回的数据
+    // event.detail: {
+    //   xhr: XMLHttpRequest 对象
+    //   options: AJAX 请求的配置参数
+    //   data: AJAX 请求返回的数据
+    // }
+    $(document).ajaxStart(function (event, xhr, options) {
+      if (!isJquery) {
         assert.equal(xhr.constructor, XMLHttpRequest);
-        assert.equal(event.detail.constructor, XMLHttpRequest);
+        assert.equal(typeof options, 'object');
       }
     });
 
-    $(document).ajaxSuccess(function (event, xhr) {
+    $(document).ajaxSuccess(function (event, xhr, options, data) {
       if (!isJquery) {
         assert.equal(xhr.constructor, XMLHttpRequest);
-        assert.equal(event.detail.constructor, XMLHttpRequest);
       }
+      assert.equal(typeof options, 'object');
+      assert.equal(data, 'is a text')
     });
 
-    $(document).ajaxError(function (event, xhr) {
+    $(document).ajaxError(function (event, xhr, options) {
       if (!isJquery) {
         assert.equal(xhr.constructor, XMLHttpRequest);
-        assert.equal(event.detail.constructor, XMLHttpRequest);
       }
+      assert.equal(typeof options, 'object');
     });
 
-    $(document).ajaxComplete(function (event, xhr) {
+    $(document).ajaxComplete(function (event, xhr, options) {
       if (!isJquery) {
         assert.equal(xhr.constructor, XMLHttpRequest);
-        assert.equal(event.detail.constructor, XMLHttpRequest);
       }
+      assert.equal(typeof options, 'object');
     });
 
     // 用于测试回调函数触发顺序
@@ -137,7 +179,7 @@ describe('Ajax', function () {
         assert.equal(callbackStatusCode200, 0);
         assert.equal(callbackComplete, 0);
 
-        if (!isJquery && xhr !== null) {
+        if (!isJquery) {
           assert.equal(xhr.constructor, XMLHttpRequest);
         }
       },
@@ -152,7 +194,7 @@ describe('Ajax', function () {
 
         assert.equal(data, 'is a text');
         assert.equal(textStatus, 'success');
-        if (!isJquery && xhr !== null) {
+        if (!isJquery) {
           assert.equal(xhr.constructor, XMLHttpRequest);
         }
       },
@@ -160,10 +202,10 @@ describe('Ajax', function () {
         callbackError++;
       },
       statusCode: {
-        404: function (xhr) {
+        404: function (xhr, textStatus) {
           callbackStatusCode404++;
         },
-        200: function (xhr) {
+        200: function (data, textStatus, xhr) {
           callbackStatusCode200++;
           assert.equal(callbackBeforeSend, 1);
           assert.equal(callbackSuccess, 1);
@@ -172,7 +214,10 @@ describe('Ajax', function () {
           assert.equal(callbackStatusCode200, 1);
           assert.equal(callbackComplete, 0);
 
-          if (!isJquery && xhr !== null) {
+          assert.equal(data, 'is a text');
+          assert.equal(textStatus, 'success');
+
+          if (!isJquery) {
             assert.equal(xhr.constructor, XMLHttpRequest);
           }
         }
@@ -213,7 +258,7 @@ describe('Ajax', function () {
       // ==============================================
       // 事件监听，这 4 个事件仅支持 mdui.JQ，不支持 jQuery
       // ==============================================
-      $(document).on('start.mdui.ajax', function (event, xhr) {
+      $(document).on('start.mdui.ajax', function () {
         eventStart++;
         assert.equal(eventStart, 1);
         assert.equal(eventSuccess, 0);
@@ -221,11 +266,11 @@ describe('Ajax', function () {
         assert.equal(eventComplete, 0);
       });
 
-      $(document).on('success.mdui.ajax', function (event, xhr) {
+      $(document).on('success.mdui.ajax', function () {
         eventSuccess++;
       });
 
-      $(document).on('error.mdui.ajax', function (event, xhr) {
+      $(document).on('error.mdui.ajax', function () {
         eventError++;
         assert.equal(eventStart, 1);
         assert.equal(eventSuccess, 0);
@@ -233,7 +278,7 @@ describe('Ajax', function () {
         assert.equal(eventComplete, 0);
       });
 
-      $(document).on('complete.mdui.ajax', function (event, xhr) {
+      $(document).on('complete.mdui.ajax', function () {
         eventComplete++;
         assert.equal(eventStart, 1);
         assert.equal(eventSuccess, 0);
@@ -275,7 +320,7 @@ describe('Ajax', function () {
           assert.equal(callbackStatusCode200, 0);
           assert.equal(callbackComplete, 0);
 
-          if (!isJquery && xhr !== null) {
+          if (!isJquery) {
             assert.equal(xhr.constructor, XMLHttpRequest);
           }
           assert.equal(textStatus, 'error');
@@ -319,6 +364,18 @@ describe('Ajax', function () {
         }
       });
     }, 1000);
+  });
+
+  it('beforeSend 回调中返回 false 来取消 Ajax 请求', function () {
+    setTimeout(function () {
+      $.ajax({
+        method: 'get',
+        url: './data/test.php',
+        beforeSend: function () {
+          return false;
+        }
+      });
+    }, 2000);
   });
 
   it('GET 请求，请求超时', function () {
@@ -525,7 +582,7 @@ describe('Ajax', function () {
           assert.isFalse(xhr.responseURL.indexOf('_=') > 0);
         }
       }
-    })
+    });
   });
 
   it('测试 JSONP，只支持 GET 请求', function () {
@@ -534,10 +591,19 @@ describe('Ajax', function () {
       dataType: 'jsonp',
       url: './data/jsonp.php?key=val&callback2=test&a=b',
       jsonp: 'callback2',
+      beforeSend: function (xhr) {
+        if (!isJquery) {
+          assert.equal(xhr, null);
+        }
+      },
       success: function (data, textStatus, xhr) {
         assert.equal(data.key1, 'val1');
         assert.equal(data.key2, 'val2');
         assert.equal(textStatus, 'success');
+
+        if (!isJquery) {
+          assert.equal(xhr, null);
+        }
       }
     });
 
@@ -569,6 +635,6 @@ describe('Ajax', function () {
         assert.equal(data, 'success');
       }
     });
-  })
+  });
 
 });

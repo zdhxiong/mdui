@@ -66,20 +66,21 @@
         contentType: 'application/x-www-form-urlencoded', // 发送信息至服务器时内容编码类型
         timeout: 0,            // 设置请求超时时间（毫秒）
         global: true,          // 是否在 document 上触发全局 ajax 事件
-        // beforeSend:    function (XMLHttpRequest)
-        // success:       function (data, status, XMLHttpRequest)
-        // error:         function (XMLHttpRequest, status)
-        // complete:      function (XMLHttpRequest, status)
-        // statusCode:    {404: function (data, status, XMLHttpRequest)}
+        // beforeSend:    function (XMLHttpRequest) 请求发送前执行，返回 false 可取消本次 ajax 请求
+        // success:       function (data, textStatus, XMLHttpRequest) 请求成功时调用
+        // error:         function (XMLHttpRequest, textStatus) 请求失败时调用
+        // statusCode:    {404: function ()}
+        //                200-299之间的状态码表示成功，参数和 success 回调一样；其他状态码表示失败，参数和 error 回调一样
+        // complete:      function (XMLHttpRequest, textStatus) 请求完成后回调函数 (请求成功或失败之后均调用)
       };
 
       // 回调函数
       var callbacks = [
-        'beforeSend',          // (xhr) 请求发送前执行，返回 false 可取消本次 ajax 请求
-        'success',             // (data, textStatus, XMLHttpRequest) 请求成功时调用
-        'error',               // (XMLHttpRequest, textStatus) 请求失败时调用
-        'statusCode',          // { 404：function (XMLHttpRequest) {}}
-        'complete',            // (XMLHttpRequest, textStatus) 请求完成后回调函数 (请求成功或失败之后均调用)
+        'beforeSend',
+        'success',
+        'error',
+        'statusCode',
+        'complete',
       ];
 
       // 是否已取消请求
@@ -87,6 +88,9 @@
 
       // 保存全局配置
       var globals = globalOptions;
+
+      // 事件参数
+      var eventParams = {};
 
       // 合并全局参数到默认参数，全局回调函数不覆盖
       each(globals, function (key, value) {
@@ -137,7 +141,7 @@
       }
 
       // 请求方式转为大写
-      var method = options.method.toUpperCase();
+      var method = options.method = options.method.toUpperCase();
 
       // 默认使用当前页面 URL
       if (!options.url) {
@@ -172,6 +176,15 @@
           options.jsonpCallback;
         var requestUrl = appendQuery(options.url, options.jsonp + '=' + callbackName);
 
+        eventParams.options = options;
+
+        triggerEvent(ajaxEvent.ajaxStart, eventParams);
+        triggerCallback('beforeSend', null);
+
+        if (isCanceled) {
+          return;
+        }
+
         var abortTimeout;
 
         // 创建 script
@@ -184,10 +197,10 @@
             clearTimeout(abortTimeout);
           }
 
-          triggerEvent(ajaxEvent.ajaxError, null);
+          triggerEvent(ajaxEvent.ajaxError, eventParams);
           triggerCallback('error', null, 'scripterror');
 
-          triggerEvent(ajaxEvent.ajaxComplete, null);
+          triggerEvent(ajaxEvent.ajaxComplete, eventParams);
           triggerCallback('complete', null, 'scripterror');
         };
 
@@ -199,7 +212,9 @@
             clearTimeout(abortTimeout);
           }
 
-          triggerEvent(ajaxEvent.ajaxSuccess, null);
+          eventParams.data = data;
+
+          triggerEvent(ajaxEvent.ajaxSuccess, eventParams);
           triggerCallback('success', data, 'success', null);
 
           $(script).remove();
@@ -214,7 +229,7 @@
             $(script).remove();
             script = null;
 
-            triggerEvent(ajaxEvent.ajaxError, null);
+            triggerEvent(ajaxEvent.ajaxError, eventParams);
             triggerCallback('error', null, 'timeout');
           }, options.timeout);
         }
@@ -263,6 +278,9 @@
         });
       }
 
+      eventParams.xhr = xhr;
+      eventParams.options = options;
+
       var xhrTimeout;
 
       xhr.onload = function () {
@@ -270,9 +288,13 @@
           clearTimeout(xhrTimeout);
         }
 
+        // 包含成功或错误代码的字符串
         var textStatus;
 
-        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 0) {
+        // AJAX 返回的 HTTP 响应码是否表示成功
+        var isHttpStatusSuccess = (xhr.status >= 200 && xhr.status < 300) || xhr.status === 0;
+
+        if (isHttpStatusSuccess) {
 
           if (xhr.status === 204 || method === 'HEAD') {
             textStatus = 'nocontent';
@@ -285,41 +307,44 @@
           var responseData;
           if (options.dataType === 'json') {
             try {
-              responseData = JSON.parse(xhr.responseText);
+              eventParams.data = responseData = JSON.parse(xhr.responseText);
 
-              triggerEvent(ajaxEvent.ajaxSuccess, xhr);
+              triggerEvent(ajaxEvent.ajaxSuccess, eventParams);
               triggerCallback('success', responseData, textStatus, xhr);
             } catch (err) {
               textStatus = 'parsererror';
 
-              triggerEvent(ajaxEvent.ajaxError, xhr);
+              triggerEvent(ajaxEvent.ajaxError, eventParams);
               triggerCallback('error', xhr, textStatus);
             }
           } else {
-            responseData =
+            eventParams.data = responseData =
               xhr.responseType === 'text' || xhr.responseType === '' ?
               xhr.responseText :
               xhr.response;
 
-            triggerEvent(ajaxEvent.ajaxSuccess, xhr);
+            triggerEvent(ajaxEvent.ajaxSuccess, eventParams);
             triggerCallback('success', responseData, textStatus, xhr);
           }
         } else {
           textStatus = 'error';
 
-          triggerEvent(ajaxEvent.ajaxError, xhr);
+          triggerEvent(ajaxEvent.ajaxError, eventParams);
           triggerCallback('error', xhr, textStatus);
         }
 
-        if (globals.statusCode && globals.statusCode[xhr.status]) {
-          globals.statusCode[xhr.status](xhr);
-        }
+        // statusCode
+        each([globals.statusCode, options.statusCode], function (i, func) {
+          if (func && func[xhr.status]) {
+            if (isHttpStatusSuccess) {
+              func[xhr.status](responseData, textStatus, xhr);
+            } else {
+              func[xhr.status](xhr, textStatus);
+            }
+          }
+        });
 
-        if (options.statusCode && options.statusCode[xhr.status]) {
-          options.statusCode[xhr.status](xhr);
-        }
-
-        triggerEvent(ajaxEvent.ajaxComplete, xhr);
+        triggerEvent(ajaxEvent.ajaxComplete, eventParams);
         triggerCallback('complete', xhr, textStatus);
       };
 
@@ -328,10 +353,10 @@
           clearTimeout(xhrTimeout);
         }
 
-        triggerEvent(ajaxEvent.ajaxError, xhr);
+        triggerEvent(ajaxEvent.ajaxError, eventParams);
         triggerCallback('error', xhr, xhr.statusText);
 
-        triggerEvent(ajaxEvent.ajaxComplete, xhr);
+        triggerEvent(ajaxEvent.ajaxComplete, eventParams);
         triggerCallback('complete', xhr, 'error');
       };
 
@@ -343,16 +368,20 @@
           clearTimeout(xhrTimeout);
         }
 
-        triggerEvent(ajaxEvent.ajaxError, xhr);
+        triggerEvent(ajaxEvent.ajaxError, eventParams);
         triggerCallback('error', xhr, textStatus);
 
-        triggerEvent(ajaxEvent.ajaxComplete, xhr);
+        triggerEvent(ajaxEvent.ajaxComplete, eventParams);
         triggerCallback('complete', xhr, textStatus);
       };
 
       // ajax start 回调
-      triggerEvent(ajaxEvent.ajaxStart, xhr);
+      triggerEvent(ajaxEvent.ajaxStart, eventParams);
       triggerCallback('beforeSend', xhr);
+
+      if (isCanceled) {
+        return xhr;
+      }
 
       // Timeout
       if (options.timeout > 0) {
@@ -362,18 +391,32 @@
       }
 
       // 发送 XHR
-      if (!isCanceled) {
-        xhr.send(sendData);
-      }
+      xhr.send(sendData);
 
       return xhr;
     },
   });
 
+  // 监听全局事件
+  //
+  // 通过 $(document).on('success.mdui.ajax', function (event, params) {}) 调用时，包含两个参数
+  // event: 事件对象
+  // params: {
+  //   xhr: XMLHttpRequest 对象
+  //   options: ajax 请求的配置参数
+  //   data: ajax 请求返回的数据
+  // }
+
   // 全局 Ajax 事件快捷方法
-  each(ajaxEvent, function (name, event) {
+  // $(document).ajaxStart(function (event, xhr, options) {})
+  // $(document).ajaxSuccess(function (event, xhr, options, data) {})
+  // $(document).ajaxError(function (event, xhr, options) {})
+  // $(document).ajaxComplete(function (event, xhr, options) {})
+  each(ajaxEvent, function (name, eventName) {
     $.fn[name] = function (fn) {
-      return this.on(event, fn);
+      return this.on(eventName, function (e, params) {
+        fn(e, params.xhr, params.options, params.data);
+      });
     };
   });
 })();

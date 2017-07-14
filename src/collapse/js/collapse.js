@@ -12,30 +12,25 @@ var CollapsePrivate = (function () {
     accordion: false,                             // 是否使用手风琴效果
   };
 
-  // 类名
-  var CLASS = {
-    item: 'mdui-collapse-item',           // item 类名
-    itemOpen: 'mdui-collapse-item-open',  // 打开状态的 item
-    header: 'mdui-collapse-item-header',  // item 中的 header 类名
-    body: 'mdui-collapse-item-body',      // item 中的 body 类名
-  };
-
-  // 命名空间
-  var NAMESPACE = 'collapse';
-
   /**
    * 折叠内容块
    * @param selector
    * @param opts
-   * @param classes
    * @param namespace
    * @constructor
    */
-  function Collapse(selector, opts, classes, namespace) {
+  function Collapse(selector, opts, namespace) {
     var _this = this;
 
-    _this.classes = $.extend({}, CLASS, classes || {});
-    _this.namespace = namespace ? namespace : NAMESPACE;
+    // 命名空间
+    _this.ns = namespace;
+
+    // 类名
+    var classpPefix = 'mdui-' + _this.ns + '-item';
+    _this.class_item = classpPefix;
+    _this.class_item_open = classpPefix + '-open';
+    _this.class_header = classpPefix + '-header';
+    _this.class_body = classpPefix + '-body';
 
     // 折叠面板元素
     _this.$collapse = $(selector).eq(0);
@@ -44,17 +39,25 @@ var CollapsePrivate = (function () {
     }
 
     // 已通过自定义属性实例化过，不再重复实例化
-    var oldInst = _this.$collapse.data('mdui.' + _this.namespace);
+    var oldInst = _this.$collapse.data('mdui.' + _this.ns);
     if (oldInst) {
       return oldInst;
     }
 
     _this.options = $.extend({}, DEFAULT, (opts || {}));
 
-    _this.$collapse.on('click', '.' + _this.classes.header, function () {
-      var $item = $(this).parent('.' + _this.classes.item);
+    _this.$collapse.on('click', '.' + _this.class_header, function () {
+      var $item = $(this).parent('.' + _this.class_item);
       if (_this.$collapse.children($item).length) {
         _this.toggle($item);
+      }
+    });
+
+    // 绑定关闭按钮
+    _this.$collapse.on('click', '[mdui-' + _this.ns + '-item-close]', function () {
+      var $item = $(this).parents('.' + _this.class_item).eq(0);
+      if (_this._isOpen($item)) {
+        _this.close($item);
       }
     });
   }
@@ -66,7 +69,7 @@ var CollapsePrivate = (function () {
    * @private
    */
   Collapse.prototype._isOpen = function ($item) {
-    return $item.hasClass(this.classes.itemOpen);
+    return $item.hasClass(this.class_item_open);
   };
 
   /**
@@ -80,7 +83,7 @@ var CollapsePrivate = (function () {
 
     if (parseInt(item) === item) {
       // item 是索引号
-      return _this.$collapse.children('.' + _this.classes.item).eq(item);
+      return _this.$collapse.children('.' + _this.class_item).eq(item);
     }
 
     return $(item).eq(0);
@@ -100,11 +103,11 @@ var CollapsePrivate = (function () {
         .reflow()
         .transition('');
 
-      componentEvent('opened', inst.namespace, inst, $item[0]);
+      componentEvent('opened', inst.ns, inst, $item[0]);
     } else {
       $content.height('');
 
-      componentEvent('closed', inst.namespace, inst, $item[0]);
+      componentEvent('closed', inst.ns, inst, $item[0]);
     }
   };
 
@@ -122,7 +125,7 @@ var CollapsePrivate = (function () {
 
     // 关闭其他项
     if (_this.options.accordion) {
-      _this.$collapse.children('.' + _this.classes.itemOpen).each(function () {
+      _this.$collapse.children('.' + _this.class_item_open).each(function () {
         var $tmpItem = $(this);
 
         if ($tmpItem !== $item) {
@@ -131,7 +134,7 @@ var CollapsePrivate = (function () {
       });
     }
 
-    var $content = $item.children('.' + _this.classes.body);
+    var $content = $item.children('.' + _this.class_body);
 
     $content
       .height($content[0].scrollHeight)
@@ -139,9 +142,9 @@ var CollapsePrivate = (function () {
         transitionEnd(_this, $content, $item);
       });
 
-    componentEvent('open', _this.namespace, _this, $item[0]);
+    componentEvent('open', _this.ns, _this, $item[0]);
 
-    $item.addClass(_this.classes.itemOpen);
+    $item.addClass(_this.class_item_open);
   };
 
   /**
@@ -156,11 +159,11 @@ var CollapsePrivate = (function () {
       return;
     }
 
-    var $content = $item.children('.' + _this.classes.body);
+    var $content = $item.children('.' + _this.class_body);
 
-    componentEvent('close', _this.namespace, _this, $item[0]);
+    componentEvent('close', _this.ns, _this, $item[0]);
 
-    $item.removeClass(_this.classes.itemOpen);
+    $item.removeClass(_this.class_item_open);
 
     $content
       .transition(0)
@@ -194,7 +197,7 @@ var CollapsePrivate = (function () {
   Collapse.prototype.openAll = function () {
     var _this = this;
 
-    _this.$collapse.children('.' + _this.classes.item).each(function () {
+    _this.$collapse.children('.' + _this.class_item).each(function () {
       var $tmpItem = $(this);
 
       if (!_this._isOpen($tmpItem)) {
@@ -209,7 +212,7 @@ var CollapsePrivate = (function () {
   Collapse.prototype.closeAll = function () {
     var _this = this;
 
-    _this.$collapse.children('.' + _this.classes.item).each(function () {
+    _this.$collapse.children('.' + _this.class_item).each(function () {
       var $tmpItem = $(this);
 
       if (_this._isOpen($tmpItem)) {
@@ -229,7 +232,7 @@ var CollapsePrivate = (function () {
 mdui.Collapse = (function () {
 
   function Collapse(selector, opts) {
-    return new CollapsePrivate(selector, opts);
+    return new CollapsePrivate(selector, opts, 'collapse');
   }
 
   return Collapse;

@@ -7,12 +7,7 @@
 mdui.Panel = (function () {
 
   function Panel(selector, opts) {
-    return new CollapsePrivate(selector, opts, {
-      item: 'mdui-panel-item',
-      itemOpen: 'mdui-panel-item-open',
-      header: 'mdui-panel-item-header',
-      body: 'mdui-panel-item-body',
-    }, 'panel');
+    return new CollapsePrivate(selector, opts, 'panel');
   }
 
   return Panel;

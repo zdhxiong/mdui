@@ -6,13 +6,13 @@
 
 $(function () {
   $('[mdui-collapse]').each(function () {
-    var $this = $(this);
-    var options = parseOptions($this.attr('mdui-collapse'));
+    var $target = $(this);
 
-    var inst = $this.data('mdui.collapse');
+    var inst = $target.data('mdui.collapse');
     if (!inst) {
-      inst = new mdui.Collapse($this, options);
-      $this.data('mdui.collapse', inst);
+      var options = parseOptions($target.attr('mdui-collapse'));
+      inst = new mdui.Collapse($target, options);
+      $target.data('mdui.collapse', inst);
     }
   });
 });

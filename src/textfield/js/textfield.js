@@ -66,6 +66,17 @@
 
     // textarea 高度自动调整
     if (e.target.nodeName.toLowerCase() === 'textarea') {
+
+      // IE bug：textarea 的值仅为多个换行，不含其他内容时，textarea 的高度不准确
+      //         此时，在计算高度前，在值的开头加入一个空格，计算完后，移除空格
+      var inputValue = $input.val();
+      var hasExtraSpace = false;
+      if (inputValue.replace(/[\r\n]/g, '') === '') {
+        $input.val(' ' + inputValue);
+        hasExtraSpace = true;
+      }
+
+      // 设置 textarea 高度
       $input.height('');
       var height = input.offsetHeight;
       var diff = height - input.clientHeight;
@@ -74,6 +85,11 @@
       if (scrollHeight + diff > height) {
         var newAreaHeight = scrollHeight + diff;
         $input.height(newAreaHeight);
+      }
+
+      // 计算完，还原 textarea 的值
+      if (hasExtraSpace) {
+        $input.val(inputValue);
       }
     }
 

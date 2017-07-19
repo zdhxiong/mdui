@@ -28,26 +28,26 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "chai": "3.5.0",
-    "del": "2.2.2",
+    "chai": "4.1.0",
+    "del": "3.0.0",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "4.0.0",
     "gulp-concat": "2.6.1",
     "gulp-copy": "1.0.0",
     "gulp-csscomb": "3.0.8",
     "gulp-csslint": "1.0.0",
-    "gulp-header": "1.8.8",
+    "gulp-header": "1.8.9",
     "gulp-jscs": "4.0.0",
     "gulp-jshint": "2.0.4",
-    "gulp-less": "3.3.0",
+    "gulp-less": "3.3.2",
     "gulp-minify-css": "1.2.4",
     "gulp-rename": "1.2.2",
     "gulp-tap": "1.0.1",
-    "gulp-uglify": "2.1.2",
+    "gulp-uglify": "3.0.0",
     "gulp-zip": "4.0.0",
     "jquery": "3.2.1",
-    "jshint": "2.9.4",
-    "mocha": "3.4.1"
+    "jshint": "2.9.5",
+    "mocha": "3.4.2"
   },
   "engines": {
     "node": ">=6.10.0"

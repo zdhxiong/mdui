@@ -26,7 +26,7 @@
   var jscs = require('gulp-jscs');
   var jshint = require('gulp-jshint');
   var less = require('gulp-less');
-  var minifyCSS = require('gulp-minify-css');
+  var cleanCSS = require('gulp-clean-css');
   var uglify = require('gulp-uglify');
   var del = require('del');
   var tap = require('gulp-tap');
@@ -269,9 +269,8 @@
         'Safari >= 8',
       ],
     },
-    minifyCSS: {
-      advanced: false,
-      aggressiveMerging: false,
+    cleanCSS: {
+      compatibility: 'ie10'
     },
     header: {
       pkg: mdui.pkg,
@@ -368,7 +367,7 @@
       .pipe(csslint.formatter())
       .pipe(gulp.dest(paths.dist.css))
 
-      .pipe(minifyCSS(configs.minifyCSS))
+      .pipe(cleanCSS(configs.cleanCSS))
       .pipe(rename(function (path) {
         path.basename = mdui.filename + '.min';
       }))
@@ -649,7 +648,7 @@
       .pipe(csslint.formatter())
       .pipe(gulp.dest(paths.custom.css))
 
-      .pipe(minifyCSS(configs.minifyCSS))
+      .pipe(cleanCSS(configs.cleanCSS))
       .pipe(rename(function (path) {
         path.basename = mdui.filename + '.custom.min';
       }))

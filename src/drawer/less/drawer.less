@@ -14,7 +14,6 @@ body.mdui-loaded .mdui-drawer {
 
 /* 抽屉栏外层，默认出现在左侧且隐藏 */
 .mdui-drawer {
-  width: @drawer-width;
   box-sizing: border-box;
   position: fixed;
   left: 0;
@@ -26,6 +25,22 @@ body.mdui-loaded .mdui-drawer {
   overflow-x: hidden;
   overflow-y: auto;
   top: 0;
+
+  // 手机端宽度为 100% - 56px，最大为 280px
+  width: calc(~"100% - 56px");
+  max-width: @drawer-width-xs;
+
+  // 平板端宽度为 100% - 64px，最大为 320px
+  @media (min-width: @screen-sm-min) {
+    width: calc(~"100% - 64px");
+    max-width: @drawer-width-sm;
+  }
+
+  // 桌面端宽度
+  @media (min-width: @screen-md-min) {
+    width: @drawer-width-md;
+    max-width: none;
+  }
 }
 
 /* 出现在右侧的抽屉栏 */
@@ -34,11 +49,11 @@ body.mdui-loaded .mdui-drawer {
   right: 0;
 }
 
-/* 手机平板上的样式 */
+/* 平板上的样式 */
 @media (max-width: @screen-sm-max) {
   .mdui-drawer {
     /* 默认隐藏 */
-    transform: translateX(-@drawer-width - 10);
+    transform: translateX(-@drawer-width-sm - 10);
 
     /* 始终有背景和阴影 */
     background-color: #fff;
@@ -47,16 +62,39 @@ body.mdui-loaded .mdui-drawer {
 
   .mdui-drawer-right {
     /* 右侧 drawer 也默认隐藏 */
-    transform: translateX(@drawer-width + 10);
+    transform: translateX(@drawer-width-sm + 10);
+  }
+}
+
+/* 手机上的样式 */
+@media (max-width: @screen-xs-max) {
+  .mdui-drawer {
+    transform: translateX(-@drawer-width-xs - 10);
+  }
+
+  .mdui-drawer-right {
+    transform: translateX(@drawer-width-xs + 10);
   }
 }
 
 /* 强制隐藏抽屉栏 */
-.mdui-drawer-close {
-  transform: translateX(-@drawer-width - 10);
-  &.mdui-drawer-right {
-    transform: translateX(@drawer-width + 10);
+._drawer_close(@drawer-width) {
+  .mdui-drawer-close {
+    transform: translateX(-@drawer-width - 10);
+    &.mdui-drawer-right {
+      transform: translateX(@drawer-width + 10);
+    }
   }
+}
+
+._drawer_close(@drawer-width-xs);
+
+@media (min-width: @screen-sm-min) {
+  ._drawer_close(@drawer-width-sm);
+}
+
+@media (min-width: @screen-md-min) {
+  ._drawer_close(@drawer-width-md);
 }
 
 /* 强制显示抽屉栏 */
@@ -68,10 +106,10 @@ body.mdui-loaded .mdui-drawer {
 @media (min-width: @screen-md-min) {
   /* 使 body 获得 padding-left 或 padding-right，避免被抽屉栏覆盖住页面 */
   body.mdui-drawer-body-left {
-    padding-left: @drawer-width;
+    padding-left: @drawer-width-md;
   }
   body.mdui-drawer-body-right {
-    padding-right: @drawer-width;
+    padding-right: @drawer-width-md;
   }
 
   /* PC 上默认有上边距 */

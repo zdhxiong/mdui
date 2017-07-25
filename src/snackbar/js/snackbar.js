@@ -30,7 +30,16 @@
     onButtonClick: function () {    // 点击按钮的回调
     },
 
+    onOpen: function () {           // 打开动画开始时的回调
+    },
+
+    onOpened: function () {         // 打开动画结束时的回调
+    },
+
     onClose: function () {          // 关闭动画开始时的回调
+    },
+
+    onClosed: function () {         // 打开动画结束时的回调
     },
   };
 
@@ -125,6 +134,8 @@
 
     // 开始打开
     _this.state = 'opening';
+    _this.options.onOpen();
+
     _this.$snackbar
       .transform('translateY(0)')
       .transitionEnd(function () {
@@ -133,6 +144,7 @@
         }
 
         _this.state = 'opened';
+        _this.options.onOpened();
 
         // 有按钮时绑定事件
         if (_this.options.buttonText) {
@@ -195,6 +207,7 @@
 
         currentInst = null;
         _this.state = 'closed';
+        _this.options.onClosed();
         _this.$snackbar.remove();
         queue.dequeue(queueName);
       });

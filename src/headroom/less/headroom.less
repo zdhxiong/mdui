@@ -38,13 +38,15 @@
 
 /* 隐藏应用栏中的工具栏 */
 .mdui-headroom-unpinned-toolbar {
-  transform: translate3d(0, -@appbar-height-xs, 0) !important;
+  transform: translate3d(0, -@appbar-height-xs-portrait, 0) !important;
 
+  // 平板和桌面
   @media (min-width: @screen-sm-min) {
     transform: translate3d(0, -@appbar-height-sm, 0) !important;
   }
 
-  @media (min-width: @screen-md-min) {
-    transform: translate3d(0, -@appbar-height-md, 0) !important;
+  // 手机横屏
+  @media (orientation : landscape) and (max-width: @screen-xs-max-landscape) {
+    transform: translate3d(0, -@appbar-height-xs-landscape, 0) !important;
   }
 }

@@ -20,12 +20,16 @@
 
 /* 含工具栏 */
 .mdui-appbar-with-toolbar {
-  padding-top: @appbar-height-xs;
+  padding-top: @appbar-height-xs-portrait;
+
+  // 平板和桌面
   @media (min-width: @screen-sm-min) {
     padding-top: @appbar-height-sm;
   }
-  @media (min-width: @screen-md-min) {
-    padding-top: @appbar-height-md;
+
+  // 手机横屏
+  @media (orientation: landscape) and (max-width: @screen-xs-max-landscape) {
+    padding-top: @appbar-height-xs-landscape;
   }
 }
 
@@ -41,23 +45,31 @@
 
 /* 含工具栏和 Tab */
 .mdui-appbar-with-toolbar.mdui-appbar-with-tab {
-  padding-top: @appbar-height-xs + 48px;
+  padding-top: @appbar-height-xs-portrait + 48px;
+
+  // 平板和桌面
   @media (min-width: @screen-sm-min) {
     padding-top: @appbar-height-sm + 48px;
   }
-  @media (min-width: @screen-md-min) {
-    padding-top: @appbar-height-md + 48px;
+
+  // 手机横屏
+  @media (orientation: landscape) and (max-width: @screen-xs-max-landscape) {
+    padding-top: @appbar-height-xs-landscape + 48px;
   }
 }
 
 /* 含工具栏和大 Tab */
 .mdui-appbar-with-toolbar.mdui-appbar-with-tab-larger {
-  padding-top: @appbar-height-xs + 72px;
+  padding-top: @appbar-height-xs-portrait + 72px;
+
+  // 平板和桌面
   @media (min-width: @screen-sm-min) {
     padding-top: @appbar-height-sm + 72px;
   }
-  @media (min-width: @screen-md-min) {
-    padding-top: @appbar-height-md + 72px;
+
+  // 手机横屏
+  @media (orientation : landscape) and (max-width: @screen-xs-max-landscape) {
+    padding-top: @appbar-height-xs-landscape + 72px;
   }
 }
 

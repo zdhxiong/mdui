@@ -78,13 +78,11 @@
 
       // 设置 textarea 高度
       $input.height('');
-      var height = input.offsetHeight;
-      var diff = height - input.clientHeight;
+      var height = $input.height();
       var scrollHeight = input.scrollHeight;
 
-      if (scrollHeight + diff > height) {
-        var newAreaHeight = scrollHeight + diff;
-        $input.height(newAreaHeight);
+      if (scrollHeight > height) {
+        $input.height(scrollHeight);
       }
 
       // 计算完，还原 textarea 的值

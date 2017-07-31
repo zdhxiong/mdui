@@ -22,6 +22,7 @@
     timeout: 4000,                  // 在用户没有操作时多长时间自动隐藏
     buttonText: '',                 // 按钮的文本
     buttonColor: '',                // 按钮的颜色，支持 blue #90caf9 rgba(...)
+    position: 'bottom',             // 位置 bottom、top、left-top、left-bottom、right-top、right-bottom
     closeOnButtonClick: true,       // 点击按钮时关闭
     closeOnOutsideClick: true,      // 触摸或点击屏幕其他地方时关闭
     onClick: function () {          // 在 Snackbar 上点击的回调
@@ -105,11 +106,57 @@
       .appendTo(document.body);
 
     // 设置位置
+    _this._setPosition('close');
+
     _this.$snackbar
-      .transform('translateY(' + _this.$snackbar[0].clientHeight + 'px)')
-      .css('left', (document.body.clientWidth - _this.$snackbar[0].clientWidth) / 2 + 'px')
-      .addClass('mdui-snackbar-transition');
+      .reflow()
+      .addClass('mdui-snackbar-' + _this.options.position);
   }
+
+  /**
+   * 设置 Snackbar 的位置
+   * @param state
+   * @private
+   */
+  Snackbar.prototype._setPosition = function (state) {
+    var _this = this;
+
+    var snackbarHeight = _this.$snackbar[0].clientHeight;
+    var position = _this.options.position;
+
+    var translateX;
+    var translateY;
+
+    // translateX
+    if (position === 'bottom' || position === 'top') {
+      translateX = '-50%';
+    } else {
+      translateX = '0';
+    }
+
+    // translateY
+    if (state === 'open') {
+      translateY = '0';
+    } else {
+      if (position === 'bottom') {
+        translateY = snackbarHeight;
+      }
+
+      if (position === 'top') {
+        translateY = -snackbarHeight;
+      }
+
+      if (position === 'left-top' || position === 'right-top') {
+        translateY = -snackbarHeight - 24;
+      }
+
+      if (position === 'left-bottom' || position === 'right-bottom') {
+        translateY = snackbarHeight + 24;
+      }
+    }
+
+    _this.$snackbar.transform('translate(' + translateX + ',' + translateY + 'px)');
+  };
 
   /**
    * 打开 Snackbar
@@ -136,8 +183,9 @@
     _this.state = 'opening';
     _this.options.onOpen();
 
+    _this._setPosition('open');
+
     _this.$snackbar
-      .transform('translateY(0)')
       .transitionEnd(function () {
         if (_this.state !== 'opening') {
           return;
@@ -198,8 +246,9 @@
     _this.state = 'closing';
     _this.options.onClose();
 
+    _this._setPosition('close');
+
     _this.$snackbar
-      .transform('translateY(' + _this.$snackbar[0].clientHeight + 'px)')
       .transitionEnd(function () {
         if (_this.state !== 'closing') {
           return;

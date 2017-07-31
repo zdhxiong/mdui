@@ -16,10 +16,8 @@
   background-color: #323232;
   color: #fff;
   position: fixed;
-  bottom: 0;
   z-index: @z-index-snackbar;
   will-change: transform;
-  .mdui-shadow(6);
 
   // 手机端的样式
   width: 100%;
@@ -33,9 +31,54 @@
   }
 }
 
-/* 为 .mdui-snackbar 添加 transition 属性 */
-.mdui-snackbar-transition {
+.mdui-snackbar-bottom,
+.mdui-snackbar-top,
+.mdui-snackbar-left-top,
+.mdui-snackbar-left-bottom,
+.mdui-snackbar-right-top,
+.mdui-snackbar-right-bottom {
   transition: transform .3s @animation-curve-default;
+}
+
+/* 位置 */
+.mdui-snackbar-bottom,
+.mdui-snackbar-left-bottom,
+.mdui-snackbar-right-bottom {
+  bottom: 0;
+}
+
+.mdui-snackbar-top,
+.mdui-snackbar-left-top,
+.mdui-snackbar-right-top {
+  top: 0;
+}
+
+.mdui-snackbar-top,
+.mdui-snackbar-bottom {
+  left: 50%;
+}
+
+// 平板、桌面端位置
+@media (min-width: @screen-sm-min) {
+  .mdui-snackbar-left-top {
+    left: 24px;
+    top: 24px;
+  }
+
+  .mdui-snackbar-left-bottom {
+    left: 24px;
+    bottom: 24px;
+  }
+
+  .mdui-snackbar-right-top {
+    right: 24px;
+    top: 24px;
+  }
+
+  .mdui-snackbar-right-bottom {
+    right: 24px;
+    bottom: 24px;
+  }
 }
 
 /* 文本 */

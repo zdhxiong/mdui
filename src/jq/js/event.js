@@ -204,7 +204,7 @@
         evt.detail = data;
       }
 
-      evt._data = data;
+      evt._detailData = data;
 
       return this.each(function () {
         this.dispatchEvent(evt);
@@ -242,7 +242,7 @@
       };
 
       var callFn = function (e, ele) {
-        var result = func.apply(ele, e._data === undefined ? [e] : [e].concat(e._data));
+        var result = func.apply(ele, e._detailData === undefined ? [e] : [e].concat(e._detailData));
 
         if (result === false) {
           e.preventDefault();
@@ -251,7 +251,7 @@
       };
 
       var proxyfn = handler.proxy = function (e) {
-        e.data = data;
+        e._data = data;
 
         // 事件代理
         if (selector) {

@@ -58,7 +58,14 @@ describe('事件', function () {
     // =====================================
     $button.on('click', {key1: 'value1', key2: 'value2'}, function (event) {
       eventCount++;
-      assert.deepEqual(event.data, {key1: 'value1', key2: 'value2'});
+
+      // 原生事件的 .data 属性被占用了。因此 jQuery 使用 .data，而 JQ 使用 ._data。
+      if (isJquery) {
+        assert.deepEqual(event.data, {key1: 'value1', key2: 'value2'});
+      } else {
+        assert.deepEqual(event._data, {key1: 'value1', key2: 'value2'});
+      }
+
     });
     $button.trigger('click');
     assert.equal(eventCount, 3);

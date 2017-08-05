@@ -121,11 +121,10 @@
 /* 有子菜单的条目的图标 */
 .mdui-menu-item-more {
   float: right;
-  &:before {
-    content: '►';
-    font-size: 70%;
-    color: @color-black-icon;
-  }
+  width: 24px;
+  height: 24px;
+  margin: 4px 0;
+  background-image: data-uri('image/svg+xml', './menu/svg/arrow_right_dark.svg');
 }
 
 
@@ -190,8 +189,6 @@
   }
 
   .mdui-menu-item-more {
-    &:before {
-      color: @color-white-icon;
-    }
+    background-image: data-uri('image/svg+xml', './menu/svg/arrow_right_light.svg');
   }
 }

@@ -83,35 +83,35 @@ describe('数据存储', function () {
     assert.equal($intro.data().keySub, 'val-sub');
 
     // data 属性无法通过 removeData 删除
-    $intro.removeData('key');
+    assert.isTrue($intro.removeData('key').is($intro));
     assert.equal($intro.data('key'), 'val');
 
     // 存储字符串
-    $intro.data('string', 'value');
+    assert.isTrue($intro.data('string', 'value').is($intro));
     assert.equal($intro.data('string'), 'value');
 
     // 删除数据
-    $intro.removeData('string');
+    assert.isTrue($intro.removeData('string').is($intro));
     assert.isUndefined($intro.data('string'));
 
     // 存储已设置了 data 属性的数据
-    $intro.data('key-sub', 'testval');
+    assert.isTrue($intro.data('key-sub', 'testval').is($intro));
     assert.equal($intro.data('key-sub'), 'testval');
 
     // 删除了数据后，恢复为 data 属性数据
-    $intro.removeData('key-sub');
+    assert.isTrue($intro.removeData('key-sub').is($intro));
     assert.equal($intro.data('key-sub'), 'val-sub');
 
     // 存储对象
-    $intro.data('object', {test: "test"});
+    assert.isTrue($intro.data('object', {test: "test"}).is($intro));
     assert.deepEqual($intro.data('object'), {test: "test"});
 
     // 存储数组
-    $intro.data('array', [1, 2, 3, 4]);
+    assert.isTrue($intro.data('array', [1, 2, 3, 4]).is($intro));
     assert.deepEqual($intro.data('array'), [1, 2, 3, 4]);
 
     // 存储键值对数据
-    $intro.data({'objkey1': 'objval1', 'objkey2': 'objval2'});
+    assert.isTrue($intro.data({'objkey1': 'objval1', 'objkey2': 'objval2'}).is($intro));
     assert.equal($intro.data('objkey1'), 'objval1');
     assert.equal($intro.data('objkey2'), 'objval2');
 

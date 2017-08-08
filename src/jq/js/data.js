@@ -87,8 +87,15 @@
      */
     data: function (key, value) {
       if (value === undefined) {
-        // 获取值
-        if (this[0]) {
+        if (isObjectLike(key)) {
+
+          // 同时设置多个值
+          return this.each(function (i, ele) {
+            $.data(ele, key);
+          });
+        } else if (this[0]) {
+
+          // 获取值
           return $.data(this[0], key);
         } else {
           return undefined;

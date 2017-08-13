@@ -203,6 +203,16 @@
       "button"
     ]
   },
+  "select": {
+    "js": [
+      "src/select/js/select.js",
+      "src/select/js/select.data.js"
+    ],
+    "less": [
+      "src/select/less/select.less"
+    ],
+    "dependencies": []
+  },
   "grid": {
     "js": [],
     "less": [

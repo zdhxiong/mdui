@@ -1,6 +1,6 @@
 {
   "preset": "airbnb",
-
+  "maximumLineLength": 120,
   "excludeFiles": [
     "src/global/js/wrap_start.js",
     "src/global/js/wrap_end.js",

@@ -884,13 +884,16 @@ each({
 
       var $ele = $(ele);
 
-      // IE10、IE11 在 box-sizing:border-box 时，不会包含 padding，这里进行修复
+      // IE10、IE11 在 box-sizing:border-box 时，不会包含 padding 和 border，这里进行修复
       var IEFixValue = 0;
+      var isWidth = name === 'width';
       if ('ActiveXObject' in window) { // 判断是 IE 浏览器
         if ($ele.css('box-sizing') === 'border-box') {
           IEFixValue =
-            parseFloat($ele.css('padding-' + (name === 'width' ? 'left' : 'top'))) +
-            parseFloat($ele.css('padding-' + (name === 'width' ? 'right' : 'bottom')));
+            parseFloat($ele.css('padding-' + (isWidth ? 'left' : 'top'))) +
+            parseFloat($ele.css('padding-' + (isWidth ? 'right' : 'bottom'))) +
+            parseFloat($ele.css('border-' + (isWidth ? 'left' : 'top') + '-width')) +
+            parseFloat($ele.css('border-' + (isWidth ? 'right' : 'bottom') + '-width'));
         }
       }
 

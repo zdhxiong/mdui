@@ -131,22 +131,10 @@ mdui.Select = (function () {
     // 为当前 select 生成唯一 ID
     _this.uniqueID = $.guid('select');
 
-    // 生成 select
-    _this.handleUpdate();
-
     _this.state = 'closed';
 
-    // 点击后打开
-    _this.$select.on('click', function (e) {
-      var $target = $(e.target);
-
-      // 在菜单上点击时不打开
-      if ($target.is('.mdui-select-menu') || $target.is('.mdui-select-menu-item')) {
-        return;
-      }
-
-      _this.toggle();
-    });
+    // 生成 select
+    _this.handleUpdate();
 
     // 点击 select 外面区域关闭
     $document.on('click touchstart', function (e) {
@@ -166,6 +154,11 @@ mdui.Select = (function () {
    */
   Select.prototype.handleUpdate = function () {
     var _this = this;
+
+    if (_this.state === 'opening' || _this.state === 'opened') {
+      _this.close();
+    }
+
     var $selectNative = _this.$selectNative;
 
     // 当前的值和文本
@@ -233,7 +226,7 @@ mdui.Select = (function () {
       _this.size = 2;
     }
 
-    // 点击选项时关闭下拉框
+    // 点击选项时关闭下拉菜单
     _this.$items.on('click', function () {
       if (_this.state === 'closing') {
         return;
@@ -257,6 +250,18 @@ mdui.Select = (function () {
 
       _this.close();
     });
+
+    // 点击 select 时打开下拉菜单
+    _this.$select.on('click', function (e) {
+      var $target = $(e.target);
+
+      // 在菜单上点击时不打开
+      if ($target.is('.mdui-select-menu') || $target.is('.mdui-select-menu-item')) {
+        return;
+      }
+
+      _this.toggle();
+    });
   };
 
   /**
@@ -268,14 +273,14 @@ mdui.Select = (function () {
 
     if (inst.state === 'opening') {
       inst.state = 'opened';
-      componentEvent('opened', 'select', inst, inst.$select);
+      componentEvent('opened', 'select', inst, inst.$selectNative);
 
       inst.$menu.css('overflow-y', 'auto');
     }
 
     if (inst.state === 'closing') {
       inst.state = 'closed';
-      componentEvent('closed', 'menu', inst, inst.$select);
+      componentEvent('closed', 'select', inst, inst.$selectNative);
 
       // 恢复样式
       inst.$select.width('');
@@ -298,7 +303,7 @@ mdui.Select = (function () {
     }
 
     _this.state = 'opening';
-    componentEvent('open', 'menu', _this, _this.$select);
+    componentEvent('open', 'select', _this, _this.$selectNative);
 
     readjustMenu(_this);
 
@@ -320,7 +325,7 @@ mdui.Select = (function () {
     }
 
     _this.state = 'closing';
-    componentEvent('close', 'menu', _this, _this.$select);
+    componentEvent('close', 'select', _this, _this.$selectNative);
 
     _this.$menu.css('overflow-y', '');
 

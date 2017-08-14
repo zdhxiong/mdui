@@ -102,48 +102,57 @@ mdui.Drawer = (function () {
       });
     });
 
-    // 抽屉栏触屏手势控制
+    swipeSupport(_this);
+  }
+
+  /**
+   * 滑动手势支持
+   * @param _this
+   */
+  var swipeSupport = function (_this) {
+    // 抽屉栏滑动手势控制
     var openNavEventHandler;
     var touchStartX;
     var touchStartY;
     var swipeStartX;
     var swiping = false;
     var maybeSwiping = false;
+    var $body = $('body');
 
     // 手势触发的范围
-    var swipeAreaWidth = 30;
+    var swipeAreaWidth = 24;
 
-    _this.enableSwipeHandling = function () {
+    function enableSwipeHandling() {
       if (!openNavEventHandler) {
-        $(document.body).on('touchstart', onBodyTouchStart);
+        $body.on('touchstart', onBodyTouchStart);
         openNavEventHandler = onBodyTouchStart;
       }
-    };
+    }
 
     function setPosition(translateX, closeTransform) {
       var rtlTranslateMultiplier = _this.position === 'right' ? -1 : 1;
-      var drawer = _this.$drawer;
-      var transformCSS =
-        'translate(' + (-1 * rtlTranslateMultiplier * translateX) + 'px, 0) !important;';
-      drawer.css('cssText',
-        'transform:' + transformCSS + (closeTransform ? 'transition: initial !important;' : ''));
+      var transformCSS = 'translate(' + (-1 * rtlTranslateMultiplier * translateX) + 'px, 0) !important;';
+      _this.$drawer.css(
+        'cssText',
+        'transform:' + transformCSS + (closeTransform ? 'transition: initial !important;' : '')
+      );
     }
 
     function cleanPosition() {
-      _this.$drawer.css('transform', null).css('transition', null);
+      _this.$drawer.css({
+        transform: '',
+        transition: '',
+      });
     }
 
     function getMaxTranslateX() {
-      var width = _this.$drawer.width();
-      return width + 10;
+      return _this.$drawer.width() + 10;
     }
 
     function getTranslateX(currentX) {
       return Math.min(
         Math.max(
-          swiping === 'closing' ?
-            -1 * (currentX - swipeStartX) :
-            getMaxTranslateX() - (swipeStartX - currentX) * -1,
+          swiping === 'closing' ? (swipeStartX - currentX) : (getMaxTranslateX() + swipeStartX - currentX),
           0
         ),
         getMaxTranslateX()
@@ -151,36 +160,34 @@ mdui.Drawer = (function () {
     }
 
     function onBodyTouchStart(event) {
-      var touchX = _this.position === 'right' ?
-        (document.body.offsetWidth - event.touches[0].pageX) :
-        event.touches[0].pageX;
-      var touchY = event.touches[0].pageY;
+      touchStartX = event.touches[0].pageX;
+      if (_this.position === 'right') {
+        touchStartX = $body.width() - touchStartX;
+      }
 
-      if (swipeAreaWidth !== null && _this.state !== 'opened') {
-        if (touchX > swipeAreaWidth) {
+      touchStartY = event.touches[0].pageY;
+
+      if (_this.state !== 'opened') {
+        if (touchStartX > swipeAreaWidth || openNavEventHandler !== onBodyTouchStart) {
           return;
         }
       }
 
-      if (_this.state !== 'opened' &&
-        (openNavEventHandler !== onBodyTouchStart)
-      ) {
-        return;
-      }
-
       maybeSwiping = true;
-      touchStartX = touchX;
-      touchStartY = touchY;
 
-      document.body.addEventListener('touchmove', onBodyTouchMove);
-      document.body.addEventListener('touchend', onBodyTouchEnd);
-      document.body.addEventListener('touchcancel', onBodyTouchMove);
+      $body.on({
+        touchmove: onBodyTouchMove,
+        touchend: onBodyTouchEnd,
+        touchcancel: onBodyTouchMove,
+      });
     }
 
     function onBodyTouchMove(event) {
-      var touchX = _this.position === 'right' ?
-        (document.body.offsetWidth - event.touches[0].pageX) :
-        event.touches[0].pageX;
+      var touchX = event.touches[0].pageX;
+      if (_this.position === 'right') {
+        touchX = $body.width() - touchX;
+      }
+
       var touchY = event.touches[0].pageY;
 
       if (swiping) {
@@ -188,12 +195,12 @@ mdui.Drawer = (function () {
       } else if (maybeSwiping) {
         var dXAbs = Math.abs(touchX - touchStartX);
         var dYAbs = Math.abs(touchY - touchStartY);
-        var threshold = 10;
+        var threshold = 8;
 
         if (dXAbs > threshold && dYAbs <= threshold) {
           swipeStartX = touchX;
           swiping = _this.state === 'opened' ? 'closing' : 'opening';
-          $(document.body).addClass('mdui-locked');
+          $.lockScreen();
           setPosition(getTranslateX(touchX), true);
         } else if (dXAbs <= threshold && dYAbs > threshold) {
           onBodyTouchEnd();
@@ -203,9 +210,11 @@ mdui.Drawer = (function () {
 
     function onBodyTouchEnd(event) {
       if (swiping) {
-        var touchX = _this.position === 'right' ?
-          (document.body.offsetWidth - event.changedTouches[0].pageX) :
-          event.changedTouches[0].pageX;
+        var touchX = event.changedTouches[0].pageX;
+        if (_this.position === 'right') {
+          touchX = $body.width() - touchX;
+        }
+
         var translateRatio = getTranslateX(touchX) / getMaxTranslateX();
 
         maybeSwiping = false;
@@ -213,14 +222,14 @@ mdui.Drawer = (function () {
         swiping = null;
 
         if (swipingState === 'opening') {
-          if (translateRatio < 0.7) {
+          if (translateRatio < 0.92) {
             cleanPosition();
             _this.open();
           } else {
             cleanPosition();
           }
         } else {
-          if (translateRatio > 0.3) {
+          if (translateRatio > 0.08) {
             cleanPosition();
             _this.close();
           } else {
@@ -228,20 +237,22 @@ mdui.Drawer = (function () {
           }
         }
 
-        $(document.body).removeClass('mdui-locked');
+        $.unlockScreen();
       } else {
         maybeSwiping = false;
       }
 
-      document.body.removeEventListener('touchmove', onBodyTouchMove);
-      document.body.removeEventListener('touchend', onBodyTouchEnd);
-      document.body.removeEventListener('touchcancel', onBodyTouchMove);
+      $body.off({
+        touchmove: onBodyTouchMove,
+        touchend: onBodyTouchEnd,
+        touchcancel: onBodyTouchMove,
+      });
     }
 
     if (_this.options.swipe) {
-      _this.enableSwipeHandling();
+      enableSwipeHandling();
     }
-  }
+  };
 
   /**
    * 动画结束回调

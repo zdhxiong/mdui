@@ -1,5 +1,5 @@
 /*!
- * mdui v0.2.1 (http://mdui.org)
+ * mdui v0.3.0 (https://mdui.org)
  * Copyright 2016-2017 zdhxiong
  * Licensed under MIT
  */
@@ -1111,13 +1111,16 @@
 
           var $ele = $(ele);
 
-          // IE10、IE11 在 box-sizing:border-box 时，不会包含 padding，这里进行修复
+          // IE10、IE11 在 box-sizing:border-box 时，不会包含 padding 和 border，这里进行修复
           var IEFixValue = 0;
+          var isWidth = name === 'width';
           if ('ActiveXObject' in window) { // 判断是 IE 浏览器
             if ($ele.css('box-sizing') === 'border-box') {
               IEFixValue =
-                parseFloat($ele.css('padding-' + (name === 'width' ? 'left' : 'top'))) +
-                parseFloat($ele.css('padding-' + (name === 'width' ? 'right' : 'bottom')));
+                parseFloat($ele.css('padding-' + (isWidth ? 'left' : 'top'))) +
+                parseFloat($ele.css('padding-' + (isWidth ? 'right' : 'bottom'))) +
+                parseFloat($ele.css('border-' + (isWidth ? 'left' : 'top') + '-width')) +
+                parseFloat($ele.css('border-' + (isWidth ? 'right' : 'bottom') + '-width'));
             }
           }
 
@@ -1461,8 +1464,15 @@
          */
         data: function (key, value) {
           if (value === undefined) {
-            // 获取值
-            if (this[0]) {
+            if (isObjectLike(key)) {
+
+              // 同时设置多个值
+              return this.each(function (i, ele) {
+                $.data(ele, key);
+              });
+            } else if (this[0]) {
+
+              // 获取值
               return $.data(this[0], key);
             } else {
               return undefined;
@@ -1685,14 +1695,18 @@
 
           var evt;
           try {
-            evt = new CustomEvent(eventName, { detail: data, bubbles: true, cancelable: true });
+            evt = new CustomEvent(eventName, {
+              detail: data,
+              bubbles: true,
+              cancelable: true,
+            });
           } catch (e) {
             evt = document.createEvent('Event');
             evt.initEvent(eventName, true, true);
             evt.detail = data;
           }
 
-          evt._data = data;
+          evt._detailData = data;
 
           return this.each(function () {
             this.dispatchEvent(evt);
@@ -1730,7 +1744,8 @@
           };
 
           var callFn = function (e, ele) {
-            var result = func.apply(ele, e._data === undefined ? [e] : [e].concat(e._data));
+            var result = func.apply(ele, e._detailData === undefined ? [e] : [e].concat(e._detailData));
+
             if (result === false) {
               e.preventDefault();
               e.stopPropagation();
@@ -1738,7 +1753,7 @@
           };
 
           var proxyfn = handler.proxy = function (e) {
-            e.data = data;
+            e._data = data;
 
             // 事件代理
             if (selector) {
@@ -1803,6 +1818,430 @@
         });
       }
 
+    })();
+
+
+    (function () {
+      var globalOptions = {};
+      var jsonpID = 0;
+
+      // 全局事件名
+      var ajaxEvent = {
+        ajaxStart: 'start.mdui.ajax',
+        ajaxSuccess: 'success.mdui.ajax',
+        ajaxError: 'error.mdui.ajax',
+        ajaxComplete: 'complete.mdui.ajax',
+      };
+
+      /**
+       * 判断此请求方法是否通过查询字符串提交参数
+       * @param method 请求方法，大写
+       * @returns {boolean}
+       */
+      var isQueryStringData = function (method) {
+        return ['GET', 'HEAD'].indexOf(method) >= 0;
+      };
+
+      /**
+       * 添加参数到 URL 上，且 URL 中不存在 ? 时，自动把第一个 & 替换为 ?
+       * @param url
+       * @param query 参数 key=value
+       * @returns {string}
+       */
+      var appendQuery = function (url, query) {
+        return (url + '&' + query).replace(/[&?]{1,2}/, '?');
+      };
+
+      $.extend({
+
+        /**
+         * 为 ajax 请求设置全局配置参数
+         * @param options
+         */
+        ajaxSetup: function (options) {
+          $.extend(globalOptions, options || {});
+        },
+
+        /**
+         * 发送 ajax 请求
+         * @param options
+         */
+        ajax: function (options) {
+
+          // 配置参数
+          var defaults = {
+            method: 'GET',         // 请求方式
+            data: false,           // 请求的数据，查询字符串或对象
+            processData: true,     // 是否把数据转换为查询字符串发送，为 false 时不进行自动转换。
+            async: true,           // 是否为异步请求
+            cache: true,           // 是否从缓存中读取，只对 GET/HEAD 请求有效，dataType 为 jsonp 时为 false
+            username: '',          // HTTP 访问认证的用户名
+            password: '',          // HTTP 访问认证的密码
+            headers: {},           // 一个键值对，随着请求一起发送
+            xhrFields: {},         // 设置 XHR 对象
+            statusCode: {},        // 一个 HTTP 代码和函数的对象
+            dataType: 'text',      // 预期服务器返回的数据类型 text、json、jsonp
+            jsonp: 'callback',     // jsonp 请求的回调函数名称
+            jsonpCallback: function () {  // （string 或 Function）使用指定的回调函数名代替自动生成的回调函数名
+              return 'mduijsonp_' + Date.now() + '_' + (jsonpID += 1);
+            },
+
+            contentType: 'application/x-www-form-urlencoded', // 发送信息至服务器时内容编码类型
+            timeout: 0,            // 设置请求超时时间（毫秒）
+            global: true,          // 是否在 document 上触发全局 ajax 事件
+            // beforeSend:    function (XMLHttpRequest) 请求发送前执行，返回 false 可取消本次 ajax 请求
+            // success:       function (data, textStatus, XMLHttpRequest) 请求成功时调用
+            // error:         function (XMLHttpRequest, textStatus) 请求失败时调用
+            // statusCode:    {404: function ()}
+            //                200-299之间的状态码表示成功，参数和 success 回调一样；其他状态码表示失败，参数和 error 回调一样
+            // complete:      function (XMLHttpRequest, textStatus) 请求完成后回调函数 (请求成功或失败之后均调用)
+          };
+
+          // 回调函数
+          var callbacks = [
+            'beforeSend',
+            'success',
+            'error',
+            'statusCode',
+            'complete',
+          ];
+
+          // 是否已取消请求
+          var isCanceled = false;
+
+          // 保存全局配置
+          var globals = globalOptions;
+
+          // 事件参数
+          var eventParams = {};
+
+          // 合并全局参数到默认参数，全局回调函数不覆盖
+          each(globals, function (key, value) {
+            if (callbacks.indexOf(key) < 0) {
+              defaults[key] = value;
+            }
+          });
+
+          // 参数合并
+          options = $.extend({}, defaults, options);
+
+          /**
+           * 触发全局事件
+           * @param event string 事件名
+           * @param xhr XMLHttpRequest 事件参数
+           */
+          function triggerEvent(event, xhr) {
+            if (options.global) {
+              $(document).trigger(event, xhr);
+            }
+          }
+
+          /**
+           * 触发 XHR 回调和事件
+           * @param callback string 回调函数名称
+           */
+          function triggerCallback(callback) {
+            var a = arguments;
+            var result1;
+            var result2;
+
+            if (callback) {
+              // 全局回调
+              if (callback in globals) {
+                result1 = globals[callback](a[1], a[2], a[3], a[4]);
+              }
+
+              // 自定义回调
+              if (options[callback]) {
+                result2 = options[callback](a[1], a[2], a[3], a[4]);
+              }
+
+              // beforeSend 回调返回 false 时取消 ajax 请求
+              if (callback === 'beforeSend' && (result1 === false || result2 === false)) {
+                isCanceled = true;
+              }
+            }
+          }
+
+          // 请求方式转为大写
+          var method = options.method = options.method.toUpperCase();
+
+          // 默认使用当前页面 URL
+          if (!options.url) {
+            options.url = window.location.toString();
+          }
+
+          // 需要发送的数据
+          // GET/HEAD 请求和 processData 为 true 时，转换为查询字符串格式，特殊格式不转换
+          var sendData;
+          if (
+            (isQueryStringData(method) || options.processData) &&
+            options.data &&
+            [ArrayBuffer, Blob, Document, FormData].indexOf(options.data.constructor) < 0
+          ) {
+            sendData = isString(options.data) ? options.data : $.param(options.data);
+          } else {
+            sendData = options.data;
+          }
+
+          // 对于 GET、HEAD 类型的请求，把 data 数据添加到 URL 中
+          if (isQueryStringData(method) && sendData) {
+            // 查询字符串拼接到 URL 中
+            options.url = appendQuery(options.url, sendData);
+            sendData = null;
+          }
+
+          // JSONP
+          if (options.dataType === 'jsonp') {
+            // URL 中添加自动生成的回调函数名
+            var callbackName = isFunction(options.jsonpCallback) ?
+              options.jsonpCallback() :
+              options.jsonpCallback;
+            var requestUrl = appendQuery(options.url, options.jsonp + '=' + callbackName);
+
+            eventParams.options = options;
+
+            triggerEvent(ajaxEvent.ajaxStart, eventParams);
+            triggerCallback('beforeSend', null);
+
+            if (isCanceled) {
+              return;
+            }
+
+            var abortTimeout;
+
+            // 创建 script
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+
+            // 创建 script 失败
+            script.onerror = function () {
+              if (abortTimeout) {
+                clearTimeout(abortTimeout);
+              }
+
+              triggerEvent(ajaxEvent.ajaxError, eventParams);
+              triggerCallback('error', null, 'scripterror');
+
+              triggerEvent(ajaxEvent.ajaxComplete, eventParams);
+              triggerCallback('complete', null, 'scripterror');
+            };
+
+            script.src = requestUrl;
+
+            // 处理
+            window[callbackName] = function (data) {
+              if (abortTimeout) {
+                clearTimeout(abortTimeout);
+              }
+
+              eventParams.data = data;
+
+              triggerEvent(ajaxEvent.ajaxSuccess, eventParams);
+              triggerCallback('success', data, 'success', null);
+
+              $(script).remove();
+              script = null;
+              delete window[callbackName];
+            };
+
+            $('head').append(script);
+
+            if (options.timeout > 0) {
+              abortTimeout = setTimeout(function () {
+                $(script).remove();
+                script = null;
+
+                triggerEvent(ajaxEvent.ajaxError, eventParams);
+                triggerCallback('error', null, 'timeout');
+              }, options.timeout);
+            }
+
+            return;
+          }
+
+          // GET/HEAD 请求的缓存处理
+          if (isQueryStringData(method) && !options.cache) {
+            options.url = appendQuery(options.url, '_=' + Date.now());
+          }
+
+          // 创建 XHR
+          var xhr = new XMLHttpRequest();
+
+          xhr.open(method, options.url, options.async, options.username, options.password);
+
+          xhr.setRequestHeader('Content-Type', options.contentType);
+
+          // 设置 Accept
+          if (options.contentType === 'json') {
+            xhr.setRequestHeader('Accept', 'application/json, text/javascript');
+          }
+
+          // 添加 headers
+          if (options.headers) {
+            each(options.headers, function (key, value) {
+              xhr.setRequestHeader(key, value);
+            });
+          }
+
+          // 检查是否是跨域请求
+          if (options.crossDomain === undefined) {
+            options.crossDomain =
+              /^([\w-]+:)?\/\/([^\/]+)/.test(options.url) &&
+              RegExp.$2 !== window.location.host;
+          }
+
+          if (!options.crossDomain) {
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+          }
+
+          if (options.xhrFields) {
+            each(options.xhrFields, function (key, value) {
+              xhr[key] = value;
+            });
+          }
+
+          eventParams.xhr = xhr;
+          eventParams.options = options;
+
+          var xhrTimeout;
+
+          xhr.onload = function () {
+            if (xhrTimeout) {
+              clearTimeout(xhrTimeout);
+            }
+
+            // 包含成功或错误代码的字符串
+            var textStatus;
+
+            // AJAX 返回的 HTTP 响应码是否表示成功
+            var isHttpStatusSuccess = (xhr.status >= 200 && xhr.status < 300) || xhr.status === 0;
+
+            if (isHttpStatusSuccess) {
+
+              if (xhr.status === 204 || method === 'HEAD') {
+                textStatus = 'nocontent';
+              } else if (xhr.status === 304) {
+                textStatus = 'notmodified';
+              } else {
+                textStatus = 'success';
+              }
+
+              var responseData;
+              if (options.dataType === 'json') {
+                try {
+                  eventParams.data = responseData = JSON.parse(xhr.responseText);
+
+                  triggerEvent(ajaxEvent.ajaxSuccess, eventParams);
+                  triggerCallback('success', responseData, textStatus, xhr);
+                } catch (err) {
+                  textStatus = 'parsererror';
+
+                  triggerEvent(ajaxEvent.ajaxError, eventParams);
+                  triggerCallback('error', xhr, textStatus);
+                }
+              } else {
+                eventParams.data = responseData =
+                  xhr.responseType === 'text' || xhr.responseType === '' ?
+                  xhr.responseText :
+                  xhr.response;
+
+                triggerEvent(ajaxEvent.ajaxSuccess, eventParams);
+                triggerCallback('success', responseData, textStatus, xhr);
+              }
+            } else {
+              textStatus = 'error';
+
+              triggerEvent(ajaxEvent.ajaxError, eventParams);
+              triggerCallback('error', xhr, textStatus);
+            }
+
+            // statusCode
+            each([globals.statusCode, options.statusCode], function (i, func) {
+              if (func && func[xhr.status]) {
+                if (isHttpStatusSuccess) {
+                  func[xhr.status](responseData, textStatus, xhr);
+                } else {
+                  func[xhr.status](xhr, textStatus);
+                }
+              }
+            });
+
+            triggerEvent(ajaxEvent.ajaxComplete, eventParams);
+            triggerCallback('complete', xhr, textStatus);
+          };
+
+          xhr.onerror = function () {
+            if (xhrTimeout) {
+              clearTimeout(xhrTimeout);
+            }
+
+            triggerEvent(ajaxEvent.ajaxError, eventParams);
+            triggerCallback('error', xhr, xhr.statusText);
+
+            triggerEvent(ajaxEvent.ajaxComplete, eventParams);
+            triggerCallback('complete', xhr, 'error');
+          };
+
+          xhr.onabort = function () {
+            var textStatus = 'abort';
+
+            if (xhrTimeout) {
+              textStatus = 'timeout';
+              clearTimeout(xhrTimeout);
+            }
+
+            triggerEvent(ajaxEvent.ajaxError, eventParams);
+            triggerCallback('error', xhr, textStatus);
+
+            triggerEvent(ajaxEvent.ajaxComplete, eventParams);
+            triggerCallback('complete', xhr, textStatus);
+          };
+
+          // ajax start 回调
+          triggerEvent(ajaxEvent.ajaxStart, eventParams);
+          triggerCallback('beforeSend', xhr);
+
+          if (isCanceled) {
+            return xhr;
+          }
+
+          // Timeout
+          if (options.timeout > 0) {
+            xhrTimeout = setTimeout(function () {
+              xhr.abort();
+            }, options.timeout);
+          }
+
+          // 发送 XHR
+          xhr.send(sendData);
+
+          return xhr;
+        },
+      });
+
+      // 监听全局事件
+      //
+      // 通过 $(document).on('success.mdui.ajax', function (event, params) {}) 调用时，包含两个参数
+      // event: 事件对象
+      // params: {
+      //   xhr: XMLHttpRequest 对象
+      //   options: ajax 请求的配置参数
+      //   data: ajax 请求返回的数据
+      // }
+
+      // 全局 Ajax 事件快捷方法
+      // $(document).ajaxStart(function (event, xhr, options) {})
+      // $(document).ajaxSuccess(function (event, xhr, options, data) {})
+      // $(document).ajaxError(function (event, xhr, options) {})
+      // $(document).ajaxComplete(function (event, xhr, options) {})
+      each(ajaxEvent, function (name, eventName) {
+        $.fn[name] = function (fn) {
+          return this.on(eventName, function (e, params) {
+            fn(e, params.xhr, params.options, params.data);
+          });
+        };
+      });
     })();
 
 
@@ -2519,30 +2958,25 @@
       accordion: false,                             // 是否使用手风琴效果
     };
 
-    // 类名
-    var CLASS = {
-      item: 'mdui-collapse-item',           // item 类名
-      itemOpen: 'mdui-collapse-item-open',  // 打开状态的 item
-      header: 'mdui-collapse-item-header',  // item 中的 header 类名
-      body: 'mdui-collapse-item-body',      // item 中的 body 类名
-    };
-
-    // 命名空间
-    var NAMESPACE = 'collapse';
-
     /**
      * 折叠内容块
      * @param selector
      * @param opts
-     * @param classes
      * @param namespace
      * @constructor
      */
-    function Collapse(selector, opts, classes, namespace) {
+    function Collapse(selector, opts, namespace) {
       var _this = this;
 
-      _this.classes = $.extend({}, CLASS, classes || {});
-      _this.namespace = namespace ? namespace : NAMESPACE;
+      // 命名空间
+      _this.ns = namespace;
+
+      // 类名
+      var classpPefix = 'mdui-' + _this.ns + '-item';
+      _this.class_item = classpPefix;
+      _this.class_item_open = classpPefix + '-open';
+      _this.class_header = classpPefix + '-header';
+      _this.class_body = classpPefix + '-body';
 
       // 折叠面板元素
       _this.$collapse = $(selector).eq(0);
@@ -2551,17 +2985,25 @@
       }
 
       // 已通过自定义属性实例化过，不再重复实例化
-      var oldInst = _this.$collapse.data('mdui.' + _this.namespace);
+      var oldInst = _this.$collapse.data('mdui.' + _this.ns);
       if (oldInst) {
         return oldInst;
       }
 
       _this.options = $.extend({}, DEFAULT, (opts || {}));
 
-      _this.$collapse.on('click', '.' + _this.classes.header, function () {
-        var $item = $(this).parent('.' + _this.classes.item);
+      _this.$collapse.on('click', '.' + _this.class_header, function () {
+        var $item = $(this).parent('.' + _this.class_item);
         if (_this.$collapse.children($item).length) {
           _this.toggle($item);
+        }
+      });
+
+      // 绑定关闭按钮
+      _this.$collapse.on('click', '[mdui-' + _this.ns + '-item-close]', function () {
+        var $item = $(this).parents('.' + _this.class_item).eq(0);
+        if (_this._isOpen($item)) {
+          _this.close($item);
         }
       });
     }
@@ -2573,7 +3015,7 @@
      * @private
      */
     Collapse.prototype._isOpen = function ($item) {
-      return $item.hasClass(this.classes.itemOpen);
+      return $item.hasClass(this.class_item_open);
     };
 
     /**
@@ -2587,7 +3029,7 @@
 
       if (parseInt(item) === item) {
         // item 是索引号
-        return _this.$collapse.children('.' + _this.classes.item).eq(item);
+        return _this.$collapse.children('.' + _this.class_item).eq(item);
       }
 
       return $(item).eq(0);
@@ -2607,11 +3049,11 @@
           .reflow()
           .transition('');
 
-        componentEvent('opened', inst.namespace, inst, $item[0]);
+        componentEvent('opened', inst.ns, inst, $item[0]);
       } else {
         $content.height('');
 
-        componentEvent('closed', inst.namespace, inst, $item[0]);
+        componentEvent('closed', inst.ns, inst, $item[0]);
       }
     };
 
@@ -2629,7 +3071,7 @@
 
       // 关闭其他项
       if (_this.options.accordion) {
-        _this.$collapse.children('.' + _this.classes.itemOpen).each(function () {
+        _this.$collapse.children('.' + _this.class_item_open).each(function () {
           var $tmpItem = $(this);
 
           if ($tmpItem !== $item) {
@@ -2638,7 +3080,7 @@
         });
       }
 
-      var $content = $item.children('.' + _this.classes.body);
+      var $content = $item.children('.' + _this.class_body);
 
       $content
         .height($content[0].scrollHeight)
@@ -2646,9 +3088,9 @@
           transitionEnd(_this, $content, $item);
         });
 
-      componentEvent('open', _this.namespace, _this, $item[0]);
+      componentEvent('open', _this.ns, _this, $item[0]);
 
-      $item.addClass(_this.classes.itemOpen);
+      $item.addClass(_this.class_item_open);
     };
 
     /**
@@ -2663,11 +3105,11 @@
         return;
       }
 
-      var $content = $item.children('.' + _this.classes.body);
+      var $content = $item.children('.' + _this.class_body);
 
-      componentEvent('close', _this.namespace, _this, $item[0]);
+      componentEvent('close', _this.ns, _this, $item[0]);
 
-      $item.removeClass(_this.classes.itemOpen);
+      $item.removeClass(_this.class_item_open);
 
       $content
         .transition(0)
@@ -2701,7 +3143,7 @@
     Collapse.prototype.openAll = function () {
       var _this = this;
 
-      _this.$collapse.children('.' + _this.classes.item).each(function () {
+      _this.$collapse.children('.' + _this.class_item).each(function () {
         var $tmpItem = $(this);
 
         if (!_this._isOpen($tmpItem)) {
@@ -2716,7 +3158,7 @@
     Collapse.prototype.closeAll = function () {
       var _this = this;
 
-      _this.$collapse.children('.' + _this.classes.item).each(function () {
+      _this.$collapse.children('.' + _this.class_item).each(function () {
         var $tmpItem = $(this);
 
         if (_this._isOpen($tmpItem)) {
@@ -2736,7 +3178,7 @@
   mdui.Collapse = (function () {
 
     function Collapse(selector, opts) {
-      return new CollapsePrivate(selector, opts);
+      return new CollapsePrivate(selector, opts, 'collapse');
     }
 
     return Collapse;
@@ -2751,13 +3193,13 @@
 
   $(function () {
     $('[mdui-collapse]').each(function () {
-      var $this = $(this);
-      var options = parseOptions($this.attr('mdui-collapse'));
+      var $target = $(this);
 
-      var inst = $this.data('mdui.collapse');
+      var inst = $target.data('mdui.collapse');
       if (!inst) {
-        inst = new mdui.Collapse($this, options);
-        $this.data('mdui.collapse', inst);
+        var options = parseOptions($target.attr('mdui-collapse'));
+        inst = new mdui.Collapse($target, options);
+        $target.data('mdui.collapse', inst);
       }
     });
   });
@@ -3091,6 +3533,11 @@
 
       TouchHandler.register(e);
 
+      // Chrome 59 点击滚动条时，会在 document 上触发事件
+      if (e.target === document) {
+        return;
+      }
+
       var $ripple;
       var $target = $(e.target);
 
@@ -3171,7 +3618,7 @@
       return (
         typeof obj === 'object' &&
         obj !== null &&
-        typeof obj[prop] !== 'undefined' &&
+        obj[prop] !== undefined &&
         obj[prop]
       ) ? obj[prop] : false;
     };
@@ -3227,14 +3674,28 @@
 
       // textarea 高度自动调整
       if (e.target.nodeName.toLowerCase() === 'textarea') {
+
+        // IE bug：textarea 的值仅为多个换行，不含其他内容时，textarea 的高度不准确
+        //         此时，在计算高度前，在值的开头加入一个空格，计算完后，移除空格
+        var inputValue = $input.val();
+        var hasExtraSpace = false;
+        if (inputValue.replace(/[\r\n]/g, '') === '') {
+          $input.val(' ' + inputValue);
+          hasExtraSpace = true;
+        }
+
+        // 设置 textarea 高度
         $input.height('');
-        var height = input.offsetHeight;
-        var diff = height - input.clientHeight;
+        var height = $input.height();
         var scrollHeight = input.scrollHeight;
 
-        if (scrollHeight + diff > height) {
-          var newAreaHeight = scrollHeight + diff;
-          $input.height(newAreaHeight);
+        if (scrollHeight > height) {
+          $input.height(scrollHeight);
+        }
+
+        // 计算完，还原 textarea 的值
+        if (hasExtraSpace) {
+          $input.val(inputValue);
         }
       }
 
@@ -3554,7 +4015,9 @@
           15 * (_this.$dialBtns.length - index) + 'ms';
       });
 
-      _this.$dial.addClass('mdui-fab-dial-show');
+      _this.$dial
+        .css('height', 'auto')
+        .addClass('mdui-fab-dial-show');
 
       // 如果按钮中存在 .mdui-fab-opened 的图标，则进行图标切换
       if (_this.$btn.find('.mdui-fab-opened').length) {
@@ -3598,6 +4061,7 @@
         if (!_this.$btn.hasClass('mdui-fab-opened')) {
           _this.state = 'closed';
           componentEvent('closed', 'fab', _this, _this.$fab);
+          _this.$dial.css('height', 0);
         }
       });
     };
@@ -3659,6 +4123,380 @@
         var options = parseOptions($this.attr('mdui-fab'));
         inst = new mdui.Fab($this, options);
         $this.data('mdui.fab', inst);
+      }
+    });
+  });
+
+
+  /**
+   * =============================================================================
+   * ************   Select 下拉选择   ************
+   * =============================================================================
+   */
+
+  mdui.Select = (function () {
+
+    /**
+     * 默认参数
+     */
+    var DEFAULT = {
+      position: 'auto',                // 下拉框位置，auto、bottom、top
+      gutter: 16,                      // 菜单与窗口上下边框至少保持多少间距
+    };
+
+    /**
+     * 调整菜单位置
+     * @param _this Select 实例
+     */
+    var readjustMenu = function (_this) {
+      // 窗口高度
+      var windowHeight = $window.height();
+
+      // 配置参数
+      var gutter = _this.options.gutter;
+      var position = _this.options.position;
+
+      // mdui-select 高度
+      var selectHeight = parseInt(_this.$select.height());
+
+      // 菜单项高度
+      var $menuItemFirst = _this.$items.eq(0);
+      var menuItemHeight = parseInt($menuItemFirst.height());
+      var menuItemMargin = parseInt($menuItemFirst.css('margin-top'));
+
+      // 菜单高度
+      var menuWidth = parseFloat(_this.$select.width() + 0.01); // 必须比真实宽度多一点，不然会出现省略号
+      var menuHeight = menuItemHeight * _this.size + menuItemMargin * 2;
+
+      // var menuRealHeight = menuItemHeight * _this.$items.length + menuItemMargin * 2;
+
+      // 菜单是否出现了滚动条
+      //var isMenuScrollable = menuRealHeight > menuHeight;
+
+      // select 在窗口中的位置
+      var selectTop = _this.$select[0].getBoundingClientRect().top;
+
+      var transformOriginY;
+      var menuMarginTop;
+
+      // position 为 auto 时
+      if (position === 'auto') {
+
+        // 菜单高度不能超过窗口高度
+        var heightTemp = windowHeight - gutter * 2;
+        if (menuHeight > heightTemp) {
+          menuHeight = heightTemp;
+        }
+
+        // 菜单的 margin-top
+        menuMarginTop = -(
+          menuItemMargin + _this.selectedIndex * menuItemHeight +
+          (menuItemHeight - selectHeight) / 2
+        );
+        var menuMarginTopMax = -(
+          menuItemMargin + (_this.size - 1) * menuItemHeight +
+          (menuItemHeight - selectHeight) / 2
+        );
+        if (menuMarginTop < menuMarginTopMax) {
+          menuMarginTop = menuMarginTopMax;
+        }
+
+        // 菜单不能超出窗口
+        var menuTop = selectTop + menuMarginTop;
+
+        if (menuTop < gutter) {
+          // 不能超出窗口上方
+          menuMarginTop = -(selectTop - gutter);
+        } else if (menuTop + menuHeight + gutter > windowHeight) {
+          // 不能超出窗口下方
+          menuMarginTop = -(selectTop + menuHeight + gutter - windowHeight);
+        }
+
+        // transform 的 Y 轴坐标
+        transformOriginY = (_this.selectedIndex * menuItemHeight + menuItemHeight / 2 + menuItemMargin) + 'px';
+      } else if (position === 'bottom') {
+        menuMarginTop = selectHeight;
+        transformOriginY = '0px';
+      } else if (position === 'top') {
+        menuMarginTop = -menuHeight - 1;
+        transformOriginY = '100%';
+      }
+
+      // 设置样式
+      _this.$select.width(menuWidth);
+      _this.$menu
+        .width(menuWidth)
+        .height(menuHeight)
+        .css({
+          'margin-top': menuMarginTop + 'px',
+          'transform-origin':
+          'center ' + transformOriginY + ' 0',
+        });
+    };
+
+    /**
+     * 下拉选择
+     * @param selector
+     * @param opts
+     * @constructor
+     */
+    function Select(selector, opts) {
+      var _this = this;
+
+      var $selectNative =  _this.$selectNative = $(selector).eq(0);
+      if (!$selectNative.length) {
+        return;
+      }
+
+      // 已通过自定义属性实例化过，不再重复实例化
+      var oldInst = $selectNative.data('mdui.select');
+      if (oldInst) {
+        return oldInst;
+      }
+
+      $selectNative.hide();
+
+      _this.options = $.extend({}, DEFAULT, (opts || {}));
+
+      // 为当前 select 生成唯一 ID
+      _this.uniqueID = $.guid('select');
+
+      _this.state = 'closed';
+
+      // 生成 select
+      _this.handleUpdate();
+
+      // 点击 select 外面区域关闭
+      $document.on('click touchstart', function (e) {
+        var $target = $(e.target);
+        if (
+          (_this.state === 'opening' || _this.state === 'opened') &&
+          !$target.is(_this.$select) &&
+          !$.contains(_this.$select[0], $target[0])
+        ) {
+          _this.close();
+        }
+      });
+    }
+
+    /**
+     * 对原生 select 组件进行了修改后，需要调用该方法
+     */
+    Select.prototype.handleUpdate = function () {
+      var _this = this;
+
+      if (_this.state === 'opening' || _this.state === 'opened') {
+        _this.close();
+      }
+
+      var $selectNative = _this.$selectNative;
+
+      // 当前的值和文本
+      _this.value = $selectNative.val();
+      _this.text = '';
+
+      // 生成 HTML
+      // 菜单项
+      _this.$items = $();
+      $selectNative.find('option').each(function (index, option) {
+        var data = {
+          value: option.value,
+          text: option.textContent,
+          disabled: option.disabled,
+          selected: _this.value === option.value,
+          index: index,
+        };
+
+        if (_this.value === data.value) {
+          _this.text = data.text;
+          _this.selectedIndex = index;
+        }
+
+        _this.$items = _this.$items.add(
+          $('<div class="mdui-select-menu-item mdui-ripple"' +
+            (data.disabled ? ' disabled' : '') +
+            (data.selected ? ' selected' : '') + '>' + data.text + '</div>')
+            .data(data)
+        );
+      });
+
+      // selected
+      _this.$selected = $('<span class="mdui-select-selected">' + _this.text + '</span>');
+
+      // select
+      _this.$select =
+        $(
+          '<div class="mdui-select mdui-select-position-' + _this.options.position + '" ' +
+          'style="' + _this.$selectNative.attr('style') + '" ' +
+          'id="' + _this.uniqueID + '"></div>'
+        )
+          .show()
+          .append(_this.$selected);
+
+      // menu
+      _this.$menu =
+        $('<div class="mdui-select-menu"></div>')
+          .appendTo(_this.$select)
+          .append(_this.$items);
+
+      $('#' + _this.uniqueID).remove();
+      $selectNative.after(_this.$select);
+
+      // 根据 select 的 size 属性设置高度，默认为 6
+      _this.size = _this.$selectNative.attr('size');
+
+      if (!_this.size) {
+        _this.size = _this.$items.length;
+        if (_this.size > 8) {
+          _this.size = 8;
+        }
+      }
+
+      if (_this.size < 2) {
+        _this.size = 2;
+      }
+
+      // 点击选项时关闭下拉菜单
+      _this.$items.on('click', function () {
+        if (_this.state === 'closing') {
+          return;
+        }
+
+        var $item = $(this);
+
+        if ($item.data('disabled')) {
+          return;
+        }
+
+        var itemData = $item.data();
+
+        _this.$selected.text(itemData.text);
+        $selectNative.val(itemData.value);
+        _this.$items.removeAttr('selected');
+        $item.attr('selected', '');
+        _this.selectedIndex = itemData.index;
+        _this.value = itemData.value;
+        _this.text = itemData.text;
+
+        _this.close();
+      });
+
+      // 点击 select 时打开下拉菜单
+      _this.$select.on('click', function (e) {
+        var $target = $(e.target);
+
+        // 在菜单上点击时不打开
+        if ($target.is('.mdui-select-menu') || $target.is('.mdui-select-menu-item')) {
+          return;
+        }
+
+        _this.toggle();
+      });
+    };
+
+    /**
+     * 动画结束回调
+     * @param inst
+     */
+    var transitionEnd = function (inst) {
+      inst.$select.removeClass('mdui-select-closing');
+
+      if (inst.state === 'opening') {
+        inst.state = 'opened';
+        componentEvent('opened', 'select', inst, inst.$selectNative);
+
+        inst.$menu.css('overflow-y', 'auto');
+      }
+
+      if (inst.state === 'closing') {
+        inst.state = 'closed';
+        componentEvent('closed', 'select', inst, inst.$selectNative);
+
+        // 恢复样式
+        inst.$select.width('');
+        inst.$menu.css({
+          'margin-top': '',
+          height: '',
+          width: '',
+        });
+      }
+    };
+
+    /**
+     * 打开 Select
+     */
+    Select.prototype.open = function () {
+      var _this = this;
+
+      if (_this.state === 'opening' || _this.state === 'opened') {
+        return;
+      }
+
+      _this.state = 'opening';
+      componentEvent('open', 'select', _this, _this.$selectNative);
+
+      readjustMenu(_this);
+
+      _this.$select.addClass('mdui-select-open');
+
+      _this.$menu.transitionEnd(function () {
+        transitionEnd(_this);
+      });
+    };
+
+    /**
+     * 关闭 Select
+     */
+    Select.prototype.close = function () {
+      var _this = this;
+
+      if (_this.state === 'closing' || _this.state === 'closed') {
+        return;
+      }
+
+      _this.state = 'closing';
+      componentEvent('close', 'select', _this, _this.$selectNative);
+
+      _this.$menu.css('overflow-y', '');
+
+      _this.$select
+        .removeClass('mdui-select-open')
+        .addClass('mdui-select-closing');
+      _this.$menu.transitionEnd(function () {
+        transitionEnd(_this);
+      });
+    };
+
+    /**
+     * 切换 Select 显示状态
+     */
+    Select.prototype.toggle = function () {
+      var _this = this;
+
+      if (_this.state === 'opening' || _this.state === 'opened') {
+        _this.close();
+      } else if (_this.state === 'closing' || _this.state === 'closed') {
+        _this.open();
+      }
+    };
+
+    return Select;
+  })();
+
+
+  /**
+   * =============================================================================
+   * ************   Select 下拉选择   ************
+   * =============================================================================
+   */
+
+  $(function () {
+    $('[mdui-select]').each(function () {
+      var $this = $(this);
+      var inst = $this.data('mdui.select');
+      if (!inst) {
+        inst = new mdui.Select($this, parseOptions($this.attr('mdui-select')));
+        $this.data('mdui.select', inst);
       }
     });
   });
@@ -3952,6 +4790,9 @@
     var DEFAULT = {
       // 在桌面设备上是否显示遮罩层。手机和平板不受这个参数影响，始终会显示遮罩层
       overlay: false,
+
+      // 是否开启手势
+      swipe: false,
     };
 
     var isDesktop = function () {
@@ -4034,7 +4875,158 @@
           _this.close();
         });
       });
+
+      swipeSupport(_this);
     }
+
+    /**
+     * 滑动手势支持
+     * @param _this
+     */
+    var swipeSupport = function (_this) {
+      // 抽屉栏滑动手势控制
+      var openNavEventHandler;
+      var touchStartX;
+      var touchStartY;
+      var swipeStartX;
+      var swiping = false;
+      var maybeSwiping = false;
+      var $body = $('body');
+
+      // 手势触发的范围
+      var swipeAreaWidth = 24;
+
+      function enableSwipeHandling() {
+        if (!openNavEventHandler) {
+          $body.on('touchstart', onBodyTouchStart);
+          openNavEventHandler = onBodyTouchStart;
+        }
+      }
+
+      function setPosition(translateX, closeTransform) {
+        var rtlTranslateMultiplier = _this.position === 'right' ? -1 : 1;
+        var transformCSS = 'translate(' + (-1 * rtlTranslateMultiplier * translateX) + 'px, 0) !important;';
+        _this.$drawer.css(
+          'cssText',
+          'transform:' + transformCSS + (closeTransform ? 'transition: initial !important;' : '')
+        );
+      }
+
+      function cleanPosition() {
+        _this.$drawer.css({
+          transform: '',
+          transition: '',
+        });
+      }
+
+      function getMaxTranslateX() {
+        return _this.$drawer.width() + 10;
+      }
+
+      function getTranslateX(currentX) {
+        return Math.min(
+          Math.max(
+            swiping === 'closing' ? (swipeStartX - currentX) : (getMaxTranslateX() + swipeStartX - currentX),
+            0
+          ),
+          getMaxTranslateX()
+        );
+      }
+
+      function onBodyTouchStart(event) {
+        touchStartX = event.touches[0].pageX;
+        if (_this.position === 'right') {
+          touchStartX = $body.width() - touchStartX;
+        }
+
+        touchStartY = event.touches[0].pageY;
+
+        if (_this.state !== 'opened') {
+          if (touchStartX > swipeAreaWidth || openNavEventHandler !== onBodyTouchStart) {
+            return;
+          }
+        }
+
+        maybeSwiping = true;
+
+        $body.on({
+          touchmove: onBodyTouchMove,
+          touchend: onBodyTouchEnd,
+          touchcancel: onBodyTouchMove,
+        });
+      }
+
+      function onBodyTouchMove(event) {
+        var touchX = event.touches[0].pageX;
+        if (_this.position === 'right') {
+          touchX = $body.width() - touchX;
+        }
+
+        var touchY = event.touches[0].pageY;
+
+        if (swiping) {
+          setPosition(getTranslateX(touchX), true);
+        } else if (maybeSwiping) {
+          var dXAbs = Math.abs(touchX - touchStartX);
+          var dYAbs = Math.abs(touchY - touchStartY);
+          var threshold = 8;
+
+          if (dXAbs > threshold && dYAbs <= threshold) {
+            swipeStartX = touchX;
+            swiping = _this.state === 'opened' ? 'closing' : 'opening';
+            $.lockScreen();
+            setPosition(getTranslateX(touchX), true);
+          } else if (dXAbs <= threshold && dYAbs > threshold) {
+            onBodyTouchEnd();
+          }
+        }
+      }
+
+      function onBodyTouchEnd(event) {
+        if (swiping) {
+          var touchX = event.changedTouches[0].pageX;
+          if (_this.position === 'right') {
+            touchX = $body.width() - touchX;
+          }
+
+          var translateRatio = getTranslateX(touchX) / getMaxTranslateX();
+
+          maybeSwiping = false;
+          var swipingState = swiping;
+          swiping = null;
+
+          if (swipingState === 'opening') {
+            if (translateRatio < 0.92) {
+              cleanPosition();
+              _this.open();
+            } else {
+              cleanPosition();
+            }
+          } else {
+            if (translateRatio > 0.08) {
+              cleanPosition();
+              _this.close();
+            } else {
+              cleanPosition();
+            }
+          }
+
+          $.unlockScreen();
+        } else {
+          maybeSwiping = false;
+        }
+
+        $body.off({
+          touchmove: onBodyTouchMove,
+          touchend: onBodyTouchEnd,
+          touchcancel: onBodyTouchMove,
+        });
+      }
+
+      if (_this.options.swipe) {
+        enableSwipeHandling();
+      }
+    };
 
     /**
      * 动画结束回调
@@ -5134,7 +6126,7 @@
         return;
       }
 
-      var oldOpts = _this.options;
+      var oldOpts = $.extend({}, _this.options);
 
       // 合并 data 属性参数
       $.extend(_this.options, parseOptions(_this.$target.attr('mdui-tooltip')));
@@ -5267,6 +6259,7 @@
       timeout: 4000,                  // 在用户没有操作时多长时间自动隐藏
       buttonText: '',                 // 按钮的文本
       buttonColor: '',                // 按钮的颜色，支持 blue #90caf9 rgba(...)
+      position: 'bottom',             // 位置 bottom、top、left-top、left-bottom、right-top、right-bottom
       closeOnButtonClick: true,       // 点击按钮时关闭
       closeOnOutsideClick: true,      // 触摸或点击屏幕其他地方时关闭
       onClick: function () {          // 在 Snackbar 上点击的回调
@@ -5275,7 +6268,16 @@
       onButtonClick: function () {    // 点击按钮的回调
       },
 
+      onOpen: function () {           // 打开动画开始时的回调
+      },
+
+      onOpened: function () {         // 打开动画结束时的回调
+      },
+
       onClose: function () {          // 关闭动画开始时的回调
+      },
+
+      onClosed: function () {         // 打开动画结束时的回调
       },
     };
 
@@ -5341,11 +6343,57 @@
         .appendTo(document.body);
 
       // 设置位置
+      _this._setPosition('close');
+
       _this.$snackbar
-        .transform('translateY(' + _this.$snackbar[0].clientHeight + 'px)')
-        .css('left', (document.body.clientWidth - _this.$snackbar[0].clientWidth) / 2 + 'px')
-        .addClass('mdui-snackbar-transition');
+        .reflow()
+        .addClass('mdui-snackbar-' + _this.options.position);
     }
+
+    /**
+     * 设置 Snackbar 的位置
+     * @param state
+     * @private
+     */
+    Snackbar.prototype._setPosition = function (state) {
+      var _this = this;
+
+      var snackbarHeight = _this.$snackbar[0].clientHeight;
+      var position = _this.options.position;
+
+      var translateX;
+      var translateY;
+
+      // translateX
+      if (position === 'bottom' || position === 'top') {
+        translateX = '-50%';
+      } else {
+        translateX = '0';
+      }
+
+      // translateY
+      if (state === 'open') {
+        translateY = '0';
+      } else {
+        if (position === 'bottom') {
+          translateY = snackbarHeight;
+        }
+
+        if (position === 'top') {
+          translateY = -snackbarHeight;
+        }
+
+        if (position === 'left-top' || position === 'right-top') {
+          translateY = -snackbarHeight - 24;
+        }
+
+        if (position === 'left-bottom' || position === 'right-bottom') {
+          translateY = snackbarHeight + 24;
+        }
+      }
+
+      _this.$snackbar.transform('translate(' + translateX + ',' + translateY + 'px)');
+    };
 
     /**
      * 打开 Snackbar
@@ -5370,14 +6418,18 @@
 
       // 开始打开
       _this.state = 'opening';
+      _this.options.onOpen();
+
+      _this._setPosition('open');
+
       _this.$snackbar
-        .transform('translateY(0)')
         .transitionEnd(function () {
           if (_this.state !== 'opening') {
             return;
           }
 
           _this.state = 'opened';
+          _this.options.onOpened();
 
           // 有按钮时绑定事件
           if (_this.options.buttonText) {
@@ -5431,8 +6483,9 @@
       _this.state = 'closing';
       _this.options.onClose();
 
+      _this._setPosition('close');
+
       _this.$snackbar
-        .transform('translateY(' + _this.$snackbar[0].clientHeight + 'px)')
         .transitionEnd(function () {
           if (_this.state !== 'closing') {
             return;
@@ -5440,6 +6493,7 @@
 
           currentInst = null;
           _this.state = 'closed';
+          _this.options.onClosed();
           _this.$snackbar.remove();
           queue.dequeue(queueName);
         });
@@ -5570,12 +6624,7 @@
   mdui.Panel = (function () {
 
     function Panel(selector, opts) {
-      return new CollapsePrivate(selector, opts, {
-        item: 'mdui-panel-item',
-        itemOpen: 'mdui-panel-item-open',
-        header: 'mdui-panel-item-header',
-        body: 'mdui-panel-item-body',
-      }, 'panel');
+      return new CollapsePrivate(selector, opts, 'panel');
     }
 
     return Panel;
@@ -5740,7 +6789,7 @@
         var menuHeightTemp = menuHeight;
 
         // 简单菜单比窗口高时，限制菜单高度
-        if (!_this.$menu.hasClass('mdui-menu-cascade')) {
+        if (!_this.isCascade) {
           if (menuHeight + gutter * 2 > windowHeight) {
             menuHeightTemp = windowHeight - gutter * 2;
             _this.$menu.height(menuHeightTemp);

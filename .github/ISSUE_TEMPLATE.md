@@ -1,5 +1,5 @@
 * 在提交 issue 之前，请搜索相关内容是否已被提出。
-* 请确保你使用的是最新版的 mdui，当前最新版为 0.2.1
+* 请确保你使用的是最新版的 mdui，当前最新版为 0.3.0
 ---------------------------
 这是一个（可多选）
 * [x] bug 反馈
@@ -8,7 +8,7 @@
 ---------------------------
 * 使用平台：如 Android、iOS、Windows、Linux、MacOS 等
 * 浏览器及版本：如 Chrome 58.0.3029.110 (64-bit)
-* 在线演示：你可以直接在这个模板上编辑：http://jsbin.com/pamiyulice/edit?html,output
+* 在线演示：你可以直接在这个模板上编辑：http://jsbin.com/nizivuwevu/edit?html,output
 
 ### 如何操作
 请在这里详细说明你是如何操作导致的问题

@@ -5,7 +5,7 @@
  */
 
 $(function () {
-  $('[mdui-select]').each(function () {
+  mdui.mutation('[mdui-select]', function () {
     var $this = $(this);
     var inst = $this.data('mdui.select');
     if (!inst) {

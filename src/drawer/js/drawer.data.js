@@ -5,13 +5,10 @@
  */
 
 $(function () {
-  $('[mdui-drawer]').each(function () {
+  $document.on('click', '[mdui-drawer]', function () {
     var $this = $(this);
     var options = parseOptions($this.attr('mdui-drawer'));
-    var selector = options.target;
-    delete options.target;
-
-    var $drawer = $(selector).eq(0);
+    var $drawer = $(options.target).eq(0);
 
     var inst = $drawer.data('mdui.drawer');
     if (!inst) {
@@ -19,8 +16,6 @@ $(function () {
       $drawer.data('mdui.drawer', inst);
     }
 
-    $this.on('click', function () {
-      inst.toggle();
-    });
+    inst.toggle();
   });
 });

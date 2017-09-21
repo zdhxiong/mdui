@@ -5,7 +5,7 @@
  */
 
 $(function () {
-  $('[mdui-headroom]').each(function () {
+  mdui.mutation('[mdui-headroom]', function () {
     var $this = $(this);
     var options = parseOptions($this.attr('mdui-headroom'));
 

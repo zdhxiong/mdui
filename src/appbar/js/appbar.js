@@ -9,13 +9,13 @@
 
 $(function () {
   // 滚动时隐藏应用栏
-  $('.mdui-appbar-scroll-hide').each(function () {
+  mdui.mutation('.mdui-appbar-scroll-hide', function () {
     var $this = $(this);
     $this.data('mdui.headroom', new mdui.Headroom($this));
   });
 
   // 滚动时只隐藏应用栏中的工具栏
-  $('.mdui-appbar-scroll-toolbar-hide').each(function () {
+  mdui.mutation('.mdui-appbar-scroll-toolbar-hide', function () {
     var $this = $(this);
     var inst = new mdui.Headroom($this, {
       pinnedClass: 'mdui-headroom-pinned-toolbar',

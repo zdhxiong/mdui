@@ -2694,6 +2694,83 @@
 
   /**
    * =============================================================================
+   * ************   Mutation   ************
+   * =============================================================================
+   */
+
+  (function () {
+    /**
+     * API 初始化代理, 当 DOM 突变再次执行代理的初始化函数. 使用方法:
+     *
+     * 1. 代理组件 API 执行初始化函数, selector 必须为字符串.
+     *    mdui.mutation(selector, apiInit);
+     *    mutation 会执行 $(selector).each(apiInit)
+     *
+     * 2. 突变时, 再次执行代理的初始化函数
+     *    mdui.mutation()        等价 $(document).mutation()
+     *    $(selector).mutation() 在 selector 节点内进行 API 初始化
+     *
+     * 原理:
+     *
+     *    mutation 执行了 $().data('mdui.mutation', [selector]).
+     *    当元素被重构时, 该数据会丢失, 由此判断是否突变.
+     *
+     * 提示:
+     *
+     *    类似 Drawer 可以使用委托事件完成.
+     *    类似 Collapse 需要知道 DOM 发生突变, 并再次进行初始化.
+     */
+    var entries = { };
+
+    function mutation(selector, apiInit, that, i, item) {
+      var $this = $(that);
+      var m = $this.data('mdui.mutation');
+
+      if (!m) {
+        m = [];
+        $this.data('mdui.mutation', m);
+      }
+
+      if (m.indexOf(selector) === -1) {
+        m.push(selector);
+        apiInit.call(that, i, item);
+      }
+    }
+
+    $.fn.extend({
+      mutation: function () {
+        return this.each(function (i, item) {
+          var $this = $(this);
+          $.each(entries, function (selector, apiInit) {
+            if ($this.is(selector)) {
+              mutation(selector, apiInit, $this[0], i, item);
+            }
+
+            $this.find(selector).each(function (i, item) {
+              mutation(selector, apiInit, this, i, item);
+            });
+          });
+        });
+      },
+    });
+
+    mdui.mutation = function (selector, apiInit) {
+      if (typeof selector !== 'string' || typeof apiInit !== 'function') {
+        $(document).mutation();
+        return;
+      }
+
+      entries[selector] = apiInit;
+      $(selector).each(function (i, item) {
+        mutation(selector, apiInit, this, i, item);
+      });
+    };
+
+  })();
+
+
+  /**
+   * =============================================================================
    * ************   Headroom.js   ************
    * =============================================================================
    */
@@ -2931,7 +3008,7 @@
    */
 
   $(function () {
-    $('[mdui-headroom]').each(function () {
+    mdui.mutation('[mdui-headroom]', function () {
       var $this = $(this);
       var options = parseOptions($this.attr('mdui-headroom'));
 
@@ -3192,7 +3269,7 @@
    */
 
   $(function () {
-    $('[mdui-collapse]').each(function () {
+    mdui.mutation('[mdui-collapse]', function () {
       var $target = $(this);
 
       var inst = $target.data('mdui.collapse');
@@ -4491,7 +4568,7 @@
    */
 
   $(function () {
-    $('[mdui-select]').each(function () {
+    mdui.mutation('[mdui-select]', function () {
       var $this = $(this);
       var inst = $this.data('mdui.select');
       if (!inst) {
@@ -4513,13 +4590,13 @@
 
   $(function () {
     // 滚动时隐藏应用栏
-    $('.mdui-appbar-scroll-hide').each(function () {
+    mdui.mutation('.mdui-appbar-scroll-hide', function () {
       var $this = $(this);
       $this.data('mdui.headroom', new mdui.Headroom($this));
     });
 
     // 滚动时只隐藏应用栏中的工具栏
-    $('.mdui-appbar-scroll-toolbar-hide').each(function () {
+    mdui.mutation('.mdui-appbar-scroll-toolbar-hide', function () {
       var $this = $(this);
       var inst = new mdui.Headroom($this, {
         pinnedClass: 'mdui-headroom-pinned-toolbar',
@@ -4761,7 +4838,7 @@
    */
 
   $(function () {
-    $('[mdui-tab]').each(function () {
+    mdui.mutation('[mdui-tab]', function () {
       var $this = $(this);
       var inst = $this.data('mdui.tab');
       if (!inst) {
@@ -5140,13 +5217,10 @@
    */
 
   $(function () {
-    $('[mdui-drawer]').each(function () {
+    $document.on('click', '[mdui-drawer]', function () {
       var $this = $(this);
       var options = parseOptions($this.attr('mdui-drawer'));
-      var selector = options.target;
-      delete options.target;
-
-      var $drawer = $(selector).eq(0);
+      var $drawer = $(options.target).eq(0);
 
       var inst = $drawer.data('mdui.drawer');
       if (!inst) {
@@ -5154,9 +5228,7 @@
         $drawer.data('mdui.drawer', inst);
       }
 
-      $this.on('click', function () {
-        inst.toggle();
-      });
+      inst.toggle();
     });
   });
 
@@ -6539,7 +6611,7 @@
     });
 
     // 滚动时隐藏 mdui-bottom-nav-scroll-hide
-    $('.mdui-bottom-nav-scroll-hide').each(function () {
+    mdui.mutation('.mdui-bottom-nav-scroll-hide', function () {
       var $this = $(this);
       var inst = new mdui.Headroom($this, {
         pinnedClass: 'mdui-headroom-pinned-down',
@@ -6639,7 +6711,7 @@
    */
 
   $(function () {
-    $('[mdui-panel]').each(function () {
+    mdui.mutation('[mdui-panel]', function () {
       var $target = $(this);
 
       var inst = $target.data('mdui.panel');

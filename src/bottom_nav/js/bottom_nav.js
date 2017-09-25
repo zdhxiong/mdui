@@ -24,7 +24,7 @@
   });
 
   // 滚动时隐藏 mdui-bottom-nav-scroll-hide
-  $('.mdui-bottom-nav-scroll-hide').each(function () {
+  mdui.mutation('.mdui-bottom-nav-scroll-hide', function () {
     var $this = $(this);
     var inst = new mdui.Headroom($this, {
       pinnedClass: 'mdui-headroom-pinned-down',

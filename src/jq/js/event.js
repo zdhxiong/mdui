@@ -191,20 +191,35 @@
         return;
       }
 
+      var isMouseEvent = ['click', 'mousedown', 'mouseup', 'mousemove'].indexOf(eventName) > -1;
+
       var evt;
-      try {
-        evt = new CustomEvent(eventName, {
-          detail: data,
-          bubbles: true,
-          cancelable: true,
-        });
-      } catch (e) {
-        evt = document.createEvent('Event');
-        evt.initEvent(eventName, true, true);
-        evt.detail = data;
+
+      if (isMouseEvent) {
+        // Note: MouseEvent 无法传入 detail 参数
+        try {
+          evt = new MouseEvent(eventName, {
+            bubbles: true,
+            cancelable: true,
+          });
+        } catch (e) {
+          evt = document.createEvent('MouseEvent');
+          evt.initMouseEvent(eventName, true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        }
+      } else {
+        try {
+          evt = new CustomEvent(eventName, {
+            detail: data,
+            bubbles: true,
+            cancelable: true,
+          });
+        } catch (e) {
+          evt = document.createEvent('CustomEvent');
+          evt.initCustomEvent(eventName, true, true, data);
+        }
       }
 
-      evt._detailData = data;
+      evt._detail = data;
 
       return this.each(function () {
         this.dispatchEvent(evt);
@@ -242,7 +257,8 @@
       };
 
       var callFn = function (e, ele) {
-        var result = func.apply(ele, e._detailData === undefined ? [e] : [e].concat(e._detailData));
+        // 因为鼠标事件模拟事件的 detail 属性是只读的，因此在 e._detail 中存储参数
+        var result = func.apply(ele, e._detail === undefined ? [e] : [e].concat(e._detail));
 
         if (result === false) {
           e.preventDefault();

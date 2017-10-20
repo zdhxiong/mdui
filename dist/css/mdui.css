@@ -57,7 +57,7 @@
   background-color: #ff6f00 !important;
 }
 .mdui-theme-primary-blue .mdui-color-theme {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #2196f3 !important;
 }
 .mdui-theme-primary-blue .mdui-color-theme-50 {
@@ -81,7 +81,7 @@
   background-color: #42a5f5 !important;
 }
 .mdui-theme-primary-blue .mdui-color-theme-500 {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #2196f3 !important;
 }
 .mdui-theme-primary-blue .mdui-color-theme-600 {
@@ -233,7 +233,7 @@
   background-color: #006064 !important;
 }
 .mdui-theme-primary-deep-orange .mdui-color-theme {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #ff5722 !important;
 }
 .mdui-theme-primary-deep-orange .mdui-color-theme-50 {
@@ -257,7 +257,7 @@
   background-color: #ff7043 !important;
 }
 .mdui-theme-primary-deep-orange .mdui-color-theme-500 {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #ff5722 !important;
 }
 .mdui-theme-primary-deep-orange .mdui-color-theme-600 {
@@ -481,7 +481,7 @@
   background-color: #03a9f4 !important;
 }
 .mdui-theme-primary-light-blue .mdui-color-theme-600 {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #039be5 !important;
 }
 .mdui-theme-primary-light-blue .mdui-color-theme-700 {
@@ -529,7 +529,7 @@
   background-color: #7cb342 !important;
 }
 .mdui-theme-primary-light-green .mdui-color-theme-700 {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #689f38 !important;
 }
 .mdui-theme-primary-light-green .mdui-color-theme-800 {
@@ -621,7 +621,7 @@
   background-color: #f57c00 !important;
 }
 .mdui-theme-primary-orange .mdui-color-theme-800 {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #ef6c00 !important;
 }
 .mdui-theme-primary-orange .mdui-color-theme-900 {
@@ -645,7 +645,7 @@
   background-color: #f48fb1 !important;
 }
 .mdui-theme-primary-pink .mdui-color-theme-300 {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #f06292 !important;
 }
 .mdui-theme-primary-pink .mdui-color-theme-400 {
@@ -1221,7 +1221,7 @@
   background-color: #ff6f00 !important;
 }
 .mdui-color-blue {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #2196f3 !important;
 }
 .mdui-color-blue-50 {
@@ -1245,7 +1245,7 @@
   background-color: #42a5f5 !important;
 }
 .mdui-color-blue-500 {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #2196f3 !important;
 }
 .mdui-color-blue-600 {
@@ -1397,7 +1397,7 @@
   background-color: #006064 !important;
 }
 .mdui-color-deep-orange {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #ff5722 !important;
 }
 .mdui-color-deep-orange-50 {
@@ -1421,7 +1421,7 @@
   background-color: #ff7043 !important;
 }
 .mdui-color-deep-orange-500 {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #ff5722 !important;
 }
 .mdui-color-deep-orange-600 {
@@ -1645,7 +1645,7 @@
   background-color: #03a9f4 !important;
 }
 .mdui-color-light-blue-600 {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #039be5 !important;
 }
 .mdui-color-light-blue-700 {
@@ -1693,7 +1693,7 @@
   background-color: #7cb342 !important;
 }
 .mdui-color-light-green-700 {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #689f38 !important;
 }
 .mdui-color-light-green-800 {
@@ -1785,7 +1785,7 @@
   background-color: #f57c00 !important;
 }
 .mdui-color-orange-800 {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #ef6c00 !important;
 }
 .mdui-color-orange-900 {
@@ -1809,7 +1809,7 @@
   background-color: #f48fb1 !important;
 }
 .mdui-color-pink-300 {
-  color: rgba(0, 0, 0, .87) !important;
+  color: #fff !important;
   background-color: #f06292 !important;
 }
 .mdui-color-pink-400 {
@@ -4741,13 +4741,10 @@ a {
  */
 abbr[title] {
   /* 1 */
-          text-decoration: underline;
-          text-decoration: underline dotted;
-  border-bottom: none;
+  text-decoration: underline;
   /* 2 */
-
-  -webkit-text-decoration: underline dotted;
-     -moz-text-decoration: underline dotted;
+  text-decoration: underline dotted;
+  border-bottom: none;
   /* 2 */
 }
 /**

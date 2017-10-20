@@ -39,6 +39,7 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
     type: 'text',             // 输入框类型，text: 单行文本框 textarea: 多行文本框
     maxlength: '',            // 最大输入字符数
     defaultValue: '',         // 输入框中的默认文本
+    confirmOnEnter: false,    // 按下 enter 确认输入内容
   };
 
   options = $.extend({}, DEFAULT, options);
@@ -94,6 +95,17 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
 
       // 聚焦到输入框
       $input[0].focus();
+
+      // 捕捉文本框回车键，在单行文本框的情况下触发回调
+      if (options.type === 'text' && options.confirmOnEnter === true) {
+        $input.on('keydown', function (event) {
+          if (event.keyCode === 13) {
+            var value = inst.$dialog.find('.mdui-textfield-input').val();
+            onConfirm(value, inst);
+            inst.close();
+          }
+        });
+      }
 
       // 如果是多行输入框，监听输入框的 input 事件，更新对话框高度
       if (options.type === 'textarea') {

@@ -25,6 +25,7 @@
 
 /* 左侧的图标 */
 .mdui-chip-icon {
+  position: relative;
   height: @chip-height;
   width: @chip-height;
   border-radius: 50%;
@@ -37,7 +38,11 @@
   text-align: center;
   background-color: #989898;
   color: #ffffff;
+
   .mdui-icon {
+    position: absolute;
+    left: 4px;
+    top: 4px;
     color: #ffffff;
   }
 }

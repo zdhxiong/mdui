@@ -9,7 +9,6 @@
   font-weight: normal;
   font-style: normal;
   font-size: 24px;  /* Preferred icon size */
-  display: inline-block;
   vertical-align: middle;
   line-height: 1;
   text-transform: none;
@@ -18,4 +17,15 @@
   white-space: nowrap;
   direction: ltr;
   color: inherit;
+}
+
+.mdui-icon {
+  display: inline-block;
+  text-align: center;
+}
+
+.mdui-icon::before {
+  display: block !important;
+  width: 24px;
+  height: 24px;
 }

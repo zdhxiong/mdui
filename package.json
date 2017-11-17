@@ -42,6 +42,7 @@
     "gulp-jshint": "2.0.4",
     "gulp-less": "3.3.2",
     "gulp-rename": "1.2.2",
+    "gulp-sourcemaps": "2.6.1",
     "gulp-tap": "1.0.1",
     "gulp-uglify": "3.0.0",
     "gulp-zip": "4.0.0",

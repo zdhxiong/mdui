@@ -34,6 +34,7 @@
   var path = require('path');
   var copy = require('gulp-copy');
   var zip = require('gulp-zip');
+  var sourcemaps = require('gulp-sourcemaps');
 
   // 定义一些常用函数
   var $ = {
@@ -351,6 +352,7 @@
   gulp.task('build-css', ['clean-css'], function (cb) {
 
     gulp.src(paths.src.root + mdui.filename + '.less')
+      .pipe(sourcemaps.init())
       .pipe(less({
         modifyVars: {
           globalPrimaryColors: mdui.primaryColors,
@@ -366,11 +368,11 @@
       .pipe(csslint())
       .pipe(csslint.formatter())
       .pipe(gulp.dest(paths.dist.css))
-
       .pipe(cleanCSS(configs.cleanCSS))
       .pipe(rename(function (path) {
         path.basename = mdui.filename + '.min';
       }))
+      .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.dist.css))
       .on('end', function () {
         cb();
@@ -382,6 +384,7 @@
    */
   gulp.task('build-js', ['clean-js'], function (cb) {
     gulp.src(mdui.jsFiles)
+      .pipe(sourcemaps.init())
       .pipe(jscs())
       .pipe(jscs.reporter())
       .pipe(tap(function (file, t) {
@@ -392,12 +395,12 @@
       .pipe(jshint())
       .pipe(jshint.reporter('default'))
       .pipe(gulp.dest(paths.dist.js))
-
       .pipe(uglify())
       .pipe(header(mdui.distBanner, configs.header))
       .pipe(rename(function (path) {
         path.basename = mdui.filename + '.min';
       }))
+      .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.dist.js))
       .on('end', function () {
         cb();
@@ -610,6 +613,7 @@
 
     // 构建 JavaScript 文件
     gulp.src(moduleJs)
+      .pipe(sourcemaps.init())
       .pipe(jscs())
       .pipe(jscs.reporter())
       .pipe(tap(function (file, t) {
@@ -620,17 +624,18 @@
       .pipe(jshint())
       .pipe(jshint.reporter('default'))
       .pipe(gulp.dest(paths.custom.js))
-
       .pipe(uglify())
       .pipe(header(mdui.customBanner, customBannerOptions()))
       .pipe(rename(function (path) {
         path.basename = mdui.filename + '.custom.min';
       }))
+      .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.custom.js));
 
     // 构建 CSS 文件
     gulp.src(moduleLess)
       .pipe(concat(mdui.filename + '.custom.less'))
+      .pipe(sourcemaps.init())
       .pipe(less({
         paths: [path.join(__dirname, 'less', 'includes')],
         modifyVars: {
@@ -652,6 +657,7 @@
       .pipe(rename(function (path) {
         path.basename = mdui.filename + '.custom.min';
       }))
+      .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.custom.css));
 
     // 复制 fonts、icons 目录
@@ -676,6 +682,7 @@
    */
   gulp.task('build-jq', function (cb) {
     gulp.src(mdui.modules.jq.js)
+      .pipe(sourcemaps.init())
       .pipe(jscs())
       .pipe(jscs.reporter())
       .pipe(tap(function (file, t) {
@@ -684,12 +691,13 @@
       .pipe(concat('jq.js'))
       .pipe(jshint())
       .pipe(jshint.reporter('default'))
-      .pipe(gulp.dest(paths.dist.js))
 
+      .pipe(gulp.dest(paths.dist.js))
       .pipe(uglify())
       .pipe(rename(function (path) {
         path.basename = 'jq.min';
       }))
+      .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(paths.dist.js))
       .on('end', function () {
         cb();

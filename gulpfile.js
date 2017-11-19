@@ -243,7 +243,7 @@
   mdui.jsFiles = [];          // 所有 JavaScript 文件列表
 
   // 必须的模块名
-  mdui.moduleNamesRequire = ['core_intro', 'core_outro', 'jq', 'global'];
+  mdui.moduleNamesRequire = ['core_intro', 'core_outro', 'jq', 'global', 'mutation'];
 
   $.each(mdui.modules, function (prop, module) {
 

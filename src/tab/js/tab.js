@@ -79,39 +79,49 @@ mdui.Tab = (function () {
 
     // 监听点击选项卡事件
     _this.$tabs.each(function (i, tab) {
-      var $tab = $(tab);
-
-      // 点击或鼠标移入触发的事件
-      var clickEvent = function (e) {
-        // 禁用状态的选项无法选中
-        if (isDisabled($tab)) {
-          e.preventDefault();
-          return;
-        }
-
-        _this.activeIndex = i;
-        _this._setActive();
-      };
-
-      // 无论 trigger 是 click 还是 hover，都会响应 click 事件
-      $tab.on('click', clickEvent);
-
-      // trigger 为 hover 时，额外响应 mouseenter 事件
-      if (_this.options.trigger === 'hover') {
-        $tab.on('mouseenter', clickEvent);
-      }
-
-      $tab.on('click', function (e) {
-        // 阻止链接的默认点击动作
-        if ($tab.attr('href').indexOf('#') === 0) {
-          e.preventDefault();
-        }
-      });
+      _this._bindTabEvent(tab);
     });
   }
 
   /**
+   * 绑定在 Tab 上点击或悬浮的事件
+   * @private
+   */
+  Tab.prototype._bindTabEvent = function (tab) {
+    var _this = this;
+    var $tab = $(tab);
+
+    // 点击或鼠标移入触发的事件
+    var clickEvent = function (e) {
+      // 禁用状态的选项无法选中
+      if (isDisabled($tab)) {
+        e.preventDefault();
+        return;
+      }
+
+      _this.activeIndex = _this.$tabs.index(tab);
+      _this._setActive();
+    };
+
+    // 无论 trigger 是 click 还是 hover，都会响应 click 事件
+    $tab.on('click', clickEvent);
+
+    // trigger 为 hover 时，额外响应 mouseenter 事件
+    if (_this.options.trigger === 'hover') {
+      $tab.on('mouseenter', clickEvent);
+    }
+
+    $tab.on('click', function (e) {
+      // 阻止链接的默认点击动作
+      if ($tab.attr('href').indexOf('#') === 0) {
+        e.preventDefault();
+      }
+    });
+  };
+
+  /**
    * 设置激活状态的选项卡
+   * @private
    */
   Tab.prototype._setActive = function () {
     var _this = this;
@@ -213,9 +223,53 @@ mdui.Tab = (function () {
 
   /**
    * 在父元素的宽度变化时，需要调用该方法重新调整指示器位置
+   * 在添加或删除选项卡时，需要调用该方法
    */
   Tab.prototype.handleUpdate = function () {
-    this._setIndicatorPosition();
+    var _this = this;
+
+    var $oldTabs = _this.$tabs;               // 旧的 tabs JQ对象
+    var $newTabs = _this.$tab.children('a');  // 新的 tabs JQ对象
+    var oldTabsEle = $oldTabs.get();          // 旧 tabs 的元素数组
+    var newTabsEle = $newTabs.get();          // 新的 tabs 元素数组
+
+    var addedTabs = [];                       // 新增的元素数组
+    var removedTabs = [];                     // 被移除的元素数组
+
+    // 重新遍历选项卡，找出新增的选项卡
+    $newTabs.each(function (i, tab) {
+      // 有新增的选项卡
+      if (oldTabsEle.indexOf(tab) < 0) {
+        addedTabs.push(tab);
+
+        if (i <= _this.activeIndex) {
+          _this.activeIndex++;
+        }
+      }
+    });
+
+    // 找出被移除的选项卡
+    $oldTabs.each(function (i, tab) {
+      // 有被移除的选项卡
+      if (newTabsEle.indexOf(tab) < 0) {
+        removedTabs.push(tab);
+
+        if (i < _this.activeIndex) {
+          _this.activeIndex--;
+        } else if (i === _this.activeIndex) {
+          _this.activeIndex = 0;
+        }
+      }
+    });
+
+    // 为新增的选项卡绑定事件
+    $.each(addedTabs, function (i, tab) {
+      _this._bindTabEvent(tab);
+    });
+
+    _this.$tabs = $newTabs;
+
+    _this._setIndicatorPosition();
   };
 
   return Tab;

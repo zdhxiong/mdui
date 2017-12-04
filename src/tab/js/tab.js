@@ -41,7 +41,7 @@ mdui.Tab = (function () {
     _this.options = $.extend({}, DEFAULT, (opts || {}));
     _this.$tabs = _this.$tab.children('a');
     _this.$indicator = $('<div class="mdui-tab-indicator"></div>').appendTo(_this.$tab);
-    _this.activeIndex = false;
+    _this.activeIndex = false; // 为 false 时表示没有激活的选项卡，或不存在选项卡
 
     // 根据 url hash 获取默认激活的选项卡
     var hash = location.hash;
@@ -64,8 +64,8 @@ mdui.Tab = (function () {
       });
     }
 
-    // 默认激活第一个选项卡
-    if (_this.activeIndex === false) {
+    // 存在选项卡时，默认激活第一个选项卡
+    if (_this.$tabs.length && _this.activeIndex === false) {
       _this.activeIndex = 0;
     }
 
@@ -156,13 +156,25 @@ mdui.Tab = (function () {
    */
   Tab.prototype._setIndicatorPosition = function () {
     var _this = this;
+    var $activeTab;
+    var activeTabOffset;
 
-    var $activeTab = _this.$tabs.eq(_this.activeIndex);
+    // 选项卡数量为 0 时，不显示指示器
+    if (_this.activeIndex === false) {
+      _this.$indicator.css({
+        left: 0,
+        width: 0,
+      });
+
+      return;
+    }
+
+    $activeTab = _this.$tabs.eq(_this.activeIndex);
     if (isDisabled($activeTab)) {
       return;
     }
 
-    var activeTabOffset = $activeTab.offset();
+    activeTabOffset = $activeTab.offset();
     _this.$indicator.css({
       left: activeTabOffset.left + _this.$tab[0].scrollLeft -
             _this.$tab[0].getBoundingClientRect().left + 'px',
@@ -175,6 +187,10 @@ mdui.Tab = (function () {
    */
   Tab.prototype.next = function () {
     var _this = this;
+
+    if (_this.activeIndex === false) {
+      return;
+    }
 
     if (_this.$tabs.length > _this.activeIndex + 1) {
       _this.activeIndex++;
@@ -191,6 +207,10 @@ mdui.Tab = (function () {
   Tab.prototype.prev = function () {
     var _this = this;
 
+    if (_this.activeIndex === false) {
+      return;
+    }
+
     if (_this.activeIndex > 0) {
       _this.activeIndex--;
     } else if (_this.options.loop) {
@@ -206,6 +226,10 @@ mdui.Tab = (function () {
    */
   Tab.prototype.show = function (index) {
     var _this = this;
+
+    if (_this.activeIndex === false) {
+      return;
+    }
 
     if (parseInt(index) === index) {
       _this.activeIndex = index;
@@ -233,16 +257,23 @@ mdui.Tab = (function () {
     var oldTabsEle = $oldTabs.get();          // 旧 tabs 的元素数组
     var newTabsEle = $newTabs.get();          // 新的 tabs 元素数组
 
-    var addedTabs = [];                       // 新增的元素数组
-    var removedTabs = [];                     // 被移除的元素数组
+    if (!$newTabs.length) {
+      _this.activeIndex = false;
+      _this.$tabs = $newTabs;
+      _this._setIndicatorPosition();
+
+      return;
+    }
 
     // 重新遍历选项卡，找出新增的选项卡
     $newTabs.each(function (i, tab) {
       // 有新增的选项卡
       if (oldTabsEle.indexOf(tab) < 0) {
-        addedTabs.push(tab);
+        _this._bindTabEvent(tab);
 
-        if (i <= _this.activeIndex) {
+        if (_this.activeIndex === false) {
+          _this.activeIndex = 0;
+        } else if (i <= _this.activeIndex) {
           _this.activeIndex++;
         }
       }
@@ -252,7 +283,6 @@ mdui.Tab = (function () {
     $oldTabs.each(function (i, tab) {
       // 有被移除的选项卡
       if (newTabsEle.indexOf(tab) < 0) {
-        removedTabs.push(tab);
 
         if (i < _this.activeIndex) {
           _this.activeIndex--;
@@ -262,14 +292,9 @@ mdui.Tab = (function () {
       }
     });
 
-    // 为新增的选项卡绑定事件
-    $.each(addedTabs, function (i, tab) {
-      _this._bindTabEvent(tab);
-    });
-
     _this.$tabs = $newTabs;
 
-    _this._setIndicatorPosition();
+    _this._setActive();
   };
 
   return Tab;

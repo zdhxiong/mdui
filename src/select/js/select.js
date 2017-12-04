@@ -247,6 +247,7 @@ mdui.Select = (function () {
       _this.selectedIndex = itemData.index;
       _this.value = itemData.value;
       _this.text = itemData.text;
+      $selectNative.trigger('change');
 
       _this.close();
     });

@@ -135,7 +135,7 @@ mdui.Tab = (function () {
         if (!$tab.hasClass('mdui-tab-active')) {
           componentEvent('change', 'tab', _this, _this.$tab, {
             index: _this.activeIndex,
-            target: tab,
+            id: targetId.substr(1),
           });
           componentEvent('show', 'tab', _this, $tab);
 

@@ -219,9 +219,11 @@
         }
 
         // 超时后自动关闭
-        _this.timeoutId = setTimeout(function () {
-          _this.close();
-        }, _this.options.timeout);
+        if (_this.options.timeout) {
+          _this.timeoutId = setTimeout(function () {
+            _this.close();
+          }, _this.options.timeout);
+        }
       });
   };
 

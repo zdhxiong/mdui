@@ -18,7 +18,6 @@
   var queueName = '__md_snackbar';
 
   var DEFAULT = {
-    message: '',                    // 文本内容
     timeout: 4000,                  // 在用户没有操作时多长时间自动隐藏
     buttonText: '',                 // 按钮的文本
     buttonColor: '',                // 按钮的颜色，支持 blue #90caf9 rgba(...)
@@ -57,16 +56,18 @@
 
   /**
    * Snackbar 实例
+   * @param message
    * @param opts
    * @constructor
    */
-  function Snackbar(opts) {
+  function Snackbar(message, opts) {
     var _this = this;
 
+    _this.message = message;
     _this.options = $.extend({}, DEFAULT, (opts || {}));
 
     // message 参数必须
-    if (!_this.options.message) {
+    if (!_this.message) {
       return;
     }
 
@@ -91,7 +92,7 @@
     _this.$snackbar = $(
       '<div class="mdui-snackbar">' +
         '<div class="mdui-snackbar-text">' +
-          _this.options.message +
+          _this.message +
         '</div>' +
         (_this.options.buttonText ?
           ('<a href="javascript:void(0)" ' +
@@ -266,10 +267,16 @@
 
   /**
    * 打开 Snackbar
-   * @param params
+   * @param message
+   * @param opts
    */
-  mdui.snackbar = function (params) {
-    var inst = new Snackbar(params);
+  mdui.snackbar = function (message, opts) {
+    if (typeof message !== 'string') {
+      opts = message;
+      message = opts.message;
+    }
+
+    var inst = new Snackbar(message, opts);
 
     inst.open();
     return inst;

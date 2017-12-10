@@ -8,7 +8,7 @@
 .mdui-textfield {
   position: relative;
   padding-top: 16px;
-  padding-bottom: 8px;
+  padding-bottom: 28px;
   overflow: hidden;
 }
 
@@ -64,15 +64,24 @@
   transform: scale(0.75) translateY(0);
 }
 
-/* 表单验证错误提示 */
-.mdui-textfield-error {
-  margin-top: 8px;
+/* 表单验证错误提示、帮助文本提示 */
+.mdui-textfield-error,
+.mdui-textfield-helper {
+  position: absolute;
+  bottom: 8px;
   font-size: 12px;
-  color: @color-red-500;
   .mdui-text-truncate();
-  visibility: hidden;
   height: 12px;
   line-height: 12px;
+}
+
+.mdui-textfield-error {
+  color: @color-red-500;
+  visibility: hidden;
+}
+
+.mdui-textfield-helper {
+  color: rgba(0, 0, 0, 0.54);
 }
 
 
@@ -81,13 +90,14 @@
 .mdui-textfield {
   .mdui-icon {
     position: absolute;
-    bottom: 8px;
+    bottom: 28px;
     color: @color-black-icon;
     padding: 6px;
 
     ~ .mdui-textfield-label,
     ~ .mdui-textfield-input,
     ~ .mdui-textfield-error,
+    ~ .mdui-textfield-helper,
     ~ .mdui-textfield-flex-wrap {
       margin-left: 56px;
       width: calc(~"100% - 56px");
@@ -214,6 +224,10 @@
 
   .mdui-textfield-error {
     visibility: visible;
+
+    &+.mdui-textfield-helper {
+      visibility: hidden;
+    }
   }
 }
 
@@ -240,10 +254,6 @@
   color: @color-black-secondary;
   height: 12px;
   line-height: 12px;
-}
-// 加载 .mdui-textfield 元素上
-.mdui-textfield-has-counter {
-  padding-bottom: 28px;
 }
 
 
@@ -327,6 +337,11 @@
     .mdui-textfield-label {
       color: rgba(255, 255, 255, 0.35);
     }
+  }
+
+  // 帮助文本颜色
+  .mdui-textfield-helper {
+    color: rgba(255, 255, 255, 0.7);
   }
 
   // 字数统计颜色

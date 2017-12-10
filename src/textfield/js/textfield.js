@@ -94,7 +94,6 @@
     // 实时字数统计
     if (reInit) {
       $textField
-        .removeClass('mdui-textfield-has-counter')
         .find('.mdui-textfield-counter')
         .remove();
     }
@@ -105,12 +104,6 @@
         $('<div class="mdui-textfield-counter">' +
             '<span class="mdui-textfield-counter-inputed"></span> / ' + maxlength +
           '</div>').appendTo($textField);
-
-        // 如果没有 .mdui-textfield-error 作为占位，需要增加 .mdui-textfield 的下边距，
-        // 使 .mdui-textfield-counter 不会覆盖在文本框上
-        if (!$textField.find('.mdui-textfield-error').length) {
-          $textField.addClass('mdui-textfield-has-counter');
-        }
       }
 
       // 字符长度，确保统计方式和 maxlength 一致

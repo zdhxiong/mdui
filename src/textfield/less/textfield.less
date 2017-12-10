@@ -16,13 +16,13 @@
 .mdui-textfield-input {
   width: 100%;
   overflow: hidden;
-  padding: 8px 0 8px 0;
+  padding: 8px 0;
   appearance: none;
   box-sizing: border-box;
   border: none;
   background: none;
-  color: inherit;
-  border-radius: 0 0 0 0;
+  color: rgba(0, 0, 0, 0.87);
+  border-radius: 0;
   box-shadow: none;
   display: block;
   margin: 0;
@@ -32,18 +32,20 @@
   font-family: inherit;
   outline: none;
   resize: none;
-  transition-property: border-bottom-color, padding-right;
+  transition-property: border-bottom-color, padding-right, box-shadow;
   transition-duration: .2s;
   transition-timing-function: @animation-curve-default;
-  .mdui-divider-bottom-dark();
+  border-bottom: 1px solid rgba(0, 0, 0, .42);
 
   &::-webkit-input-placeholder {
     color: inherit;
-    opacity: 0.35;
+    opacity: 0.42;
   }
 
-  &[disabled] {
-    color: @color-black-disabled;
+  &:not([disabled]):hover {
+    border-bottom: 1px solid rgba(0, 0, 0, .87);
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, .87);
+    cursor: pointer;
   }
 
   &[rows] {
@@ -59,7 +61,7 @@
   font-size: 16px;
   width: 100%;
   transform-origin: left;
-  color: rgba(0, 0, 0, 0.65);
+  color: rgba(0, 0, 0, 0.54);
   transition: all .2s;
   transform: scale(0.75) translateY(0);
 }
@@ -76,7 +78,7 @@
 }
 
 .mdui-textfield-error {
-  color: @color-red-500;
+  color: rgba(red(@color-red-a400), green(@color-red-a400), blue(@color-red-a400), .87);
   visibility: hidden;
 }
 
@@ -109,17 +111,15 @@
    ============= */
 .mdui-textfield-focus {
 
-  .mdui-textfield-input {
-    border-bottom: 1px solid @color-default-a200;
-    box-shadow: 0 1px 0 0 @color-default-a200;
+  .mdui-textfield-input,
+  .mdui-textfield-input:hover {
+    border-bottom-color: @color-default-a700;
+    box-shadow: 0 1px 0 0 @color-default-a700;
   }
 
-  .mdui-textfield-label {
-    color: @color-default-a200;
-  }
-
+  .mdui-textfield-label,
   .mdui-icon {
-    color: @color-default-a200;
+    color: rgba(red(@color-default-a700), green(@color-default-a700), blue(@color-default-a700), .87);
   }
 }
 
@@ -196,28 +196,25 @@
 .mdui-textfield-invalid,
 .mdui-textfield-invalid-html5 {
 
-  .mdui-textfield-input {
-    border-bottom: 1px solid @color-red-500 !important;
-    box-shadow: 0 1px 0 0 @color-red-500 !important;
-  }
-  &.mdui-textfield-focus {
-    .mdui-textfield-input {
-      border-bottom: 1px solid @color-red-500 !important;
-      box-shadow: 0 1px 0 0 @color-red-500 !important;
-    }
+  .mdui-textfield-input,
+  &.mdui-textfield-focus .mdui-textfield-input {
+    border-bottom-color: @color-red-a400 !important;
+    box-shadow: 0 1px 0 0 @color-red-a400 !important;
   }
 
   .mdui-textfield-label {
-    color: @color-red-500 !important;
+    color: @color-red-a400 !important;
   }
+
   &.mdui-textfield-floating-label {
     .mdui-textfield-label {
-      color: rgba(red(@color-red-500), green(@color-red-500), blue(@color-red-500), 0.35) !important;
+      color: @color-red-a400 !important;
     }
+
     &.mdui-textfield-focus,
     &.mdui-textfield-not-empty {
       .mdui-textfield-label {
-        color: @color-red-500 !important;
+        color: @color-red-a400 !important;
       }
     }
   }
@@ -235,12 +232,16 @@
    ====== */
 .mdui-textfield-disabled {
   .mdui-textfield-label,
-  .mdui-textfield-input,
   .mdui-textfield-input::-webkit-input-placeholder {
     color: @color-black-disabled;
   }
+
   .mdui-textfield-input {
-    border-bottom: 1px dotted @color-black-disabled;
+    color: rgba(0, 0, 0, .42);
+  }
+
+  .mdui-textfield-input {
+    border-bottom: 1px dashed rgba(0, 0, 0, .42);
   }
 }
 
@@ -259,54 +260,25 @@
 
 /**
  * =============================================================================
- * ************   Textfield 强调色   ************
- * =============================================================================
- */
-& {
-  .loop-accent-theme(@counter-color) when (@counter-color > 0) {
-    .loop-accent-theme((@counter-color - 1));
-    @colorName: extract(@globalAccentColors, @counter-color);
-
-    .mdui-theme-accent-@{colorName} {
-
-      @color: 'color-@{colorName}-a200';
-
-      .mdui-textfield-focus {
-
-        .mdui-textfield-input {
-          border-bottom-color: @@color;
-          box-shadow: 0 1px 0 0 @@color;
-        }
-
-        .mdui-textfield-label {
-          color: @@color;
-        }
-
-        .mdui-icon {
-          color: @@color !important;
-        }
-      }
-
-      .mdui-textfield-floating-label {
-        &.mdui-textfield-focus {
-          .mdui-textfield-label {
-            color: @@color;
-          }
-        }
-      }
-    }
-
-  }
-  .loop-accent-theme(length(@globalAccentColors));
-}
-
-
-/**
- * =============================================================================
  * ************   Textfield dark   ************
  * =============================================================================
  */
 .mdui-theme-layout-dark when (@globalLayoutDark = true) {
+
+  // 输入框颜色
+  .mdui-textfield-input {
+    color: #fff;
+    border-bottom-color: rgba(255, 255, 255, .7);
+
+    &::-webkit-input-placeholder {
+      color: rgba(255, 255, 255, .5);
+    }
+
+    &:not([disabled]):hover {
+      border-bottom-color: rgba(255, 255, 255, 1);
+      box-shadow: 0 1px 0 0 rgba(255, 255, 255, 1);
+    }
+  }
 
   // 图标颜色
   .mdui-textfield {
@@ -315,28 +287,20 @@
     }
   }
 
-  // 输入框颜色
-  .mdui-textfield-input {
-    .mdui-divider-bottom-light();
-
-    &::-webkit-input-placeholder {
-      color: rgba(255, 255, 255, 0.35);
-    }
-
-    &[disabled] {
-      color: @color-white-disabled;
-    }
-  }
-
   // 标签颜色
   .mdui-textfield-label {
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.7);
   }
 
   .mdui-textfield-floating-label {
     .mdui-textfield-label {
       color: rgba(255, 255, 255, 0.35);
     }
+  }
+
+  // 错误文本颜色
+  .mdui-textfield-error {
+    color: @color-red-a400;
   }
 
   // 帮助文本颜色
@@ -348,4 +312,86 @@
   .mdui-textfield-counter {
     color: @color-white-secondary;
   }
+
+  // 聚焦状态
+  .mdui-textfield-focus {
+
+    .mdui-textfield-input,
+    .mdui-textfield-input:hover {
+      border-bottom-color: @color-default-a200;
+      box-shadow: 0 1px 0 0 @color-default-a200;
+    }
+
+    .mdui-textfield-label {
+      color: @color-default-a200;
+    }
+  }
+
+  // 禁用状态
+  .mdui-textfield-disabled {
+    .mdui-textfield-label,
+    .mdui-textfield-input::-webkit-input-placeholder {
+      color: @color-white-disabled;
+    }
+
+    .mdui-textfield-input {
+      color: @color-white-disabled;
+    }
+
+    .mdui-textfield-input {
+      border-bottom-color: rgba(255, 255, 255, .7);
+    }
+  }
+}
+
+
+/**
+ * =============================================================================
+ * ************   Textfield 强调色   ************
+ * =============================================================================
+ */
+& {
+  .loop-accent-theme(@counter-color) when (@counter-color > 0) {
+    .loop-accent-theme((@counter-color - 1));
+    @colorName: extract(@globalAccentColors, @counter-color);
+
+    .mdui-theme-accent-@{colorName} {
+
+      @colorA700: 'color-@{colorName}-a700';
+      @colorA200: 'color-@{colorName}-a200';
+
+      .mdui-textfield-focus {
+
+        .mdui-textfield-input {
+          border-bottom-color: @@colorA700;
+          box-shadow: 0 1px 0 0 @@colorA700;
+        }
+
+        .mdui-textfield-label,
+        .mdui-textfield-floating-label.mdui-textfield-focus .mdui-textfield-label,
+        .mdui-icon {
+          color: rgba(red(@@colorA700), green(@@colorA700), blue(@@colorA700), .87);
+        }
+      }
+
+      // 暗色主题
+      &.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+        .mdui-textfield-focus {
+
+          .mdui-textfield-input {
+            border-bottom-color: @@colorA200;
+            box-shadow: 0 1px 0 0 @@colorA200;
+          }
+
+          .mdui-textfield-label,
+          .mdui-textfield-floating-label.mdui-textfield-focus .mdui-textfield-label,
+          .mdui-icon {
+            color: @@colorA200;
+          }
+        }
+      }
+    }
+
+  }
+  .loop-accent-theme(length(@globalAccentColors));
 }

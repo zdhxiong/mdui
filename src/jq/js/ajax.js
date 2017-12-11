@@ -247,10 +247,12 @@
 
       xhr.open(method, options.url, options.async, options.username, options.password);
 
-      xhr.setRequestHeader('Content-Type', options.contentType);
+      if (sendData && !isQueryStringData(method) && options.contentType !== false || options.contentType) {
+        xhr.setRequestHeader('Content-Type', options.contentType);
+      }
 
       // 设置 Accept
-      if (options.contentType === 'json') {
+      if (options.dataType === 'json') {
         xhr.setRequestHeader('Accept', 'application/json, text/javascript');
       }
 

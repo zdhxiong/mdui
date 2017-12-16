@@ -155,13 +155,16 @@
     });
   };
 
-  $(function () {
-    // DOM 加载完后自动执行
-    $('.mdui-textfield-input').each(function () {
-      $(this).trigger('input', {
+  /**
+   * 初始化文本框
+   */
+  mdui.mutation('.mdui-textfield', function () {
+    console.log('test');
+    $(this)
+      .find('.mdui-textfield-input')
+      .trigger('input', {
         domLoadedEvent: true,
       });
-    });
   });
 
 })();

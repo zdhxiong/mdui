@@ -153,14 +153,14 @@
     });
   };
 
-  $(function () {
-    // 实例化表格
-    $('.mdui-table').each(function () {
-      var $table = $(this);
-      if (!$table.data('mdui.table')) {
-        $table.data('mdui.table', new Table($table));
-      }
-    });
+  /**
+   * 初始化表格
+   */
+  mdui.mutation('.mdui-table', function () {
+    var $table = $(this);
+    if (!$table.data('mdui.table')) {
+      $table.data('mdui.table', new Table($table));
+    }
   });
 
   /**

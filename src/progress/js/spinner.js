@@ -43,10 +43,8 @@
   /**
    * 页面加载完后自动填充 HTML 结构
    */
-  $(function () {
-    $('.mdui-spinner').each(function () {
-      fillHTML(this);
-    });
+  mdui.mutation('.mdui-spinner', function () {
+    fillHTML(this);
   });
 
   /**

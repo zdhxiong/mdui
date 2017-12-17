@@ -111,6 +111,14 @@
       $textField.find('.mdui-textfield-counter-inputed').text(inputed.toString());
     }
 
+    // 含 帮助文本、错误提示、字数统计 时，增加文本框底部内边距
+    if (
+      $textField.find('.mdui-textfield-helper').length ||
+      $textField.find('.mdui-textfield-error').length ||
+      maxlength
+    ) {
+      $textField.addClass('mdui-textfield-has-bottom');
+    }
   };
 
   // 绑定事件

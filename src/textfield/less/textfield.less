@@ -8,8 +8,12 @@
 .mdui-textfield {
   position: relative;
   padding-top: 16px;
-  padding-bottom: 28px;
+  padding-bottom: 8px;
   overflow: hidden;
+}
+
+.mdui-textfield-has-bottom {
+  padding-bottom: 28px;
 }
 
 /* 输入框 */
@@ -92,7 +96,7 @@
 .mdui-textfield {
   .mdui-icon {
     position: absolute;
-    bottom: 28px;
+    bottom: 8px;
     color: @color-black-icon;
     padding: 6px;
 
@@ -104,6 +108,12 @@
       margin-left: 56px;
       width: calc(~"100% - 56px");
     }
+  }
+}
+
+.mdui-textfield-has-bottom {
+  .mdui-icon {
+    bottom: 28px;
   }
 }
 

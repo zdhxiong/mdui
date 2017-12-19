@@ -167,7 +167,6 @@
    * 初始化文本框
    */
   mdui.mutation('.mdui-textfield', function () {
-    console.log('test');
     $(this)
       .find('.mdui-textfield-input')
       .trigger('input', {

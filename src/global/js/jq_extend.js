@@ -207,25 +207,35 @@ $.extend({
       }
     };
   },
-
-  /**
-   * 生成唯一 id
-   * @param pluginName 插件名，若传入该参数，guid 将以该参数作为前缀
-   * @returns {string}
-   */
-  guid: function (pluginName) {
-    function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-    }
-
-    var guid = s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-    if (pluginName) {
-      guid = 'mdui-' + pluginName + '-' + guid;
-    }
-
-    return guid;
-  },
-
 });
+
+/**
+ * 生成唯一 id
+ * @param string name id的名称，若该名称对于的guid不存在，则生成新的guid并返回；若已存在，则返回原有guid
+ * @returns {string}
+ */
+(function () {
+  var GUID = {};
+
+  $.extend({
+    guid: function (name) {
+      if (typeof name !== 'undefined' && typeof GUID[name] !== 'undefined') {
+        return GUID[name];
+      }
+
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
+
+      var guid = s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+
+      if (typeof name !== 'undefined') {
+        GUID[name] = guid;
+      }
+
+      return guid;
+    },
+  });
+})();

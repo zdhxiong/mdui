@@ -129,7 +129,7 @@ mdui.Select = (function () {
     _this.options = $.extend({}, DEFAULT, (opts || {}));
 
     // 为当前 select 生成唯一 ID
-    _this.uniqueID = $.guid('select');
+    _this.uniqueID = $.guid();
 
     _this.state = 'closed';
 

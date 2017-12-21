@@ -123,9 +123,8 @@ mdui.Tooltip = (function () {
     _this.state = 'closed';
 
     // 创建 Tooltip HTML
-    var guid = $.guid('tooltip');
     _this.$tooltip = $(
-      '<div class="mdui-tooltip" id="mdui-tooltip-' + guid + '">' +
+      '<div class="mdui-tooltip" id="' + $.guid() + '">' +
         _this.options.content +
       '</div>'
     ).appendTo(document.body);

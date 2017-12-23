@@ -310,14 +310,16 @@
           if (options.dataType === 'json') {
             try {
               eventParams.data = responseData = JSON.parse(xhr.responseText);
-
-              triggerEvent(ajaxEvent.ajaxSuccess, eventParams);
-              triggerCallback('success', responseData, textStatus, xhr);
             } catch (err) {
               textStatus = 'parsererror';
 
               triggerEvent(ajaxEvent.ajaxError, eventParams);
               triggerCallback('error', xhr, textStatus);
+            }
+
+            if (textStatus !== 'parsererror') {
+              triggerEvent(ajaxEvent.ajaxSuccess, eventParams);
+              triggerCallback('success', responseData, textStatus, xhr);
             }
           } else {
             eventParams.data = responseData =

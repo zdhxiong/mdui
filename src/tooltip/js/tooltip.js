@@ -129,9 +129,13 @@ mdui.Tooltip = (function () {
       '</div>'
     ).appendTo(document.body);
 
-    // 绑定事件
+    // 绑定事件。元素处于 disabled 状态时无法触发鼠标事件，为了统一，把 touch 事件也禁用
     _this.$target
       .on('touchstart mouseenter', function (e) {
+        if (this.disabled) {
+          return;
+        }
+
         if (!TouchHandler.isAllow(e)) {
           return;
         }
@@ -141,13 +145,23 @@ mdui.Tooltip = (function () {
         _this.open();
       })
       .on('touchend mouseleave', function (e) {
+        if (this.disabled) {
+          return;
+        }
+
         if (!TouchHandler.isAllow(e)) {
           return;
         }
 
         _this.close();
       })
-      .on(TouchHandler.unlock, TouchHandler.register);
+      .on(TouchHandler.unlock, function (e) {
+        if (this.disabled) {
+          return;
+        }
+
+        TouchHandler.register(e);
+      });
   }
 
   /**

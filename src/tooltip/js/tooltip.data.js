@@ -14,8 +14,6 @@ $(function () {
       var options = parseOptions($this.attr('mdui-tooltip'));
       inst = new mdui.Tooltip($this, options);
       $this.data('mdui.tooltip', inst);
-
-      inst.open();
     }
   });
 });

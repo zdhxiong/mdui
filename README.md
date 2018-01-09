@@ -10,6 +10,8 @@
 
 MDUI 是一个基于 Material Design 的前端框架。
 
+QQ群：[635509201](https://jq.qq.com/?_wv=1027&k=53jpYKH)
+
 ## [中文文档](https://mdui.org/docs)
 
 ## 特性

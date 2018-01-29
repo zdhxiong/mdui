@@ -165,6 +165,10 @@
   Snackbar.prototype.open = function () {
     var _this = this;
 
+    if (!_this.message) {
+      return;
+    }
+
     if (_this.state === 'opening' || _this.state === 'opened') {
       return;
     }
@@ -233,6 +237,10 @@
    */
   Snackbar.prototype.close = function () {
     var _this = this;
+
+    if (!_this.message) {
+      return;
+    }
 
     if (_this.state === 'closing' || _this.state === 'closed') {
       return;

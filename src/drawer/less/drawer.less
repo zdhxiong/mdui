@@ -30,6 +30,13 @@ body.mdui-loaded .mdui-drawer {
   width: calc(~"100% - 56px");
   max-width: @drawer-width-xs;
 
+  // 隐藏时不显示阴影
+  @media (max-width: @screen-sm-max) {
+    &:not(.mdui-drawer-open) {
+      box-shadow: none !important;
+    }
+  }
+
   // 平板端宽度为 100% - 64px，最大为 320px
   @media (min-width: @screen-sm-min) {
     width: calc(~"100% - 64px");
@@ -40,6 +47,11 @@ body.mdui-loaded .mdui-drawer {
   @media (min-width: @screen-md-min) {
     width: @drawer-width-md;
     max-width: none;
+
+    // 隐藏时不显示阴影
+    &.mdui-drawer-close {
+      box-shadow: none !important;
+    }
   }
 }
 

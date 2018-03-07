@@ -11,7 +11,7 @@
   width: 100%;
   background-color: #fff;
   border: 1px solid @color-black-divider;
-  border-top: none;
+  border-bottom: none;
   .mdui-shadow(2);
 
   tbody {
@@ -27,7 +27,7 @@
     text-align: left;
     padding: 12px 28px;
     box-sizing: border-box;
-    .mdui-divider-top-dark();
+    .mdui-divider-bottom-dark();
 
     &:last-child {
       padding-right: 24px;
@@ -90,8 +90,9 @@ th.mdui-table-cell-checkbox {
 .mdui-table-fluid {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid @color-black-divider;
-  border-top: none;
+  border-bottom: none;
   .mdui-shadow(2);
 
   .mdui-table {
@@ -121,7 +122,7 @@ th.mdui-table-cell-checkbox {
   .mdui-table {
     background-color: @layout-dark-color-3;
     border: 1px solid @color-white-divider;
-    border-top: none;
+    border-bottom: none;
 
     th, td {
       .mdui-divider-bottom-light();
@@ -146,7 +147,7 @@ th.mdui-table-cell-checkbox {
 
   .mdui-table-fluid {
     border: 1px solid @color-white-divider;
-    border-top: none;
+    border-bottom: none;
 
     .mdui-table {
       .mdui-shadow(0);

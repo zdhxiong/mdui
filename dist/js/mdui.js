@@ -1,6 +1,6 @@
 /*!
- * mdui v0.4.0 (https://mdui.org)
- * Copyright 2016-2017 zdhxiong
+ * mdui v0.4.1 (https://mdui.org)
+ * Copyright 2016-2018 zdhxiong
  * Licensed under MIT
  */
 /* jshint ignore:start */
@@ -2153,14 +2153,16 @@
               if (options.dataType === 'json') {
                 try {
                   eventParams.data = responseData = JSON.parse(xhr.responseText);
-
-                  triggerEvent(ajaxEvent.ajaxSuccess, eventParams);
-                  triggerCallback('success', responseData, textStatus, xhr);
                 } catch (err) {
                   textStatus = 'parsererror';
 
                   triggerEvent(ajaxEvent.ajaxError, eventParams);
                   triggerCallback('error', xhr, textStatus);
+                }
+
+                if (textStatus !== 'parsererror') {
+                  triggerEvent(ajaxEvent.ajaxSuccess, eventParams);
+                  triggerCallback('success', responseData, textStatus, xhr);
                 }
               } else {
                 eventParams.data = responseData =
@@ -2690,28 +2692,38 @@
         }
       };
     },
-
-    /**
-     * 生成唯一 id
-     * @param pluginName 插件名，若传入该参数，guid 将以该参数作为前缀
-     * @returns {string}
-     */
-    guid: function (pluginName) {
-      function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-          .toString(16)
-          .substring(1);
-      }
-
-      var guid = s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-      if (pluginName) {
-        guid = 'mdui-' + pluginName + '-' + guid;
-      }
-
-      return guid;
-    },
-
   });
+
+  /**
+   * 生成唯一 id
+   * @param string name id的名称，若该名称对于的guid不存在，则生成新的guid并返回；若已存在，则返回原有guid
+   * @returns {string}
+   */
+  (function () {
+    var GUID = {};
+
+    $.extend({
+      guid: function (name) {
+        if (typeof name !== 'undefined' && typeof GUID[name] !== 'undefined') {
+          return GUID[name];
+        }
+
+        function s4() {
+          return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+        }
+
+        var guid = s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+
+        if (typeof name !== 'undefined') {
+          GUID[name] = guid;
+        }
+
+        return guid;
+      },
+    });
+  })();
 
 
   /**
@@ -3874,7 +3886,6 @@
      * 初始化文本框
      */
     mdui.mutation('.mdui-textfield', function () {
-      console.log('test');
       $(this)
         .find('.mdui-textfield-input')
         .trigger('input', {
@@ -4360,7 +4371,7 @@
       _this.options = $.extend({}, DEFAULT, (opts || {}));
 
       // 为当前 select 生成唯一 ID
-      _this.uniqueID = $.guid('select');
+      _this.uniqueID = $.guid();
 
       _this.state = 'closed';
 
@@ -5321,10 +5332,13 @@
    */
 
   $(function () {
-    $document.on('click', '[mdui-drawer]', function () {
+    mdui.mutation('[mdui-drawer]', function () {
       var $this = $(this);
       var options = parseOptions($this.attr('mdui-drawer'));
-      var $drawer = $(options.target).eq(0);
+      var selector = options.target;
+      delete options.target;
+
+      var $drawer = $(selector).eq(0);
 
       var inst = $drawer.data('mdui.drawer');
       if (!inst) {
@@ -5332,7 +5346,10 @@
         $drawer.data('mdui.drawer', inst);
       }
 
-      inst.toggle();
+      $this.on('click', function () {
+        inst.toggle();
+      });
+
     });
   });
 
@@ -6244,16 +6261,19 @@
       _this.state = 'closed';
 
       // 创建 Tooltip HTML
-      var guid = $.guid('tooltip');
       _this.$tooltip = $(
-        '<div class="mdui-tooltip" id="mdui-tooltip-' + guid + '">' +
+        '<div class="mdui-tooltip" id="' + $.guid() + '">' +
           _this.options.content +
         '</div>'
       ).appendTo(document.body);
 
-      // 绑定事件
+      // 绑定事件。元素处于 disabled 状态时无法触发鼠标事件，为了统一，把 touch 事件也禁用
       _this.$target
         .on('touchstart mouseenter', function (e) {
+          if (this.disabled) {
+            return;
+          }
+
           if (!TouchHandler.isAllow(e)) {
             return;
           }
@@ -6263,13 +6283,23 @@
           _this.open();
         })
         .on('touchend mouseleave', function (e) {
+          if (this.disabled) {
+            return;
+          }
+
           if (!TouchHandler.isAllow(e)) {
             return;
           }
 
           _this.close();
         })
-        .on(TouchHandler.unlock, TouchHandler.register);
+        .on(TouchHandler.unlock, function (e) {
+          if (this.disabled) {
+            return;
+          }
+
+          TouchHandler.register(e);
+        });
     }
 
     /**
@@ -6416,8 +6446,6 @@
         var options = parseOptions($this.attr('mdui-tooltip'));
         inst = new mdui.Tooltip($this, options);
         $this.data('mdui.tooltip', inst);
-
-        inst.open();
       }
     });
   });
@@ -6590,6 +6618,10 @@
     Snackbar.prototype.open = function () {
       var _this = this;
 
+      if (!_this.message) {
+        return;
+      }
+
       if (_this.state === 'opening' || _this.state === 'opened') {
         return;
       }
@@ -6658,6 +6690,10 @@
      */
     Snackbar.prototype.close = function () {
       var _this = this;
+
+      if (!_this.message) {
+        return;
+      }
 
       if (_this.state === 'closing' || _this.state === 'closed') {
         return;

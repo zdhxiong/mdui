@@ -1,6 +1,6 @@
 /*!
- * mdui v0.4.0 (https://mdui.org)
- * Copyright 2016-2017 zdhxiong
+ * mdui v0.4.1 (https://mdui.org)
+ * Copyright 2016-2018 zdhxiong
  * Licensed under MIT
  */
 /**
@@ -4893,15 +4893,6 @@ button::-moz-focus-inner,
   border-style: none;
 }
 /**
- * Restore the focus styles unset by the previous rule.
- */
-button:-moz-focusring,
-[type="button"]:-moz-focusring,
-[type="reset"]:-moz-focusring,
-[type="submit"]:-moz-focusring {
-  outline: 1px dotted ButtonText;
-}
-/**
  * 1. Correct the text wrapping in Edge and IE.
  * 2. Correct the color inheritance from `fieldset` elements in IE.
  * 3. Remove the padding so developers are not caught out when they zero out
@@ -5433,15 +5424,17 @@ body.mdui-locked {
 }
 .mdui-typo a {
   position: relative;
+  display: inline-block;
   overflow: hidden;
   color: #ff4081;
   text-decoration: none;
+  vertical-align: top;
   outline: none;
 }
 .mdui-typo a:before {
   position: absolute;
   top: auto;
-  bottom: -2px;
+  bottom: 1px;
   left: 0;
   width: 100%;
   height: 1px;
@@ -5841,7 +5834,7 @@ body.mdui-locked {
   border-collapse: separate;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, .12);
-  border-top: none;
+  border-bottom: none;
   -webkit-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
           box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
 }
@@ -5858,7 +5851,7 @@ body.mdui-locked {
   padding: 12px 28px;
   text-align: left;
   vertical-align: middle;
-  border-top: 1px solid rgba(0, 0, 0, .12);
+  border-bottom: 1px solid rgba(0, 0, 0, .12);
 }
 .mdui-table th:last-child,
 .mdui-table td:last-child {
@@ -5911,8 +5904,9 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-table-fluid {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border: 1px solid rgba(0, 0, 0, .12);
-  border-top: none;
+  border-bottom: none;
   -webkit-box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
           box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
 }
@@ -5938,7 +5932,7 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-layout-dark .mdui-table {
   background-color: #303030;
   border: 1px solid rgba(255, 255, 255, .12);
-  border-top: none;
+  border-bottom: none;
 }
 .mdui-theme-layout-dark .mdui-table th,
 .mdui-theme-layout-dark .mdui-table td {
@@ -5955,7 +5949,7 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 }
 .mdui-theme-layout-dark .mdui-table-fluid {
   border: 1px solid rgba(255, 255, 255, .12);
-  border-top: none;
+  border-bottom: none;
 }
 .mdui-theme-layout-dark .mdui-table-fluid .mdui-table {
   border: none;
@@ -6222,6 +6216,7 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-textfield-input[rows] {
   height: auto !important;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 /* 文本框 label */
 .mdui-textfield-label {
@@ -8029,10 +8024,6 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   will-change: box-shadow;
   -webkit-user-drag: none;
 }
-.mdui-btn::-moz-focus-inner,
-.mdui-fab::-moz-focus-inner {
-  border: 0;
-}
 .mdui-btn:hover,
 .mdui-fab:hover {
   background-color: rgba(0, 0, 0, .1);
@@ -8099,6 +8090,7 @@ input.mdui-btn[type="submit"] {
   background-color: transparent !important;
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
+  opacity: 1 !important;
 }
 .mdui-btn[disabled] .mdui-icon,
 .mdui-fab[disabled] .mdui-icon,
@@ -8512,6 +8504,7 @@ input.mdui-btn[type="submit"] {
           box-sizing: border-box;
   margin: 0 -24px 0 0;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   color: rgba(0, 0, 0, .87);
   cursor: default;
   visibility: hidden;
@@ -9586,7 +9579,7 @@ select.mdui-select[multiple] option:last-child {
   -webkit-box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
           box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
 }
-/* appbar 固定在顶部时，为 body 添加 padding-top，避免 appbar 覆盖页面内容 */
+/* appbar 固定在顶部 */
 .mdui-appbar-fixed {
   position: fixed;
   top: 0;
@@ -9871,6 +9864,7 @@ select.mdui-select[multiple] option:last-child {
   margin: 0 auto;
   overflow-x: auto;
   overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   white-space: nowrap;
 }
 .mdui-tab a {
@@ -10650,9 +10644,16 @@ body.mdui-loaded .mdui-drawer {
   margin: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   white-space: nowrap;
 
   will-change: transform;
+}
+@media (max-width: 1023px) {
+  .mdui-drawer:not(.mdui-drawer-open) {
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+  }
 }
 @media (min-width: 600px) {
   .mdui-drawer {
@@ -10664,6 +10665,10 @@ body.mdui-loaded .mdui-drawer {
   .mdui-drawer {
     width: 240px;
     max-width: none;
+  }
+  .mdui-drawer.mdui-drawer-close {
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
   }
 }
 /* 出现在右侧的抽屉栏 */
@@ -10735,11 +10740,11 @@ body.mdui-loaded .mdui-drawer {
 }
 /* PC 上的样式 */
 @media (min-width: 1024px) {
-  /* 使 body 获得 padding-left 或 padding-right，避免被抽屉栏覆盖住页面 */
-  body.mdui-drawer-body-left {
+  /* 使该类所在元素获得 padding-left 或 padding-right，避免被抽屉栏覆盖住页面 */
+  .mdui-drawer-body-left {
     padding-left: 240px;
   }
-  body.mdui-drawer-body-right {
+  .mdui-drawer-body-right {
     padding-right: 240px;
   }
   /* PC 上默认有上边距 */
@@ -10851,6 +10856,7 @@ body.mdui-loaded .mdui-drawer {
           box-sizing: border-box;
   padding: 24px;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   font-size: 15px;
   line-height: 1.5;
   color: rgba(0, 0, 0, .7);
@@ -11555,10 +11561,10 @@ body.mdui-loaded .mdui-drawer {
           transform: scale(1);
 }
 /* 固定到页面底部 */
-body.mdui-bottom-nav-fixed {
+.mdui-bottom-nav-fixed {
   padding-bottom: 56px;
 }
-body.mdui-bottom-nav-fixed .mdui-bottom-nav {
+.mdui-bottom-nav-fixed .mdui-bottom-nav {
   position: fixed;
   right: 0;
   bottom: 0;
@@ -12554,6 +12560,7 @@ body.mdui-bottom-nav-fixed .mdui-bottom-nav {
   padding: 8px 0;
   margin: 0;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   font-size: 16px;
   color: rgba(0, 0, 0, .87);
   list-style: none;
@@ -12639,7 +12646,10 @@ body.mdui-bottom-nav-fixed .mdui-bottom-nav {
 /* 菜单中的图标 */
 .mdui-menu-item-icon {
   display: inline-block;
-  width: 42px;
+  width: 40px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding-right: 16px;
   color: rgba(0, 0, 0, .54);
 }
 /* 菜单中的辅助文本或图标 */
@@ -12665,9 +12675,6 @@ body.mdui-bottom-nav-fixed .mdui-bottom-nav {
   height: 32px;
   padding: 0 24px;
   line-height: 32px;
-}
-.mdui-menu-cascade > .mdui-menu-item .mdui-menu-item-icon {
-  width: 40px;
 }
 /**
  * =============================================================================

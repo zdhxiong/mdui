@@ -553,8 +553,14 @@ $.fn.extend({
    */
   find: function (selector) {
     var foundElements = [];
+    var nodeType;
 
     this.each(function (i, _this) {
+      // 不是 element 和 document 则跳过
+      if ((nodeType = _this.nodeType) !== 1 && nodeType !== 9) {
+        return true;
+      }
+
       merge(foundElements, _this.querySelectorAll(selector));
     });
 

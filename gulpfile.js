@@ -40,15 +40,6 @@
   var $ = {
 
     /**
-     * 是否是数组
-     * @param value
-     * @returns {boolean}
-     */
-    isArray: function (value) {
-      return Object.prototype.toString.apply(value) === '[object Array]';
-    },
-
-    /**
      * 循环数组或对象
      * @param obj
      * @param callback
@@ -60,7 +51,7 @@
         return;
       }
 
-      if ($.isArray(obj)) {
+      if (Array.isArray(obj)) {
         // Array
         for (i = 0; i < obj.length; i++) {
           callback(i, obj[i]);
@@ -279,29 +270,15 @@
     },
   };
 
-  // str 字符串是否以 needle 字符串结尾
-  function endWith(str, needle) {
-    return str.slice(-needle.length) === needle;
-  }
-
   // JavaScript 文件添加缩进
-  function addJSIndent(file, t, onlyJQ) {
-    var addIndent = onlyJQ ? '' : '  ';
+  function addJSIndent(file, t) {
+    var addIndent = '  ';
     var filepath = file.path.replace(/\\/g, '/');
     if (
-      endWith(filepath, '/global/js/wrap_start.js') ||
-      endWith(filepath, '/global/js/wrap_end.js')
+      filepath.endsWith('/global/js/wrap_start.js') ||
+      filepath.endsWith('/global/js/wrap_end.js')
     ) {
       addIndent = '';
-    } else if (
-      endWith(filepath, '/jq/js/function.js') ||
-      endWith(filepath, '/jq/js/ajax.js') ||
-      endWith(filepath, '/jq/js/core.js') ||
-      endWith(filepath, '/jq/js/data.js') ||
-      endWith(filepath, '/jq/js/event.js') ||
-      endWith(filepath, '/jq/js/queue.js')
-    ) {
-      addIndent = onlyJQ ? '  ' : '    ';
     }
 
     if (addIndent !== '') {
@@ -385,15 +362,15 @@
   gulp.task('build-js', ['clean-js'], function (cb) {
     gulp.src(mdui.jsFiles)
       .pipe(sourcemaps.init())
-      .pipe(jscs())
-      .pipe(jscs.reporter())
+      // .pipe(jscs())
+      // .pipe(jscs.reporter())
       .pipe(tap(function (file, t) {
         addJSIndent(file, t);
       }))
       .pipe(concat(mdui.filename + '.js'))
       .pipe(header(mdui.distBanner, configs.header))
-      .pipe(jshint())
-      .pipe(jshint.reporter('default'))
+      // .pipe(jshint())
+      // .pipe(jshint.reporter('default'))
       .pipe(gulp.dest(paths.dist.js))
       .pipe(uglify())
       .pipe(header(mdui.distBanner, configs.header))
@@ -614,15 +591,15 @@
     // 构建 JavaScript 文件
     gulp.src(moduleJs)
       .pipe(sourcemaps.init())
-      .pipe(jscs())
-      .pipe(jscs.reporter())
+      // .pipe(jscs())
+      // .pipe(jscs.reporter())
       .pipe(tap(function (file, t) {
-        addJSIndent(file, t, false);
+        addJSIndent(file, t);
       }))
       .pipe(concat(mdui.filename + '.custom.js'))
       .pipe(header(mdui.customBanner, customBannerOptions()))
-      .pipe(jshint())
-      .pipe(jshint.reporter('default'))
+      // .pipe(jshint())
+      // .pipe(jshint.reporter('default'))
       .pipe(gulp.dest(paths.custom.js))
       .pipe(uglify())
       .pipe(header(mdui.customBanner, customBannerOptions()))
@@ -674,34 +651,6 @@
           prefix: 1,
         }));
     }
-
-  });
-
-  /**
-   * 打包生成 jq.js
-   */
-  gulp.task('build-jq', function (cb) {
-    gulp.src(mdui.modules.jq.js)
-      .pipe(sourcemaps.init())
-      .pipe(jscs())
-      .pipe(jscs.reporter())
-      .pipe(tap(function (file, t) {
-        addJSIndent(file, t, true);
-      }))
-      .pipe(concat('jq.js'))
-      .pipe(jshint())
-      .pipe(jshint.reporter('default'))
-
-      .pipe(gulp.dest(paths.dist.js))
-      .pipe(uglify())
-      .pipe(rename(function (path) {
-        path.basename = 'jq.min';
-      }))
-      .pipe(sourcemaps.write('./'))
-      .pipe(gulp.dest(paths.dist.js))
-      .on('end', function () {
-        cb();
-      })
   });
 
 })();

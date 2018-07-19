@@ -50,13 +50,7 @@
   },
   "jq": {
     "js": [
-      "src/jq/js/jq_start.js",
-      "src/jq/js/function.js",
-      "src/jq/js/core.js",
-      "src/jq/js/data.js",
-      "src/jq/js/event.js",
-      "src/jq/js/ajax.js",
-      "src/jq/js/jq_end.js"
+      "src/jq/js/jq.js"
     ],
     "less": [],
     "dependencies": []

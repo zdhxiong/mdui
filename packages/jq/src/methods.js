@@ -794,13 +794,12 @@ each({
     }
 
     // 设置
-    let value = val;
-
-    if (!Number.isNaN(Number(value)) && value !== '') {
-      value += 'px';
+    /* eslint no-restricted-globals: 0 */
+    if (!isNaN(Number(val)) && val !== '') {
+      val += 'px';
     }
 
-    return this.css(name, value);
+    return this.css(name, val);
   };
 });
 

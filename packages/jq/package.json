@@ -1,5 +1,5 @@
 {
-  "name": "mdui.JQ",
+  "name": "mdui.jq",
   "version": "1.0.0",
   "description": "拥有和 jQuery 相似 API 的轻量级 JavaScript 工具库",
   "main": "src/index.js",

@@ -9,18 +9,18 @@
 使用 npm 或 yarn 安装。
 
 ```
-npm install mdui.JQ --save
+npm install mdui.jq --save
 ```
 
-mdui.JQ 支持 CommonJS、AMD 和 ES6 模块化规范。
+mdui.jq 支持 CommonJS、AMD 和 ES6 模块化规范。
 
 在 ES6 环境中，可以这样导入：
 
 ```js
-import $ from mdui.JQ;
+import $ from mdui.jq;
 ```
 
-如果你不想使用构建环境，可以直接通过 <script> 标签引入 js 文件：
+如果你不想使用构建环境，可以直接通过 `<script>` 标签引入 js 文件：
 
 ```html
 <script src="./jq.min.js"></script>

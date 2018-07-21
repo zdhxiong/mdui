@@ -126,13 +126,6 @@
     .on(TouchHandler.unlock, rangeSelector, TouchHandler.register);
 
   /**
-   * 页面加载完后自动初始化（未初始化时，可以调用该方法初始化）
-   */
-  mdui.mutation('.mdui-slider', function () {
-    reInit($(this));
-  });
-
-  /**
    * 重新初始化滑块（强制重新初始化）
    */
   mdui.updateSliders = function () {
@@ -140,4 +133,13 @@
       reInit($(this));
     });
   };
+
+  $(function () {
+    /**
+     * 页面加载完后自动初始化（未初始化时，可以调用该方法初始化）
+     */
+    mdui.mutation('.mdui-slider', function () {
+      reInit($(this));
+    });
+  });
 })();

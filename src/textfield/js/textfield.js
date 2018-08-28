@@ -106,9 +106,7 @@
           '</div>').appendTo($textField);
       }
 
-      // 字符长度，确保统计方式和 maxlength 一致
-      var inputed = value.length + value.split('\n').length - 1;
-      $textField.find('.mdui-textfield-counter-inputed').text(inputed.toString());
+      $textField.find('.mdui-textfield-counter-inputed').text(value.length.toString());
     }
 
     // 含 帮助文本、错误提示、字数统计 时，增加文本框底部内边距

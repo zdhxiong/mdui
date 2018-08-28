@@ -5,7 +5,6 @@
  */
 
 .mdui-appbar {
-  width: 100%;
   z-index: @z-index-appbar;
   .mdui-shadow(4);
 }
@@ -16,6 +15,25 @@
   top: 0;
   left: 0;
   right: 0;
+  will-change: left, right;
+  transition-property: left, right;
+  transition-timing-function: @animation-curve-linear-out-slow-in;
+  transition-duration: 0.3s;
+}
+
+/* 左侧留出抽屉栏的距离 */
+.mdui-appbar-inset.mdui-appbar-fixed {
+  .mdui-drawer-body-left & {
+    @media (min-width: @screen-md-min) {
+      left: @drawer-width-md;
+    }
+  }
+
+  .mdui-drawer-body-right & {
+    @media (min-width: @screen-md-min) {
+      right: @drawer-width-md;
+    }
+  }
 }
 
 /* 含工具栏 */

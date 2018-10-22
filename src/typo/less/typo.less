@@ -116,8 +116,13 @@
     color: @color-black-secondary;
   }
 
-  [draggable] {
+  [draggable],
+  [draggable="true"] {
     cursor: move;
+  }
+
+  [draggable="false"] {
+    cursor: inherit;
   }
 
   p, pre, ul, ol, dl, form, hr, figure, table, .mdui-table, .mdui-table-fluid {

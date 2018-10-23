@@ -77,6 +77,7 @@
   height: @fab-size;
   padding-top: 8px;
   z-index: @z-index-fab;
+  text-align: center;
 
   // 菜单打开前
   &>.mdui-fab {
@@ -103,6 +104,11 @@
       opacity: 1;
       transform: rotate(360deg);
     }
+  }
+
+  // mini 按钮需要垂直居中
+  &>.mdui-fab-mini {
+    margin-top: (@fab-size - @fab-size-mini) / 2;
   }
 
   .mdui-fab-dial {

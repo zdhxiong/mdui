@@ -19,7 +19,7 @@
     width: 0;
     overflow: hidden;
     position: absolute;
-    visibility: hidden;
+    opacity: 0;
   }
 }
 
@@ -77,13 +77,19 @@
 }
 
 /* 未选中、禁用时 按下的阴影 */
-.mdui-radio:active input[type="radio"] + .mdui-radio-icon {
-  box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.1);
+.mdui-radio:active input[type="radio"],
+.mdui-radio input[type="radio"]:focus {
+  & + .mdui-radio-icon {
+    box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.1);
+  }
 }
 
 /* 已选中时按下的阴影 */
-.mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
-  box-shadow: 0 0 0 15px rgba(red(@color-default-a200), green(@color-default-a200), blue(@color-default-a200), 0.16);
+.mdui-radio:active input[type="radio"],
+.mdui-radio input[type="radio"]:focus {
+  &:checked:not(:disabled) + .mdui-radio-icon {
+    box-shadow: 0 0 0 15px rgba(red(@color-default-a200), green(@color-default-a200), blue(@color-default-a200), 0.16);
+  }
 }
 
 /**
@@ -111,8 +117,11 @@
       }
 
       // 已选中时按下的阴影
-      .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
-        box-shadow: 0 0 0 15px rgba(red(@@color), green(@@color), blue(@@color), 0.16);
+      .mdui-radio:active input[type="radio"],
+      .mdui-radio input[type="radio"]:focus {
+        &:checked:not(:disabled) + .mdui-radio-icon {
+          box-shadow: 0 0 0 15px rgba(red(@@color), green(@@color), blue(@@color), 0.16);
+        }
       }
 
     }
@@ -147,8 +156,11 @@
   }
 
   // 未选中或禁用时 按下的阴影
-  .mdui-radio:active input[type="radio"] + .mdui-radio-icon {
-    box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.1);
+  .mdui-radio:active input[type="radio"],
+  .mdui-radio input[type="radio"]:focus {
+    & + .mdui-radio-icon {
+      box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.1);
+    }
   }
 
 }

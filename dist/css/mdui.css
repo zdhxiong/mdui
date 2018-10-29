@@ -1,5 +1,5 @@
 /*!
- * mdui v0.4.1 (https://mdui.org)
+ * mdui v0.4.2 (https://mdui.org)
  * Copyright 2016-2018 zdhxiong
  * Licensed under MIT
  */
@@ -4638,40 +4638,26 @@
     display: none !important;
   }
 }
-/*! normalize.css v6.0.0 | MIT License | github.com/necolas/normalize.css */
+/*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
 /* Document
    ========================================================================== */
 /**
  * 1. Correct the line height in all browsers.
- * 2. Prevent adjustments of font size after orientation changes in
- *    IE on Windows Phone and in iOS.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 html {
   line-height: 1.15;
-  /* 2 */
-  -webkit-text-size-adjust: 100%;
   /* 1 */
-      -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
   /* 2 */
 }
 /* Sections
    ========================================================================== */
 /**
- * Remove the margin in all browsers (opinionated).
+ * Remove the margin in all browsers.
  */
 body {
   margin: 0;
-}
-/**
- * Add the correct display in IE 9-.
- */
-article,
-aside,
-footer,
-header,
-nav,
-section {
-  display: block;
 }
 /**
  * Correct the font size and margin on `h1` elements within `section` and
@@ -4683,22 +4669,6 @@ h1 {
 }
 /* Grouping content
    ========================================================================== */
-/**
- * Add the correct display in IE 9-.
- * 1. Add the correct display in IE.
- */
-figcaption,
-figure,
-main {
-  /* 1 */
-  display: block;
-}
-/**
- * Add the correct margin in IE 8.
- */
-figure {
-  margin: 1em 40px;
-}
 /**
  * 1. Add the correct box sizing in Firefox.
  * 2. Show the overflow in Edge and IE.
@@ -4725,18 +4695,13 @@ pre {
 /* Text-level semantics
    ========================================================================== */
 /**
- * 1. Remove the gray background on active links in IE 10.
- * 2. Remove gaps in links underline in iOS 8+ and Safari 8+.
+ * Remove the gray background on active links in IE 10.
  */
 a {
   background-color: transparent;
-  /* 1 */
-
-  -webkit-text-decoration-skip: objects;
-  /* 2 */
 }
 /**
- * 1. Remove the bottom border in Chrome 57- and Firefox 39-.
+ * 1. Remove the bottom border in Chrome 57-
  * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
  */
 abbr[title] {
@@ -4749,13 +4714,6 @@ abbr[title] {
   -webkit-text-decoration: underline dotted;
      -moz-text-decoration: underline dotted;
   /* 2 */
-}
-/**
- * Prevent the duplicate application of `bolder` by the next rule in Safari 6.
- */
-b,
-strong {
-  font-weight: inherit;
 }
 /**
  * Add the correct font weight in Chrome, Edge, and Safari.
@@ -4775,19 +4733,6 @@ samp {
   /* 1 */
   font-size: 1em;
   /* 2 */
-}
-/**
- * Add the correct font style in Android 4.3-.
- */
-dfn {
-  font-style: italic;
-}
-/**
- * Add the correct background and color in IE 9-.
- */
-mark {
-  color: #000;
-  background-color: #ff0;
 }
 /**
  * Add the correct font size in all browsers.
@@ -4815,42 +4760,30 @@ sup {
 /* Embedded content
    ========================================================================== */
 /**
- * Add the correct display in IE 9-.
- */
-audio,
-video {
-  display: inline-block;
-}
-/**
- * Add the correct display in iOS 4-7.
- */
-audio:not([controls]) {
-  display: none;
-  height: 0;
-}
-/**
- * Remove the border on images inside links in IE 10-.
+ * Remove the border on images inside links in IE 10.
  */
 img {
   border-style: none;
 }
-/**
- * Hide the overflow in IE.
- */
-svg:not(:root) {
-  overflow: hidden;
-}
 /* Forms
    ========================================================================== */
 /**
- * Remove the margin in Firefox and Safari.
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
  */
 button,
 input,
 optgroup,
 select,
 textarea {
+  /* 1 */
   margin: 0;
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 1 */
+  line-height: 1.15;
+  /* 2 */
 }
 /**
  * Show the overflow in IE.
@@ -4871,16 +4804,13 @@ select {
   text-transform: none;
 }
 /**
- * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
- *    controls in Android 4.
- * 2. Correct the inability to style clickable types in iOS and Safari.
+ * Correct the inability to style clickable types in iOS and Safari.
  */
 button,
-html [type="button"],
+[type="button"],
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
-  /* 2 */
 }
 /**
  * Remove the inner border and padding in Firefox.
@@ -4891,6 +4821,12 @@ button::-moz-focus-inner,
 [type="submit"]::-moz-focus-inner {
   padding: 0;
   border-style: none;
+}
+/**
+ * Correct the padding in Firefox.
+ */
+fieldset {
+  padding: .35em .75em .625em;
 }
 /**
  * 1. Correct the text wrapping in Edge and IE.
@@ -4914,24 +4850,20 @@ legend {
   /* 1 */
 }
 /**
- * 1. Add the correct display in IE 9-.
- * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
  */
 progress {
-  display: inline-block;
-  /* 1 */
   vertical-align: baseline;
-  /* 2 */
 }
 /**
- * Remove the default vertical scrollbar in IE.
+ * Remove the default vertical scrollbar in IE 10+.
  */
 textarea {
   overflow: auto;
 }
 /**
- * 1. Add the correct box sizing in IE 10-.
- * 2. Remove the padding in IE 10-.
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
  */
 [type="checkbox"],
 [type="radio"] {
@@ -4959,9 +4891,8 @@ textarea {
   /* 2 */
 }
 /**
- * Remove the inner padding and cancel buttons in Chrome and Safari on macOS.
+ * Remove the inner padding in Chrome and Safari on macOS.
  */
-[type="search"]::-webkit-search-cancel-button,
 [type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
@@ -4978,11 +4909,9 @@ textarea {
 /* Interactive
    ========================================================================== */
 /*
- * Add the correct display in IE 9-.
- * 1. Add the correct display in Edge, IE, and Firefox.
+ * Add the correct display in Edge, IE 10+, and Firefox.
  */
-details,
-menu {
+details {
   display: block;
 }
 /*
@@ -4991,24 +4920,16 @@ menu {
 summary {
   display: list-item;
 }
-/* Scripting
+/* Misc
    ========================================================================== */
 /**
- * Add the correct display in IE 9-.
- */
-canvas {
-  display: inline-block;
-}
-/**
- * Add the correct display in IE.
+ * Add the correct display in IE 10+.
  */
 template {
   display: none;
 }
-/* Hidden
-   ========================================================================== */
 /**
- * Add the correct display in IE 10-.
+ * Add the correct display in IE 10.
  */
 [hidden] {
   display: none;
@@ -5406,8 +5327,12 @@ body.mdui-locked {
   font-size: 80%;
   color: rgba(0, 0, 0, .54);
 }
-.mdui-typo [draggable] {
+.mdui-typo [draggable],
+.mdui-typo [draggable="true"] {
   cursor: move;
+}
+.mdui-typo [draggable="false"] {
+  cursor: inherit;
 }
 .mdui-typo p,
 .mdui-typo pre,
@@ -6795,7 +6720,7 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   width: 0;
   height: 0;
   overflow: hidden;
-  visibility: hidden;
+  opacity: 0;
 }
 /* 透明的圆形，用于生成圆形阴影 */
 .mdui-checkbox-icon {
@@ -6868,13 +6793,14 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: rgba(0, 0, 0, .26) !important;
   border-color: transparent !important;
 }
-/* 未选中、禁用时 按下的阴影 */
-.mdui-checkbox:active input[type="checkbox"] + .mdui-checkbox-icon {
+/* 阴影 */
+.mdui-checkbox:active input[type="checkbox"] + .mdui-checkbox-icon,
+.mdui-checkbox input[type="checkbox"]:focus + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(0, 0, 0, .1);
           box-shadow: 0 0 0 15px rgba(0, 0, 0, .1);
 }
-/* 已选中时按下的阴影 */
-.mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 64, 129, .16);
           box-shadow: 0 0 0 15px rgba(255, 64, 129, .16);
 }
@@ -6887,7 +6813,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #ffd740;
   border-color: #ffd740;
 }
-.mdui-theme-accent-amber .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-amber .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-amber .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 215, 64, .16);
           box-shadow: 0 0 0 15px rgba(255, 215, 64, .16);
 }
@@ -6895,7 +6822,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #448aff;
   border-color: #448aff;
 }
-.mdui-theme-accent-blue .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-blue .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-blue .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(68, 138, 255, .16);
           box-shadow: 0 0 0 15px rgba(68, 138, 255, .16);
 }
@@ -6903,7 +6831,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #18ffff;
   border-color: #18ffff;
 }
-.mdui-theme-accent-cyan .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-cyan .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-cyan .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(24, 255, 255, .16);
           box-shadow: 0 0 0 15px rgba(24, 255, 255, .16);
 }
@@ -6911,7 +6840,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #ff6e40;
   border-color: #ff6e40;
 }
-.mdui-theme-accent-deep-orange .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-deep-orange .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-deep-orange .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 110, 64, .16);
           box-shadow: 0 0 0 15px rgba(255, 110, 64, .16);
 }
@@ -6919,7 +6849,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #7c4dff;
   border-color: #7c4dff;
 }
-.mdui-theme-accent-deep-purple .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-deep-purple .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-deep-purple .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(124, 77, 255, .16);
           box-shadow: 0 0 0 15px rgba(124, 77, 255, .16);
 }
@@ -6927,7 +6858,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #69f0ae;
   border-color: #69f0ae;
 }
-.mdui-theme-accent-green .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-green .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-green .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(105, 240, 174, .16);
           box-shadow: 0 0 0 15px rgba(105, 240, 174, .16);
 }
@@ -6935,7 +6867,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #536dfe;
   border-color: #536dfe;
 }
-.mdui-theme-accent-indigo .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-indigo .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-indigo .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(83, 109, 254, .16);
           box-shadow: 0 0 0 15px rgba(83, 109, 254, .16);
 }
@@ -6943,7 +6876,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #40c4ff;
   border-color: #40c4ff;
 }
-.mdui-theme-accent-light-blue .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-light-blue .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-light-blue .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(64, 196, 255, .16);
           box-shadow: 0 0 0 15px rgba(64, 196, 255, .16);
 }
@@ -6951,7 +6885,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #b2ff59;
   border-color: #b2ff59;
 }
-.mdui-theme-accent-light-green .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-light-green .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-light-green .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(178, 255, 89, .16);
           box-shadow: 0 0 0 15px rgba(178, 255, 89, .16);
 }
@@ -6959,7 +6894,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #eeff41;
   border-color: #eeff41;
 }
-.mdui-theme-accent-lime .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-lime .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-lime .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(238, 255, 65, .16);
           box-shadow: 0 0 0 15px rgba(238, 255, 65, .16);
 }
@@ -6967,7 +6903,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #ffab40;
   border-color: #ffab40;
 }
-.mdui-theme-accent-orange .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-orange .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-orange .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 171, 64, .16);
           box-shadow: 0 0 0 15px rgba(255, 171, 64, .16);
 }
@@ -6975,7 +6912,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #ff4081;
   border-color: #ff4081;
 }
-.mdui-theme-accent-pink .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-pink .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-pink .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 64, 129, .16);
           box-shadow: 0 0 0 15px rgba(255, 64, 129, .16);
 }
@@ -6983,7 +6921,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #e040fb;
   border-color: #e040fb;
 }
-.mdui-theme-accent-purple .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-purple .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-purple .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(224, 64, 251, .16);
           box-shadow: 0 0 0 15px rgba(224, 64, 251, .16);
 }
@@ -6991,7 +6930,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #ff5252;
   border-color: #ff5252;
 }
-.mdui-theme-accent-red .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-red .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-red .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 82, 82, .16);
           box-shadow: 0 0 0 15px rgba(255, 82, 82, .16);
 }
@@ -6999,7 +6939,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #64ffda;
   border-color: #64ffda;
 }
-.mdui-theme-accent-teal .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-teal .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-teal .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(100, 255, 218, .16);
           box-shadow: 0 0 0 15px rgba(100, 255, 218, .16);
 }
@@ -7007,7 +6948,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #ff0;
   border-color: #ff0;
 }
-.mdui-theme-accent-yellow .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon {
+.mdui-theme-accent-yellow .mdui-checkbox:active input[type="checkbox"]:checked:not(:disabled) + .mdui-checkbox-icon,
+.mdui-theme-accent-yellow .mdui-checkbox input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 255, 0, .16);
           box-shadow: 0 0 0 15px rgba(255, 255, 0, .16);
 }
@@ -7030,7 +6972,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: rgba(255, 255, 255, .3) !important;
   border-color: transparent !important;
 }
-.mdui-theme-layout-dark .mdui-checkbox:active input[type="checkbox"] + .mdui-checkbox-icon {
+.mdui-theme-layout-dark .mdui-checkbox:active input[type="checkbox"] + .mdui-checkbox-icon,
+.mdui-theme-layout-dark .mdui-checkbox input[type="checkbox"]:focus + .mdui-checkbox-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 255, 255, .1);
           box-shadow: 0 0 0 15px rgba(255, 255, 255, .1);
 }
@@ -7056,7 +6999,7 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   width: 0;
   height: 0;
   overflow: hidden;
-  visibility: hidden;
+  opacity: 0;
 }
 /* 图标外圈 */
 .mdui-radio-icon {
@@ -7109,12 +7052,14 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: rgba(0, 0, 0, .26) !important;
 }
 /* 未选中、禁用时 按下的阴影 */
-.mdui-radio:active input[type="radio"] + .mdui-radio-icon {
+.mdui-radio:active input[type="radio"] + .mdui-radio-icon,
+.mdui-radio input[type="radio"]:focus + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(0, 0, 0, .1);
           box-shadow: 0 0 0 15px rgba(0, 0, 0, .1);
 }
 /* 已选中时按下的阴影 */
-.mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 64, 129, .16);
           box-shadow: 0 0 0 15px rgba(255, 64, 129, .16);
 }
@@ -7129,7 +7074,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-amber .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #ffd740;
 }
-.mdui-theme-accent-amber .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-amber .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-amber .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 215, 64, .16);
           box-shadow: 0 0 0 15px rgba(255, 215, 64, .16);
 }
@@ -7139,7 +7085,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-blue .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #448aff;
 }
-.mdui-theme-accent-blue .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-blue .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-blue .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(68, 138, 255, .16);
           box-shadow: 0 0 0 15px rgba(68, 138, 255, .16);
 }
@@ -7149,7 +7096,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-cyan .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #18ffff;
 }
-.mdui-theme-accent-cyan .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-cyan .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-cyan .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(24, 255, 255, .16);
           box-shadow: 0 0 0 15px rgba(24, 255, 255, .16);
 }
@@ -7159,7 +7107,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-deep-orange .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #ff6e40;
 }
-.mdui-theme-accent-deep-orange .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-deep-orange .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-deep-orange .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 110, 64, .16);
           box-shadow: 0 0 0 15px rgba(255, 110, 64, .16);
 }
@@ -7169,7 +7118,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-deep-purple .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #7c4dff;
 }
-.mdui-theme-accent-deep-purple .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-deep-purple .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-deep-purple .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(124, 77, 255, .16);
           box-shadow: 0 0 0 15px rgba(124, 77, 255, .16);
 }
@@ -7179,7 +7129,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-green .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #69f0ae;
 }
-.mdui-theme-accent-green .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-green .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-green .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(105, 240, 174, .16);
           box-shadow: 0 0 0 15px rgba(105, 240, 174, .16);
 }
@@ -7189,7 +7140,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-indigo .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #536dfe;
 }
-.mdui-theme-accent-indigo .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-indigo .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-indigo .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(83, 109, 254, .16);
           box-shadow: 0 0 0 15px rgba(83, 109, 254, .16);
 }
@@ -7199,7 +7151,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-light-blue .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #40c4ff;
 }
-.mdui-theme-accent-light-blue .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-light-blue .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-light-blue .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(64, 196, 255, .16);
           box-shadow: 0 0 0 15px rgba(64, 196, 255, .16);
 }
@@ -7209,7 +7162,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-light-green .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #b2ff59;
 }
-.mdui-theme-accent-light-green .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-light-green .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-light-green .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(178, 255, 89, .16);
           box-shadow: 0 0 0 15px rgba(178, 255, 89, .16);
 }
@@ -7219,7 +7173,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-lime .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #eeff41;
 }
-.mdui-theme-accent-lime .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-lime .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-lime .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(238, 255, 65, .16);
           box-shadow: 0 0 0 15px rgba(238, 255, 65, .16);
 }
@@ -7229,7 +7184,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-orange .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #ffab40;
 }
-.mdui-theme-accent-orange .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-orange .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-orange .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 171, 64, .16);
           box-shadow: 0 0 0 15px rgba(255, 171, 64, .16);
 }
@@ -7239,7 +7195,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-pink .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #ff4081;
 }
-.mdui-theme-accent-pink .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-pink .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-pink .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 64, 129, .16);
           box-shadow: 0 0 0 15px rgba(255, 64, 129, .16);
 }
@@ -7249,7 +7206,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-purple .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #e040fb;
 }
-.mdui-theme-accent-purple .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-purple .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-purple .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(224, 64, 251, .16);
           box-shadow: 0 0 0 15px rgba(224, 64, 251, .16);
 }
@@ -7259,7 +7217,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-red .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #ff5252;
 }
-.mdui-theme-accent-red .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-red .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-red .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 82, 82, .16);
           box-shadow: 0 0 0 15px rgba(255, 82, 82, .16);
 }
@@ -7269,7 +7228,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-teal .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #64ffda;
 }
-.mdui-theme-accent-teal .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-teal .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-teal .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(100, 255, 218, .16);
           box-shadow: 0 0 0 15px rgba(100, 255, 218, .16);
 }
@@ -7279,7 +7239,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-yellow .mdui-radio input[type="radio"]:checked + .mdui-radio-icon:before {
   background-color: #ff0;
 }
-.mdui-theme-accent-yellow .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon {
+.mdui-theme-accent-yellow .mdui-radio:active input[type="radio"]:checked:not(:disabled) + .mdui-radio-icon,
+.mdui-theme-accent-yellow .mdui-radio input[type="radio"]:focus:checked:not(:disabled) + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 255, 0, .16);
           box-shadow: 0 0 0 15px rgba(255, 255, 0, .16);
 }
@@ -7297,7 +7258,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-layout-dark .mdui-radio input[type="radio"]:disabled:checked + .mdui-radio-icon:before {
   background-color: rgba(255, 255, 255, .3) !important;
 }
-.mdui-theme-layout-dark .mdui-radio:active input[type="radio"] + .mdui-radio-icon {
+.mdui-theme-layout-dark .mdui-radio:active input[type="radio"] + .mdui-radio-icon,
+.mdui-theme-layout-dark .mdui-radio input[type="radio"]:focus + .mdui-radio-icon {
   -webkit-box-shadow: 0 0 0 15px rgba(255, 255, 255, .1);
           box-shadow: 0 0 0 15px rgba(255, 255, 255, .1);
 }
@@ -7321,7 +7283,7 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   width: 0;
   height: 0;
   overflow: hidden;
-  visibility: hidden;
+  opacity: 0;
 }
 /* 图标轨道 */
 .mdui-switch-icon {
@@ -7361,12 +7323,14 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
   background-color: #ff4081;
 }
 /* 未选中时或禁用时 按下的阴影 */
-.mdui-switch:active input[type="checkbox"] + .mdui-switch-icon:before {
+.mdui-switch:active input[type="checkbox"] + .mdui-switch-icon:before,
+.mdui-switch input[type="checkbox"]:focus + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(0, 0, 0, .1);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(0, 0, 0, .1);
 }
 /* 已选中时按下的阴影 */
-.mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 64, 129, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 64, 129, .16);
 }
@@ -7388,7 +7352,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-amber .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #ffd740;
 }
-.mdui-theme-accent-amber .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-amber .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-amber .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 215, 64, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 215, 64, .16);
 }
@@ -7398,7 +7363,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-blue .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #448aff;
 }
-.mdui-theme-accent-blue .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-blue .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-blue .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(68, 138, 255, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(68, 138, 255, .16);
 }
@@ -7408,7 +7374,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-cyan .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #18ffff;
 }
-.mdui-theme-accent-cyan .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-cyan .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-cyan .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(24, 255, 255, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(24, 255, 255, .16);
 }
@@ -7418,7 +7385,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-deep-orange .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #ff6e40;
 }
-.mdui-theme-accent-deep-orange .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-deep-orange .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-deep-orange .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 110, 64, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 110, 64, .16);
 }
@@ -7428,7 +7396,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-deep-purple .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #7c4dff;
 }
-.mdui-theme-accent-deep-purple .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-deep-purple .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-deep-purple .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(124, 77, 255, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(124, 77, 255, .16);
 }
@@ -7438,7 +7407,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-green .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #69f0ae;
 }
-.mdui-theme-accent-green .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-green .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-green .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(105, 240, 174, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(105, 240, 174, .16);
 }
@@ -7448,7 +7418,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-indigo .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #536dfe;
 }
-.mdui-theme-accent-indigo .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-indigo .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-indigo .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(83, 109, 254, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(83, 109, 254, .16);
 }
@@ -7458,7 +7429,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-light-blue .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #40c4ff;
 }
-.mdui-theme-accent-light-blue .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-light-blue .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-light-blue .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(64, 196, 255, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(64, 196, 255, .16);
 }
@@ -7468,7 +7440,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-light-green .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #b2ff59;
 }
-.mdui-theme-accent-light-green .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-light-green .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-light-green .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(178, 255, 89, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(178, 255, 89, .16);
 }
@@ -7478,7 +7451,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-lime .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #eeff41;
 }
-.mdui-theme-accent-lime .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-lime .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-lime .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(238, 255, 65, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(238, 255, 65, .16);
 }
@@ -7488,7 +7462,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-orange .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #ffab40;
 }
-.mdui-theme-accent-orange .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-orange .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-orange .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 171, 64, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 171, 64, .16);
 }
@@ -7498,7 +7473,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-pink .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #ff4081;
 }
-.mdui-theme-accent-pink .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-pink .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-pink .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 64, 129, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 64, 129, .16);
 }
@@ -7508,7 +7484,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-purple .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #e040fb;
 }
-.mdui-theme-accent-purple .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-purple .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-purple .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(224, 64, 251, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(224, 64, 251, .16);
 }
@@ -7518,7 +7495,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-red .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #ff5252;
 }
-.mdui-theme-accent-red .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-red .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-red .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 82, 82, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 82, 82, .16);
 }
@@ -7528,7 +7506,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-teal .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #64ffda;
 }
-.mdui-theme-accent-teal .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-teal .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-teal .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(100, 255, 218, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(100, 255, 218, .16);
 }
@@ -7538,7 +7517,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-accent-yellow .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #ff0;
 }
-.mdui-theme-accent-yellow .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before {
+.mdui-theme-accent-yellow .mdui-switch:active input[type="checkbox"]:checked:not(:disabled) + .mdui-switch-icon:before,
+.mdui-theme-accent-yellow .mdui-switch input[type="checkbox"]:focus:checked:not(:disabled) + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 255, 0, .16);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 255, 0, .16);
 }
@@ -7649,7 +7629,8 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-theme-layout-dark.mdui-theme-accent-yellow .mdui-switch input[type="checkbox"]:checked + .mdui-switch-icon:before {
   background-color: #ffff8d;
 }
-.mdui-theme-layout-dark .mdui-switch:active input[type="checkbox"] + .mdui-switch-icon:before {
+.mdui-theme-layout-dark .mdui-switch:active input[type="checkbox"] + .mdui-switch-icon:before,
+.mdui-theme-layout-dark .mdui-switch input[type="checkbox"]:focus + .mdui-switch-icon:before {
   -webkit-box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 255, 255, .1);
           box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0 1px 1px 0 rgba(0, 0, 0, .14), 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 0 15px rgba(255, 255, 255, .1);
 }
@@ -8320,6 +8301,7 @@ input.mdui-btn[type="submit"] {
   width: 56px;
   height: 56px;
   padding-top: 8px;
+  text-align: center;
 }
 .mdui-fab-wrapper > .mdui-fab .mdui-icon:not(.mdui-fab-opened) {
   opacity: 1;
@@ -8346,6 +8328,9 @@ input.mdui-btn[type="submit"] {
   opacity: 1;
   -webkit-transform: rotate(360deg);
           transform: rotate(360deg);
+}
+.mdui-fab-wrapper > .mdui-fab-mini {
+  margin-top: 8px;
 }
 .mdui-fab-wrapper .mdui-fab-dial {
   position: absolute;
@@ -9575,7 +9560,6 @@ select.mdui-select[multiple] option:last-child {
  */
 .mdui-appbar {
   z-index: 1000;
-  width: 100%;
   -webkit-box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
           box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
 }
@@ -9585,6 +9569,25 @@ select.mdui-select[multiple] option:last-child {
   top: 0;
   right: 0;
   left: 0;
+  -webkit-transition-timing-function: cubic-bezier(0, 0, .2, 1);
+          transition-timing-function: cubic-bezier(0, 0, .2, 1);
+  -webkit-transition-duration: .3s;
+          transition-duration: .3s;
+  -webkit-transition-property: left, right;
+          transition-property: left, right;
+
+  will-change: left, right;
+}
+/* 左侧留出抽屉栏的距离 */
+@media (min-width: 1024px) {
+  .mdui-drawer-body-left .mdui-appbar-inset.mdui-appbar-fixed {
+    left: 240px;
+  }
+}
+@media (min-width: 1024px) {
+  .mdui-drawer-body-right .mdui-appbar-inset.mdui-appbar-fixed {
+    right: 240px;
+  }
 }
 /* 含工具栏 */
 .mdui-appbar-with-toolbar {
@@ -10451,7 +10454,7 @@ select.mdui-select[multiple] option:last-child {
 /* 列表项内容的副内容 */
 .mdui-list-item-text {
   font-size: 14px;
-  color: rgba(0, 0, 0, .54);
+  opacity: .54;
 }
 .mdui-list-item-title ~ .mdui-list-item-text {
   margin-top: 4px;
@@ -10600,7 +10603,7 @@ select.mdui-select[multiple] option:last-child {
   color: #fff;
 }
 .mdui-theme-layout-dark .mdui-list-item-text {
-  color: rgba(255, 255, 255, .7);
+  opacity: .7;
 }
 .mdui-theme-layout-dark .mdui-list-item-active {
   background-color: rgba(255, 255, 255, .08);

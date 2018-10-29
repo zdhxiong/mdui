@@ -36,7 +36,6 @@ mdui.Dialog = (function () {
 
   /**
    * 队列名
-   * @type {string}
    */
   var queueName = '__md_dialog';
 
@@ -65,18 +64,14 @@ mdui.Dialog = (function () {
     });
 
     // 调整 mdui-dialog-content 的高度
-    $dialogContent.height(
-      dialogHeight -
-      ($dialogTitle.height() || 0) -
-      ($dialogActions.height() || 0)
-    );
+    $dialogContent.height(dialogHeight - ($dialogTitle.height() || 0) - ($dialogActions.height() || 0));
   };
 
   /**
    * hashchange 事件触发时关闭对话框
    */
   var hashchangeEvent = function () {
-    if (location.hash.substring(1).indexOf('&mdui-dialog') < 0) {
+    if (location.hash.substring(1).indexOf('mdui-dialog') < 0) {
       currentInst.close(true);
     }
   };
@@ -224,14 +219,19 @@ mdui.Dialog = (function () {
       .css('opacity', _this.options.overlay ? '' : 0);
 
     if (_this.options.history) {
-      // 如果 hash 中原来就有 &mdui-dialog，先删除，避免后退历史纪录后仍然有 &mdui-dialog 导致无法关闭
+      // 如果 hash 中原来就有 mdui-dialog，先删除，避免后退历史纪录后仍然有 mdui-dialog 导致无法关闭（包括 &mdui-dialog 和 ?mdui-dialog）
       var hash = location.hash.substring(1);
-      if (hash.indexOf('&mdui-dialog') > -1) {
-        hash = hash.replace(/&mdui-dialog/g, '');
+      if (hash.indexOf('mdui-dialog') > -1) {
+        hash = hash.replace(/[&?]mdui-dialog/g, '');
       }
 
       // 后退按钮关闭对话框
-      location.hash = hash + '&mdui-dialog';
+      if (hash) {
+        location.hash = hash + (hash.indexOf('?') > -1 ? '&' : '?') + 'mdui-dialog';
+      } else {
+        location.hash = 'mdui-dialog';
+      }
+
       $window.on('hashchange', hashchangeEvent);
     }
   };
@@ -266,6 +266,7 @@ mdui.Dialog = (function () {
    */
   Dialog.prototype.close = function () {
     var _this = this;
+    var needHistoryBack = arguments[0];
 
     // setTimeout 的作用是：
     // 当同时关闭一个对话框，并打开另一个对话框时，使打开对话框的操作先执行，以使需要打开的对话框先加入队列
@@ -295,7 +296,7 @@ mdui.Dialog = (function () {
         // 是否需要后退历史纪录，默认为 false。
         // 为 false 时是通过 js 关闭，需要后退一个历史记录
         // 为 true 时是通过后退按钮关闭，不需要后退历史记录
-        if (!arguments[0]) {
+        if (!needHistoryBack) {
           window.history.back();
         }
 

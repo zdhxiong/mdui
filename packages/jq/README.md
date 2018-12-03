@@ -1,5 +1,11 @@
 # mdui.JQ
 
+[![GitHub version](https://badge.fury.io/gh/zdhxiong%2Fmdui.JQ.svg)](https://badge.fury.io/gh/zdhxiong%2Fmdui.JQ)
+![Bower version](https://img.shields.io/bower/v/mdui.JQ.svg)
+[![npm version](https://img.shields.io/npm/v/mdui.jq.svg)](https://www.npmjs.com/package/mdui.jq)
+[![dependencies Status](https://david-dm.org/zdhxiong/mdui.JQ/status.svg)](https://david-dm.org/zdhxiong/mdui.JQ)
+[![devDependencies Status](https://david-dm.org/zdhxiong/mdui.JQ/dev-status.svg)](https://david-dm.org/zdhxiong/mdui.JQ?type=dev)
+
 拥有和 jQuery 相似 API 的轻量级 JavaScript 工具库。已作为 [MDUI](https://github.com/zdhxiong/mdui) 内置工具库使用。
 
 文档：https://www.mdui.org/docs/jq

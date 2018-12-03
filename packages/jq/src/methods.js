@@ -945,7 +945,7 @@ each(['append', 'prepend'], (nameIndex, name) => {
     let newChilds;
     const copyByClone = this.length > 1;
 
-    if (isString(newChild)) {
+    if (isString(newChild) && (newChild[0] !== '<' || newChild[newChild.length - 1] !== '>')) {
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = newChild;
       newChilds = [].slice.call(tempDiv.childNodes);

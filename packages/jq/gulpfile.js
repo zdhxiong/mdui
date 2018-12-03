@@ -7,7 +7,7 @@ const rollup = require('rollup-stream');
 const resolve = require('rollup-plugin-node-resolve');
 const buble = require('rollup-plugin-buble');
 const commonjs = require('rollup-plugin-commonjs');
-const eslint = require('rollup-plugin-eslint');
+const { eslint } = require('rollup-plugin-eslint');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const pkg = require('./package.json');
@@ -23,15 +23,18 @@ const banner = `
 gulp.task('build', (cb) => {
   rollup({
     input: './src/index.js',
+    output: {
+      name: 'JQ',
+      format: 'umd',
+      banner,
+    },
+    rollup: require('rollup'), // rollup-stream 内置的 rollup 版本太低，与 rollup-plugin-commonjs v9 不兼容。在这里使用指定的 rollup
     plugins: [
       resolve(),
       commonjs(),
       eslint(),
       buble(),
     ],
-    format: 'umd',
-    name: 'JQ',
-    banner,
   })
     .pipe(source('index.js', './src'))
     .pipe(buffer())

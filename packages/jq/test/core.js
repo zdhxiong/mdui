@@ -1602,6 +1602,11 @@ describe('核心', function () {
     $('.first').append('dd<i>icon</i><i>icon2</i>');
     assert.equal(test.innerHTML, '<p class="first">firstdd<i>icon</i><i>icon2</i></p>');
 
+    // 特殊标签中追加 HTML
+    test.innerHTML = '<table><tbody class="first"></tbody></table>';
+    $('.first').append('<tr><td>11</td></tr>');
+    assert.equal(test.innerHTML, '<table><tbody class="first"><tr><td>11</td></tr></tbody></table>');
+
     // 追加 JQ 对象
     test.innerHTML =
       '<p class="first">first1</p>' +

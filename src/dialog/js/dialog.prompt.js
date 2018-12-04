@@ -60,6 +60,22 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
         '') +
     '</div>';
 
+  var onCancelClick = onCancel;
+  if (typeof onCancel === 'function') {
+    onCancelClick = function (inst) {
+      var value = inst.$dialog.find('.mdui-textfield-input').val();
+      onCancel(value, inst);
+    }
+  }
+
+  var onConfirmClick = onConfirm;
+  if (typeof onConfirm === 'function') {
+    onConfirmClick = function (inst) {
+      var value = inst.$dialog.find('.mdui-textfield-input').val();
+      onConfirm(value, inst);
+    }
+  }
+
   return mdui.dialog({
     title: title,
     content: content,
@@ -68,19 +84,13 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
         text: options.cancelText,
         bold: false,
         close: true,
-        onClick: function (inst) {
-          var value = inst.$dialog.find('.mdui-textfield-input').val();
-          onCancel(value, inst);
-        },
+        onClick: onCancelClick,
       },
       {
         text: options.confirmText,
         bold: false,
         close: true,
-        onClick: function (inst) {
-          var value = inst.$dialog.find('.mdui-textfield-input').val();
-          onConfirm(value, inst);
-        },
+        onClick: onConfirmClick,
       },
     ],
     cssClass: 'mdui-dialog-prompt',

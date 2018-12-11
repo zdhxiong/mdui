@@ -213,17 +213,13 @@ mdui.Select = (function () {
     $selectNative.after(_this.$select);
 
     // 根据 select 的 size 属性设置高度，默认为 6
-    _this.size = _this.$selectNative.attr('size');
+    _this.size = parseInt(_this.$selectNative.attr('size'));
 
-    if (!_this.size) {
+    if (!_this.size || _this.size < 0) {
       _this.size = _this.$items.length;
       if (_this.size > 8) {
         _this.size = 8;
       }
-    }
-
-    if (_this.size < 2) {
-      _this.size = 2;
     }
 
     // 点击选项时关闭下拉菜单

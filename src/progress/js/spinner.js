@@ -43,8 +43,10 @@
   /**
    * 页面加载完后自动填充 HTML 结构
    */
-  mdui.mutation('.mdui-spinner', function () {
-    fillHTML(this);
+  $(function () {
+    mdui.mutation('.mdui-spinner', function () {
+      fillHTML(this);
+    });
   });
 
   /**
@@ -57,4 +59,3 @@
   };
 
 })();
-

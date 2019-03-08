@@ -18,25 +18,22 @@ function $(selector) {
       // 创建 HTML 字符串
       let toCreate = 'div';
 
-      if (html.indexOf('<li') === 0) {
-        toCreate = 'ul';
-      }
+      const tags = {
+        li: 'ul',
+        tr: 'tbody',
+        td: 'tr',
+        th: 'tr',
+        tbody: 'table',
+        option: 'select',
+      };
 
-      if (html.indexOf('<tr') === 0) {
-        toCreate = 'tbody';
-      }
+      Object.keys(tags).forEach((childTag) => {
+        const parentTag = tags[childTag];
 
-      if (html.indexOf('<td') === 0 || html.indexOf('<th') === 0) {
-        toCreate = 'tr';
-      }
-
-      if (html.indexOf('<tbody') === 0) {
-        toCreate = 'table';
-      }
-
-      if (html.indexOf('<option') === 0) {
-        toCreate = 'select';
-      }
+        if (html.indexOf(`<${childTag}`) === 0) {
+          toCreate = parentTag;
+        }
+      });
 
       const tempParent = document.createElement(toCreate);
       tempParent.innerHTML = html;
@@ -56,10 +53,16 @@ function $(selector) {
         }
       }
     }
-  } else if (typeof selector === 'function') {
+
+    return new JQ(arr);
+  }
+
+  if (typeof selector === 'function') {
     // function
     return $(document).ready(selector);
-  } else if (selector.nodeType || selector === window || selector === document) {
+  }
+
+  if (selector.nodeType || selector === window || selector === document) {
     // Node
     arr.push(selector);
   } else if (selector.length > 0 && selector[0].nodeType) {

@@ -1,15 +1,12 @@
 const gulp = require('gulp');
+const rollup = require('gulp-better-rollup');
 const header = require('gulp-header');
-const uglify = require('gulp-uglify');
-const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
-const rollup = require('rollup-stream');
-const resolve = require('rollup-plugin-node-resolve');
+const sourcemaps = require('gulp-sourcemaps');
+const uglify = require('gulp-uglify');
 const buble = require('rollup-plugin-buble');
-const commonjs = require('rollup-plugin-commonjs');
 const { eslint } = require('rollup-plugin-eslint');
-const source = require('vinyl-source-stream');
-const buffer = require('vinyl-buffer');
+const resolve = require('rollup-plugin-node-resolve');
 const pkg = require('./package.json');
 
 const banner = `
@@ -20,38 +17,29 @@ const banner = `
  */
 `.trim();
 
-gulp.task('build', (cb) => {
-  rollup({
-    input: './src/index.js',
-    output: {
+function compile(cb) {
+  gulp.src('./src/index.js')
+    .pipe(rollup({
+      plugins: [resolve(), eslint(), buble()],
+    }, {
       name: 'JQ',
       format: 'umd',
+      file: 'jq.js',
       banner,
-    },
-    rollup: require('rollup'), // rollup-stream 内置的 rollup 版本太低，与 rollup-plugin-commonjs v9 不兼容。在这里使用指定的 rollup
-    plugins: [
-      resolve(),
-      commonjs(),
-      eslint(),
-      buble(),
-    ],
-  })
-    .pipe(source('index.js', './src'))
-    .pipe(buffer())
-    .pipe(rename('jq.js'))
+    }))
     .pipe(gulp.dest('./dist/'))
-    .on('end', () => {
-      gulp.src('./dist/jq.js')
-        .pipe(sourcemaps.init())
-        .pipe(uglify())
-        .pipe(header(banner))
-        .pipe(rename('jq.min.js'))
-        .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest('./dist/'))
-        .on('end', () => {
-          if (cb) {
-            cb();
-          }
-        });
-    });
-});
+    .on('end', cb);
+}
+
+function compress(cb) {
+  gulp.src('./dist/jq.js')
+    .pipe(sourcemaps.init())
+    .pipe(uglify())
+    .pipe(header(banner))
+    .pipe(rename('jq.min.js'))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./dist/'))
+    .on('end', cb);
+}
+
+gulp.task('build', gulp.series(compile, compress));

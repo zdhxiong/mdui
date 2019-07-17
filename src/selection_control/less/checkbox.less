@@ -14,7 +14,7 @@
   user-select: none;
 
   // 隐藏系统 input 标签，用自定义的图标代替
-  input {
+  input[type="checkbox"] {
     height: 0;
     width: 0;
     overflow: hidden;
@@ -52,7 +52,7 @@
     z-index: 0;
   }
 
-  // 图标内部的勾
+  // 选中状态图标内部的勾
   &:before {
     content: ' ';
     box-sizing: border-box;
@@ -71,31 +71,56 @@
   }
 }
 
-/* 选中状态的图标 */
-.mdui-checkbox input[type="checkbox"]:checked + .mdui-checkbox-icon {
-  &:after {
-    border-color: @color-default-a200;
-    background-color: @color-default-a200;
+/* 各种状态的图标 */
+.mdui-checkbox input[type="checkbox"] {
+
+  // 选中状态的图标
+  &:checked + .mdui-checkbox-icon {
+    &:after {
+      border-color: @color-default-a200;
+      background-color: @color-default-a200;
+    }
+
+    &:before {
+      transform: rotateZ(37deg) scale(1);
+      opacity: 1;
+    }
   }
 
-  &:before {
-    opacity: 1;
-    transform: rotateZ(37deg) scale(1);
-  }
-}
+  // 不确定状态的图标
+  &:indeterminate + .mdui-checkbox-icon {
+    &:after {
+      border-color: @color-default-a200;
+      background-color: @color-default-a200;
+    }
 
-/* 禁用状态的图标 */
-.mdui-checkbox input[type="checkbox"]:disabled + .mdui-checkbox-icon {
-  &:after {
-    border-color: @color-black-icon-disabled;
+    &:before {
+      top: 8px;
+      left: 3px;
+      width: 12px;
+      height: 0;
+      border-radius: 1px;
+      transform: rotateZ(0) scale(1);
+      border-right: none;
+      border-bottom: 2px solid #fff;
+      opacity: 1;
+    }
   }
-}
 
-/* 禁用且选中状态 */
-.mdui-checkbox input[type="checkbox"]:disabled:checked + .mdui-checkbox-icon {
-  &:after {
-    background-color: @color-black-icon-disabled !important;
-    border-color: transparent !important;
+  // 禁用状态的图标
+  &:disabled + .mdui-checkbox-icon {
+    &:after {
+      border-color: @color-black-icon-disabled;
+    }
+  }
+
+  // 禁用且选中状态
+  &:disabled:checked + .mdui-checkbox-icon,
+  &:disabled:indeterminate + .mdui-checkbox-icon {
+    &:after {
+      background-color: @color-black-icon-disabled !important;
+      border-color: transparent !important;
+    }
   }
 }
 
@@ -108,8 +133,11 @@
   }
 
   // 已选中时按下的阴影
-  &:checked:not(:disabled) + .mdui-checkbox-icon {
-    box-shadow: 0 0 0 15px rgba(red(@color-default-a200), green(@color-default-a200), blue(@color-default-a200), 0.16);
+  &:not(:disabled):checked,
+  &:not(:disabled):indeterminate {
+    & + .mdui-checkbox-icon {
+      box-shadow: 0 0 0 15px rgba(red(@color-default-a200), green(@color-default-a200), blue(@color-default-a200), 0.16);
+    }
   }
 }
 
@@ -130,8 +158,9 @@
     .mdui-theme-accent-@{colorName} {
 
       // 选中状态的图标
-      .mdui-checkbox input[type="checkbox"]:checked + .mdui-checkbox-icon {
-        &:after {
+      .mdui-checkbox input[type="checkbox"]:checked,
+      .mdui-checkbox input[type="checkbox"]:indeterminate {
+        & + .mdui-checkbox-icon:after {
           border-color: @@color;
           background-color: @@color;
         }
@@ -140,11 +169,11 @@
       // 已选中时按下的阴影
       .mdui-checkbox:active input[type="checkbox"],
       .mdui-checkbox input[type="checkbox"]:focus {
-        &:checked:not(:disabled) + .mdui-checkbox-icon {
+        &:not(:disabled):checked + .mdui-checkbox-icon,
+        &:not(:disabled):indeterminate + .mdui-checkbox-icon {
           box-shadow: 0 0 0 15px rgba(red(@@color), green(@@color), blue(@@color), 0.16);
         }
       }
-
     }
   }
   .loop-accent-theme(length(@globalAccentColors));
@@ -164,9 +193,10 @@
     &:after {
       border-color: rgba(255, 255, 255, 0.7);
     }
+
     &:before {
-      border-right-color: @layout-dark-color-3;
-      border-bottom-color: @layout-dark-color-3;
+      border-right-color: @layout-dark-color-3 !important;
+      border-bottom-color: @layout-dark-color-3 !important;
     }
   }
 
@@ -178,10 +208,13 @@
   }
 
   // 禁用且选中状态
-  .mdui-checkbox input[type="checkbox"]:disabled:checked + .mdui-checkbox-icon {
-    &:after {
-      background-color: @color-white-icon-disabled !important;
-      border-color: transparent !important;
+  .mdui-checkbox input[type="checkbox"] {
+    &:disabled:checked + .mdui-checkbox-icon,
+    &:disabled:indeterminate + .mdui-checkbox-icon {
+      &:after {
+        background-color: @color-white-icon-disabled !important;
+        border-color: transparent !important;
+      }
     }
   }
 

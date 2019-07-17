@@ -55,6 +55,17 @@
   };
 
   /**
+   * 更新表头 checkbox 的状态
+   */
+  Table.prototype._updateThCheckboxStatus = function () {
+    var _this = this;
+    var checkbox = _this.$thCheckbox[0];
+
+    checkbox.checked = _this.selectedRow === _this.$tdRows.length;
+    checkbox.indeterminate = _this.selectedRow && _this.selectedRow !== _this.$tdRows.length;
+  };
+
+  /**
    * 更新表格行的 checkbox
    */
   Table.prototype._updateTdCheckbox = function () {
@@ -81,8 +92,7 @@
         _this.selectedRow++;
       }
 
-      // 所有行都选中后，选中表头；否则，不选中表头
-      _this.$thCheckbox[0].checked = _this.selectedRow === _this.$tdRows.length;
+      _this._updateThCheckboxStatus();
 
       // 绑定事件
       $checkbox.on('change', function () {
@@ -94,8 +104,7 @@
           _this.selectedRow--;
         }
 
-        // 所有行都选中后，选中表头；否则，不选中表头
-        _this.$thCheckbox[0].checked = _this.selectedRow === _this.$tdRows.length;
+        _this._updateThCheckboxStatus();
       });
 
       _this.$tdCheckboxs = _this.$tdCheckboxs.add($checkbox);
@@ -130,7 +139,6 @@
         _this.$tdRows.each(function (i, row) {
           $(row)[isCheckedAll ? 'addClass' : 'removeClass']('mdui-table-row-selected');
         });
-
       });
   };
 

@@ -1,12 +1,13 @@
 const gulp = require('gulp');
-const rollup = require('gulp-better-rollup');
 const header = require('gulp-header');
 const rename = require('gulp-rename');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
+const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
 const { eslint } = require('rollup-plugin-eslint');
 const resolve = require('rollup-plugin-node-resolve');
+const polyfill = require('rollup-plugin-polyfill');
 const pkg = require('./package.json');
 
 const banner = `
@@ -17,29 +18,53 @@ const banner = `
  */
 `.trim();
 
-function compile(cb) {
-  gulp.src('./src/index.js')
-    .pipe(rollup({
-      plugins: [resolve(), eslint(), buble()],
-    }, {
-      name: 'JQ',
-      format: 'umd',
-      file: 'jq.js',
-      banner,
-    }))
-    .pipe(gulp.dest('./dist/'))
-    .on('end', cb);
-}
+async function umd() {
+  const bundle = await rollup.rollup({
+    input: './src/index.js',
+    plugins: [
+      resolve(),
+      eslint(),
+      buble(),
+      polyfill([
+        'mdn-polyfills/MouseEvent',
+        'mdn-polyfills/CustomEvent',
+      ]),
+    ],
+  });
 
-function compress(cb) {
-  gulp.src('./dist/jq.js')
+  await bundle.write({
+    strict: true,
+    name: 'JQ',
+    format: 'umd',
+    file: './dist/jq.js',
+    banner,
+  });
+
+  await gulp.src('./dist/jq.js')
     .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(header(banner))
     .pipe(rename('jq.min.js'))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./dist/'))
-    .on('end', cb);
+    .pipe(gulp.dest('./dist/'));
 }
 
-gulp.task('build', gulp.series(compile, compress));
+async function es() {
+  const bundle = await rollup.rollup({
+    input: './src/index.js',
+    plugins: [
+      resolve(),
+      eslint(),
+    ],
+  });
+
+  await bundle.write({
+    strict: true,
+    name: 'JQ',
+    format: 'es',
+    file: './dist/jq.module.js',
+    banner,
+  });
+}
+
+gulp.task('build', gulp.parallel(umd, es));

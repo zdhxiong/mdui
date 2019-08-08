@@ -75,6 +75,51 @@ function $(selector) {
   return new JQ(arr);
 }
 
+function extend(...args) {
+  if (!args.length) {
+    return this;
+  }
+
+  // $.extend(obj)
+  if (args.length === 1) {
+    Object.keys(args[0]).forEach((prop) => {
+      this[prop] = args[0][prop];
+    });
+
+    return this;
+  }
+
+  // $.extend({}, defaults[, obj])
+  const target = args.shift();
+
+  for (let i = 0; i < args.length; i += 1) {
+    Object.keys(args[i]).forEach((prop) => {
+      target[prop] = args[i][prop];
+    });
+  }
+
+  return target;
+}
+
 $.fn = JQ.prototype;
+$.fn.extend = extend;
+$.extend = extend;
+
+/**
+ * DOM 加载完毕后调用的函数
+ * @param callback
+ * @returns {ready}
+ */
+$.fn.ready = function (callback) {
+  if (/complete|loaded|interactive/.test(document.readyState) && document.body) {
+    callback($);
+  } else {
+    document.addEventListener('DOMContentLoaded', () => {
+      callback($);
+    }, false);
+  }
+
+  return this;
+};
 
 export default $;

@@ -166,7 +166,7 @@ describe('Ajax', function () {
     var callbackStatusCode404 = 0;
     var callbackStatusCode200 = 0;
 
-    var xhr = $.ajax({
+    var promise = $.ajax({
       method: 'GET',
       url: './data/get_text.html',
       global: true,
@@ -241,9 +241,11 @@ describe('Ajax', function () {
         $(document).off('error.mdui.ajax');
         $(document).off('complete.mdui.ajax');
       }
+    }).then(function (data) {
+      assert.equal(data, 'is a text');
     });
     if (!isJquery) {
-      assert.equal(xhr.constructor, XMLHttpRequest);
+      assert.equal(promise.constructor, Promise);
     }
   });
 
@@ -362,6 +364,8 @@ describe('Ajax', function () {
           $(document).off('error.mdui.ajax');
           $(document).off('complete.mdui.ajax');
         }
+      }).catch(function (err) {
+        assert.equal(err.message, 'error');
       });
     }, 1000);
   });
@@ -374,6 +378,8 @@ describe('Ajax', function () {
         beforeSend: function () {
           return false;
         }
+      }).catch(function (err) {
+        assert.equal(err.message, 'cancel');
       });
     }, 2000);
   });
@@ -386,7 +392,9 @@ describe('Ajax', function () {
       error: function (xhr, textStatus) {
         assert.equal(textStatus, 'timeout');
       }
-    })
+    }).catch(function (err) {
+      assert.equal(err.message, 'timeout');
+    });
   });
 
   it('所有请求，提交参数', function () {
@@ -402,6 +410,8 @@ describe('Ajax', function () {
           assert.isTrue(xhr.responseURL.indexOf('/data/params.php?key1=val1&key2=val2') > 0);
         }
       }
+    }).then(function (data) {
+      assert.equal(data, 'get');
     });
 
     // 提交对象参数
@@ -419,6 +429,8 @@ describe('Ajax', function () {
           assert.isTrue(xhr.responseURL.indexOf('/data/params.php?key1=val1&key2=val2') > 0);
         }
       }
+    }).then(function (data) {
+      assert.equal(data, 'get');
     });
 
     $.ajax({
@@ -435,6 +447,8 @@ describe('Ajax', function () {
           assert.isTrue(xhr.responseURL.indexOf('/data/params.php') > 0);
         }
       }
+    }).then(function (data) {
+      assert.equal(data, 'post');
     });
 
     $.ajax({
@@ -451,6 +465,8 @@ describe('Ajax', function () {
           assert.isTrue(xhr.responseURL.indexOf('/data/params.php') > 0);
         }
       }
+    }).then(function (data) {
+      assert.equal(data, 'put');
     });
 
     $.ajax({
@@ -467,6 +483,8 @@ describe('Ajax', function () {
           assert.isTrue(xhr.responseURL.indexOf('/data/params.php') > 0);
         }
       }
+    }).then(function (data) {
+      assert.equal(data, 'delete');
     });
 
     $.ajax({
@@ -482,6 +500,8 @@ describe('Ajax', function () {
           assert.isTrue(xhr.responseURL.indexOf('/data/params.php?key1=val1&key2=val2') > 0);
         }
       }
+    }).then(function (data) {
+      assert.equal(data, '');
     });
 
     $.ajax({
@@ -498,6 +518,8 @@ describe('Ajax', function () {
           assert.isTrue(xhr.responseURL.indexOf('/data/params.php') > 0);
         }
       }
+    }).then(function (data) {
+      assert.equal(data, 'options');
     });
 
     $.ajax({
@@ -514,6 +536,8 @@ describe('Ajax', function () {
           assert.isTrue(xhr.responseURL.indexOf('/data/params.php') > 0);
         }
       }
+    }).then(function (data) {
+      assert.equal(data, 'patch');
     });
   });
 
@@ -525,6 +549,8 @@ describe('Ajax', function () {
       success: function (data) {
         assert.equal(typeof data, 'string');
       }
+    }).then(function (data) {
+      assert.equal(typeof data, 'string');
     });
 
     // 成功获取 json 数据
@@ -537,6 +563,10 @@ describe('Ajax', function () {
         assert.equal(data.key1, 'val1');
         assert.equal(data.key2, 'val2');
       }
+    }).then(function (data) {
+      assert.equal(typeof data, 'object');
+      assert.equal(data.key1, 'val1');
+      assert.equal(data.key2, 'val2');
     });
 
     // json 数据格式错误
@@ -547,7 +577,9 @@ describe('Ajax', function () {
       error: function (xhr, textStatus) {
         assert.equal(textStatus, 'parsererror');
       }
-    })
+    }).catch(function (err) {
+      assert.equal(err.message, 'parsererror');
+    });
   });
 
   it('禁用 GET/HEAD 请求的缓存', function () {
@@ -605,6 +637,9 @@ describe('Ajax', function () {
           assert.equal(xhr, null);
         }
       }
+    }).then(function (data) {
+      assert.equal(data.key1, 'val1');
+      assert.equal(data.key2, 'val2');
     });
 
     // 自定义 jsonpCallback 参数
@@ -619,6 +654,9 @@ describe('Ajax', function () {
         assert.equal(data.key2, 'val2');
         assert.equal(textStatus, 'success');
       }
+    }).then(function (data) {
+      assert.equal(data.key1, 'val1');
+      assert.equal(data.key2, 'val2');
     });
   });
 
@@ -634,6 +672,8 @@ describe('Ajax', function () {
       success: function (data) {
         assert.equal(data, 'success');
       }
+    }).then(function (data) {
+      assert.equal(data, 'success');
     });
   });
 

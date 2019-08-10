@@ -28,6 +28,7 @@ async function umd() {
       polyfill([
         'mdn-polyfills/MouseEvent',
         'mdn-polyfills/CustomEvent',
+        'promise-polyfill/src/polyfill',
       ]),
     ],
   });
@@ -49,7 +50,7 @@ async function umd() {
     .pipe(gulp.dest('./dist/'));
 }
 
-async function es() {
+async function esm() {
   const bundle = await rollup.rollup({
     input: './src/index.js',
     plugins: [
@@ -62,9 +63,9 @@ async function es() {
     strict: true,
     name: 'JQ',
     format: 'es',
-    file: './dist/jq.module.js',
+    file: './dist/jq.esm.js',
     banner,
   });
 }
 
-gulp.task('build', gulp.parallel(umd, es));
+gulp.task('build', gulp.parallel(umd, esm));

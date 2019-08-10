@@ -1,5 +1,3 @@
-// import 'mdn-polyfills/MouseEvent';
-// import 'mdn-polyfills/CustomEvent';
 import $ from '../$';
 import './each';
 

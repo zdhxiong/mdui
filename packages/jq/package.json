@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "拥有和 jQuery 相似 API 的轻量级 JavaScript 工具库",
   "main": "dist/jq.js",
-  "module": "dist/jq.module.js",
+  "module": "dist/jq.esm.js",
   "types": "types/jq.d.ts",
   "scripts": {
     "build": "gulp build"
@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/zdhxiong/mdui.JQ#readme",
   "dependencies": {
-    "mdn-polyfills": "^5.18.0"
+    "mdn-polyfills": "^5.18.0",
+    "promise-polyfill": "^8.1.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",

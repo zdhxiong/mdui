@@ -1,3 +1,5 @@
 .vscode/
 .idea/
 node_modules/
+es/
+types/

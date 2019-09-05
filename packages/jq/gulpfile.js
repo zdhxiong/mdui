@@ -6,13 +6,13 @@ const uglify = require('gulp-uglify');
 const rollup = require('rollup');
 const buble = require('rollup-plugin-buble');
 const { eslint } = require('rollup-plugin-eslint');
-const resolve = require('rollup-plugin-node-resolve');
+const typescript = require('rollup-plugin-typescript');
 const polyfill = require('rollup-plugin-polyfill');
 const pkg = require('./package.json');
 
 const banner = `
-/**
- * JQ ${pkg.version} (${pkg.homepage})
+/*!
+ * mdui.jq ${pkg.version} (${pkg.homepage})
  * Copyright 2018-${new Date().getFullYear()} ${pkg.author}
  * Licensed under ${pkg.license}
  */
@@ -20,10 +20,12 @@ const banner = `
 
 async function umd() {
   const bundle = await rollup.rollup({
-    input: './src/index.js',
+    input: './src/index.ts',
     plugins: [
-      resolve(),
-      eslint(),
+      eslint({
+        fix: true,
+      }),
+      typescript(),
       buble(),
       polyfill([
         'mdn-polyfills/MouseEvent',
@@ -52,10 +54,12 @@ async function umd() {
 
 async function esm() {
   const bundle = await rollup.rollup({
-    input: './src/index.js',
+    input: './src/index.ts',
     plugins: [
-      resolve(),
-      eslint(),
+      eslint({
+        fix: true,
+      }),
+      typescript(),
     ],
   });
 

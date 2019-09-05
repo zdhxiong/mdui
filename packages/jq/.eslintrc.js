@@ -1,16 +1,23 @@
 // https://eslint.org/docs/user-guide/configuring
 
 module.exports = {
-  env: {
-    es6: true,
-    browser: true
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    project: "./tsconfig.json",
   },
-  extends: 'airbnb-base',
   plugins: [
-    "import",
+    "@typescript-eslint",
+    "prettier",
   ],
   rules: {
-    'func-names': 0,
-    'no-param-reassign': 0,
-  }
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/ban-ts-ignore": 0,
+    "prettier/prettier": "error",
+  },
+  extends: [
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "prettier/@typescript-eslint",
+  ],
 };

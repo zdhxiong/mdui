@@ -1,4 +1,4 @@
-# mdui.JQ
+# mdui.jq
 
 [![GitHub version](https://badge.fury.io/gh/zdhxiong%2Fmdui.JQ.svg)](https://badge.fury.io/gh/zdhxiong%2Fmdui.JQ)
 ![Bower version](https://img.shields.io/bower/v/mdui.JQ.svg)
@@ -10,7 +10,7 @@
 
 文档：https://www.mdui.org/docs/jq
 
-## 通过 `<script>` 标签引入 JS 文件：
+## 通过 `<script>` 标签引入 JS 文件
 
 ```html
 <script src="./jq.min.js"></script>
@@ -32,7 +32,7 @@ jq.js 和 jq.min.js 文件已经内置了 polyfill 文件，可直接兼容 IE �
 npm install mdui.jq --save
 ```
 
-在 `JS` 文件中导入 `mdui.jq`：
+在 `js` 文件中导入 `mdui.jq`：
 
 ```js
 import $ from 'mdui.jq';
@@ -43,7 +43,7 @@ import $ from 'mdui.jq';
 ```js
 import 'mdn-polyfills/MouseEvent';
 import 'mdn-polyfills/CustomEvent';
-import 'promise-polyfill/src/polyfill';
+import 'promise-polyfill/src/polyfill';j
 ```
 
 ## 在 ES6 环境中按需导入所需模块
@@ -54,94 +54,106 @@ import 'promise-polyfill/src/polyfill';
 
 ```js
 // 导入 $，其中已包含了 $.extend 和 $.fn.extend 方法
-import $ from 'mdui.jq/src/$';
+import $ from 'mdui.jq/es/$';
 
 // 按需导入下面的原型链方法。导入对应的方法后，就能以这样的形式调用：$(document).method()
 // 注意：这些方法都依赖 $，因此导入这些方法前需要先导入 mdui.jq/src/$
-import 'mdui.jq/src/methods/add';
-import 'mdui.jq/src/methods/addClass';
-import 'mdui.jq/src/methods/after';
-import 'mdui.jq/src/methods/ajaxComplete';
-import 'mdui.jq/src/methods/ajaxError';
-import 'mdui.jq/src/methods/ajaxStart';
-import 'mdui.jq/src/methods/ajaxSuccess';
-import 'mdui.jq/src/methods/append';
-import 'mdui.jq/src/methods/appendTo';
-import 'mdui.jq/src/methods/attr';
-import 'mdui.jq/src/methods/before';
-import 'mdui.jq/src/methods/children';
-import 'mdui.jq/src/methods/clone';
-import 'mdui.jq/src/methods/closest';
-import 'mdui.jq/src/methods/css';
-import 'mdui.jq/src/methods/data';
-import 'mdui.jq/src/methods/each';
-import 'mdui.jq/src/methods/empty';
-import 'mdui.jq/src/methods/eq';
-import 'mdui.jq/src/methods/filter';
-import 'mdui.jq/src/methods/find';
-import 'mdui.jq/src/methods/first';
-import 'mdui.jq/src/methods/get';
-import 'mdui.jq/src/methods/has';
-import 'mdui.jq/src/methods/hasClass';
-import 'mdui.jq/src/methods/height';
-import 'mdui.jq/src/methods/hide';
-import 'mdui.jq/src/methods/html';
-import 'mdui.jq/src/methods/index';
-import 'mdui.jq/src/methods/innerHeight';
-import 'mdui.jq/src/methods/innerWidth';
-import 'mdui.jq/src/methods/insertAfter';
-import 'mdui.jq/src/methods/insertBefore';
-import 'mdui.jq/src/methods/is';
-import 'mdui.jq/src/methods/last';
-import 'mdui.jq/src/methods/map';
-import 'mdui.jq/src/methods/next';
-import 'mdui.jq/src/methods/nextAll';
-import 'mdui.jq/src/methods/nextUntil';
-import 'mdui.jq/src/methods/not';
-import 'mdui.jq/src/methods/off';
-import 'mdui.jq/src/methods/offset';
-import 'mdui.jq/src/methods/offsetParent';
-import 'mdui.jq/src/methods/on';
-import 'mdui.jq/src/methods/one';
-import 'mdui.jq/src/methods/parent';
-import 'mdui.jq/src/methods/parents';
-import 'mdui.jq/src/methods/parentUntil';
-import 'mdui.jq/src/methods/position';
-import 'mdui.jq/src/methods/prepend';
-import 'mdui.jq/src/methods/prependTo';
-import 'mdui.jq/src/methods/prev';
-import 'mdui.jq/src/methods/prevAll';
-import 'mdui.jq/src/methods/prevUntil';
-import 'mdui.jq/src/methods/prop';
-import 'mdui.jq/src/methods/remove';
-import 'mdui.jq/src/methods/removeAttr';
-import 'mdui.jq/src/methods/removeClass';
-import 'mdui.jq/src/methods/removeData';
-import 'mdui.jq/src/methods/removeProp';
-import 'mdui.jq/src/methods/replaceAll';
-import 'mdui.jq/src/methods/replaceWith';
-import 'mdui.jq/src/methods/serialize';
-import 'mdui.jq/src/methods/serializeArray';
-import 'mdui.jq/src/methods/show';
-import 'mdui.jq/src/methods/siblings';
-import 'mdui.jq/src/methods/slice';
-import 'mdui.jq/src/methods/text';
-import 'mdui.jq/src/methods/toggle';
-import 'mdui.jq/src/methods/toggleClass';
-import 'mdui.jq/src/methods/trigger';
-import 'mdui.jq/src/methods/val';
-import 'mdui.jq/src/methods/width';
+import 'mdui.jq/es/methods/add';
+import 'mdui.jq/es/methods/addClass';
+import 'mdui.jq/es/methods/after';
+import 'mdui.jq/es/methods/ajaxComplete';
+import 'mdui.jq/es/methods/ajaxError';
+import 'mdui.jq/es/methods/ajaxStart';
+import 'mdui.jq/es/methods/ajaxSuccess';
+import 'mdui.jq/es/methods/append';
+import 'mdui.jq/es/methods/appendTo';
+import 'mdui.jq/es/methods/attr';
+import 'mdui.jq/es/methods/before';
+import 'mdui.jq/es/methods/children';
+import 'mdui.jq/es/methods/clone';
+import 'mdui.jq/es/methods/closest';
+import 'mdui.jq/es/methods/css';
+import 'mdui.jq/es/methods/data';
+import 'mdui.jq/es/methods/each';
+import 'mdui.jq/es/methods/empty';
+import 'mdui.jq/es/methods/eq';
+import 'mdui.jq/es/methods/filter';
+import 'mdui.jq/es/methods/find';
+import 'mdui.jq/es/methods/first';
+import 'mdui.jq/es/methods/get';
+import 'mdui.jq/es/methods/has';
+import 'mdui.jq/es/methods/hasClass';
+import 'mdui.jq/es/methods/height';
+import 'mdui.jq/es/methods/hide';
+import 'mdui.jq/es/methods/html';
+import 'mdui.jq/es/methods/index';
+import 'mdui.jq/es/methods/innerHeight';
+import 'mdui.jq/es/methods/innerWidth';
+import 'mdui.jq/es/methods/insertAfter';
+import 'mdui.jq/es/methods/insertBefore';
+import 'mdui.jq/es/methods/is';
+import 'mdui.jq/es/methods/last';
+import 'mdui.jq/es/methods/map';
+import 'mdui.jq/es/methods/next';
+import 'mdui.jq/es/methods/nextAll';
+import 'mdui.jq/es/methods/nextUntil';
+import 'mdui.jq/es/methods/not';
+import 'mdui.jq/es/methods/off';
+import 'mdui.jq/es/methods/offset';
+import 'mdui.jq/es/methods/offsetParent';
+import 'mdui.jq/es/methods/on';
+import 'mdui.jq/es/methods/one';
+import 'mdui.jq/es/methods/parent';
+import 'mdui.jq/es/methods/parents';
+import 'mdui.jq/es/methods/parentUntil';
+import 'mdui.jq/es/methods/position';
+import 'mdui.jq/es/methods/prepend';
+import 'mdui.jq/es/methods/prependTo';
+import 'mdui.jq/es/methods/prev';
+import 'mdui.jq/es/methods/prevAll';
+import 'mdui.jq/es/methods/prevUntil';
+import 'mdui.jq/es/methods/prop';
+import 'mdui.jq/es/methods/remove';
+import 'mdui.jq/es/methods/removeAttr';
+import 'mdui.jq/es/methods/removeClass';
+import 'mdui.jq/es/methods/removeData';
+import 'mdui.jq/es/methods/removeProp';
+import 'mdui.jq/es/methods/replaceAll';
+import 'mdui.jq/es/methods/replaceWith';
+import 'mdui.jq/es/methods/serialize';
+import 'mdui.jq/es/methods/serializeArray';
+import 'mdui.jq/es/methods/show';
+import 'mdui.jq/es/methods/siblings';
+import 'mdui.jq/es/methods/slice';
+import 'mdui.jq/es/methods/text';
+import 'mdui.jq/es/methods/toggle';
+import 'mdui.jq/es/methods/toggleClass';
+import 'mdui.jq/es/methods/trigger';
+import 'mdui.jq/es/methods/val';
+import 'mdui.jq/es/methods/width';
 
 // 按需导入函数，这些函数不依赖 $，无需先导入 $
 // 如果你希望以 $.method() 的形式调用这些函数，需要自行将函数扩展到 $ 下，例如 $.extend({ ajax: ajax })
-import ajax from 'mdui.jq/src/functions/ajax';
-import ajaxSetup from 'mdui.jq/src/functions/ajaxSetup';
-import contains from 'mdui.jq/src/functions/contains';
-import data from 'mdui.jq/src/functions/data';
-import each from 'mdui.jq/src/functions/each';
-import map from 'mdui.jq/src/functions/map';
-import merge from 'mdui.jq/src/functions/merge';
-import param from 'mdui.jq/src/functions/param';
-import removeData from 'mdui.jq/src/functions/removeData';
-import unique from 'mdui.jq/src/functions/unique';
+import ajax from 'mdui.jq/es/functions/ajax';
+import ajaxSetup from 'mdui.jq/es/functions/ajaxSetup';
+import contains from 'mdui.jq/es/functions/contains';
+import data from 'mdui.jq/es/functions/data';
+import each from 'mdui.jq/es/functions/each';
+import map from 'mdui.jq/es/functions/map';
+import merge from 'mdui.jq/es/functions/merge';
+import param from 'mdui.jq/es/functions/param';
+import removeData from 'mdui.jq/es/functions/removeData';
+import unique from 'mdui.jq/es/functions/unique';
 ```
+
+## 在 `typescript` 中使用
+
+`mdui.jq` 本身全部使用 `typescript` 开发，可完美地在 `typescript` 中使用。
+
+在 `typescript` 中导入 `mdui.jq`：
+
+```js
+import $ from 'mdui.jq/src/index';
+```
+
+如果需要按模块导入，用法和在 ES6 环境中的按模块导入一样，只需把 `es` 目录换成 `src` 目录即可。

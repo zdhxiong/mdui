@@ -1,5 +1,6 @@
 .vscode/
 .idea/
 dist/
+es6/
 node_modules/
 test/

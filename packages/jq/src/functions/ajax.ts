@@ -3,7 +3,7 @@ import AjaxOptions from '../interfaces/AjaxOptions';
 import each from './each';
 import extend from './extend';
 import param from './param';
-import { isFunction, isString } from '../utils';
+import { isFunction, isString, isUndefined } from '../utils';
 import { ajaxEvents, globalOptions } from './utils/ajax';
 import '../methods/trigger';
 import '../methods/remove';
@@ -321,7 +321,10 @@ function ajax(options: AjaxOptions): Promise<any> {
       // 添加 headers
       if (headers) {
         each(headers, (key: string, value) => {
-          xhr.setRequestHeader(key, value);
+          // undefined 值不发送，string 和 null 需要发送
+          if (!isUndefined(value)) {
+            xhr.setRequestHeader(key, value + ''); // 把 null 转换成字符串
+          }
         });
       }
 

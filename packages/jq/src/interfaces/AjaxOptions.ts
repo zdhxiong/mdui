@@ -51,8 +51,9 @@ export default interface AjaxOptions {
 
   /**
    * 添加到 Headers 中的数据。可以在 beforeSend 回调函数中重写该值
+   * string 和 null 会被发送，undefined 会被舍去
    */
-  headers?: PlainObject<string>;
+  headers?: PlainObject<string | null | undefined>;
 
   /**
    * 设置在 XMLHttpRequest 对象上的数据

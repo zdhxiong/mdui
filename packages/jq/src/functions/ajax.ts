@@ -89,7 +89,7 @@ function mergeOptions(options: AjaxOptions): AjaxOptions {
     ];
 
     // @ts-ignore
-    if (callbacks.indexOf(key) < 0) {
+    if (callbacks.indexOf(key) < 0 && !isUndefined(value)) {
       defaults[key] = value;
     }
   });

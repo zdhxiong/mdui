@@ -1,5 +1,6 @@
 import each from '../functions/each';
 import PlainObject from '../interfaces/PlainObject';
+import { isUndefined } from '../utils';
 
 /**
  * 将所有对象的属性都添加到第一个对象，并返回合并后的对象。
@@ -243,7 +244,9 @@ function extend(
 
   each(objectN, (_, object) => {
     each(object, (prop, value) => {
-      target[prop] = value;
+      if (!isUndefined(value)) {
+        target[prop] = value;
+      }
     });
   });
 

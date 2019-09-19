@@ -8,6 +8,8 @@
 
 拥有和 jQuery 相似 API 的轻量级 JavaScript 工具库。已作为 [MDUI](https://github.com/zdhxiong/mdui) 内置工具库使用。
 
+mdui.jq 全部使用 typescript 开发，可获得完美的类型提示。
+
 文档：https://www.mdui.org/docs/jq
 
 ## 通过 `<script>` 标签引入 JS 文件
@@ -145,15 +147,3 @@ import param from 'mdui.jq/es/functions/param';
 import removeData from 'mdui.jq/es/functions/removeData';
 import unique from 'mdui.jq/es/functions/unique';
 ```
-
-## 在 `typescript` 中使用
-
-`mdui.jq` 本身全部使用 `typescript` 开发，可完美地在 `typescript` 中使用。
-
-在 `typescript` 中导入 `mdui.jq`：
-
-```js
-import $ from 'mdui.jq/src/index';
-```
-
-如果需要按模块导入，用法和在 ES6 环境中的按模块导入一样，只需把 `es` 目录换成 `src` 目录即可。

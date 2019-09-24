@@ -1,5 +1,5 @@
 .vscode/
 .idea/
 dist/
+es/
 node_modules/
-test/

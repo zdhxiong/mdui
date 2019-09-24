@@ -1,5 +1,4 @@
 .vscode/
 .idea/
-node_modules/
 es/
-types/
+node_modules/

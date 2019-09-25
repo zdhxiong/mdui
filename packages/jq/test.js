@@ -17,7 +17,10 @@ async function test() {
       eslint({
         fix: true,
       }),
-      typescript(),
+      typescript({
+        module: "ES6",
+        target: "ES6"
+      }),
       buble(),
     ],
     watch: {

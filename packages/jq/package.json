@@ -6,7 +6,7 @@
   "module": "dist/jq.esm.js",
   "types": "es/index.d.ts",
   "scripts": {
-    "build": "tsc && node build.js",
+    "build": "tsc -p src/tsconfig.json && node build.js",
     "test": "node test.js"
   },
   "repository": {

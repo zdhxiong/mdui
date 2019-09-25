@@ -1,15 +1,7 @@
 {
-  "include": [
-    "./src/**/*"
-  ],
   "compilerOptions": {
     "strict": true, // noImplicitAny, noImplicitThis, alwaysStrict, strictNullChecks, strictFunctionTypes, strictPropertyInitialization
     "noImplicitReturns": true,
-    "declaration": true,
-    "declarationDir": "./es",
-    "module": "ES6",
-    "newLine": "lf",
-    "outDir": "./es",
-    "target": "ES6"
+    "newLine": "lf"
   }
 }

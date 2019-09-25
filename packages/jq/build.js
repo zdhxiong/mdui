@@ -4,6 +4,7 @@ const { uglify } = require('rollup-plugin-uglify');
 const buble = require('rollup-plugin-buble');
 const typescript = require('rollup-plugin-typescript');
 const polyfill = require('rollup-plugin-polyfill');
+const tsconfig = require('./src/tsconfig.json');
 const pkg = require('./package.json');
 
 const banner = `
@@ -20,7 +21,7 @@ const plugins = [
   eslint({
     fix: true,
   }),
-  typescript(),
+  typescript(tsconfig.compilerOptions),
 ];
 
 const outputOptions = {

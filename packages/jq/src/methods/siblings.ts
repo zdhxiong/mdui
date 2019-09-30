@@ -1,13 +1,12 @@
-import JQElement from '../types/JQElement';
-import Selector from '../types/Selector';
-import { JQ } from '../JQ';
 import $ from '../$';
+import { JQ } from '../JQ';
+import Selector from '../types/Selector';
 import './add';
-import './prevAll';
 import './nextAll';
+import './prevAll';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 取得同辈元素的集合。可指定 CSS 选择器作为参数
      * @param selector

@@ -1,0 +1,3 @@
+describe('.innerWidth()', function() {
+  return '';
+});

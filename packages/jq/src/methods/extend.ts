@@ -1,11 +1,10 @@
-import JQElement from '../types/JQElement';
-import PlainObject from '../interfaces/PlainObject';
-import { JQ } from '../JQ';
 import $ from '../$';
 import each from '../functions/each';
+import PlainObject from '../interfaces/PlainObject';
+import { JQ } from '../JQ';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 在 $ 的原型链上扩展方法
      * @param obj
@@ -26,8 +25,7 @@ $(document).customFunc()
 $.fn.extend = function(this: JQ, obj: PlainObject): JQ {
   each(obj, (prop, value) => {
     // 在 JQ 对象上扩展方法时，需要自己添加 typescript 的类型定义
-    // @ts-ignore
-    this[prop] = value;
+    $.fn[prop] = value;
   });
 
   return this;

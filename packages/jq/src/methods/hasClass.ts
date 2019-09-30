@@ -1,8 +1,7 @@
 import $ from '../$';
-import JQElement from '../types/JQElement';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 是否含有指定的 CSS 类
      * @param className
@@ -16,9 +15,5 @@ $('div').hasClass('item')
 }
 
 $.fn.hasClass = function(className: string): boolean {
-  if (!this[0] || !className) {
-    return false;
-  }
-
   return this[0].classList.contains(className);
 };

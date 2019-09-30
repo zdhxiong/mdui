@@ -1,11 +1,10 @@
-import JQElement from '../types/JQElement';
-import { JQ } from '../JQ';
 import $ from '../$';
-import each from '../functions/each';
+import param from '../functions/param';
+import { JQ } from '../JQ';
 import './serializeArray';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 将表单元素数组或者对象序列化
      * @example
@@ -23,13 +22,5 @@ $('form').serialize();
  * @returns {String}
  */
 $.fn.serialize = function(this: JQ): string {
-  const result: string[] = [];
-
-  each(this.serializeArray(), (_, item) => {
-    result.push(
-      `${encodeURIComponent(item.name)}=${encodeURIComponent(item.value)}`,
-    );
-  });
-
-  return result.join('&');
+  return param(this.serializeArray());
 };

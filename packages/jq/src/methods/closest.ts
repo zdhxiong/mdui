@@ -1,13 +1,12 @@
-import JQElement from '../types/JQElement';
-import JQSelector from '../types/JQSelector';
-import { JQ } from '../JQ';
 import $ from '../$';
-import './parents';
+import { JQ } from '../JQ';
+import Selector from '../types/Selector';
 import './eq';
 import './is';
+import './parents';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 从当前元素向上逐级匹配，返回最先匹配到的元素
      * @param selector
@@ -16,14 +15,23 @@ declare module '../JQ' {
 $('.box').closest('.parent')
 ```
      */
-    closest(selector: JQSelector): this;
+    closest(selector: Selector | Element | JQ): this;
   }
 }
 
-$.fn.closest = function(this: JQ, selector: JQSelector): JQ {
+$.fn.closest = function(this: JQ, selector: any): JQ {
   if (this.is(selector)) {
-    return new JQ();
+    return this;
   }
 
-  return this.parents(selector).eq(0);
+  const matched: HTMLElement[] = [];
+  this.parents().each((_, element): void | false => {
+    if ($(element).is(selector)) {
+      matched.push(element);
+
+      return false;
+    }
+  });
+
+  return new JQ(matched);
 };

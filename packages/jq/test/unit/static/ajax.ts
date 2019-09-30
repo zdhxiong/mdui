@@ -1,0 +1,3 @@
+describe('$.ajax', function() {
+  return '';
+});

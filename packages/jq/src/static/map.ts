@@ -1,6 +1,6 @@
-import PlainObject from '../interfaces/PlainObject';
 import $ from '../$';
 import map from '../functions/map';
+import PlainObject from '../interfaces/PlainObject';
 
 declare module '../interfaces/JQStatic' {
   interface JQStatic {

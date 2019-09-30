@@ -1,11 +1,10 @@
-import JQElement from '../types/JQElement';
-import { JQ } from '../JQ';
 import $ from '../$';
 import each from '../functions/each';
+import { JQ } from '../JQ';
 import './css';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 获取元素的宽度，包含内边距
      * @example

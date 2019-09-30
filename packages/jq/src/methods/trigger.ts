@@ -1,11 +1,10 @@
 import $ from '../$';
-import './each';
-import JQElement from '../types/JQElement';
 import PlainObject from '../interfaces/PlainObject';
 import { JQ } from '../JQ';
+import './each';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 触发指定的事件
      * @param eventName 事件名

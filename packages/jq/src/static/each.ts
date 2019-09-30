@@ -1,6 +1,6 @@
-import PlainObject from '../interfaces/PlainObject';
 import $ from '../$';
 import each from '../functions/each';
+import PlainObject from '../interfaces/PlainObject';
 
 declare module '../interfaces/JQStatic' {
   interface JQStatic {

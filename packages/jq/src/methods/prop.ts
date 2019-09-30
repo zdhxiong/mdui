@@ -1,12 +1,12 @@
-import JQElement from '../types/JQElement';
 import PlainObject from '../interfaces/PlainObject';
 import './attr';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 设置元素属性
-     * @param propertyName
+     * 如果值为 void 或 undefined，则不修改当前属性
+     * @param name
      * @param value
      * @example ````设置属性
 ```js
@@ -20,10 +20,29 @@ $('input').prop('checked', function () {
 ```
      */
     prop(
-      propertyName: string,
+      name: string,
       value:
-        | any
-        | ((this: HTMLElement, index: number, oldPropValue: any) => any),
+        | string
+        | number
+        | boolean
+        | symbol
+        | object
+        | null
+        | undefined
+        | ((
+            this: T,
+            index: number,
+            oldPropValue: any,
+          ) =>
+            | string
+            | number
+            | boolean
+            | symbol
+            | object
+            | null
+            | void
+            | undefined
+          ),
     ): this;
 
     /**
@@ -48,18 +67,38 @@ $('input').prop({
      */
     prop(
       properties: PlainObject<
-        any | ((this: HTMLElement, index: number, oldPropValue: any) => any)
+        | string
+        | number
+        | boolean
+        | symbol
+        | object
+        | null
+        | undefined
+        | ((
+            this: T,
+            index: number,
+            oldPropValue: any,
+          ) =>
+            | string
+            | number
+            | boolean
+            | symbol
+            | object
+            | null
+            | void
+            | undefined
+          )
       >,
     ): this;
 
     /**
      * 获取第一个元素的属性
-     * @param propertyName
+     * @param name
      * @example
 ```js
 $('input').prop('checked');
 ```
      */
-    prop(propertyName: string): any;
+    prop(name: string): any;
   }
 }

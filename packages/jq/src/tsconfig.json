@@ -8,6 +8,7 @@
     "declarationDir": "../es",
     "module": "ES6",
     "outDir": "../es",
-    "target": "ES6"
+    "target": "ES6",
+    "typeRoots" : []
   }
 }

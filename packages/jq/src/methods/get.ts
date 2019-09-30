@@ -1,9 +1,8 @@
-import JQElement from '../types/JQElement';
-import { JQ } from '../JQ';
 import $ from '../$';
+import { JQ } from '../JQ';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 获取指定索引位置的 Dom 元素
      * @param index 索引号
@@ -29,7 +28,7 @@ $('p').get()
   }
 }
 
-$.fn.get = function(this: JQ, index?: number): JQElement | JQElement[] {
+$.fn.get = function(this: JQ, index?: number): any | any[] {
   return index === undefined
     ? [].slice.call(this)
     : this[index >= 0 ? index : index + this.length];

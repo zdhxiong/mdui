@@ -1,9 +1,8 @@
-import JQElement from '../types/JQElement';
-import { JQ } from '../JQ';
 import $ from '../$';
+import { JQ } from '../JQ';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 返回一个 JQ 对象的子集
      * 子集为从 start 开始的元素。如果传入了 end 参数，则提取从 start 到不包含 end 位置的元素。

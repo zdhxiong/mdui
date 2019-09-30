@@ -1,5 +1,5 @@
-import { isArrayLike } from '../utils';
 import PlainObject from '../interfaces/PlainObject';
+import { isArrayLike } from '../utils';
 
 /**
  * 遍历数组，原样返回第一个参数。回调函数返回 false 时，停止遍历
@@ -14,7 +14,7 @@ each( [ "a", "b", "c" ], function( index, value ){
  */
 function each<T>(
   array: ArrayLike<T>,
-  callback: (this: T, index: number, value: T) => any | false,
+  callback: (this: T, index: number, value: T) => any | void,
 ): ArrayLike<T>;
 
 /**
@@ -30,7 +30,7 @@ each({ name: "John", lang: "JS" }, function( key, value ) {
  */
 function each<T extends PlainObject, K extends keyof T>(
   obj: T,
-  callback: (this: T[K], key: K, value: T[K]) => any | false,
+  callback: (this: T[K], key: K, value: T[K]) => any | void,
 ): T;
 
 function each(target: ArrayLike<any> | PlainObject, callback: Function): any {

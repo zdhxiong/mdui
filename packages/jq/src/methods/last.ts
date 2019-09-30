@@ -1,10 +1,9 @@
-import JQElement from '../types/JQElement';
-import { JQ } from '../JQ';
 import $ from '../$';
+import { JQ } from '../JQ';
 import './eq';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 获取对象中最后一个元素
      * @example

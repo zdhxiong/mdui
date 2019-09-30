@@ -1,11 +1,12 @@
-import JQElement from '../types/JQElement';
-import { JQ } from '../JQ';
 import $ from '../$';
+import { JQ } from '../JQ';
+import { getComputedStyleValue } from '../utils';
 import './each';
-import { isElement } from '../utils';
+import './hide';
+import './show';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 切换当前元素的显示状态
      * @example
@@ -19,14 +20,11 @@ $('.box').toggle()
 
 /**
  * 切换元素的显示状态
- * @returns {JQ}
  */
 $.fn.toggle = function(this: JQ): JQ {
   return this.each(function() {
-    if (!isElement(this)) {
-      return;
-    }
-
-    this.style.display = this.style.display === 'none' ? '' : 'none';
+    getComputedStyleValue(this, 'display') === 'none'
+      ? $(this).show()
+      : $(this).hide();
   });
 };

@@ -1,8 +1,7 @@
-import JQElement from '../types/JQElement';
 import './innerWidth';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 获取元素的高度，包含内边距
      * @example

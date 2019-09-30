@@ -1,11 +1,9 @@
-import JQElement from '../types/JQElement';
-import { isElement } from '../utils';
-import { JQ } from '../JQ';
 import $ from '../$';
+import { JQ } from '../JQ';
 import './each';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 移除当前元素中所有的子元素
      * @example
@@ -19,8 +17,6 @@ $('.box').empty()
 
 $.fn.empty = function(this: JQ): JQ {
   return this.each(function() {
-    if (isElement(this)) {
-      this.innerHTML = '';
-    }
+    this.innerHTML = '';
   });
 };

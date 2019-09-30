@@ -5,10 +5,13 @@
 [![npm version](https://img.shields.io/npm/v/mdui.jq.svg)](https://www.npmjs.com/package/mdui.jq)
 [![dependencies Status](https://david-dm.org/zdhxiong/mdui.JQ/status.svg)](https://david-dm.org/zdhxiong/mdui.JQ)
 [![devDependencies Status](https://david-dm.org/zdhxiong/mdui.JQ/dev-status.svg)](https://david-dm.org/zdhxiong/mdui.JQ?type=dev)
+[![DeepScan grade](https://deepscan.io/api/teams/5880/projects/7707/branches/82471/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=5880&pid=7707&bid=82471)
 
 拥有和 jQuery 相似 API 的轻量级 JavaScript 工具库。已作为 [MDUI](https://github.com/zdhxiong/mdui) 内置工具库使用。
 
 mdui.jq 全部使用 typescript 开发，可获得完美的类型提示。
+
+兼容至 IE11。
 
 文档：https://www.mdui.org/docs/jq
 
@@ -45,7 +48,7 @@ import $ from 'mdui.jq';
 ```js
 import 'mdn-polyfills/MouseEvent';
 import 'mdn-polyfills/CustomEvent';
-import 'promise-polyfill/src/polyfill';j
+import 'promise-polyfill/src/polyfill';
 ```
 
 ## 在 ES6 环境中按需导入所需模块
@@ -55,7 +58,7 @@ import 'promise-polyfill/src/polyfill';j
 `mdui.jq` 中每一个方法都是一个模块，你可以仅导入需要用到的方法：
 
 ```js
-// 导入 $，其中已包含了 $.extend 和 $.fn.extend 方法
+// 导入 $ 函数
 import $ from 'mdui.jq/es/$';
 
 // 按需导入下面的原型链方法。导入对应的方法后，就能以这样的形式调用：$(document).method()
@@ -134,8 +137,20 @@ import 'mdui.jq/es/methods/trigger';
 import 'mdui.jq/es/methods/val';
 import 'mdui.jq/es/methods/width';
 
-// 按需导入函数，这些函数不依赖 $，无需先导入 $
-// 如果你希望以 $.method() 的形式调用这些函数，需要自行将函数扩展到 $ 下，例如 $.extend({ ajax: ajax })
+// 按需导入下面的静态方法。导入对应的方法后，就能以这样的形式调用：$.method()
+// 注意：这些方法都依赖 $，因此导入这些方法前需要先导入 mdui.jq/src/$
+import 'mdui.jq/es/static/ajax';
+import 'mdui.jq/es/static/ajaxSetup';
+import 'mdui.jq/es/static/contains';
+import 'mdui.jq/es/static/data';
+import 'mdui.jq/es/static/each';
+import 'mdui.jq/es/static/map';
+import 'mdui.jq/es/static/merge';
+import 'mdui.jq/es/static/param';
+import 'mdui.jq/es/static/removeData';
+import 'mdui.jq/es/static/unique';
+
+// 上面提到的静态方法，也可以作为独立的函数使用。作为独立函数使用时，不需要依赖 $。
 import ajax from 'mdui.jq/es/functions/ajax';
 import ajaxSetup from 'mdui.jq/es/functions/ajaxSetup';
 import contains from 'mdui.jq/es/functions/contains';

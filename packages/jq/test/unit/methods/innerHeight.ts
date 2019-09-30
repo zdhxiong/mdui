@@ -1,0 +1,3 @@
+describe('.innerHeight()', function() {
+  return '';
+});

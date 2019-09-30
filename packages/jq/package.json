@@ -6,8 +6,13 @@
   "module": "dist/jq.esm.js",
   "types": "es/index.d.ts",
   "scripts": {
-    "build": "tsc -p src/tsconfig.json && node build.js",
-    "test": "node test.js"
+    "build": "tsc -p src/tsconfig.json && node build.js --build",
+    "test": "node build.js --test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build"
+    }
   },
   "repository": {
     "type": "git",
@@ -30,7 +35,6 @@
   },
   "devDependencies": {
     "@types/chai": "^4.2.3",
-    "@types/jquery": "^3.3.31",
     "@types/mocha": "^5.2.7",
     "@typescript-eslint/eslint-plugin": "^2.3.0",
     "@typescript-eslint/parser": "^2.3.0",
@@ -38,6 +42,7 @@
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.0.7",
     "jquery": "^3.4.1",
     "mocha": "^6.2.0",
     "prettier": "^1.18.2",

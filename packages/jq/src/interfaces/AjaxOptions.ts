@@ -1,12 +1,5 @@
+import { BeforeSendCallback, CompleteCallback, ErrorCallback, StatusCodeCallbacks, SuccessCallback, XHRFields } from '../types/JQAjax';
 import PlainObject from './PlainObject';
-import {
-  BeforeSendCallback,
-  CompleteCallback,
-  ErrorCallback,
-  StatusCodeCallbacks,
-  SuccessCallback,
-  XHRFields,
-} from '../types/JQAjax';
 
 export default interface AjaxOptions {
   /**

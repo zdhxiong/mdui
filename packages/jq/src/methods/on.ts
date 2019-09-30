@@ -1,17 +1,16 @@
-import { JQ } from '../JQ';
-import JQElement from '../types/JQElement';
-import PlainObject from '../interfaces/PlainObject';
 import $ from '../$';
-import { isString, isFunction, isObjectLike } from '../utils';
-import { add } from './utils/event';
 import each from '../functions/each';
-import './off';
+import PlainObject from '../interfaces/PlainObject';
+import { JQ } from '../JQ';
+import { isFunction, isObjectLike, isString } from '../utils';
 import './each';
+import './off';
+import { add } from './utils/event';
 
 type EventCallback = (e: Event, data?: any) => void | false;
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 通过事件委托同时添加多个事件处理函数
      * @param events

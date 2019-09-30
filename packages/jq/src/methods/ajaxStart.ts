@@ -1,13 +1,12 @@
-import JQElement from '../types/JQElement';
-import { GlobalCallback, GlobalSuccessCallback } from '../types/JQAjax';
-import { JQ } from '../JQ';
 import $ from '../$';
 import each from '../functions/each';
 import { ajaxEvents } from '../functions/utils/ajax';
+import { JQ } from '../JQ';
+import { GlobalCallback, GlobalSuccessCallback } from '../types/JQAjax';
 import './on';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 监听全局 Ajax 开始事件
      * 通过 $(document).on('start.mdui.ajax', function (event, params) {}) 调用时，包含两个参数

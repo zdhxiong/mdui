@@ -1,14 +1,12 @@
-import JQElement from '../types/JQElement';
-import Selector from '../types/Selector';
-import { isWindow } from '../utils';
-import { JQ } from '../JQ';
 import $ from '../$';
 import merge from '../functions/merge';
+import { JQ } from '../JQ';
+import Selector from '../types/Selector';
 import './each';
 import './get';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 根据 CSS 选择器找到指定的后代节点的集合
      * @param selector
@@ -25,9 +23,7 @@ $.fn.find = function(this: JQ, selector: Selector): JQ {
   const foundElements: HTMLElement[] = [];
 
   this.each((_, element) => {
-    if (!isWindow(element)) {
-      merge(foundElements, $(element.querySelectorAll(selector)).get());
-    }
+    merge(foundElements, $(element.querySelectorAll(selector)).get());
   });
 
   return new JQ(foundElements);

@@ -1,13 +1,8 @@
 import $ from '../$';
 import AjaxOptions from '../interfaces/AjaxOptions';
-import each from './each';
-import extend from './extend';
-import param from './param';
-import { isFunction, isString, isUndefined } from '../utils';
-import { ajaxEvents, globalOptions } from './utils/ajax';
-import '../methods/trigger';
-import '../methods/remove';
 import '../methods/append';
+import '../methods/remove';
+import '../methods/trigger';
 import {
   CallbackName,
   ErrorCallback,
@@ -17,6 +12,11 @@ import {
   SuccessCallback,
   SuccessTextStatus,
 } from '../types/JQAjax';
+import { isFunction, isString, isUndefined } from '../utils';
+import each from './each';
+import extend from './extend';
+import param from './param';
+import { ajaxEvents, globalOptions } from './utils/ajax';
 
 interface EventParams {
   data?: string;

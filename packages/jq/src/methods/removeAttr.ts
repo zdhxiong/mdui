@@ -1,13 +1,12 @@
-import JQElement from '../types/JQElement';
-import { isElement } from '../utils';
-import { JQ } from '../JQ';
 import $ from '../$';
+import each from '../functions/each';
+import { JQ } from '../JQ';
 import './each';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
-     * 移除指定属性
+     * 移除指定属性，多个属性可以用空格分隔
      * @param attributeName
      * @example
 ```js
@@ -19,9 +18,11 @@ $('div').removeAttr('title')
 }
 
 $.fn.removeAttr = function(this: JQ, attributeName: string): JQ {
+  const names = attributeName.split(' ').filter(name => name);
+
   return this.each(function() {
-    if (isElement(this)) {
-      this.removeAttribute(attributeName);
-    }
+    each(names, (_, name) => {
+      this.removeAttribute(name);
+    });
   });
 };

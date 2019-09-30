@@ -1,22 +1,15 @@
-import JQElement from '../types/JQElement';
-import JQSelector from '../types/JQSelector';
-import {
-  isArrayLike,
-  isDocument,
-  isElement,
-  isNull,
-  isString,
-  isUndefined,
-  isWindow,
-} from '../utils';
-import { JQ } from '../JQ';
 import $ from '../$';
+import { JQ } from '../JQ';
+import Selector from '../types/Selector';
+import TypeOrArray from '../types/TypeOrArray';
+import { isFunction, isString } from '../utils';
+import './each';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 根据选择器、DOM元素或 JQ 对象来检测匹配元素集合，
-     * 如果其中至少有一个元素符合这个给定的表达式就返回true
+     * 如果其中至少有一个元素符合这个给定的表达式就返回 true
      * @param selector
      * @example
 ```js
@@ -24,47 +17,51 @@ $('.box').is('.box') // true
 $('.box').is('.boxss'); // false
 ```
      */
-    is(selector: JQSelector): boolean;
+    is(
+      selector:
+        | Selector
+        | TypeOrArray<Element>
+        | JQ
+        | ((this: T, index: number, element: T) => boolean),
+    ): boolean;
   }
 }
 
-$.fn.is = function(this: JQ, selector: JQSelector): boolean {
-  const self = this[0];
+$.fn.is = function(this: JQ, selector: any): boolean {
+  let isMatched = false;
 
-  if (!self || isUndefined(selector) || isNull(selector)) {
-    return false;
-  }
-
-  // CSS 选择器
-  if (isString(selector) && isElement(self)) {
-    const matchesSelector =
-      self.matches ||
-      // @ts-ignore
-      self.matchesSelector ||
-      self.webkitMatchesSelector ||
-      // @ts-ignore
-      self.mozMatchesSelector ||
-      // @ts-ignore
-      self.oMatchesSelector ||
-      // @ts-ignore
-      self.msMatchesSelector;
-
-    return matchesSelector.call(self, selector);
-  }
-
-  if (isDocument(selector) || isWindow(selector)) {
-    return self === selector;
-  }
-
-  if (selector instanceof Node || isArrayLike(selector)) {
-    const $compareWith = selector instanceof Node ? [selector] : selector;
-
-    for (let i = 0; i < $compareWith.length; i += 1) {
-      if ($compareWith[i] === self) {
-        return true;
+  if (isFunction(selector)) {
+    this.each((index, element) => {
+      if (selector.call(element, index, element)) {
+        isMatched = true;
       }
-    }
+    });
+
+    return isMatched;
   }
 
-  return false;
+  if (isString(selector)) {
+    this.each((_, element) => {
+      // @ts-ignore
+      const matches = element.matches || element.msMatchesSelector;
+
+      if (matches.call(element, selector)) {
+        isMatched = true;
+      }
+    });
+
+    return isMatched;
+  }
+
+  const $compareWith = $(selector);
+
+  this.each((_, element) => {
+    $compareWith.each((_, compare) => {
+      if (element === compare) {
+        isMatched = true;
+      }
+    });
+  });
+
+  return isMatched;
 };

@@ -1,13 +1,12 @@
-import JQElement from '../types/JQElement';
+import $ from '../$';
 import PlainObject from '../interfaces/PlainObject';
 import { JQ } from '../JQ';
-import $ from '../$';
 import './on';
 
 type EventCallback = (e: Event, data?: any) => void | false;
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 通过事件委托同时添加多个事件处理函数，触发一次后自动解绑
      * @param events

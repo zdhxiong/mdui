@@ -1,13 +1,5 @@
-function isNodeName(element: HTMLElement, name: string): boolean {
+function isNodeName(element: Element, name: string): boolean {
   return element.nodeName.toLowerCase() === name.toLowerCase();
-}
-
-function isArrayLike(target: any): target is ArrayLike<any> {
-  return typeof target.length === 'number';
-}
-
-function isObjectLike(target: any): target is Record<string, any> {
-  return typeof target === 'object' && target !== null;
 }
 
 function isFunction(target: any): target is Function {
@@ -16,6 +8,10 @@ function isFunction(target: any): target is Function {
 
 function isString(target: any): target is string {
   return typeof target === 'string';
+}
+
+function isNumber(target: any): target is number {
+  return typeof target === 'number';
 }
 
 function isUndefined(target: any): target is undefined {
@@ -30,13 +26,80 @@ function isWindow(target: any): target is Window {
   return target instanceof Window;
 }
 
-function isDocument(target: any): target is HTMLDocument {
-  return target instanceof HTMLDocument;
+function isDocument(target: any): target is Document {
+  return target instanceof Document;
 }
 
-function isElement(target: any): target is HTMLElement {
-  return target instanceof HTMLElement;
+function isElement(target: any): target is Element {
+  return target instanceof Element;
 }
+
+function isNode(target: any): target is Node {
+  return target instanceof Node;
+}
+
+function isArrayLike(target: any): target is ArrayLike<any> {
+  if (isFunction(target) || isWindow(target)) {
+    return false;
+  }
+
+  return isNumber(target.length);
+}
+
+function isObjectLike(target: any): target is Record<string, any> {
+  return typeof target === 'object' && target !== null;
+}
+
+function toElement(target: Element | Document): Element {
+  return isDocument(target) ? target.documentElement : target;
+}
+
+/**
+ * 把用 - 分隔的字符串转为驼峰
+ * @param string
+ */
+function toCamelCase(string: string): string {
+  return string
+    .replace(/^-ms-/, 'ms-')
+    .replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase());
+}
+
+function getComputedStyleValue(element: Element, name: string): string {
+  return window.getComputedStyle(element, null).getPropertyValue(name);
+}
+
+function getChildNodesArray(target: string, parent: string): Array<Node> {
+  const tempParent = document.createElement(parent);
+  tempParent.innerHTML = target;
+
+  return [].slice.call(tempParent.childNodes);
+}
+
+/**
+ * 数值单位的 CSS 属性
+ */
+const cssNumber = [
+  'animationIterationCount',
+  'columnCount',
+  'fillOpacity',
+  'flexGrow',
+  'flexShrink',
+  'fontWeight',
+  'gridArea',
+  'gridColumn',
+  'gridColumnEnd',
+  'gridColumnStart',
+  'gridRow',
+  'gridRowEnd',
+  'gridRowStart',
+  'lineHeight',
+  'opacity',
+  'order',
+  'orphans',
+  'widows',
+  'zIndex',
+  'zoom',
+];
 
 export {
   isNodeName,
@@ -44,9 +107,16 @@ export {
   isObjectLike,
   isFunction,
   isString,
+  isNumber,
   isUndefined,
   isNull,
   isWindow,
   isDocument,
   isElement,
+  isNode,
+  toElement,
+  toCamelCase,
+  getComputedStyleValue,
+  getChildNodesArray,
+  cssNumber,
 };

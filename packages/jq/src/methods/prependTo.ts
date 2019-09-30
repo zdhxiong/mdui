@@ -1,11 +1,10 @@
-import JQElement from '../types/JQElement';
-import JQSelector from '../types/JQSelector';
-import { JQ } from '../JQ';
-import $ from '../$';
+import HTMLString from '../types/HTMLString';
+import Selector from '../types/Selector';
+import TypeOrArray from '../types/TypeOrArray';
 import './prepend';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 前置到指定元素内部
      * @param selector
@@ -15,12 +14,6 @@ $('<p>Hello</p>').prependTo('<p>I would like to say: </p>')
 // [ <p><p>Hello</p>I would like to say: </p> ]
 ```
      */
-    prependTo(selector: JQSelector): this;
+    prependTo(target: Selector | HTMLString | TypeOrArray<Element> | JQ): this;
   }
 }
-
-$.fn.prependTo = function(this: JQ, selector: JQSelector): JQ {
-  $(selector).prepend(this);
-
-  return this;
-};

@@ -1,13 +1,12 @@
-import JQElement from '../types/JQElement';
-import PlainObject from '../interfaces/PlainObject';
-import { isObjectLike, isUndefined } from '../utils';
-import { JQ } from '../JQ';
 import $ from '../$';
 import data from '../functions/data';
+import PlainObject from '../interfaces/PlainObject';
+import { JQ } from '../JQ';
+import { isObjectLike, isUndefined } from '../utils';
 import './each';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 在当前元素上存储数据
      * @param key

@@ -1,67 +1,66 @@
-import JQElement from '../types/JQElement';
-import JQSelector from '../types/JQSelector';
-import { isElement, isString } from '../utils';
-import { JQ } from '../JQ';
 import $ from '../$';
 import each from '../functions/each';
-import './get';
+import { JQ } from '../JQ';
+import HTMLString from '../types/HTMLString';
+import TypeOrArray from '../types/TypeOrArray';
+import { isFunction } from '../utils';
+import './after';
+import './before';
 import './each';
+import './remove';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 在当前元素内部的后面插入指定内容
-     * @param contents 可以是字符串、HTML、JQ 对象、DOM 元素、DOM 元素数组、NodeList 等
+     * @param contents
+     * @returns 原集合
      * @example
 ```js
 $('<p>I would like to say: </p>').append('<b>Hello</b>');
 // [ <p>I would like to say: <b>Hello</b></p> ]
 ```
      */
-    append(contents: JQSelector): this;
+    append(...contents: Array<HTMLString | TypeOrArray<Node> | JQ<Node>>): this;
+
+    /**
+     * 在当前元素内部的后面插入指定内容
+     * @param callback
+     * @returns 原集合
+     */
+    append(
+      callback: (
+        this: T,
+        index: number,
+        html: string,
+      ) => HTMLString | TypeOrArray<Node> | JQ<Node>,
+    ): this;
   }
 }
 
-each(['append', 'prepend'], (nameIndex, name) => {
-  $.fn[name] = function(this: JQ, newChild: JQSelector): JQ {
-    let newChilds: any[];
-    const copyByClone = this.length > 1;
+each(['prepend', 'append'], (nameIndex, name) => {
+  $.fn[name] = function(this: JQ, ...args: any[]): JQ {
+    return this.each((index, element) => {
+      const childNodes = element.childNodes;
+      const childLength = childNodes.length;
 
-    if (
-      isString(newChild) &&
-      (newChild[0] !== '<' || newChild[newChild.length - 1] !== '>')
-    ) {
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = newChild;
-      newChilds = [].slice.call(tempDiv.childNodes);
-    } else {
-      newChilds = $(newChild).get();
-    }
+      const child = childLength
+        ? childNodes[nameIndex ? childLength - 1 : 0]
+        : document.createElement('div');
 
-    if (nameIndex === 1) {
-      // prepend
-      newChilds.reverse();
-    }
-
-    return this.each((i, element) => {
-      if (!isElement(element)) {
-        return;
+      if (!childLength) {
+        element.append(child);
       }
 
-      each(newChilds, (_, child) => {
-        // 一个元素要同时追加到多个元素中，需要先复制一份，然后追加
-        if (copyByClone && i > 0) {
-          child = child.cloneNode(true);
-        }
+      const contents = isFunction(args[0])
+        ? [args[0].call(element, index, element.innerHTML)]
+        : args;
 
-        if (nameIndex === 0) {
-          // append
-          element.appendChild(child);
-        } else {
-          // prepend
-          element.insertBefore(child, element.childNodes[0]);
-        }
-      });
+      $(child)[nameIndex ? 'after' : 'before'](...contents);
+
+      if (!childLength) {
+        element.removeChild(child);
+      }
     });
   };
 });

@@ -1,6 +1,5 @@
-import JQElement from '../types/JQElement';
-import dataNS from './utils/data';
 import { isUndefined } from '../utils';
+import dataNS from './utils/data';
 
 /**
  * 移除指定元素上存放的数据
@@ -15,7 +14,7 @@ removeData(document.body, 'name');
 removeData(document.body);
 ```
  */
-function removeData(element: JQElement, name?: string): void {
+function removeData(element: Element | Document | Window, name?: string): void {
   // @ts-ignore
   if (!element[dataNS]) {
     return;

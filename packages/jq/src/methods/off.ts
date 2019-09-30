@@ -1,14 +1,13 @@
-import { JQ } from '../JQ';
-import JQElement from '../types/JQElement';
-import PlainObject from '../interfaces/PlainObject';
 import $ from '../$';
-import { isFunction, isObjectLike } from '../utils';
-import { remove } from './utils/event';
 import each from '../functions/each';
+import PlainObject from '../interfaces/PlainObject';
+import { JQ } from '../JQ';
+import { isFunction, isObjectLike } from '../utils';
 import './each';
+import { remove } from './utils/event';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 解除通过事件委托绑定的指定事件
      * @param eventName

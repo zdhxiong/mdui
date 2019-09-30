@@ -1,11 +1,11 @@
-import JQElement from '../types/JQElement';
-import JQSelector from '../types/JQSelector';
+import Selector from '../types/Selector';
 import './parent';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 返回匹配的所有祖先元素的 JQ 对象。
+     * $( "html" ).parents()返回一个空集合。
      * @param selector
      * @example ````返回 span 元素的所有祖先元素
 ```js
@@ -16,6 +16,6 @@ $('span').parents()
 $('span').parents('p');
 ```
      */
-    parents(selector?: JQSelector): this;
+    parents(selector?: Selector): this;
   }
 }

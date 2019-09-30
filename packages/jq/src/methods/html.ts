@@ -1,8 +1,8 @@
-import JQElement from '../types/JQElement';
+import HTMLString from '../types/HTMLString';
 import './val';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 设置当前元素的 HTML 内容
      * @param html
@@ -11,7 +11,17 @@ declare module '../JQ' {
 $('#box').html('html content')
 ```
      */
-    html(html: string): this;
+    html(
+      html:
+        | HTMLString
+        | Element
+        | undefined
+        | ((
+            this: T,
+            index: number,
+            oldHtml: HTMLString,
+          ) => HTMLString | Element | void | undefined),
+    ): this;
 
     /**
      * 获取当前元素的 HTML 内容
@@ -20,6 +30,6 @@ $('#box').html('html content')
 $('#box').html()
 ```
      */
-    html(): string;
+    html(): string | undefined;
   }
 }

@@ -1,11 +1,10 @@
-import JQElement from '../types/JQElement';
-import { JQ } from '../JQ';
 import $ from '../$';
 import removeData from '../functions/removeData';
+import { JQ } from '../JQ';
 import './each';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 移除元素上存储的数据。若未指定键名，则移除元素上所有数据
      * @param name

@@ -1,13 +1,14 @@
-import JQElement from '../types/JQElement';
-import JQSelector from '../types/JQSelector';
-import { isFunction } from '../utils';
-import { JQ } from '../JQ';
 import $ from '../$';
-import './map';
+import { JQ } from '../JQ';
+import Selector from '../types/Selector';
+import TypeOrArray from '../types/TypeOrArray';
+import { isFunction, isString } from '../utils';
 import './index';
+import './is';
+import './map';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 从当前对象中筛选出与指定表达式匹配的元素
      * 参数为函数时，函数返回 true 时，该元素会被保留，返回 false 时，该元素会被移除。
@@ -24,7 +25,11 @@ $('#select option').filter(function (idx, element) {
 ```
      */
     filter(
-      selector: JQSelector | ((this: T, index: number, element: T) => boolean),
+      selector:
+        | Selector
+        | TypeOrArray<Element>
+        | JQ
+        | ((this: T, index: number, element: T) => boolean),
     ): this;
   }
 }
@@ -33,6 +38,12 @@ $.fn.filter = function(this: JQ, selector: any): JQ {
   if (isFunction(selector)) {
     return this.map((index, element) =>
       selector.call(element, index, element) ? element : undefined,
+    );
+  }
+
+  if (isString(selector)) {
+    return this.map((_, element) =>
+      $(element).is(selector) ? element : undefined,
     );
   }
 

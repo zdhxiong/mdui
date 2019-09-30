@@ -1,43 +1,47 @@
-import JQSelector from '../../types/JQSelector';
-import { isElement } from '../../utils';
-import { JQ } from '../../JQ';
 import $ from '../../$';
 import unique from '../../functions/unique';
+import { JQ } from '../../JQ';
+import { isElement } from '../../utils';
 import '../each';
 import '../is';
 
 export default function dir(
   $elements: JQ,
-  selector: JQSelector,
   nameIndex: number,
   node: 'parentNode' | 'nextElementSibling' | 'previousElementSibling',
+  selector?: any,
+  filter?: string,
 ): JQ {
-  const ret: Node[] = [];
+  const ret: Element[] = [];
   let target;
 
   $elements.each((_, element) => {
-    if (!isElement(element)) {
-      return;
-    }
-
     target = element[node];
-    while (target) {
+
+    // 不能包含最顶层的 document 元素
+    while (target && isElement(target)) {
+      // prevUntil, nextUntil, parentsUntil
       if (nameIndex === 2) {
-        // prevUntil, nextUntil, parentsUntil
-        if (!selector || $(target).is(selector)) {
+        if (selector && $(target).is(selector)) {
           break;
         }
 
-        ret.push(target);
-      } else if (nameIndex === 0) {
-        // prev, next, parent
+        if (!filter || $(target).is(filter)) {
+          ret.push(target);
+        }
+      }
+
+      // prev, next, parent
+      else if (nameIndex === 0) {
         if (!selector || $(target).is(selector)) {
           ret.push(target);
         }
 
         break;
-      } else {
-        // prevAll, nextAll, parents
+      }
+
+      // prevAll, nextAll, parents
+      else {
         if (!selector || $(target).is(selector)) {
           ret.push(target);
         }

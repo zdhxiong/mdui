@@ -1,13 +1,12 @@
-import JQElement from '../types/JQElement';
-import JQSelector from '../types/JQSelector';
-import { JQ } from '../JQ';
 import $ from '../$';
 import each from '../functions/each';
-import dir from './utils/dir';
+import { JQ } from '../JQ';
+import Selector from '../types/Selector';
 import './get';
+import dir from './utils/dir';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 获取当前元素的前一个匹配的同辈元素
      * @param selector
@@ -20,15 +19,19 @@ $('.box').prev()
 $('.box').prev('div')
 ```
      */
-    prev(selector?: JQSelector): this;
+    prev(selector?: Selector): this;
   }
 }
 
 each(['', 'All', 'Until'], (nameIndex, name) => {
-  $.fn[`prev${name}`] = function(this: JQ, selector?: JQSelector): JQ {
+  $.fn[`prev${name}`] = function(
+    this: JQ,
+    selector?: any,
+    filter?: Selector,
+  ): JQ {
     // prevAll、prevUntil 需要把元素的顺序倒序处理，以便和 jQuery 的结果一致
-    const $nodes = nameIndex === 0 ? this : $(this.get().reverse());
+    const $nodes = !nameIndex ? this : $(this.get().reverse());
 
-    return dir($nodes, selector, nameIndex, 'previousElementSibling');
+    return dir($nodes, nameIndex, 'previousElementSibling', selector, filter);
   };
 });

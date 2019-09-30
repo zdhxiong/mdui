@@ -1,9 +1,8 @@
-import JQElement from '../types/JQElement';
-import JQSelector from '../types/JQSelector';
+import Selector from '../types/Selector';
 import './prev';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 获取当前元素前面的所有匹配的同辈元素
      * @param selector
@@ -16,6 +15,6 @@ $('.box').prevAll()
 $('.box').prevAll('.selected')
 ```
      */
-    prevAll(selector?: JQSelector): this;
+    prevAll(selector?: Selector): this;
   }
 }

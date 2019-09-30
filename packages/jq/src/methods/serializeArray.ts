@@ -1,20 +1,18 @@
-import JQElement from '../types/JQElement';
-import { isNodeName } from '../utils';
-import { JQ } from '../JQ';
 import $ from '../$';
+import { JQ } from '../JQ';
 import './each';
-import './attr';
 import './val';
 
 interface NameValuePair {
   name: string;
-  value: string;
+  value: any;
 }
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 把表单元素的值组合成由 name 和 value 的键值对组成的数组
+     * 该方法可对单独表单元素进行操作，也可以对整个 `<form>` 标签进行操作
      * @example
 ```js
 $('form').serializeArray()
@@ -31,34 +29,36 @@ $('form').serializeArray()
  */
 $.fn.serializeArray = function(this: JQ): NameValuePair[] {
   const result: NameValuePair[] = [];
-  const formElement = this[0];
 
-  if (!formElement || !(formElement instanceof HTMLFormElement)) {
-    return result;
-  }
+  this.each((_, element) => {
+    const elements =
+      element instanceof HTMLFormElement ? element.elements : [element];
 
-  $([].slice.call(formElement.elements)).each(function() {
-    const $item = $(this);
-    const type = $item.attr('type');
+    $(elements).each((_, element) => {
+      const $element = $(element);
+      const type = (element as HTMLInputElement).type;
+      const nodeName = element.nodeName.toLowerCase();
 
-    if (
-      !isNodeName(this, 'fieldset') &&
-      // @ts-ignore
-      !this.disabled &&
-      // @ts-ignore
-      ['submit', 'reset', 'button'].indexOf(type) === -1 &&
-      // @ts-ignore
-      (['radio', 'checkbox'].indexOf(type) === -1 || this.checked)
-    ) {
-      const name = $item.attr('name');
+      if (
+        nodeName !== 'fieldset' &&
+        (element as HTMLInputElement).name &&
+        !(element as HTMLInputElement).disabled &&
+        ['input', 'select', 'textarea', 'keygen'].indexOf(nodeName) > -1 &&
+        ['submit', 'button', 'image', 'reset', 'file'].indexOf(type) === -1 &&
+        (['radio', 'checkbox'].indexOf(type) === -1 ||
+          (element as HTMLInputElement).checked)
+      ) {
+        const value = $element.val();
+        const valueArr = Array.isArray(value) ? value : [value];
 
-      if (name) {
-        result.push({
-          name,
-          value: $item.val(),
+        valueArr.forEach(value => {
+          result.push({
+            name: (element as HTMLInputElement).name,
+            value,
+          });
         });
       }
-    }
+    });
   });
 
   return result;

@@ -1,72 +1,63 @@
-import JQElement from '../types/JQElement';
-import { isElement, isNodeName } from '../utils';
-import { JQ } from '../JQ';
 import $ from '../$';
+import { JQ } from '../JQ';
 import './css';
+import './eq';
 import './offset';
 import './offsetParent';
 
 interface Coordinates {
   left: number;
   top: number;
-  width?: number;
-  height?: number;
 }
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
-     * 获取元素相对于父元素的偏移
+     * 获取元素集中第一个元素相对于父元素的偏移
      * @example
 ```js
 $('.box').position();
-// { top: 20, left: 30, width: 100, height: 200 }
+// { top: 20, left: 30 }
 ```
      */
-    position(): Coordinates | undefined;
+    position(): Coordinates;
   }
 }
 
-$.fn.position = function(this: JQ): Coordinates | undefined {
-  const element = this[0];
+function floatStyle($element: JQ, name: string): number {
+  return parseFloat($element.css(name));
+}
 
-  if (!element || !isElement(element)) {
+$.fn.position = function(this: JQ): Coordinates | undefined {
+  if (!this.length) {
     return undefined;
   }
 
-  let $offsetParent: JQ;
+  const $element = this.eq(0);
+
+  let currentOffset: Coordinates;
   let parentOffset: Coordinates = {
     left: 0,
     top: 0,
   };
-  const offset = this.offset();
 
-  if (!offset) {
-    return undefined;
-  }
+  if ($element.css('position') === 'fixed') {
+    currentOffset = $element[0].getBoundingClientRect();
+  } else {
+    currentOffset = $element.offset();
 
-  if (this.css('position') !== 'fixed') {
-    $offsetParent = this.offsetParent();
-    if (!isNodeName($offsetParent[0] as HTMLElement, 'html')) {
-      parentOffset = $offsetParent.offset() as Coordinates;
-    }
-
-    parentOffset.top =
-      parentOffset.top + parseFloat($offsetParent.css('borderTopWidth') || '');
-
-    parentOffset.left =
-      parentOffset.left +
-      parseFloat($offsetParent.css('borderLeftWidth') || '');
+    const $offsetParent = $element.offsetParent();
+    parentOffset = $offsetParent.offset();
+    parentOffset.top += floatStyle($offsetParent, 'border-top-width');
+    parentOffset.left += floatStyle($offsetParent, 'border-left-width');
   }
 
   return {
     top:
-      offset.top - parentOffset.top - parseFloat(this.css('marginTop') || ''),
+      currentOffset.top - parentOffset.top - floatStyle($element, 'margin-top'),
     left:
-      offset.left -
+      currentOffset.left -
       parentOffset.left -
-      parseFloat(this.css('marginLeft') || ''),
-    width: offset.width,
-    height: offset.height,
+      floatStyle($element, 'margin-left'),
   };
 };

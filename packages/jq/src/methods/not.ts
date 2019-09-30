@@ -1,12 +1,12 @@
-import JQElement from '../types/JQElement';
-import JQSelector from '../types/JQSelector';
-import { JQ } from '../JQ';
 import $ from '../$';
-import './map';
+import { JQ } from '../JQ';
+import Selector from '../types/Selector';
+import TypeOrArray from '../types/TypeOrArray';
 import './filter';
+import './map';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 从当前对象中筛选出与表达式不匹配的元素
      * 参数为函数时，函数返回 true 时，该元素会被移除，返回 false 时，该元素会被保留。
@@ -22,14 +22,20 @@ $('#select option').not(function (idx, element) {
 })
 ```
      */
-    not(selection: JQSelector): this;
+    not(
+      selection:
+        | Selector
+        | TypeOrArray<Element>
+        | JQ
+        | ((this: T, index: number, element: T) => boolean),
+    ): this;
   }
 }
 
-$.fn.not = function(this: JQ, selector: JQSelector): JQ {
+$.fn.not = function(this: JQ, selector: any): JQ {
   const $excludes = this.filter(selector);
 
-  return this.map((index, element) =>
+  return this.map((_, element) =>
     $excludes.index(element) > -1 ? undefined : element,
   );
 };

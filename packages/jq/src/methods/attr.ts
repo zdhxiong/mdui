@@ -1,16 +1,27 @@
-import JQElement from '../types/JQElement';
-import PlainObject from '../interfaces/PlainObject';
-import { isElement, isFunction, isObjectLike, isUndefined } from '../utils';
-import { JQ } from '../JQ';
 import $ from '../$';
 import each from '../functions/each';
+import PlainObject from '../interfaces/PlainObject';
+import { JQ } from '../JQ';
+import {
+  cssNumber,
+  getComputedStyleValue,
+  isElement,
+  isFunction,
+  isNull,
+  isNumber,
+  isObjectLike,
+  isUndefined,
+  toCamelCase,
+} from '../utils';
 import './each';
 
 declare module '../JQ' {
-  interface JQ<T = JQElement> {
+  interface JQ<T = HTMLElement> {
     /**
      * 设置元素的属性
-     * @param attributeName
+     * 如果为 null，则删除指定属性
+     * 如果值为 void 或 undefined，则不修改当前属性
+     * @param name
      * @param value
      * @example ````设置属性值
 ```js
@@ -24,16 +35,17 @@ $('img').attr('src', function() {
 ```
      */
     attr(
-      attributeName: string,
+      name: string,
       value:
         | string
         | number
         | null
+        | undefined
         | ((
-            this: HTMLElement,
+            this: T,
             index: number,
             oldAttrValue: string,
-          ) => string | number | void | undefined),
+          ) => string | number | null | void | undefined),
     ): this;
 
     /**
@@ -63,57 +75,82 @@ $('img').attr({
         | string
         | number
         | null
+        | undefined
         | ((
-            this: HTMLElement,
+            this: T,
             index: number,
             oldAttrValue: string,
-          ) => string | number | void | undefined)
+          ) => string | number | null | void | undefined)
       >,
     ): this;
 
     /**
      * 获取第一个元素的属性值
-     * @param attributeName
+     * @param name
      * @example
 ```js
 $('div').attr('title');
 ```
      */
-    attr(attributeName: string): string | undefined;
+    attr(name: string): string | undefined;
   }
 }
 
 each(['attr', 'prop', 'css'], (nameIndex, name) => {
   function set(element: HTMLElement, key: string, value: any): void {
-    if (nameIndex === 0) {
-      element.setAttribute(key, value);
-    } else if (nameIndex === 1) {
-      // @ts-ignore
-      element[key] = value;
-    } else {
-      // @ts-ignore
-      element.style[key] = value;
+    // 值为 undefined 时，不修改
+    if (isUndefined(value)) {
+      return;
+    }
+
+    switch (nameIndex) {
+      // attr
+      case 0:
+        if (isNull(value)) {
+          element.removeAttribute(key);
+        } else {
+          element.setAttribute(key, value);
+        }
+        break;
+
+      // prop
+      case 1:
+        // @ts-ignore
+        element[key] = value;
+        break;
+
+      // css
+      default:
+        key = toCamelCase(key);
+
+        // @ts-ignore
+        element.style[key] = isNumber(value)
+          ? `${value}${cssNumber.indexOf(key) > -1 ? '' : 'px'}`
+          : value;
+        break;
     }
   }
 
   function get(element: HTMLElement, key: string): any {
-    if (nameIndex === 0) {
-      return element.getAttribute(key);
-    }
+    switch (nameIndex) {
+      // attr
+      case 0:
+        // 属性不存在时，原生 getAttribute 方法返回 null，而 jquery 返回 undefined。这里和 jquery 保持一致
+        const value = element.getAttribute(key);
+        return isNull(value) ? undefined : value;
 
-    if (nameIndex === 1) {
-      // @ts-ignore
-      return element[key];
-    }
+      // prop
+      case 1:
+        // @ts-ignore
+        return element[key];
 
-    return window.getComputedStyle(element, null).getPropertyValue(key);
+      // css
+      default:
+        return getComputedStyleValue(element, key);
+    }
   }
 
-  $.fn[name] = function<T extends JQElement>(
-    this: JQ<T>,
-    key: string | PlainObject,
-    value?: any,
-  ): any {
+  $.fn[name] = function(this: JQ, key: string | PlainObject, value?: any): any {
     if (isObjectLike(key)) {
       each(key, (k, v) => {
         // @ts-ignore
@@ -123,22 +160,18 @@ each(['attr', 'prop', 'css'], (nameIndex, name) => {
       return this;
     }
 
-    if (isUndefined(value)) {
+    if (arguments.length === 1) {
       const element = this[0];
 
       return isElement(element) ? get(element, key) : undefined;
     }
 
     return this.each((i, element) => {
-      if (!isElement(element)) {
-        return;
-      }
-
-      if (isFunction(value)) {
-        value = value.call(element, i, get(element, key));
-      }
-
-      set(element, key, value);
+      set(
+        element,
+        key,
+        isFunction(value) ? value.call(element, i, get(element, key)) : value,
+      );
     });
   };
 });

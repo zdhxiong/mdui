@@ -6,6 +6,9 @@ const typescript = require('rollup-plugin-typescript');
 const polyfill = require('rollup-plugin-polyfill');
 const tsconfig = require('./src/tsconfig.json');
 const pkg = require('./package.json');
+const serverFactory = require('spa-server');
+
+const arguments = process.argv.splice(2);
 
 const banner = `
 /*!
@@ -84,4 +87,47 @@ async function build() {
   await buildUmdUglify();
 }
 
-build();
+async function test() {
+  await rollup.watch({
+    input: './test/index.ts',
+    output: [{
+      strict: true,
+      name: 'JQTest',
+      format: 'umd',
+      file: './test/dist.js',
+    }],
+    plugins: [
+      eslint({
+        fix: true,
+      }),
+      typescript({
+        module: "ES6",
+        target: "ES6"
+      }),
+      buble(),
+    ],
+    watch: {
+      clearScreen: true,
+      include: [
+        './test/unit/**/*',
+         './src/**/*',
+      ]
+    }
+  });
+
+  const server = serverFactory.create({
+    path: './',
+  });
+
+  server.start();
+
+  console.log(
+`打开 http://127.0.0.1:8888/test/jq.html 使用 mdui.jq 开始测试
+打开 http://127.0.0.1:8888/test/jquery.html 使用 jquery 开始测试`);
+}
+
+if (arguments.indexOf('--build') > -1) {
+  build();
+} else if (arguments.indexOf('--test') > -1) {
+  test();
+}

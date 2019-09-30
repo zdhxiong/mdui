@@ -1,8 +1,8 @@
-import JQElement from '../../types/JQElement';
-import { isObjectLike } from '../../utils';
 import $ from '../../$';
 import contains from '../../functions/contains';
 import data from '../../functions/data';
+import JQElement from '../../types/JQElement';
+import { isObjectLike } from '../../utils';
 import '../find';
 
 type Handler = {
@@ -113,7 +113,10 @@ function add(
           .get()
           .reverse()
           .forEach(elem => {
-            if (elem === e.target || contains(elem, e.target as HTMLElement)) {
+            if (
+              elem === e.target ||
+              contains(elem as HTMLElement, e.target as HTMLElement)
+            ) {
               callFn(e, elem);
             }
           });

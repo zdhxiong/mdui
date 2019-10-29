@@ -11,12 +11,13 @@ interface NameValuePair {
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 把表单元素的值组合成由 name 和 value 的键值对组成的数组
-     * 该方法可对单独表单元素进行操作，也可以对整个 `<form>` 标签进行操作
+     * 把表单元素的值组合成由 `name` 和 `value` 的键值对组成的数组
+     *
+     * 该方法可对单独表单元素进行操作，也可以对整个 `<form>` 表单进行操作
      * @example
 ```js
 $('form').serializeArray()
-// [ {"name":"name","value":"mdui"}, {"name":"password","value":""} ]
+// [ {"name":"name","value":"mdui"}, {"name":"password","value":"123456"} ]
 ```
      */
     serializeArray(): NameValuePair[];

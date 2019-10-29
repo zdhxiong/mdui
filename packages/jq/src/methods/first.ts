@@ -5,7 +5,7 @@ import './eq';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 返回当前对象中第一个元素的 JQ 对象。
+     * 返回当前集合中第一个元素的 JQ 对象
      * @example
 ```js
 $('div').first()

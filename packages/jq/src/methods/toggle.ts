@@ -8,7 +8,7 @@ import './show';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 切换当前元素的显示状态
+     * 切换集合中所有元素的显示状态
      * @example
 ```js
 $('.box').toggle()

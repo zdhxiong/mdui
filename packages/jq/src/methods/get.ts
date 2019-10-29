@@ -4,25 +4,28 @@ import { JQ } from '../JQ';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 获取指定索引位置的 Dom 元素
-     * @param index 索引号
-     * @example ````获取第 3 个 p 元素
+     * 获取集合中指定索引位置的元素
+     * @param index 索引位置
+     * @example
 ```js
+// 获取第 3 个 p 元素
 $('p').get(2)
 ```
-     * @example ````获取最后一个 p 元素
+     * @example
 ```js
+// 获取最后一个 p 元素
 $('p').get(-1)
 ```
      */
     get(index: number): T;
 
     /**
-     * 获取 Dom 元素组成的数组
-     * @example ````获取所有 p 元素组成的数组
-````js
+     * 获取集合中所有元素组成的数组
+     * @example
+```js
+// 获取所有 p 元素组成的数组
 $('p').get()
-````
+```
      */
     get(): T[];
   }

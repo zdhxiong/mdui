@@ -6,7 +6,7 @@ import './serializeArray';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 将表单元素数组或者对象序列化
+     * 把表单元素的值编译为字符串
      * @example
 ```js
 $('form').serialize();
@@ -17,10 +17,6 @@ $('form').serialize();
   }
 }
 
-/**
- * 将表单元素或对象序列化
- * @returns {String}
- */
 $.fn.serialize = function(this: JQ): string {
   return param(this.serializeArray());
 };

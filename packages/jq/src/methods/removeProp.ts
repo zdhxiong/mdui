@@ -5,8 +5,8 @@ import './each';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 删除属性值
-     * @param name
+     * 删除集合中每个元素上的指定属性
+     * @param name 属性名
      * @example
 ```js
 $('input').removeProp('disabled')

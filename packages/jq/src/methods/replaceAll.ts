@@ -9,11 +9,12 @@ import './replaceWith';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 用当前元素替换指定元素
-     * @param target
+     * 用当前集合中的元素替换指定元素
+     * @param target 被替换的元素。可以是 CSS 选择器、DOM 元素、DOM 元素数组、或 JQ 对象
      * @returns 用于替换的元素的集合
-     * @example ````用 .new 元素替换所有 .box 元素
+     * @example
 ```js
+// 用 .new 元素替换所有 .box 元素
 $('.new').replaceAll('.box');
 ```
      */

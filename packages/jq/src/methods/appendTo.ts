@@ -6,18 +6,19 @@ import Selector from '../types/Selector';
 import TypeOrArray from '../types/TypeOrArray';
 import './insertAfter';
 import './insertBefore';
+import './map';
 import './remove';
 
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
      * 把当前元素追加到指定元素内部的后面
-     * @param selector
+     * @param target CSS 选择器、HTML 字符串、DOM 元素、DOM 元素数组、或 JQ 对象
      * @returns 由新插入的元素组成的集合
      * @example
 ```js
 $('<p>Hello</p>').appendTo('<p>I would like to say: </p>')
-// [ <p>I would like to say: <p>Hello</p></p> ]
+// <p>I would like to say: <p>Hello</p></p>
 ```
      */
     appendTo(target: Selector | HTMLString | TypeOrArray<Element> | JQ): this;

@@ -5,7 +5,7 @@
 [![npm version](https://img.shields.io/npm/v/mdui.jq.svg)](https://www.npmjs.com/package/mdui.jq)
 [![dependencies Status](https://david-dm.org/zdhxiong/mdui.JQ/status.svg)](https://david-dm.org/zdhxiong/mdui.JQ)
 [![devDependencies Status](https://david-dm.org/zdhxiong/mdui.JQ/dev-status.svg)](https://david-dm.org/zdhxiong/mdui.JQ?type=dev)
-[![DeepScan grade](https://deepscan.io/api/teams/5880/projects/7707/branches/82471/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=5880&pid=7707&bid=82471)
+[![CodeFactor](https://www.codefactor.io/repository/github/zdhxiong/mdui.jq/badge)](https://www.codefactor.io/repository/github/zdhxiong/mdui.jq)
 
 拥有和 jQuery 相似 API 的轻量级 JavaScript 工具库。已作为 [MDUI](https://github.com/zdhxiong/mdui) 内置工具库使用。
 

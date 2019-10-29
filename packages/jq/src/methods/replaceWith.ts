@@ -8,12 +8,21 @@ import './remove';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 用新元素替换当前元素
+     * 用指定元素替换当前集合中的元素
      * @param newContent
-     * @returns 被删除的元素集
-     * @example ````用 <p>Hello</p> 替换所有的 .box 元素
+     * 可以是 HTML 字符串、DOM 元素、DOM 元素数组、JQ 对象、或回调函数
+     *
+     * 回调函数的第一个参数为元素的索引位置，第二个参数为当前元素 HTML 字符串，`this` 指向当前元素
+     * @returns 被替换调的元素集
+     * @example
 ```js
 $('.box').replaceWith('<p>Hello</p>')
+```
+     * @example
+```js
+$('.box').replaceWith(function (index, html) {
+  return html + index;
+})
 ```
      */
     replaceWith(

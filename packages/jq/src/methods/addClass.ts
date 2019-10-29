@@ -8,20 +8,26 @@ import './each';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 添加 CSS 类，多个类名用空格分割
+     * 在当前元素上添加 CSS 类
      * @param className
-     * @example ````在 p 元素上加上 item 类
+     * CSS 类名的字符串，多个类名可以用空格分隔
+     *
+     * 也可以是一个返回 CSS 类名的回调函数。回调函数的第一个参数为元素的索引位置，第二个参数为旧的 CSS 类名，`this` 指向当前元素
+     * @example
 ```js
+// 在 p 元素上加上 item 类
 $('p').addClass('item')
 ```
-     * @example ````在 p 元素上加上 item1 和 item2 两个类
+     * @example
 ```js
+// 在 p 元素上加上 item1 和 item2 两个类
 $('p').addClass('item1 item2')
 ```
-     * @example ````在 p 元素上添加回调函数返回的类
+     * @example
 ```js
-$('p').addClass(function () {
-  return 'mdui';
+// 在 p 元素上添加由回调函数返回的类
+$('p').addClass(function (index, currentClassName) {
+  return currentClassName + '-' + index;
 });
 ```
      */

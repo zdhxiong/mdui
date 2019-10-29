@@ -6,8 +6,9 @@ import './map';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 返回最近的用于定位的父元素，
-     * 即父元素中第一个 position 为 relative, absolute 或 fixed 的元素
+     * 返回最近的用于定位的父元素
+     *
+     * 即父元素中第一个 `position` 为 `relative`, `absolute` 或 `fixed` 的元素
      * @example
 ```js
 $('.box').offsetParent()

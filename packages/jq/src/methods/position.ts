@@ -13,7 +13,7 @@ interface Coordinates {
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 获取元素集中第一个元素相对于父元素的偏移
+     * 获取集合中第一个元素相对于父元素的偏移
      * @example
 ```js
 $('.box').position();

@@ -4,7 +4,7 @@ declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
      * 是否含有指定的 CSS 类
-     * @param className
+     * @param className CSS 类名
      * @example
 ```js
 $('div').hasClass('item')

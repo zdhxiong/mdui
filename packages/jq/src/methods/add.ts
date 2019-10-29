@@ -9,8 +9,9 @@ declare module '../JQ' {
     /**
      * 添加元素到当前 JQ 对象中
      * @param selector 可以是 HTML 字符串、CSS 选择器、JQ 对象、DOM 元素、DOM 元素数组、NodeList 等
-     * @example ````把含 .selected 的元素添加到当前 JQ 对象中
+     * @example
 ```js
+// 把含 .selected 的元素添加到当前 JQ 对象中
 $('.box').add('.selected');
 ```
      */

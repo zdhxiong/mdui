@@ -3,16 +3,23 @@ import './width';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 设置对象中所有元素的高度。参数是数字或数字字符串时，自动添加 px 作为单位
+     * 设置集合中所有元素的高度
      * @param value
+     * 可以是带单位的字符串，或者数值；或者是返回带单位的字符串或数值的回调函数
+     *
+     * 回调函数的第一个参数为元素的索引位置，第二个参数为旧的高度值，`this` 指向当前元素
+     *
+     * 若该值、或函数返回值是数值，则自动添加 `px` 作为单位
+     *
+     * 若该值、或函数返回值是 `null` 或 `undefined`，则不修改元素的高度
      * @example
-     ```js
-     $('.box').height('20%')
-     ```
-     @example
-     ```js
-     $('.box').height(10);
-     ```
+```js
+$('.box').height('20%')
+```
+      * @example
+```js
+$('.box').height(10);
+```
      */
     height(
       value:

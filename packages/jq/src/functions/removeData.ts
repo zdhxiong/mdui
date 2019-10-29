@@ -4,13 +4,15 @@ import dataNS from './utils/data';
 /**
  * 移除指定元素上存放的数据
  * @param element 存放数据的元素
- * @param name 数据键名，若为指定键名，将移除元素上所有数据
- * @example ````移除指定键名的数据
+ * @param name 数据键名。若未指定键名，将移除元素上所有数据
+ * @example
 ```js
+// 移除元素上键名为 name 的数据
 removeData(document.body, 'name');
 ```
- * @example ````移除所有数据
+ * @example
 ```js
+// 移除元素上所有数据
 removeData(document.body);
 ```
  */

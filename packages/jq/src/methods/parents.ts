@@ -4,15 +4,16 @@ import './parent';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 返回匹配的所有祖先元素的 JQ 对象。
-     * $( "html" ).parents()返回一个空集合。
-     * @param selector
-     * @example ````返回 span 元素的所有祖先元素
+     * 获取当前集合中，所有元素的祖先元素
+     * @param selector CSS 选择器。若指定了该参数，则仅返回与该参数匹配的祖先元素的集合
+     * @example
 ```js
+// 返回 span 元素的所有祖先元素
 $('span').parents()
 ```
-     * @example ````返回 span 元素的所有是 p 元素的祖先元素
+     * @example
 ```js
+// 返回 span 元素的所有是 p 元素的祖先元素
 $('span').parents('p');
 ```
      */

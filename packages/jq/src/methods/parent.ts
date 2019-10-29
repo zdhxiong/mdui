@@ -8,16 +8,16 @@ import dir from './utils/dir';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 如果没有传入参数，则返回直接父元素的 JQ 对象。
-     * 如果传入了参数，仅返回和 CSS 选择器匹配的直接父元素的 JQ 对象。
-     * $('html').parent() 返回一个包含document的集合
-     * @param selector
-     * @example ````返回 .box 元素的直接父元素
+     * 获取当前集合中，所有元素的直接父元素的集合
+     * @param selector CSS 选择器。若指定了该参数，则仅返回与该参数匹配的父元素的集合
+     * @example
 ```js
+// 返回 .box 元素的直接父元素的集合
 $('.box').parent()
 ```
-     * @example ````返回 .box 元素的直接父元素中含有 .parent 类的元素
+     * @example
 ```js
+// 返回 .box 元素的直接父元素中含有 .parent 元素的集合
 $('.box').parent('.parent')
 ```
      */

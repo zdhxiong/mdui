@@ -6,8 +6,9 @@ import { isNull, toElement } from '../utils';
  * @param contains 子元素
  * @example
 ```js
-contains( document.documentElement, document.body ); // true
-contains( document.body, document.documentElement ); // false
+contains( document, document.body ); // true
+contains( document.getElementById('test'), document ); // false
+contains( $('.container').get(0), $('.contains').get(0) ); // false
 ```
  */
 function contains(

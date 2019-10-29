@@ -5,7 +5,7 @@ import './each';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 隐藏对象中所有元素
+     * 隐藏集合中所有元素
      * @example
 ```js
 $('.box').hide();

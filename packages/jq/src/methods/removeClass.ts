@@ -3,17 +3,24 @@ import './addClass';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 移除 CSS 类，多个类名用空格分隔
+     * 移除集合中每个元素上的 CSS 类
      * @param className
-     * @example ````移除 p 元素上的 item 类
+     * CSS 类名、或返回 CSS 类名的回调函数
+     *
+     * 回调函数的第一个参数为元素的索引位置，第二个参数为旧的 CSS 类名，`this` 指向当前元素
+     *
+     * 多个 CSS 类名可以用空格分隔
+     *
+     * 若没有指定该参数，则将直接移除元素上的 `class` 属性
+     * @example
 ```js
 $('p').removeClass('item')
 ```
-     * @example ````移除 p 元素上的 item1 和 item2 两个类
+     * @example
 ```js
 $('p').removeClass('item1 item2')
 ```
-     * @example ````移除 p 元素上的由回调函数返回的类
+     * @example
 ```js
 $('p').removeClass(function () {
   return 'item1';
@@ -23,7 +30,7 @@ $('p').removeClass(function () {
     removeClass(
       className?:
         | string
-        | ((this: T, index: number, currentClassName: string) => string),
+        | ((this: T, index: number, oldClassName: string) => string),
     ): this;
   }
 }

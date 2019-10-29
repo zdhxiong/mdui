@@ -10,14 +10,16 @@ import './is';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 获取当前元素的直接子元素，可以使用 CSS 选择器作为参数进行过滤
-     * @param selector
-     * @example ````找到 #box 的所有直接子元素
+     * 获取当前元素的直接子元素
+     * @param selector CSS 选择器。若指定了该参数，则使用该参数对子元素进行过滤
+     * @example
 ```js
+// 找到 #box 的所有直接子元素
 $('#box').children()
 ```
-     * @example ````找到 #box 的所有直接子元素中，包含 .box 的元素集合
+     * @example
 ```js
+// 找到 #box 的所有直接子元素中，包含 .box 的元素集合
 $('#box').children('.box')
 ```
      */

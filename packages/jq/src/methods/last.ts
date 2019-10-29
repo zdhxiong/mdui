@@ -5,7 +5,7 @@ import './eq';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 获取对象中最后一个元素
+     * 返回当前集合中最后一个元素的 JQ 对象
      * @example
 ```js
 $('div').last()

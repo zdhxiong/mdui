@@ -6,8 +6,7 @@ import './each';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 显示对象中的所有元素
-     * 即将元素的 display 属性恢复到初始值
+     * 显示集合中的所有元素
      * @example
 ```js
 $('.box').show()

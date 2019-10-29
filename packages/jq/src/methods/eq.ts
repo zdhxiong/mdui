@@ -5,14 +5,16 @@ import './slice';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 返回 JQ 对象中指定索引号的元素的 JQ 对象
-     * @param index
-     * @example ````返回第一个元素的 JQ 对象
+     * 返回 JQ 对象中指定索引位置的元素的 JQ 对象
+     * @param index 元素的索引位置
+     * @example
 ```js
+// 返回第一个元素的 JQ 对象
 $('div').eq(0);
 ```
-     * @example ````返回最后一个元素的 JQ 对象
+     * @example
 ```js
+// 返回最后一个元素的 JQ 对象
 $('div').eq(-1);
 ```
      */

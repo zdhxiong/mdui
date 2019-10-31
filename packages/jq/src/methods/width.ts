@@ -1,13 +1,20 @@
 import $ from '../$';
 import each from '../functions/each';
 import { JQ } from '../JQ';
-import { isDocument, isFunction, isWindow, toElement } from '../utils';
+import {
+  isBoolean,
+  isDocument,
+  isFunction,
+  isWindow,
+  toElement,
+} from '../utils';
 import './css';
+import './each';
 
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 设置集合中所有元素的宽度
+     * 设置集合中所有元素的宽度（不包含 `padding`, `border`, `margin` 的宽度）
      * @param value
      * 可以是带单位的字符串，或者数值；或者是返回带单位的字符串或数值的回调函数
      *
@@ -18,7 +25,7 @@ declare module '../JQ' {
      * 若该值、或函数返回值是 `null` 或 `undefined`，则不修改元素的宽度
      * @example
 ```js
-$('.box').width('20%')
+$('.box').width('20%');
 ```
      * @example
 ```js
@@ -39,7 +46,7 @@ $('.box').width(10);
     ): this;
 
     /**
-     * 获取集合中第一个元素的宽度（像素值），不包含 padding, border, margin 的宽度
+     * 获取集合中第一个元素的宽度（像素值），不包含 `padding`, `border`, `margin` 的宽度
      * @example
 ```js
 $('.box').width();
@@ -49,62 +56,202 @@ $('.box').width();
   }
 }
 
-each(
-  {
-    Width: 'width',
-    Height: 'height',
-  },
-  (prop, name) => {
-    function get(element: Element): number {
-      const clientPropName = `client${prop}` as 'clientWidth' | 'clientHeight';
-      const scrollPropName = `scroll${prop}` as 'scrollWidth' | 'scrollHeight';
-      const offsetPropName = `offset${prop}` as 'offsetWidth' | 'offsetHeight';
+type typeName = 'Width' | 'Height';
+type typeFuncIndex = 0 | 1 | 2;
+type typeExtra = 'margin' | 'padding' | 'border';
 
-      if (isWindow(element)) {
-        return toElement(document)[clientPropName];
-      }
+/**
+ * 元素的 box-sizing 是否为 border-box
+ * @param $element
+ */
+function isBorderBox($element: JQ): boolean {
+  return $element.css('box-sizing') === 'border-box';
+}
 
-      if (isDocument(element)) {
-        const doc = toElement(element) as HTMLElement;
+/**
+ * 值上面的 padding、border、margin 处理
+ * @param $element
+ * @param name
+ * @param value
+ * @param funcIndex
+ * @param includeMargin
+ * @param multiply
+ */
+function handleExtraWidth(
+  $element: JQ,
+  name: typeName,
+  value: number,
+  funcIndex: typeFuncIndex,
+  includeMargin: boolean,
+  multiply: number, // 值乘以多少
+): number {
+  // 获取元素的 padding, border, margin 宽度（两侧宽度的和）
+  const getExtraWidth = (extra: typeExtra): number => {
+    const direction = name === 'Width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
 
-        return Math.max(
-          element.body[scrollPropName],
-          doc[scrollPropName],
-          element.body[offsetPropName],
-          doc[offsetPropName],
-          doc[clientPropName],
-        );
-      }
+    return (
+      [0, 1].reduce((prev, _, index) => {
+        let prop = extra + direction[index];
 
-      return parseFloat($(element).css(name) || '0');
+        if (extra === 'border') {
+          prop += 'Width';
+        }
+
+        return prev + parseFloat($element.css(prop) || '0');
+      }, 0) * multiply
+    );
+  };
+
+  if (funcIndex === 2 && includeMargin) {
+    value += getExtraWidth('margin');
+  }
+
+  if (isBorderBox($element)) {
+    if (funcIndex === 0) {
+      value -= getExtraWidth('border');
     }
 
-    $.fn[name] = function(this: JQ, value?: any): JQ | number | undefined {
-      // 获取第一个元素的值
-      if (!arguments.length) {
-        if (!this.length) {
-          return undefined;
+    if (funcIndex === 1) {
+      value -= getExtraWidth('border');
+      value -= getExtraWidth('padding');
+    }
+  } else {
+    if (funcIndex === 0) {
+      value += getExtraWidth('padding');
+    }
+
+    if (funcIndex === 2) {
+      value += getExtraWidth('border');
+      value += getExtraWidth('padding');
+    }
+  }
+
+  return value;
+}
+
+/**
+ * 获取元素的样式值
+ * @param element
+ * @param name
+ * @param funcIndex 0: innerWidth, innerHeight; 1: width, height; 2: outerWidth, outerHeight
+ * @param includeMargin
+ */
+function get(
+  element: HTMLElement,
+  name: typeName,
+  funcIndex: typeFuncIndex,
+  includeMargin: boolean,
+): number {
+  const clientProp = `client${name}` as 'clientWidth' | 'clientHeight';
+  const scrollProp = `scroll${name}` as 'scrollWidth' | 'scrollHeight';
+  const offsetProp = `offset${name}` as 'offsetWidth' | 'offsetHeight';
+  const innerProp = `inner${name}` as 'innerWidth' | 'innerHeight';
+
+  // $(window).width()
+  if (isWindow(element)) {
+    // outerWidth, outerHeight 需要包含滚动条的宽度
+    return funcIndex === 2
+      ? element[innerProp]
+      : toElement(document)[clientProp];
+  }
+
+  // $(document).width()
+  if (isDocument(element)) {
+    const doc = toElement(element) as HTMLElement;
+
+    return Math.max(
+      element.body[scrollProp],
+      doc[scrollProp],
+      element.body[offsetProp],
+      doc[offsetProp],
+      doc[clientProp],
+    );
+  }
+
+  const $element = $(element);
+  const value = parseFloat($element.css(name.toLowerCase()) || '0');
+
+  return handleExtraWidth($element, name, value, funcIndex, includeMargin, 1);
+}
+
+/**
+ * 设置元素的样式值
+ * @param element
+ * @param elementIndex
+ * @param name
+ * @param funcIndex 0: innerWidth, innerHeight; 1: width, height; 2: outerWidth, outerHeight
+ * @param includeMargin
+ * @param value
+ */
+function set(
+  element: HTMLElement,
+  elementIndex: number,
+  name: typeName,
+  funcIndex: typeFuncIndex,
+  includeMargin: boolean,
+  value: string | number,
+): void {
+  let computedValue = isFunction(value)
+    ? value.call(
+        element,
+        elementIndex,
+        get(element, name, funcIndex, includeMargin),
+      )
+    : value;
+
+  if (computedValue == null) {
+    return;
+  }
+
+  const $element = $(element);
+  const dimension = name.toLowerCase();
+
+  // computedValue 不是数值，且单位不是 px 时，计算以 px 为单位的值
+  if (isNaN(Number(computedValue)) && computedValue.substr(-2) !== 'px') {
+    $element.css(dimension, computedValue);
+    computedValue = $element.css(dimension);
+  }
+
+  // 去除单位
+  computedValue = parseFloat(computedValue);
+
+  computedValue = handleExtraWidth(
+    $element,
+    name,
+    computedValue,
+    funcIndex,
+    includeMargin,
+    -1,
+  );
+
+  $element.css(dimension, computedValue);
+}
+
+each(['Width', 'Height'], (_, name: typeName) => {
+  each(
+    [`inner${name}`, name.toLowerCase(), `outer${name}`],
+    (funcIndex: typeFuncIndex, funcName) => {
+      $.fn[funcName] = function(
+        this: JQ,
+        margin?: any,
+        value?: any,
+      ): JQ | number | undefined {
+        // 是否是赋值操作
+        const isSet = arguments.length && (funcIndex < 2 || !isBoolean(margin));
+        const includeMargin = margin === true || value === true;
+
+        // 获取第一个元素的值
+        if (!isSet) {
+          return this.length
+            ? get(this[0], name, funcIndex, includeMargin)
+            : undefined;
         }
 
-        return get(this[0]);
-      }
-
-      // 设置每个元素的值
-      return this.each((index, element) => {
-        let computedValue = isFunction(value)
-          ? value.call(element, index, get(element))
-          : value;
-
-        if (computedValue == null) {
-          return;
-        }
-
-        if (!isNaN(Number(computedValue)) && computedValue !== '') {
-          computedValue += 'px';
-        }
-
-        $(element).css(name, computedValue);
-      });
-    };
-  },
-);
+        // 设置每个元素的值
+        return this.each((index, element) =>
+          set(element, index, name, funcIndex, includeMargin, margin),
+        );
+      };
+    },
+  );
+});

@@ -14,6 +14,10 @@ function isNumber(target: any): target is number {
   return typeof target === 'number';
 }
 
+function isBoolean(target: any): target is boolean {
+  return typeof target === 'boolean';
+}
+
 function isUndefined(target: any): target is undefined {
   return typeof target === 'undefined';
 }
@@ -55,7 +59,7 @@ function toElement(target: Element | Document): Element {
 }
 
 /**
- * 把用 - 分隔的字符串转为驼峰
+ * 把用 - 分隔的字符串转为驼峰（如 box-sizing 转换为 boxSizing）
  * @param string
  */
 function toCamelCase(string: string): string {
@@ -64,8 +68,18 @@ function toCamelCase(string: string): string {
     .replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase());
 }
 
+/**
+ * 把驼峰法转为用 - 分隔的字符串（如 boxSizing 转换为 box-sizing）
+ * @param string
+ */
+function toKebabCase(string: string): string {
+  return string.replace(/[A-Z]/g, replacer => '-' + replacer.toLowerCase());
+}
+
 function getComputedStyleValue(element: Element, name: string): string {
-  return window.getComputedStyle(element, null).getPropertyValue(name);
+  return window
+    .getComputedStyle(element, null)
+    .getPropertyValue(toKebabCase(name));
 }
 
 function getChildNodesArray(target: string, parent: string): Array<Node> {
@@ -108,6 +122,7 @@ export {
   isFunction,
   isString,
   isNumber,
+  isBoolean,
   isUndefined,
   isNull,
   isWindow,
@@ -116,6 +131,7 @@ export {
   isNode,
   toElement,
   toCamelCase,
+  toKebabCase,
   getComputedStyleValue,
   getChildNodesArray,
   cssNumber,

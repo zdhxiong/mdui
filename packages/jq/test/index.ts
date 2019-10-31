@@ -57,6 +57,8 @@ import './unit/methods/offset';
 import './unit/methods/offsetParent';
 import './unit/methods/on';
 import './unit/methods/one';
+import './unit/methods/outerHeight';
+import './unit/methods/outerWidth';
 import './unit/methods/parent';
 import './unit/methods/parents';
 import './unit/methods/parentsUntil';

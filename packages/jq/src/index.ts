@@ -60,6 +60,8 @@ import './methods/offset';
 import './methods/offsetParent';
 import './methods/on';
 import './methods/one';
+import './methods/outerWidth';
+import './methods/outerHeight';
 import './methods/parent';
 import './methods/parents';
 import './methods/parentsUntil';

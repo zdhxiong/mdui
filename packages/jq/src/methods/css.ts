@@ -11,7 +11,7 @@ declare module '../JQ' {
      *
      * 也可以是一个返回字符串或数值的回调函数。函数的第一个参数为元素的索引位置，第二个参数为旧的 CSS 属性值，`this` 指向当前元素
      *
-     * 若属性值或回调函数返回 `void` 或 `undefined`，则不修改当前样式。
+     * 若属性值或回调函数返回 `void`、`undefined` 或 `null`，则不修改当前样式。
      *
      * 若属性值或回调函数返回数值，则会添加 `px` 作为单位。若该属性无法使用 `px` 作为单位，则会直接把值转为字符串。
      * @example
@@ -30,12 +30,13 @@ $('#box').css('color', function () {
       value:
         | string
         | number
+        | null
         | undefined
         | ((
             this: T,
             index: number,
             oldCssValue: string,
-          ) => string | number | void | undefined),
+          ) => string | number | null | void | undefined),
     ): this;
 
     /**
@@ -69,12 +70,13 @@ $('#box').css({
       properties: PlainObject<
         | string
         | number
+        | null
         | undefined
         | ((
             this: T,
             index: number,
             oldCssValue: string,
-          ) => string | number | void | undefined)
+          ) => string | number | null | void | undefined)
       >,
     ): this;
 

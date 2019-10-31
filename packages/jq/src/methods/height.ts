@@ -3,7 +3,7 @@ import './width';
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
-     * 设置集合中所有元素的高度
+     * 设置集合中所有元素的高度（不包含 `padding`, `border`, `margin` 的宽度）
      * @param value
      * 可以是带单位的字符串，或者数值；或者是返回带单位的字符串或数值的回调函数
      *
@@ -14,7 +14,7 @@ declare module '../JQ' {
      * 若该值、或函数返回值是 `null` 或 `undefined`，则不修改元素的高度
      * @example
 ```js
-$('.box').height('20%')
+$('.box').height('20%');
 ```
       * @example
 ```js
@@ -35,11 +35,11 @@ $('.box').height(10);
     ): this;
 
     /**
-     * 获取第一个元素的高度（像素值），不包含 padding, border, margin 的宽度
+     * 获取集合中第一个元素的高度（像素值），不包含 `padding`, `border`, `margin` 的宽度
      * @example
-     ```js
-     $('.box').height();
-     ```
+```js
+$('.box').height();
+```
      */
     height(): number;
   }

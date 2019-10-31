@@ -1,3 +1,6 @@
 describe('.innerHeight()', function() {
-  return '';
+  // 已在 .width() 方法中测试
+  it('.innerHeight()', function() {
+    return '';
+  });
 });

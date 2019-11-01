@@ -76,12 +76,75 @@ function toKebabCase(string: string): string {
   return string.replace(/[A-Z]/g, replacer => '-' + replacer.toLowerCase());
 }
 
-function getComputedStyleValue(element: Element, name: string): string {
-  return window
-    .getComputedStyle(element, null)
-    .getPropertyValue(toKebabCase(name));
+/**
+ * 获取元素的样式值
+ * @param element
+ * @param name
+ */
+function getComputedStyleValue(element: HTMLElement, name: string): string {
+  return window.getComputedStyle(element).getPropertyValue(toKebabCase(name));
 }
 
+/**
+ * 检查元素的 box-sizing 是否是 border-box
+ * @param element
+ */
+function isBorderBox(element: HTMLElement): boolean {
+  return getComputedStyleValue(element, 'box-sizing') === 'border-box';
+}
+
+/**
+ * 获取元素的 padding, border, margin 宽度（两侧宽度的和）
+ * @param element
+ * @param direction
+ * @param extra
+ */
+function getExtraWidth(
+  element: HTMLElement,
+  direction: 'width' | 'height',
+  extra: 'padding' | 'border' | 'margin',
+): number {
+  const position =
+    direction === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
+
+  return [0, 1].reduce((prev, _, index) => {
+    let prop = extra + position[index];
+
+    if (extra === 'border') {
+      prop += 'Width';
+    }
+
+    return prev + parseFloat(getComputedStyleValue(element, prop) || '0');
+  }, 0);
+}
+
+/**
+ * 获取元素的样式值，对 width 和 height 进行过处理
+ * @param element
+ * @param name
+ */
+function getStyle(element: HTMLElement, name: string): string {
+  // width、height 属性使用 getComputedStyle 得到的值不准确，需要使用 getBoundingClientRect 获取
+  if (name === 'width' || name === 'height') {
+    const valueNumber = element.getBoundingClientRect()[name];
+
+    if (isBorderBox(element)) {
+      return `${valueNumber}px`;
+    }
+
+    return `${valueNumber -
+      getExtraWidth(element, name, 'border') -
+      getExtraWidth(element, name, 'padding')}px`;
+  }
+
+  return getComputedStyleValue(element, name);
+}
+
+/**
+ * 获取子节点组成的数组
+ * @param target
+ * @param parent
+ */
 function getChildNodesArray(target: string, parent: string): Array<Node> {
   const tempParent = document.createElement(parent);
   tempParent.innerHTML = target;
@@ -133,6 +196,9 @@ export {
   toCamelCase,
   toKebabCase,
   getComputedStyleValue,
+  isBorderBox,
+  getExtraWidth,
+  getStyle,
   getChildNodesArray,
   cssNumber,
 };

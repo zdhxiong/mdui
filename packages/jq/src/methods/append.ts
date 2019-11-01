@@ -64,7 +64,7 @@ each(['prepend', 'append'], (nameIndex, name) => {
         : document.createElement('div');
 
       if (!childLength) {
-        element.append(child);
+        element.appendChild(child);
       }
 
       const contents = isFunction(args[0])

@@ -37,7 +37,7 @@ each(['appendTo', 'prependTo'], (nameIndex, name) => {
       }
 
       const child = document.createElement('div');
-      element.append(child);
+      element.appendChild(child);
       extraChilds.push(child);
 
       return child;

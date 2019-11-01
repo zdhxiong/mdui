@@ -43,6 +43,10 @@ describe('$.data, $.removeData', function() {
     $.data(intro, 'object', testObjectData);
     chai.assert.deepEqual($.data(intro, 'object'), testObjectData);
 
+    // 再次存储相同键名的对象
+    $.data(intro, 'object', { test1: 'aa', bb: 'bb' });
+    chai.assert.deepEqual($.data(intro, 'object'), { test1: 'aa', bb: 'bb' });
+
     // 存储数组
     $.data(intro, 'array', testArrayData);
     chai.assert.sameOrderedMembers($.data(intro, 'array'), testArrayData);
@@ -109,6 +113,32 @@ describe('$.data, $.removeData', function() {
   });
 
   it('$.removeData(element, name)', function() {
-    // tested
+    // name 可以是用空格分隔的多个键名，或用数组表示的多个键名
+    $.data(document.body, {
+      a: 'aa',
+      b: 'bb',
+      c: 'cc',
+      d: 'dd',
+      e: 'ee',
+      f: 'ff',
+      g: 'gg',
+      h: 'hh',
+    });
+
+    $.removeData(document.body, 'a b  c');
+    chai.assert.deepEqual($.data(document.body), {
+      d: 'dd',
+      e: 'ee',
+      f: 'ff',
+      g: 'gg',
+      h: 'hh',
+    });
+
+    $.removeData(document.body, ['d', 'e f', 'g']);
+    chai.assert.deepEqual($.data(document.body), {
+      e: 'ee',
+      f: 'ff',
+      h: 'hh',
+    });
   });
 });

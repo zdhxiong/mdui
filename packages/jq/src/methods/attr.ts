@@ -4,7 +4,7 @@ import PlainObject from '../interfaces/PlainObject';
 import { JQ } from '../JQ';
 import {
   cssNumber,
-  getComputedStyleValue,
+  getStyle,
   isElement,
   isFunction,
   isNull,
@@ -158,7 +158,7 @@ each(['attr', 'prop', 'css'], (nameIndex, name) => {
 
       // css
       default:
-        return getComputedStyleValue(element, key);
+        return getStyle(element, key);
     }
   }
 

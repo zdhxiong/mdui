@@ -229,13 +229,13 @@ describe('.width()', function() {
     chai.assert.deepEqual($borderBoxInner.width(), 3);
     chai.assert.deepEqual($borderBoxInner.innerWidth(), 9);
     chai.assert.deepEqual($borderBoxInner.outerWidth(), 9);
-    chai.assert.deepEqual($borderBoxInner.outerWidth(true), 11.4);
+    chai.assert.deepEqual($borderBoxInner.outerWidth(true), 11.375);
 
     $borderBoxInner.height('20%');
     chai.assert.deepEqual($borderBoxInner.height(), 46);
     chai.assert.deepEqual($borderBoxInner.innerHeight(), 52);
     chai.assert.deepEqual($borderBoxInner.outerHeight(), 52);
-    chai.assert.deepEqual($borderBoxInner.outerHeight(true), 54.4);
+    chai.assert.deepEqual($borderBoxInner.outerHeight(true), 54.375);
   });
 
   it('.width(value)', function() {
@@ -422,6 +422,27 @@ describe('.width()', function() {
     chai.assert.deepEqual($borderBox.outerWidth(), 110);
     chai.assert.deepEqual($borderBox.outerWidth(true), 130);
 
+    // .height()
+    const _heightThiss: HTMLElement[] = [];
+    const _heightIndexs: number[] = [];
+    const _heightValues: number[] = [];
+
+    $borderBox.height(function(index, oldValue) {
+      _heightThiss.push(this);
+      _heightIndexs.push(index);
+      _heightValues.push(oldValue);
+
+      return oldValue + 10;
+    });
+
+    chai.assert.sameOrderedMembers(_heightThiss, $borderBox.get());
+    chai.assert.sameOrderedMembers(_heightIndexs, [0]);
+    chai.assert.sameOrderedMembers(_heightValues, [150]);
+    chai.assert.deepEqual($borderBox.height(), 160);
+    chai.assert.deepEqual($borderBox.innerHeight(), 200);
+    chai.assert.deepEqual($borderBox.outerHeight(), 210);
+    chai.assert.deepEqual($borderBox.outerHeight(true), 230);
+
     // .innerWidth()
     const _innerWidthThiss: HTMLElement[] = [];
     const _innerWidthIndexs: number[] = [];
@@ -442,6 +463,27 @@ describe('.width()', function() {
     chai.assert.deepEqual($borderBox.innerWidth(), 110);
     chai.assert.deepEqual($borderBox.outerWidth(), 120);
     chai.assert.deepEqual($borderBox.outerWidth(true), 140);
+
+    // .innerHeight()
+    const _innerHeightThiss: HTMLElement[] = [];
+    const _innerHeightIndexs: number[] = [];
+    const _innerHeightValues: number[] = [];
+
+    $borderBox.innerHeight(function(index, oldValue) {
+      _innerHeightThiss.push(this);
+      _innerHeightIndexs.push(index);
+      _innerHeightValues.push(oldValue);
+
+      return oldValue + 10;
+    });
+
+    chai.assert.sameOrderedMembers(_innerHeightThiss, $borderBox.get());
+    chai.assert.sameOrderedMembers(_innerHeightIndexs, [0]);
+    chai.assert.sameOrderedMembers(_innerHeightValues, [200]);
+    chai.assert.deepEqual($borderBox.height(), 170);
+    chai.assert.deepEqual($borderBox.innerHeight(), 210);
+    chai.assert.deepEqual($borderBox.outerHeight(), 220);
+    chai.assert.deepEqual($borderBox.outerHeight(true), 240);
 
     // .outerWidth()
     const _outerWidthThiss: HTMLElement[] = [];
@@ -464,6 +506,27 @@ describe('.width()', function() {
     chai.assert.deepEqual($borderBox.outerWidth(), 130);
     chai.assert.deepEqual($borderBox.outerWidth(true), 150);
 
+    // .outerHeight()
+    const _outerHeightThiss: HTMLElement[] = [];
+    const _outerHeightIndexs: number[] = [];
+    const _outerHeightValues: number[] = [];
+
+    $borderBox.outerHeight(function(index, oldValue) {
+      _outerHeightThiss.push(this);
+      _outerHeightIndexs.push(index);
+      _outerHeightValues.push(oldValue);
+
+      return oldValue + 10;
+    });
+
+    chai.assert.sameOrderedMembers(_outerHeightThiss, $borderBox.get());
+    chai.assert.sameOrderedMembers(_outerHeightIndexs, [0]);
+    chai.assert.sameOrderedMembers(_outerHeightValues, [220]);
+    chai.assert.deepEqual($borderBox.height(), 180);
+    chai.assert.deepEqual($borderBox.innerHeight(), 220);
+    chai.assert.deepEqual($borderBox.outerHeight(), 230);
+    chai.assert.deepEqual($borderBox.outerHeight(true), 250);
+
     // .outerWidth(true)
     const _outerWidthMarginThiss: HTMLElement[] = [];
     const _outerWidthMarginIndexs: number[] = [];
@@ -485,6 +548,27 @@ describe('.width()', function() {
     chai.assert.deepEqual($borderBox.outerWidth(), 140);
     chai.assert.deepEqual($borderBox.outerWidth(true), 160);
 
+    // .outerHeight(true)
+    const _outerHeightMarginThiss: HTMLElement[] = [];
+    const _outerHeightMarginIndexs: number[] = [];
+    const _outerHeightMarginValues: number[] = [];
+
+    $borderBox.outerHeight(function(index, oldValue) {
+      _outerHeightMarginThiss.push(this);
+      _outerHeightMarginIndexs.push(index);
+      _outerHeightMarginValues.push(oldValue);
+
+      return oldValue + 10;
+    }, true);
+
+    chai.assert.sameOrderedMembers(_outerHeightMarginThiss, $borderBox.get());
+    chai.assert.sameOrderedMembers(_outerHeightMarginIndexs, [0]);
+    chai.assert.sameOrderedMembers(_outerHeightMarginValues, [250]);
+    chai.assert.deepEqual($borderBox.height(), 190);
+    chai.assert.deepEqual($borderBox.innerHeight(), 230);
+    chai.assert.deepEqual($borderBox.outerHeight(), 240);
+    chai.assert.deepEqual($borderBox.outerHeight(true), 260);
+
     // .width(null)
     $borderBox.width(function() {
       return null;
@@ -494,6 +578,15 @@ describe('.width()', function() {
     chai.assert.deepEqual($borderBox.outerWidth(), 140);
     chai.assert.deepEqual($borderBox.outerWidth(true), 160);
 
+    // .height(null)
+    $borderBox.height(function() {
+      return null;
+    });
+    chai.assert.deepEqual($borderBox.height(), 190);
+    chai.assert.deepEqual($borderBox.innerHeight(), 230);
+    chai.assert.deepEqual($borderBox.outerHeight(), 240);
+    chai.assert.deepEqual($borderBox.outerHeight(true), 260);
+
     // .width(undefined)
     $borderBox.width(function() {
       return undefined;
@@ -502,5 +595,14 @@ describe('.width()', function() {
     chai.assert.deepEqual($borderBox.innerWidth(), 130);
     chai.assert.deepEqual($borderBox.outerWidth(), 140);
     chai.assert.deepEqual($borderBox.outerWidth(true), 160);
+
+    // .height(undefined)
+    $borderBox.height(function() {
+      return undefined;
+    });
+    chai.assert.deepEqual($borderBox.height(), 190);
+    chai.assert.deepEqual($borderBox.innerHeight(), 230);
+    chai.assert.deepEqual($borderBox.outerHeight(), 240);
+    chai.assert.deepEqual($borderBox.outerHeight(true), 260);
   });
 });

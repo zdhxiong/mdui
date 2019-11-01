@@ -1,6 +1,6 @@
 import $ from '../$';
 import { JQ } from '../JQ';
-import { getComputedStyleValue } from '../utils';
+import { getStyle } from '../utils';
 import './each';
 import './hide';
 import './show';
@@ -23,8 +23,6 @@ $('.box').toggle()
  */
 $.fn.toggle = function(this: JQ): JQ {
   return this.each(function() {
-    getComputedStyleValue(this, 'display') === 'none'
-      ? $(this).show()
-      : $(this).hide();
+    getStyle(this, 'display') === 'none' ? $(this).show() : $(this).hide();
   });
 };

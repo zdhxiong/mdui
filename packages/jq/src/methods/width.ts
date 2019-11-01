@@ -7,6 +7,8 @@ import {
   isFunction,
   isWindow,
   toElement,
+  isBorderBox,
+  getExtraWidth,
 } from '../utils';
 import './css';
 import './each';
@@ -61,14 +63,6 @@ type typeFuncIndex = 0 | 1 | 2;
 type typeExtra = 'margin' | 'padding' | 'border';
 
 /**
- * 元素的 box-sizing 是否为 border-box
- * @param $element
- */
-function isBorderBox($element: JQ): boolean {
-  return $element.css('box-sizing') === 'border-box';
-}
-
-/**
  * 值上面的 padding、border、margin 处理
  * @param $element
  * @param name
@@ -78,7 +72,7 @@ function isBorderBox($element: JQ): boolean {
  * @param multiply
  */
 function handleExtraWidth(
-  $element: JQ,
+  element: HTMLElement,
   name: typeName,
   value: number,
   funcIndex: typeFuncIndex,
@@ -86,43 +80,34 @@ function handleExtraWidth(
   multiply: number, // 值乘以多少
 ): number {
   // 获取元素的 padding, border, margin 宽度（两侧宽度的和）
-  const getExtraWidth = (extra: typeExtra): number => {
-    const direction = name === 'Width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
-
+  const getExtraWidthValue = (extra: typeExtra): number => {
     return (
-      [0, 1].reduce((prev, _, index) => {
-        let prop = extra + direction[index];
-
-        if (extra === 'border') {
-          prop += 'Width';
-        }
-
-        return prev + parseFloat($element.css(prop) || '0');
-      }, 0) * multiply
+      getExtraWidth(element, name.toLowerCase() as 'width' | 'height', extra) *
+      multiply
     );
   };
 
   if (funcIndex === 2 && includeMargin) {
-    value += getExtraWidth('margin');
+    value += getExtraWidthValue('margin');
   }
 
-  if (isBorderBox($element)) {
+  if (isBorderBox(element)) {
     if (funcIndex === 0) {
-      value -= getExtraWidth('border');
+      value -= getExtraWidthValue('border');
     }
 
     if (funcIndex === 1) {
-      value -= getExtraWidth('border');
-      value -= getExtraWidth('padding');
+      value -= getExtraWidthValue('border');
+      value -= getExtraWidthValue('padding');
     }
   } else {
     if (funcIndex === 0) {
-      value += getExtraWidth('padding');
+      value += getExtraWidthValue('padding');
     }
 
     if (funcIndex === 2) {
-      value += getExtraWidth('border');
-      value += getExtraWidth('padding');
+      value += getExtraWidthValue('border');
+      value += getExtraWidthValue('padding');
     }
   }
 
@@ -171,7 +156,7 @@ function get(
   const $element = $(element);
   const value = parseFloat($element.css(name.toLowerCase()) || '0');
 
-  return handleExtraWidth($element, name, value, funcIndex, includeMargin, 1);
+  return handleExtraWidth(element, name, value, funcIndex, includeMargin, 1);
 }
 
 /**
@@ -216,7 +201,7 @@ function set(
   computedValue = parseFloat(computedValue);
 
   computedValue = handleExtraWidth(
-    $element,
+    element,
     name,
     computedValue,
     funcIndex,

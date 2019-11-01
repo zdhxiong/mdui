@@ -1,6 +1,6 @@
 import $ from '../$';
 import { JQ } from '../JQ';
-import { getComputedStyleValue } from '../utils';
+import { getStyle } from '../utils';
 import './each';
 
 declare module '../JQ' {
@@ -31,7 +31,7 @@ function defaultDisplay(nodeName: string): string {
   if (!elementDisplay[nodeName]) {
     element = document.createElement(nodeName);
     document.body.appendChild(element);
-    display = getComputedStyleValue(element, 'display');
+    display = getStyle(element, 'display');
     element.parentNode!.removeChild(element);
     if (display === 'none') {
       display = 'block';
@@ -53,7 +53,7 @@ $.fn.show = function(this: JQ): JQ {
       this.style.display = '';
     }
 
-    if (getComputedStyleValue(this, 'display') === 'none') {
+    if (getStyle(this, 'display') === 'none') {
       this.style.display = defaultDisplay(this.nodeName);
     }
   });

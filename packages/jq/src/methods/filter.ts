@@ -3,7 +3,6 @@ import { JQ } from '../JQ';
 import Selector from '../types/Selector';
 import TypeOrArray from '../types/TypeOrArray';
 import { isFunction, isString } from '../utils';
-import './index';
 import './is';
 import './map';
 
@@ -56,6 +55,6 @@ $.fn.filter = function(this: JQ, selector: any): JQ {
   const $selector = $(selector);
 
   return this.map((_, element) =>
-    $selector.index(element) > -1 ? element : undefined,
+    $selector.get().indexOf(element) > -1 ? element : undefined,
   );
 };

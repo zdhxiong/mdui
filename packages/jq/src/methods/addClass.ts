@@ -2,7 +2,6 @@ import $ from '../$';
 import each from '../functions/each';
 import { JQ } from '../JQ';
 import { isElement, isFunction } from '../utils';
-import './attr';
 import './each';
 
 declare module '../JQ' {
@@ -49,7 +48,9 @@ each(['add', 'remove', 'toggle'], (_, name: classListMethod) => {
       | ((this: any, index: number, currentClassName: string) => string),
   ): JQ {
     if (name === 'remove' && !arguments.length) {
-      return this.attr('class', '');
+      return this.each((_, element) => {
+        element.setAttribute('class', '');
+      });
     }
 
     return this.each((i, element) => {
@@ -58,7 +59,7 @@ each(['add', 'remove', 'toggle'], (_, name: classListMethod) => {
       }
 
       const classes = (isFunction(className)
-        ? className.call(element, i, $(element).attr('class') || '')
+        ? className.call(element, i, element.getAttribute('class') || '')
         : className
       )
         .split(' ')

@@ -3,7 +3,6 @@ import contains from '../functions/contains';
 import { JQ } from '../JQ';
 import Selector from '../types/Selector';
 import { isString } from '../utils';
-import './filter';
 import './find';
 
 declare module '../JQ' {
@@ -25,13 +24,13 @@ $.fn.has = function(this: JQ, selector: Selector | Element): JQ {
   const $targets = isString(selector) ? this.find(selector) : $(selector);
   const { length } = $targets;
 
-  return this.filter(function() {
+  return this.map(function() {
     for (let i = 0; i < length; i += 1) {
       if (contains(this, $targets[i])) {
-        return true;
+        return this;
       }
     }
 
-    return false;
+    return;
   });
 };

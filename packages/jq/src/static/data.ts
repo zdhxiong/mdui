@@ -74,7 +74,10 @@ data(document.body, { 'width': 1020, 'height': 680 })
 // { 'width': 1020, 'height': 680 }
 ```
      */
-    data(element: Element | Document | Window, data: PlainObject): PlainObject;
+    data<T extends PlainObject>(
+      element: Element | Document | Window,
+      data: T,
+    ): T;
   }
 }
 

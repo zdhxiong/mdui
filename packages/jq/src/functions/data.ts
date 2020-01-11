@@ -98,10 +98,10 @@ data(document.body, { 'width': 1020, 'height': 680 })
 // { 'width': 1020, 'height': 680 }
 ```
  */
-function data(
+function data<T extends PlainObject>(
   element: Element | Document | Window,
-  data: PlainObject,
-): PlainObject;
+  data: T,
+): T;
 
 function data(
   element: Element | Document | Window,

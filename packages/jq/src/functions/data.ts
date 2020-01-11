@@ -1,5 +1,5 @@
 import PlainObject from '../interfaces/PlainObject';
-import { isObjectLike, isUndefined } from '../utils';
+import { isObjectLike, isUndefined, toCamelCase } from '../utils';
 import each from './each';
 import dataNS from './utils/data';
 
@@ -20,7 +20,7 @@ function setObjectToElement(
 
   each(object, (key, value) => {
     // @ts-ignore
-    element[dataNS][key] = value;
+    element[dataNS][toCamelCase(key)] = value;
   });
 }
 
@@ -77,7 +77,7 @@ function data(element: Element | Document | Window, key: string): any;
 /**
  * 获取指定元素上存储的所有数据
  *
- * Note: 该方法不检索 data-* 属性
+ * Note: 该方法不检索 `data-*` 属性
  *
  * @param element 用于存储数据的元素
  * @example
@@ -98,10 +98,10 @@ data(document.body, { 'width': 1020, 'height': 680 })
 // { 'width': 1020, 'height': 680 }
 ```
  */
-function data<T extends PlainObject>(
+function data(
   element: Element | Document | Window,
-  data: T,
-): T;
+  data: PlainObject,
+): PlainObject;
 
 function data(
   element: Element | Document | Window,
@@ -133,6 +133,7 @@ function data(
 
   // 从 dataNS 中获取指定值
   // data(element, 'key')
+  key = toCamelCase(key);
   // @ts-ignore
   if (element[dataNS] && key in element[dataNS]) {
     // @ts-ignore

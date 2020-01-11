@@ -22,6 +22,15 @@ describe('$.data, $.removeData', function() {
     $.removeData(document, 'string');
     chai.assert.isUndefined($.data(document, 'string'));
 
+    // 键名转为驼峰法
+    $.data(document, 'sub-key', 'sub-val');
+    chai.assert.equal($.data(document, 'sub-key'), 'sub-val');
+    chai.assert.equal($.data(document, 'subKey'), 'sub-val');
+    chai.assert.deepEqual($.data(document), { subKey: 'sub-val' });
+    $.removeData(document, 'sub-key');
+    chai.assert.isUndefined($.data(document, 'sub-key'));
+    chai.assert.isUndefined($.data(document, 'subKey'));
+
     // 存储字符串
     const val = $.data(intro, 'string', 'value');
     chai.assert.equal(val, 'value');
@@ -106,6 +115,15 @@ describe('$.data, $.removeData', function() {
     // 删除所有数据
     $.removeData(intro);
     chai.assert.deepEqual($.data(intro), {});
+
+    // 键名转为驼峰法
+    const val = $.data(intro, {
+      'sub-key': 'sub-val',
+    });
+    chai.assert.deepEqual(val, { 'sub-key': 'sub-val' });
+    chai.assert.deepEqual($.data(intro), { subKey: 'sub-val' });
+    $.removeData(intro, 'sub-key');
+    chai.assert.deepEqual($.data(intro), {});
   });
 
   it('$.removeData(element)', function() {
@@ -123,6 +141,8 @@ describe('$.data, $.removeData', function() {
       f: 'ff',
       g: 'gg',
       h: 'hh',
+      'i-i': 'ii',
+      'j-j': 'jj',
     });
 
     $.removeData(document.body, 'a b  c');
@@ -132,12 +152,21 @@ describe('$.data, $.removeData', function() {
       f: 'ff',
       g: 'gg',
       h: 'hh',
+      iI: 'ii',
+      jJ: 'jj',
     });
 
-    $.removeData(document.body, ['d', 'e f', 'g']);
+    $.removeData(document.body, ['d', 'e f', 'g', 'i-i']);
     chai.assert.deepEqual($.data(document.body), {
       e: 'ee',
       f: 'ff',
+      h: 'hh',
+      jJ: 'jj',
+    });
+
+    $.removeData(document.body, 'f j-j');
+    chai.assert.deepEqual($.data(document.body), {
+      e: 'ee',
       h: 'hh',
     });
   });

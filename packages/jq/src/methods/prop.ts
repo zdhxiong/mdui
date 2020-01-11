@@ -45,8 +45,7 @@ $('input').prop('checked', function () {
             | object
             | null
             | void
-            | undefined
-          ),
+            | undefined),
     ): this;
 
     /**
@@ -95,8 +94,7 @@ $('input').prop({
             | object
             | null
             | void
-            | undefined
-          )
+            | undefined)
       >,
     ): this;
 

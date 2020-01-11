@@ -1,7 +1,7 @@
 const rollup = require('rollup');
 const { eslint } = require('rollup-plugin-eslint');
 const { uglify } = require('rollup-plugin-uglify');
-const buble = require('rollup-plugin-buble');
+const buble = require('@rollup/plugin-buble');
 const typescript = require('rollup-plugin-typescript');
 const polyfill = require('rollup-plugin-polyfill');
 const tsconfig = require('./src/tsconfig.json');
@@ -110,7 +110,7 @@ async function test() {
       clearScreen: true,
       include: [
         './test/unit/**/*',
-         './src/**/*',
+        './src/**/*',
       ]
     }
   });

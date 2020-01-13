@@ -1,36 +1,107 @@
 import $ from '../../jq_or_jquery';
 
 describe('.data(), .removeData()', function() {
+  const $window = $(window);
+  const $document = $(document);
+  const dataObject = {
+    key: 'val',
+    keySub: 'val-sub',
+    age: 43,
+    hidden: true,
+    visible: false,
+    none: null,
+    options: { name: 'John', age: 43 },
+  };
+
   beforeEach(function() {
     $('#test').html(
-      '<div class="intro" data-key="val" data-key-sub="val-sub"></div>',
+      `<div
+         class="intro"
+         data-key="val"
+         data-key-sub="val-sub"
+         data-age="43"
+         data-hidden="true"
+         data-visible="false"
+         data-none="null"
+         data-options='{"name": "John", "age": 43}'
+       ></div>`,
     );
   });
 
-  // 在当前元素上存储数据
-  it('.data(key: string, value: any): JQ', function() {
+  it('.data(key, value)', function() {
     const $intro = $('.intro');
+    const $empty = $();
+
+    chai.assert.lengthOf($empty.data('test', 'value'), 0);
+    chai.assert.isUndefined($empty.data('ggg'));
+
+    // 在 window 上存储数据
+    $window.data('string', 'value');
+    chai.assert.equal($window.data('string'), 'value');
+    $window.removeData('string');
+    chai.assert.isUndefined($window.data('string'));
+
+    // 在 document 上存储数据
+    $document.data('string', 'value2');
+    chai.assert.equal($document.data('string'), 'value2');
+    $document.removeData('string');
+    chai.assert.isUndefined($document.data('string'));
+
+    // 键名转为驼峰法
+    $document.data('string-sub', 'value-sub');
+    chai.assert.equal($document.data('string-sub'), 'value-sub');
+    chai.assert.equal($document.data('stringSub'), 'value-sub');
+    chai.assert.deepEqual($document.data(), { stringSub: 'value-sub' });
+    $document.removeData('string-sub');
+    chai.assert.isUndefined($document.data('string-sub'));
+    chai.assert.isUndefined($document.data('stringSub'));
 
     // 存储字符串
     chai.assert.isTrue($intro.data('string', 'value').is($intro));
     chai.assert.equal($intro.data('string'), 'value');
 
     // 存储对象
-    $intro.data('object', { test: 'test' });
-    chai.assert.deepEqual($intro.data('object'), { test: 'test' });
+    const testObject = { test1: 'test1', test2: 'test2' };
+    $intro.data('object', testObject);
+    chai.assert.deepEqual($intro.data('object'), testObject);
+
+    // 再次存储相同键名的对象
+    $intro.data('object', { test1: 'aa', test2: 'bb' });
+    chai.assert.deepEqual($intro.data('object'), { test1: 'aa', test2: 'bb' });
 
     // 存储数组
-    $intro.data('array', [1, 2, 3, 4]);
-    chai.assert.sameOrderedMembers($intro.data('array'), [1, 2, 3, 4]);
+    const testArrayData = [1, 2, 3, 4];
+    $intro.data('array', testArrayData);
+    chai.assert.sameOrderedMembers($intro.data('array'), testArrayData);
+
+    // .data(key, undefined) 不设置数据，直接返回原对象
+    chai.assert.isTrue($intro.data('array', undefined).is($intro));
+    chai.assert.sameOrderedMembers($intro.data('array'), testArrayData);
+
+    // .data(key, null) 将存储 null 值
+    chai.assert.isTrue($intro.data('array', null).is($intro));
+    chai.assert.deepEqual($intro.data('array'), null);
   });
 
-  // 使用键值对在当前元素上存储数据
   it('.data(object): JQ', function() {
     const $intro = $('.intro');
 
-    $intro.data({ objkey1: 'objval1', objkey2: 'objval2' });
+    chai.assert.deepEqual($intro.data(), dataObject);
+
+    const otherObject = {
+      objkey1: 'objval1',
+      'obj-key2': 'objval2',
+    };
+
+    $intro.data(otherObject);
+    chai.assert.deepEqual(
+      $intro.data(),
+      Object.assign({ objkey1: 'objval1', objKey2: 'objval2' }, dataObject),
+    );
+
     chai.assert.equal($intro.data('objkey1'), 'objval1');
-    chai.assert.equal($intro.data('objkey2'), 'objval2');
+    chai.assert.equal($intro.data('obj-key2'), 'objval2');
+    chai.assert.equal($intro.data('objKey2'), 'objval2');
   });
 
   // 获取在当前元素上存储的数据
@@ -39,33 +110,15 @@ describe('.data(), .removeData()', function() {
 
     $intro.data('test', 'value');
 
+    chai.assert.equal($intro.data('test'), 'value');
     chai.assert.equal($intro.data('key'), 'val');
     chai.assert.equal($intro.data('key-sub'), 'val-sub');
-    chai.assert.equal($intro.data('test'), 'value');
-  });
-
-  // 获取在当前元素上存储的所有数据
-  it('.data(): object', function() {
-    const $intro = $('.intro');
-
-    $intro.data({
-      array: [1, 2, 3],
-      object: { test1: 'val1', test2: 'val2' },
-      key1: 'value1',
-    });
-
-    $intro.data('key2', 'value2');
-
-    const data = $intro.data();
-
-    chai.assert.deepEqual(data, {
-      key: 'val',
-      keySub: 'val-sub',
-      array: [1, 2, 3],
-      object: { test1: 'val1', test2: 'val2' },
-      key1: 'value1',
-      key2: 'value2',
-    });
+    chai.assert.equal($intro.data('keySub'), 'val-sub');
+    chai.assert.deepEqual($intro.data('age'), 43);
+    chai.assert.isTrue($intro.data('hidden'));
+    chai.assert.isFalse($intro.data('visible'));
+    chai.assert.deepEqual($intro.data('options'), { name: 'John', age: 43 });
+    chai.assert.isUndefined($intro.data('dddd'));
   });
 
   it('.removeData(key: string): JQ', function() {
@@ -96,9 +149,6 @@ describe('.data(), .removeData()', function() {
 
     $intro.removeData();
 
-    chai.assert.deepEqual($intro.data(), {
-      key: 'val',
-      keySub: 'val-sub',
-    });
+    chai.assert.deepEqual($intro.data(), dataObject);
   });
 });

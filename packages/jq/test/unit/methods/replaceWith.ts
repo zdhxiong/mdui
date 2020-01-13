@@ -168,11 +168,10 @@ describe('.replaceWith()', function() {
 
       return $('.other');
     });
-    chai.assert.sameOrderedMembers(_thiss.map(e => e.innerText), [
-      'Hello',
-      'And',
-      'Goodbye',
-    ]);
+    chai.assert.sameOrderedMembers(
+      _thiss.map(e => e.innerText),
+      ['Hello', 'And', 'Goodbye'],
+    );
     chai.assert.sameOrderedMembers(_indexs, [0, 1, 2]);
     chai.assert.sameOrderedMembers(_htmls, ['Hello', 'And', 'Goodbye']);
 

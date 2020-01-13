@@ -1,5 +1,4 @@
 import $ from '../../jq_or_jquery';
-import { JQ } from '../../../src/JQ';
 
 describe('$.contains', function() {
   beforeEach(function() {
@@ -33,20 +32,5 @@ describe('$.contains', function() {
         document.getElementById('test'),
       ),
     );
-    // jquery 中，元素为 null 会报错，JQ 中返回 false
-    if ($ instanceof JQ) {
-      chai.assert.isFalse(
-        $.contains(
-          document.getElementById('notfound'),
-          document.getElementById('child'),
-        ),
-      );
-      chai.assert.isFalse(
-        $.contains(
-          document.getElementById('test'),
-          document.getElementById('notfound'),
-        ),
-      );
-    }
   });
 });

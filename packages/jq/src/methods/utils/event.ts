@@ -1,16 +1,22 @@
 import $ from '../../$';
 import contains from '../../functions/contains';
-import data from '../../functions/data';
-import JQElement from '../../types/JQElement';
 import { isObjectLike } from '../../utils';
 import '../find';
 
+type EventCallback = (
+  this: Element | Document | Window,
+  event: Event,
+  data?: any,
+  ...dataN: any[]
+) => void | false;
+
 type Handler = {
-  e: string; // 事件名
-  fn: Function; // 事件处理函数
-  i: number; // 事件ID
+  type: string; // 事件名
+  ns: string; // 命名空间
+  func: Function; // 事件处理函数
+  id: number; // 事件ID
   proxy: any;
-  sel?: string; // 选择器
+  selector?: string; // 选择器
 };
 
 type Handlers = {
@@ -27,50 +33,77 @@ let mduiElementId = 1;
 /**
  * 为元素赋予一个唯一的ID
  */
-function getElementId(element: JQElement): number {
-  const key = 'mduiElementId';
+function getElementId(element: Element | Document | Window | Function): number {
+  const key = '_mduiEventId';
 
-  if (!data(element, key)) {
-    mduiElementId += 1;
-    data(element, key, mduiElementId);
+  // @ts-ignore
+  if (!element[key]) {
+    // @ts-ignore
+    element[key] = ++mduiElementId;
   }
 
-  return data(element, key);
+  // @ts-ignore
+  return element[key];
+}
+
+/**
+ * 解析事件名中的命名空间
+ */
+function parse(type: string): { type: string; ns: string } {
+  const parts = type.split('.');
+
+  return {
+    type: parts[0],
+    ns: parts
+      .slice(1)
+      .sort()
+      .join(' '),
+  };
+}
+
+/**
+ * 命名空间匹配规则
+ */
+function matcherFor(ns: string): RegExp {
+  return new RegExp('(?:^| )' + ns.replace(' ', ' .* ?') + '(?: |$)');
 }
 
 /**
  * 获取匹配的事件
  * @param element
- * @param eventName
+ * @param type
  * @param func
  * @param selector
  */
 function getHandlers(
-  element: JQElement,
-  eventName: string,
+  element: Element | Document | Window,
+  type: string,
   func?: Function,
   selector?: string,
 ): Handler[] {
+  const event = parse(type);
+
   return (handlers[getElementId(element)] || []).filter(
     handler =>
       handler &&
-      (!eventName || handler.e === eventName) &&
-      (!func || handler.fn.toString() === func.toString()) &&
-      (!selector || handler.sel === selector),
+      (!event.type || handler.type === event.type) &&
+      (!event.ns || matcherFor(event.ns).test(handler.ns)) &&
+      (!func || getElementId(handler.func) === getElementId(func)) &&
+      (!selector || handler.selector === selector),
   );
 }
 
 /**
  * 添加事件监听
  * @param element
- * @param eventName
+ * @param types
  * @param func
  * @param data
  * @param selector
  */
 function add(
-  element: JQElement,
-  eventName: string,
+  element: Element | Document | Window,
+  types: string,
   func: Function,
   data?: any,
   selector?: string,
@@ -87,8 +120,14 @@ function add(
     useCapture = true;
   }
 
-  eventName.split(' ').forEach(event => {
-    function callFn(e: Event, elem: JQElement): void {
+  types.split(' ').forEach(type => {
+    if (!type) {
+      return;
+    }
+
+    const event = parse(type);
+
+    function callFn(e: Event, elem: Element | Document | Window): void {
       // 因为鼠标事件模拟事件的 detail 属性是只读的，因此在 e._detail 中存储参数
       const result = func.apply(
         elem,
@@ -103,6 +142,11 @@ function add(
     }
 
     function proxyFn(e: Event): void {
+      // @ts-ignore
+      if (e._ns && !matcherFor(e._ns).test(event.ns)) {
+        return;
+      }
+
       // @ts-ignore
       e._data = data;
 
@@ -127,37 +171,50 @@ function add(
     }
 
     const handler: Handler = {
-      e: event,
-      fn: func,
-      sel: selector,
-      i: handlers[elementId].length,
+      type: event.type,
+      ns: event.ns,
+      func,
+      selector,
+      id: handlers[elementId].length,
       proxy: proxyFn,
     };
 
     handlers[elementId].push(handler);
-    element.addEventListener(handler.e, proxyFn, useCapture);
+
+    element.addEventListener(handler.type, proxyFn, useCapture);
   });
 }
 
 /**
  * 移除事件监听
  * @param element
- * @param eventName
+ * @param types
  * @param func
  * @param selector
  */
 function remove(
-  element: JQElement,
-  eventName: string,
+  element: Element | Document | Window,
+  types?: string,
   func?: Function,
   selector?: string,
 ): void {
-  (eventName || '').split(' ').forEach(event => {
-    getHandlers(element, event, func, selector).forEach(handler => {
-      delete handlers[getElementId(element)][handler.i];
-      element.removeEventListener(handler.e, handler.proxy, false);
+  const handlersInElement = handlers[getElementId(element)] || [];
+  const removeEvent = (handler: Handler): void => {
+    delete handlersInElement[handler.id];
+    element.removeEventListener(handler.type, handler.proxy, false);
+  };
+
+  if (!types) {
+    handlersInElement.forEach(handler => removeEvent(handler));
+  } else {
+    types.split(' ').forEach(type => {
+      if (type) {
+        getHandlers(element, type, func, selector).forEach(handler =>
+          removeEvent(handler),
+        );
+      }
     });
-  });
+  }
 }
 
-export { add, remove };
+export { EventCallback, parse, add, remove };

@@ -64,7 +64,7 @@ type typeExtra = 'margin' | 'padding' | 'border';
 
 /**
  * 值上面的 padding、border、margin 处理
- * @param $element
+ * @param element
  * @param name
  * @param value
  * @param funcIndex

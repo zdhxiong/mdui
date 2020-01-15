@@ -2,12 +2,13 @@ import $ from '../$';
 import PlainObject from '../interfaces/PlainObject';
 import { JQ } from '../JQ';
 import './each';
+import { parse } from './utils/event';
 
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
     /**
      * 触发指定的事件
-     * @param eventName 事件名
+     * @param type 事件名
      * @param extraParameters 传给事件处理函数的额外参数
      * @example ````触发 .box 元素上的 click 事件
 ```js
@@ -19,43 +20,43 @@ $('.box').trigger('click', {key1: 'value1', key2: 'value2'});
 ```
      */
     trigger(
-      eventName: string,
+      type: string,
       extraParameters?: any[] | PlainObject | string | number | boolean,
     ): this;
   }
 }
 
-$.fn.trigger = function(
-  this: JQ,
-  eventName: string,
-  extraParameters: any = {},
-): JQ {
+$.fn.trigger = function(this: JQ, type: string, extraParameters: any): JQ {
   type EventParams = {
     detail?: any;
     bubbles: boolean;
     cancelable: boolean;
   };
 
-  let event: MouseEvent | CustomEvent;
+  const event = parse(type);
+  let eventObject: MouseEvent | CustomEvent;
   const eventParams: EventParams = {
     bubbles: true,
     cancelable: true,
   };
   const isMouseEvent =
-    ['click', 'mousedown', 'mouseup', 'mousemove'].indexOf(eventName) > -1;
+    ['click', 'mousedown', 'mouseup', 'mousemove'].indexOf(event.type) > -1;
 
   if (isMouseEvent) {
     // Note: MouseEvent 无法传入 detail 参数
-    event = new MouseEvent(eventName, eventParams);
+    eventObject = new MouseEvent(event.type, eventParams);
   } else {
     eventParams.detail = extraParameters;
-    event = new CustomEvent(eventName, eventParams);
+    eventObject = new CustomEvent(event.type, eventParams);
   }
 
   // @ts-ignore
-  event._detail = extraParameters;
+  eventObject._detail = extraParameters;
+
+  // @ts-ignore
+  eventObject._ns = event.ns;
 
   return this.each(function() {
-    this.dispatchEvent(event);
+    this.dispatchEvent(eventObject);
   });
 };

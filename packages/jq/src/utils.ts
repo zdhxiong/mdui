@@ -153,6 +153,13 @@ function getChildNodesArray(target: string, parent: string): Array<Node> {
 }
 
 /**
+ * 始终返回 false 的函数
+ */
+function returnFalse(): boolean {
+  return false;
+}
+
+/**
  * 数值单位的 CSS 属性
  */
 const cssNumber = [
@@ -200,5 +207,6 @@ export {
   getExtraWidth,
   getStyle,
   getChildNodesArray,
+  returnFalse,
   cssNumber,
 };

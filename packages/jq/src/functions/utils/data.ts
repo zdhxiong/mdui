@@ -1,3 +1,3 @@
-const dataNS = 'mduiElementDataStorage';
+const dataNS = '_mduiElementDataStorage';
 
 export default dataNS;

@@ -1,4 +1,11 @@
-import { BeforeSendCallback, CompleteCallback, ErrorCallback, StatusCodeCallbacks, SuccessCallback, XHRFields } from '../types/JQAjax';
+import {
+  BeforeSendCallback,
+  CompleteCallback,
+  ErrorCallback,
+  StatusCodeCallbacks,
+  SuccessCallback,
+  XHRFields,
+} from '../types/JQAjax';
 import PlainObject from './PlainObject';
 
 export default interface AjaxOptions {
@@ -61,17 +68,7 @@ export default interface AjaxOptions {
   /**
    * 服务器返回的数据类型
    */
-  dataType?: 'text' | 'json' | 'jsonp';
-
-  /**
-   * JSONP 请求中的回调函数名称
-   */
-  jsonp?: string;
-
-  /**
-   * JSONP 请求的回调函数名称。你可以指定一个固定的名称，使浏览器能缓存 GET 请求
-   */
-  jsonpCallback?: string | Function;
+  dataType?: 'text' | 'json';
 
   /**
    *内容的编码类型。为 false 时将不设置 Content-Type

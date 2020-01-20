@@ -1,7 +1,5 @@
 import $ from '../$';
 import AjaxOptions from '../interfaces/AjaxOptions';
-import '../methods/append';
-import '../methods/remove';
 import '../methods/trigger';
 import {
   CallbackName,
@@ -11,8 +9,9 @@ import {
   StatusCodeCallbacks,
   SuccessCallback,
   SuccessTextStatus,
+  TextStatus,
 } from '../types/JQAjax';
-import { isFunction, isString, isUndefined } from '../utils';
+import { isString, isUndefined } from '../utils';
 import each from './each';
 import extend from './extend';
 import param from './param';
@@ -23,8 +22,6 @@ interface EventParams {
   xhr?: XMLHttpRequest;
   options?: AjaxOptions;
 }
-
-let jsonpID = 0;
 
 /**
  * 判断此请求方法是否通过查询字符串提交参数
@@ -41,15 +38,6 @@ function isQueryStringData(method: string): boolean {
  */
 function appendQuery(url: string, query: string): string {
   return `${url}&${query}`.replace(/[&?]{1,2}/, '?');
-}
-
-/**
- * 获取 jsonp 请求的回调函数名称
- */
-function defaultJsonpCallback(): string {
-  jsonpID += 1;
-
-  return `mduijsonp_${Date.now()}_${jsonpID}`;
 }
 
 /**
@@ -71,8 +59,6 @@ function mergeOptions(options: AjaxOptions): AjaxOptions {
     xhrFields: {},
     statusCode: {},
     dataType: 'text',
-    jsonp: 'callback',
-    jsonpCallback: defaultJsonpCallback,
     contentType: 'application/x-www-form-urlencoded',
     timeout: 0,
     global: true,
@@ -133,8 +119,6 @@ function ajax(options: AjaxOptions): Promise<any> {
   const xhrFields = mergedOptions.xhrFields!;
   const statusCode = mergedOptions.statusCode!;
   const dataType = mergedOptions.dataType!;
-  const jsonp = mergedOptions.jsonp!;
-  const jsonpCallback = mergedOptions.jsonpCallback!;
   const contentType = mergedOptions.contentType!;
   const timeout = mergedOptions.timeout!;
   const global = mergedOptions.global!;
@@ -154,29 +138,32 @@ function ajax(options: AjaxOptions): Promise<any> {
   }
 
   // 对于 GET、HEAD 类型的请求，把 data 数据添加到 URL 中
-  if (isQueryStringData(method) && data) {
+  if (data && isQueryStringData(method)) {
     // 查询字符串拼接到 URL 中
     url = appendQuery(url, data);
     data = null;
   }
 
   /**
-   * 触发全局事件
-   * @param event 事件名
-   * @param params 事件参数
+   * 触发事件和回调函数
+   * @param event
+   * @param params
+   * @param callback
+   * @param args
    */
-  function triggerEvent(event: EventName, params: EventParams): void {
+  function trigger(
+    event: EventName,
+    params: EventParams,
+    callback: CallbackName,
+    ...args: any[]
+  ): void {
+    console.log(event);
+    // 触发全局事件
     if (global) {
       $(document).trigger(event, params);
     }
-  }
 
-  /**
-   * 触发 XHR 回调和事件
-   * @param callback 回调函数名称
-   * @param args
-   */
-  function triggerCallback(callback: CallbackName, ...args: any[]): void {
+    // 触发 ajax 回调和事件
     let result1;
     let result2;
 
@@ -203,97 +190,9 @@ function ajax(options: AjaxOptions): Promise<any> {
     }
   }
 
-  // JSONP 请求
-  function JSONP(): Promise<any> {
-    let textStatus: SuccessTextStatus | ErrorTextStatus;
-
-    return new Promise((resolve, reject): void => {
-      // URL 中添加自动生成的回调函数名
-      const callbackName = isFunction(jsonpCallback)
-        ? jsonpCallback()
-        : jsonpCallback;
-
-      const requestUrl = appendQuery(url, `${jsonp}=${callbackName}`);
-
-      eventParams.options = mergedOptions;
-
-      triggerEvent(ajaxEvents.ajaxStart, eventParams);
-      triggerCallback('beforeSend', null);
-
-      if (isCanceled) {
-        reject(new Error('cancel'));
-
-        return;
-      }
-
-      let abortTimeout: any;
-
-      // 创建 script
-      let script: HTMLScriptElement | null = document.createElement('script');
-      script.type = 'text/javascript';
-
-      // 创建 script 失败
-      script.onerror = function(): void {
-        if (abortTimeout) {
-          clearTimeout(abortTimeout);
-        }
-
-        textStatus = 'error';
-
-        triggerEvent(ajaxEvents.ajaxError, eventParams);
-        triggerCallback('error', null, textStatus);
-
-        triggerEvent(ajaxEvents.ajaxComplete, eventParams);
-        triggerCallback('complete', null, textStatus);
-
-        reject(new Error(textStatus));
-      };
-
-      script.src = requestUrl;
-
-      // 处理
-      // @ts-ignore
-      window[callbackName] = function(data: string): void {
-        if (abortTimeout) {
-          clearTimeout(abortTimeout);
-        }
-
-        textStatus = 'success';
-        eventParams.data = data;
-
-        triggerEvent(ajaxEvents.ajaxSuccess, eventParams);
-        triggerCallback('success', data, textStatus, null);
-
-        $(script).remove();
-        script = null;
-        delete window[callbackName];
-
-        resolve(data);
-      };
-
-      $('head').append(script);
-
-      if (timeout > 0) {
-        abortTimeout = setTimeout(() => {
-          $(script).remove();
-          script = null;
-
-          textStatus = 'timeout';
-
-          triggerEvent(ajaxEvents.ajaxError, eventParams);
-          triggerCallback('error', null, textStatus);
-
-          reject(new Error(textStatus));
-        }, timeout);
-      }
-
-      return;
-    });
-  }
-
   // XMLHttpRequest 请求
   function XHR(): Promise<any> {
-    let textStatus: SuccessTextStatus | ErrorTextStatus;
+    let textStatus: TextStatus;
 
     return new Promise((resolve, reject): void => {
       // GET/HEAD 请求的缓存处理
@@ -378,15 +277,26 @@ function ajax(options: AjaxOptions): Promise<any> {
             } catch (err) {
               textStatus = 'parsererror';
 
-              triggerEvent(ajaxEvents.ajaxError, eventParams);
-              triggerCallback('error', xhr, textStatus);
+              trigger(
+                ajaxEvents.ajaxError,
+                eventParams,
+                'error',
+                xhr,
+                textStatus,
+              );
 
               reject(new Error(textStatus));
             }
 
             if (textStatus !== 'parsererror') {
-              triggerEvent(ajaxEvents.ajaxSuccess, eventParams);
-              triggerCallback('success', responseData, textStatus, xhr);
+              trigger(
+                ajaxEvents.ajaxSuccess,
+                eventParams,
+                'success',
+                responseData,
+                textStatus,
+                xhr,
+              );
 
               resolve(responseData);
             }
@@ -397,16 +307,21 @@ function ajax(options: AjaxOptions): Promise<any> {
                 : xhr.response;
             eventParams.data = responseData;
 
-            triggerEvent(ajaxEvents.ajaxSuccess, eventParams);
-            triggerCallback('success', responseData, textStatus, xhr);
+            trigger(
+              ajaxEvents.ajaxSuccess,
+              eventParams,
+              'success',
+              responseData,
+              textStatus,
+              xhr,
+            );
 
             resolve(responseData);
           }
         } else {
           textStatus = 'error';
 
-          triggerEvent(ajaxEvents.ajaxError, eventParams);
-          triggerCallback('error', xhr, textStatus);
+          trigger(ajaxEvents.ajaxError, eventParams, 'error', xhr, textStatus);
 
           reject(new Error(textStatus));
         }
@@ -432,8 +347,13 @@ function ajax(options: AjaxOptions): Promise<any> {
           },
         );
 
-        triggerEvent(ajaxEvents.ajaxComplete, eventParams);
-        triggerCallback('complete', xhr, textStatus);
+        trigger(
+          ajaxEvents.ajaxComplete,
+          eventParams,
+          'complete',
+          xhr,
+          textStatus,
+        );
       };
 
       xhr.onerror = function(): void {
@@ -441,11 +361,14 @@ function ajax(options: AjaxOptions): Promise<any> {
           clearTimeout(xhrTimeout);
         }
 
-        triggerEvent(ajaxEvents.ajaxError, eventParams);
-        triggerCallback('error', xhr, xhr.statusText);
-
-        triggerEvent(ajaxEvents.ajaxComplete, eventParams);
-        triggerCallback('complete', xhr, 'error');
+        trigger(
+          ajaxEvents.ajaxError,
+          eventParams,
+          'error',
+          xhr,
+          xhr.statusText,
+        );
+        trigger(ajaxEvents.ajaxComplete, eventParams, 'complete', xhr, 'error');
 
         reject(new Error(xhr.statusText));
       };
@@ -458,18 +381,20 @@ function ajax(options: AjaxOptions): Promise<any> {
           clearTimeout(xhrTimeout);
         }
 
-        triggerEvent(ajaxEvents.ajaxError, eventParams);
-        triggerCallback('error', xhr, statusText);
-
-        triggerEvent(ajaxEvents.ajaxComplete, eventParams);
-        triggerCallback('complete', xhr, statusText);
+        trigger(ajaxEvents.ajaxError, eventParams, 'error', xhr, statusText);
+        trigger(
+          ajaxEvents.ajaxComplete,
+          eventParams,
+          'complete',
+          xhr,
+          statusText,
+        );
 
         reject(new Error(statusText));
       };
 
       // ajax start 回调
-      triggerEvent(ajaxEvents.ajaxStart, eventParams);
-      triggerCallback('beforeSend', xhr);
+      trigger(ajaxEvents.ajaxStart, eventParams, 'beforeSend', xhr);
 
       if (isCanceled) {
         reject(new Error('cancel'));
@@ -489,7 +414,7 @@ function ajax(options: AjaxOptions): Promise<any> {
     });
   }
 
-  return dataType === 'jsonp' ? JSONP() : XHR();
+  return XHR();
 }
 
 export default ajax;

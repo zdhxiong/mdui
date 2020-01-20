@@ -4,6 +4,6 @@ afterEach(function() {
   $('#test')
     .empty()
     .removeData();
-  // $(document).off();
-  // $(document.body).off();
+  $(document).off();
+  $(document.body).off();
 });

@@ -71,9 +71,9 @@ describe('.on()', function() {
       data2,
     ) {
       chai.assert.isTrue(
-        ['click', 'input', 'change', 'dbclick', 'customEvent'].includes(
+        ['click', 'input', 'change', 'dbclick', 'customEvent'].indexOf(
           event.type,
-        ),
+        ) > -1,
       );
 
       switch (event.type) {

@@ -105,6 +105,11 @@ async function test() {
         target: "ES6"
       }),
       buble(),
+      polyfill([
+        'mdn-polyfills/MouseEvent',
+        'mdn-polyfills/CustomEvent',
+        'promise-polyfill/src/polyfill',
+      ]),
     ],
     watch: {
       clearScreen: true,

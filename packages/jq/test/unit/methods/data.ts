@@ -96,7 +96,7 @@ describe('.data(), .removeData()', function() {
     $intro.data(otherObject);
     chai.assert.deepEqual(
       $intro.data(),
-      Object.assign({ objkey1: 'objval1', objKey2: 'objval2' }, dataObject),
+      $.extend({ objkey1: 'objval1', objKey2: 'objval2' }, dataObject),
     );
 
     chai.assert.equal($intro.data('objkey1'), 'objval1');

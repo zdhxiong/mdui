@@ -157,7 +157,6 @@ function ajax(options: AjaxOptions): Promise<any> {
     callback: CallbackName,
     ...args: any[]
   ): void {
-    console.log(event);
     // 触发全局事件
     if (global) {
       $(document).trigger(event, params);

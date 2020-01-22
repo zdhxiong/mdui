@@ -6,8 +6,9 @@
   "module": "dist/jq.esm.js",
   "types": "es/index.d.ts",
   "scripts": {
-    "build": "tsc -p src/tsconfig.json && node build.js --build",
-    "test": "node build.js --test"
+    "eslint": "eslint --fix src/**/*.ts",
+    "test": "node build.js --test",
+    "build": "npm run eslint && tsc -p src/tsconfig.json && node build.js --build"
   },
   "husky": {
     "hooks": {
@@ -42,6 +43,7 @@
     "@typescript-eslint/parser": "^2.16.0",
     "acorn": "^7.1.0",
     "chai": "^4.2.0",
+    "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-prettier": "^3.1.2",

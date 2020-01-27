@@ -1174,7 +1174,12 @@ var $ = (function () {
    * @param newChild {String|Node|NodeList|JQ}
    * @return {JQ}
    */
-  each(['append', 'prepend'], function (nameIndex, name) {
+  /**
+   * appendAll - 在元素内部追加所有参数的内容
+   * @param newChild {String|Node|NodeList|JQ}
+   * @return {JQ}
+   */
+  each(['append', 'prepend', 'appendAll'], function (nameIndex, name) {
     $.fn[name] = function (newChild) {
       var newChilds;
       var copyByClone = this.length > 1;
@@ -1183,13 +1188,18 @@ var $ = (function () {
         var tempDiv = document.createElement('div');
         tempDiv.innerHTML = newChild;
         newChilds = [].slice.call(tempDiv.childNodes);
-      } else {
+      } else if (nameIndex !== 2) {
         newChilds = $(newChild).get();
       }
 
       if (nameIndex === 1) {
         // prepend
         newChilds.reverse();
+      }
+
+      if (nameIndex === 2) {
+        // appendAll
+        newChilds = Array.prototype.flatMap.call(arguments, arg => $(arg).get());
       }
 
       return this.each(function (i, _this) {
@@ -1199,8 +1209,8 @@ var $ = (function () {
             child = child.cloneNode(true);
           }
 
-          if (nameIndex === 0) {
-            // append
+          if (nameIndex !== 1) {
+            // append & appendAll
             _this.appendChild(child);
           } else {
             // prepend

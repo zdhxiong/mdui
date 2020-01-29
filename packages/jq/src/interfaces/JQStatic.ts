@@ -8,7 +8,7 @@ export interface JQStatic {
   /**
    * 根据 HTML 字符串或 CSS 选择器创建 JQ 对象
    */
-  <T extends HTMLElement = HTMLElement>(htmlOrSelector: string): JQ<T>;
+  (htmlOrSelector: string): JQ<HTMLElement>;
 
   /**
    * HTMLSelectElement 是 Element, 也是 ArrayLike，JQ 把它视为 Element
@@ -24,6 +24,11 @@ export interface JQStatic {
    * 传入 JQ 对象，返回 JQ 对象
    */
   <T>(selection: JQ<T>): JQ<T>;
+
+  /**
+   * 根据 CSS 选择器，HTML 字符串，DOM 元素，DOM 元素数组创建 JQ 对象
+   */
+  <T extends Element>(element: string | T | ArrayLike<T> | null): JQ<T>;
 
   /**
    * Document 加载完成后执行函数

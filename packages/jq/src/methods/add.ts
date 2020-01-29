@@ -3,6 +3,7 @@ import merge from '../functions/merge';
 import unique from '../functions/unique';
 import { JQ } from '../JQ';
 import TypeOrArray from '../types/TypeOrArray';
+import './get';
 
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {

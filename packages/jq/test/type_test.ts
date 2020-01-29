@@ -2,6 +2,7 @@
  * 测试 typescript 的类型提示
  */
 import $ from '../es/index';
+import { JQ } from '../es/JQ';
 
 const getElementById = document.getElementById('test');
 const querySelector = document.querySelector('.test');
@@ -14,6 +15,8 @@ const $elements = $('.test');
 const arr = [1, 2, 3];
 
 // $()
+$(window);
+$(document);
 $(getElementById);
 $(querySelector);
 $(querySelectorAll);
@@ -23,6 +26,14 @@ $(getElementsByName);
 $(textNode);
 $($elements);
 $(arr);
+$('.selector');
+$('<div>');
+
+function test(selector: string | HTMLElement | ArrayLike<HTMLElement>): JQ {
+  return $(selector).eq(0);
+}
+
+test('.test');
 
 /**
  * ========================================= Function
@@ -37,14 +48,14 @@ $.contains(document, document);
 $.contains(document, getElementById);
 $.contains(document, querySelector);
 $.contains(getElementById, document);
-$.contains($('.test').get(0), $('.new')[0]);
+$.contains($elements.get(0), $elements[0]);
 
 // data()
 $.data(document, 'key', undefined);
 $.data(window, 'type', 'image');
 $.data(getElementById as HTMLElement, 'type');
-$.data($('.test')[0]);
-$.data($('.test').get(0), { key1: 'value1', key2: 'value2' });
+$.data($elements[0]);
+$.data($elements.get(0), { key1: 'value1', key2: 'value2' });
 
 // each()
 $.each(['a', 'b', 'c'], function(i, value) {
@@ -52,7 +63,7 @@ $.each(['a', 'b', 'c'], function(i, value) {
   console.log(value);
 });
 
-$.each($('.test'), function(i, element) {
+$.each($elements, function(i, element) {
   console.log(i);
   console.log(element);
 });
@@ -272,8 +283,8 @@ $elements.clone();
 
 // .closest()
 $elements.closest('.parent');
-$elements.closest($('.parent'));
-$elements.closest($('.parent')[0]);
+$elements.closest($elements);
+$elements.closest($elements[0]);
 
 // .css()
 $elements.css('width', 100);
@@ -330,9 +341,9 @@ $(document).extend({
 
 // .filter()
 $elements.filter('.tes');
-$elements.filter($('.test'));
-$elements.filter($('.test').get());
-$elements.filter($('.test')[0]);
+$elements.filter($elements);
+$elements.filter($elements.get());
+$elements.filter($elements[0]);
 $elements.filter(function() {
   return true;
 });
@@ -350,7 +361,7 @@ $elements.get(-1);
 $elements.get();
 
 // .has()
-$elements.has($('.test')[0]);
+$elements.has($elements[0]);
 
 // .hasClass()
 $elements.hasClass('test');
@@ -371,7 +382,7 @@ $elements.hide();
 
 // .html()
 $elements.html('<p>test</p>');
-$elements.html($('.test')[0]);
+$elements.html($elements[0]);
 $elements.html(function(_, oldHTML) {
   return oldHTML + '<p>test</p>';
 });
@@ -383,8 +394,8 @@ $elements.html();
 // .index()
 $elements.index();
 $elements.index('.test');
-$elements.index($('.test')[0]);
-$elements.index($('.test'));
+$elements.index($elements[0]);
+$elements.index($elements);
 
 // .innerHeight()
 
@@ -393,22 +404,22 @@ $elements.index($('.test'));
 // .insertAfter()
 $elements.insertAfter('.test');
 $elements.insertAfter('<p>test</p>');
-$elements.insertAfter($('.test')[0]);
-$elements.insertAfter($('.test'));
-$elements.insertAfter($('.test').get());
+$elements.insertAfter($elements[0]);
+$elements.insertAfter($elements);
+$elements.insertAfter($elements.get());
 
 // .insertBefore()
 $elements.insertBefore('.test');
 $elements.insertBefore('<p>test</p>');
-$elements.insertBefore($('.test')[0]);
-$elements.insertBefore($('.test'));
-$elements.insertBefore($('.test').get());
+$elements.insertBefore($elements[0]);
+$elements.insertBefore($elements);
+$elements.insertBefore($elements.get());
 
 // .is()
 $elements.is('.test');
-$elements.is($('.test')[0]);
-$elements.is($('.test').get());
-$elements.is($('.test'));
+$elements.is($elements[0]);
+$elements.is($elements.get());
+$elements.is($elements);
 $elements.is(function() {
   return true;
 });
@@ -438,15 +449,15 @@ $elements.nextAll('.box');
 // .nextUntil()
 $elements.nextUntil();
 $elements.nextUntil('.until');
-$elements.nextUntil($('.until'));
-$elements.nextUntil($('.until')[0]);
+$elements.nextUntil($elements);
+$elements.nextUntil($elements[0]);
 $elements.nextUntil('.until', 'div');
 
 // .not()
 $elements.not('.box');
-$elements.not($('.box'));
-$elements.not($('.box').get());
-$elements.not($('.box')[0]);
+$elements.not($elements);
+$elements.not($elements.get());
+$elements.not($elements[0]);
 $elements.not(function() {
   return false;
 });
@@ -485,8 +496,8 @@ $elements.parents('p');
 // .parentsUntil()
 $elements.parentsUntil();
 $elements.parentsUntil('.parent');
-$elements.parentsUntil($('.parent'));
-$elements.parentsUntil($('.parent')[0]);
+$elements.parentsUntil($elements);
+$elements.parentsUntil($elements[0]);
 $elements.parentsUntil('.parent', 'div');
 
 // .position()
@@ -532,8 +543,8 @@ $elements.prevAll('.box');
 // .prevUntil()
 $elements.prevUntil();
 $elements.prevUntil('.until');
-$elements.prevUntil($('.until'));
-$elements.prevUntil($('.until')[0]);
+$elements.prevUntil($elements);
+$elements.prevUntil($elements[0]);
 $elements.prevUntil('.until', 'div');
 
 // .prop()
@@ -588,15 +599,15 @@ $elements.removeProp('disabled');
 
 // .replaceAll()
 $elements.replaceAll('.box');
-$elements.replaceAll($('.box'));
-$elements.replaceAll($('.box').get());
-$elements.replaceAll($('.box')[0]);
+$elements.replaceAll($elements);
+$elements.replaceAll($elements.get());
+$elements.replaceAll($elements[0]);
 
 // .replaceWith()
 $elements.replaceWith('<p>Hello</p>');
-$elements.replaceWith($('.new'));
-$elements.replaceWith($('.new').get());
-$elements.replaceWith($('.new')[0]);
+$elements.replaceWith($elements);
+$elements.replaceWith($elements.get());
+$elements.replaceWith($elements[0]);
 $elements.replaceWith(function(index, html) {
   return html + index;
 });

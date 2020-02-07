@@ -1,0 +1,11 @@
+{
+  "files": [
+	  "dist",
+		"es",
+		"src",
+		"LICENSE",
+		"package.json",
+		"package-lock.json",
+		"README.md"
+	]
+}

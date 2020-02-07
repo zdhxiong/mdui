@@ -1,0 +1,96 @@
+/**
+ * =============================================================================
+ * ************   Chip 纸片   ************
+ * =============================================================================
+ */
+
+@chip-height: 32px;
+
+.mdui-chip {
+  display: inline-block;
+  box-sizing: border-box;
+  height: @chip-height;
+  margin: 2px 0;
+  white-space: nowrap;
+  background-color: #e0e0e0;
+  border-radius: @chip-height / 2;
+  cursor: pointer;
+  user-select: none;
+  .mdui-hoverable(2);
+
+  &:active {
+    background-color: #d6d6d6;
+  }
+}
+
+/* 左侧的图标 */
+.mdui-chip-icon {
+  position: relative;
+  display: inline-block;
+  width: @chip-height;
+  height: @chip-height;
+  margin-right: -4px;
+  overflow: hidden;
+  color: #fff;
+  font-size: 18px;
+  line-height: @chip-height;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #989898;
+  border-radius: 50%;
+
+  .mdui-icon {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    color: #fff;
+  }
+}
+
+/* 文本 */
+.mdui-chip-title {
+  display: inline-block;
+  height: @chip-height;
+  padding-right: 12px;
+  padding-left: 12px;
+  font-size: 14px;
+  line-height: @chip-height;
+  vertical-align: middle;
+}
+
+/* 删除按钮 */
+.mdui-chip-delete {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin-right: 4px;
+  margin-left: -8px;
+  overflow: hidden;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: .54;
+  transition: opacity .25s @animation-curve-default;
+  will-change: opacity;
+  &:hover,
+  &:focus {
+    opacity: .87;
+  }
+}
+
+
+/**
+ * =============================================================================
+ * ************   Chip dark   ************
+ * =============================================================================
+ */
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-chip {
+    background-color: #484848;
+    &:active {
+      background-color: #5d5d5d;
+    }
+  }
+}

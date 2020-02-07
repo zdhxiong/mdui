@@ -1,0 +1,66 @@
+// 根据背景色设置文本色
+._mdui-color-text-color(@color-is-dark) {
+  & when (@color-is-dark = true) {
+    color: @color-white-text;
+  }
+  & when (@color-is-dark = false) {
+    color: @color-black-text;
+  }
+}
+
+// hover 状态背景色
+._mdui-background-color-hover(@colorName) {
+  @color-is-dark: 'color-@{colorName}-500-is-dark';
+  & when (@@color-is-dark = true) {
+    @color: 'color-@{colorName}-400';
+
+    background-color: @@color;
+  }
+  & when (@@color-is-dark = false) {
+    @color: 'color-@{colorName}-600';
+
+    background-color: @@color;
+  }
+}
+
+// active 状态背景色
+._mdui-background-color-active(@colorName) {
+  @color-is-dark: 'color-@{colorName}-500-is-dark';
+  & when (@@color-is-dark = true) {
+    @color: 'color-@{colorName}-300';
+
+    background-color: @@color;
+  }
+  & when (@@color-is-dark = false) {
+    @color: 'color-@{colorName}-700';
+
+    background-color: @@color;
+  }
+}
+
+// 仅设置背景色
+.mdui-background-color(@colorName, @degree: 500) {
+  @color: 'color-@{colorName}-@{degree}';
+
+  background-color: @@color;
+}
+
+// 背景色和文本色
+.mdui-color(@colorName, @degree: 500) {
+  .mdui-background-color(@colorName, @degree);
+
+  @color-is-dark: 'color-@{colorName}-@{degree}-is-dark';
+  ._mdui-color-text-color(@@color-is-dark);
+}
+
+// 文本色
+.mdui-text-color(@colorName, @degree: 500, @opacity: 1) {
+  @color: 'color-@{colorName}-@{degree}';
+
+  & when (@opacity = 1) {
+    color: @@color;
+  }
+  & when (@opacity < 1) {
+    color: rgba(red(@@color), green(@@color), blue(@@color), @opacity);
+  }
+}

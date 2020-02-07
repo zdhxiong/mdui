@@ -1,0 +1,158 @@
+/**
+ * =============================================================================
+ * ************   Fab 浮动操作按钮   ************
+ * =============================================================================
+ */
+
+@import '../button/index';
+
+@fab-size: 56px;
+@fab-size-mini: 40px;
+
+/* 浮动操作按钮 */
+.mdui-fab {
+  width: @fab-size;
+  min-width: @fab-size;
+  height: @fab-size;
+  margin: auto;
+  padding: 0 !important;
+  overflow: hidden;
+  font-size: 24px;
+  line-height: normal !important;
+  border-radius: 50%;
+  .mdui-shadow(6);
+
+  &:hover{
+    .mdui-shadow(8);
+  }
+
+  &:active {
+    .mdui-shadow(12);
+  }
+
+  // 浮动操作按钮中的图标
+  .mdui-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    margin-top: 16px;
+    margin-left: 16px;
+    line-height: 24px;
+  }
+}
+
+/* mini 型浮动操作按钮 */
+.mdui-fab-mini {
+  width: @fab-size-mini;
+  min-width: @fab-size-mini;
+  height: @fab-size-mini;
+
+  // mini 型浮动操作按钮中的图标
+  .mdui-icon {
+    margin-top: 8px;
+    margin-left: 8px;
+  }
+}
+
+/* 固定到右下角的 FAB 按钮 */
+.mdui-fab-fixed,
+.mdui-fab-wrapper {
+  position: fixed !important;
+
+  /* 手机平板上距离屏幕右下角 16px */
+  right: 16px;
+  bottom: 16px;
+
+  @media (min-width: @screen-md-min) {
+    /* 电脑上距离屏幕右下角 24px */
+    right: 24px;
+    bottom: 24px;
+  }
+}
+
+/* 含菜单的浮动操作按钮 */
+.mdui-fab-wrapper {
+  position: relative;
+  z-index: @z-index-fab;
+  width: @fab-size;
+  height: @fab-size;
+  padding-top: 8px;
+  text-align: center;
+
+  // 菜单打开前
+  &>.mdui-fab {
+    .mdui-icon:not(.mdui-fab-opened) {
+      opacity: 1;
+      transition: all .2s @animation-curve-default;
+      will-change: opacity, transform;
+    }
+    .mdui-icon.mdui-fab-opened {
+      transform: rotate(225deg);
+      opacity: 0;
+      transition: all .2s @animation-curve-default;
+      will-change: opacity, transform;
+    }
+  }
+
+  // 菜单打开后
+  &>.mdui-fab.mdui-fab-opened {
+    .mdui-icon:not(.mdui-fab-opened) {
+      transform: rotate(225deg);
+      opacity: 0;
+    }
+    .mdui-icon.mdui-fab-opened {
+      transform: rotate(360deg);
+      opacity: 1;
+    }
+  }
+
+  // mini 按钮需要垂直居中
+  &>.mdui-fab-mini {
+    margin-top: (@fab-size - @fab-size-mini) / 2;
+  }
+
+  .mdui-fab-dial {
+    position: absolute;
+    right: 0;
+    bottom: @fab-size + 8px;
+    left: 0;
+    height: 0;
+    text-align: center;
+    visibility: visible;
+
+    .mdui-fab {
+      margin: 8px 0;
+      transform: scale(0);
+      opacity: 0;
+      transition: box-shadow .2s @animation-curve-fast-out-linear-in,
+                  color .2s @animation-curve-default,
+                  // fab
+                  transform 150ms @animation-curve-default,
+                  opacity 150ms @animation-curve-default;
+    }
+
+    &.mdui-fab-dial-show {
+      .mdui-fab {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  }
+}
+
+/* 添加类 .mdui-fab-hide 以动画的形式隐藏按钮 */
+.mdui-fab,
+.mdui-fab-mini,
+.mdui-fab-wrapper {
+  transform: scale(1) translateZ(0);
+  transition: all .2s @animation-curve-default,
+              box-shadow .2s @animation-curve-fast-out-linear-in,
+                // fab
+              transform .2s;
+  will-change: transform;
+
+  &.mdui-fab-hide {
+    transform: scale(0) translateZ(0);
+  }
+}

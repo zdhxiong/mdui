@@ -1,0 +1,44 @@
+/**
+ * =============================================================================
+ * ************   Collapse 折叠插件   ************
+ * =============================================================================
+ */
+
+ .mdui-collapse-item-header {
+  // 图标，打开时翻转 180 度
+  .mdui-collapse-item-arrow,
+  &.mdui-collapse-item-arrow {
+    transform: rotate(0);
+    transition: transform .3s @animation-curve-default;
+    will-change: transform;
+  }
+}
+
+.mdui-collapse-item-body {
+  height: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+  transition: all .3s @animation-curve-default;
+  will-change: height;
+
+  // 使子列表缩进
+  .mdui-list-item {
+    padding-left: 72px;
+  }
+}
+
+.mdui-collapse-item-open {
+  &>.mdui-collapse-item-header {
+    .mdui-collapse-item-arrow,
+    &.mdui-collapse-item-arrow {
+      transform: rotate(180deg);
+    }
+  }
+
+  &>.mdui-collapse-item-body {
+    height: auto;
+  }
+}

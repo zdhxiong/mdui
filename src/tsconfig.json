@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig",
+  "include": ["./"],
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "../es",
+    "module": "ES6",
+    "outDir": "../es",
+    "target": "ES6",
+    "typeRoots": []
+  }
+}

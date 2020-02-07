@@ -1,0 +1,126 @@
+// ======================== 边距
+.mdui-m-a(@spacing) {
+  margin: @spacing * @spacing-base;
+}
+.mdui-m-t(@spacing) {
+  margin-top: @spacing * @spacing-base;
+}
+.mdui-m-r(@spacing) {
+  margin-right: @spacing * @spacing-base;
+}
+.mdui-m-b(@spacing) {
+  margin-bottom: @spacing * @spacing-base;
+}
+.mdui-m-l(@spacing) {
+  margin-left: @spacing * @spacing-base;
+}
+.mdui-m-x(@spacing) {
+  margin-right: @spacing * @spacing-base;
+  margin-left: @spacing * @spacing-base;
+}
+.mdui-m-y(@spacing) {
+  margin-top: @spacing * @spacing-base;
+  margin-bottom: @spacing * @spacing-base;
+}
+
+.mdui-p-a(@spacing) {
+  padding: @spacing * @spacing-base;
+}
+.mdui-p-t(@spacing) {
+  padding-top: @spacing * @spacing-base;
+}
+.mdui-p-r(@spacing) {
+  padding-right: @spacing * @spacing-base;
+}
+.mdui-p-b(@spacing) {
+  padding-bottom: @spacing * @spacing-base;
+}
+.mdui-p-l(@spacing) {
+  padding-left: @spacing * @spacing-base;
+}
+.mdui-p-x(@spacing) {
+  padding-right: @spacing * @spacing-base;
+  padding-left: @spacing * @spacing-base;
+}
+.mdui-p-y(@spacing) {
+  padding-top: @spacing * @spacing-base;
+  padding-bottom: @spacing * @spacing-base;
+}
+
+//=========================== 清除浮动
+// 清除浮动
+.mdui-clearfix() {
+  &::before,
+  &::after {
+    display: table;
+    content: ' ';
+  }
+  &::after {
+    clear: both;
+  }
+}
+
+// 用省略号代替被截断的文本
+.mdui-text-truncate() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// 文本强制换行
+.mdui-textwrap() {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+// 使子元素垂直居中
+.mdui-valign() {
+  display: flex;
+  align-items: center;
+}
+
+// 使元素水平居中
+.mdui-center() {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+// 美化滚动条样式
+.mdui-scrollbar-beautify(@layout: light) {
+  // 亮色主题
+  & when (@layout = light) {
+    &::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+      background: transparent;
+      // 桌面端
+      @media (min-width: @screen-md-min) {
+        width: 8px;
+        height: 8px;
+      }
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // 暗色主题
+  & when (@layout = dark) {
+    &::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+      background: transparent;
+      // 桌面端
+      @media (min-width: @screen-md-min) {
+        width: 8px;
+        height: 8px;
+      }
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+}

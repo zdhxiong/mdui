@@ -1,0 +1,133 @@
+/**
+ * =============================================================================
+ * ************   Snackbar   ************
+ * =============================================================================
+ */
+
+@import '../button/index';
+
+.mdui-snackbar {
+  position: fixed;
+  z-index: @z-index-snackbar;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+
+  // 手机端的样式
+  width: 100%;
+  min-height: 48px;
+  padding: 0 24px 0 24px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 20px;
+  background-color: #323232;
+  will-change: transform;
+
+  // 平板、桌面端样式
+  @media (min-width: @screen-sm-min) {
+    width: auto;
+    min-width: 288px;
+    max-width: 568px;
+    border-radius: 2px;
+  }
+}
+
+.mdui-snackbar-bottom,
+.mdui-snackbar-top,
+.mdui-snackbar-left-top,
+.mdui-snackbar-left-bottom,
+.mdui-snackbar-right-top,
+.mdui-snackbar-right-bottom {
+  transition: transform .3s @animation-curve-default;
+}
+
+/* 位置 */
+.mdui-snackbar-bottom,
+.mdui-snackbar-left-bottom,
+.mdui-snackbar-right-bottom {
+  bottom: 0;
+}
+
+.mdui-snackbar-top,
+.mdui-snackbar-left-top,
+.mdui-snackbar-right-top {
+  top: 0;
+}
+
+.mdui-snackbar-top,
+.mdui-snackbar-bottom {
+  left: 50%;
+}
+
+// 平板、桌面端位置
+@media (min-width: @screen-sm-min) {
+  .mdui-snackbar-left-top {
+    top: 24px;
+    left: 24px;
+  }
+
+  .mdui-snackbar-left-bottom {
+    bottom: 24px;
+    left: 24px;
+  }
+
+  .mdui-snackbar-right-top {
+    top: 24px;
+    right: 24px;
+  }
+
+  .mdui-snackbar-right-bottom {
+    right: 24px;
+    bottom: 24px;
+  }
+}
+
+/* 文本 */
+.mdui-snackbar-text {
+  position: relative;
+  max-width: 100%;
+  padding: 14px 0 14px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 按钮 */
+.mdui-snackbar-action {
+  margin-right: -16px;
+  white-space: nowrap;
+  .mdui-text-color(@color-accent-default-name, a100);
+}
+
+
+/**
+ * =============================================================================
+ * ************   Snackbar 强调色   ************
+ * =============================================================================
+ */
+& {
+  .loop-accent-theme(@counter-color) when (@counter-color > 0) {
+    .loop-accent-theme((@counter-color - 1));
+    @colorName: extract(@globalAccentColors, @counter-color);
+
+    .mdui-theme-accent-@{colorName} {
+      .mdui-snackbar-action {
+        .mdui-text-color(@colorName, a100);
+      }
+    }
+
+  }
+  .loop-accent-theme(length(@globalAccentColors));
+}
+
+
+/**
+ * =============================================================================
+ * ************   Snackbar dark   ************
+ * =============================================================================
+ */
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-snackbar {
+    background-color: #5d5d5d;
+  }
+}

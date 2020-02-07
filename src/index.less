@@ -1,0 +1,69 @@
+// 主色颜色名列表
+@globalPrimaryColors: amber, blue, blue-grey, brown, cyan, deep-orange,
+  deep-purple, green, grey, indigo, light-blue, light-green, lime, orange, pink,
+  purple, red, teal, yellow;
+
+// 主色饱和度列表
+@globalPrimaryColorDegrees: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900;
+
+// 强调色颜色名列表
+@globalAccentColors: amber, blue, cyan, deep-orange, deep-purple, green, indigo,
+  light-blue, light-green, lime, orange, pink, purple, red, teal, yellow;
+
+// 强调色饱和度列表
+@globalAccentColorDegrees: a100, a200, a400, a700;
+
+// 是否包含深色布局主题
+@globalLayoutDark: true;
+
+// 不能删除
+@import './styles/mixin';
+@import './styles/variable';
+@import (inline) './node_modules/normalize.css/normalize.css';
+@import './styles/global';
+
+// 可删除
+@import './styles/color';
+@import './styles/helper';
+@import './styles/icon';
+@import './styles/material-icons';
+@import './styles/media';
+@import './styles/roboto';
+@import './styles/typo';
+@import './styles/grid';
+@import './styles/shadow';
+
+// 组件，可删除
+@import './components/headroom/index';
+@import './components/collapse/index';
+@import './components/panel/index';
+@import './components/table/index';
+@import './components/divider/index';
+@import './components/ripple/index';
+@import './components/textfield/index';
+@import './components/selection_control/checkbox';
+@import './components/selection_control/radio';
+@import './components/selection_control/switch';
+@import './components/slider/index';
+@import './components/button/index';
+@import './components/fab/index';
+@import './components/select/index';
+@import './components/appbar/index';
+@import './components/toolbar/index';
+@import './components/card/index';
+@import './components/tab/index';
+@import './components/subheader/index';
+@import './components/grid_list/index';
+@import './components/list/index';
+@import './components/drawer/index';
+@import './components/dialog/index';
+@import './components/dialog/alert';
+@import './components/dialog/confirm';
+@import './components/dialog/prompt';
+@import './components/tooltip/index';
+@import './components/snackbar/index';
+@import './components/chip/index';
+@import './components/bottom_nav/index';
+@import './components/progress/progress';
+@import './components/progress/spinner';
+@import './components//menu/index';

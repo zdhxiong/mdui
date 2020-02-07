@@ -1,0 +1,33 @@
+// 图标颜色，纯黑色图标有 54% 不透明度，其他颜色保持原色
+.mdui-icon-color(@colorName) {
+  @color: 'color-@{colorName}-500';
+  & when (@colorName = black) {
+    color: @color-black-icon;
+  }
+  & when not (@colorName = black) {
+    color: @@color;
+  }
+}
+
+// 禁用状态图标颜色，深色图标有 26% 不透明度，浅色图标有 30% 不透明度
+.mdui-icon-color-disabled(@colorName) {
+  @color: 'color-@{colorName}-500';
+  @color-is-dark: 'color-@{colorName}-500-is-dark';
+
+  & when (@@color-is-dark = true) {
+    color: rgba(
+      red(@@color),
+      green(@@color),
+      blue(@@color),
+      @opacity-black-icon-disabled
+    );
+  }
+  & when (@@color-is-dark = false) {
+    color: rgba(
+      red(@@color),
+      green(@@color),
+      blue(@@color),
+      @opacity-white-icon-disabled
+    );
+  }
+}

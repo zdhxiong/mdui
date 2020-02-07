@@ -1,0 +1,45 @@
+/**
+ * =============================================================================
+ * ************   Tooltip 工具提示   ************
+ * =============================================================================
+ */
+
+.mdui-tooltip {
+  position: absolute;
+  z-index: @z-index-tooltip;
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 180px;
+  min-height: 32px;
+  padding: 8px 16px;
+  color: #fff;
+  font-weight: 500;
+
+  // 移动端样式
+  font-size: 14px;
+  line-height: 22px;
+  text-align: left;
+  background-color: rgba(red(@color-grey-700), green(@color-grey-700), blue(@color-grey-700), 0.9);
+  border-radius: 2px;
+  transform: scale(0);
+  opacity: 0;
+  transition-timing-function: @animation-curve-default;
+  transition-duration: 0.15s;
+  transition-property: opacity, transform;
+  will-change: opacity, transform;
+
+  // 桌面端样式
+  @media (min-width: @screen-md-min) {
+    max-width: 200px;
+    min-height: 24px;
+    padding: 4px 8px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+
+/* 显示工具提示 */
+.mdui-tooltip-open {
+  transform: scale(1);
+  opacity: 1;
+}

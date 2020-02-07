@@ -1,0 +1,51 @@
+/**
+ * =============================================================================
+ * ************   Headroom   ************
+ * =============================================================================
+ */
+
+ .mdui-headroom {
+  transition: all .3s @animation-curve-default !important;
+}
+
+/* 固定在顶部时 */
+.mdui-headroom-pinned-top {
+  transform: translate3d(0, 0, 0) !important;
+}
+
+/* 在顶部隐藏时 */
+.mdui-headroom-unpinned-top {
+  transform: translate3d(0, -100%, 0) !important;
+  .mdui-shadow(0) !important;
+}
+
+/* 固定在底部时 */
+.mdui-headroom-pinned-down {
+  transform: translate3d(0, 0, 0) !important;
+}
+
+/* 在底部隐藏时 */
+.mdui-headroom-unpinned-down {
+  transform: translate3d(0, 100%, 0) !important;
+  .mdui-shadow(0) !important;
+}
+
+/* 固定应用栏中的工具栏 */
+.mdui-headroom-pinned-toolbar {
+  transform: translate3d(0, 0, 0) !important;
+}
+
+/* 隐藏应用栏中的工具栏 */
+.mdui-headroom-unpinned-toolbar {
+  transform: translate3d(0, -@appbar-height-xs-portrait, 0) !important;
+
+  // 平板和桌面
+  @media (min-width: @screen-sm-min) {
+    transform: translate3d(0, -@appbar-height-sm, 0) !important;
+  }
+
+  // 手机横屏
+  @media (orientation: landscape) and (max-width: @screen-xs-max-landscape) {
+    transform: translate3d(0, -@appbar-height-xs-landscape, 0) !important;
+  }
+}

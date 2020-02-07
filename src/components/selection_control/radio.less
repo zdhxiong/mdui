@@ -1,0 +1,166 @@
+/**
+ * =============================================================================
+ * ************   Radio 单选框   ************
+ * =============================================================================
+ */
+
+.mdui-radio {
+  position: relative;
+  display: inline-block;
+  height: 36px;
+  padding-left: 36px;
+  line-height: 36px;
+  cursor: pointer;
+  user-select: none;
+
+  // 隐藏系统 input 标签，用自定义的图标代替
+  input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
+}
+
+/* 图标外圈 */
+.mdui-radio-icon {
+  position: absolute;
+  top: 9px;
+  left: 0;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  border: 2px solid @color-black-icon;
+  border-radius: 18px;
+  transition: all .3s @animation-curve-default,
+              box-shadow .14s @animation-curve-default;
+
+  // 图标内部圆圈
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    background-color: @color-default-a200;
+    border-radius: 14px;
+    transform: scale(0);
+    opacity: 0;
+    transition: all .3s @animation-curve-default;
+    content: ' ';
+  }
+}
+
+/* 选中状态的图标 */
+.mdui-radio input[type="radio"]:checked + .mdui-radio-icon {
+  border-color: @color-default-a200;
+
+  &::before {
+    transform: scale(0.68);
+    opacity: 1;
+  }
+}
+
+/* 禁用状态的图标 */
+.mdui-radio input[type="radio"]:disabled + .mdui-radio-icon {
+  border-color: @color-black-icon-disabled !important;
+}
+
+/* 禁用且选中状态的图标 */
+.mdui-radio input[type="radio"]:disabled:checked + .mdui-radio-icon {
+  &::before {
+    background-color: @color-black-icon-disabled !important;
+  }
+}
+
+/* 未选中、禁用时 按下的阴影 */
+.mdui-radio:active input[type="radio"],
+.mdui-radio input[type="radio"]:focus {
+  & + .mdui-radio-icon {
+    box-shadow: 0 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* 已选中时按下的阴影 */
+.mdui-radio:active input[type="radio"],
+.mdui-radio input[type="radio"]:focus {
+  &:checked:not(:disabled) + .mdui-radio-icon {
+    box-shadow: 0 0 0 15px rgba(red(@color-default-a200), green(@color-default-a200), blue(@color-default-a200), 0.16);
+  }
+}
+
+/**
+ * =============================================================================
+ * ************   Radio 强调色   ************
+ * =============================================================================
+ */
+
+& {
+  .loop-accent-theme(@counter-color) when (@counter-color > 0) {
+    .loop-accent-theme((@counter-color - 1));
+    @colorName: extract(@globalAccentColors, @counter-color);
+
+    @color: 'color-@{colorName}-a200';
+
+    .mdui-theme-accent-@{colorName} {
+
+      // 选中状态的图标
+      .mdui-radio input[type="radio"]:checked + .mdui-radio-icon {
+        border-color: @@color;
+
+        &::before {
+          background-color: @@color;
+        }
+      }
+
+      // 已选中时按下的阴影
+      .mdui-radio:active input[type="radio"],
+      .mdui-radio input[type="radio"]:focus {
+        &:checked:not(:disabled) + .mdui-radio-icon {
+          box-shadow: 0 0 0 15px rgba(red(@@color), green(@@color), blue(@@color), 0.16);
+        }
+      }
+
+    }
+  }
+  .loop-accent-theme(length(@globalAccentColors));
+}
+
+
+/**
+ * =============================================================================
+ * ************   Radio dark   ************
+ * =============================================================================
+ */
+
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+
+  // 图标外圈
+  .mdui-radio-icon {
+    border-color: rgba(255, 255, 255, 0.7);
+  }
+
+  // 禁用状态
+  .mdui-radio input[type="radio"]:disabled + .mdui-radio-icon {
+    border-color: @color-white-icon-disabled !important;
+  }
+
+  // 禁用且选中状态
+  .mdui-radio input[type="radio"]:disabled:checked + .mdui-radio-icon {
+    &::before {
+      background-color: @color-white-icon-disabled !important;
+    }
+  }
+
+  // 未选中或禁用时 按下的阴影
+  .mdui-radio:active input[type="radio"],
+  .mdui-radio input[type="radio"]:focus {
+    & + .mdui-radio-icon {
+      box-shadow: 0 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+}

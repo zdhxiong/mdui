@@ -1,0 +1,39 @@
+/**
+ * =============================================================================
+ * ************   Subheader 副标题   ************
+ * =============================================================================
+ *
+ * 用于 List 和 Grid list 组件
+ */
+
+.mdui-subheader,
+.mdui-subheader-inset {
+  position: relative;
+  box-sizing: border-box;
+  height: 48px;
+  padding-right: 16px;
+  padding-left: 16px;
+  color: @color-black-secondary;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 48px;
+  cursor: default;
+  .mdui-text-truncate();
+}
+
+.mdui-subheader-inset {
+  padding-left: 72px;
+}
+
+/**
+ * =============================================================================
+ * ************   Subheader dark   ************
+ * =============================================================================
+ */
+
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-subheader,
+  .mdui-subheader-inset {
+    color: @color-white-secondary;
+  }
+}

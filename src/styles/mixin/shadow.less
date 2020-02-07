@@ -1,0 +1,17 @@
+// 阴影
+.mdui-shadow(@depth) {
+  @shadow: 'shadow-depth-@{depth}';
+
+  box-shadow: @@shadow;
+}
+
+// hover 时添加阴影
+.mdui-hoverable(@depth: 8) {
+  transition: box-shadow 0.25s @animation-curve-default;
+  will-change: box-shadow;
+
+  &:hover,
+  &:focus {
+    .mdui-shadow(@depth);
+  }
+}

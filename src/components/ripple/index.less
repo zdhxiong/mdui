@@ -1,0 +1,92 @@
+/**
+ * =============================================================================
+ * ************   涟漪动画   ************
+ * =============================================================================
+ */
+
+.mdui-ripple {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Ripple */
+.mdui-ripple-wave {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  transform: translate3d(0, 0, 0) scale(0);
+  transition-duration: 1400ms;
+  pointer-events: none;
+}
+
+/* 有背景色的默认使用白色涟漪 */
+.mdui-ripple[class*="mdui-color-"] {
+  .mdui-ripple-wave {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* 白色涟漪 */
+.mdui-ripple-white .mdui-ripple-wave {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 黑色涟漪 */
+.mdui-ripple-black .mdui-ripple-wave {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.mdui-ripple-wave-fill {
+  opacity: 0.35;
+  transition-duration: 300ms;
+}
+
+.mdui-ripple-wave-out {
+  opacity: 0;
+  transition-duration: 600ms;
+}
+
+
+/**
+ * =============================================================================
+ * ************   Ripple 颜色   ************
+ * =============================================================================
+ */
+& {
+  .loop-primary-theme(@counter-color) when (@counter-color > 0) {
+    .loop-primary-theme((@counter-color - 1));
+    @colorName: extract(@globalPrimaryColors, @counter-color);
+
+    // 指定涟漪颜色
+    .mdui-ripple-@{colorName} {
+      .mdui-ripple-wave {
+        @color: 'color-@{colorName}-500';
+
+        background-color: rgba(red(@@color), green(@@color), blue(@@color), 0.3) !important;
+      }
+    }
+
+  }
+  .loop-primary-theme(length(@globalPrimaryColors));
+}
+
+
+/**
+ * =============================================================================
+ * ************   Ripple dark   ************
+ * =============================================================================
+ */
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  // 深色主题下使用白色涟漪
+  .mdui-ripple-wave {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+}

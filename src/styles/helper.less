@@ -1,0 +1,242 @@
+/**
+ * =============================================================================
+ * ************   Helper 辅助类   ************
+ * =============================================================================
+ */
+
+/**
+ * =================== 边距
+ */
+._spacing_margin_mixin(@spacing) when (@spacing > -1) {
+  ._spacing_margin_mixin(@spacing - 1);
+
+  .mdui-m-a-@{spacing} {
+    .mdui-m-a(@spacing) !important;
+  }
+  .mdui-m-t-@{spacing} {
+    .mdui-m-t(@spacing) !important;
+  }
+  .mdui-m-r-@{spacing} {
+    .mdui-m-r(@spacing) !important;
+  }
+  .mdui-m-b-@{spacing} {
+    .mdui-m-b(@spacing) !important;
+  }
+  .mdui-m-l-@{spacing} {
+    .mdui-m-l(@spacing) !important;
+  }
+  .mdui-m-x-@{spacing} {
+    .mdui-m-x(@spacing) !important;
+  }
+  .mdui-m-y-@{spacing} {
+    .mdui-m-y(@spacing) !important;
+  }
+
+  .mdui-p-a-@{spacing} {
+    .mdui-p-a(@spacing) !important;
+  }
+  .mdui-p-t-@{spacing} {
+    .mdui-p-t(@spacing) !important;
+  }
+  .mdui-p-r-@{spacing} {
+    .mdui-p-r(@spacing) !important;
+  }
+  .mdui-p-b-@{spacing} {
+    .mdui-p-b(@spacing) !important;
+  }
+  .mdui-p-l-@{spacing} {
+    .mdui-p-l(@spacing) !important;
+  }
+  .mdui-p-x-@{spacing} {
+    .mdui-p-x(@spacing) !important;
+  }
+  .mdui-p-y-@{spacing} {
+    .mdui-p-y(@spacing) !important;
+  }
+}
+
+._spacing_margin_mixin(5);
+
+
+/**
+ * ======================== 快速浮动
+ */
+
+/* 向左浮动 */
+.mdui-float-left {
+  float: left !important;
+}
+
+/* 向右浮动 */
+.mdui-float-right {
+  float: right !important;
+}
+
+/**
+ * ========================= 水平居中
+ */
+
+/* 水平居中 */
+.mdui-center {
+  .mdui-center() !important;
+}
+
+/**
+ * ========================= 垂直居中
+ */
+
+/* 垂直居中 */
+.mdui-valign {
+  .mdui-valign() !important;
+}
+
+/**
+ * ========================= 文本对齐方式
+ */
+
+/* 文本左对齐 */
+.mdui-text-left {
+  text-align: left !important;
+}
+
+/* 文本居中对齐 */
+.mdui-text-center {
+  text-align: center !important;
+}
+
+/* 文本向右对齐 */
+.mdui-text-right {
+  text-align: right !important;
+}
+
+/**
+ * ========================= 文本大小写转换
+ */
+
+/* 文本转为小写 */
+.mdui-text-lowercase {
+  text-transform: lowercase !important;
+}
+
+/* 文本转为大写 */
+.mdui-text-uppercase {
+  text-transform: uppercase !important;
+}
+
+/* 文本转为单词的首字母大写 */
+.mdui-text-capitalize {
+  text-transform: capitalize !important;
+}
+
+/**
+ * ======================== 文本截断
+ */
+
+/* 文本截断 */
+.mdui-text-truncate {
+  .mdui-text-truncate();
+}
+
+/**
+ * ========================= 清除浮动
+ */
+
+/* 清除浮动 */
+.mdui-clearfix {
+  .mdui-clearfix();
+}
+
+/**
+ * ========================= 隐藏内容
+ */
+
+/* 隐藏元素 */
+.mdui-hidden,
+[hidden] {
+  display: none !important;
+}
+
+/* 使元素不可见 */
+.mdui-invisible {
+  visibility: hidden;
+}
+
+/* Responsive utilities 响应式工具
+   ========================================================================== */
+
+/* 在特定屏幕的特备上隐藏 */
+@media (max-width: @screen-xs-max) {
+  .mdui-hidden-xs {
+    display: none !important;
+  }
+}
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+  .mdui-hidden-sm {
+    display: none !important;
+  }
+}
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+  .mdui-hidden-md {
+    display: none !important;
+  }
+}
+@media (min-width: @screen-lg-min) and (max-width: @screen-lg-max) {
+  .mdui-hidden-lg {
+    display: none !important;
+  }
+}
+@media (min-width: @screen-xl-min) {
+  .mdui-hidden-xl {
+    display: none !important;
+  }
+}
+
+/* 在比特定屏幕小的设备上隐藏 */
+@media (max-width: @screen-xs-max) {
+  .mdui-hidden-xs-down {
+    display: none !important;
+  }
+}
+@media (max-width: @screen-sm-max) {
+  .mdui-hidden-sm-down {
+    display: none !important;
+  }
+}
+@media (max-width: @screen-md-max) {
+  .mdui-hidden-md-down {
+    display: none !important;
+  }
+}
+@media (max-width: @screen-lg-max) {
+  .mdui-hidden-lg-down {
+    display: none !important;
+  }
+}
+.mdui-hidden-xl-down {
+  display: none !important;
+}
+
+/* 在比特定屏幕大的设备上隐藏 */
+.mdui-hidden-xs-up {
+  display: none !important;
+}
+@media (min-width: @screen-sm-min) {
+  .mdui-hidden-sm-up {
+    display: none !important;
+  }
+}
+@media (min-width: @screen-md-min) {
+  .mdui-hidden-md-up {
+    display: none !important;
+  }
+}
+@media (min-width: @screen-lg-min) {
+  .mdui-hidden-lg-up {
+    display: none !important;
+  }
+}
+@media (min-width: @screen-xl-min) {
+  .mdui-hidden-xl-up {
+    display: none !important;
+  }
+}

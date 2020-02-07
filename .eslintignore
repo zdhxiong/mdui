@@ -1,0 +1,6 @@
+.github
+.idea
+dist
+es
+node_modules
+gulpfile.js

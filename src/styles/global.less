@@ -1,0 +1,77 @@
+/**
+ * =============================================================================
+ * ************   公共样式   ************
+ * =============================================================================
+ */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  color: @body-text-color;
+  font-size: @screen-xs-font-size;
+  font-family: @font-family-base;
+  background-color: @body-background-color;
+  @media (min-width: @screen-sm-min) {
+    font-size: @screen-sm-font-size;
+  }
+  @media (min-width: @screen-md-min) {
+    font-size: @screen-md-font-size;
+  }
+
+  // 滚动条样式
+  * {
+    .mdui-scrollbar-beautify(light);
+  }
+
+  // 夜间模式滚动条样式
+  &.mdui-theme-layout-dark {
+    * {
+      .mdui-scrollbar-beautify(dark);
+    }
+  }
+}
+
+/* 锁定屏幕 */
+body.mdui-locked {
+  overflow: hidden;
+}
+
+/* 遮罩层 */
+.mdui-overlay {
+  position: fixed;
+  top: -5000px;
+  right: -5000px;
+  bottom: -5000px;
+  left: -5000px;
+  z-index: @z-index-overlay;
+  background: rgba(0, 0, 0, .4);
+  backface-visibility: hidden;
+  visibility: hidden;
+  opacity: 0;
+  transition-duration: .3s;
+  transition-property: opacity, visibility;
+  will-change: opacity;
+}
+
+/* 显示遮罩层 */
+.mdui-overlay-show {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* 取消 transition 过渡效果 */
+.mdui-no-transition {
+  transition-property: none !important;
+}
+
+
+/**
+ * =============================================================================
+ * ************   Global dark   ************
+ * =============================================================================
+ */
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  color: #fff;
+  background-color: @layout-dark-color-3;
+}

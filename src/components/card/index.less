@@ -1,0 +1,200 @@
+/**
+ * =============================================================================
+ * ************   Card 卡片   ************
+ * =============================================================================
+ */
+
+/* 卡片 */
+.mdui-card {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: #000;
+  background-color: #fff;
+  border-radius: 2px;
+  .mdui-shadow(2);
+}
+
+/**
+ * ===================== 头部，包含头像、标题、副标题
+ */
+.mdui-card-header {
+  position: relative;
+  box-sizing: border-box;
+  height: 72px;
+  padding: 16px;
+}
+
+/* 卡片头部头像 */
+.mdui-card-header-avatar {
+  float: left;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* 卡片头部标题 */
+.mdui-card-header-title {
+  display: block;
+  margin-left: 52px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  opacity: @opacity-black-text;
+  .mdui-text-truncate();
+}
+
+/* 卡片头部副标题 */
+.mdui-card-header-subtitle {
+  display: block;
+  margin-left: 52px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  opacity: @opacity-black-secondary;
+  .mdui-text-truncate();
+}
+
+/**
+ * =========================== 主标题区域
+ */
+.mdui-card-primary {
+  position: relative;
+  padding: 24px 16px 16px 16px;
+}
+
+/* 主标题区域标题 */
+.mdui-card-primary-title {
+  display: block;
+  font-size: 24px;
+  line-height: 36px;
+  opacity: @opacity-black-text;
+}
+
+/* 主标题区域副标题 */
+.mdui-card-primary-subtitle {
+  display: block;
+  font-size: 14px;
+  line-height: 24px;
+  opacity: @opacity-black-secondary;
+}
+
+/**
+ * ============================ 内容区域
+ */
+.mdui-card-content {
+  position: relative;
+  padding: 16px;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+/**
+ * ============================ 卡片菜单
+ */
+.mdui-card-menu {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1;
+
+  .mdui-btn {
+    margin-left: 8px;
+  }
+}
+
+/**
+ * =========================== 按钮区域
+ */
+.mdui-card-actions {
+  .mdui-clearfix();
+
+  position: relative;
+  box-sizing: border-box;
+  padding: 8px;
+
+  .mdui-btn {
+    max-width: 100%;
+    margin: 0 8px 0 0;
+    .mdui-text-truncate();
+  }
+
+  .mdui-btn-icon {
+    width: @button-height;
+    height: @button-height;
+    margin: 0 8px;
+  }
+}
+
+/* 使按钮竖向排列 */
+.mdui-card-actions-stacked {
+  .mdui-btn {
+    display: block;
+    margin: 0 0 4px 0;
+    &:last-child {
+      margin: 0;
+    }
+  }
+}
+
+/**
+ * ============================= 媒体元素区域
+ */
+.mdui-card-media {
+  position: relative;
+  img, video {
+    display: block;
+    width: 100%;
+  }
+}
+
+/* 覆盖在媒体元素上的内容 */
+.mdui-card-media-covered {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.2);
+
+  /* 覆盖在媒体元素上的标题 */
+  .mdui-card-primary-title {
+    opacity: @opacity-white-text;
+  }
+  .mdui-card-primary-subtitle {
+    opacity: @opacity-white-secondary;
+  }
+}
+
+/* 覆盖在媒体元素顶部 */
+.mdui-card-media-covered-top {
+  top: 0;
+  bottom: auto;
+}
+
+/* 覆盖层透明 */
+.mdui-card-media-covered-transparent {
+  background: transparent;
+}
+
+/* 覆盖层渐变 */
+.mdui-card-media-covered-gradient {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0));
+
+  &.mdui-card-media-covered-top {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0));
+  }
+}
+
+
+/**
+ * =============================================================================
+ * ************   Card dark   ************
+ * =============================================================================
+ */
+.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+  .mdui-card {
+    color: #fff;
+    background-color: @layout-dark-color-4;
+  }
+}

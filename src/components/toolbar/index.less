@@ -1,0 +1,92 @@
+/**
+ * =============================================================================
+ * ************   Toolbar 工具栏   ************
+ * =============================================================================
+ */
+
+.mdui-toolbar {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  &>* {
+    margin: 0 16px;
+    .mdui-text-truncate();
+  }
+
+  // 工具栏默认有背景色时，工具栏中的按钮，hover 和 active 时颜色变浅
+  &[class*="mdui-color-"]:not(.mdui-color-transparent) {
+    .mdui-btn {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+      &:active {
+        background-color: rgba(255, 255, 255, 0.165);
+      }
+    }
+  }
+
+  &>a {
+    color: inherit;
+    text-decoration: none;
+    user-select: none;
+  }
+
+  &>.mdui-btn-icon {
+    width: @appbar-icon-width;
+    min-width: @appbar-icon-width;
+    height: @appbar-icon-width;
+
+    // 手机横屏时
+    @media (orientation: landscape) and (max-width: @screen-xs-max-landscape) {
+      width: @appbar-icon-width-xs-landscape;
+      min-width: @appbar-icon-width-xs-landscape;
+      height: @appbar-icon-width-xs-landscape;
+    }
+
+    .mdui-icon {
+      height: 24px;
+      line-height: 24px;
+    }
+  }
+
+  .mdui-icon {
+    color: inherit;
+  }
+}
+
+.mdui-toolbar-spacer {
+  flex-grow: 1;
+  margin: 0;
+}
+
+// 响应式。只有在应用栏中的工具栏，才具有响应式特性，不在应用栏中，则使用手机样式
+._toolbar_responsive_mixed(@toolbar-height, @icon-width) {
+  .mdui-toolbar {
+    height: @toolbar-height;
+    line-height: @toolbar-height;
+
+    &>.mdui-btn {
+      margin: 0 (@toolbar-height - @icon-width) / 2;
+
+      & + .mdui-btn {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+/* 手机 */
+._toolbar_responsive_mixed(@appbar-height-xs-portrait, @appbar-icon-width);
+
+.mdui-appbar {
+  // 平板和桌面
+  @media (min-width: @screen-sm-min) {
+    ._toolbar_responsive_mixed(@appbar-height-sm, @appbar-icon-width);
+  }
+
+  // 手机横屏
+  @media (orientation: landscape) and (max-width: @screen-xs-max-landscape) {
+    ._toolbar_responsive_mixed(@appbar-height-xs-landscape, @appbar-icon-width-xs-landscape);
+  }
+}

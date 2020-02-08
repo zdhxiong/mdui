@@ -35,6 +35,7 @@ async function buildEsm() {
   const bundle = await rollup.rollup({ input, plugins });
 
   await bundle.write(Object.assign({}, outputOptions, {
+    sourcemap: true,
     format: 'es',
     file: './dist/jq.esm.js',
   }));
@@ -54,6 +55,7 @@ async function buildUmd() {
   const bundle = await rollup.rollup({ input, plugins });
 
   await bundle.write(Object.assign({}, outputOptions, {
+    sourcemap: true,
     format: 'umd',
     file: './dist/jq.js',
   }));

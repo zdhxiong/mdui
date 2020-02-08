@@ -1087,7 +1087,8 @@
                       }
                       if (dataType === 'json') {
                           try {
-                              responseData = JSON.parse(xhr.responseText);
+                              responseData =
+                                  method === 'HEAD' ? undefined : JSON.parse(xhr.responseText);
                               eventParams.data = responseData;
                           }
                           catch (err) {
@@ -1102,9 +1103,11 @@
                       }
                       else {
                           responseData =
-                              xhr.responseType === 'text' || xhr.responseType === ''
-                                  ? xhr.responseText
-                                  : xhr.response;
+                              method === 'HEAD'
+                                  ? undefined
+                                  : xhr.responseType === 'text' || xhr.responseType === ''
+                                      ? xhr.responseText
+                                      : xhr.response;
                           eventParams.data = responseData;
                           trigger(ajaxEvents.ajaxSuccess, eventParams, 'success', responseData, textStatus, xhr);
                           resolve(responseData);

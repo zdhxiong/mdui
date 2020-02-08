@@ -271,7 +271,8 @@ function ajax(options: AjaxOptions): Promise<any> {
 
           if (dataType === 'json') {
             try {
-              responseData = JSON.parse(xhr.responseText);
+              responseData =
+                method === 'HEAD' ? undefined : JSON.parse(xhr.responseText);
               eventParams.data = responseData;
             } catch (err) {
               textStatus = 'parsererror';
@@ -301,7 +302,9 @@ function ajax(options: AjaxOptions): Promise<any> {
             }
           } else {
             responseData =
-              xhr.responseType === 'text' || xhr.responseType === ''
+              method === 'HEAD'
+                ? undefined
+                : xhr.responseType === 'text' || xhr.responseType === ''
                 ? xhr.responseText
                 : xhr.response;
             eventParams.data = responseData;

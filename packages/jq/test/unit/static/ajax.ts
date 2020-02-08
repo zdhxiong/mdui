@@ -2,6 +2,7 @@ import $ from '../../jq_or_jquery';
 
 const hasPHP = true;
 const isLocal = window.location.protocol === 'file:';
+const phpPath = 'http://localhost/github/mdui.jq/test/data';
 
 // @ts-ignore
 const isJquery = typeof jQuery !== 'undefined';
@@ -259,7 +260,7 @@ describe('$.ajax', function() {
     return promise;
   });
 
-  it('GET 请求，请求返回 404，测试回调函数参数，全局事件', function(done) {
+  it('GET 请求，请求返回 404，测试回调函数参数，全局事件', function() {
     // 用于测试事件触发顺序
     let eventStart = 0;
     let eventSuccess = 0;
@@ -305,97 +306,107 @@ describe('$.ajax', function() {
     let callbackStatusCode404 = 0;
     let callbackStatusCode200 = 0;
 
-    $.ajax({
-      method: 'get',
-      url: './data/not_fount.html',
-      global: true,
-      beforeSend: function() {
-        callbackBeforeSend++;
-        chai.assert.equal(callbackBeforeSend, 1);
-        chai.assert.equal(callbackSuccess, 0);
-        chai.assert.equal(callbackError, 0);
-        chai.assert.equal(callbackStatusCode404, 0);
-        chai.assert.equal(callbackStatusCode200, 0);
-        chai.assert.equal(callbackComplete, 0);
-      },
-      success: function() {
-        callbackSuccess++;
-      },
-      error: function(xhr, textStatus) {
-        callbackError++;
-        chai.assert.equal(callbackBeforeSend, 1);
-        chai.assert.equal(callbackSuccess, 0);
-        chai.assert.equal(callbackError, 1);
-        chai.assert.equal(callbackStatusCode404, 0);
-        chai.assert.equal(callbackStatusCode200, 0);
-        chai.assert.equal(callbackComplete, 0);
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        method: 'get',
+        url: './data/not_fount.html',
+        global: true,
+        beforeSend: function() {
+          callbackBeforeSend++;
+          chai.assert.equal(callbackBeforeSend, 1);
+          chai.assert.equal(callbackSuccess, 0);
+          chai.assert.equal(callbackError, 0);
+          chai.assert.equal(callbackStatusCode404, 0);
+          chai.assert.equal(callbackStatusCode200, 0);
+          chai.assert.equal(callbackComplete, 0);
+        },
+        success: function() {
+          callbackSuccess++;
+          reject('error');
+        },
+        error: function(xhr, textStatus) {
+          callbackError++;
+          chai.assert.equal(callbackBeforeSend, 1);
+          chai.assert.equal(callbackSuccess, 0);
+          chai.assert.equal(callbackError, 1);
+          chai.assert.equal(callbackStatusCode404, 0);
+          chai.assert.equal(callbackStatusCode200, 0);
+          chai.assert.equal(callbackComplete, 0);
 
-        if (!isJquery) {
-          chai.assert.instanceOf(xhr, XMLHttpRequest);
-        }
-        chai.assert.equal(textStatus, 'error');
-      },
-      statusCode: {
-        404: function(xhr): void {
-          callbackStatusCode404++;
+          if (!isJquery) {
+            chai.assert.instanceOf(xhr, XMLHttpRequest);
+          }
+          chai.assert.equal(textStatus, 'error');
+        },
+        statusCode: {
+          404: function(xhr): void {
+            callbackStatusCode404++;
+            chai.assert.equal(callbackBeforeSend, 1);
+            chai.assert.equal(callbackSuccess, 0);
+            chai.assert.equal(callbackError, 1);
+            chai.assert.equal(callbackStatusCode404, 1);
+            chai.assert.equal(callbackStatusCode200, 0);
+            chai.assert.equal(callbackComplete, 0);
+
+            if (!isJquery && xhr !== null) {
+              chai.assert.instanceOf(xhr, XMLHttpRequest);
+            }
+          },
+          200: function(): void {
+            callbackStatusCode200++;
+          },
+        },
+        complete: function(xhr, textStatus) {
+          callbackComplete++;
           chai.assert.equal(callbackBeforeSend, 1);
           chai.assert.equal(callbackSuccess, 0);
           chai.assert.equal(callbackError, 1);
           chai.assert.equal(callbackStatusCode404, 1);
           chai.assert.equal(callbackStatusCode200, 0);
-          chai.assert.equal(callbackComplete, 0);
+          chai.assert.equal(callbackComplete, 1);
 
-          if (!isJquery && xhr !== null) {
+          if (!isJquery) {
             chai.assert.instanceOf(xhr, XMLHttpRequest);
           }
+          chai.assert.equal(textStatus, 'error');
         },
-        200: function(): void {
-          callbackStatusCode200++;
-        },
-      },
-      complete: function(xhr, textStatus) {
-        callbackComplete++;
-        chai.assert.equal(callbackBeforeSend, 1);
-        chai.assert.equal(callbackSuccess, 0);
-        chai.assert.equal(callbackError, 1);
-        chai.assert.equal(callbackStatusCode404, 1);
-        chai.assert.equal(callbackStatusCode200, 0);
-        chai.assert.equal(callbackComplete, 1);
-
-        if (!isJquery) {
-          chai.assert.instanceOf(xhr, XMLHttpRequest);
-        }
-        chai.assert.equal(textStatus, 'error');
-        done();
-      },
-    }).catch(function(err) {
-      chai.assert.equal(err.message, 'error');
+      }).catch(function() {
+        resolve();
+      });
     });
   });
 
-  it('beforeSend 回调中返回 false 来取消 Ajax 请求', function(done) {
-    $.ajax({
-      method: 'get',
-      url: './data/test.php',
-      beforeSend: function() {
-        return false;
-      },
-    }).catch(function(err) {
-      chai.assert.equal(err.message, 'cancel');
-      done();
+  it('beforeSend 回调中返回 false 来取消 Ajax 请求', function() {
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        method: 'get',
+        url: './data/test.php',
+        beforeSend: function() {
+          return false;
+        },
+      })
+        .then(function() {
+          reject('cancel');
+        })
+        .catch(function() {
+          resolve();
+        });
     });
   });
 
   it('GET 请求，请求超时', function() {
-    return $.ajax({
-      method: 'get',
-      url: './data/timeout.php',
-      timeout: 1000,
-      error: function(_, textStatus) {
-        chai.assert.equal(textStatus, 'timeout');
-      },
-    }).catch(function(err) {
-      chai.assert.equal(err.message, 'timeout');
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        method: 'get',
+        url: `${phpPath}/timeout.php`,
+        timeout: 1000,
+        error: function() {
+          resolve();
+        },
+        success: function() {
+          reject('timeout');
+        },
+      });
     });
   });
 
@@ -403,7 +414,7 @@ describe('$.ajax', function() {
     // 提交查询字符串参数
     return $.ajax({
       method: 'get',
-      url: './data/params.php',
+      url: `${phpPath}/params.php`,
       data: 'key1=val1&key2=val2',
       success: function(data, textStatus, xhr) {
         chai.assert.equal(data, 'get');
@@ -414,6 +425,9 @@ describe('$.ajax', function() {
           );
         }
       },
+      error: function() {
+        chai.assert.isTrue(false);
+      },
     })
       .then(function(data) {
         chai.assert.equal(data, 'get');
@@ -422,7 +436,7 @@ describe('$.ajax', function() {
         // 提交对象参数
         return $.ajax({
           method: 'get',
-          url: './data/params.php',
+          url: `${phpPath}/params.php`,
           data: {
             key1: 'val1',
             key2: 'val2',
@@ -438,6 +452,9 @@ describe('$.ajax', function() {
               );
             }
           },
+          error: function() {
+            chai.assert.isTrue(false);
+          },
         });
       })
       .then(function(data) {
@@ -446,7 +463,7 @@ describe('$.ajax', function() {
       .then(() => {
         return $.ajax({
           method: 'post',
-          url: './data/params.php',
+          url: `${phpPath}/params.php`,
           data: {
             key1: 'val1',
             key2: 'val2',
@@ -460,6 +477,9 @@ describe('$.ajax', function() {
               );
             }
           },
+          error: function() {
+            chai.assert.isTrue(false);
+          },
         });
       })
       .then(function(data) {
@@ -468,7 +488,7 @@ describe('$.ajax', function() {
       .then(() => {
         return $.ajax({
           method: 'put',
-          url: './data/params.php',
+          url: `${phpPath}/params.php`,
           data: {
             key1: 'val1',
             key2: 'val2',
@@ -482,6 +502,9 @@ describe('$.ajax', function() {
               );
             }
           },
+          error: function() {
+            chai.assert.isTrue(false);
+          },
         });
       })
       .then(function(data) {
@@ -490,7 +513,7 @@ describe('$.ajax', function() {
       .then(() => {
         return $.ajax({
           method: 'delete',
-          url: './data/params.php',
+          url: `${phpPath}/params.php`,
           data: {
             key1: 'val1',
             key2: 'val2',
@@ -504,6 +527,9 @@ describe('$.ajax', function() {
               );
             }
           },
+          error: function() {
+            chai.assert.isTrue(false);
+          },
         });
       })
       .then(function(data) {
@@ -512,12 +538,13 @@ describe('$.ajax', function() {
       .then(() => {
         return $.ajax({
           method: 'head',
-          url: './data/params.php',
+          url: `${phpPath}/params.php`,
           data: {
             key1: 'val1',
             key2: 'val2',
           },
-          success: function(_, textStatus, xhr) {
+          success: function(data, textStatus, xhr) {
+            chai.assert.isUndefined(data);
             chai.assert.equal(textStatus, 'nocontent');
             if (!isJquery) {
               chai.assert.isTrue(
@@ -527,15 +554,18 @@ describe('$.ajax', function() {
               );
             }
           },
+          error: function() {
+            chai.assert.isTrue(false);
+          },
         });
       })
       .then(function(data) {
-        chai.assert.equal(data, '');
+        chai.assert.isUndefined(data);
       })
       .then(() => {
         return $.ajax({
           method: 'options',
-          url: './data/params.php',
+          url: `${phpPath}/params.php`,
           data: {
             key1: 'val1',
             key2: 'val2',
@@ -549,6 +579,9 @@ describe('$.ajax', function() {
               );
             }
           },
+          error: function() {
+            chai.assert.isTrue(false);
+          },
         });
       })
       .then(function(data) {
@@ -557,7 +590,7 @@ describe('$.ajax', function() {
       .then(() => {
         return $.ajax({
           method: 'patch',
-          url: './data/params.php',
+          url: `${phpPath}/params.php`,
           data: {
             key1: 'val1',
             key2: 'val2',
@@ -571,6 +604,9 @@ describe('$.ajax', function() {
               );
             }
           },
+          error: function() {
+            chai.assert.isTrue(false);
+          },
         });
       })
       .then(function(data) {
@@ -582,19 +618,19 @@ describe('$.ajax', function() {
     // 没有指定 dataType
     return $.ajax({
       method: 'get',
-      url: './data/json.php',
+      url: `${phpPath}/json.php`,
       success: function(data) {
-        chai.assert.equal(typeof data, 'string');
+        chai.assert.isString(data);
       },
     })
       .then(function(data) {
-        chai.assert.equal(typeof data, 'string');
+        chai.assert.isString(data);
       })
       .then(() => {
         // 成功获取 json 数据
         return $.ajax({
           method: 'get',
-          url: './data/json.php',
+          url: `${phpPath}/json.php`,
           dataType: 'json',
           success: function(data) {
             chai.assert.isObject(data);
@@ -612,22 +648,22 @@ describe('$.ajax', function() {
         // json 数据格式错误
         return $.ajax({
           method: 'get',
-          url: './data/json_error.php',
+          url: `${phpPath}/json_error.php`,
           dataType: 'json',
           error: function(_, textStatus) {
             chai.assert.equal(textStatus, 'parsererror');
           },
         });
       })
-      .catch(function(err) {
-        chai.assert.equal(err.message, 'parsererror');
+      .catch(function() {
+        chai.assert.isTrue(true);
       });
   });
 
   it('禁用 GET/HEAD 请求的缓存', function() {
     return $.ajax({
       method: 'get',
-      url: './data/json.php',
+      url: `${phpPath}/json.php`,
       cache: false,
       success: function(_, __, xhr) {
         if (!isJquery) {
@@ -638,7 +674,7 @@ describe('$.ajax', function() {
       .then(() => {
         return $.ajax({
           method: 'head',
-          url: './data/json.php',
+          url: `${phpPath}/json.php`,
           cache: false,
           success: function(_, __, xhr) {
             if (!isJquery) {
@@ -650,7 +686,7 @@ describe('$.ajax', function() {
       .then(() => {
         return $.ajax({
           method: 'post',
-          url: './data/json.php',
+          url: `${phpPath}/json.php`,
           cache: false,
           success: function(_, __, xhr) {
             if (!isJquery) {
@@ -668,7 +704,7 @@ describe('$.ajax', function() {
         key1: 'val1',
         key2: 'val2',
       },
-      url: './data/processData.php',
+      url: `${phpPath}/processData.php`,
       processData: false,
       success: function(data) {
         chai.assert.equal(data, 'success');

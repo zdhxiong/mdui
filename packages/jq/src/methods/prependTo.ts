@@ -1,7 +1,7 @@
 import HTMLString from '../types/HTMLString';
 import Selector from '../types/Selector';
 import TypeOrArray from '../types/TypeOrArray';
-import './prepend';
+import './appendTo';
 
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {

@@ -73,7 +73,7 @@ describe('.insertAfter()', function() {
   });
 
   it('.insertAfter(selector)', function() {
-    // 选择多个现有元素插入到多个元素后面
+    // 选择多个现有元素插入到多个元素后面，通过 .data() 设置的数据都保留
     $('#test').html(`
 <div class="container">
   <p class="p1"></p>
@@ -86,7 +86,9 @@ describe('.insertAfter()', function() {
 </div>
     `);
 
-    const $result = $('.outline').insertAfter('.inner');
+    const $result = $('.outline')
+      .data('test_key', 'test_value')
+      .insertAfter('.inner');
     chai.assert.sameOrderedMembers(toClassNameArray($result), [
       'p5 outline',
       'p7 outline',
@@ -106,6 +108,13 @@ describe('.insertAfter()', function() {
       'p7 outline',
       'p6',
     ]);
+
+    chai.assert.isUndefined($children.eq(1).data('test_key'));
+    chai.assert.equal($children.eq(2).data('test_key'), 'test_value');
+    chai.assert.equal($children.eq(3).data('test_key'), 'test_value');
+    chai.assert.isUndefined($children.eq(5).data('test_key'));
+    chai.assert.equal($children.eq(6).data('test_key'), 'test_value');
+    chai.assert.equal($children.eq(7).data('test_key'), 'test_value');
   });
 
   it('.insertAfter(html)', function() {

@@ -1,4 +1,5 @@
 import $ from '../$';
+import data from '../functions/data';
 import each from '../functions/each';
 import { JQ } from '../JQ';
 import HTMLString from '../types/HTMLString';
@@ -31,7 +32,7 @@ $('<p>I would like to say: </p>').insertBefore('<b>Hello</b>');
 
 each(['insertBefore', 'insertAfter'], (nameIndex, name) => {
   $.fn[name] = function(this: JQ, target: any): JQ {
-    const $element = nameIndex === 1 ? $(this.get().reverse()) : this; // 顺序和 jQuery 保持一致
+    const $element = nameIndex ? $(this.get().reverse()) : this; // 顺序和 jQuery 保持一致
     const result: HTMLElement[] = [];
 
     $(target).each((_, target) => {
@@ -40,8 +41,13 @@ each(['insertBefore', 'insertAfter'], (nameIndex, name) => {
       }
 
       $element.each((_, element) => {
-        const newItem = element.cloneNode(true);
+        const newItem = element.cloneNode(true) as HTMLElement;
         const existingItem = nameIndex ? target.nextSibling : target;
+
+        // 通过 .data() 设置的数据需要保留
+        data(newItem, data(element));
+
+        // todo: 事件也需要保留
 
         result.push(newItem as HTMLElement);
         target.parentNode.insertBefore(newItem, existingItem);
@@ -50,6 +56,6 @@ each(['insertBefore', 'insertAfter'], (nameIndex, name) => {
 
     $element.remove();
 
-    return $(nameIndex === 1 ? result.reverse() : result);
+    return $(nameIndex ? result.reverse() : result);
   };
 });

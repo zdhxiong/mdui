@@ -94,7 +94,7 @@ function isBorderBox(element: HTMLElement): boolean {
 }
 
 /**
- * 获取元素的 padding, border, margin 宽度（两侧宽度的和）
+ * 获取元素的 padding, border, margin 宽度（两侧宽度的和，单位为px）
  * @param element
  * @param direction
  * @param extra

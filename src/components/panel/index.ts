@@ -24,7 +24,9 @@ declare module '../../interfaces/MduiStatic' {
 }
 
 class Panel extends CollapseAbstract {
-  protected namespace = 'panel';
+  protected getNamespace(): string {
+    return 'panel';
+  }
 }
 
 mdui.Panel = Panel;

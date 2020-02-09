@@ -47,11 +47,6 @@ abstract class CollapseAbstract {
   public options: OPTIONS = DEFAULT_OPTIONS;
 
   /**
-   * 继承的组件名称
-   */
-  protected abstract namespace: string;
-
-  /**
    * item 的 class 名
    */
   private classItem: string;
@@ -71,14 +66,17 @@ abstract class CollapseAbstract {
    */
   private classBody: string;
 
+  /**
+   * 获取继承的组件名称
+   */
+  protected abstract getNamespace(): string;
+
   public constructor(
     selector: Selector | HTMLElement | ArrayLike<HTMLElement>,
     options: OPTIONS = {},
   ) {
-    const namespace = this.getNamespace();
-
     // CSS 类名
-    const classPrefix = `mdui-${namespace}-item`;
+    const classPrefix = `mdui-${this.getNamespace()}-item`;
     this.classItem = classPrefix;
     this.classItemOpen = `${classPrefix}-open`;
     this.classHeader = `${classPrefix}-header`;
@@ -97,7 +95,6 @@ abstract class CollapseAbstract {
   private bindEvent(): void {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
-    const namespace = this.getNamespace();
     const $items = this.getItems();
 
     // 点击 header 时，打开/关闭 item
@@ -113,19 +110,16 @@ abstract class CollapseAbstract {
     });
 
     // 点击关闭按钮时，关闭 item
-    this.$element.on('click', `[mdui-${namespace}-item-close]`, function() {
-      const $target = $(this as HTMLElement);
-      const $item = $target.parents(`.${that.classItem}`).first();
+    this.$element.on(
+      'click',
+      `[mdui-${this.getNamespace()}-item-close]`,
+      function() {
+        const $target = $(this as HTMLElement);
+        const $item = $target.parents(`.${that.classItem}`).first();
 
-      that.close($item);
-    });
-  }
-
-  /**
-   * 获取继承的组件名称
-   */
-  private getNamespace(): string {
-    return this.namespace;
+        that.close($item);
+      },
+    );
   }
 
   /**

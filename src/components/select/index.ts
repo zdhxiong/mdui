@@ -446,7 +446,7 @@ class Select {
     this.triggerEvent('open');
     this.readjustMenu();
     this.$element.addClass('mdui-select-open');
-    this.$menu.transitionEnd(this.transitionEnd);
+    this.$menu.transitionEnd(() => this.transitionEnd());
   }
 
   /**
@@ -463,7 +463,7 @@ class Select {
     this.$element
       .removeClass('mdui-select-open')
       .addClass('mdui-select-closing');
-    this.$menu.transitionEnd(this.transitionEnd);
+    this.$menu.transitionEnd(() => this.transitionEnd());
   }
 
   /**

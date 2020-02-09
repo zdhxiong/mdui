@@ -99,12 +99,12 @@ class Fab {
     this.$dialBtns = this.$dial.find('.mdui-fab');
 
     if (this.options.trigger === 'hover') {
-      this.$btn.on('touchstart mouseenter', this.open);
-      this.$element.on('mouseleave', this.close);
+      this.$btn.on('touchstart mouseenter', () => this.open());
+      this.$element.on('mouseleave', () => this.close());
     }
 
     if (this.options.trigger === 'click') {
-      this.$btn.on(startEvent, this.open);
+      this.$btn.on(startEvent, () => this.open());
     }
 
     // 触摸屏幕其他地方关闭快速拨号

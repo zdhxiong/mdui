@@ -289,7 +289,7 @@ class Tooltip {
 
     this.$element
       .addClass('mdui-tooltip-open')
-      .transitionEnd(this.transitionEnd);
+      .transitionEnd(() => this.transitionEnd());
   }
 
   /**
@@ -315,7 +315,7 @@ class Tooltip {
     this.setPosition();
 
     if (this.options.delay) {
-      this.timeoutId = setTimeout(() => this.doOpen, this.options.delay);
+      this.timeoutId = setTimeout(() => this.doOpen(), this.options.delay);
     } else {
       this.timeoutId = null;
       this.doOpen();
@@ -340,7 +340,7 @@ class Tooltip {
 
     this.$element
       .removeClass('mdui-tooltip-open')
-      .transitionEnd(this.transitionEnd);
+      .transitionEnd(() => this.transitionEnd());
   }
 
   /**

@@ -170,7 +170,7 @@ class Menu {
       this.options.covered === 'auto' ? !this.isCascade : this.options.covered!;
 
     // 点击触发菜单切换
-    this.$anchor.on('click', this.toggle);
+    this.$anchor.on('click', () => this.toggle());
 
     // 点击菜单外面区域关闭菜单
     $document.on('click touchstart', (event: Event) => {
@@ -696,7 +696,7 @@ class Menu {
       // 菜单隐藏状态使用使用 fixed 定位。
       .css('position', this.options.fixed ? 'fixed' : 'absolute')
       .addClass('mdui-menu-open')
-      .transitionEnd(this.transitionEnd);
+      .transitionEnd(() => this.transitionEnd());
   }
 
   /**
@@ -718,7 +718,7 @@ class Menu {
     this.$element
       .removeClass('mdui-menu-open')
       .addClass('mdui-menu-closing')
-      .transitionEnd(this.transitionEnd);
+      .transitionEnd(() => this.transitionEnd());
   }
 }
 

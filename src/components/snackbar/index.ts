@@ -268,7 +268,7 @@ class Snackbar {
 
     // 如果当前有正在显示的 Snackbar，则先加入队列，等旧 Snackbar 关闭后再打开
     if (currentInst) {
-      queue(queueName, this.open);
+      queue(queueName, () => this.open());
       return;
     }
 
@@ -312,7 +312,7 @@ class Snackbar {
 
       // 超时后自动关闭
       if (this.options.timeout) {
-        this.timeoutId = setTimeout(this.close, this.options.timeout);
+        this.timeoutId = setTimeout(() => this.close(), this.options.timeout);
       }
     });
   }

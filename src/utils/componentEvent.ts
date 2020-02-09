@@ -1,5 +1,4 @@
 import $ from 'mdui.jq/es/$';
-import { isUndefined } from 'mdui.jq/es/utils';
 import { JQ } from 'mdui.jq/es/JQ';
 import 'mdui.jq/es/methods/trigger';
 
@@ -29,7 +28,7 @@ function componentEvent(
 
   // jQuery 事件
   // @ts-ignore
-  if (!isUndefined(jQuery)) {
+  if (typeof jQuery !== 'undefined') {
     // @ts-ignore
     jQuery(target).trigger(fullEventName, parameters);
   }

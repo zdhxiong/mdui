@@ -13,7 +13,10 @@ function parseOptions(element: HTMLElement, name: string): object {
     return {};
   }
 
-  return JSON.parse(attr);
+  return new Function(
+    '',
+    `var json = ${attr}; return JSON.parse(JSON.stringify(json));`,
+  )();
 }
 
 export { parseOptions };

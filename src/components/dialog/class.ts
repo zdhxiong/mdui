@@ -267,7 +267,7 @@ class Dialog {
     this.triggerEvent('open');
     this.$element
       .addClass('mdui-dialog-open')
-      .transitionEnd(this.transitionEnd);
+      .transitionEnd(() => this.transitionEnd());
 
     // 不存在遮罩层元素时，添加遮罩层
     if (!$overlay) {
@@ -358,7 +358,7 @@ class Dialog {
 
       this.$element
         .removeClass('mdui-dialog-open')
-        .transitionEnd(this.transitionEnd);
+        .transitionEnd(() => this.transitionEnd());
 
       if (this.options.history && !queue(queueName).length) {
         if (!historyBack) {

@@ -140,7 +140,7 @@ class Drawer {
             this.overlay = true;
             $.lockScreen();
 
-            $('.mdui-overlay').one('click', this.close);
+            $('.mdui-overlay').one('click', () => this.close());
           } else {
             this.state = 'closed';
           }
@@ -150,7 +150,7 @@ class Drawer {
 
     // 绑定关闭按钮事件
     this.$element.find('[mdui-drawer-close]').each((_, close) => {
-      $(close).on('click', this.close);
+      $(close).on('click', () => this.close());
     });
 
     this.swipeSupport();
@@ -367,11 +367,11 @@ class Drawer {
     this.$element
       .removeClass('mdui-drawer-close')
       .addClass('mdui-drawer-open')
-      .transitionEnd(this.transitionEnd);
+      .transitionEnd(() => this.transitionEnd());
 
     if (!this.isDesktop() || this.options.overlay) {
       this.overlay = true;
-      $.showOverlay().one('click', this.close);
+      $.showOverlay().one('click', () => this.close());
       $.lockScreen();
     }
   }
@@ -394,7 +394,7 @@ class Drawer {
     this.$element
       .addClass('mdui-drawer-close')
       .removeClass('mdui-drawer-open')
-      .transitionEnd(this.transitionEnd);
+      .transitionEnd(() => this.transitionEnd());
 
     if (this.overlay) {
       $.hideOverlay();

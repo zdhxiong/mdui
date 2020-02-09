@@ -100,7 +100,7 @@ function removeRipple($wave: JQ): void {
 
   $wave.data('_ripple_wave_removed', true);
 
-  let removeTimer = setTimeout($wave.remove, 400);
+  let removeTimer = setTimeout(() => $wave.remove(), 400);
   const translate = $wave.data('_ripple_wave_translate');
 
   $wave
@@ -113,7 +113,7 @@ function removeRipple($wave: JQ): void {
         .addClass('mdui-ripple-wave-out')
         .transform(translate.replace('scale(1)', 'scale(1.01)'));
 
-      removeTimer = setTimeout($wave.remove, 700);
+      removeTimer = setTimeout(() => $wave.remove(), 700);
 
       setTimeout(() => {
         $wave.transitionEnd(() => {

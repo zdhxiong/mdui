@@ -24,6 +24,6 @@ $(() => {
     const $drawer = $(selector).first();
     const instance = new mdui.Drawer($drawer, options);
 
-    $element.on('click', instance.toggle);
+    $element.on('click', () => instance.toggle());
   });
 });

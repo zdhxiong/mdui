@@ -204,7 +204,7 @@ class Headroom {
     this.$element
       .removeClass(this.options.unpinnedClass)
       .addClass(this.options.pinnedClass!)
-      .transitionEnd(this.transitionEnd);
+      .transitionEnd(() => this.transitionEnd());
   }
 
   /**
@@ -224,7 +224,7 @@ class Headroom {
     this.$element
       .removeClass(this.options.pinnedClass)
       .addClass(this.options.unpinnedClass!)
-      .transitionEnd(this.transitionEnd);
+      .transitionEnd(() => this.transitionEnd());
   }
 
   /**
@@ -243,7 +243,7 @@ class Headroom {
       .removeClass(this.options.unpinnedClass);
     this.lastScrollY = window.pageYOffset;
 
-    $window.on('scroll', this.onScroll);
+    $window.on('scroll', () => this.onScroll());
   }
 
   /**
@@ -260,7 +260,7 @@ class Headroom {
       .removeClass(this.options.pinnedClass)
       .removeClass(this.options.unpinnedClass);
 
-    $window.off('scroll', this.onScroll);
+    $window.off('scroll', () => this.onScroll());
     window.cancelAnimationFrame(this.rafId);
   }
 

@@ -3,10 +3,12 @@ import each from '../functions/each';
 import { JQ } from '../JQ';
 import HTMLString from '../types/HTMLString';
 import TypeOrArray from '../types/TypeOrArray';
-import { isFunction } from '../utils';
+import { isFunction, isString } from '../utils';
 import './after';
 import './before';
+import './clone';
 import './each';
+import './map';
 import './remove';
 
 declare module '../JQ' {
@@ -67,9 +69,16 @@ each(['prepend', 'append'], (nameIndex, name) => {
         element.appendChild(child);
       }
 
-      const contents = isFunction(args[0])
+      let contents = isFunction(args[0])
         ? [args[0].call(element, index, element.innerHTML)]
         : args;
+
+      // 如果不是字符串，则仅第一个元素使用原始元素，其他的都克隆自第一个元素
+      if (index) {
+        contents = contents.map(content => {
+          return isString(content) ? content : $(content).clone();
+        });
+      }
 
       $(child)[nameIndex ? 'after' : 'before'](...contents);
 

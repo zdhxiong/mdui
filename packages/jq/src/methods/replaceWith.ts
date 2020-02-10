@@ -3,7 +3,10 @@ import { JQ } from '../JQ';
 import HTMLString from '../types/HTMLString';
 import TypeOrArray from '../types/TypeOrArray';
 import './before';
+import './clone';
+import './each';
 import './remove';
+import { isFunction, isString } from '../utils';
 
 declare module '../JQ' {
   interface JQ<T = HTMLElement> {
@@ -40,5 +43,17 @@ $('.box').replaceWith(function (index, html) {
 }
 
 $.fn.replaceWith = function(this: JQ, newContent: any): JQ {
-  return this.before(newContent).remove();
+  this.each((index, element) => {
+    let content = newContent;
+
+    if (isFunction(content)) {
+      content = content.call(element, index, element.innerHTML);
+    } else if (index && !isString(content)) {
+      content = $(content).clone();
+    }
+
+    $(element).before(content);
+  });
+
+  return this.remove();
 };

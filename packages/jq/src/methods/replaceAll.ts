@@ -2,6 +2,7 @@ import $ from '../$';
 import { JQ } from '../JQ';
 import Selector from '../types/Selector';
 import TypeOrArray from '../types/TypeOrArray';
+import './clone';
 import './get';
 import './map';
 import './replaceWith';
@@ -23,8 +24,8 @@ $('.new').replaceAll('.box');
 }
 
 $.fn.replaceAll = function(this: JQ, target: any): JQ {
-  return $(target).map((_, element) => {
-    $(element).replaceWith(this);
+  return $(target).map((index, element) => {
+    $(element).replaceWith(index ? this.clone() : this);
 
     return this.get();
   });

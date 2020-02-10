@@ -73,7 +73,7 @@ describe('.insertBefore()', function() {
   });
 
   it('.insertBefore(selector)', function() {
-    // 选择多个现有元素插入到多个元素前，通过 .data() 设置的数据都保留
+    // 选择多个现有元素插入到多个元素前
     $('#test').html(`
 <div class="container">
   <p class="p1"></p>
@@ -112,9 +112,6 @@ describe('.insertBefore()', function() {
     chai.assert.equal($children.eq(1).data('test_key'), 'test_value');
     chai.assert.equal($children.eq(2).data('test_key'), 'test_value');
     chai.assert.isUndefined($children.eq(3).data('test_key'));
-    chai.assert.equal($children.eq(5).data('test_key'), 'test_value');
-    chai.assert.equal($children.eq(6).data('test_key'), 'test_value');
-    chai.assert.isUndefined($children.eq(7).data('test_key'));
   });
 
   it('.insertBefore(html)', function() {

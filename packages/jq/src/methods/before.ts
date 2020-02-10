@@ -3,7 +3,7 @@ import each from '../functions/each';
 import { JQ } from '../JQ';
 import HTMLString from '../types/HTMLString';
 import TypeOrArray from '../types/TypeOrArray';
-import { getChildNodesArray, isFunction, isString } from '../utils';
+import { getChildNodesArray, isFunction, isString, isElement } from '../utils';
 import './each';
 import './insertAfter';
 import './insertBefore';
@@ -75,9 +75,15 @@ each(['before', 'after'], (nameIndex, name) => {
         : args;
 
       each(targets, (_, target) => {
-        const $target = $(
-          isPlainText(target) ? getChildNodesArray(target, 'div') : target,
-        );
+        let $target: JQ;
+
+        if (isPlainText(target)) {
+          $target = $(getChildNodesArray(target, 'div') as HTMLElement[]);
+        } else if (index && isElement(target)) {
+          $target = $(target.cloneNode(true) as HTMLElement);
+        } else {
+          $target = $(target);
+        }
 
         $target[nameIndex ? 'insertAfter' : 'insertBefore'](element);
       });

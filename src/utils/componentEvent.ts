@@ -33,8 +33,13 @@ function componentEvent(
     jQuery(target).trigger(fullEventName, parameters);
   }
 
+  const $target = $(target);
+
   // mdui.jq 事件
-  $(target).trigger(fullEventName, parameters);
+  $target.trigger(fullEventName, parameters);
+
+  // 原生事件，供使用 addEventListener 监听
+  $target[0].dispatchEvent(new CustomEvent(fullEventName, parameters));
 }
 
 export { componentEvent };

@@ -169,7 +169,7 @@ mdui.dialog = function(options: OPTIONS): Dialog {
 
   // Dialog 的 HTML
   const HTML =
-    `<div class="mdui-dialog ${options.cssClass}"></div>` +
+    `<div class="mdui-dialog ${options.cssClass}">` +
     (options.title
       ? `<div class="mdui-dialog-title">${options.title}</div>`
       : '') +

@@ -12,6 +12,7 @@ import 'mdui.jq/es/methods/first';
 import 'mdui.jq/es/methods/hasClass';
 import 'mdui.jq/es/methods/height';
 import 'mdui.jq/es/methods/hide';
+import 'mdui.jq/es/methods/innerHeight';
 import 'mdui.jq/es/methods/off';
 import 'mdui.jq/es/methods/on';
 import 'mdui.jq/es/methods/remove';
@@ -193,8 +194,10 @@ class Dialog {
     });
 
     // 调整 mdui-dialog-content 的高度
-    $content.height(
-      elementHeight - ($title.height() || 0) - ($actions.height() || 0),
+    $content.innerHeight(
+      elementHeight -
+        ($title.innerHeight() || 0) -
+        ($actions.innerHeight() || 0),
     );
   }
 
@@ -321,8 +324,12 @@ class Dialog {
     }
 
     // 如果当前有正在打开或已经打开的对话框,或队列不为空，则先加入队列，等旧对话框开始关闭时再打开
-    if ((currentInst && this.isOpen()) || queue(queueName).length) {
-      queue(queueName, this.doOpen);
+    if (
+      (currentInst &&
+        (currentInst.state === 'opening' || currentInst.state === 'opened')) ||
+      queue(queueName).length
+    ) {
+      queue(queueName, () => this.doOpen());
 
       return;
     }

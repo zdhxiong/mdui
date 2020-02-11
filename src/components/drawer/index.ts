@@ -77,7 +77,7 @@ class Drawer {
   /**
    * 配置参数
    */
-  public options: OPTIONS = DEFAULT_OPTIONS;
+  public options: OPTIONS = extend({}, DEFAULT_OPTIONS);
 
   /**
    * 当前是否显示着遮罩层

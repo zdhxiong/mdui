@@ -94,7 +94,7 @@ class Headroom {
   /**
    * 配置参数
    */
-  public options: OPTIONS = DEFAULT_OPTIONS;
+  public options: OPTIONS = extend({}, DEFAULT_OPTIONS);
 
   /**
    * 当前 headroom 的状态

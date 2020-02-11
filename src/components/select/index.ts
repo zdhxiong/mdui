@@ -32,6 +32,7 @@ import 'mdui.jq/es/methods/first';
 import 'mdui.jq/es/methods/height';
 import 'mdui.jq/es/methods/hide';
 import 'mdui.jq/es/methods/index';
+import 'mdui.jq/es/methods/innerWidth';
 import 'mdui.jq/es/methods/is';
 import 'mdui.jq/es/methods/on';
 import 'mdui.jq/es/methods/remove';
@@ -41,7 +42,6 @@ import 'mdui.jq/es/methods/show';
 import 'mdui.jq/es/methods/text';
 import 'mdui.jq/es/methods/trigger';
 import 'mdui.jq/es/methods/val';
-import 'mdui.jq/es/methods/width';
 import Selector from 'mdui.jq/es/types/Selector';
 import mdui from '../../global/mdui';
 import '../../jq_extends/methods/transitionEnd';
@@ -104,7 +104,7 @@ class Select {
   /**
    * 配置参数
    */
-  public options: OPTIONS = DEFAULT_OPTIONS;
+  public options: OPTIONS = extend({}, DEFAULT_OPTIONS);
 
   /**
    * select 的 size 属性的值，根据该值设置 select 的高度
@@ -195,7 +195,7 @@ class Select {
     const itemMargin = parseInt($itemFirst.css('margin-top'));
 
     // 菜单高度
-    const menuWidth = this.$element.width() + 0.01; // 必须比真实宽度多一点，不然会出现省略号
+    const menuWidth = this.$element.innerWidth() + 0.01; // 必须比真实宽度多一点，不然会出现省略号
     let menuHeight = itemHeight * this.size + itemMargin * 2;
 
     // mdui-select 在窗口中的位置
@@ -255,9 +255,9 @@ class Select {
     }
 
     // 设置样式
-    this.$element.width(menuWidth);
+    this.$element.innerWidth(menuWidth);
     this.$menu
-      .width(menuWidth)
+      .innerWidth(menuWidth)
       .height(menuHeight)
       .css({
         'margin-top': menuMarginTop + 'px',
@@ -291,6 +291,7 @@ class Select {
       index: number;
     };
     const itemsData: typeItemsData[] = [];
+    this.$items = $();
 
     // 生成 HTML
     this.$native.find('option').each((index, option) => {
@@ -410,7 +411,7 @@ class Select {
       this.triggerEvent('closed');
 
       // 恢复样式
-      this.$element.width('');
+      this.$element.innerWidth('');
       this.$menu.css({
         'margin-top': '',
         height: '',

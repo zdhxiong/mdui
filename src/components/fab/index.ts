@@ -64,7 +64,7 @@ class Fab {
   /**
    * 配置参数
    */
-  public options: OPTIONS = DEFAULT_OPTIONS;
+  public options: OPTIONS = extend({}, DEFAULT_OPTIONS);
 
   /**
    * 当前 fab 的状态

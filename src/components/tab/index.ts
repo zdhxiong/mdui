@@ -74,7 +74,7 @@ class Tab {
   /**
    * 配置参数
    */
-  public options: OPTIONS = DEFAULT_OPTIONS;
+  public options: OPTIONS = extend({}, DEFAULT_OPTIONS);
 
   /**
    * 选项数组 JQ 对象

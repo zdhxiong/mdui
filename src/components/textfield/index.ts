@@ -5,9 +5,9 @@ import 'mdui.jq/es/methods/appendTo';
 import 'mdui.jq/es/methods/attr';
 import 'mdui.jq/es/methods/each';
 import 'mdui.jq/es/methods/find';
-import 'mdui.jq/es/methods/height';
 import 'mdui.jq/es/methods/is';
 import 'mdui.jq/es/methods/on';
+import 'mdui.jq/es/methods/outerHeight';
 import 'mdui.jq/es/methods/parent';
 import 'mdui.jq/es/methods/parents';
 import 'mdui.jq/es/methods/remove';
@@ -115,12 +115,12 @@ function inputEvent(event: Event, data: INPUT_EVENT_DATA = {}): void {
     }
 
     // 设置 textarea 高度
-    $input.height('');
-    const height = $input.height();
+    $input.outerHeight('');
+    const height = $input.outerHeight();
     const scrollHeight = input.scrollHeight;
 
     if (scrollHeight > height) {
-      $input.height(scrollHeight);
+      $input.outerHeight(scrollHeight);
     }
 
     // 计算完，还原 textarea 的值

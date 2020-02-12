@@ -11,7 +11,7 @@ const dataName = '_mdui_tooltip';
 
 $(() => {
   // mouseenter 不能冒泡，所以这里用 mouseover 代替
-  $document.on('touchstart mouseover', '[mdui-tooltip]', function() {
+  $document.on('touchstart mouseover', `[${customAttr}]`, function() {
     const $target = $(this);
     let instance = $target.data(dataName);
 

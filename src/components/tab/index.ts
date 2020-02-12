@@ -13,11 +13,11 @@ import 'mdui.jq/es/methods/get';
 import 'mdui.jq/es/methods/hasClass';
 import 'mdui.jq/es/methods/hide';
 import 'mdui.jq/es/methods/index';
+import 'mdui.jq/es/methods/innerWidth';
 import 'mdui.jq/es/methods/offset';
 import 'mdui.jq/es/methods/on';
 import 'mdui.jq/es/methods/removeClass';
 import 'mdui.jq/es/methods/show';
-import 'mdui.jq/es/methods/width';
 import Selector from 'mdui.jq/es/types/Selector';
 import { isNumber } from 'mdui.jq/es/utils';
 import mdui from '../../global/mdui';
@@ -138,7 +138,10 @@ class Tab {
     this.setActive();
 
     // 监听窗口大小变化事件，调整指示器位置
-    $window.on('resize', $.throttle(this.setIndicatorPosition, 100));
+    $window.on(
+      'resize',
+      $.throttle(() => this.setIndicatorPosition(), 100),
+    );
 
     // 监听点击选项卡事件
     this.$tabs.each((_, tab) => {
@@ -192,6 +195,7 @@ class Tab {
    * 触发组件事件
    * @param name
    * @param $element
+   * @param parameters
    */
   private triggerEvent(name: EVENT, $element: JQ, parameters?: {}): void {
     componentEvent(name, 'tab', $element, this, parameters);
@@ -252,7 +256,7 @@ class Tab {
       left: `${activeTabOffset.left +
         this.$element[0].scrollLeft -
         this.$element[0].getBoundingClientRect().left}px`,
-      width: `${$activeTab.width()}px`,
+      width: `${$activeTab.innerWidth()}px`,
     });
   }
 

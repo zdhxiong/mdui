@@ -39,7 +39,24 @@ function componentEvent(
   $target.trigger(fullEventName, parameters);
 
   // 原生事件，供使用 addEventListener 监听
-  $target[0].dispatchEvent(new CustomEvent(fullEventName, parameters));
+  type EventParams = {
+    detail?: any;
+    bubbles: boolean;
+    cancelable: boolean;
+  };
+
+  const eventParams: EventParams = {
+    bubbles: true,
+    cancelable: true,
+    detail: parameters,
+  };
+
+  const eventObject: CustomEvent = new CustomEvent(fullEventName, eventParams);
+
+  // @ts-ignore
+  eventObject._detail = parameters;
+
+  $target[0].dispatchEvent(eventObject);
 }
 
 export { componentEvent };

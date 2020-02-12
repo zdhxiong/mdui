@@ -205,7 +205,10 @@ class Menu {
     this.bindSubMenuEvent();
 
     // 窗口大小变化时，重新调整菜单位置
-    $window.on('resize', $.throttle(this.readjust, 100));
+    $window.on(
+      'resize',
+      $.throttle(() => this.readjust(), 100),
+    );
   }
 
   /**

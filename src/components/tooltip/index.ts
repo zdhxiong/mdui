@@ -242,7 +242,7 @@ class Tooltip {
         break;
     }
 
-    const targetOffset = this.$element.offset();
+    const targetOffset = this.$target.offset();
 
     this.$element.css({
       top: `${targetOffset.top + targetProps.height / 2}px`,

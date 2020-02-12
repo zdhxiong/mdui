@@ -167,6 +167,9 @@ class Drawer {
    * 滑动手势支持
    */
   private swipeSupport(): void {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const that = this;
+
     // 抽屉栏滑动手势控制
     let openNavEventHandler: (event: Event) => void;
     let touchStartX: number;
@@ -178,31 +181,31 @@ class Drawer {
     // 手势触发的范围
     const swipeAreaWidth = 24;
 
-    const setPosition = (translateX: number): void => {
-      const rtlTranslateMultiplier = this.position === 'right' ? -1 : 1;
+    function setPosition(translateX: number): void {
+      const rtlTranslateMultiplier = that.position === 'right' ? -1 : 1;
       const transformCSS = `translate(${-1 *
         rtlTranslateMultiplier *
         translateX}px, 0) !important;`;
       const transitionCSS = 'initial !important;';
 
-      this.$element[0].style.transform = transformCSS;
-      this.$element[0].style.webkitTransform = transformCSS;
-      this.$element[0].style.transition = transitionCSS;
-      this.$element[0].style.webkitTransition = transitionCSS;
-    };
+      that.$element.css(
+        'cssText',
+        `transform: ${transformCSS}; transition: ${transitionCSS};`,
+      );
+    }
 
-    const cleanPosition = (): void => {
-      this.$element[0].style.transform = '';
-      this.$element[0].style.webkitTransform = '';
-      this.$element[0].style.transition = '';
-      this.$element[0].style.webkitTransition = '';
-    };
+    function cleanPosition(): void {
+      that.$element[0].style.transform = '';
+      that.$element[0].style.webkitTransform = '';
+      that.$element[0].style.transition = '';
+      that.$element[0].style.webkitTransition = '';
+    }
 
-    const getMaxTranslateX = (): number => {
-      return this.$element.width() + 10;
-    };
+    function getMaxTranslateX(): number {
+      return that.$element.width() + 10;
+    }
 
-    const getTranslateX = (currentX: number): number => {
+    function getTranslateX(currentX: number): number {
       return Math.min(
         Math.max(
           swiping === 'closing'
@@ -212,12 +215,12 @@ class Drawer {
         ),
         getMaxTranslateX(),
       );
-    };
+    }
 
-    const onBodyTouchEnd = (event?: Event): void => {
+    function onBodyTouchEnd(event?: Event): void {
       if (swiping) {
         let touchX = (event as TouchEvent).changedTouches[0].pageX;
-        if (this.position === 'right') {
+        if (that.position === 'right') {
           touchX = $body.width() - touchX;
         }
 
@@ -230,14 +233,14 @@ class Drawer {
         if (swipingState === 'opening') {
           if (translateRatio < 0.92) {
             cleanPosition();
-            this.open();
+            that.open();
           } else {
             cleanPosition();
           }
         } else {
           if (translateRatio > 0.08) {
             cleanPosition();
-            this.close();
+            that.close();
           } else {
             cleanPosition();
           }
@@ -255,11 +258,11 @@ class Drawer {
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
         touchcancel: onBodyTouchMove,
       });
-    };
+    }
 
-    const onBodyTouchMove = (event: Event): void => {
+    function onBodyTouchMove(event: Event): void {
       let touchX = (event as TouchEvent).touches[0].pageX;
-      if (this.position === 'right') {
+      if (that.position === 'right') {
         touchX = $body.width() - touchX;
       }
 
@@ -274,24 +277,24 @@ class Drawer {
 
         if (dXAbs > threshold && dYAbs <= threshold) {
           swipeStartX = touchX;
-          swiping = this.state === 'opened' ? 'closing' : 'opening';
+          swiping = that.state === 'opened' ? 'closing' : 'opening';
           $.lockScreen();
           setPosition(getTranslateX(touchX));
         } else if (dXAbs <= threshold && dYAbs > threshold) {
           onBodyTouchEnd();
         }
       }
-    };
+    }
 
-    const onBodyTouchStart = (event: Event): void => {
+    function onBodyTouchStart(event: Event): void {
       touchStartX = (event as TouchEvent).touches[0].pageX;
-      if (this.position === 'right') {
+      if (that.position === 'right') {
         touchStartX = $body.width() - touchStartX;
       }
 
       touchStartY = (event as TouchEvent).touches[0].pageY;
 
-      if (this.state !== 'opened') {
+      if (that.state !== 'opened') {
         if (
           touchStartX > swipeAreaWidth ||
           openNavEventHandler !== onBodyTouchStart
@@ -307,14 +310,14 @@ class Drawer {
         touchend: onBodyTouchEnd,
         touchcancel: onBodyTouchMove,
       });
-    };
+    }
 
-    const enableSwipeHandling = (): void => {
+    function enableSwipeHandling(): void {
       if (!openNavEventHandler) {
         $body.on('touchstart', onBodyTouchStart);
         openNavEventHandler = onBodyTouchStart;
       }
-    };
+    }
 
     if (this.options.swipe) {
       enableSwipeHandling();

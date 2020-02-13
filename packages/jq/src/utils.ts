@@ -42,6 +42,14 @@ function isNode(target: any): target is Node {
   return target instanceof Node;
 }
 
+/**
+ * 是否是 IE 浏览器
+ */
+function isIE(): boolean {
+  // @ts-ignore
+  return !!window.document.documentMode;
+}
+
 function isArrayLike(target: any): target is ArrayLike<any> {
   if (isFunction(target) || isWindow(target)) {
     return false;
@@ -199,6 +207,7 @@ export {
   isDocument,
   isElement,
   isNode,
+  isIE,
   toElement,
   toCamelCase,
   toKebabCase,

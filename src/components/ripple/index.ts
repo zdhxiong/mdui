@@ -51,7 +51,9 @@ function show(event: Event, $ripple: JQ): void {
 
   // 点击位置坐标
   const touchPosition =
-    event instanceof TouchEvent && event.touches.length
+    typeof TouchEvent !== 'undefined' &&
+    event instanceof TouchEvent &&
+    event.touches.length
       ? event.touches[0]
       : (event as MouseEvent);
 

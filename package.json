@@ -6,7 +6,7 @@
   "module": "dist/js/mdui.esm.js",
   "types": "es/index.d.ts",
   "style": "dist/css/mdui.css",
-  "less": "src/mdui.less",
+  "less": "src/index.less",
   "scripts": {
     "eslint": "eslint --fix src/**/*.ts",
     "stylelint": "stylelint --fix src/**/*.less",

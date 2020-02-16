@@ -14,7 +14,7 @@ declare module '../../interfaces/MduiStatic' {
      * 打开一个提示用户输入的对话框，可以包含标题、文本框标签、文本框、一个确认按钮和一个取消按钮
      * @param label 文本框浮动标签的文本
      * @param title 标题
-     * @param conConfirm 点击确认按钮的回调。含两个参数，分别为文本框的值和对话框实例
+     * @param onConfirm 点击确认按钮的回调。含两个参数，分别为文本框的值和对话框实例
      * @param onCancel 点击取消按钮的回调。含两个参数，分别为文本框的值和对话框实例
      * @param options 配置参数
      */
@@ -35,8 +35,8 @@ declare module '../../interfaces/MduiStatic' {
      */
     prompt(
       label: string,
-      onConfirm?: (dialog: Dialog) => void,
-      onCancel?: (dialog: Dialog) => void,
+      onConfirm?: (value: string, dialog: Dialog) => void,
+      onCancel?: (value: string, dialog: Dialog) => void,
       options?: OPTIONS,
     ): Dialog;
   }
@@ -69,6 +69,16 @@ type OPTIONS = {
   closeOnEsc?: boolean;
 
   /**
+   * 是否在按下取消按钮时是否关闭对话框
+   */
+  closeOnCancel?: boolean;
+
+  /**
+   * 是否在按下确认按钮时是否关闭对话框
+   */
+  closeOnConfirm?: boolean;
+
+  /**
    * 是否在按下 Enter 键时触发 `onConfirm` 回调函数，默认为 `false`
    */
   confirmOnEnter?: boolean;
@@ -95,6 +105,8 @@ const DEFAULT_OPTIONS: OPTIONS = {
   history: true,
   modal: false,
   closeOnEsc: true,
+  closeOnCancel: true,
+  closeOnConfirm: true,
   type: 'text',
   maxlength: 0,
   defaultValue: '',
@@ -165,13 +177,13 @@ mdui.prompt = function(
       {
         text: options.cancelText,
         bold: false,
-        close: true,
+        close: options.closeOnCancel,
         onClick: onCancelClick,
       },
       {
         text: options.confirmText,
         bold: false,
-        close: true,
+        close: options.closeOnConfirm,
         onClick: onConfirmClick,
       },
     ],
@@ -188,12 +200,15 @@ mdui.prompt = function(
       $input[0].focus();
 
       // 捕捉文本框回车键，在单行文本框的情况下触发回调
-      if (options.type === 'text' && options.confirmOnEnter === true) {
+      if (options.type !== 'textarea' && options.confirmOnEnter === true) {
         $input.on('keydown', event => {
           if ((event as KeyboardEvent).keyCode === 13) {
             const value = dialog.$element.find('.mdui-textfield-input').val();
             onConfirm(value, dialog);
-            dialog.close();
+
+            if (options.closeOnConfirm) {
+              dialog.close();
+            }
           }
         });
       }

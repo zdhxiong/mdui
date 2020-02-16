@@ -63,6 +63,16 @@ type OPTIONS = {
    * 按下 Esc 键时是否关闭对话框，默认为 `true`
    */
   closeOnEsc?: boolean;
+
+  /**
+   * 是否在按下取消按钮时是否关闭对话框
+   */
+  closeOnCancel?: boolean;
+
+  /**
+   * 是否在按下确认按钮时是否关闭对话框
+   */
+  closeOnConfirm?: boolean;
 };
 
 const DEFAULT_OPTIONS: OPTIONS = {
@@ -71,6 +81,8 @@ const DEFAULT_OPTIONS: OPTIONS = {
   history: true,
   modal: false,
   closeOnEsc: true,
+  closeOnCancel: true,
+  closeOnConfirm: true,
 };
 
 mdui.confirm = function(
@@ -110,13 +122,13 @@ mdui.confirm = function(
       {
         text: options.cancelText,
         bold: false,
-        close: true,
+        close: options.closeOnCancel,
         onClick: onCancel,
       },
       {
         text: options.confirmText,
         bold: false,
-        close: true,
+        close: options.closeOnConfirm,
         onClick: onConfirm,
       },
     ],

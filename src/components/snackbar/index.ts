@@ -10,7 +10,7 @@ import 'mdui.jq/es/methods/on';
 import 'mdui.jq/es/methods/parents';
 import 'mdui.jq/es/methods/remove';
 import { isString } from 'mdui.jq/es/utils';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import '../../jq_extends/methods/reflow';
 import '../../jq_extends/methods/transform';
 import '../../jq_extends/methods/transitionEnd';

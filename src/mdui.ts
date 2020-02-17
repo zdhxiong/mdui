@@ -1,6 +1,6 @@
-import { MduiStatic } from '../interfaces/MduiStatic';
+import { MduiStatic } from './interfaces/MduiStatic';
 import $ from 'mdui.jq/es/$';
-import { $body } from '../utils/dom';
+import { $body } from './utils/dom';
 
 // 避免页面加载完后直接执行css动画
 // https://css-tricks.com/transitions-only-after-page-load/

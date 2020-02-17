@@ -33,6 +33,13 @@ function isElement(target) {
 function isNode(target) {
     return target instanceof Node;
 }
+/**
+ * 是否是 IE 浏览器
+ */
+function isIE() {
+    // @ts-ignore
+    return !!window.document.documentMode;
+}
 function isArrayLike(target) {
     if (isFunction(target) || isWindow(target)) {
         return false;
@@ -77,7 +84,7 @@ function isBorderBox(element) {
     return getComputedStyleValue(element, 'box-sizing') === 'border-box';
 }
 /**
- * 获取元素的 padding, border, margin 宽度（两侧宽度的和）
+ * 获取元素的 padding, border, margin 宽度（两侧宽度的和，单位为px）
  * @param element
  * @param direction
  * @param extra
@@ -1074,62 +1081,25 @@ each(['add', 'remove', 'toggle'], (_, name) => {
     };
 });
 
-$.fn.is = function (selector) {
-    let isMatched = false;
-    if (isFunction(selector)) {
-        this.each((index, element) => {
-            if (selector.call(element, index, element)) {
-                isMatched = true;
-            }
-        });
-        return isMatched;
-    }
-    if (isString(selector)) {
-        this.each((_, element) => {
-            // @ts-ignore
-            const matches = element.matches || element.msMatchesSelector;
-            if (matches.call(element, selector)) {
-                isMatched = true;
-            }
-        });
-        return isMatched;
-    }
-    const $compareWith = $(selector);
-    this.each((_, element) => {
-        $compareWith.each((_, compare) => {
-            if (element === compare) {
-                isMatched = true;
-            }
-        });
-    });
-    return isMatched;
-};
-
-$.fn.remove = function (selector) {
-    return this.each((_, element) => {
-        if (element.parentNode && (!selector || $(element).is(selector))) {
-            element.parentNode.removeChild(element);
-        }
-    });
-};
-
 each(['insertBefore', 'insertAfter'], (nameIndex, name) => {
     $.fn[name] = function (target) {
-        const $element = nameIndex === 1 ? $(this.get().reverse()) : this; // 顺序和 jQuery 保持一致
+        const $element = nameIndex ? $(this.get().reverse()) : this; // 顺序和 jQuery 保持一致
+        const $target = $(target);
         const result = [];
-        $(target).each((_, target) => {
+        $target.each((index, target) => {
             if (!target.parentNode) {
                 return;
             }
             $element.each((_, element) => {
-                const newItem = element.cloneNode(true);
+                const newItem = index
+                    ? element.cloneNode(true)
+                    : element;
                 const existingItem = nameIndex ? target.nextSibling : target;
                 result.push(newItem);
                 target.parentNode.insertBefore(newItem, existingItem);
             });
         });
-        $element.remove();
-        return $(nameIndex === 1 ? result.reverse() : result);
+        return $(nameIndex ? result.reverse() : result);
     };
 });
 
@@ -1151,7 +1121,16 @@ each(['before', 'after'], (nameIndex, name) => {
                 ? [args[0].call(element, index, element.innerHTML)]
                 : args;
             each(targets, (_, target) => {
-                const $target = $(isPlainText(target) ? getChildNodesArray(target, 'div') : target);
+                let $target;
+                if (isPlainText(target)) {
+                    $target = $(getChildNodesArray(target, 'div'));
+                }
+                else if (index && isElement(target)) {
+                    $target = $(target.cloneNode(true));
+                }
+                else {
+                    $target = $(target);
+                }
                 $target[nameIndex ? 'insertAfter' : 'insertBefore'](element);
             });
         });
@@ -1247,6 +1226,55 @@ each(ajaxEvents, (name, eventName) => {
     };
 });
 
+$.fn.map = function (callback) {
+    return new JQ(map(this, (element, i) => callback.call(element, i, element)));
+};
+
+$.fn.clone = function () {
+    return this.map(function () {
+        return this.cloneNode(true);
+    });
+};
+
+$.fn.is = function (selector) {
+    let isMatched = false;
+    if (isFunction(selector)) {
+        this.each((index, element) => {
+            if (selector.call(element, index, element)) {
+                isMatched = true;
+            }
+        });
+        return isMatched;
+    }
+    if (isString(selector)) {
+        this.each((_, element) => {
+            // @ts-ignore
+            const matches = element.matches || element.msMatchesSelector;
+            if (matches.call(element, selector)) {
+                isMatched = true;
+            }
+        });
+        return isMatched;
+    }
+    const $compareWith = $(selector);
+    this.each((_, element) => {
+        $compareWith.each((_, compare) => {
+            if (element === compare) {
+                isMatched = true;
+            }
+        });
+    });
+    return isMatched;
+};
+
+$.fn.remove = function (selector) {
+    return this.each((_, element) => {
+        if (element.parentNode && (!selector || $(element).is(selector))) {
+            element.parentNode.removeChild(element);
+        }
+    });
+};
+
 each(['prepend', 'append'], (nameIndex, name) => {
     $.fn[name] = function (...args) {
         return this.each((index, element) => {
@@ -1258,9 +1286,15 @@ each(['prepend', 'append'], (nameIndex, name) => {
             if (!childLength) {
                 element.appendChild(child);
             }
-            const contents = isFunction(args[0])
+            let contents = isFunction(args[0])
                 ? [args[0].call(element, index, element.innerHTML)]
                 : args;
+            // 如果不是字符串，则仅第一个元素使用原始元素，其他的都克隆自第一个元素
+            if (index) {
+                contents = contents.map(content => {
+                    return isString(content) ? content : $(content).clone();
+                });
+            }
             $(child)[nameIndex ? 'after' : 'before'](...contents);
             if (!childLength) {
                 element.removeChild(child);
@@ -1268,10 +1302,6 @@ each(['prepend', 'append'], (nameIndex, name) => {
         });
     };
 });
-
-$.fn.map = function (callback) {
-    return new JQ(map(this, (element, i) => callback.call(element, i, element)));
-};
 
 each(['appendTo', 'prependTo'], (nameIndex, name) => {
     $.fn[name] = function (target) {
@@ -1371,12 +1401,6 @@ $.fn.children = function (selector) {
         });
     });
     return new JQ(unique(children));
-};
-
-$.fn.clone = function () {
-    return this.map(function () {
-        return this.cloneNode(true);
-    });
 };
 
 $.fn.slice = function (...args) {
@@ -1597,6 +1621,12 @@ function handleExtraWidth(element, name, value, funcIndex, includeMargin, multip
         value += getExtraWidthValue('margin');
     }
     if (isBorderBox(element)) {
+        // IE 为 box-sizing: border-box 时，得到的值不含 border 和 padding，这里先修复
+        // 仅获取时需要处理，multiply === 1 为 get
+        if (isIE() && multiply === 1) {
+            value += getExtraWidthValue('border');
+            value += getExtraWidthValue('padding');
+        }
         if (funcIndex === 0) {
             value -= getExtraWidthValue('border');
         }
@@ -1640,8 +1670,7 @@ function get(element, name, funcIndex, includeMargin) {
         const doc = toElement(element);
         return Math.max(element.body[scrollProp], doc[scrollProp], element.body[offsetProp], doc[offsetProp], doc[clientProp]);
     }
-    const $element = $(element);
-    const value = parseFloat($element.css(name.toLowerCase()) || '0');
+    const value = parseFloat(getComputedStyleValue(element, name.toLowerCase()) || '0');
     return handleExtraWidth(element, name, value, funcIndex, includeMargin, 1);
 }
 /**
@@ -1662,14 +1691,17 @@ function set(element, elementIndex, name, funcIndex, includeMargin, value) {
     }
     const $element = $(element);
     const dimension = name.toLowerCase();
-    // computedValue 不是数值，且单位不是 px 时，计算以 px 为单位的值
-    if (isNaN(Number(computedValue)) && computedValue.substr(-2) !== 'px') {
+    // 特殊的值，不需要计算 padding、border、margin
+    if (['auto', 'inherit', ''].indexOf(computedValue) > -1) {
         $element.css(dimension, computedValue);
-        computedValue = $element.css(dimension);
+        return;
     }
-    // 去除单位
-    computedValue = parseFloat(computedValue);
-    computedValue = handleExtraWidth(element, name, computedValue, funcIndex, includeMargin, -1);
+    // 其他值保留原始单位。注意：如果不使用 px 作为单位，则算出的值一般是不准确的
+    const suffix = computedValue.toString().replace(/\b[0-9.]*/, '');
+    const numerical = parseFloat(computedValue);
+    computedValue =
+        handleExtraWidth(element, name, numerical, funcIndex, includeMargin, -1) +
+            (suffix || 'px');
     $element.css(dimension, computedValue);
 }
 each(['Width', 'Height'], (_, name) => {
@@ -1941,12 +1973,22 @@ $.fn.removeProp = function (name) {
 };
 
 $.fn.replaceWith = function (newContent) {
-    return this.before(newContent).remove();
+    this.each((index, element) => {
+        let content = newContent;
+        if (isFunction(content)) {
+            content = content.call(element, index, element.innerHTML);
+        }
+        else if (index && !isString(content)) {
+            content = $(content).clone();
+        }
+        $(element).before(content);
+    });
+    return this.remove();
 };
 
 $.fn.replaceAll = function (target) {
-    return $(target).map((_, element) => {
-        $(element).replaceWith(this);
+    return $(target).map((index, element) => {
+        $(element).replaceWith(index ? this.clone() : this);
         return this.get();
     });
 };
@@ -2258,12 +2300,22 @@ function componentEvent(eventName, componentName, target, instance, parameters) 
     const fullEventName = `${eventName}.mdui.${componentName}`;
     // jQuery 事件
     // @ts-ignore
-    if (!isUndefined(jQuery)) {
+    if (typeof jQuery !== 'undefined') {
         // @ts-ignore
         jQuery(target).trigger(fullEventName, parameters);
     }
+    const $target = $(target);
     // mdui.jq 事件
-    $(target).trigger(fullEventName, parameters);
+    $target.trigger(fullEventName, parameters);
+    const eventParams = {
+        bubbles: true,
+        cancelable: true,
+        detail: parameters,
+    };
+    const eventObject = new CustomEvent(fullEventName, eventParams);
+    // @ts-ignore
+    eventObject._detail = parameters;
+    $target[0].dispatchEvent(eventObject);
 }
 
 const DEFAULT_OPTIONS = {
@@ -2278,7 +2330,7 @@ class Headroom {
         /**
          * 配置参数
          */
-        this.options = DEFAULT_OPTIONS;
+        this.options = extend({}, DEFAULT_OPTIONS);
         /**
          * 当前 headroom 的状态
          */
@@ -2363,7 +2415,7 @@ class Headroom {
         this.$element
             .removeClass(this.options.unpinnedClass)
             .addClass(this.options.pinnedClass)
-            .transitionEnd(this.transitionEnd);
+            .transitionEnd(() => this.transitionEnd());
     }
     /**
      * 使元素隐藏
@@ -2379,7 +2431,7 @@ class Headroom {
         this.$element
             .removeClass(this.options.pinnedClass)
             .addClass(this.options.unpinnedClass)
-            .transitionEnd(this.transitionEnd);
+            .transitionEnd(() => this.transitionEnd());
     }
     /**
      * 启用 headroom 插件
@@ -2395,7 +2447,7 @@ class Headroom {
             .removeClass(this.options.pinnedClass)
             .removeClass(this.options.unpinnedClass);
         this.lastScrollY = window.pageYOffset;
-        $window.on('scroll', this.onScroll);
+        $window.on('scroll', () => this.onScroll());
     }
     /**
      * 禁用 headroom 插件
@@ -2409,7 +2461,7 @@ class Headroom {
             .removeClass(this.options.initialClass)
             .removeClass(this.options.pinnedClass)
             .removeClass(this.options.unpinnedClass);
-        $window.off('scroll', this.onScroll);
+        $window.off('scroll', () => this.onScroll());
         window.cancelAnimationFrame(this.rafId);
     }
     /**
@@ -2431,7 +2483,7 @@ function parseOptions(element, name) {
     if (!attr) {
         return {};
     }
-    return JSON.parse(attr);
+    return new Function('', `var json = ${attr}; return JSON.parse(JSON.stringify(json));`)();
 }
 
 const customAttr = 'mdui-headroom';
@@ -2449,10 +2501,9 @@ class CollapseAbstract {
         /**
          * 配置参数
          */
-        this.options = DEFAULT_OPTIONS$1;
-        const namespace = this.getNamespace();
+        this.options = extend({}, DEFAULT_OPTIONS$1);
         // CSS 类名
-        const classPrefix = `mdui-${namespace}-item`;
+        const classPrefix = `mdui-${this.getNamespace()}-item`;
         this.classItem = classPrefix;
         this.classItemOpen = `${classPrefix}-open`;
         this.classHeader = `${classPrefix}-header`;
@@ -2467,7 +2518,6 @@ class CollapseAbstract {
     bindEvent() {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const that = this;
-        const namespace = this.getNamespace();
         const $items = this.getItems();
         // 点击 header 时，打开/关闭 item
         this.$element.on('click', `.${this.classHeader}`, function () {
@@ -2480,17 +2530,11 @@ class CollapseAbstract {
             });
         });
         // 点击关闭按钮时，关闭 item
-        this.$element.on('click', `[mdui-${namespace}-item-close]`, function () {
+        this.$element.on('click', `[mdui-${this.getNamespace()}-item-close]`, function () {
             const $target = $(this);
             const $item = $target.parents(`.${that.classItem}`).first();
             that.close($item);
         });
-    }
-    /**
-     * 获取继承的组件名称
-     */
-    getNamespace() {
-        return this.namespace;
     }
     /**
      * 指定 item 是否处于打开状态
@@ -2610,9 +2654,8 @@ class CollapseAbstract {
 }
 
 class Collapse extends CollapseAbstract {
-    constructor() {
-        super(...arguments);
-        this.namespace = 'collapse';
+    getNamespace() {
+        return 'collapse';
     }
 }
 mdui.Collapse = Collapse;
@@ -2625,9 +2668,8 @@ $(() => {
 });
 
 class Panel extends CollapseAbstract {
-    constructor() {
-        super(...arguments);
-        this.namespace = 'panel';
+    getNamespace() {
+        return 'panel';
     }
 }
 mdui.Panel = Panel;
@@ -2897,7 +2939,9 @@ function show(event, $ripple) {
         return;
     }
     // 点击位置坐标
-    const touchPosition = event instanceof TouchEvent && event.touches.length
+    const touchPosition = typeof TouchEvent !== 'undefined' &&
+        event instanceof TouchEvent &&
+        event.touches.length
         ? event.touches[0]
         : event;
     const touchStartX = touchPosition.pageX;
@@ -2933,7 +2977,7 @@ function removeRipple($wave) {
         return;
     }
     $wave.data('_ripple_wave_removed', true);
-    let removeTimer = setTimeout($wave.remove, 400);
+    let removeTimer = setTimeout(() => $wave.remove(), 400);
     const translate = $wave.data('_ripple_wave_translate');
     $wave
         .addClass('mdui-ripple-wave-fill')
@@ -2943,7 +2987,7 @@ function removeRipple($wave) {
         $wave
             .addClass('mdui-ripple-wave-out')
             .transform(translate.replace('scale(1)', 'scale(1.01)'));
-        removeTimer = setTimeout($wave.remove, 700);
+        removeTimer = setTimeout(() => $wave.remove(), 700);
         setTimeout(() => {
             $wave.transitionEnd(() => {
                 clearTimeout(removeTimer);
@@ -3083,11 +3127,11 @@ function inputEvent(event, data = {}) {
             hasExtraSpace = true;
         }
         // 设置 textarea 高度
-        $input.height('');
-        const height = $input.height();
+        $input.outerHeight('');
+        const height = $input.outerHeight();
         const scrollHeight = input.scrollHeight;
         if (scrollHeight > height) {
-            $input.height(scrollHeight);
+            $input.outerHeight(scrollHeight);
         }
         // 计算完，还原 textarea 的值
         if (hasExtraSpace) {
@@ -3282,7 +3326,7 @@ class Fab {
         /**
          * 配置参数
          */
-        this.options = DEFAULT_OPTIONS$2;
+        this.options = extend({}, DEFAULT_OPTIONS$2);
         /**
          * 当前 fab 的状态
          */
@@ -3293,11 +3337,11 @@ class Fab {
         this.$dial = this.$element.find('.mdui-fab-dial');
         this.$dialBtns = this.$dial.find('.mdui-fab');
         if (this.options.trigger === 'hover') {
-            this.$btn.on('touchstart mouseenter', this.open);
-            this.$element.on('mouseleave', this.close);
+            this.$btn.on('touchstart mouseenter', () => this.open());
+            this.$element.on('mouseleave', () => this.close());
         }
         if (this.options.trigger === 'click') {
-            this.$btn.on(startEvent, this.open);
+            this.$btn.on(startEvent, () => this.open());
         }
         // 触摸屏幕其他地方关闭快速拨号
         $document.on(startEvent, event => {
@@ -3440,7 +3484,7 @@ class Select {
         /**
          * 配置参数
          */
-        this.options = DEFAULT_OPTIONS$3;
+        this.options = extend({}, DEFAULT_OPTIONS$3);
         /**
          * select 的 size 属性的值，根据该值设置 select 的高度
          */
@@ -3502,7 +3546,7 @@ class Select {
         const itemHeight = $itemFirst.height();
         const itemMargin = parseInt($itemFirst.css('margin-top'));
         // 菜单高度
-        const menuWidth = this.$element.width() + 0.01; // 必须比真实宽度多一点，不然会出现省略号
+        const menuWidth = this.$element.innerWidth() + 0.01; // 必须比真实宽度多一点，不然会出现省略号
         let menuHeight = itemHeight * this.size + itemMargin * 2;
         // mdui-select 在窗口中的位置
         const elementTop = this.$element[0].getBoundingClientRect().top;
@@ -3551,9 +3595,9 @@ class Select {
                 itemMargin}px`;
         }
         // 设置样式
-        this.$element.width(menuWidth);
+        this.$element.innerWidth(menuWidth);
         this.$menu
-            .width(menuWidth)
+            .innerWidth(menuWidth)
             .height(menuHeight)
             .css({
             'margin-top': menuMarginTop + 'px',
@@ -3575,6 +3619,7 @@ class Select {
         }
         this.selectedValue = this.$native.val();
         const itemsData = [];
+        this.$items = $();
         // 生成 HTML
         this.$native.find('option').each((index, option) => {
             const text = option.textContent || '';
@@ -3664,7 +3709,7 @@ class Select {
             this.state = 'closed';
             this.triggerEvent('closed');
             // 恢复样式
-            this.$element.width('');
+            this.$element.innerWidth('');
             this.$menu.css({
                 'margin-top': '',
                 height: '',
@@ -3696,7 +3741,7 @@ class Select {
         this.triggerEvent('open');
         this.readjustMenu();
         this.$element.addClass('mdui-select-open');
-        this.$menu.transitionEnd(this.transitionEnd);
+        this.$menu.transitionEnd(() => this.transitionEnd());
     }
     /**
      * 关闭下拉菜单
@@ -3711,7 +3756,7 @@ class Select {
         this.$element
             .removeClass('mdui-select-open')
             .addClass('mdui-select-closing');
-        this.$menu.transitionEnd(this.transitionEnd);
+        this.$menu.transitionEnd(() => this.transitionEnd());
     }
     /**
      * 获取当前菜单的状态。共包含四种状态：`opening`、`opened`、`closing`、`closed`
@@ -3752,7 +3797,7 @@ class Tab {
         /**
          * 配置参数
          */
-        this.options = DEFAULT_OPTIONS$4;
+        this.options = extend({}, DEFAULT_OPTIONS$4);
         /**
          * 当前激活的 tab 的索引号。为 -1 时表示没有激活的选项卡，或不存在选项卡
          */
@@ -3789,7 +3834,7 @@ class Tab {
         // 设置激活状态选项卡
         this.setActive();
         // 监听窗口大小变化事件，调整指示器位置
-        $window.on('resize', $.throttle(this.setIndicatorPosition, 100));
+        $window.on('resize', $.throttle(() => this.setIndicatorPosition(), 100));
         // 监听点击选项卡事件
         this.$tabs.each((_, tab) => {
             this.bindTabEvent(tab);
@@ -3834,6 +3879,7 @@ class Tab {
      * 触发组件事件
      * @param name
      * @param $element
+     * @param parameters
      */
     triggerEvent(name, $element, parameters) {
         componentEvent(name, 'tab', $element, this, parameters);
@@ -3885,7 +3931,7 @@ class Tab {
             left: `${activeTabOffset.left +
                 this.$element[0].scrollLeft -
                 this.$element[0].getBoundingClientRect().left}px`,
-            width: `${$activeTab.width()}px`,
+            width: `${$activeTab.innerWidth()}px`,
         });
     }
     /**
@@ -4005,7 +4051,7 @@ class Drawer {
         /**
          * 配置参数
          */
-        this.options = DEFAULT_OPTIONS$5;
+        this.options = extend({}, DEFAULT_OPTIONS$5);
         /**
          * 当前是否显示着遮罩层
          */
@@ -4048,7 +4094,7 @@ class Drawer {
                     $.showOverlay();
                     this.overlay = true;
                     $.lockScreen();
-                    $('.mdui-overlay').one('click', this.close);
+                    $('.mdui-overlay').one('click', () => this.close());
                 }
                 else {
                     this.state = 'closed';
@@ -4057,7 +4103,7 @@ class Drawer {
         }, 100));
         // 绑定关闭按钮事件
         this.$element.find('[mdui-drawer-close]').each((_, close) => {
-            $(close).on('click', this.close);
+            $(close).on('click', () => this.close());
         });
         this.swipeSupport();
     }
@@ -4071,6 +4117,8 @@ class Drawer {
      * 滑动手势支持
      */
     swipeSupport() {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const that = this;
         // 抽屉栏滑动手势控制
         let openNavEventHandler;
         let touchStartX;
@@ -4080,35 +4128,32 @@ class Drawer {
         let maybeSwiping = false;
         // 手势触发的范围
         const swipeAreaWidth = 24;
-        const setPosition = (translateX) => {
-            const rtlTranslateMultiplier = this.position === 'right' ? -1 : 1;
+        function setPosition(translateX) {
+            const rtlTranslateMultiplier = that.position === 'right' ? -1 : 1;
             const transformCSS = `translate(${-1 *
                 rtlTranslateMultiplier *
                 translateX}px, 0) !important;`;
             const transitionCSS = 'initial !important;';
-            this.$element[0].style.transform = transformCSS;
-            this.$element[0].style.webkitTransform = transformCSS;
-            this.$element[0].style.transition = transitionCSS;
-            this.$element[0].style.webkitTransition = transitionCSS;
-        };
-        const cleanPosition = () => {
-            this.$element[0].style.transform = '';
-            this.$element[0].style.webkitTransform = '';
-            this.$element[0].style.transition = '';
-            this.$element[0].style.webkitTransition = '';
-        };
-        const getMaxTranslateX = () => {
-            return this.$element.width() + 10;
-        };
-        const getTranslateX = (currentX) => {
+            that.$element.css('cssText', `transform: ${transformCSS}; transition: ${transitionCSS};`);
+        }
+        function cleanPosition() {
+            that.$element[0].style.transform = '';
+            that.$element[0].style.webkitTransform = '';
+            that.$element[0].style.transition = '';
+            that.$element[0].style.webkitTransition = '';
+        }
+        function getMaxTranslateX() {
+            return that.$element.width() + 10;
+        }
+        function getTranslateX(currentX) {
             return Math.min(Math.max(swiping === 'closing'
                 ? swipeStartX - currentX
                 : getMaxTranslateX() + swipeStartX - currentX, 0), getMaxTranslateX());
-        };
-        const onBodyTouchEnd = (event) => {
+        }
+        function onBodyTouchEnd(event) {
             if (swiping) {
                 let touchX = event.changedTouches[0].pageX;
-                if (this.position === 'right') {
+                if (that.position === 'right') {
                     touchX = $body.width() - touchX;
                 }
                 const translateRatio = getTranslateX(touchX) / getMaxTranslateX();
@@ -4118,7 +4163,7 @@ class Drawer {
                 if (swipingState === 'opening') {
                     if (translateRatio < 0.92) {
                         cleanPosition();
-                        this.open();
+                        that.open();
                     }
                     else {
                         cleanPosition();
@@ -4127,7 +4172,7 @@ class Drawer {
                 else {
                     if (translateRatio > 0.08) {
                         cleanPosition();
-                        this.close();
+                        that.close();
                     }
                     else {
                         cleanPosition();
@@ -4145,10 +4190,10 @@ class Drawer {
                 // eslint-disable-next-line @typescript-eslint/no-use-before-define
                 touchcancel: onBodyTouchMove,
             });
-        };
-        const onBodyTouchMove = (event) => {
+        }
+        function onBodyTouchMove(event) {
             let touchX = event.touches[0].pageX;
-            if (this.position === 'right') {
+            if (that.position === 'right') {
                 touchX = $body.width() - touchX;
             }
             const touchY = event.touches[0].pageY;
@@ -4161,7 +4206,7 @@ class Drawer {
                 const threshold = 8;
                 if (dXAbs > threshold && dYAbs <= threshold) {
                     swipeStartX = touchX;
-                    swiping = this.state === 'opened' ? 'closing' : 'opening';
+                    swiping = that.state === 'opened' ? 'closing' : 'opening';
                     $.lockScreen();
                     setPosition(getTranslateX(touchX));
                 }
@@ -4169,14 +4214,14 @@ class Drawer {
                     onBodyTouchEnd();
                 }
             }
-        };
-        const onBodyTouchStart = (event) => {
+        }
+        function onBodyTouchStart(event) {
             touchStartX = event.touches[0].pageX;
-            if (this.position === 'right') {
+            if (that.position === 'right') {
                 touchStartX = $body.width() - touchStartX;
             }
             touchStartY = event.touches[0].pageY;
-            if (this.state !== 'opened') {
+            if (that.state !== 'opened') {
                 if (touchStartX > swipeAreaWidth ||
                     openNavEventHandler !== onBodyTouchStart) {
                     return;
@@ -4188,13 +4233,13 @@ class Drawer {
                 touchend: onBodyTouchEnd,
                 touchcancel: onBodyTouchMove,
             });
-        };
-        const enableSwipeHandling = () => {
+        }
+        function enableSwipeHandling() {
             if (!openNavEventHandler) {
                 $body.on('touchstart', onBodyTouchStart);
                 openNavEventHandler = onBodyTouchStart;
             }
-        };
+        }
         if (this.options.swipe) {
             enableSwipeHandling();
         }
@@ -4240,10 +4285,10 @@ class Drawer {
         this.$element
             .removeClass('mdui-drawer-close')
             .addClass('mdui-drawer-open')
-            .transitionEnd(this.transitionEnd);
+            .transitionEnd(() => this.transitionEnd());
         if (!this.isDesktop() || this.options.overlay) {
             this.overlay = true;
-            $.showOverlay().one('click', this.close);
+            $.showOverlay().one('click', () => this.close());
             $.lockScreen();
         }
     }
@@ -4262,7 +4307,7 @@ class Drawer {
         this.$element
             .addClass('mdui-drawer-close')
             .removeClass('mdui-drawer-open')
-            .transitionEnd(this.transitionEnd);
+            .transitionEnd(() => this.transitionEnd());
         if (this.overlay) {
             $.hideOverlay();
             this.overlay = false;
@@ -4293,7 +4338,7 @@ $(() => {
         delete options.target;
         const $drawer = $(selector).first();
         const instance = new mdui.Drawer($drawer, options);
-        $element.on('click', instance.toggle);
+        $element.on('click', () => instance.toggle());
     });
 });
 
@@ -4352,7 +4397,7 @@ class Dialog {
         /**
          * 配置参数
          */
-        this.options = DEFAULT_OPTIONS$6;
+        this.options = extend({}, DEFAULT_OPTIONS$6);
         /**
          * 当前 dialog 的状态
          */
@@ -4418,7 +4463,9 @@ class Dialog {
             height: `${elementHeight}px`,
         });
         // 调整 mdui-dialog-content 的高度
-        $content.height(elementHeight - ($title.height() || 0) - ($actions.height() || 0));
+        $content.innerHeight(elementHeight -
+            ($title.innerHeight() || 0) -
+            ($actions.innerHeight() || 0));
     }
     /**
      * hashchange 事件触发时关闭对话框
@@ -4478,7 +4525,7 @@ class Dialog {
         this.triggerEvent('open');
         this.$element
             .addClass('mdui-dialog-open')
-            .transitionEnd(this.transitionEnd);
+            .transitionEnd(() => this.transitionEnd());
         // 不存在遮罩层元素时，添加遮罩层
         if (!$overlay) {
             $overlay = $.showOverlay(5100);
@@ -4523,8 +4570,10 @@ class Dialog {
             return;
         }
         // 如果当前有正在打开或已经打开的对话框,或队列不为空，则先加入队列，等旧对话框开始关闭时再打开
-        if ((currentInst && this.isOpen()) || queue(queueName).length) {
-            queue(queueName, this.doOpen);
+        if ((currentInst &&
+            (currentInst.state === 'opening' || currentInst.state === 'opened')) ||
+            queue(queueName).length) {
+            queue(queueName, () => this.doOpen());
             return;
         }
         this.doOpen();
@@ -4552,7 +4601,7 @@ class Dialog {
             }
             this.$element
                 .removeClass('mdui-dialog-open')
-                .transitionEnd(this.transitionEnd);
+                .transitionEnd(() => this.transitionEnd());
             if (this.options.history && !queue(queueName).length) {
                 if (!historyBack) {
                     window.history.back();
@@ -4678,7 +4727,7 @@ mdui.dialog = function (options) {
         buttonsHTML += '</div>';
     }
     // Dialog 的 HTML
-    const HTML = `<div class="mdui-dialog ${options.cssClass}"></div>` +
+    const HTML = `<div class="mdui-dialog ${options.cssClass}">` +
         (options.title
             ? `<div class="mdui-dialog-title">${options.title}</div>`
             : '') +
@@ -4731,6 +4780,7 @@ const DEFAULT_OPTIONS$8 = {
     history: true,
     modal: false,
     closeOnEsc: true,
+    closeOnConfirm: true,
 };
 mdui.alert = function (text, title, onConfirm, options) {
     if (isFunction(title)) {
@@ -4753,7 +4803,7 @@ mdui.alert = function (text, title, onConfirm, options) {
             {
                 text: options.confirmText,
                 bold: false,
-                close: true,
+                close: options.closeOnConfirm,
                 onClick: onConfirm,
             },
         ],
@@ -4770,6 +4820,8 @@ const DEFAULT_OPTIONS$9 = {
     history: true,
     modal: false,
     closeOnEsc: true,
+    closeOnCancel: true,
+    closeOnConfirm: true,
 };
 mdui.confirm = function (text, title, onConfirm, onCancel, options) {
     if (isFunction(title)) {
@@ -4797,13 +4849,13 @@ mdui.confirm = function (text, title, onConfirm, onCancel, options) {
             {
                 text: options.cancelText,
                 bold: false,
-                close: true,
+                close: options.closeOnCancel,
                 onClick: onCancel,
             },
             {
                 text: options.confirmText,
                 bold: false,
-                close: true,
+                close: options.closeOnConfirm,
                 onClick: onConfirm,
             },
         ],
@@ -4820,6 +4872,8 @@ const DEFAULT_OPTIONS$a = {
     history: true,
     modal: false,
     closeOnEsc: true,
+    closeOnCancel: true,
+    closeOnConfirm: true,
     type: 'text',
     maxlength: 0,
     defaultValue: '',
@@ -4868,13 +4922,13 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
             {
                 text: options.cancelText,
                 bold: false,
-                close: true,
+                close: options.closeOnCancel,
                 onClick: onCancelClick,
             },
             {
                 text: options.confirmText,
                 bold: false,
-                close: true,
+                close: options.closeOnConfirm,
                 onClick: onConfirmClick,
             },
         ],
@@ -4889,12 +4943,14 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
             // 聚焦到输入框
             $input[0].focus();
             // 捕捉文本框回车键，在单行文本框的情况下触发回调
-            if (options.type === 'text' && options.confirmOnEnter === true) {
+            if (options.type !== 'textarea' && options.confirmOnEnter === true) {
                 $input.on('keydown', event => {
                     if (event.keyCode === 13) {
                         const value = dialog.$element.find('.mdui-textfield-input').val();
                         onConfirm(value, dialog);
-                        dialog.close();
+                        if (options.closeOnConfirm) {
+                            dialog.close();
+                        }
                     }
                 });
             }
@@ -4920,7 +4976,7 @@ class Tooltip {
         /**
          * 配置参数
          */
-        this.options = DEFAULT_OPTIONS$b;
+        this.options = extend({}, DEFAULT_OPTIONS$b);
         /**
          * 当前 tooltip 的状态
          */
@@ -5040,7 +5096,7 @@ class Tooltip {
                 this.$element.transformOrigin('center left');
                 break;
         }
-        const targetOffset = this.$element.offset();
+        const targetOffset = this.$target.offset();
         this.$element.css({
             top: `${targetOffset.top + targetProps.height / 2}px`,
             left: `${targetOffset.left + targetProps.width / 2}px`,
@@ -5082,7 +5138,7 @@ class Tooltip {
         this.triggerEvent('open');
         this.$element
             .addClass('mdui-tooltip-open')
-            .transitionEnd(this.transitionEnd);
+            .transitionEnd(() => this.transitionEnd());
     }
     /**
      * 打开 Tooltip
@@ -5102,7 +5158,7 @@ class Tooltip {
         }
         this.setPosition();
         if (this.options.delay) {
-            this.timeoutId = setTimeout(() => this.doOpen, this.options.delay);
+            this.timeoutId = setTimeout(() => this.doOpen(), this.options.delay);
         }
         else {
             this.timeoutId = null;
@@ -5124,7 +5180,7 @@ class Tooltip {
         this.triggerEvent('close');
         this.$element
             .removeClass('mdui-tooltip-open')
-            .transitionEnd(this.transitionEnd);
+            .transitionEnd(() => this.transitionEnd());
     }
     /**
      * 切换 Tooltip 的打开状态
@@ -5145,7 +5201,7 @@ const customAttr$8 = 'mdui-tooltip';
 const dataName$2 = '_mdui_tooltip';
 $(() => {
     // mouseenter 不能冒泡，所以这里用 mouseover 代替
-    $document.on('touchstart mouseover', '[mdui-tooltip]', function () {
+    $document.on('touchstart mouseover', `[${customAttr$8}]`, function () {
         const $target = $(this);
         let instance = $target.data(dataName$2);
         if (!instance) {
@@ -5189,7 +5245,7 @@ class Snackbar {
         /**
          * 配置参数
          */
-        this.options = DEFAULT_OPTIONS$c;
+        this.options = extend({}, DEFAULT_OPTIONS$c);
         /**
          * 当前 Snackbar 的状态
          */
@@ -5276,7 +5332,7 @@ class Snackbar {
         }
         // 如果当前有正在显示的 Snackbar，则先加入队列，等旧 Snackbar 关闭后再打开
         if (currentInst$1) {
-            queue(queueName$1, this.open);
+            queue(queueName$1, () => this.open());
             return;
         }
         currentInst$1 = this;
@@ -5311,7 +5367,7 @@ class Snackbar {
             }
             // 超时后自动关闭
             if (this.options.timeout) {
-                this.timeoutId = setTimeout(this.close, this.options.timeout);
+                this.timeoutId = setTimeout(() => this.close(), this.options.timeout);
             }
         });
     }
@@ -5436,7 +5492,7 @@ class Menu {
         /**
          * 配置参数
          */
-        this.options = DEFAULT_OPTIONS$d;
+        this.options = extend({}, DEFAULT_OPTIONS$d);
         /**
          * 当前菜单状态
          */
@@ -5454,7 +5510,7 @@ class Menu {
         this.isCovered =
             this.options.covered === 'auto' ? !this.isCascade : this.options.covered;
         // 点击触发菜单切换
-        this.$anchor.on('click', this.toggle);
+        this.$anchor.on('click', () => this.toggle());
         // 点击菜单外面区域关闭菜单
         $document.on('click touchstart', (event) => {
             const $target = $(event.target);
@@ -5479,7 +5535,7 @@ class Menu {
         // 绑定点击或鼠标移入含子菜单的条目的事件
         this.bindSubMenuEvent();
         // 窗口大小变化时，重新调整菜单位置
-        $window.on('resize', $.throttle(this.readjust, 100));
+        $window.on('resize', $.throttle(() => this.readjust(), 100));
     }
     /**
      * 是否为打开状态
@@ -5890,7 +5946,7 @@ class Menu {
             // 菜单隐藏状态使用使用 fixed 定位。
             .css('position', this.options.fixed ? 'fixed' : 'absolute')
             .addClass('mdui-menu-open')
-            .transitionEnd(this.transitionEnd);
+            .transitionEnd(() => this.transitionEnd());
     }
     /**
      * 关闭菜单
@@ -5908,7 +5964,7 @@ class Menu {
         this.$element
             .removeClass('mdui-menu-open')
             .addClass('mdui-menu-closing')
-            .transitionEnd(this.transitionEnd);
+            .transitionEnd(() => this.transitionEnd());
     }
 }
 mdui.Menu = Menu;

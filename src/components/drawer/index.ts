@@ -17,7 +17,7 @@ import 'mdui.jq/es/methods/one';
 import 'mdui.jq/es/methods/removeClass';
 import 'mdui.jq/es/methods/width';
 import Selector from 'mdui.jq/es/types/Selector';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import '../../jq_extends/methods/transitionEnd';
 import '../../jq_extends/static/hideOverlay';
 import '../../jq_extends/static/lockScreen';

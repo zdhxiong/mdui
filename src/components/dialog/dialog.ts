@@ -4,7 +4,7 @@ import extend from 'mdui.jq/es/functions/extend';
 import 'mdui.jq/es/methods/each';
 import 'mdui.jq/es/methods/find';
 import 'mdui.jq/es/methods/on';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import { Dialog } from './class';
 import './index';
 

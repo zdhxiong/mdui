@@ -6,7 +6,7 @@ import 'mdui.jq/es/methods/is';
 import 'mdui.jq/es/methods/on';
 import 'mdui.jq/es/methods/parent';
 import 'mdui.jq/es/methods/removeClass';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import '../../global/mutation';
 import { componentEvent } from '../../utils/componentEvent';
 import { $document } from '../../utils/dom';

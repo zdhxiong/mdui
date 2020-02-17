@@ -20,7 +20,7 @@ import 'mdui.jq/es/methods/removeClass';
 import 'mdui.jq/es/methods/show';
 import Selector from 'mdui.jq/es/types/Selector';
 import { isNumber } from 'mdui.jq/es/utils';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import '../../jq_extends/static/throttle';
 import { componentEvent } from '../../utils/componentEvent';
 import { $window } from '../../utils/dom';

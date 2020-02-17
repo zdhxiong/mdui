@@ -1,5 +1,5 @@
 import Selector from 'mdui.jq/es/types/Selector';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import { CollapseAbstract, OPTIONS } from '../collapse/collapseAbstract';
 
 declare module '../../interfaces/MduiStatic' {

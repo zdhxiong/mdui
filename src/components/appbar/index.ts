@@ -1,5 +1,5 @@
 import $ from 'mdui.jq/es/$';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import '../../global/mutation';
 import '../headroom';
 

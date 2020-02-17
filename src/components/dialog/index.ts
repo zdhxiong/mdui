@@ -1,5 +1,5 @@
 import Selector from 'mdui.jq/es/types/Selector';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import 'mdui.jq/es/methods/on';
 import { $document } from '../../utils/dom';
 import { currentInst, OPTIONS, Dialog } from './class';

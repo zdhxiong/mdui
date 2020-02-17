@@ -14,7 +14,7 @@ import 'mdui.jq/es/methods/on';
 import 'mdui.jq/es/methods/removeClass';
 import 'mdui.jq/es/methods/width';
 import Selector from 'mdui.jq/es/types/Selector';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import '../../jq_extends/methods/transformOrigin';
 import '../../jq_extends/methods/transitionEnd';
 import '../../jq_extends/static/guid';

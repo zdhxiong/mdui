@@ -12,7 +12,7 @@ import 'mdui.jq/es/methods/on';
 import 'mdui.jq/es/methods/parents';
 import 'mdui.jq/es/methods/removeClass';
 import Selector from 'mdui.jq/es/types/Selector';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import '../../jq_extends/methods/transitionEnd';
 import { componentEvent } from '../../utils/componentEvent';
 import { $document } from '../../utils/dom';

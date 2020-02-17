@@ -14,7 +14,7 @@ import 'mdui.jq/es/methods/remove';
 import 'mdui.jq/es/methods/removeClass';
 import Selector from 'mdui.jq/es/types/Selector';
 import { isUndefined } from 'mdui.jq/es/utils';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import '../../global/mutation';
 
 declare module '../../interfaces/MduiStatic' {

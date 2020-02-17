@@ -43,7 +43,7 @@ import 'mdui.jq/es/methods/text';
 import 'mdui.jq/es/methods/trigger';
 import 'mdui.jq/es/methods/val';
 import Selector from 'mdui.jq/es/types/Selector';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import '../../jq_extends/methods/transitionEnd';
 import '../../jq_extends/static/guid';
 import { componentEvent } from '../../utils/componentEvent';

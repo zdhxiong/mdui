@@ -1,6 +1,6 @@
 import extend from 'mdui.jq/es/functions/extend';
 import { isFunction, isUndefined } from 'mdui.jq/es/utils';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import { Dialog } from './class';
 import './dialog';
 

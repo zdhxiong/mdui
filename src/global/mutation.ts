@@ -1,6 +1,6 @@
 import $ from 'mdui.jq/es/$';
 import 'mdui.jq/es/methods/each';
-import mdui from './mdui';
+import mdui from '../mdui';
 import '../jq_extends/methods/mutation';
 import { isUndefined } from 'mdui.jq/es/utils';
 import { TYPE_API_INIT, entries, mutation } from '../utils/mutation';

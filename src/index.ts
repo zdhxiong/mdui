@@ -1,4 +1,4 @@
-import mdui from './global/mdui';
+import mdui from './mdui';
 
 import './jq';
 import './global/mutation';

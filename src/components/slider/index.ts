@@ -18,7 +18,7 @@ import 'mdui.jq/es/methods/val';
 import 'mdui.jq/es/methods/width';
 import Selector from 'mdui.jq/es/types/Selector';
 import { isUndefined } from 'mdui.jq/es/utils';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import { $document } from '../../utils/dom';
 import {
   endEvent,

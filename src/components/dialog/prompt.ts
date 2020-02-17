@@ -3,7 +3,7 @@ import 'mdui.jq/es/methods/find';
 import 'mdui.jq/es/methods/on';
 import 'mdui.jq/es/methods/val';
 import { isFunction, isUndefined } from 'mdui.jq/es/utils';
-import mdui from '../../global/mdui';
+import mdui from '../../mdui';
 import '../textfield';
 import { Dialog } from './class';
 import './dialog';

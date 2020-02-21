@@ -165,7 +165,7 @@
     @colorName: extract(@globalPrimaryColors, @counter-color);
     @color: 'color-@{colorName}-500';
 
-    .mdui-theme-primary-@{colorName} {
+    .mdui-theme-primary-@{colorName} when not (@colorName = null) {
       .mdui-tab .mdui-tab-active {
         color: @@color;
       }

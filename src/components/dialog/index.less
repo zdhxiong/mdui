@@ -125,7 +125,7 @@
     .loop-accent-theme((@counter-color - 1));
     @colorName: extract(@globalAccentColors, @counter-color);
 
-    .mdui-theme-accent-@{colorName} {
+    .mdui-theme-accent-@{colorName} when not (@colorName = null) {
       .mdui-dialog-actions {
         .mdui-btn {
           .mdui-text-color(@colorName);

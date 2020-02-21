@@ -21,7 +21,7 @@
 
     @colorName: extract(@globalPrimaryColors, @counter-color);
 
-    .mdui-theme-primary-@{colorName} {
+    .mdui-theme-primary-@{colorName} when not (@colorName = null) {
 
       // .mdui-theme-primary-[color] .mdui-color-theme
       .mdui-color-theme {
@@ -34,7 +34,7 @@
         @degree: extract(@globalPrimaryColorDegrees, @counter-degree);
 
         // .mdui-theme-primary-[color] .mdui-color-theme-[degree]
-        .mdui-color-theme-@{degree} {
+        .mdui-color-theme-@{degree} when not (@degree = null) {
           .mdui-color(@colorName, @degree) !important;
         }
       }
@@ -56,7 +56,7 @@
 
     @colorName: extract(@globalAccentColors, @counter-color);
 
-    .mdui-theme-accent-@{colorName} {
+    .mdui-theme-accent-@{colorName} when not (@colorName = null) {
 
       // .mdui-theme-accent-[color] .mdui-color-theme-accent
       .mdui-color-theme-accent {
@@ -69,7 +69,7 @@
         @degree: extract(@globalAccentColorDegrees, @counter-degree);
 
         // .mdui-theme-accent-[color] .mdui-color-theme-[degree]
-        .mdui-color-theme-@{degree} {
+        .mdui-color-theme-@{degree} when not (@degree = null) {
           .mdui-color(@colorName, @degree) !important;
         }
       }
@@ -93,7 +93,7 @@
 
     & {
       // .mdui-color-[color]
-      .mdui-color-@{colorName} {
+      .mdui-color-@{colorName} when not (@colorName = null) {
         .mdui-color(@colorName) !important;
       }
 
@@ -103,7 +103,7 @@
         @degree: extract(@globalPrimaryColorDegrees, @counter-degree);
 
         // .mdui-color-[color]-[degree]
-        .mdui-color-@{colorName}-@{degree} {
+        .mdui-color-@{colorName}-@{degree} when not (@degree = null) {
           .mdui-color(@colorName, @degree) !important;
         }
       }
@@ -127,7 +127,7 @@
 
     &{
       // .mdui-color-[color]-accent
-      .mdui-color-@{colorName}-accent {
+      .mdui-color-@{colorName}-accent when not (@colorName = null) {
         .mdui-color(@colorName, a200) !important;
       }
 
@@ -137,7 +137,7 @@
         @degree: extract(@globalAccentColorDegrees, @counter-degree);
 
         // .mdui-color-[color]-[degree]
-        .mdui-color-@{colorName}-@{degree} {
+        .mdui-color-@{colorName}-@{degree} when not (@degree = null) {
           .mdui-color(@colorName, @degree) !important;
         }
       }
@@ -180,7 +180,7 @@
 
     @colorName: extract(@globalPrimaryColors, @counter-color);
 
-    .mdui-theme-primary-@{colorName} {
+    .mdui-theme-primary-@{colorName} when not (@colorName = null) {
 
       // .mdui-theme-primary-[color] .mdui-text-color-theme
       .mdui-text-color-theme {
@@ -193,7 +193,7 @@
         @degree: extract(@globalPrimaryColorDegrees, @counter-degree);
 
         // .mdui-theme-primary-[color] .mdui-text-color-theme-[degree]
-        .mdui-text-color-theme-@{degree} {
+        .mdui-text-color-theme-@{degree} when not (@degree = null) {
           .mdui-text-color(@colorName, @degree) !important;
         }
       }
@@ -215,7 +215,7 @@
 
     @colorName: extract(@globalAccentColors, @counter-color);
 
-    .mdui-theme-accent-@{colorName} {
+    .mdui-theme-accent-@{colorName} when not (@colorName = null) {
 
       // .mdui-theme-accent-[color] .mdui-text-color-theme-accent
       .mdui-text-color-theme-accent {
@@ -228,7 +228,7 @@
         @degree: extract(@globalAccentColorDegrees, @counter-degree);
 
         // .mdui-theme-accent-[color] .mdui-text-color-theme-[degree]
-        .mdui-text-color-theme-@{degree} {
+        .mdui-text-color-theme-@{degree} when not (@degree = null) {
           .mdui-text-color(@colorName, @degree) !important;
         }
       }
@@ -252,7 +252,7 @@
 
     &{
       // .mdui-text-color-[color]
-      .mdui-text-color-@{colorName} {
+      .mdui-text-color-@{colorName} when not (@colorName = null) {
         .mdui-text-color(@colorName) !important;
       }
 
@@ -262,7 +262,7 @@
         @degree: extract(@globalPrimaryColorDegrees, @counter-degree);
 
         // .mdui-text-color-[color]-[degree]
-        .mdui-text-color-@{colorName}-@{degree} {
+        .mdui-text-color-@{colorName}-@{degree} when not (@degree = null) {
           .mdui-text-color(@colorName, @degree) !important;
         }
       }
@@ -286,7 +286,7 @@
 
     &{
       // .mdui-text-color-[color]-accent
-      .mdui-text-color-@{colorName}-accent {
+      .mdui-text-color-@{colorName}-accent when not (@colorName = null) {
         .mdui-text-color(@colorName, a200) !important;
       }
 
@@ -296,7 +296,7 @@
         @degree: extract(@globalAccentColorDegrees, @counter-degree);
 
         // .mdui-text-color-[color]-[degree]
-        .mdui-text-color-@{colorName}-@{degree} {
+        .mdui-text-color-@{colorName}-@{degree} when not (@degree = null) {
           .mdui-text-color(@colorName, @degree) !important;
         }
       }

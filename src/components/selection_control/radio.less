@@ -105,7 +105,7 @@
 
     @color: 'color-@{colorName}-a200';
 
-    .mdui-theme-accent-@{colorName} {
+    .mdui-theme-accent-@{colorName} when not (@colorName = null) {
 
       // 选中状态的图标
       .mdui-radio input[type="radio"]:checked + .mdui-radio-icon {

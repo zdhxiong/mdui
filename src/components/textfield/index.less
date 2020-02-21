@@ -369,7 +369,7 @@
     .loop-accent-theme((@counter-color - 1));
     @colorName: extract(@globalAccentColors, @counter-color);
 
-    .mdui-theme-accent-@{colorName} {
+    .mdui-theme-accent-@{colorName} when not (@colorName = null) {
 
       @colorA700: 'color-@{colorName}-a700';
       @colorA200: 'color-@{colorName}-a200';

@@ -251,7 +251,7 @@ select.mdui-select[multiple] {
     .loop-accent-theme((@counter-color - 1));
     @colorName: extract(@globalAccentColors, @counter-color);
 
-    .mdui-theme-accent-@{colorName} {
+    .mdui-theme-accent-@{colorName} when not (@colorName = null) {
 
       .mdui-select-menu-item {
         // 菜单中已选中项

@@ -66,7 +66,7 @@
     @colorName: extract(@globalPrimaryColors, @counter-color);
 
     // 指定涟漪颜色
-    .mdui-ripple-@{colorName} {
+    .mdui-ripple-@{colorName} when not (@colorName = null) {
       .mdui-ripple-wave {
         @color: 'color-@{colorName}-500';
 

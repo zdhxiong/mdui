@@ -15,7 +15,8 @@
   font-size: 16px;
   font-family: @font-family-base;
   vertical-align: middle;
-  background-image: data-uri('image/svg+xml', './components/select/svg/arrow_down_dark.svg');
+  //background-image: data-uri('image/svg+xml', './components/select/svg/arrow_down_dark.svg');
+  background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2210%22%20height%3D%2210%22%20viewBox%3D%220%200%2010%2010%22%3E%3Cpath%20d%3D%22m-0.00254%2C2.5l5%2C5l5%2C-5l-10%2C0z%22%20fill%3D%22%23000000%22%20opacity%3D%220.54%22%2F%3E%3C%2Fsvg%3E%0A");
 
   // 箭头
   background-repeat: no-repeat;
@@ -37,7 +38,8 @@
 }
 
 .mdui-select-position-top {
-  background-image: data-uri('image/svg+xml', './components/select/svg/arrow_up_dark.svg');
+  //background-image: data-uri('image/svg+xml', './components/select/svg/arrow_up_dark.svg');
+  background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2210%22%20height%3D%2210%22%20viewBox%3D%220%200%2010%2010%22%3E%3Cpath%20d%3D%22m-0.00254%2C2.5l5%2C5l5%2C-5l-10%2C0z%22%20fill%3D%22%23000000%22%20opacity%3D%220.54%22%20transform%3D%22rotate(-180%205%2C5)%22%2F%3E%3C%2Fsvg%3E%0A");
 }
 
 /* 底部和顶部菜单的样式 */
@@ -273,12 +275,14 @@ select.mdui-select[multiple] {
  */
 .mdui-theme-layout-dark when (@globalLayoutDark = true) {
   .mdui-select {
-    background-image: data-uri('image/svg+xml', './components/select/svg/arrow_down_light.svg');
+    //background-image: data-uri('image/svg+xml', './components/select/svg/arrow_down_light.svg');
+    background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2210%22%20height%3D%2210%22%20viewBox%3D%220%200%2010%2010%22%3E%3Cpath%20d%3D%22m-0.00254%2C2.5l5%2C5l5%2C-5l-10%2C0z%22%20fill%3D%22%23FFFFFF%22%2F%3E%3C%2Fsvg%3E%0A");
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .mdui-select-position-top {
-    background-image: data-uri('image/svg+xml', './components/select/svg/arrow_up_light.svg');
+    //background-image: data-uri('image/svg+xml', './components/select/svg/arrow_up_light.svg');
+    background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2210%22%20height%3D%2210%22%20viewBox%3D%220%200%2010%2010%22%3E%3Cpath%20d%3D%22m-0.00254%2C2.5l5%2C5l5%2C-5l-10%2C0z%22%20fill%3D%22%23FFFFFF%22%20transform%3D%22rotate(-180%205%2C5)%22%2F%3E%3C%2Fsvg%3E%0A");
   }
 
   .mdui-select-open {

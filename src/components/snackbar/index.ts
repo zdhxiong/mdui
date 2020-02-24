@@ -352,7 +352,7 @@ class Snackbar {
   }
 }
 
-mdui.snackbar = function(message: any, options?: any): Snackbar {
+mdui.snackbar = function(message: any, options: any = {}): Snackbar {
   if (isString(message)) {
     options.message = message;
   } else {

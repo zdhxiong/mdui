@@ -2,7 +2,7 @@ import $ from '../$';
 import { JQ } from '../JQ';
 import Selector from '../types/Selector';
 import TypeOrArray from '../types/TypeOrArray';
-import { isFunction, isString } from '../utils';
+import { isDocument, isFunction, isString, isWindow } from '../utils';
 import './each';
 
 declare module '../JQ' {
@@ -46,6 +46,10 @@ $.fn.is = function(this: JQ, selector: any): boolean {
 
   if (isString(selector)) {
     this.each((_, element) => {
+      if (isDocument(element) || isWindow(element)) {
+        return;
+      }
+
       // @ts-ignore
       const matches = element.matches || element.msMatchesSelector;
 

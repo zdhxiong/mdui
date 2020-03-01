@@ -77,6 +77,11 @@ class Tab {
   public options: OPTIONS = extend({}, DEFAULT_OPTIONS);
 
   /**
+   * 当前激活的 tab 的索引号。为 -1 时表示没有激活的选项卡，或不存在选项卡
+   */
+  private activeIndex = -1;
+
+  /**
    * 选项数组 JQ 对象
    */
   private $tabs: JQ;
@@ -85,11 +90,6 @@ class Tab {
    * 激活状态的 tab 底部的指示符
    */
   private $indicator: JQ;
-
-  /**
-   * 当前激活的 tab 的索引号。为 -1 时表示没有激活的选项卡，或不存在选项卡
-   */
-  private activeIndex = -1;
 
   public constructor(
     selector: Selector | HTMLElement | ArrayLike<HTMLElement>,

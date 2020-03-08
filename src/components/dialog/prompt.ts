@@ -209,7 +209,11 @@ mdui.prompt = function(
             if (options.closeOnConfirm) {
               dialog.close();
             }
+
+            return false;
           }
+
+          return;
         });
       }
 

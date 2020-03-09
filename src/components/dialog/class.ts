@@ -361,6 +361,9 @@ class Dialog {
       if (!queue(queueName).length && $overlay) {
         $.hideOverlay();
         $overlay = null;
+
+        // 若仍存在遮罩，恢复遮罩的 z-index
+        $('.mdui-overlay').css('z-index', 2000);
       }
 
       this.$element

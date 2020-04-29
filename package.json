@@ -46,7 +46,7 @@
     "gulp-tap": "1.0.1",
     "gulp-uglify": "3.0.0",
     "gulp-zip": "4.1.0",
-    "jquery": "3.4.1",
+    "jquery": "3.5.0",
     "jshint": "2.9.5",
     "mocha": "5.0.2"
   },

@@ -15,6 +15,6 @@ $('div').last()
   }
 }
 
-$.fn.last = function(this: JQ): JQ {
+$.fn.last = function (this: JQ): JQ {
   return this.eq(-1);
 };

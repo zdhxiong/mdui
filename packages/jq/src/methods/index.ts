@@ -23,19 +23,13 @@ declare module '../JQ' {
   }
 }
 
-$.fn.index = function(this: JQ, selector?: any): number {
+$.fn.index = function (this: JQ, selector?: any): number {
   if (!arguments.length) {
-    return this.eq(0)
-      .parent()
-      .children()
-      .get()
-      .indexOf(this[0]);
+    return this.eq(0).parent().children().get().indexOf(this[0]);
   }
 
   if (isString(selector)) {
-    return $(selector)
-      .get()
-      .indexOf(this[0]);
+    return $(selector).get().indexOf(this[0]);
   }
 
   return this.get().indexOf($(selector)[0]);

@@ -32,7 +32,7 @@ const result = $('input.checked').map(function (i, element) {
   }
 }
 
-$.fn.map = function(
+$.fn.map = function (
   this: JQ<any>,
   callback: (this: any, index: number, element: any) => null | undefined | any,
 ): JQ {

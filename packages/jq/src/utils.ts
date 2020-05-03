@@ -81,7 +81,7 @@ function toCamelCase(string: string): string {
  * @param string
  */
 function toKebabCase(string: string): string {
-  return string.replace(/[A-Z]/g, replacer => '-' + replacer.toLowerCase());
+  return string.replace(/[A-Z]/g, (replacer) => '-' + replacer.toLowerCase());
 }
 
 /**
@@ -140,9 +140,11 @@ function getStyle(element: HTMLElement, name: string): string {
       return `${valueNumber}px`;
     }
 
-    return `${valueNumber -
+    return `${
+      valueNumber -
       getExtraWidth(element, name, 'border') -
-      getExtraWidth(element, name, 'padding')}px`;
+      getExtraWidth(element, name, 'padding')
+    }px`;
   }
 
   return getComputedStyleValue(element, name);

@@ -20,6 +20,6 @@ $('.box').add('.selected');
   }
 }
 
-$.fn.add = function(this: JQ, selector: any): JQ {
+$.fn.add = function (this: JQ, selector: any): JQ {
   return new JQ(unique(merge(this.get(), $(selector).get())));
 };

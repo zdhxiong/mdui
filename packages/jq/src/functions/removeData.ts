@@ -63,8 +63,8 @@ function removeData(
   } else if (isString(name)) {
     name
       .split(' ')
-      .filter(nameItem => nameItem)
-      .forEach(nameItem => remove(nameItem));
+      .filter((nameItem) => nameItem)
+      .forEach((nameItem) => remove(nameItem));
   } else {
     each(name, (_, nameItem) => remove(nameItem));
   }

@@ -20,11 +20,11 @@ $('li').has('ul').css('background-color', 'red');
   }
 }
 
-$.fn.has = function(this: JQ, selector: Selector | Element): JQ {
+$.fn.has = function (this: JQ, selector: Selector | Element): JQ {
   const $targets = isString(selector) ? this.find(selector) : $(selector);
   const { length } = $targets;
 
-  return this.map(function() {
+  return this.map(function () {
     for (let i = 0; i < length; i += 1) {
       if (contains(this, $targets[i])) {
         return this;

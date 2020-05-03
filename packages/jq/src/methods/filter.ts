@@ -39,7 +39,7 @@ $('#select option').filter(function (idx, element) {
   }
 }
 
-$.fn.filter = function(this: JQ, selector: any): JQ {
+$.fn.filter = function (this: JQ, selector: any): JQ {
   if (isFunction(selector)) {
     return this.map((index, element) =>
       selector.call(element, index, element) ? element : undefined,

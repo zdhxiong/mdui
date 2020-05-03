@@ -24,7 +24,7 @@ $('p').remove('.box')
   }
 }
 
-$.fn.remove = function(this: JQ, selector?: Selector): JQ {
+$.fn.remove = function (this: JQ, selector?: Selector): JQ {
   return this.each((_, element) => {
     if (element.parentNode && (!selector || $(element).is(selector))) {
       element.parentNode.removeChild(element);

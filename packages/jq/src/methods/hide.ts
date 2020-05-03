@@ -15,8 +15,8 @@ $('.box').hide();
   }
 }
 
-$.fn.hide = function(this: JQ): JQ {
-  return this.each(function() {
+$.fn.hide = function (this: JQ): JQ {
+  return this.each(function () {
     this.style.display = 'none';
   });
 };

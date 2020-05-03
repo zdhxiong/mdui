@@ -31,7 +31,7 @@ $('p').get()
   }
 }
 
-$.fn.get = function(this: JQ, index?: number): any | any[] {
+$.fn.get = function (this: JQ, index?: number): any | any[] {
   return index === undefined
     ? [].slice.call(this)
     : this[index >= 0 ? index : index + this.length];

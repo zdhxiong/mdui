@@ -38,7 +38,7 @@ $('#select option').not(function (idx, element) {
   }
 }
 
-$.fn.not = function(this: JQ, selector: any): JQ {
+$.fn.not = function (this: JQ, selector: any): JQ {
   const $excludes = this.filter(selector);
 
   return this.map((_, element) =>

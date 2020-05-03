@@ -247,7 +247,7 @@ function ajax(options: AjaxOptions): Promise<any> {
 
       let xhrTimeout: any;
 
-      xhr.onload = function(): void {
+      xhr.onload = function (): void {
         if (xhrTimeout) {
           clearTimeout(xhrTimeout);
         }
@@ -358,7 +358,7 @@ function ajax(options: AjaxOptions): Promise<any> {
         );
       };
 
-      xhr.onerror = function(): void {
+      xhr.onerror = function (): void {
         if (xhrTimeout) {
           clearTimeout(xhrTimeout);
         }
@@ -375,7 +375,7 @@ function ajax(options: AjaxOptions): Promise<any> {
         reject(new Error(xhr.statusText));
       };
 
-      xhr.onabort = function(): void {
+      xhr.onabort = function (): void {
         let statusText: ErrorTextStatus = 'abort';
 
         if (xhrTimeout) {

@@ -162,7 +162,11 @@ each(['attr', 'prop', 'css'], (nameIndex, name) => {
     }
   }
 
-  $.fn[name] = function(this: JQ, key: string | PlainObject, value?: any): any {
+  $.fn[name] = function (
+    this: JQ,
+    key: string | PlainObject,
+    value?: any,
+  ): any {
     if (isObjectLike(key)) {
       each(key, (k, v) => {
         // @ts-ignore

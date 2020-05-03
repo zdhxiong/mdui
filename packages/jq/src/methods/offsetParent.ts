@@ -21,8 +21,8 @@ $('.box').offsetParent()
 /**
  * 返回最近的用于定位的父元素
  */
-$.fn.offsetParent = function(this: JQ): JQ {
-  return this.map(function() {
+$.fn.offsetParent = function (this: JQ): JQ {
+  return this.map(function () {
     let offsetParent = this.offsetParent as HTMLElement;
 
     while (offsetParent && $(offsetParent).css('position') === 'static') {

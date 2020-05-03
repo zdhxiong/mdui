@@ -26,7 +26,7 @@ $('.box').parent('.parent')
 }
 
 each(['', 's', 'sUntil'], (nameIndex, name) => {
-  $.fn[`parent${name}`] = function(
+  $.fn[`parent${name}`] = function (
     this: JQ,
     selector?: any,
     filter?: Selector,

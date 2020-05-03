@@ -17,6 +17,6 @@ $('form').serialize();
   }
 }
 
-$.fn.serialize = function(this: JQ): string {
+$.fn.serialize = function (this: JQ): string {
   return param(this.serializeArray());
 };

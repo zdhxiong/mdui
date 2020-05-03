@@ -26,7 +26,7 @@ $('.box').prev('div')
 }
 
 each(['', 'All', 'Until'], (nameIndex, name) => {
-  $.fn[`prev${name}`] = function(
+  $.fn[`prev${name}`] = function (
     this: JQ,
     selector?: any,
     filter?: Selector,

@@ -12,7 +12,7 @@ import {
 } from './utils';
 
 function get$(): JQStatic {
-  const $ = function(
+  const $ = function (
     selector?:
       | string
       | TypeOrArray<Element>

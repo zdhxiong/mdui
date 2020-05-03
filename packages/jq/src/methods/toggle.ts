@@ -21,8 +21,8 @@ $('.box').toggle()
 /**
  * 切换元素的显示状态
  */
-$.fn.toggle = function(this: JQ): JQ {
-  return this.each(function() {
+$.fn.toggle = function (this: JQ): JQ {
+  return this.each(function () {
     getStyle(this, 'display') === 'none' ? $(this).show() : $(this).hide();
   });
 };

@@ -41,8 +41,8 @@ $('.box').removeData();
   }
 }
 
-$.fn.removeData = function(this: JQ, name?: TypeOrArray<string>): JQ {
-  return this.each(function() {
+$.fn.removeData = function (this: JQ, name?: TypeOrArray<string>): JQ {
+  return this.each(function () {
     removeData(this, name);
   });
 };

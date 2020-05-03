@@ -102,7 +102,7 @@ $('.wrapper').off();
   }
 }
 
-$.fn.off = function(
+$.fn.off = function (
   this: JQ,
   types?: PlainObject<EventCallback | false> | string,
   selector?: any,
@@ -131,7 +131,7 @@ $.fn.off = function(
     callback = returnFalse;
   }
 
-  return this.each(function() {
+  return this.each(function () {
     remove(this, types, callback, selector);
   });
 };

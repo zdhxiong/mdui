@@ -26,7 +26,7 @@ $('.box').trigger('click', {key1: 'value1', key2: 'value2'});
   }
 }
 
-$.fn.trigger = function(this: JQ, type: string, extraParameters: any): JQ {
+$.fn.trigger = function (this: JQ, type: string, extraParameters: any): JQ {
   type EventParams = {
     detail?: any;
     bubbles: boolean;
@@ -56,7 +56,7 @@ $.fn.trigger = function(this: JQ, type: string, extraParameters: any): JQ {
   // @ts-ignore
   eventObject._ns = event.ns;
 
-  return this.each(function() {
+  return this.each(function () {
     this.dispatchEvent(eventObject);
   });
 };

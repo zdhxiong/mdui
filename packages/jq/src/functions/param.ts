@@ -63,7 +63,7 @@ function param(obj: any[] | PlainObject): string {
   }
 
   if (Array.isArray(obj)) {
-    each(obj, function() {
+    each(obj, function () {
       destructure(this.name, this.value);
     });
   } else {

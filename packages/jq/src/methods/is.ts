@@ -31,7 +31,7 @@ $('.box').is('.boxss'); // false
   }
 }
 
-$.fn.is = function(this: JQ, selector: any): boolean {
+$.fn.is = function (this: JQ, selector: any): boolean {
   let isMatched = false;
 
   if (isFunction(selector)) {

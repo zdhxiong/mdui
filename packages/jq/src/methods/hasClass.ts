@@ -14,6 +14,6 @@ $('div').hasClass('item')
   }
 }
 
-$.fn.hasClass = function(className: string): boolean {
+$.fn.hasClass = function (className: string): boolean {
   return this[0].classList.contains(className);
 };

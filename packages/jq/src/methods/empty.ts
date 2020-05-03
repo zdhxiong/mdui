@@ -15,8 +15,8 @@ $('.box').empty()
   }
 }
 
-$.fn.empty = function(this: JQ): JQ {
-  return this.each(function() {
+$.fn.empty = function (this: JQ): JQ {
+  return this.each(function () {
     this.innerHTML = '';
   });
 };

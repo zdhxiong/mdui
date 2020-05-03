@@ -27,7 +27,7 @@ $('#box').children('.box')
   }
 }
 
-$.fn.children = function(this: JQ, selector?: Selector): JQ {
+$.fn.children = function (this: JQ, selector?: Selector): JQ {
   const children: Element[] = [];
 
   this.each((_, element) => {

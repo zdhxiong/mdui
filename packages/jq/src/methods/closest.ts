@@ -20,7 +20,7 @@ $('.box').closest('.parent')
   }
 }
 
-$.fn.closest = function(this: JQ, selector: any): JQ {
+$.fn.closest = function (this: JQ, selector: any): JQ {
   if (this.is(selector)) {
     return this;
   }

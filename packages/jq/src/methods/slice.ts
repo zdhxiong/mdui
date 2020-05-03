@@ -24,6 +24,6 @@ $('div').slice(3, 5);
   }
 }
 
-$.fn.slice = function(this: JQ, ...args: [number, number?]): JQ {
+$.fn.slice = function (this: JQ, ...args: [number, number?]): JQ {
   return new JQ([].slice.apply(this, args));
 };

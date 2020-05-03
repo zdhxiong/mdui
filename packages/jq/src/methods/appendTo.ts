@@ -26,7 +26,7 @@ $('<p>Hello</p>').appendTo('<p>I would like to say: </p>')
 }
 
 each(['appendTo', 'prependTo'], (nameIndex, name) => {
-  $.fn[name] = function(this: JQ, target: any): JQ {
+  $.fn[name] = function (this: JQ, target: any): JQ {
     const extraChilds: HTMLElement[] = [];
     const $target = $(target).map((_, element: HTMLElement) => {
       const childNodes = element.childNodes;

@@ -22,7 +22,7 @@ $('div').eq(-1);
   }
 }
 
-$.fn.eq = function(this: JQ, index: number): JQ {
+$.fn.eq = function (this: JQ, index: number): JQ {
   const ret = index === -1 ? this.slice(index) : this.slice(index, +index + 1);
 
   return new JQ(ret);

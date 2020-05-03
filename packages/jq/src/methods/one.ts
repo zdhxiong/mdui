@@ -99,7 +99,7 @@ declare module '../JQ' {
   }
 }
 
-$.fn.one = function(
+$.fn.one = function (
   this: JQ,
   types: PlainObject<EventCallback | false> | string,
   selector?: any,

@@ -122,7 +122,7 @@ function set(element: Element, value: CoordinatesParam, index: number): void {
   });
 }
 
-$.fn.offset = function(this: JQ, value?: any): any {
+$.fn.offset = function (this: JQ, value?: any): any {
   // 获取坐标
   if (!arguments.length) {
     if (!this.length) {
@@ -133,7 +133,7 @@ $.fn.offset = function(this: JQ, value?: any): any {
   }
 
   // 设置坐标
-  return this.each(function(index) {
+  return this.each(function (index) {
     set(this, value, index);
   });
 };

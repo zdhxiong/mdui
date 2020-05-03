@@ -47,8 +47,8 @@ function defaultDisplay(nodeName: string): string {
  * 显示指定元素
  * @returns {JQ}
  */
-$.fn.show = function(this: JQ): JQ {
-  return this.each(function() {
+$.fn.show = function (this: JQ): JQ {
+  return this.each(function () {
     if (this.style.display === 'none') {
       this.style.display = '';
     }

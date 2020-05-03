@@ -23,10 +23,10 @@ $('div').removeAttr('title label');
   }
 }
 
-$.fn.removeAttr = function(this: JQ, attributeName: string): JQ {
-  const names = attributeName.split(' ').filter(name => name);
+$.fn.removeAttr = function (this: JQ, attributeName: string): JQ {
+  const names = attributeName.split(' ').filter((name) => name);
 
-  return this.each(function() {
+  return this.each(function () {
     each(names, (_, name) => {
       this.removeAttribute(name);
     });

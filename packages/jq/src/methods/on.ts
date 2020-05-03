@@ -102,7 +102,7 @@ declare module '../JQ' {
   }
 }
 
-$.fn.on = function(
+$.fn.on = function (
   this: JQ,
   types: PlainObject<EventCallback | false> | string,
   selector: any,
@@ -157,7 +157,10 @@ $.fn.on = function(
     const _this = this;
     const origCallback: Function = callback;
 
-    callback = function(this: Element | Document | Window, event: Event): void {
+    callback = function (
+      this: Element | Document | Window,
+      event: Event,
+    ): void {
       _this.off(event.type, selector, callback);
 
       // eslint-disable-next-line prefer-rest-params
@@ -165,7 +168,7 @@ $.fn.on = function(
     };
   }
 
-  return this.each(function() {
+  return this.each(function () {
     add(this, types, callback, data, selector);
   });
 };

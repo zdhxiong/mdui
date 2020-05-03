@@ -19,7 +19,7 @@ $('#box').find('.box')
   }
 }
 
-$.fn.find = function(this: JQ, selector: Selector): JQ {
+$.fn.find = function (this: JQ, selector: Selector): JQ {
   const foundElements: HTMLElement[] = [];
 
   this.each((_, element) => {

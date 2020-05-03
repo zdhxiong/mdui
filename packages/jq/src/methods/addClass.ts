@@ -41,7 +41,7 @@ $('p').addClass(function (index, currentClassName) {
 type classListMethod = 'add' | 'remove' | 'toggle';
 
 each(['add', 'remove', 'toggle'], (_, name: classListMethod) => {
-  $.fn[`${name}Class`] = function(
+  $.fn[`${name}Class`] = function (
     this: JQ,
     className:
       | string
@@ -63,7 +63,7 @@ each(['add', 'remove', 'toggle'], (_, name: classListMethod) => {
         : className
       )
         .split(' ')
-        .filter(name => name);
+        .filter((name) => name);
 
       each(classes, (_, cls) => {
         element.classList[name](cls);

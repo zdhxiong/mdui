@@ -29,7 +29,7 @@ $('<p>I would like to say: </p>').insertBefore('<b>Hello</b>');
 }
 
 each(['insertBefore', 'insertAfter'], (nameIndex, name) => {
-  $.fn[name] = function(this: JQ, target: any): JQ {
+  $.fn[name] = function (this: JQ, target: any): JQ {
     const $element = nameIndex ? $(this.get().reverse()) : this; // 顺序和 jQuery 保持一致
     const $target = $(target);
     const result: HTMLElement[] = [];

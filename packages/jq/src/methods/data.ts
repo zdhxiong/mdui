@@ -108,7 +108,7 @@ function dataAttr(element: HTMLElement, key: string, value?: any): any {
   return value;
 }
 
-$.fn.data = function(this: JQ, key?: string | PlainObject, value?: any): any {
+$.fn.data = function (this: JQ, key?: string | PlainObject, value?: any): any {
   // 获取所有值
   if (isUndefined(key)) {
     if (!this.length) {
@@ -141,7 +141,7 @@ $.fn.data = function(this: JQ, key?: string | PlainObject, value?: any): any {
 
   // 同时设置多个值
   if (isObjectLike(key)) {
-    return this.each(function() {
+    return this.each(function () {
       data(this, key);
     });
   }
@@ -153,7 +153,7 @@ $.fn.data = function(this: JQ, key?: string | PlainObject, value?: any): any {
 
   // 设置值
   if (!isUndefined(value)) {
-    return this.each(function() {
+    return this.each(function () {
       data(this, key as string, value);
     });
   }

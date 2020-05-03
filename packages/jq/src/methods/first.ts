@@ -15,6 +15,6 @@ $('div').first()
   }
 }
 
-$.fn.first = function(this: JQ): JQ {
+$.fn.first = function (this: JQ): JQ {
   return this.eq(0);
 };

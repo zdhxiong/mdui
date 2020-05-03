@@ -17,8 +17,8 @@ $('body').append($("#box").clone())
   }
 }
 
-$.fn.clone = function(this: JQ): JQ {
-  return this.map(function() {
+$.fn.clone = function (this: JQ): JQ {
+  return this.map(function () {
     return this.cloneNode(true) as HTMLElement;
   });
 };

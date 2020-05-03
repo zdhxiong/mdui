@@ -22,7 +22,7 @@ $(document).customFunc()
   }
 }
 
-$.fn.extend = function(this: JQ, obj: PlainObject): JQ {
+$.fn.extend = function (this: JQ, obj: PlainObject): JQ {
   each(obj, (prop, value) => {
     // 在 JQ 对象上扩展方法时，需要自己添加 typescript 的类型定义
     $.fn[prop] = value;

@@ -54,10 +54,7 @@ function parse(type: string): { type: string; ns: string } {
 
   return {
     type: parts[0],
-    ns: parts
-      .slice(1)
-      .sort()
-      .join(' '),
+    ns: parts.slice(1).sort().join(' '),
   };
 }
 
@@ -84,7 +81,7 @@ function getHandlers(
   const event = parse(type);
 
   return (handlers[getElementId(element)] || []).filter(
-    handler =>
+    (handler) =>
       handler &&
       (!event.type || handler.type === event.type) &&
       (!event.ns || matcherFor(event.ns).test(handler.ns)) &&
@@ -120,7 +117,7 @@ function add(
     useCapture = true;
   }
 
-  types.split(' ').forEach(type => {
+  types.split(' ').forEach((type) => {
     if (!type) {
       return;
     }
@@ -156,7 +153,7 @@ function add(
           .find(selector)
           .get()
           .reverse()
-          .forEach(elem => {
+          .forEach((elem) => {
             if (
               elem === e.target ||
               contains(elem as HTMLElement, e.target as HTMLElement)
@@ -205,11 +202,11 @@ function remove(
   };
 
   if (!types) {
-    handlersInElement.forEach(handler => removeEvent(handler));
+    handlersInElement.forEach((handler) => removeEvent(handler));
   } else {
-    types.split(' ').forEach(type => {
+    types.split(' ').forEach((type) => {
       if (type) {
-        getHandlers(element, type, func, selector).forEach(handler =>
+        getHandlers(element, type, func, selector).forEach((handler) =>
           removeEvent(handler),
         );
       }

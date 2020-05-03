@@ -26,7 +26,7 @@ $(document).ajaxStart(function (event, xhr, options) {});
 }
 
 each(ajaxEvents, (name, eventName) => {
-  $.fn[name] = function(
+  $.fn[name] = function (
     this: JQ,
     fn: GlobalCallback | GlobalSuccessCallback,
   ): any {

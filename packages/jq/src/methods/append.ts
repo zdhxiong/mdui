@@ -56,7 +56,7 @@ $('<p>Hello</p>').append(function (index, html) {
 }
 
 each(['prepend', 'append'], (nameIndex, name) => {
-  $.fn[name] = function(this: JQ, ...args: any[]): JQ {
+  $.fn[name] = function (this: JQ, ...args: any[]): JQ {
     return this.each((index, element) => {
       const childNodes = element.childNodes;
       const childLength = childNodes.length;
@@ -75,7 +75,7 @@ each(['prepend', 'append'], (nameIndex, name) => {
 
       // 如果不是字符串，则仅第一个元素使用原始元素，其他的都克隆自第一个元素
       if (index) {
-        contents = contents.map(content => {
+        contents = contents.map((content) => {
           return isString(content) ? content : $(content).clone();
         });
       }

@@ -23,6 +23,6 @@ $('img').each(function (index, element) {
   }
 }
 
-$.fn.each = function(this: JQ, callback: void | any): JQ {
+$.fn.each = function (this: JQ, callback: void | any): JQ {
   return each(this, callback) as JQ;
 };

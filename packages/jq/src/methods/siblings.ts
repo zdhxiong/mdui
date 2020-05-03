@@ -30,6 +30,6 @@ $('.box').siblings('.selected')
  * @param selector {String=}
  * @returns {JQ}
  */
-$.fn.siblings = function(this: JQ, selector?: Selector): JQ {
+$.fn.siblings = function (this: JQ, selector?: Selector): JQ {
   return this.prevAll(selector).add(this.nextAll(selector));
 };

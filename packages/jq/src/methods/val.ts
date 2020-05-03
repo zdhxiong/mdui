@@ -61,7 +61,7 @@ each(['val', 'html', 'text'], (nameIndex, name) => {
     // text() 获取所有元素的文本
     if (nameIndex === 2) {
       // @ts-ignore
-      return map($elements, element => toElement(element)[propName]).join('');
+      return map($elements, (element) => toElement(element)[propName]).join('');
     }
 
     // 空集合时，val() 和 html() 返回 undefined
@@ -76,7 +76,7 @@ each(['val', 'html', 'text'], (nameIndex, name) => {
     if (nameIndex === 0 && $(firstElement).is('select[multiple]')) {
       return map(
         $(firstElement).find('option:checked'),
-        element => (element as HTMLOptionElement).value,
+        (element) => (element as HTMLOptionElement).value,
       );
     }
 
@@ -103,7 +103,7 @@ each(['val', 'html', 'text'], (nameIndex, name) => {
     element[propName] = value;
   }
 
-  $.fn[name] = function(this: JQ, value?: any): any {
+  $.fn[name] = function (this: JQ, value?: any): any {
     // 获取值
     if (!arguments.length) {
       return get(this);
@@ -121,7 +121,7 @@ each(['val', 'html', 'text'], (nameIndex, name) => {
         if ($(element).is('select[multiple]')) {
           map(
             $(element).find('option'),
-            option =>
+            (option) =>
               ((option as HTMLOptionElement).selected =
                 computedValue.indexOf((option as HTMLOptionElement).value) >
                 -1),

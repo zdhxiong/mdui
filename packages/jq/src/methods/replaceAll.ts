@@ -23,7 +23,7 @@ $('.new').replaceAll('.box');
   }
 }
 
-$.fn.replaceAll = function(this: JQ, target: any): JQ {
+$.fn.replaceAll = function (this: JQ, target: any): JQ {
   return $(target).map((index, element) => {
     $(element).replaceWith(index ? this.clone() : this);
 

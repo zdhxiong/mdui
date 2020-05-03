@@ -25,7 +25,7 @@ $('.box').next('div')
 }
 
 each(['', 'All', 'Until'], (nameIndex, name) => {
-  $.fn[`next${name}`] = function(
+  $.fn[`next${name}`] = function (
     this: JQ,
     selector?: any,
     filter?: Selector,

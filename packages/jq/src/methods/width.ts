@@ -222,7 +222,7 @@ each(['Width', 'Height'], (_, name: typeName) => {
   each(
     [`inner${name}`, name.toLowerCase(), `outer${name}`],
     (funcIndex: typeFuncIndex, funcName) => {
-      $.fn[funcName] = function(
+      $.fn[funcName] = function (
         this: JQ,
         margin?: any,
         value?: any,

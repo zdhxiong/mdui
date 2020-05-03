@@ -28,7 +28,7 @@ function floatStyle($element: JQ, name: string): number {
   return parseFloat($element.css(name));
 }
 
-$.fn.position = function(this: JQ): Coordinates | undefined {
+$.fn.position = function (this: JQ): Coordinates | undefined {
   if (!this.length) {
     return undefined;
   }

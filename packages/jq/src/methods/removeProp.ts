@@ -16,8 +16,8 @@ $('input').removeProp('disabled')
   }
 }
 
-$.fn.removeProp = function(this: JQ, name: string): JQ {
-  return this.each(function() {
+$.fn.removeProp = function (this: JQ, name: string): JQ {
+  return this.each(function () {
     try {
       // @ts-ignore
       delete this[name];

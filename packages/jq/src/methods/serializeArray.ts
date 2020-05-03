@@ -28,7 +28,7 @@ $('form').serializeArray()
  * 将表单元素的值组合成键值对数组
  * @returns {Array}
  */
-$.fn.serializeArray = function(this: JQ): NameValuePair[] {
+$.fn.serializeArray = function (this: JQ): NameValuePair[] {
   const result: NameValuePair[] = [];
 
   this.each((_, element) => {
@@ -52,7 +52,7 @@ $.fn.serializeArray = function(this: JQ): NameValuePair[] {
         const value = $element.val();
         const valueArr = Array.isArray(value) ? value : [value];
 
-        valueArr.forEach(value => {
+        valueArr.forEach((value) => {
           result.push({
             name: (element as HTMLInputElement).name,
             value,

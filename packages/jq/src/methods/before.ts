@@ -63,7 +63,7 @@ function isPlainText(target: string): boolean {
 }
 
 each(['before', 'after'], (nameIndex, name) => {
-  $.fn[name] = function(this: JQ, ...args: any[]): JQ {
+  $.fn[name] = function (this: JQ, ...args: any[]): JQ {
     // after 方法，多个参数需要按参数顺序添加到元素后面，所以需要将参数顺序反向处理
     if (nameIndex === 1) {
       args = args.reverse();

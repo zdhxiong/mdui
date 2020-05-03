@@ -269,7 +269,7 @@ var object = extend(
   }
 }
 
-$.extend = function(...objectN: PlainObject[]): any {
+$.extend = function (...objectN: PlainObject[]): any {
   if (objectN.length === 1) {
     each(objectN[0], (prop, value) => {
       this[prop] = value;

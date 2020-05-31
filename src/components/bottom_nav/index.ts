@@ -14,7 +14,7 @@ import '../headroom';
 
 $(() => {
   // 切换导航项
-  $document.on('click', '.mdui-bottom-nav>a', function() {
+  $document.on('click', '.mdui-bottom-nav>a', function () {
     const $item = $(this as HTMLElement);
     const $bottomNav = $item.parent();
 
@@ -34,7 +34,7 @@ $(() => {
   });
 
   // 滚动时隐藏 mdui-bottom-nav-scroll-hide
-  mdui.mutation('.mdui-bottom-nav-scroll-hide', function() {
+  mdui.mutation('.mdui-bottom-nav-scroll-hide', function () {
     new mdui.Headroom(this, {
       pinnedClass: 'mdui-headroom-pinned-down',
       unpinnedClass: 'mdui-headroom-unpinned-down',

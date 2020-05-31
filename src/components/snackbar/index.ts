@@ -299,7 +299,7 @@ class Snackbar {
       }
 
       // 点击 snackbar 的事件
-      this.$element.on('click', event => {
+      this.$element.on('click', (event) => {
         if (!$(event.target as HTMLElement).hasClass('mdui-snackbar-action')) {
           this.options.onClick!(this);
         }
@@ -352,7 +352,7 @@ class Snackbar {
   }
 }
 
-mdui.snackbar = function(message: any, options: any = {}): Snackbar {
+mdui.snackbar = function (message: any, options: any = {}): Snackbar {
   if (isString(message)) {
     options.message = message;
   } else {

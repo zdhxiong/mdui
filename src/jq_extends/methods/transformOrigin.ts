@@ -16,8 +16,8 @@ $('.box').transformOrigin('top center');
   }
 }
 
-$.fn.transformOrigin = function(this: JQ, transformOrigin: string): JQ {
-  return this.each(function() {
+$.fn.transformOrigin = function (this: JQ, transformOrigin: string): JQ {
+  return this.each(function () {
     this.style.webkitTransformOrigin = transformOrigin;
     this.style.transformOrigin = transformOrigin;
   });

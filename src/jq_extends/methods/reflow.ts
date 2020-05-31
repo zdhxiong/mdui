@@ -16,8 +16,8 @@ $('.box').reflow();
   }
 }
 
-$.fn.reflow = function(this: JQ): JQ {
-  return this.each(function() {
+$.fn.reflow = function (this: JQ): JQ {
+  return this.each(function () {
     return this.clientLeft;
   });
 };

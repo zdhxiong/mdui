@@ -113,7 +113,7 @@ const DEFAULT_OPTIONS: OPTIONS = {
   confirmOnEnter: false,
 };
 
-mdui.prompt = function(
+mdui.prompt = function (
   label: string,
   title?: any,
   onConfirm?: any,
@@ -191,7 +191,7 @@ mdui.prompt = function(
     history: options.history,
     modal: options.modal,
     closeOnEsc: options.closeOnEsc,
-    onOpen: dialog => {
+    onOpen: (dialog) => {
       // 初始化输入框
       const $input = dialog.$element.find('.mdui-textfield-input');
       mdui.updateTextFields($input);
@@ -201,7 +201,7 @@ mdui.prompt = function(
 
       // 捕捉文本框回车键，在单行文本框的情况下触发回调
       if (options.type !== 'textarea' && options.confirmOnEnter === true) {
-        $input.on('keydown', event => {
+        $input.on('keydown', (event) => {
           if ((event as KeyboardEvent).keyCode === 13) {
             const value = dialog.$element.find('.mdui-textfield-input').val();
             onConfirm(value, dialog);

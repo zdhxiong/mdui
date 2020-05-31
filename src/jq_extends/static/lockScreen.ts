@@ -17,7 +17,7 @@ $.lockScreen();
   }
 }
 
-$.lockScreen = function(): void {
+$.lockScreen = function (): void {
   // 不直接把 body 设为 box-sizing: border-box，避免污染全局样式
   const newBodyWidth = $body.width();
   let level = $body.data('_lockscreen_level') || 0;

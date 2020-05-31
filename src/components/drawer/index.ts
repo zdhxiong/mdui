@@ -183,9 +183,9 @@ class Drawer {
 
     function setPosition(translateX: number): void {
       const rtlTranslateMultiplier = that.position === 'right' ? -1 : 1;
-      const transformCSS = `translate(${-1 *
-        rtlTranslateMultiplier *
-        translateX}px, 0) !important;`;
+      const transformCSS = `translate(${
+        -1 * rtlTranslateMultiplier * translateX
+      }px, 0) !important;`;
       const transitionCSS = 'initial !important;';
 
       that.$element.css(

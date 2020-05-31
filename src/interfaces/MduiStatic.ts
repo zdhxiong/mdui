@@ -7,5 +7,5 @@ export interface MduiStatic {
   $: JQStatic;
 
   // mdui 命名空间下的静态方法
-  [method: string]: Function;
+  [method: string]: any;
 }

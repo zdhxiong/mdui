@@ -2228,10 +2228,7 @@ $.unlockScreen = function (force = false) {
         $body.data('_lockscreen_level', --level);
         return;
     }
-    $body
-        .data('_lockscreen_level', 0)
-        .removeClass('mdui-locked')
-        .width('');
+    $body.data('_lockscreen_level', 0).removeClass('mdui-locked').width('');
 };
 
 $.throttle = function (fn, delay = 16) {
@@ -2574,11 +2571,7 @@ class CollapseAbstract {
      */
     transitionEnd($content, $item) {
         if (this.isOpen($item)) {
-            $content
-                .transition(0)
-                .height('auto')
-                .reflow()
-                .transition('');
+            $content.transition(0).height('auto').reflow().transition('');
             this.triggerEvent('opened', $item);
         }
         else {
@@ -2813,9 +2806,7 @@ class Table {
         this.$thRow.find('th').each((i, th) => {
             const isNumericCol = $(th).hasClass(numericClass);
             this.$tdRows.each((_, row) => {
-                const $td = $(row)
-                    .find('td')
-                    .eq(i);
+                const $td = $(row).find('td').eq(i);
                 isNumericCol
                     ? $td.addClass(numericClass)
                     : $td.removeClass(numericClass);
@@ -3183,9 +3174,7 @@ $(() => {
      * 初始化文本框
      */
     mdui.mutation('.mdui-textfield', function () {
-        $(this)
-            .find('.mdui-textfield-input')
-            .trigger('input', {
+        $(this).find('.mdui-textfield-input').trigger('input', {
             domLoadedEvent: true,
         });
     });
@@ -3193,9 +3182,7 @@ $(() => {
 mdui.updateTextFields = function (selector) {
     const $elements = isUndefined(selector) ? $('.mdui-textfield') : $(selector);
     $elements.each((_, element) => {
-        $(element)
-            .find('.mdui-textfield-input')
-            .trigger('input', {
+        $(element).find('.mdui-textfield-input').trigger('input', {
             reInit: true,
         });
     });
@@ -3251,10 +3238,7 @@ function reInit($slider) {
     $slider.find('.mdui-slider-track').remove();
     $slider.find('.mdui-slider-fill').remove();
     $slider.find('.mdui-slider-thumb').remove();
-    $slider
-        .append($track)
-        .append($fill)
-        .append($thumb);
+    $slider.append($track).append($fill).append($thumb);
     // 间续型滑块
     let $thumbText = $();
     if (isDiscrete) {
@@ -3344,7 +3328,7 @@ class Fab {
             this.$btn.on(startEvent, () => this.open());
         }
         // 触摸屏幕其他地方关闭快速拨号
-        $document.on(startEvent, event => {
+        $document.on(startEvent, (event) => {
             if ($(event.target).parents('.mdui-fab-wrapper').length) {
                 return;
             }
@@ -3590,9 +3574,7 @@ class Select {
                     windowHeight);
             }
             // transform 的 Y 轴坐标
-            transformOriginY = `${this.selectedIndex * itemHeight +
-                itemHeight / 2 +
-                itemMargin}px`;
+            transformOriginY = `${this.selectedIndex * itemHeight + itemHeight / 2 + itemMargin}px`;
         }
         // 设置样式
         this.$element.innerWidth(menuWidth);
@@ -3881,7 +3863,7 @@ class Tab {
      * @param $element
      * @param parameters
      */
-    triggerEvent(name, $element, parameters) {
+    triggerEvent(name, $element, parameters = {}) {
         componentEvent(name, 'tab', $element, this, parameters);
     }
     /**
@@ -4130,9 +4112,7 @@ class Drawer {
         const swipeAreaWidth = 24;
         function setPosition(translateX) {
             const rtlTranslateMultiplier = that.position === 'right' ? -1 : 1;
-            const transformCSS = `translate(${-1 *
-                rtlTranslateMultiplier *
-                translateX}px, 0) !important;`;
+            const transformCSS = `translate(${-1 * rtlTranslateMultiplier * translateX}px, 0) !important;`;
             const transitionCSS = 'initial !important;';
             that.$element.css('cssText', `transform: ${transformCSS}; transition: ${transitionCSS};`);
         }
@@ -4598,6 +4578,8 @@ class Dialog {
             if (!queue(queueName).length && $overlay) {
                 $.hideOverlay();
                 $overlay = null;
+                // 若仍存在遮罩，恢复遮罩的 z-index
+                $('.mdui-overlay').css('z-index', 2000);
             }
             this.$element
                 .removeClass('mdui-dialog-open')
@@ -4936,7 +4918,7 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
         history: options.history,
         modal: options.modal,
         closeOnEsc: options.closeOnEsc,
-        onOpen: dialog => {
+        onOpen: (dialog) => {
             // 初始化输入框
             const $input = dialog.$element.find('.mdui-textfield-input');
             mdui.updateTextFields($input);
@@ -4944,14 +4926,16 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
             $input[0].focus();
             // 捕捉文本框回车键，在单行文本框的情况下触发回调
             if (options.type !== 'textarea' && options.confirmOnEnter === true) {
-                $input.on('keydown', event => {
+                $input.on('keydown', (event) => {
                     if (event.keyCode === 13) {
                         const value = dialog.$element.find('.mdui-textfield-input').val();
                         onConfirm(value, dialog);
                         if (options.closeOnConfirm) {
                             dialog.close();
                         }
+                        return false;
                     }
+                    return;
                 });
             }
             // 如果是多行输入框，监听输入框的 input 事件，更新对话框高度
@@ -5356,7 +5340,7 @@ class Snackbar {
                 });
             }
             // 点击 snackbar 的事件
-            this.$element.on('click', event => {
+            this.$element.on('click', (event) => {
                 if (!$(event.target).hasClass('mdui-snackbar-action')) {
                     this.options.onClick(this);
                 }
@@ -5399,7 +5383,7 @@ class Snackbar {
         });
     }
 }
-mdui.snackbar = function (message, options) {
+mdui.snackbar = function (message, options = {}) {
     if (isString(message)) {
         options.message = message;
     }
@@ -5818,10 +5802,7 @@ class Menu {
                 return;
             }
             // 阻止冒泡，点击菜单项时只在最后一级的 mdui-menu-item 上生效，不向上冒泡
-            if (!$target
-                .parents('.mdui-menu-item')
-                .first()
-                .is($item)) {
+            if (!$target.parents('.mdui-menu-item').first().is($item)) {
                 return;
             }
             // 当前菜单的子菜单

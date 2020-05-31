@@ -5264,7 +5264,7 @@ body.mdui-locked {
 }
 /**
  * =============================================================================
- * ************   Typography 排版   ************
+ * ************   Typography 样式排版   ************
  * =============================================================================
  */
 /* .mdui-typo-display-4 */
@@ -5363,6 +5363,11 @@ body.mdui-locked {
 .mdui-typo-caption-opacity {
   opacity: 0.54;
 }
+/**
+ * =============================================================================
+ * ************   Typography 文章排版   ************
+ * =============================================================================
+ */
 .mdui-typo {
   line-height: 1.8;
   word-wrap: break-word;
@@ -5431,6 +5436,19 @@ body.mdui-locked {
 .mdui-typo .mdui-table-fluid {
   margin: 0 0 1.2em 0;
 }
+.mdui-typo p:last-child,
+.mdui-typo pre:last-child,
+.mdui-typo ul:last-child,
+.mdui-typo ol:last-child,
+.mdui-typo dl:last-child,
+.mdui-typo form:last-child,
+.mdui-typo hr:last-child,
+.mdui-typo figure:last-child,
+.mdui-typo table:last-child,
+.mdui-typo .mdui-table:last-child,
+.mdui-typo .mdui-table-fluid:last-child {
+  margin-bottom: 0;
+}
 .mdui-typo a {
   color: #FF4081;
   position: relative;
@@ -5475,6 +5493,9 @@ body.mdui-locked {
     margin: 1em 0;
   }
 }
+.mdui-typo blockquote:last-child {
+  margin-bottom: 0;
+}
 .mdui-typo blockquote footer {
   color: rgba(0, 0, 0, 0.54);
   font-size: 86%;
@@ -5497,6 +5518,14 @@ body.mdui-locked {
   font-weight: 400;
   font-family: inherit;
   line-height: 1.35;
+}
+.mdui-typo h1:last-child,
+.mdui-typo h2:last-child,
+.mdui-typo h3:last-child,
+.mdui-typo h4:last-child,
+.mdui-typo h5:last-child,
+.mdui-typo h6:last-child {
+  margin-bottom: 0;
 }
 .mdui-typo h1 small,
 .mdui-typo h2 small,
@@ -5594,6 +5623,20 @@ body.mdui-locked {
 }
 .mdui-typo img {
   max-width: 100%;
+}
+.mdui-typo figure {
+  text-align: center;
+}
+.mdui-typo figure figcaption {
+  margin-top: 8px;
+  color: #999;
+  font-size: 14px;
+}
+.mdui-typo figure figcaption:empty::before {
+  z-index: -1;
+  color: #bfbfbf;
+  cursor: text;
+  content: attr(placeholder);
 }
 /**
  * =============================================================================
@@ -9560,7 +9603,7 @@ input.mdui-btn[type="submit"] {
   font-size: 16px;
   font-family: Roboto, Noto, Helvetica, Arial, sans-serif;
   vertical-align: middle;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%20viewBox%3D%220%200%2010%2010%22%3E%3Cpath%20d%3D%22m-0.00254%2C2.5l5%2C5l5%2C-5l-10%2C0z%22%20fill%3D%22%23000000%22%20opacity%3D%220.54%22%2F%3E%3C%2Fsvg%3E%0A");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M-.003 2.5l5 5 5-5h-10z' opacity='.54'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right center;
   border: none;
@@ -9588,7 +9631,7 @@ input.mdui-btn[type="submit"] {
   border-bottom: none;
 }
 .mdui-select-position-top {
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%20viewBox%3D%220%200%2010%2010%22%3E%3Cpath%20d%3D%22m-0.00254%2C2.5l5%2C5l5%2C-5l-10%2C0z%22%20fill%3D%22%23000000%22%20opacity%3D%220.54%22%20transform%3D%22rotate(-180%205%2C5)%22%2F%3E%3C%2Fsvg%3E%0A");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M10.003 7.5l-5-5-5 5h10z' opacity='.54'/%3E%3C/svg%3E");
 }
 /* 底部和顶部菜单的样式 */
 .mdui-select-open.mdui-select-position-top,
@@ -9832,11 +9875,11 @@ select.mdui-select[multiple] option:last-child {
  * =============================================================================
  */
 .mdui-theme-layout-dark .mdui-select {
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%20viewBox%3D%220%200%2010%2010%22%3E%3Cpath%20d%3D%22m-0.00254%2C2.5l5%2C5l5%2C-5l-10%2C0z%22%20fill%3D%22%23FFFFFF%22%2F%3E%3C%2Fsvg%3E%0A");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M-.003 2.5l5 5 5-5h-10z' fill='%23FFF'/%3E%3C/svg%3E");
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 .mdui-theme-layout-dark .mdui-select-position-top {
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%20viewBox%3D%220%200%2010%2010%22%3E%3Cpath%20d%3D%22m-0.00254%2C2.5l5%2C5l5%2C-5l-10%2C0z%22%20fill%3D%22%23FFFFFF%22%20transform%3D%22rotate(-180%205%2C5)%22%2F%3E%3C%2Fsvg%3E%0A");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M10.003 7.5l-5-5-5 5h10z' fill='%23FFF'/%3E%3C/svg%3E");
 }
 .mdui-theme-layout-dark .mdui-select-open.mdui-select-position-top,
 .mdui-theme-layout-dark .mdui-select-open.mdui-select-position-bottom {
@@ -9874,100 +9917,6 @@ select.mdui-select[multiple] option:last-child {
 }
 .mdui-theme-layout-dark select.mdui-select[multiple] optgroup:not(:first-child) {
   border-top: 1px solid rgba(255, 255, 255, 0.12);
-}
-/**
- * =============================================================================
- * ************   Appbar 应用栏   ************
- * =============================================================================
- */
-.mdui-appbar {
-  z-index: 1000;
-  -webkit-box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
-          box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
-}
-/* appbar 固定在顶部 */
-.mdui-appbar-fixed {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  -webkit-transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
-          transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
-  -webkit-transition-duration: 0.3s;
-          transition-duration: 0.3s;
-  -webkit-transition-property: left, right;
-  transition-property: left, right;
-  will-change: left, right;
-}
-/* 左侧留出抽屉栏的距离 */
-@media (min-width: 1024px) {
-  .mdui-drawer-body-left .mdui-appbar-inset.mdui-appbar-fixed {
-    left: 240px;
-  }
-}
-@media (min-width: 1024px) {
-  .mdui-drawer-body-right .mdui-appbar-inset.mdui-appbar-fixed {
-    right: 240px;
-  }
-}
-/* 含工具栏 */
-.mdui-appbar-with-toolbar {
-  padding-top: 56px;
-}
-@media (min-width: 600px) {
-  .mdui-appbar-with-toolbar {
-    padding-top: 64px;
-  }
-}
-@media (orientation: landscape) and (max-width: 959px) {
-  .mdui-appbar-with-toolbar {
-    padding-top: 48px;
-  }
-}
-/* 含 Tab */
-.mdui-appbar-with-tab {
-  padding-top: 48px;
-}
-/* 含大 Tab  */
-.mdui-appbar-with-tab-larger {
-  padding-top: 72px;
-}
-/* 含工具栏和 Tab */
-.mdui-appbar-with-toolbar.mdui-appbar-with-tab {
-  padding-top: 104px;
-}
-@media (min-width: 600px) {
-  .mdui-appbar-with-toolbar.mdui-appbar-with-tab {
-    padding-top: 112px;
-  }
-}
-@media (orientation: landscape) and (max-width: 959px) {
-  .mdui-appbar-with-toolbar.mdui-appbar-with-tab {
-    padding-top: 96px;
-  }
-}
-/* 含工具栏和大 Tab */
-.mdui-appbar-with-toolbar.mdui-appbar-with-tab-larger {
-  padding-top: 128px;
-}
-@media (min-width: 600px) {
-  .mdui-appbar-with-toolbar.mdui-appbar-with-tab-larger {
-    padding-top: 136px;
-  }
-}
-@media (orientation: landscape) and (max-width: 959px) {
-  .mdui-appbar-with-toolbar.mdui-appbar-with-tab-larger {
-    padding-top: 120px;
-  }
-}
-/**
- * =============================================================================
- * ************   Appbar dark   ************
- * =============================================================================
- */
-.mdui-theme-layout-dark .mdui-appbar > [class*="mdui-color-"]:not(.mdui-color-transparent) {
-  color: #fff !important;
-  background-color: #212121 !important;
 }
 /**
  * =============================================================================
@@ -10064,6 +10013,100 @@ select.mdui-select[multiple] option:last-child {
   .mdui-appbar .mdui-toolbar > .mdui-btn + .mdui-btn {
     margin-left: 0;
   }
+}
+/**
+ * =============================================================================
+ * ************   Appbar 应用栏   ************
+ * =============================================================================
+ */
+.mdui-appbar {
+  z-index: 1000;
+  -webkit-box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+          box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+}
+/* appbar 固定在顶部 */
+.mdui-appbar-fixed {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  -webkit-transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+          transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  -webkit-transition-duration: 0.3s;
+          transition-duration: 0.3s;
+  -webkit-transition-property: left, right;
+  transition-property: left, right;
+  will-change: left, right;
+}
+/* 左侧留出抽屉栏的距离 */
+@media (min-width: 1024px) {
+  .mdui-drawer-body-left .mdui-appbar-inset.mdui-appbar-fixed {
+    left: 240px;
+  }
+}
+@media (min-width: 1024px) {
+  .mdui-drawer-body-right .mdui-appbar-inset.mdui-appbar-fixed {
+    right: 240px;
+  }
+}
+/* 含工具栏 */
+.mdui-appbar-with-toolbar {
+  padding-top: 56px;
+}
+@media (min-width: 600px) {
+  .mdui-appbar-with-toolbar {
+    padding-top: 64px;
+  }
+}
+@media (orientation: landscape) and (max-width: 959px) {
+  .mdui-appbar-with-toolbar {
+    padding-top: 48px;
+  }
+}
+/* 含 Tab */
+.mdui-appbar-with-tab {
+  padding-top: 48px;
+}
+/* 含大 Tab  */
+.mdui-appbar-with-tab-larger {
+  padding-top: 72px;
+}
+/* 含工具栏和 Tab */
+.mdui-appbar-with-toolbar.mdui-appbar-with-tab {
+  padding-top: 104px;
+}
+@media (min-width: 600px) {
+  .mdui-appbar-with-toolbar.mdui-appbar-with-tab {
+    padding-top: 112px;
+  }
+}
+@media (orientation: landscape) and (max-width: 959px) {
+  .mdui-appbar-with-toolbar.mdui-appbar-with-tab {
+    padding-top: 96px;
+  }
+}
+/* 含工具栏和大 Tab */
+.mdui-appbar-with-toolbar.mdui-appbar-with-tab-larger {
+  padding-top: 128px;
+}
+@media (min-width: 600px) {
+  .mdui-appbar-with-toolbar.mdui-appbar-with-tab-larger {
+    padding-top: 136px;
+  }
+}
+@media (orientation: landscape) and (max-width: 959px) {
+  .mdui-appbar-with-toolbar.mdui-appbar-with-tab-larger {
+    padding-top: 120px;
+  }
+}
+/**
+ * =============================================================================
+ * ************   Appbar dark   ************
+ * =============================================================================
+ */
+.mdui-theme-layout-dark .mdui-appbar > [class*="mdui-color-"]:not(.mdui-color-transparent) {
+  color: #fff !important;
+  background-color: #212121 !important;
 }
 /**
  * =============================================================================
@@ -11595,6 +11638,7 @@ body.mdui-loaded .mdui-drawer {
           box-sizing: border-box;
   height: 32px;
   margin: 2px 0;
+  color: inherit;
   white-space: nowrap;
   background-color: #e0e0e0;
   border-radius: 16px;
@@ -12700,7 +12744,7 @@ body.mdui-loaded .mdui-drawer {
   width: 24px;
   height: 24px;
   margin: 4px 0;
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22%20opacity%3D%220.54%22%20transform%3D%22rotate(-90%2012%2C12.5)%22%20fill%3D%22%23000000%22%2F%3E%3C%2Fsvg%3E%0A");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M9.5 17.5l5-5-5-5z' opacity='.54'/%3E%3C/svg%3E");
 }
 /* 级联菜单 */
 .mdui-menu-cascade {
@@ -12739,7 +12783,7 @@ body.mdui-loaded .mdui-drawer {
   color: #ffffff;
 }
 .mdui-theme-layout-dark .mdui-menu-item-more {
-  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%2010l5%205%205-5z%22%20transform%3D%22rotate(-90%2012%2C12.5)%22%20fill%3D%22%23FFFFFF%22%2F%3E%3C%2Fsvg%3E%0A");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M9.5 17.5l5-5-5-5z' fill='%23FFF'/%3E%3C/svg%3E");
 }
 
 /*# sourceMappingURL=mdui.css.map */

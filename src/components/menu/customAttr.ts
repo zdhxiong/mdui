@@ -21,7 +21,7 @@ type OPTIONS = {
 };
 
 $(() => {
-  $document.on('click', `[${customAttr}]`, function() {
+  $document.on('click', `[${customAttr}]`, function () {
     const $this = $(this as HTMLElement);
     let instance = $this.data(dataName);
 

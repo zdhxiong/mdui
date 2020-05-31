@@ -6,6 +6,10 @@ import polyfill from 'rollup-plugin-polyfill';
 import tsconfig from './src/tsconfig.json';
 import pkg from './package.json';
 
+delete tsconfig.compilerOptions.declaration;
+delete tsconfig.compilerOptions.declarationDir;
+delete tsconfig.compilerOptions.outDir;
+
 const banner = `
 /*!
  * mdui ${pkg.version} (${pkg.homepage})

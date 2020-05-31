@@ -7,7 +7,7 @@ import './index';
 const customAttr = 'mdui-collapse';
 
 $(() => {
-  mdui.mutation(`[${customAttr}]`, function() {
+  mdui.mutation(`[${customAttr}]`, function () {
     new mdui.Collapse(this, parseOptions(this, customAttr));
   });
 });

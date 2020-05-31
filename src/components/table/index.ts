@@ -200,9 +200,7 @@ class Table {
       const isNumericCol = $(th).hasClass(numericClass);
 
       this.$tdRows.each((_, row) => {
-        const $td = $(row)
-          .find('td')
-          .eq(i);
+        const $td = $(row).find('td').eq(i);
 
         isNumericCol
           ? $td.addClass(numericClass)
@@ -215,7 +213,7 @@ class Table {
 const dataName = '_mdui_table';
 
 $(() => {
-  mdui.mutation('.mdui-table', function() {
+  mdui.mutation('.mdui-table', function () {
     const $element = $(this);
 
     if (!$element.data(dataName)) {
@@ -224,7 +222,7 @@ $(() => {
   });
 });
 
-mdui.updateTables = function(
+mdui.updateTables = function (
   selector?: Selector | HTMLElement | ArrayLike<HTMLElement>,
 ): void {
   const $elements = isUndefined(selector) ? $('.mdui-table') : $(selector);

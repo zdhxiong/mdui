@@ -18,12 +18,12 @@ $('.box').transition(300);
   }
 }
 
-$.fn.transition = function(this: JQ, duration: string | number): JQ {
+$.fn.transition = function (this: JQ, duration: string | number): JQ {
   if (isNumber(duration)) {
     duration = `${duration}ms`;
   }
 
-  return this.each(function() {
+  return this.each(function () {
     this.style.webkitTransitionDuration = duration as string;
     this.style.transitionDuration = duration as string;
   });

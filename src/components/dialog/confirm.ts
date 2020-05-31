@@ -85,7 +85,7 @@ const DEFAULT_OPTIONS: OPTIONS = {
   closeOnConfirm: true,
 };
 
-mdui.confirm = function(
+mdui.confirm = function (
   text: string,
   title?: any,
   onConfirm?: any,

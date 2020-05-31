@@ -7,7 +7,7 @@ import './index';
 const customAttr = 'mdui-select';
 
 $(() => {
-  mdui.mutation(`[${customAttr}]`, function() {
+  mdui.mutation(`[${customAttr}]`, function () {
     new mdui.Select(this, parseOptions(this, customAttr));
   });
 });

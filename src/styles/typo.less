@@ -1,94 +1,8 @@
 /**
  * =============================================================================
- * ************   Typography 排版   ************
+ * ************   Typography 文章排版   ************
  * =============================================================================
  */
-
-/* .mdui-typo-display-4 */
-.mdui-typo-display-4,
-.mdui-typo-display-4-opacity {
-  .mdui-typo-display-4();
-}
-.mdui-typo-display-4-opacity {
-  ._mdui-typo-display-4-opacity();
-}
-
-/* .mdui-typo-display-3 */
-.mdui-typo-display-3,
-.mdui-typo-display-3-opacity {
-  .mdui-typo-display-3();
-}
-.mdui-typo-display-3-opacity {
-  ._mdui-typo-display-3-opacity();
-}
-
-/* .mdui-typo-display-2 */
-.mdui-typo-display-2,
-.mdui-typo-display-2-opacity {
-  .mdui-typo-display-2();
-}
-.mdui-typo-display-2-opacity {
-  ._mdui-typo-display-2-opacity();
-}
-
-/* .mdui-typo-display-1 */
-.mdui-typo-display-1,
-.mdui-typo-display-1-opacity {
-  .mdui-typo-display-1();
-}
-.mdui-typo-display-1-opacity {
-  ._mdui-typo-display-1-opacity();
-}
-
-/* .mdui-typo-headline */
-.mdui-typo-headline,
-.mdui-typo-headline-opacity {
-  .mdui-typo-headline();
-}
-.mdui-typo-headline-opacity {
-  ._mdui-typo-headline-opacity();
-}
-
-/* .mdui-typo-title */
-.mdui-typo-title,
-.mdui-typo-title-opacity {
-  .mdui-typo-title();
-}
-.mdui-typo-title-opacity {
-  ._mdui-typo-title-opacity();
-}
-
-.mdui-typo-subheading,
-.mdui-typo-subheading-opacity {
-  .mdui-typo-subheading();
-}
-.mdui-typo-subheading-opacity {
-  ._mdui-typo-subheading-opacity();
-}
-
-.mdui-typo-body-2,
-.mdui-typo-body-2-opacity {
-  .mdui-typo-body-2();
-}
-.mdui-typo-body-2-opacity {
-  ._mdui-typo-body-2-opacity();
-}
-
-.mdui-typo-body-1,
-.mdui-typo-body-1-opacity {
-  .mdui-typo-body-1();
-}
-.mdui-typo-body-1-opacity {
-  ._mdui-typo-body-1-opacity();
-}
-
-.mdui-typo-caption,
-.mdui-typo-caption-opacity {
-  .mdui-typo-caption();
-}
-.mdui-typo-caption-opacity {
-  ._mdui-typo-caption-opacity();
-}
 
 .mdui-typo {
   line-height: 1.8;
@@ -127,6 +41,10 @@
 
   p, pre, ul, ol, dl, form, hr, figure, table, .mdui-table, .mdui-table-fluid {
     margin: 0 0 1.2em 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   /* a */
@@ -175,6 +93,10 @@
       margin: 1em 0;
     }
 
+    &:last-child {
+      margin-bottom: 0;
+    }
+
     footer {
       color: @color-black-secondary;
       font-size: 86%;
@@ -197,6 +119,10 @@
     font-weight: 400;
     font-family: inherit;
     line-height: 1.35;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     small {
       color: @color-black-secondary;
@@ -312,6 +238,23 @@
   /* img */
   img {
     max-width: 100%;
+  }
+
+  figure {
+    text-align: center;
+
+    figcaption {
+      margin-top: 8px;
+      color: #999;
+      font-size: 14px;
+    }
+
+    figcaption:empty::before {
+      z-index: -1;
+      color: #bfbfbf;
+      cursor: text;
+      content: attr(placeholder);
+    }
   }
 }
 

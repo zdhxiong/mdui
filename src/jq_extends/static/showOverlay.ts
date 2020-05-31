@@ -25,7 +25,7 @@ $.showOverlay(3000);
   }
 }
 
-$.showOverlay = function(zIndex?: number): JQ {
+$.showOverlay = function (zIndex?: number): JQ {
   let $overlay = $('.mdui-overlay');
 
   if ($overlay.length) {

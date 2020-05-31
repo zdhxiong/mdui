@@ -69,7 +69,7 @@ const DEFAULT_OPTIONS: OPTIONS = {
   closeOnConfirm: true,
 };
 
-mdui.alert = function(
+mdui.alert = function (
   text: string,
   title?: any,
   onConfirm?: any,

@@ -73,7 +73,7 @@ function register(event: Event): void {
     ['touchmove', 'touchend', 'touchcancel'].indexOf(event.type) > -1
   ) {
     // touch 事件结束 500ms 后解除对鼠标事件的阻止
-    setTimeout(function() {
+    setTimeout(function () {
       if (touches) {
         touches -= 1;
       }

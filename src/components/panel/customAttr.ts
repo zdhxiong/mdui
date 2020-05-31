@@ -7,7 +7,7 @@ import './index';
 const customAttr = 'mdui-panel';
 
 $(() => {
-  mdui.mutation(`[${customAttr}]`, function() {
+  mdui.mutation(`[${customAttr}]`, function () {
     new mdui.Panel(this, parseOptions(this, customAttr));
   });
 });

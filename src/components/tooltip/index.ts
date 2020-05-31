@@ -118,7 +118,7 @@ class Tooltip {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     this.$target
-      .on('touchstart mouseenter', function(event) {
+      .on('touchstart mouseenter', function (event) {
         if (that.isDisabled(this as HTMLElement)) {
           return;
         }
@@ -131,7 +131,7 @@ class Tooltip {
 
         that.open();
       })
-      .on('touchend mouseleave', function(event) {
+      .on('touchend mouseleave', function (event) {
         if (that.isDisabled(this as HTMLElement)) {
           return;
         }
@@ -142,7 +142,7 @@ class Tooltip {
 
         that.close();
       })
-      .on(unlockEvent, function(event) {
+      .on(unlockEvent, function (event) {
         if (that.isDisabled(this as HTMLElement)) {
           return;
         }

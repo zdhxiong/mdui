@@ -141,7 +141,7 @@ const DEFAULT_OPTIONS: OPTIONS = {
   onClosed: () => {},
 };
 
-mdui.dialog = function(options: OPTIONS): Dialog {
+mdui.dialog = function (options: OPTIONS): Dialog {
   // 合并配置参数
   options = extend({}, DEFAULT_OPTIONS, options);
 

@@ -24,7 +24,7 @@ $.hideOverlay(true);
   }
 }
 
-$.hideOverlay = function(force = false): void {
+$.hideOverlay = function (force = false): void {
   const $overlay = $('.mdui-overlay');
 
   if (!$overlay.length) {

@@ -249,9 +249,9 @@ class Select {
       }
 
       // transform 的 Y 轴坐标
-      transformOriginY = `${this.selectedIndex * itemHeight +
-        itemHeight / 2 +
-        itemMargin}px`;
+      transformOriginY = `${
+        this.selectedIndex * itemHeight + itemHeight / 2 + itemMargin
+      }px`;
     }
 
     // 设置样式
@@ -354,7 +354,7 @@ class Select {
     // 点击选项时关闭下拉菜单
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
-    this.$items.on('click', function() {
+    this.$items.on('click', function () {
       if (that.state === 'closing') {
         return;
       }

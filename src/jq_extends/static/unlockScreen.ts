@@ -24,7 +24,7 @@ $.unlockScreen(true);
   }
 }
 
-$.unlockScreen = function(force = false): void {
+$.unlockScreen = function (force = false): void {
   let level = force ? 1 : $body.data('_lockscreen_level');
 
   if (level > 1) {
@@ -32,8 +32,5 @@ $.unlockScreen = function(force = false): void {
     return;
   }
 
-  $body
-    .data('_lockscreen_level', 0)
-    .removeClass('mdui-locked')
-    .width('');
+  $body.data('_lockscreen_level', 0).removeClass('mdui-locked').width('');
 };

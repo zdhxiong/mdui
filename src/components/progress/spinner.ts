@@ -59,17 +59,17 @@ function fillHTML(spinner: HTMLElement): void {
 
 $(() => {
   // 页面加载完后自动填充 HTML 结构
-  mdui.mutation('.mdui-spinner', function() {
+  mdui.mutation('.mdui-spinner', function () {
     fillHTML(this);
   });
 });
 
-mdui.updateSpinners = function(
+mdui.updateSpinners = function (
   selector?: Selector | HTMLElement | ArrayLike<HTMLElement>,
 ): void {
   const $elements = isUndefined(selector) ? $('.mdui-spinner') : $(selector);
 
-  $elements.each(function() {
+  $elements.each(function () {
     fillHTML(this);
   });
 };

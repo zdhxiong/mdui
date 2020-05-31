@@ -18,10 +18,10 @@ $.throttle(function () {
   }
 }
 
-$.throttle = function(fn: () => void, delay = 16): () => void {
+$.throttle = function (fn: () => void, delay = 16): () => void {
   let timer: any = null;
 
-  return function(this: any, ...args: any): void {
+  return function (this: any, ...args: any): void {
     if (isNull(timer)) {
       timer = setTimeout(() => {
         fn.apply(this, args);

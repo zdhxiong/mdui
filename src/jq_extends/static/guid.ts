@@ -22,7 +22,7 @@ $.guid('test');
 
 const GUID: PlainObject<string> = {};
 
-$.guid = function(name?: string): string {
+$.guid = function (name?: string): string {
   if (!isUndefined(name) && !isUndefined(GUID[name])) {
     return GUID[name];
   }

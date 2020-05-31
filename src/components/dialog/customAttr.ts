@@ -22,7 +22,7 @@ type OPTIONS = {
 };
 
 $(() => {
-  $document.on('click', `[${customAttr}]`, function() {
+  $document.on('click', `[${customAttr}]`, function () {
     const options = parseOptions(this as HTMLElement, customAttr) as OPTIONS;
     const selector = options.target;
     delete options.target;

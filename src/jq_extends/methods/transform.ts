@@ -16,8 +16,8 @@ $('.box').transform('rotate(90deg)');
   }
 }
 
-$.fn.transform = function(this: JQ, transform: string): JQ {
-  return this.each(function() {
+$.fn.transform = function (this: JQ, transform: string): JQ {
+  return this.each(function () {
     this.style.webkitTransform = transform;
     this.style.transform = transform;
   });

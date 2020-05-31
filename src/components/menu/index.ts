@@ -190,7 +190,7 @@ class Menu {
     // 点击不含子菜单的菜单条目关闭菜单
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
-    $document.on('click', '.mdui-menu-item', function() {
+    $document.on('click', '.mdui-menu-item', function () {
       const $item = $(this);
 
       if (
@@ -511,7 +511,7 @@ class Menu {
     const that = this;
 
     // 点击打开子菜单
-    this.$element.on('click', '.mdui-menu-item', function(event) {
+    this.$element.on('click', '.mdui-menu-item', function (event) {
       const $item = $(this as HTMLElement);
       const $target = $(event.target as HTMLElement);
 
@@ -526,12 +526,7 @@ class Menu {
       }
 
       // 阻止冒泡，点击菜单项时只在最后一级的 mdui-menu-item 上生效，不向上冒泡
-      if (
-        !$target
-          .parents('.mdui-menu-item')
-          .first()
-          .is($item)
-      ) {
+      if (!$target.parents('.mdui-menu-item').first().is($item)) {
         return;
       }
 
@@ -564,7 +559,7 @@ class Menu {
       let timeout: any = null;
       let timeoutOpen: any = null;
 
-      this.$element.on('mouseover mouseout', '.mdui-menu-item', function(
+      this.$element.on('mouseover mouseout', '.mdui-menu-item', function (
         event,
       ) {
         const $item = $(this as HTMLElement);

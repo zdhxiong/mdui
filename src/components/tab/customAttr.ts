@@ -7,7 +7,7 @@ import './index';
 const customAttr = 'mdui-tab';
 
 $(() => {
-  mdui.mutation(`[${customAttr}]`, function() {
+  mdui.mutation(`[${customAttr}]`, function () {
     new mdui.Tab(this, parseOptions(this, customAttr));
   });
 });

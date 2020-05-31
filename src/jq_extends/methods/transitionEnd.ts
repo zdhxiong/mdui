@@ -20,7 +20,7 @@ $('.box').transitionEnd(function() {
   }
 }
 
-$.fn.transitionEnd = function(
+$.fn.transitionEnd = function (
   this: JQ,
   callback: (this: HTMLElement, e: Event) => void,
 ): JQ {

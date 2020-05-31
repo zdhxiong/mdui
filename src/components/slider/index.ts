@@ -101,10 +101,7 @@ function reInit($slider: JQ): void {
   $slider.find('.mdui-slider-track').remove();
   $slider.find('.mdui-slider-fill').remove();
   $slider.find('.mdui-slider-thumb').remove();
-  $slider
-    .append($track)
-    .append($fill)
-    .append($thumb);
+  $slider.append($track).append($fill).append($thumb);
 
   // 间续型滑块
   let $thumbText = $();
@@ -131,14 +128,14 @@ const rangeSelector = '.mdui-slider input[type="range"]';
 
 $(() => {
   // 滑块滑动事件
-  $document.on('input change', rangeSelector, function() {
+  $document.on('input change', rangeSelector, function () {
     const $slider = $(this).parent() as JQ<HTMLElement>;
 
     updateValueStyle($slider);
   });
 
   // 开始触摸滑块事件
-  $document.on(startEvent, rangeSelector, function(event: Event) {
+  $document.on(startEvent, rangeSelector, function (event: Event) {
     if (!isAllow(event)) {
       return;
     }
@@ -155,7 +152,7 @@ $(() => {
   });
 
   // 结束触摸滑块事件
-  $document.on(endEvent, rangeSelector, function(event: Event) {
+  $document.on(endEvent, rangeSelector, function (event: Event) {
     if (!isAllow(event)) {
       return;
     }
@@ -174,12 +171,12 @@ $(() => {
   /**
    * 初始化滑块
    */
-  mdui.mutation('.mdui-slider', function() {
+  mdui.mutation('.mdui-slider', function () {
     reInit($(this));
   });
 });
 
-mdui.updateSliders = function(
+mdui.updateSliders = function (
   selector?: Selector | HTMLElement | ArrayLike<HTMLElement>,
 ): void {
   const $elements = isUndefined(selector) ? $('.mdui-slider') : $(selector);

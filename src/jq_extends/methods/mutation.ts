@@ -15,7 +15,7 @@ declare module 'mdui.jq/es/JQ' {
   }
 }
 
-$.fn.mutation = function(this: JQ): JQ {
+$.fn.mutation = function (this: JQ): JQ {
   return this.each((i, element) => {
     const $this = $(element);
 

@@ -108,7 +108,7 @@ class Fab {
     }
 
     // 触摸屏幕其他地方关闭快速拨号
-    $document.on(startEvent, event => {
+    $document.on(startEvent, (event) => {
       if ($(event.target as HTMLElement).parents('.mdui-fab-wrapper').length) {
         return;
       }

@@ -15,7 +15,7 @@ type OPTIONS = {
 };
 
 $(() => {
-  mdui.mutation(`[${customAttr}]`, function() {
+  mdui.mutation(`[${customAttr}]`, function () {
     const $element = $(this);
     const options = parseOptions(this, customAttr) as OPTIONS;
     const selector = options.target;

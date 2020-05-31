@@ -26,7 +26,7 @@ mdui.mutation();
   }
 }
 
-mdui.mutation = function(selector?: string, apiInit?: TYPE_API_INIT): void {
+mdui.mutation = function (selector?: string, apiInit?: TYPE_API_INIT): void {
   if (isUndefined(selector) || isUndefined(apiInit)) {
     $(document).mutation();
     return;

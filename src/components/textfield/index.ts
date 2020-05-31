@@ -172,7 +172,7 @@ $(() => {
   $document.on(
     'click',
     '.mdui-textfield-expandable .mdui-textfield-icon',
-    function() {
+    function () {
       $(this as HTMLElement)
         .parents('.mdui-textfield')
         .addClass('mdui-textfield-expanded')
@@ -185,7 +185,7 @@ $(() => {
   $document.on(
     'click',
     '.mdui-textfield-expanded .mdui-textfield-close',
-    function() {
+    function () {
       $(this)
         .parents('.mdui-textfield')
         .removeClass('mdui-textfield-expanded')
@@ -197,25 +197,21 @@ $(() => {
   /**
    * 初始化文本框
    */
-  mdui.mutation('.mdui-textfield', function() {
-    $(this)
-      .find('.mdui-textfield-input')
-      .trigger('input', {
-        domLoadedEvent: true,
-      });
+  mdui.mutation('.mdui-textfield', function () {
+    $(this).find('.mdui-textfield-input').trigger('input', {
+      domLoadedEvent: true,
+    });
   });
 });
 
-mdui.updateTextFields = function(
+mdui.updateTextFields = function (
   selector?: Selector | HTMLElement | ArrayLike<HTMLElement>,
 ): void {
   const $elements = isUndefined(selector) ? $('.mdui-textfield') : $(selector);
 
   $elements.each((_, element) => {
-    $(element)
-      .find('.mdui-textfield-input')
-      .trigger('input', {
-        reInit: true,
-      });
+    $(element).find('.mdui-textfield-input').trigger('input', {
+      reInit: true,
+    });
   });
 };

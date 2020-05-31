@@ -197,7 +197,7 @@ class Tab {
    * @param $element
    * @param parameters
    */
-  private triggerEvent(name: EVENT, $element: JQ, parameters?: {}): void {
+  private triggerEvent(name: EVENT, $element: JQ, parameters = {}): void {
     componentEvent(name, 'tab', $element, this, parameters);
   }
 
@@ -253,9 +253,11 @@ class Tab {
     const activeTabOffset = $activeTab.offset();
 
     this.$indicator.css({
-      left: `${activeTabOffset.left +
+      left: `${
+        activeTabOffset.left +
         this.$element[0].scrollLeft -
-        this.$element[0].getBoundingClientRect().left}px`,
+        this.$element[0].getBoundingClientRect().left
+      }px`,
       width: `${$activeTab.innerWidth()}px`,
     });
   }

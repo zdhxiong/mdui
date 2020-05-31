@@ -98,7 +98,7 @@ abstract class CollapseAbstract {
     const $items = this.getItems();
 
     // 点击 header 时，打开/关闭 item
-    this.$element.on('click', `.${this.classHeader}`, function() {
+    this.$element.on('click', `.${this.classHeader}`, function () {
       const $header = $(this as HTMLElement);
       const $item = $header.parent();
 
@@ -113,7 +113,7 @@ abstract class CollapseAbstract {
     this.$element.on(
       'click',
       `[mdui-${this.getNamespace()}-item-close]`,
-      function() {
+      function () {
         const $target = $(this as HTMLElement);
         const $item = $target.parents(`.${that.classItem}`).first();
 
@@ -167,11 +167,7 @@ abstract class CollapseAbstract {
    */
   private transitionEnd($content: JQ, $item: JQ): void {
     if (this.isOpen($item)) {
-      $content
-        .transition(0)
-        .height('auto')
-        .reflow()
-        .transition('');
+      $content.transition(0).height('auto').reflow().transition('');
 
       this.triggerEvent('opened', $item);
     } else {

@@ -9,7 +9,7 @@
   (global = global || self, global.mdui = factory());
 }(this, (function () { 'use strict';
 
-  !function(){try{return new MouseEvent("test")}catch(e){}var e=function(e,t){t=t||{bubbles:!1,cancelable:!1};var n=document.createEvent("MouseEvent");return n.initMouseEvent(e,t.bubbles,t.cancelable,window,0,t.screenX||0,t.screenY||0,t.clientX||0,t.clientY||0,t.ctrlKey||!1,t.altKey||!1,t.shiftKey||!1,t.metaKey||!1,t.button||0,t.relatedTarget||null),n};e.prototype=Event.prototype,window.MouseEvent=e;}();
+  !function(){try{return new MouseEvent("test")}catch(e$1){}var e=function(e,t){t=t||{bubbles:!1,cancelable:!1};var n=document.createEvent("MouseEvent");return n.initMouseEvent(e,t.bubbles,t.cancelable,window,0,t.screenX||0,t.screenY||0,t.clientX||0,t.clientY||0,t.ctrlKey||!1,t.altKey||!1,t.shiftKey||!1,t.metaKey||!1,t.button||0,t.relatedTarget||null),n};e.prototype=Event.prototype,window.MouseEvent=e;}();
 
   !function(){function t(t,e){e=e||{bubbles:!1,cancelable:!1,detail:void 0};var n=document.createEvent("CustomEvent");return n.initCustomEvent(t,e.bubbles,e.cancelable,e.detail),n}"function"!=typeof window.CustomEvent&&(t.prototype=window.Event.prototype,window.CustomEvent=t);}();
 
@@ -2569,10 +2569,7 @@
           $body.data('_lockscreen_level', --level);
           return;
       }
-      $body
-          .data('_lockscreen_level', 0)
-          .removeClass('mdui-locked')
-          .width('');
+      $body.data('_lockscreen_level', 0).removeClass('mdui-locked').width('');
   };
 
   $.throttle = function (fn, delay) {
@@ -2932,11 +2929,7 @@
    */
   CollapseAbstract.prototype.transitionEnd = function transitionEnd ($content, $item) {
       if (this.isOpen($item)) {
-          $content
-              .transition(0)
-              .height('auto')
-              .reflow()
-              .transition('');
+          $content.transition(0).height('auto').reflow().transition('');
           this.triggerEvent('opened', $item);
       }
       else {
@@ -3203,9 +3196,7 @@
       this.$thRow.find('th').each(function (i, th) {
           var isNumericCol = $(th).hasClass(numericClass);
           this$1.$tdRows.each(function (_, row) {
-              var $td = $(row)
-                  .find('td')
-                  .eq(i);
+              var $td = $(row).find('td').eq(i);
               isNumericCol
                   ? $td.addClass(numericClass)
                   : $td.removeClass(numericClass);
@@ -3573,9 +3564,7 @@
        * 初始化文本框
        */
       mdui.mutation('.mdui-textfield', function () {
-          $(this)
-              .find('.mdui-textfield-input')
-              .trigger('input', {
+          $(this).find('.mdui-textfield-input').trigger('input', {
               domLoadedEvent: true,
           });
       });
@@ -3583,9 +3572,7 @@
   mdui.updateTextFields = function (selector) {
       var $elements = isUndefined(selector) ? $('.mdui-textfield') : $(selector);
       $elements.each(function (_, element) {
-          $(element)
-              .find('.mdui-textfield-input')
-              .trigger('input', {
+          $(element).find('.mdui-textfield-input').trigger('input', {
               reInit: true,
           });
       });
@@ -3641,10 +3628,7 @@
       $slider.find('.mdui-slider-track').remove();
       $slider.find('.mdui-slider-fill').remove();
       $slider.find('.mdui-slider-thumb').remove();
-      $slider
-          .append($track)
-          .append($fill)
-          .append($thumb);
+      $slider.append($track).append($fill).append($thumb);
       // 间续型滑块
       var $thumbText = $();
       if (isDiscrete) {
@@ -3987,9 +3971,7 @@
                   windowHeight);
           }
           // transform 的 Y 轴坐标
-          transformOriginY = (this.selectedIndex * itemHeight +
-              itemHeight / 2 +
-              itemMargin) + "px";
+          transformOriginY = (this.selectedIndex * itemHeight + itemHeight / 2 + itemMargin) + "px";
       }
       // 设置样式
       this.$element.innerWidth(menuWidth);
@@ -4288,6 +4270,8 @@
    * @param parameters
    */
   Tab.prototype.triggerEvent = function triggerEvent (name, $element, parameters) {
+          if ( parameters === void 0 ) parameters = {};
+
       componentEvent(name, 'tab', $element, this, parameters);
   };
   /**
@@ -4543,9 +4527,7 @@
       var swipeAreaWidth = 24;
       function setPosition(translateX) {
           var rtlTranslateMultiplier = that.position === 'right' ? -1 : 1;
-          var transformCSS = "translate(" + (-1 *
-              rtlTranslateMultiplier *
-              translateX) + "px, 0) !important;";
+          var transformCSS = "translate(" + (-1 * rtlTranslateMultiplier * translateX) + "px, 0) !important;";
           var transitionCSS = 'initial !important;';
           that.$element.css('cssText', ("transform: " + transformCSS + "; transition: " + transitionCSS + ";"));
       }
@@ -5023,6 +5005,8 @@
           if (!queue(queueName).length && $overlay) {
               $.hideOverlay();
               $overlay = null;
+              // 若仍存在遮罩，恢复遮罩的 z-index
+              $('.mdui-overlay').css('z-index', 2000);
           }
           this$1.$element
               .removeClass('mdui-dialog-open')
@@ -5372,7 +5356,9 @@
                           if (options.closeOnConfirm) {
                               dialog.close();
                           }
+                          return false;
                       }
+                      return;
                   });
               }
               // 如果是多行输入框，监听输入框的 input 事件，更新对话框高度
@@ -5829,6 +5815,8 @@
       });
   };
   mdui.snackbar = function (message, options) {
+      if ( options === void 0 ) options = {};
+
       if (isString(message)) {
           options.message = message;
       }
@@ -6251,10 +6239,7 @@
               return;
           }
           // 阻止冒泡，点击菜单项时只在最后一级的 mdui-menu-item 上生效，不向上冒泡
-          if (!$target
-              .parents('.mdui-menu-item')
-              .first()
-              .is($item)) {
+          if (!$target.parents('.mdui-menu-item').first().is($item)) {
               return;
           }
           // 当前菜单的子菜单

@@ -1,5 +1,6 @@
 import $ from 'mdui.jq/es/$';
 import { JQ } from 'mdui.jq/es/JQ';
+import PlainObject from 'mdui.jq/es/interfaces/PlainObject';
 import 'mdui.jq/es/methods/trigger';
 
 /**
@@ -14,8 +15,8 @@ function componentEvent(
   eventName: string,
   componentName: string,
   target: HTMLElement | HTMLElement[] | JQ,
-  instance?: object,
-  parameters?: object,
+  instance?: any,
+  parameters?: PlainObject,
 ): void {
   if (!parameters) {
     parameters = {};

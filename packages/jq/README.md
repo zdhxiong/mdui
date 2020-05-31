@@ -62,7 +62,7 @@ import 'promise-polyfill/src/polyfill';
 import $ from 'mdui.jq/es/$';
 
 // 按需导入下面的原型链方法。导入对应的方法后，就能以这样的形式调用：$(document).method()
-// 注意：这些方法都依赖 $，因此导入这些方法前需要先导入 mdui.jq/src/$
+// 注意：这些方法都依赖 $，因此导入这些方法前需要先导入 mdui.jq/es/$
 import 'mdui.jq/es/methods/add';
 import 'mdui.jq/es/methods/addClass';
 import 'mdui.jq/es/methods/after';
@@ -138,7 +138,7 @@ import 'mdui.jq/es/methods/val';
 import 'mdui.jq/es/methods/width';
 
 // 按需导入下面的静态方法。导入对应的方法后，就能以这样的形式调用：$.method()
-// 注意：这些方法都依赖 $，因此导入这些方法前需要先导入 mdui.jq/src/$
+// 注意：这些方法都依赖 $，因此导入这些方法前需要先导入 mdui.jq/es/$
 import 'mdui.jq/es/static/ajax';
 import 'mdui.jq/es/static/ajaxSetup';
 import 'mdui.jq/es/static/contains';

@@ -10,6 +10,10 @@ const serverFactory = require('spa-server');
 
 const arguments = process.argv.splice(2);
 
+delete tsconfig.compilerOptions.declaration;
+delete tsconfig.compilerOptions.declarationDir;
+delete tsconfig.compilerOptions.outDir;
+
 const banner = `
 /*!
  * mdui.jq ${pkg.version} (${pkg.homepage})
@@ -21,7 +25,10 @@ const banner = `
 const input = './src/index.ts';
 
 const plugins = [
-  typescript(tsconfig.compilerOptions),
+  typescript(Object.assign(
+    tsconfig.compilerOptions,
+    { include: './src/**/*' }
+  )),
 ];
 
 const outputOptions = {
@@ -100,6 +107,7 @@ async function test() {
         fix: true,
       }),
       typescript({
+        include: './test/**/*',
         module: "ES6",
         target: "ES6"
       }),
@@ -131,7 +139,7 @@ async function test() {
 }
 
 if (arguments.indexOf('--build') > -1) {
-  build();
+  build().catch(e => console.log(e));
 } else if (arguments.indexOf('--test') > -1) {
   test();
 }

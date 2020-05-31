@@ -154,8 +154,10 @@ function get(
     const doc = toElement(element) as HTMLElement;
 
     return Math.max(
+      // @ts-ignore
       element.body[scrollProp],
       doc[scrollProp],
+      // @ts-ignore
       element.body[offsetProp],
       doc[offsetProp],
       doc[clientProp],

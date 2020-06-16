@@ -24,10 +24,6 @@
 .mdui-divider,
 .mdui-divider-inset {
   background-color: @color-black-divider;
-
-  .mdui-theme-layout-dark & {
-    background-color: @color-white-divider;
-  }
 }
 
 .mdui-divider-light,
@@ -39,3 +35,15 @@
 .mdui-divider-inset-dark {
   background-color: @color-black-divider;
 }
+
+/**
+ * =============================================================================
+ * ************   Divider dark   ************
+ * =============================================================================
+ */
+.layout-theme({
+  .mdui-divider,
+  .mdui-divider-inset {
+    background-color: @color-white-divider;
+  }
+});

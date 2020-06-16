@@ -238,8 +238,7 @@ input.mdui-btn[type="submit"] {
  * ************   Button dark   ************
  * =============================================================================
  */
-.mdui-theme-layout-dark when (@globalLayoutDark = true) {
-
+.layout-theme({
   // 透明按钮 hover、active 时颜色变浅
   .mdui-btn,
   .mdui-fab {
@@ -289,4 +288,4 @@ input.mdui-btn[type="submit"] {
       }
     }
   }
-}
+});

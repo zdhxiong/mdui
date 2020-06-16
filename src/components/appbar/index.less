@@ -100,11 +100,11 @@
  * ************   Appbar dark   ************
  * =============================================================================
  */
-.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+.layout-theme({
   .mdui-appbar {
     &>[class*="mdui-color-"]:not(.mdui-color-transparent) {
       color: #fff !important;
       background-color: @layout-dark-color-2 !important;
     }
   }
-}
+});

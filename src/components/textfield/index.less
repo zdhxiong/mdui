@@ -277,8 +277,7 @@
  * ************   Textfield dark   ************
  * =============================================================================
  */
-.mdui-theme-layout-dark when (@globalLayoutDark = true) {
-
+.layout-theme({
   // 输入框颜色
   .mdui-textfield-input {
     color: #fff;
@@ -356,7 +355,7 @@
       border-bottom-color: rgba(255, 255, 255, .7);
     }
   }
-}
+});
 
 
 /**
@@ -389,23 +388,38 @@
       }
 
       // 暗色主题
-      &.mdui-theme-layout-dark when (@globalLayoutDark = true) {
-        .mdui-textfield-focus {
+      & {
+        .dark-mode() {
+          .mdui-textfield-focus {
 
-          .mdui-textfield-input {
-            border-bottom-color: @@colorA200;
-            box-shadow: 0 1px 0 0 @@colorA200;
+            .mdui-textfield-input {
+              border-bottom-color: @@colorA200;
+              box-shadow: 0 1px 0 0 @@colorA200;
+            }
+
+            .mdui-textfield-label,
+            .mdui-textfield-floating-label.mdui-textfield-focus .mdui-textfield-label,
+            .mdui-icon {
+              color: @@colorA200;
+            }
           }
+        }
 
-          .mdui-textfield-label,
-          .mdui-textfield-floating-label.mdui-textfield-focus .mdui-textfield-label,
-          .mdui-icon {
-            color: @@colorA200;
+        & when (@globalLayoutDark = true) {
+          &.mdui-theme-layout-dark {
+            .dark-mode();
+          }
+        }
+
+        & when (@globalLayoutAuto = true) {
+          @media (prefers-color-scheme: dark) {
+            &.mdui-theme-layout-auto {
+              .dark-mode();
+            }
           }
         }
       }
     }
-
   }
   .loop-accent-theme(length(@globalAccentColors));
 }

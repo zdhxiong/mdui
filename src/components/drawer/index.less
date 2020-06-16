@@ -167,12 +167,11 @@ body.mdui-loaded .mdui-drawer {
  * ************   Drawer dark   ************
  * =============================================================================
  */
-.mdui-theme-layout-dark when (@globalLayoutDark = true) {
-
+.layout-theme({
   // 手机平板上的样式
   @media (max-width: @screen-sm-max) {
     .mdui-drawer {
       background-color: @layout-dark-color-4;
     }
   }
-}
+});

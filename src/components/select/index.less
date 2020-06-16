@@ -274,7 +274,7 @@ select.mdui-select[multiple] {
  * ************   Select dark   ************
  * =============================================================================
  */
-.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+.layout-theme({
   .mdui-select {
     //background-image: data-uri('image/svg+xml', './components/select/svg/arrow_down_light.svg');
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M-.003 2.5l5 5 5-5h-10z' fill='%23FFF'/%3E%3C/svg%3E");
@@ -339,4 +339,4 @@ select.mdui-select[multiple] {
       }
     }
   }
-}
+});

@@ -125,7 +125,7 @@ th.mdui-table-cell-checkbox {
  * ************   Table dark   ************
  * =============================================================================
  */
-.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+.layout-theme({
   .mdui-table {
     background-color: @layout-dark-color-3;
     border: 1px solid @color-white-divider;
@@ -166,4 +166,4 @@ th.mdui-table-cell-checkbox {
   .mdui-table-row-selected {
     background-color: @color-grey-800;
   }
-}
+});

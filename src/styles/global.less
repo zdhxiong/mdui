@@ -23,13 +23,6 @@ body {
   * {
     .mdui-scrollbar-beautify(light);
   }
-
-  // 夜间模式滚动条样式
-  &.mdui-theme-layout-dark {
-    * {
-      .mdui-scrollbar-beautify(dark);
-    }
-  }
 }
 
 /* 锁定屏幕 */
@@ -71,7 +64,12 @@ body.mdui-locked {
  * ************   Global dark   ************
  * =============================================================================
  */
-.mdui-theme-layout-dark when (@globalLayoutDark = true) {
+.layout-theme({
   color: #fff;
   background-color: @layout-dark-color-3;
-}
+
+  // 夜间模式滚动条样式
+  * {
+    .mdui-scrollbar-beautify(dark);
+  }
+});

@@ -2600,7 +2600,8 @@
               .toString(16)
               .substring(1);
       }
-      var guid = s4() +
+      var guid = '_' +
+          s4() +
           s4() +
           '-' +
           s4() +

@@ -2253,7 +2253,8 @@ $.guid = function (name) {
             .toString(16)
             .substring(1);
     }
-    const guid = s4() +
+    const guid = '_' +
+        s4() +
         s4() +
         '-' +
         s4() +

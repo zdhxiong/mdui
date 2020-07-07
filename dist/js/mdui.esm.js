@@ -66,7 +66,7 @@ function toCamelCase(string) {
  * @param string
  */
 function toKebabCase(string) {
-    return string.replace(/[A-Z]/g, replacer => '-' + replacer.toLowerCase());
+    return string.replace(/[A-Z]/g, (replacer) => '-' + replacer.toLowerCase());
 }
 /**
  * 获取元素的样式值
@@ -345,10 +345,7 @@ function parse(type) {
     const parts = type.split('.');
     return {
         type: parts[0],
-        ns: parts
-            .slice(1)
-            .sort()
-            .join(' '),
+        ns: parts.slice(1).sort().join(' '),
     };
 }
 /**
@@ -366,7 +363,7 @@ function matcherFor(ns) {
  */
 function getHandlers(element, type, func, selector) {
     const event = parse(type);
-    return (handlers[getElementId(element)] || []).filter(handler => handler &&
+    return (handlers[getElementId(element)] || []).filter((handler) => handler &&
         (!event.type || handler.type === event.type) &&
         (!event.ns || matcherFor(event.ns).test(handler.ns)) &&
         (!func || getElementId(handler.func) === getElementId(func)) &&
@@ -390,7 +387,7 @@ function add(element, types, func, data, selector) {
     if (isObjectLike(data) && data.useCapture) {
         useCapture = true;
     }
-    types.split(' ').forEach(type => {
+    types.split(' ').forEach((type) => {
         if (!type) {
             return;
         }
@@ -418,7 +415,7 @@ function add(element, types, func, data, selector) {
                     .find(selector)
                     .get()
                     .reverse()
-                    .forEach(elem => {
+                    .forEach((elem) => {
                     if (elem === e.target ||
                         contains(elem, e.target)) {
                         callFn(e, elem);
@@ -456,12 +453,12 @@ function remove(element, types, func, selector) {
         element.removeEventListener(handler.type, handler.proxy, false);
     };
     if (!types) {
-        handlersInElement.forEach(handler => removeEvent(handler));
+        handlersInElement.forEach((handler) => removeEvent(handler));
     }
     else {
-        types.split(' ').forEach(type => {
+        types.split(' ').forEach((type) => {
             if (type) {
-                getHandlers(element, type, func, selector).forEach(handler => removeEvent(handler));
+                getHandlers(element, type, func, selector).forEach((handler) => removeEvent(handler));
             }
         });
     }
@@ -1023,8 +1020,8 @@ function removeData(element, name) {
     else if (isString(name)) {
         name
             .split(' ')
-            .filter(nameItem => nameItem)
-            .forEach(nameItem => remove(nameItem));
+            .filter((nameItem) => nameItem)
+            .forEach((nameItem) => remove(nameItem));
     }
     else {
         each(name, (_, nameItem) => remove(nameItem));
@@ -1073,7 +1070,7 @@ each(['add', 'remove', 'toggle'], (_, name) => {
                 ? className.call(element, i, element.getAttribute('class') || '')
                 : className)
                 .split(' ')
-                .filter(name => name);
+                .filter((name) => name);
             each(classes, (_, cls) => {
                 element.classList[name](cls);
             });
@@ -1248,6 +1245,9 @@ $.fn.is = function (selector) {
     }
     if (isString(selector)) {
         this.each((_, element) => {
+            if (isDocument(element) || isWindow(element)) {
+                return;
+            }
             // @ts-ignore
             const matches = element.matches || element.msMatchesSelector;
             if (matches.call(element, selector)) {
@@ -1291,7 +1291,7 @@ each(['prepend', 'append'], (nameIndex, name) => {
                 : args;
             // 如果不是字符串，则仅第一个元素使用原始元素，其他的都克隆自第一个元素
             if (index) {
-                contents = contents.map(content => {
+                contents = contents.map((content) => {
                     return isString(content) ? content : $(content).clone();
                 });
             }
@@ -1668,7 +1668,11 @@ function get(element, name, funcIndex, includeMargin) {
     // $(document).width()
     if (isDocument(element)) {
         const doc = toElement(element);
-        return Math.max(element.body[scrollProp], doc[scrollProp], element.body[offsetProp], doc[offsetProp], doc[clientProp]);
+        return Math.max(
+        // @ts-ignore
+        element.body[scrollProp], doc[scrollProp], 
+        // @ts-ignore
+        element.body[offsetProp], doc[offsetProp], doc[clientProp]);
     }
     const value = parseFloat(getComputedStyleValue(element, name.toLowerCase()) || '0');
     return handleExtraWidth(element, name, value, funcIndex, includeMargin, 1);
@@ -1739,7 +1743,7 @@ each(['val', 'html', 'text'], (nameIndex, name) => {
         // text() 获取所有元素的文本
         if (nameIndex === 2) {
             // @ts-ignore
-            return map($elements, element => toElement(element)[propName]).join('');
+            return map($elements, (element) => toElement(element)[propName]).join('');
         }
         // 空集合时，val() 和 html() 返回 undefined
         if (!$elements.length) {
@@ -1749,7 +1753,7 @@ each(['val', 'html', 'text'], (nameIndex, name) => {
         const firstElement = $elements[0];
         // select multiple 返回数组
         if (nameIndex === 0 && $(firstElement).is('select[multiple]')) {
-            return map($(firstElement).find('option:checked'), element => element.value);
+            return map($(firstElement).find('option:checked'), (element) => element.value);
         }
         // @ts-ignore
         return firstElement[propName];
@@ -1783,7 +1787,7 @@ each(['val', 'html', 'text'], (nameIndex, name) => {
             if (nameIndex === 0 && Array.isArray(computedValue)) {
                 // select[multiple]
                 if ($(element).is('select[multiple]')) {
-                    map($(element).find('option'), option => (option.selected =
+                    map($(element).find('option'), (option) => (option.selected =
                         computedValue.indexOf(option.value) >
                             -1));
                 }
@@ -1802,16 +1806,10 @@ each(['val', 'html', 'text'], (nameIndex, name) => {
 
 $.fn.index = function (selector) {
     if (!arguments.length) {
-        return this.eq(0)
-            .parent()
-            .children()
-            .get()
-            .indexOf(this[0]);
+        return this.eq(0).parent().children().get().indexOf(this[0]);
     }
     if (isString(selector)) {
-        return $(selector)
-            .get()
-            .indexOf(this[0]);
+        return $(selector).get().indexOf(this[0]);
     }
     return this.get().indexOf($(selector)[0]);
 };
@@ -1948,7 +1946,7 @@ each(['', 'All', 'Until'], (nameIndex, name) => {
 });
 
 $.fn.removeAttr = function (attributeName) {
-    const names = attributeName.split(' ').filter(name => name);
+    const names = attributeName.split(' ').filter((name) => name);
     return this.each(function () {
         each(names, (_, name) => {
             this.removeAttribute(name);
@@ -2014,7 +2012,7 @@ $.fn.serializeArray = function () {
                     element.checked)) {
                 const value = $element.val();
                 const valueArr = Array.isArray(value) ? value : [value];
-                valueArr.forEach(value => {
+                valueArr.forEach((value) => {
                     result.push({
                         name: element.name,
                         value,
@@ -4941,7 +4939,7 @@ mdui.prompt = function (label, title, onConfirm, onCancel, options) {
             }
             // 如果是多行输入框，监听输入框的 input 事件，更新对话框高度
             if (options.type === 'textarea') {
-                $input.on('input', dialog.handleUpdate);
+                $input.on('input', () => dialog.handleUpdate());
             }
             // 有字符数限制时，加载完文本框后 DOM 会变化，需要更新对话框高度
             if (options.maxlength) {

@@ -648,10 +648,7 @@
       var parts = type.split('.');
       return {
           type: parts[0],
-          ns: parts
-              .slice(1)
-              .sort()
-              .join(' '),
+          ns: parts.slice(1).sort().join(' '),
       };
   }
   /**
@@ -1571,6 +1568,9 @@
       }
       if (isString(selector)) {
           this.each(function (_, element) {
+              if (isDocument(element) || isWindow(element)) {
+                  return;
+              }
               // @ts-ignore
               var matches = element.matches || element.msMatchesSelector;
               if (matches.call(element, selector)) {
@@ -2001,7 +2001,11 @@
       // $(document).width()
       if (isDocument(element)) {
           var doc = toElement(element);
-          return Math.max(element.body[scrollProp], doc[scrollProp], element.body[offsetProp], doc[offsetProp], doc[clientProp]);
+          return Math.max(
+          // @ts-ignore
+          element.body[scrollProp], doc[scrollProp], 
+          // @ts-ignore
+          element.body[offsetProp], doc[offsetProp], doc[clientProp]);
       }
       var value = parseFloat(getComputedStyleValue(element, name.toLowerCase()) || '0');
       return handleExtraWidth(element, name, value, funcIndex, includeMargin, 1);
@@ -2135,16 +2139,10 @@
 
   $.fn.index = function (selector) {
       if (!arguments.length) {
-          return this.eq(0)
-              .parent()
-              .children()
-              .get()
-              .indexOf(this[0]);
+          return this.eq(0).parent().children().get().indexOf(this[0]);
       }
       if (isString(selector)) {
-          return $(selector)
-              .get()
-              .indexOf(this[0]);
+          return $(selector).get().indexOf(this[0]);
       }
       return this.get().indexOf($(selector)[0]);
   };
@@ -5364,7 +5362,7 @@
               }
               // 如果是多行输入框，监听输入框的 input 事件，更新对话框高度
               if (options.type === 'textarea') {
-                  $input.on('input', dialog.handleUpdate);
+                  $input.on('input', function () { return dialog.handleUpdate(); });
               }
               // 有字符数限制时，加载完文本框后 DOM 会变化，需要更新对话框高度
               if (options.maxlength) {

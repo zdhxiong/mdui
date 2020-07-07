@@ -219,7 +219,7 @@ mdui.prompt = function (
 
       // 如果是多行输入框，监听输入框的 input 事件，更新对话框高度
       if (options.type === 'textarea') {
-        $input.on('input', dialog.handleUpdate);
+        $input.on('input', () => dialog.handleUpdate());
       }
 
       // 有字符数限制时，加载完文本框后 DOM 会变化，需要更新对话框高度

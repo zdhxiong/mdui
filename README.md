@@ -1,7 +1,6 @@
 # [MDUI](https://mdui.org)
 
 [![GitHub version](https://badge.fury.io/gh/zdhxiong%2Fmdui.svg)](https://badge.fury.io/gh/zdhxiong%2Fmdui)
-![Bower version](https://img.shields.io/bower/v/mdui.svg)
 [![npm version](https://img.shields.io/npm/v/mdui.svg)](https://www.npmjs.com/package/mdui)
 [![dependencies Status](https://david-dm.org/zdhxiong/mdui/status.svg)](https://david-dm.org/zdhxiong/mdui)
 [![devDependencies Status](https://david-dm.org/zdhxiong/mdui/dev-status.svg)](https://david-dm.org/zdhxiong/mdui?type=dev)
@@ -9,8 +8,6 @@
 [![CDNJS](https://img.shields.io/cdnjs/v/mdui.svg)](https://cdnjs.com/libraries/mdui)
 
 MDUI 是一个基于 Material Design 的前端框架。
-
-Note: 当前版本正在开发中，未经过测试，请勿用于生产环境。
 
 QQ群：[635509201](https://jq.qq.com/?_wv=1027&k=53jpYKH)
 
@@ -20,8 +17,8 @@ QQ群：[635509201](https://jq.qq.com/?_wv=1027&k=53jpYKH)
 
 ### 轻量级
 
-- CSS 文件仅 **26.7KB minified + gzip**
-- JavaScript 文件仅 **14KB minified + gzip**
+- CSS 文件仅 **32KB minified + gzip**
+- JavaScript 文件仅 **19KB minified + gzip**
 
 ### 多主题
 
@@ -40,38 +37,28 @@ MDUI 使用纯 JavaScript 编写，没有任何依赖。
 可以通过下列方式获取 MDUI：
 
 - [下载压缩包](https://github.com/zdhxiong/mdui/releases)
-- 从 CDN 获取：
-  - cdnjs: [https://cdnjs.com/libraries/mdui](https://cdnjs.com/libraries/mdui) （国外访问较快）
-  - bootcdn: [http://www.bootcdn.cn/mdui/](http://www.bootcdn.cn/mdui/) （国内访问较快）
+- 从 CDN 获取
+```html
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/mdui@1.0.0/dist/css/mdui.min.css"
+  integrity="sha384-2PJ2u4NYg6jCNNpv3i1hK9AoAqODy6CdiC+gYiL2DVx+ku5wzJMFNdE3RoWfBIRP"
+  crossorigin="anonymous"
+/>
+<script
+  src="https://cdn.jsdelivr.net/npm/mdui@1.0.0/dist/js/mdui.min.js"
+  integrity="sha384-aB8rnkAu/GBsQ1q6dwTySnlrrbhqDwrDnpVHR2Wgm8pWLbwUnzDcIROX3VvCbaK+"
+  crossorigin="anonymous"
+></script>
+```
 - 通过 npm 安装: `npm install mdui`
-- 通过 Bower 安装: `bower install mdui`
 - 从 Github 下载源码: `git clone https://github.com/zdhxiong/mdui.git`
-
-### 目录结构
-
-在压缩包中存在下面的目录和文件：
-
-```
-mdui/
-├── css/
-│   ├── mdui.css
-│   └── mdui.min.css
-├── js/
-│   ├── mdui.js
-│   └── mdui.min.js
-├── fonts/
-│   └── roboto/
-│       └── ...
-└── icons/
-    └── material-icons/
-        └── ...
-```
 
 ## 兼容性
 
 MDUI 在下列浏览器中经过测试
 
-- IE 10+
+- IE 11+
 - 最新版的 Firefox、Chrome、Safari、Edge
 
 ## 赞助

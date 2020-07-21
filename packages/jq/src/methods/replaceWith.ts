@@ -16,7 +16,7 @@ declare module '../JQ' {
      * 可以是 HTML 字符串、DOM 元素、DOM 元素数组、JQ 对象、或回调函数
      *
      * 回调函数的第一个参数为元素的索引位置，第二个参数为当前元素 HTML 字符串，`this` 指向当前元素
-     * @returns 被替换调的元素集
+     * @returns 被替换掉的元素集
      * @example
 ```js
 $('.box').replaceWith('<p>Hello</p>')

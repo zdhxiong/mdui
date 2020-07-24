@@ -8,7 +8,7 @@
 ---------------------------
 * 使用平台：如 Android、iOS、Windows、Linux、MacOS 等
 * 浏览器及版本：如 Chrome 58.0.3029.110 (64-bit)
-* 在线演示：你可以直接在这个模板上编辑：http://jsbin.com/quzokezoko/edit?html,output
+* 在线演示：你可以直接在这个模板上编辑：https://jsbin.com/vukibuhexo/edit?html,output
 
 ### 如何操作
 请在这里详细说明你是如何操作导致的问题

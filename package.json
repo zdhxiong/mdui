@@ -11,7 +11,7 @@
     "eslint": "eslint --fix src/**/*.ts",
     "stylelint": "stylelint --fix src/**/*.less",
     "lint": "npm run eslint && npm run stylelint",
-    "js": "npm run eslint && tsc -p src/tsconfig.json && rollup --config",
+    "js": "npm run eslint && tsc -p src/tsconfig.json --moduleResolution node && rollup --config",
     "css": "npm run stylelint && gulp",
     "build": "npm run js && npm run css"
   },

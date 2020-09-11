@@ -95,12 +95,12 @@ abstract class CollapseAbstract {
   private bindEvent(): void {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
-    const $items = this.getItems();
 
     // 点击 header 时，打开/关闭 item
     this.$element.on('click', `.${this.classHeader}`, function () {
       const $header = $(this as HTMLElement);
       const $item = $header.parent();
+      const $items = that.getItems();
 
       $items.each((_, item) => {
         if ($item.is(item)) {

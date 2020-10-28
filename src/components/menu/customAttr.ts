@@ -28,6 +28,7 @@ $(() => {
     if (!instance) {
       const options = parseOptions(this as HTMLElement, customAttr) as OPTIONS;
       const menuSelector = options.target;
+      // @ts-ignore
       delete options.target;
 
       instance = new mdui.Menu($this, menuSelector, options);

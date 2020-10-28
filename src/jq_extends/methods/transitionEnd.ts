@@ -16,7 +16,7 @@ $('.box').transitionEnd(function() {
 });
 ```
      */
-    transitionEnd(callback: (this: HTMLElement, e: Event) => void): this;
+    transitionEnd(callback: (this: T, e: Event) => void): this;
   }
 }
 

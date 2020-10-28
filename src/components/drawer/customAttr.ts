@@ -19,6 +19,7 @@ $(() => {
     const $element = $(this);
     const options = parseOptions(this, customAttr) as OPTIONS;
     const selector = options.target;
+    // @ts-ignore
     delete options.target;
 
     const $drawer = $(selector).first();

@@ -25,6 +25,7 @@ $(() => {
   $document.on('click', `[${customAttr}]`, function () {
     const options = parseOptions(this as HTMLElement, customAttr) as OPTIONS;
     const selector = options.target;
+    // @ts-ignore
     delete options.target;
 
     const $dialog = $(selector).first();

@@ -1,5 +1,5 @@
 /*!
- * mdui 1.0.0 (https://mdui.org)
+ * mdui 1.0.1 (https://mdui.org)
  * Copyright 2016-2020 zdhxiong
  * Licensed under MIT
  */
@@ -260,13 +260,9 @@ function get$() {
 }
 const $ = get$();
 
-const $document = $(document);
-const $window = $(window);
-const $body = $('body');
-
 // 避免页面加载完后直接执行css动画
 // https://css-tricks.com/transitions-only-after-page-load/
-setTimeout(() => $body.addClass('mdui-loaded'));
+setTimeout(() => $('body').addClass('mdui-loaded'));
 const mdui = {
     $: $,
 };
@@ -2211,6 +2207,7 @@ $.hideOverlay = function (force = false) {
 };
 
 $.lockScreen = function () {
+    const $body = $('body');
     // 不直接把 body 设为 box-sizing: border-box，避免污染全局样式
     const newBodyWidth = $body.width();
     let level = $body.data('_lockscreen_level') || 0;
@@ -2221,6 +2218,7 @@ $.lockScreen = function () {
 };
 
 $.unlockScreen = function (force = false) {
+    const $body = $('body');
     let level = force ? 1 : $body.data('_lockscreen_level');
     if (level > 1) {
         $body.data('_lockscreen_level', --level);
@@ -2313,6 +2311,10 @@ function componentEvent(eventName, componentName, target, instance, parameters) 
     eventObject._detail = parameters;
     $target[0].dispatchEvent(eventObject);
 }
+
+const $document = $(document);
+const $window = $(window);
+const $body = $('body');
 
 const DEFAULT_OPTIONS = {
     tolerance: 5,
@@ -2514,11 +2516,11 @@ class CollapseAbstract {
     bindEvent() {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const that = this;
-        const $items = this.getItems();
         // 点击 header 时，打开/关闭 item
         this.$element.on('click', `.${this.classHeader}`, function () {
             const $header = $(this);
             const $item = $header.parent();
+            const $items = that.getItems();
             $items.each((_, item) => {
                 if ($item.is(item)) {
                     that.toggle(item);
@@ -4107,6 +4109,7 @@ class Drawer {
         let swipeStartX;
         let swiping = null;
         let maybeSwiping = false;
+        const $body = $('body');
         // 手势触发的范围
         const swipeAreaWidth = 24;
         function setPosition(translateX) {
@@ -4259,7 +4262,7 @@ class Drawer {
         this.state = 'opening';
         this.triggerEvent('open');
         if (!this.options.overlay) {
-            $body.addClass(`mdui-drawer-body-${this.position}`);
+            $('body').addClass(`mdui-drawer-body-${this.position}`);
         }
         this.$element
             .removeClass('mdui-drawer-close')
@@ -4281,7 +4284,7 @@ class Drawer {
         this.state = 'closing';
         this.triggerEvent('close');
         if (!this.options.overlay) {
-            $body.removeClass(`mdui-drawer-body-${this.position}`);
+            $('body').removeClass(`mdui-drawer-body-${this.position}`);
         }
         this.$element
             .addClass('mdui-drawer-close')
@@ -4314,6 +4317,7 @@ $(() => {
         const $element = $(this);
         const options = parseOptions(this, customAttr$6);
         const selector = options.target;
+        // @ts-ignore
         delete options.target;
         const $drawer = $(selector).first();
         const instance = new mdui.Drawer($drawer, options);
@@ -4389,7 +4393,7 @@ class Dialog {
         // 如果对话框元素没有在当前文档中，则需要添加
         if (!contains(document.body, this.$element[0])) {
             this.append = true;
-            $body.append(this.$element);
+            $('body').append(this.$element);
         }
         extend(this.options, options);
         // 绑定取消按钮事件
@@ -4651,6 +4655,7 @@ $(() => {
     $document.on('click', `[${customAttr$7}]`, function () {
         const options = parseOptions(this, customAttr$7);
         const selector = options.target;
+        // @ts-ignore
         delete options.target;
         const $dialog = $(selector).first();
         let instance = $dialog.data(dataName$1);
@@ -5958,6 +5963,7 @@ $(() => {
         if (!instance) {
             const options = parseOptions(this, customAttr$9);
             const menuSelector = options.target;
+            // @ts-ignore
             delete options.target;
             instance = new mdui.Menu($this, menuSelector, options);
             $this.data(dataName$3, instance);

@@ -1,5 +1,5 @@
 /*!
- * mdui 1.0.0 (https://mdui.org)
+ * mdui 1.0.1 (https://mdui.org)
  * Copyright 2016-2020 zdhxiong
  * Licensed under MIT
  *//*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -5049,22 +5049,22 @@ body.mdui-locked {
 /* Responsive utilities 响应式工具
    ========================================================================== */
 /* 在特定屏幕的特备上隐藏 */
-@media (max-width: 599px) {
+@media (max-width: 599.9px) {
   .mdui-hidden-xs {
     display: none !important;
   }
 }
-@media (min-width: 600px) and (max-width: 1023px) {
+@media (min-width: 600px) and (max-width: 1023.9px) {
   .mdui-hidden-sm {
     display: none !important;
   }
 }
-@media (min-width: 1024px) and (max-width: 1439px) {
+@media (min-width: 1024px) and (max-width: 1439.9px) {
   .mdui-hidden-md {
     display: none !important;
   }
 }
-@media (min-width: 1440px) and (max-width: 1919px) {
+@media (min-width: 1440px) and (max-width: 1919.9px) {
   .mdui-hidden-lg {
     display: none !important;
   }
@@ -5075,22 +5075,22 @@ body.mdui-locked {
   }
 }
 /* 在比特定屏幕小的设备上隐藏 */
-@media (max-width: 599px) {
+@media (max-width: 599.9px) {
   .mdui-hidden-xs-down {
     display: none !important;
   }
 }
-@media (max-width: 1023px) {
+@media (max-width: 1023.9px) {
   .mdui-hidden-sm-down {
     display: none !important;
   }
 }
-@media (max-width: 1439px) {
+@media (max-width: 1439.9px) {
   .mdui-hidden-md-down {
     display: none !important;
   }
 }
-@media (max-width: 1919px) {
+@media (max-width: 1919.9px) {
   .mdui-hidden-lg-down {
     display: none !important;
   }
@@ -5426,7 +5426,7 @@ body.mdui-locked {
   /* pre */
   /* kbd */
   /* ul / ol */
-  /* img */
+  /* img, video */
 }
 .mdui-typo address,
 .mdui-typo caption,
@@ -5528,7 +5528,7 @@ body.mdui-locked {
   font-weight: 400;
   border-left: 4px solid rgba(0, 0, 0, 0.12);
 }
-@media only screen and (max-width: 599px) {
+@media only screen and (max-width: 599.9px) {
   .mdui-typo blockquote {
     margin: 1em 0;
   }
@@ -5661,7 +5661,8 @@ body.mdui-locked {
 .mdui-typo li ul {
   list-style: circle;
 }
-.mdui-typo img {
+.mdui-typo img,
+.mdui-typo video {
   max-width: 100%;
 }
 .mdui-typo figure {
@@ -6764,7 +6765,7 @@ body.mdui-locked {
             transform: translate3d(0, -64px, 0) !important;
   }
 }
-@media (orientation: landscape) and (max-width: 959px) {
+@media (orientation: landscape) and (max-width: 959.9px) {
   .mdui-headroom-unpinned-toolbar {
     -webkit-transform: translate3d(0, -48px, 0) !important;
             transform: translate3d(0, -48px, 0) !important;
@@ -9418,6 +9419,7 @@ th.mdui-table-cell-checkbox .mdui-checkbox {
 .mdui-slider input[type="range"] {
   position: absolute;
   top: 50%;
+  left: 0;
   z-index: 2;
   width: 100%;
   height: 20px;
@@ -10633,7 +10635,7 @@ select.mdui-select[multiple] option:last-child {
   min-width: 48px;
   height: 48px;
 }
-@media (orientation: landscape) and (max-width: 959px) {
+@media (orientation: landscape) and (max-width: 959.9px) {
   .mdui-toolbar > .mdui-btn-icon {
     width: 40px;
     min-width: 40px;
@@ -10676,7 +10678,7 @@ select.mdui-select[multiple] option:last-child {
     margin-left: 0;
   }
 }
-@media (orientation: landscape) and (max-width: 959px) {
+@media (orientation: landscape) and (max-width: 959.9px) {
   .mdui-appbar .mdui-toolbar {
     height: 48px;
     line-height: 48px;
@@ -10732,7 +10734,7 @@ select.mdui-select[multiple] option:last-child {
     padding-top: 64px;
   }
 }
-@media (orientation: landscape) and (max-width: 959px) {
+@media (orientation: landscape) and (max-width: 959.9px) {
   .mdui-appbar-with-toolbar {
     padding-top: 48px;
   }
@@ -10754,7 +10756,7 @@ select.mdui-select[multiple] option:last-child {
     padding-top: 112px;
   }
 }
-@media (orientation: landscape) and (max-width: 959px) {
+@media (orientation: landscape) and (max-width: 959.9px) {
   .mdui-appbar-with-toolbar.mdui-appbar-with-tab {
     padding-top: 96px;
   }
@@ -10768,7 +10770,7 @@ select.mdui-select[multiple] option:last-child {
     padding-top: 136px;
   }
 }
-@media (orientation: landscape) and (max-width: 959px) {
+@media (orientation: landscape) and (max-width: 959.9px) {
   .mdui-appbar-with-toolbar.mdui-appbar-with-tab-larger {
     padding-top: 120px;
   }
@@ -11139,7 +11141,7 @@ select.mdui-select[multiple] option:last-child {
       -ms-flex: none;
           flex: none;
 }
-@media (max-width: 599px) {
+@media (max-width: 599.9px) {
   .mdui-tab-scrollable {
     padding-left: 60px;
   }
@@ -11797,7 +11799,7 @@ body.mdui-loaded .mdui-drawer {
   will-change: transform;
   -webkit-overflow-scrolling: touch;
 }
-@media (max-width: 1023px) {
+@media (max-width: 1023.9px) {
   .mdui-drawer:not(.mdui-drawer-open) {
     -webkit-box-shadow: none !important;
             box-shadow: none !important;
@@ -11826,7 +11828,7 @@ body.mdui-loaded .mdui-drawer {
   left: auto;
 }
 /* 平板上的样式 */
-@media (max-width: 1023px) {
+@media (max-width: 1023.9px) {
   .mdui-drawer {
     /* 始终有背景和阴影 */
     background-color: #fff;
@@ -11843,7 +11845,7 @@ body.mdui-loaded .mdui-drawer {
   }
 }
 /* 手机上的样式 */
-@media (max-width: 599px) {
+@media (max-width: 599.9px) {
   .mdui-drawer {
     -webkit-transform: translateX(-290px);
             transform: translateX(-290px);
@@ -11927,12 +11929,12 @@ body.mdui-loaded .mdui-drawer {
  * ************   Drawer dark   ************
  * =============================================================================
  */
-@media (max-width: 1023px) {
+@media (max-width: 1023.9px) {
   .mdui-theme-layout-dark .mdui-drawer {
     background-color: #424242;
   }
 }
-@media (prefers-color-scheme: dark) and (max-width: 1023px) {
+@media (prefers-color-scheme: dark) and (max-width: 1023.9px) {
   .mdui-theme-layout-auto .mdui-drawer {
     background-color: #424242;
   }
@@ -13494,7 +13496,7 @@ body.mdui-loaded .mdui-drawer {
 .mdui-menu-cascade {
   width: 320px;
   padding: 16px 0;
-  overflow-y: visible;
+  overflow: visible;
   font-size: 15px;
 }
 .mdui-menu-cascade > .mdui-menu-item > a {

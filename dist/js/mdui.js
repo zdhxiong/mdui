@@ -1,12 +1,12 @@
 /*!
- * mdui 1.0.0 (https://mdui.org)
+ * mdui 1.0.1 (https://mdui.org)
  * Copyright 2016-2020 zdhxiong
  * Licensed under MIT
  */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.mdui = factory());
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.mdui = factory());
 }(this, (function () { 'use strict';
 
   !function(){try{return new MouseEvent("test")}catch(e$1){}var e=function(e,t){t=t||{bubbles:!1,cancelable:!1};var n=document.createEvent("MouseEvent");return n.initMouseEvent(e,t.bubbles,t.cancelable,window,0,t.screenX||0,t.screenY||0,t.clientX||0,t.clientY||0,t.ctrlKey||!1,t.altKey||!1,t.shiftKey||!1,t.metaKey||!1,t.button||0,t.relatedTarget||null),n};e.prototype=Event.prototype,window.MouseEvent=e;}();
@@ -33,6 +33,54 @@
         });
       }
     );
+  }
+
+  function allSettled(arr) {
+    var P = this;
+    return new P(function(resolve, reject) {
+      if (!(arr && typeof arr.length !== 'undefined')) {
+        return reject(
+          new TypeError(
+            typeof arr +
+              ' ' +
+              arr +
+              ' is not iterable(cannot read property Symbol(Symbol.iterator))'
+          )
+        );
+      }
+      var args = Array.prototype.slice.call(arr);
+      if (args.length === 0) { return resolve([]); }
+      var remaining = args.length;
+
+      function res(i, val) {
+        if (val && (typeof val === 'object' || typeof val === 'function')) {
+          var then = val.then;
+          if (typeof then === 'function') {
+            then.call(
+              val,
+              function(val) {
+                res(i, val);
+              },
+              function(e) {
+                args[i] = { status: 'rejected', reason: e };
+                if (--remaining === 0) {
+                  resolve(args);
+                }
+              }
+            );
+            return;
+          }
+        }
+        args[i] = { status: 'fulfilled', value: val };
+        if (--remaining === 0) {
+          resolve(args);
+        }
+      }
+
+      for (var i = 0; i < args.length; i++) {
+        res(i, args[i]);
+      }
+    });
   }
 
   // Store setTimeout reference so promise-polyfill will be unaffected by
@@ -238,6 +286,8 @@
     });
   };
 
+  Promise$1.allSettled = allSettled;
+
   Promise$1.resolve = function(value) {
     if (value && typeof value === 'object' && value.constructor === Promise$1) {
       return value;
@@ -301,10 +351,16 @@
     throw new Error('unable to locate global object');
   })();
 
-  if (!('Promise' in globalNS)) {
+  // Expose the polyfill if Promise is undefined or set to a
+  // non-function value. The latter can be due to a named HTMLElement
+  // being exposed by browsers for legacy reasons.
+  // https://github.com/taylorhakes/promise-polyfill/issues/114
+  if (typeof globalNS['Promise'] !== 'function') {
     globalNS['Promise'] = Promise$1;
   } else if (!globalNS.Promise.prototype['finally']) {
     globalNS.Promise.prototype['finally'] = finallyConstructor;
+  } else if (!globalNS.Promise.allSettled) {
+    globalNS.Promise.allSettled = allSettled;
   }
 
   function isFunction(target) {
@@ -563,13 +619,9 @@
   }
   var $ = get$();
 
-  var $document = $(document);
-  var $window = $(window);
-  var $body = $('body');
-
   // 避免页面加载完后直接执行css动画
   // https://css-tricks.com/transitions-only-after-page-load/
-  setTimeout(function () { return $body.addClass('mdui-loaded'); });
+  setTimeout(function () { return $('body').addClass('mdui-loaded'); });
   var mdui = {
       $: $,
   };
@@ -2550,6 +2602,7 @@
   };
 
   $.lockScreen = function () {
+      var $body = $('body');
       // 不直接把 body 设为 box-sizing: border-box，避免污染全局样式
       var newBodyWidth = $body.width();
       var level = $body.data('_lockscreen_level') || 0;
@@ -2562,6 +2615,7 @@
   $.unlockScreen = function (force) {
       if ( force === void 0 ) force = false;
 
+      var $body = $('body');
       var level = force ? 1 : $body.data('_lockscreen_level');
       if (level > 1) {
           $body.data('_lockscreen_level', --level);
@@ -2660,6 +2714,10 @@
       eventObject._detail = parameters;
       $target[0].dispatchEvent(eventObject);
   }
+
+  var $document = $(document);
+  var $window = $(window);
+  var $body = $('body');
 
   var DEFAULT_OPTIONS = {
       tolerance: 5,
@@ -2872,11 +2930,11 @@
   CollapseAbstract.prototype.bindEvent = function bindEvent () {
       // eslint-disable-next-line @typescript-eslint/no-this-alias
       var that = this;
-      var $items = this.getItems();
       // 点击 header 时，打开/关闭 item
       this.$element.on('click', ("." + (this.classHeader)), function () {
           var $header = $(this);
           var $item = $header.parent();
+          var $items = that.getItems();
           $items.each(function (_, item) {
               if ($item.is(item)) {
                   that.toggle(item);
@@ -4522,6 +4580,7 @@
       var swipeStartX;
       var swiping = null;
       var maybeSwiping = false;
+      var $body = $('body');
       // 手势触发的范围
       var swipeAreaWidth = 24;
       function setPosition(translateX) {
@@ -4676,7 +4735,7 @@
       this.state = 'opening';
       this.triggerEvent('open');
       if (!this.options.overlay) {
-          $body.addClass(("mdui-drawer-body-" + (this.position)));
+          $('body').addClass(("mdui-drawer-body-" + (this.position)));
       }
       this.$element
           .removeClass('mdui-drawer-close')
@@ -4700,7 +4759,7 @@
       this.state = 'closing';
       this.triggerEvent('close');
       if (!this.options.overlay) {
-          $body.removeClass(("mdui-drawer-body-" + (this.position)));
+          $('body').removeClass(("mdui-drawer-body-" + (this.position)));
       }
       this.$element
           .addClass('mdui-drawer-close')
@@ -4732,6 +4791,7 @@
           var $element = $(this);
           var options = parseOptions(this, customAttr$6);
           var selector = options.target;
+          // @ts-ignore
           delete options.target;
           var $drawer = $(selector).first();
           var instance = new mdui.Drawer($drawer, options);
@@ -4809,7 +4869,7 @@
       // 如果对话框元素没有在当前文档中，则需要添加
       if (!contains(document.body, this.$element[0])) {
           this.append = true;
-          $body.append(this.$element);
+          $('body').append(this.$element);
       }
       extend(this.options, options);
       // 绑定取消按钮事件
@@ -5077,6 +5137,7 @@
       $document.on('click', ("[" + customAttr$7 + "]"), function () {
           var options = parseOptions(this, customAttr$7);
           var selector = options.target;
+          // @ts-ignore
           delete options.target;
           var $dialog = $(selector).first();
           var instance = $dialog.data(dataName$1);
@@ -6398,6 +6459,7 @@
           if (!instance) {
               var options = parseOptions(this, customAttr$9);
               var menuSelector = options.target;
+              // @ts-ignore
               delete options.target;
               instance = new mdui.Menu($this, menuSelector, options);
               $this.data(dataName$3, instance);

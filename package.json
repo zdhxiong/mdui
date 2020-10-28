@@ -1,6 +1,6 @@
 {
   "name": "mdui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a CSS Framework based on material design",
   "main": "dist/js/mdui.js",
   "module": "dist/js/mdui.esm.js",

@@ -25,7 +25,7 @@ import '../../jq_extends/static/showOverlay';
 import '../../jq_extends/static/throttle';
 import '../../jq_extends/static/unlockScreen';
 import { componentEvent } from '../../utils/componentEvent';
-import { $body, $window } from '../../utils/dom';
+import { $window } from '../../utils/dom';
 
 declare module '../../interfaces/MduiStatic' {
   interface MduiStatic {
@@ -177,6 +177,7 @@ class Drawer {
     let swipeStartX: number;
     let swiping: null | 'opening' | 'closing' = null;
     let maybeSwiping = false;
+    const $body = $('body');
 
     // 手势触发的范围
     const swipeAreaWidth = 24;
@@ -364,7 +365,7 @@ class Drawer {
     this.triggerEvent('open');
 
     if (!this.options.overlay) {
-      $body.addClass(`mdui-drawer-body-${this.position}`);
+      $('body').addClass(`mdui-drawer-body-${this.position}`);
     }
 
     this.$element
@@ -391,7 +392,7 @@ class Drawer {
     this.triggerEvent('close');
 
     if (!this.options.overlay) {
-      $body.removeClass(`mdui-drawer-body-${this.position}`);
+      $('body').removeClass(`mdui-drawer-body-${this.position}`);
     }
 
     this.$element

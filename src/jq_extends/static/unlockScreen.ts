@@ -2,7 +2,6 @@ import $ from 'mdui.jq/es/$';
 import 'mdui.jq/es/methods/data';
 import 'mdui.jq/es/methods/removeClass';
 import 'mdui.jq/es/methods/width';
-import { $body } from '../../utils/dom';
 
 declare module 'mdui.jq/es/interfaces/JQStatic' {
   interface JQStatic {
@@ -25,6 +24,7 @@ $.unlockScreen(true);
 }
 
 $.unlockScreen = function (force = false): void {
+  const $body = $('body');
   let level = force ? 1 : $body.data('_lockscreen_level');
 
   if (level > 1) {

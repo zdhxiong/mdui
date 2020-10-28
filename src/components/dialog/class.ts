@@ -26,7 +26,7 @@ import '../../jq_extends/static/showOverlay';
 import '../../jq_extends/static/throttle';
 import '../../jq_extends/static/unlockScreen';
 import { componentEvent } from '../../utils/componentEvent';
-import { $body, $window } from '../../utils/dom';
+import { $window } from '../../utils/dom';
 import { dequeue, queue } from '../../utils/queue';
 
 type OPTIONS = {
@@ -129,7 +129,7 @@ class Dialog {
     // 如果对话框元素没有在当前文档中，则需要添加
     if (!contains(document.body, this.$element[0])) {
       this.append = true;
-      $body.append(this.$element);
+      $('body').append(this.$element);
     }
 
     extend(this.options, options);

@@ -4,5 +4,5 @@ import baseConfig from '../web-dev-server.config.mjs';
 export default /** @type {import('@web/dev-server').DevServerConfig} */ ({
   ...baseConfig,
   open: '/',
-  plugins: [...baseConfig.plugins, storybookPlugin({ type: 'web-components' })],
+  plugins: [storybookPlugin({ type: 'web-components' }), ...baseConfig.plugins],
 });

@@ -1,4 +1,52 @@
-# \<mdui-t>
+# mdui
+
+This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
+
+## Installation
+```bash
+npm i mdui-button
+```
+
+### 通过 CDN 引入所有组件
+
+```html
+<script src="https://example.com/index.js"></script>
+```
+
+### 通过 CDN 按需引入所需组件
+
+```html
+<script src="https://example.com/button/index.js"></script>
+<script src="https://example.com/checkbox/index.js"></script>
+```
+
+### ES6 模块中导入所有组件
+
+```js
+import 'mdui';
+```
+
+### ES6 模块中按需导入所需组件
+
+```js
+import 'mdui/button/index.js';
+import 'mdui/checkbox/index.js';
+```
+
+### ES6 中导入模块
+
+```js
+import { MduiButton, MduiCheckbox } from 'mdui';
+```
+
+### CDN 使用 jsdelivr
+
+添加 .min 获取压缩后的版本
+使用 , 分隔，获取合并后的版本
+
+### 注意
+
+dist 目录中的代码不要压缩，交由 jsdelivr 来处理
 
 This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
 

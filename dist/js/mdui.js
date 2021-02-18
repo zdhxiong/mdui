@@ -4429,7 +4429,7 @@
       else {
           this.$tabs.each(function (i, tab) {
               if (tab.id === index) {
-                  this$1.activeIndex === i;
+                  this$1.activeIndex = i;
                   return false;
               }
           });

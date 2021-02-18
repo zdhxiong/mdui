@@ -3961,7 +3961,7 @@ class Tab {
         else {
             this.$tabs.each((i, tab) => {
                 if (tab.id === index) {
-                    this.activeIndex === i;
+                    this.activeIndex = i;
                     return false;
                 }
             });

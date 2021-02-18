@@ -310,7 +310,7 @@ class Tab {
     } else {
       this.$tabs.each((i, tab): void | false => {
         if (tab.id === index) {
-          this.activeIndex === i;
+          this.activeIndex = i;
           return false;
         }
       });

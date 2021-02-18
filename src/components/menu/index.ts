@@ -559,89 +559,91 @@ class Menu {
       let timeout: any = null;
       let timeoutOpen: any = null;
 
-      this.$element.on('mouseover mouseout', '.mdui-menu-item', function (
-        event,
-      ) {
-        const $item = $(this as HTMLElement);
-        const eventType = event.type;
-        const $relatedTarget = $(
-          (event as MouseEvent).relatedTarget as HTMLElement,
-        );
+      this.$element.on(
+        'mouseover mouseout',
+        '.mdui-menu-item',
+        function (event) {
+          const $item = $(this as HTMLElement);
+          const eventType = event.type;
+          const $relatedTarget = $(
+            (event as MouseEvent).relatedTarget as HTMLElement,
+          );
 
-        // 禁用状态的菜单不操作
-        if ($item.attr('disabled') !== undefined) {
-          return;
-        }
-
-        // 用 mouseover 模拟 mouseenter
-        if (eventType === 'mouseover') {
-          if (
-            !$item.is($relatedTarget) &&
-            contains($item[0], $relatedTarget[0])
-          ) {
+          // 禁用状态的菜单不操作
+          if ($item.attr('disabled') !== undefined) {
             return;
           }
-        }
 
-        // 用 mouseout 模拟 mouseleave
-        else if (eventType === 'mouseout') {
-          if (
-            $item.is($relatedTarget) ||
-            contains($item[0], $relatedTarget[0])
-          ) {
-            return;
-          }
-        }
-
-        // 当前菜单项下的子菜单，未必存在
-        const $submenu = $item.children('.mdui-menu');
-
-        // 鼠标移入菜单项时，显示菜单项下的子菜单
-        if (eventType === 'mouseover') {
-          if ($submenu.length) {
-            // 当前子菜单准备打开时，如果当前子菜单正准备着关闭，不用再关闭了
-            const tmpClose = $submenu.data('timeoutClose.mdui.menu');
-            if (tmpClose) {
-              clearTimeout(tmpClose);
-            }
-
-            // 如果当前子菜单已经打开，不操作
-            if ($submenu.hasClass('mdui-menu-open')) {
+          // 用 mouseover 模拟 mouseenter
+          if (eventType === 'mouseover') {
+            if (
+              !$item.is($relatedTarget) &&
+              contains($item[0], $relatedTarget[0])
+            ) {
               return;
             }
-
-            // 当前子菜单准备打开时，其他准备打开的子菜单不用再打开了
-            clearTimeout(timeoutOpen);
-
-            // 准备打开当前子菜单
-            timeout = timeoutOpen = setTimeout(
-              () => that.openSubMenu($submenu),
-              that.options.subMenuDelay,
-            );
-
-            $submenu.data('timeoutOpen.mdui.menu', timeout);
           }
-        }
 
-        // 鼠标移出菜单项时，关闭菜单项下的子菜单
-        else if (eventType === 'mouseout') {
-          if ($submenu.length) {
-            // 鼠标移出菜单项时，如果当前菜单项下的子菜单正准备打开，不用再打开了
-            const tmpOpen = $submenu.data('timeoutOpen.mdui.menu');
-            if (tmpOpen) {
-              clearTimeout(tmpOpen);
+          // 用 mouseout 模拟 mouseleave
+          else if (eventType === 'mouseout') {
+            if (
+              $item.is($relatedTarget) ||
+              contains($item[0], $relatedTarget[0])
+            ) {
+              return;
             }
-
-            // 准备关闭当前子菜单
-            timeout = setTimeout(
-              () => that.closeSubMenu($submenu),
-              that.options.subMenuDelay,
-            );
-
-            $submenu.data('timeoutClose.mdui.menu', timeout);
           }
-        }
-      });
+
+          // 当前菜单项下的子菜单，未必存在
+          const $submenu = $item.children('.mdui-menu');
+
+          // 鼠标移入菜单项时，显示菜单项下的子菜单
+          if (eventType === 'mouseover') {
+            if ($submenu.length) {
+              // 当前子菜单准备打开时，如果当前子菜单正准备着关闭，不用再关闭了
+              const tmpClose = $submenu.data('timeoutClose.mdui.menu');
+              if (tmpClose) {
+                clearTimeout(tmpClose);
+              }
+
+              // 如果当前子菜单已经打开，不操作
+              if ($submenu.hasClass('mdui-menu-open')) {
+                return;
+              }
+
+              // 当前子菜单准备打开时，其他准备打开的子菜单不用再打开了
+              clearTimeout(timeoutOpen);
+
+              // 准备打开当前子菜单
+              timeout = timeoutOpen = setTimeout(
+                () => that.openSubMenu($submenu),
+                that.options.subMenuDelay,
+              );
+
+              $submenu.data('timeoutOpen.mdui.menu', timeout);
+            }
+          }
+
+          // 鼠标移出菜单项时，关闭菜单项下的子菜单
+          else if (eventType === 'mouseout') {
+            if ($submenu.length) {
+              // 鼠标移出菜单项时，如果当前菜单项下的子菜单正准备打开，不用再打开了
+              const tmpOpen = $submenu.data('timeoutOpen.mdui.menu');
+              if (tmpOpen) {
+                clearTimeout(tmpOpen);
+              }
+
+              // 准备关闭当前子菜单
+              timeout = setTimeout(
+                () => that.closeSubMenu($submenu),
+                that.options.subMenuDelay,
+              );
+
+              $submenu.data('timeoutClose.mdui.menu', timeout);
+            }
+          }
+        },
+      );
     }
   }
 

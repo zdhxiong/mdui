@@ -1,6 +1,6 @@
 /*!
  * mdui 1.0.1 (https://mdui.org)
- * Copyright 2016-2020 zdhxiong
+ * Copyright 2016-2021 zdhxiong
  * Licensed under MIT
  */
 (function (global, factory) {
@@ -2717,7 +2717,7 @@
 
   var $document = $(document);
   var $window = $(window);
-  var $body = $('body');
+  $('body');
 
   var DEFAULT_OPTIONS = {
       tolerance: 5,

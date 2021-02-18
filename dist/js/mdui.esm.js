@@ -1,6 +1,6 @@
 /*!
  * mdui 1.0.1 (https://mdui.org)
- * Copyright 2016-2020 zdhxiong
+ * Copyright 2016-2021 zdhxiong
  * Licensed under MIT
  */
 function isFunction(target) {
@@ -2314,7 +2314,7 @@ function componentEvent(eventName, componentName, target, instance, parameters) 
 
 const $document = $(document);
 const $window = $(window);
-const $body = $('body');
+$('body');
 
 const DEFAULT_OPTIONS = {
     tolerance: 5,

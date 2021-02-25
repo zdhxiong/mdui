@@ -1,11 +1,12 @@
-import { html, css, LitElement, property } from 'lit-element';
+import { html, css, LitElement, property, customElement } from 'lit-element';
 
-export class MduiT extends LitElement {
+@customElement('mdui-checkbox')
+export default class MduiCheckbox extends LitElement {
   static styles = css`
     :host {
       display: block;
       padding: 25px;
-      color: var(--mdui-t-text-color, #000);
+      color: var(--mdui-button-text-color, #000);
     }
   `;
 

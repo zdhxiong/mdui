@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
+  <meta name="renderer" content="webkit"/>
+  <meta name="force-rendering" content="webkit"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+</head>
+<body>
+  <div id="demo"></div>
+
+  <script type="module">
+    import { html, render } from 'lit-html';
+    import '../../dist/index.js';
+
+    render(
+      html`
+          <h2>Buttons</h3>
+          <mdui-button>normal</mdui-button>
+          <mdui-button outlined>outlined</mdui-button>
+          <mdui-button raised>raised</mdui-button>
+          <mdui-button disabled>disabled</mdui-button>
+        `,
+      document.querySelector('#demo')
+    );
+  </script>
+</body>
+</html>

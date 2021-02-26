@@ -1,7 +1,6 @@
 import { terser } from 'rollup-plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import alias from '@rollup/plugin-alias';
-import minifyHTML from 'rollup-plugin-minify-html-literals';
 import copy from 'rollup-plugin-copy';
 import pkg from './package.json';
 
@@ -31,7 +30,6 @@ export default [
           replacement: 'node_modules/lit-html/lit-html.js'
         }]
       }),
-      minifyHTML(),
       copy({
         targets: [
           {

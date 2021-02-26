@@ -4,9 +4,24 @@ const path = require('path');
 const postcss = require('postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
+const { minifyHTMLLiterals, defaultMinifyOptions } = require('minify-html-literals');
+
+function traverseDirectory(dir, callback) {
+  const arr = fs.readdirSync(dir);
+
+  arr.forEach(item => {
+    const filePath = path.join(dir, item);
+
+    if (fs.statSync(filePath).isDirectory()) {
+      traverseDirectory(filePath, callback);
+    } else {
+      callback(filePath);
+    }
+  });
+}
 
 function buildLessFile(filePath, optimization = true) {
-  const lessInput = fs.readFileSync(filePath).toString()
+  const lessInput = fs.readFileSync(filePath).toString();
   const lessOptions = { filename: path.resolve(filePath) };
 
   return less
@@ -26,7 +41,7 @@ function buildLessFile(filePath, optimization = true) {
       try {
         fs.statSync(outputDir);
       } catch (err) {
-        fs.mkdirSync(outputDir)
+        fs.mkdirSync(outputDir);
       }
 
       const isToJs = !outputDir.endsWith('styles');
@@ -40,19 +55,29 @@ function buildLessFile(filePath, optimization = true) {
     })
 }
 
-function buildLessDir(dir, optimization = true) {
-  const arr = fs.readdirSync(dir);
+function buildJsFile(filePath, optimization = true) {
+  if (!optimization) {
+    return;
+  }
 
-  arr.forEach(item => {
-    const filePath = path.join(dir, item);
+  const jsInput = fs.readFileSync(filePath).toString();
 
-    if (fs.statSync(filePath).isDirectory()) {
-      buildLessDir(filePath, optimization);
-    } else if (filePath.endsWith('less')) {
-      buildLessFile(filePath, optimization);
-    }
+  const result = minifyHTMLLiterals(jsInput, {
+    fileName: 'render.js',
+    minifyOptions: {
+      ...defaultMinifyOptions,
+      minifyCSS: false
+    },
+    shouldMinifyCSS: () => false
   });
+
+  const outputName = path.resolve(filePath);
+
+  if (result) {
+    fs.writeFileSync(outputName, result.code);
+  }
 }
 
+exports.traverseDirectory = traverseDirectory;
 exports.buildLessFile = buildLessFile;
-exports.buildLessDir = buildLessDir;
+exports.buildJsFile = buildJsFile;

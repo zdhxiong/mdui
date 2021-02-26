@@ -1,16 +1,16 @@
-import { LitElement, html, customElement, CSSResultArray } from 'lit-element';
+import { LitElement, html, customElement } from 'lit-element';
 import ElevationMixin from '../../mixins/elevation.js';
 // @ts-ignore
 import style from './style.js';
 
 @customElement('mdui-surface')
 class MduiSurface extends ElevationMixin(LitElement) {
-  static get styles(): CSSResultArray {
-    return [style];
-  }
+  static styles = style;
 
   render() {
-    return html`<slot></slot>`;
+    return html` <div>
+      <slot></slot>
+    </div>`;
   }
 }
 

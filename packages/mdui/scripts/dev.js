@@ -1,5 +1,5 @@
 const watch = require('node-watch');
-const { buildLessDir, buildLessFile } = require('./utils')
+const { traverseDirectory, buildLessFile, buildJsFile } = require('./utils')
 
 const watchOptions = {
   recursive: true,
@@ -12,7 +12,17 @@ const watchOptions = {
   }
 }
 
-buildLessDir('src', false);
+traverseDirectory('es', filePath => {
+  if (filePath.endsWith('js')) {
+    buildJsFile(filePath, false);
+  }
+})
+
+traverseDirectory('src', filePath => {
+  if (filePath.endsWith('less')) {
+    buildLessFile(filePath, false);
+  }
+})
 
 let updating = false;
 

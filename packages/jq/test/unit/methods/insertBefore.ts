@@ -1,3 +1,4 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 import {
   toTagNameArray,
@@ -6,8 +7,8 @@ import {
   removeSpace,
 } from '../../utils';
 
-describe('.insertBefore()', function() {
-  beforeEach(function() {
+describe('.insertBefore()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <div class="container">
   <h2>Greetings</h2>
@@ -18,13 +19,13 @@ describe('.insertBefore()', function() {
     `);
   });
 
-  it('.insertBefore(selector)', function() {
+  it('.insertBefore(selector)', function () {
     // 创建内容并插入到多个元素前
     const $result = $('<p>Text</p>').insertBefore('.inner');
-    chai.assert.sameOrderedMembers(toTagNameArray($result), ['p', 'p']);
+    assert.sameOrderedMembers(toTagNameArray($result), ['p', 'p']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'h2',
       'p',
       'div',
@@ -33,20 +34,20 @@ describe('.insertBefore()', function() {
     ]);
   });
 
-  it('.insertBefore(selector)', function() {
+  it('.insertBefore(selector)', function () {
     // 选择现有元素插入到另一元素前
     const $result = $('.inner:last-child').insertBefore('.container h2');
-    chai.assert.sameOrderedMembers(toTagNameArray($result), ['div']);
+    assert.sameOrderedMembers(toTagNameArray($result), ['div']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toInnerTextArray($children), [
+    assert.sameOrderedMembers(toInnerTextArray($children), [
       'Goodbye',
       'Greetings',
       'Hello',
     ]);
   });
 
-  it('.insertBefore(selector)', function() {
+  it('.insertBefore(selector)', function () {
     // 选择现有元素插入到多个元素前
     $('#test').html(`
 <div class="container">
@@ -59,10 +60,10 @@ describe('.insertBefore()', function() {
     `);
 
     const $result = $('.p5').insertBefore('.inner');
-    chai.assert.sameOrderedMembers(toClassNameArray($result), ['p5', 'p5']);
+    assert.sameOrderedMembers(toClassNameArray($result), ['p5', 'p5']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toClassNameArray($children), [
+    assert.sameOrderedMembers(toClassNameArray($children), [
       'p1',
       'p5',
       'p2 inner',
@@ -72,7 +73,7 @@ describe('.insertBefore()', function() {
     ]);
   });
 
-  it('.insertBefore(selector)', function() {
+  it('.insertBefore(selector)', function () {
     // 选择多个现有元素插入到多个元素前
     $('#test').html(`
 <div class="container">
@@ -89,7 +90,7 @@ describe('.insertBefore()', function() {
     const $result = $('.outline')
       .data('test_key', 'test_value')
       .insertBefore('.inner');
-    chai.assert.sameOrderedMembers(toClassNameArray($result), [
+    assert.sameOrderedMembers(toClassNameArray($result), [
       'p5 outline',
       'p7 outline',
       'p5 outline',
@@ -97,7 +98,7 @@ describe('.insertBefore()', function() {
     ]);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toClassNameArray($children), [
+    assert.sameOrderedMembers(toClassNameArray($children), [
       'p1',
       'p5 outline',
       'p7 outline',
@@ -109,28 +110,25 @@ describe('.insertBefore()', function() {
       'p6',
     ]);
 
-    chai.assert.equal($children.eq(1).data('test_key'), 'test_value');
-    chai.assert.equal($children.eq(2).data('test_key'), 'test_value');
-    chai.assert.isUndefined($children.eq(3).data('test_key'));
+    assert.equal($children.eq(1).data('test_key'), 'test_value');
+    assert.equal($children.eq(2).data('test_key'), 'test_value');
+    assert.isUndefined($children.eq(3).data('test_key'));
   });
 
-  it('.insertBefore(html)', function() {
+  it('.insertBefore(html)', function () {
     let $result = $('<p>test</p>').insertBefore('<span></span>');
-    chai.assert.sameOrderedMembers(toInnerTextArray($result), ['test']);
+    assert.sameOrderedMembers(toInnerTextArray($result), ['test']);
 
     $result = $('.inner').insertBefore('<span>ff</span>');
-    chai.assert.sameOrderedMembers(toClassNameArray($result), [
-      'inner',
-      'inner',
-    ]);
+    assert.sameOrderedMembers(toClassNameArray($result), ['inner', 'inner']);
   });
 
-  it('.insertBefore(element_jq)', function() {
+  it('.insertBefore(element_jq)', function () {
     const $result = $('<p>test</p>').insertBefore($('.inner'));
-    chai.assert.sameOrderedMembers(toTagNameArray($result), ['p', 'p']);
+    assert.sameOrderedMembers(toTagNameArray($result), ['p', 'p']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'h2',
       'p',
       'div',
@@ -139,7 +137,7 @@ describe('.insertBefore()', function() {
     ]);
   });
 
-  it('.insertAfter(tr)', function() {
+  it('.insertAfter(tr)', function () {
     // 插入特殊元素
     $('#test').html(`
 <table>
@@ -150,7 +148,7 @@ describe('.insertBefore()', function() {
     `);
 
     $('<tr class="first"></tr>').insertBefore('#test .second');
-    chai.assert.equal(
+    assert.equal(
       removeSpace($('#test').html()),
       '<table><tbody><trclass="first"></tr><trclass="second"></tr></tbody></table>',
     );

@@ -1,8 +1,9 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 import { toTagNameArray } from '../../utils';
 
-describe('.add()', function() {
-  beforeEach(function() {
+describe('.add()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <ul>
   <li>list item 1</li>
@@ -14,14 +15,14 @@ describe('.add()', function() {
 `);
   });
 
-  it('.add(selector)', function() {
+  it('.add(selector)', function () {
     let $selected = $('#test li')
       .add('#test p') // CSS 选择器
       .add(document.getElementById('other-paragraph')) // HTMLElement
       .add($('#test span')) // JQ 对象
       .add('<label>test</label>') // HTML 字符串
       .css('background-color', 'red');
-    chai.assert.sameOrderedMembers(toTagNameArray($selected), [
+    assert.sameOrderedMembers(toTagNameArray($selected), [
       'li',
       'li',
       'p',
@@ -30,12 +31,12 @@ describe('.add()', function() {
       'label',
     ]);
 
-    $selected.each(function() {
-      chai.assert.equal(this.style.backgroundColor, 'red');
+    $selected.each(function () {
+      assert.equal(this.style.backgroundColor, 'red');
     });
 
     // 同一个元素不重复添加
     $selected = $selected.add('#test p').add('#test p');
-    chai.assert.lengthOf($selected, 6);
+    assert.lengthOf($selected, 6);
   });
 });

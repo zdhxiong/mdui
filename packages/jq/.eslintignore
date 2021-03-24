@@ -1,7 +1,7 @@
-.vscode/
+.husky/
 .idea/
+.vscode/
 dist/
 es/
 node_modules/
 test/dist.js
-build.js

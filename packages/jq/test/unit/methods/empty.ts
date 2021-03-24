@@ -1,7 +1,8 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('.empty()', function() {
-  beforeEach(function() {
+describe('.empty()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <div id="child">
   <div id="child1">
@@ -17,15 +18,15 @@ describe('.empty()', function() {
     `);
   });
 
-  it('.empty()', function() {
+  it('.empty()', function () {
     const $result = $('#child1').empty();
-    chai.assert.isTrue($result.is('#child1'));
-    chai.assert.lengthOf($('#child1'), 1);
-    chai.assert.lengthOf($('#child1-1'), 0);
-    chai.assert.lengthOf($('#child2'), 1);
+    assert.isTrue($result.is('#child1'));
+    assert.lengthOf($('#child1'), 1);
+    assert.lengthOf($('#child1-1'), 0);
+    assert.lengthOf($('#child2'), 1);
 
     $('#child2 p').empty();
-    chai.assert.lengthOf($('#child2 p'), 2);
-    chai.assert.isEmpty($('#child2 p').html());
+    assert.lengthOf($('#child2 p'), 2);
+    assert.isEmpty($('#child2 p').html());
   });
 });

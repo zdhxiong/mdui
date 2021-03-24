@@ -58,17 +58,17 @@ $.data($elements[0]);
 $.data($elements.get(0), { key1: 'value1', key2: 'value2' });
 
 // each()
-$.each(['a', 'b', 'c'], function(i, value) {
+$.each(['a', 'b', 'c'], function (i, value) {
   console.log(i);
   console.log(value);
 });
 
-$.each($elements, function(i, element) {
+$.each($elements, function (i, element) {
   console.log(i);
   console.log(element);
 });
 
-$.each({ key1: 'value1', key2: 'value2' }, function(key, value) {
+$.each({ key1: 'value1', key2: 'value2' }, function (key, value) {
   console.log(key);
   console.log(value);
 });
@@ -119,10 +119,10 @@ $.extend(
 );
 
 // map()
-$.map(['a', 'b', 'c'], function(value, index) {
+$.map(['a', 'b', 'c'], function (value, index) {
   return [value, index];
 });
-$.map({ key1: 'value1', key2: 'value2' }, function(value, key) {
+$.map({ key1: 'value1', key2: 'value2' }, function (value, key) {
   return [value, key];
 });
 
@@ -161,7 +161,7 @@ $elements.add(querySelectorAll);
 // .addClass()
 $elements.addClass('new');
 $elements.addClass('new1 new2');
-$elements.addClass(function(index, currentClassName) {
+$elements.addClass(function (index, currentClassName) {
   return currentClassName + '-' + index;
 });
 
@@ -174,16 +174,16 @@ $elements.after($elements.get());
 $elements.after($elements.get(), $elements.get());
 $elements.after($elements[0]);
 $elements.after($elements[0], $elements[0]);
-$elements.after(function(index, html) {
+$elements.after(function (index, html) {
   return `<div>${html}-${index}</div>`;
 });
-$elements.after(function() {
+$elements.after(function () {
   return $('<p>new</p>');
 });
-$elements.after(function() {
+$elements.after(function () {
   return $('<p>new</p>').get();
 });
-$elements.after(function() {
+$elements.after(function () {
   return $('<p>new</p>')[0];
 });
 
@@ -204,16 +204,16 @@ $elements.append($elements.get());
 $elements.append($elements.get(), $elements.get());
 $elements.append($elements[0]);
 $elements.append($elements[0], $elements[0]);
-$elements.append(function(index, html) {
+$elements.append(function (index, html) {
   return `<div>${html}-${index}</div>`;
 });
-$elements.append(function() {
+$elements.append(function () {
   return $('<p>new</p>');
 });
-$elements.append(function() {
+$elements.append(function () {
   return $('<p>new</p>').get();
 });
-$elements.append(function() {
+$elements.append(function () {
   return $('<p>new</p>')[0];
 });
 
@@ -229,23 +229,23 @@ $elements.attr('title', 'mdui');
 $elements.attr('title', 123);
 $elements.attr('title', null);
 $elements.attr('title', undefined);
-$elements.attr('title', function(index, oldAttrValue) {
+$elements.attr('title', function (index, oldAttrValue) {
   return oldAttrValue + index;
 });
-$elements.attr('title', function() {
+$elements.attr('title', function () {
   return 123;
 });
-$elements.attr('title', function() {
+$elements.attr('title', function () {
   return;
 });
-$elements.attr('title', function() {
+$elements.attr('title', function () {
   return null;
 });
 
 $elements.attr({
   title: 'mdui',
   label: 123,
-  alt: function() {
+  alt: function () {
     return 'tes';
   },
 });
@@ -261,16 +261,16 @@ $elements.before($elements.get());
 $elements.before($elements.get(), $elements.get());
 $elements.before($elements[0]);
 $elements.before($elements[0], $elements[0]);
-$elements.before(function(index, html) {
+$elements.before(function (index, html) {
   return `<div>${html}-${index}</div>`;
 });
-$elements.before(function() {
+$elements.before(function () {
   return $('<p>new</p>');
 });
-$elements.before(function() {
+$elements.before(function () {
   return $('<p>new</p>').get();
 });
-$elements.before(function() {
+$elements.before(function () {
   return $('<p>new</p>')[0];
 });
 
@@ -290,28 +290,28 @@ $elements.closest($elements[0]);
 $elements.css('width', 100);
 $elements.css('width', '100px');
 $elements.css('width', undefined);
-$elements.css('width', function(_, oldCssValue) {
+$elements.css('width', function (_, oldCssValue) {
   return oldCssValue;
 });
-$elements.css('width', function() {
+$elements.css('width', function () {
   return 100;
 });
-$elements.css('width', function() {
+$elements.css('width', function () {
   return undefined;
 });
-$elements.css('width', function() {
+$elements.css('width', function () {
   return;
 });
 $elements.css({
   width: 100,
   height: '100px',
-  left: function(_, oldCssValue) {
+  left: function (_, oldCssValue) {
     return oldCssValue;
   },
-  top: function() {
+  top: function () {
     return undefined;
   },
-  right: function() {
+  right: function () {
     return;
   },
 });
@@ -320,7 +320,7 @@ $elements.css('width');
 // .data()
 
 // .each()
-$elements.each(function(_, element) {
+$elements.each(function (_, element) {
   return element.title;
 });
 
@@ -334,7 +334,7 @@ $elements.eq(-1);
 
 // .extend()
 $(document).extend({
-  addColor: function() {
+  addColor: function () {
     return '';
   },
 });
@@ -344,7 +344,7 @@ $elements.filter('.tes');
 $elements.filter($elements);
 $elements.filter($elements.get());
 $elements.filter($elements[0]);
-$elements.filter(function() {
+$elements.filter(function () {
   return true;
 });
 
@@ -369,10 +369,10 @@ $elements.hasClass('test');
 // .height()
 $elements.height(100);
 $elements.height('100px');
-$elements.height(function() {
+$elements.height(function () {
   return 100;
 });
-$elements.height(function() {
+$elements.height(function () {
   return '100px';
 });
 $elements.height();
@@ -383,10 +383,10 @@ $elements.hide();
 // .html()
 $elements.html('<p>test</p>');
 $elements.html($elements[0]);
-$elements.html(function(_, oldHTML) {
+$elements.html(function (_, oldHTML) {
   return oldHTML + '<p>test</p>';
 });
-$elements.html(function() {
+$elements.html(function () {
   return undefined;
 });
 $elements.html();
@@ -420,7 +420,7 @@ $elements.is('.test');
 $elements.is($elements[0]);
 $elements.is($elements.get());
 $elements.is($elements);
-$elements.is(function() {
+$elements.is(function () {
   return true;
 });
 
@@ -428,13 +428,13 @@ $elements.is(function() {
 $elements.last();
 
 // .map()
-$elements.map(function(index) {
+$elements.map(function (index) {
   return index;
 });
-$elements.map(function(_, element) {
+$elements.map(function (_, element) {
   return (element as HTMLInputElement).value;
 });
-$elements.map(function() {
+$elements.map(function () {
   return null;
 });
 
@@ -458,7 +458,7 @@ $elements.not('.box');
 $elements.not($elements);
 $elements.not($elements.get());
 $elements.not($elements[0]);
-$elements.not(function() {
+$elements.not(function () {
   return false;
 });
 
@@ -473,7 +473,7 @@ $elements.offset({
   left: 100,
   top: undefined,
 });
-$elements.offset(function() {
+$elements.offset(function () {
   return { left: 100, top: 20 };
 });
 $elements.offset();
@@ -512,16 +512,16 @@ $elements.prepend($elements.get());
 $elements.prepend($elements.get(), $elements.get());
 $elements.prepend($elements[0]);
 $elements.prepend($elements[0], $elements[0]);
-$elements.prepend(function(index, html) {
+$elements.prepend(function (index, html) {
   return `<div>${html}-${index}</div>`;
 });
-$elements.prepend(function() {
+$elements.prepend(function () {
   return $('<p>new</p>');
 });
-$elements.prepend(function() {
+$elements.prepend(function () {
   return $('<p>new</p>').get();
 });
-$elements.prepend(function() {
+$elements.prepend(function () {
   return $('<p>new</p>')[0];
 });
 
@@ -553,23 +553,23 @@ $elements.prop('checked', false);
 $elements.prop('obj', { a: 1, b: 2 });
 $elements.prop('title', null);
 $elements.prop('title', undefined);
-$elements.prop('title', function(index, oldPropValue) {
+$elements.prop('title', function (index, oldPropValue) {
   return oldPropValue + index;
 });
-$elements.prop('title', function() {
+$elements.prop('title', function () {
   return 123;
 });
-$elements.prop('title', function() {
+$elements.prop('title', function () {
   return;
 });
-$elements.prop('title', function() {
+$elements.prop('title', function () {
   return null;
 });
 
 $elements.prop({
   title: 'mdui',
   checked: false,
-  disabled: function() {
+  disabled: function () {
     return false;
   },
 });
@@ -588,7 +588,7 @@ $elements.removeAttr('title label');
 $elements.removeClass();
 $elements.removeClass('new1');
 $elements.removeClass('new1 new2');
-$elements.removeClass(function(index, oldClassName) {
+$elements.removeClass(function (index, oldClassName) {
   return oldClassName + '-' + index;
 });
 
@@ -608,7 +608,7 @@ $elements.replaceWith('<p>Hello</p>');
 $elements.replaceWith($elements);
 $elements.replaceWith($elements.get());
 $elements.replaceWith($elements[0]);
-$elements.replaceWith(function(index, html) {
+$elements.replaceWith(function (index, html) {
   return html + index;
 });
 
@@ -633,7 +633,7 @@ $elements.slice(3, 6);
 $elements.text('new');
 $elements.text(123);
 $elements.text(false);
-$elements.text(function(index, text) {
+$elements.text(function (index, text) {
   return text + index;
 });
 $elements.text();
@@ -644,7 +644,7 @@ $elements.toggle();
 // .toggleClass()
 $elements.toggleClass('item');
 $elements.toggleClass('item1 item2');
-$elements.toggleClass(function(index, oldClassName) {
+$elements.toggleClass(function (index, oldClassName) {
   return oldClassName + index;
 });
 
@@ -654,16 +654,16 @@ $elements.toggleClass(function(index, oldClassName) {
 $elements.val('mdui');
 $elements.val(123);
 $elements.val(['a', 'b']);
-$elements.val(function(index, oldValue) {
+$elements.val(function (index, oldValue) {
   return oldValue + '-' + index;
 });
-$elements.val(function() {
+$elements.val(function () {
   return;
 });
-$elements.val(function() {
+$elements.val(function () {
   return ['a', 'b'];
 });
-$elements.val(function() {
+$elements.val(function () {
   return 123;
 });
 $elements.val();
@@ -671,10 +671,10 @@ $elements.val();
 // .width()
 $elements.width(100);
 $elements.width('100px');
-$elements.width(function() {
+$elements.width(function () {
   return 100;
 });
-$elements.width(function() {
+$elements.width(function () {
   return '100px';
 });
 $elements.width();

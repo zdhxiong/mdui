@@ -1,7 +1,8 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('.nextAll()', function() {
-  beforeEach(function() {
+describe('.nextAll()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <div class="parent">
   <div id="child1-1" class="child"></div>
@@ -23,28 +24,28 @@ describe('.nextAll()', function() {
     `);
   });
 
-  it('.nextAll(selector)', function() {
+  it('.nextAll(selector)', function () {
     let $nexts = $('#test1').nextAll();
-    chai.assert.lengthOf($nexts, 2);
-    chai.assert.isTrue($nexts.eq(0).is('#test2'));
-    chai.assert.isTrue($nexts.eq(1).is('#test3'));
+    assert.lengthOf($nexts, 2);
+    assert.isTrue($nexts.eq(0).is('#test2'));
+    assert.isTrue($nexts.eq(1).is('#test3'));
 
     $nexts = $('#test5').nextAll();
-    chai.assert.lengthOf($nexts, 2);
-    chai.assert.isTrue($nexts.eq(0).is('#test6'));
-    chai.assert.isTrue($nexts.eq(1).is('#test7'));
+    assert.lengthOf($nexts, 2);
+    assert.isTrue($nexts.eq(0).is('#test6'));
+    assert.isTrue($nexts.eq(1).is('#test7'));
 
     $nexts = $('#test5').nextAll('#test7');
-    chai.assert.lengthOf($nexts, 1);
-    chai.assert.isTrue($nexts.eq(0).is('#test7'));
+    assert.lengthOf($nexts, 1);
+    assert.isTrue($nexts.eq(0).is('#test7'));
 
     $nexts = $('.child').nextAll();
-    chai.assert.lengthOf($nexts, 2);
-    chai.assert.isTrue($nexts.eq(0).is('#child1-2'));
-    chai.assert.isTrue($nexts.eq(1).is('#child2-2'));
+    assert.lengthOf($nexts, 2);
+    assert.isTrue($nexts.eq(0).is('#child1-2'));
+    assert.isTrue($nexts.eq(1).is('#child2-2'));
 
     $nexts = $('.child').nextAll('#child2-2');
-    chai.assert.lengthOf($nexts, 1);
-    chai.assert.isTrue($nexts.eq(0).is('#child2-2'));
+    assert.lengthOf($nexts, 1);
+    assert.isTrue($nexts.eq(0).is('#child2-2'));
   });
 });

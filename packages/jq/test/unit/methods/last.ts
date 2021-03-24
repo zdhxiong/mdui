@@ -1,8 +1,9 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 import { toIdArray } from '../../utils';
 
-describe('.last()', function() {
-  beforeEach(function() {
+describe('.last()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <ul>
   <li id="child-1">list item 1</li>
@@ -14,10 +15,10 @@ describe('.last()', function() {
     `);
   });
 
-  it('.last()', function() {
+  it('.last()', function () {
     const $last = $('#test li').last();
-    chai.assert.sameOrderedMembers(toIdArray($last), ['child-5']);
+    assert.sameOrderedMembers(toIdArray($last), ['child-5']);
 
-    chai.assert.lengthOf($('#notfound').last(), 0);
+    assert.lengthOf($('#notfound').last(), 0);
   });
 });

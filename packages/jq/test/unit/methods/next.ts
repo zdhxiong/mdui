@@ -1,8 +1,9 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 import { JQ } from '../../../src/JQ';
 
-describe('.next()', function() {
-  beforeEach(function() {
+describe('.next()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <p id="test1">a</p>
 <div id="test2">b</div>
@@ -24,7 +25,7 @@ describe('.next()', function() {
     `);
   });
 
-  it('.next(selector)', function() {
+  it('.next(selector)', function () {
     function removeSpace($element: JQ<HTMLElement>): string {
       return $element
         .map((_, element) => element.innerText.trim().replace(/[\r\n]/g, ''))
@@ -32,18 +33,18 @@ describe('.next()', function() {
         .join('');
     }
 
-    chai.assert.lengthOf($('#test p').next(), 4);
-    chai.assert.equal(removeSpace($('#test p').next()), 'bdefgeg');
+    assert.lengthOf($('#test p').next(), 4);
+    assert.equal(removeSpace($('#test p').next()), 'bdefgeg');
 
-    chai.assert.lengthOf($('#test4').next('#test6'), 0);
+    assert.lengthOf($('#test4').next('#test6'), 0);
 
-    chai.assert.lengthOf($('#test4').next('#test5'), 1);
-    chai.assert.equal(removeSpace($('#test4').next('#test5')), 'f');
+    assert.lengthOf($('#test4').next('#test5'), 1);
+    assert.equal(removeSpace($('#test4').next('#test5')), 'f');
 
-    chai.assert.lengthOf($('#test4').next(), 1);
-    chai.assert.equal(removeSpace($('#test4').next()), 'f');
+    assert.lengthOf($('#test4').next(), 1);
+    assert.equal(removeSpace($('#test4').next()), 'f');
 
-    chai.assert.lengthOf($('.child').next(), 2);
-    chai.assert.equal(removeSpace($('.child').next()), 'ik');
+    assert.lengthOf($('.child').next(), 2);
+    assert.equal(removeSpace($('.child').next()), 'ik');
   });
 });

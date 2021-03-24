@@ -1,10 +1,11 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 import { toTagNameArray, toInnerTextArray } from '../../utils';
 
-describe('.after()', function() {
+describe('.after()', function () {
   // 和 before() 一样，省略大多数测试
 
-  beforeEach(function() {
+  beforeEach(function () {
     $('#test').html(`
 <div class="container">
   <h2>Greetings</h2>
@@ -15,16 +16,13 @@ describe('.after()', function() {
     `);
   });
 
-  it('.after(html1, html2)', function() {
+  it('.after(html1, html2)', function () {
     const $result = $('.inner').after('<p>test1</p>', '<p>test2</p>');
-    chai.assert.sameOrderedMembers(toTagNameArray($result), ['div', 'div']);
-    chai.assert.sameOrderedMembers(toInnerTextArray($result), [
-      'Hello',
-      'Goodbye',
-    ]);
+    assert.sameOrderedMembers(toTagNameArray($result), ['div', 'div']);
+    assert.sameOrderedMembers(toInnerTextArray($result), ['Hello', 'Goodbye']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'h2',
       'div',
       'p',
@@ -33,7 +31,7 @@ describe('.after()', function() {
       'p',
       'p',
     ]);
-    chai.assert.sameOrderedMembers(toInnerTextArray($children), [
+    assert.sameOrderedMembers(toInnerTextArray($children), [
       'Greetings',
       'Hello',
       'test1',

@@ -1,7 +1,8 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('.hide()', function() {
-  beforeEach(function() {
+describe('.hide()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <style>
   .outline {
@@ -25,7 +26,7 @@ describe('.hide()', function() {
     return window.getComputedStyle(element, null).getPropertyValue('display');
   }
 
-  it('.hide()', function() {
+  it('.hide()', function () {
     const $div = $('.div');
     const $span = $('.span');
     const $outline = $('.outline');
@@ -33,13 +34,13 @@ describe('.hide()', function() {
     //const $important = $('.important');
     const $hidden = $('.hidden');
 
-    chai.assert.equal(getDisplay($div[0]), 'block');
-    chai.assert.equal(getDisplay($div[1]), 'block');
-    chai.assert.equal(getDisplay($span[0]), 'inline');
-    chai.assert.equal(getDisplay($outline[0]), 'block');
-    chai.assert.equal(getDisplay($outlineImportant[0]), 'block');
-    //chai.assert.equal(getDisplay($important[0]), 'block');
-    chai.assert.equal(getDisplay($hidden[0]), 'none');
+    assert.equal(getDisplay($div[0]), 'block');
+    assert.equal(getDisplay($div[1]), 'block');
+    assert.equal(getDisplay($span[0]), 'inline');
+    assert.equal(getDisplay($outline[0]), 'block');
+    assert.equal(getDisplay($outlineImportant[0]), 'block');
+    //assert.equal(getDisplay($important[0]), 'block');
+    assert.equal(getDisplay($hidden[0]), 'none');
 
     const $divResult = $div.hide();
     $span.hide();
@@ -48,13 +49,13 @@ describe('.hide()', function() {
     //$important.hide();
     $hidden.hide();
 
-    chai.assert.deepEqual($divResult, $div);
-    chai.assert.equal(getDisplay($div[0]), 'none');
-    chai.assert.equal(getDisplay($div[1]), 'none');
-    chai.assert.equal(getDisplay($span[0]), 'none');
-    chai.assert.equal(getDisplay($outline[0]), 'none');
-    chai.assert.equal(getDisplay($outlineImportant[0]), 'block');
-    //chai.assert.equal(getDisplay($important[0]), 'none');
-    chai.assert.equal(getDisplay($hidden[0]), 'none');
+    assert.deepEqual($divResult, $div);
+    assert.equal(getDisplay($div[0]), 'none');
+    assert.equal(getDisplay($div[1]), 'none');
+    assert.equal(getDisplay($span[0]), 'none');
+    assert.equal(getDisplay($outline[0]), 'none');
+    assert.equal(getDisplay($outlineImportant[0]), 'block');
+    //assert.equal(getDisplay($important[0]), 'none');
+    assert.equal(getDisplay($hidden[0]), 'none');
   });
 });

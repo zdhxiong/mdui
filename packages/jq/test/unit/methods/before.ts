@@ -1,3 +1,4 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 import {
   toTagNameArray,
@@ -6,8 +7,8 @@ import {
   removeSpace,
 } from '../../utils';
 
-describe('.before()', function() {
-  beforeEach(function() {
+describe('.before()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <div class="container">
   <h2>Greetings</h2>
@@ -18,13 +19,13 @@ describe('.before()', function() {
     `);
   });
 
-  it('.before(html)', function() {
+  it('.before(html)', function () {
     // 单个元素前插入新元素
     const $result = $('.container h2').before('<p>test</p>');
-    chai.assert.sameOrderedMembers(toTagNameArray($result), ['h2']);
+    assert.sameOrderedMembers(toTagNameArray($result), ['h2']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'p',
       'h2',
       'div',
@@ -32,16 +33,16 @@ describe('.before()', function() {
     ]);
   });
 
-  it('.before(html1, html2)', function() {
+  it('.before(html1, html2)', function () {
     // 单个元素前插入多个新元素
     const $result = $('.container h2').before(
       '<span>test</span>',
       '<p>test</p>',
     );
-    chai.assert.sameOrderedMembers(toTagNameArray($result), ['h2']);
+    assert.sameOrderedMembers(toTagNameArray($result), ['h2']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'span',
       'p',
       'h2',
@@ -50,16 +51,13 @@ describe('.before()', function() {
     ]);
   });
 
-  it('.before(html)', function() {
+  it('.before(html)', function () {
     // 多个元素前插入一个新元素
     const $result = $('.inner').before('<p>test</p>');
-    chai.assert.sameOrderedMembers(toClassNameArray($result), [
-      'inner',
-      'inner',
-    ]);
+    assert.sameOrderedMembers(toClassNameArray($result), ['inner', 'inner']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'h2',
       'p',
       'div',
@@ -68,16 +66,13 @@ describe('.before()', function() {
     ]);
   });
 
-  it('.before(html, html)', function() {
+  it('.before(html, html)', function () {
     // 多个元素前插入多个新元素
     const $result = $('.inner').before('<p>test</p>', '<span>test</span>');
-    chai.assert.sameOrderedMembers(toClassNameArray($result), [
-      'inner',
-      'inner',
-    ]);
+    assert.sameOrderedMembers(toClassNameArray($result), ['inner', 'inner']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'h2',
       'p',
       'span',
@@ -88,59 +83,55 @@ describe('.before()', function() {
     ]);
   });
 
-  it('.before(jq)', function() {
+  it('.before(jq)', function () {
     // 一个元素前插入一个现有元素
     const $result = $('.container h2').before($('.inner:last-child'));
-    chai.assert.sameOrderedMembers(toTagNameArray($result), ['h2']);
+    assert.sameOrderedMembers(toTagNameArray($result), ['h2']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
-      'div',
-      'h2',
-      'div',
-    ]);
+    assert.sameOrderedMembers(toTagNameArray($children), ['div', 'h2', 'div']);
   });
 
-  it('.before(jq)', function() {
+  it('.before(jq)', function () {
     // 一个元素前插入多个现有元素
     const $result = $('.container h2').before($('.inner'));
-    chai.assert.sameOrderedMembers(toTagNameArray($result), ['h2']);
+    assert.sameOrderedMembers(toTagNameArray($result), ['h2']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toInnerTextArray($children), [
+    assert.sameOrderedMembers(toInnerTextArray($children), [
       'Hello',
       'Goodbye',
       'Greetings',
     ]);
   });
 
-  it('.before(element, element)', function() {
+  it('.before(element, element)', function () {
     // 一个元素前插入多个现有元素
     const $result = $('.container h2').before($('.inner')[0], $('.inner')[1]);
-    chai.assert.sameOrderedMembers(toTagNameArray($result), ['h2']);
+    assert.sameOrderedMembers(toTagNameArray($result), ['h2']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toInnerTextArray($children), [
+    assert.sameOrderedMembers(toInnerTextArray($children), [
       'Hello',
       'Goodbye',
       'Greetings',
     ]);
   });
 
-  it('.before(element, element)', function() {
+  it('.before(element, element)', function () {
     // 多个元素前插入多个现有元素
     const $selector = $('.container h2').add('.other');
     const $result = $selector.before($('.inner')[0], $('.inner')[1]);
-    chai.assert.sameOrderedMembers(toTagNameArray($result), ['h2', 'div']);
+    assert.sameOrderedMembers(toTagNameArray($result), ['h2', 'div']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toInnerTextArray($children), [
+    assert.sameOrderedMembers(toInnerTextArray($children), [
       'Hello',
       'Goodbye',
       'Greetings',
     ]);
     const $children2 = $('#test').children();
-    chai.assert.sameOrderedMembers(toClassNameArray($children2), [
+    assert.sameOrderedMembers(toClassNameArray($children2), [
       'container',
       'inner',
       'inner',
@@ -148,7 +139,7 @@ describe('.before()', function() {
     ]);
   });
 
-  it('.before(element, element)', function() {
+  it('.before(element, element)', function () {
     // 多个元素前插入多个现有元素
     // 另一个测试
     $('#test').html(`
@@ -162,10 +153,10 @@ describe('.before()', function() {
     `);
     const $selector = $('.container h2');
     const $result = $selector.before($('.inner')[0], $('.inner')[1]);
-    chai.assert.sameOrderedMembers(toTagNameArray($result), ['h2', 'h2']);
+    assert.sameOrderedMembers(toTagNameArray($result), ['h2', 'h2']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toInnerTextArray($children), [
+    assert.sameOrderedMembers(toInnerTextArray($children), [
       'Hello',
       'Goodbye',
       'Greetings',
@@ -175,15 +166,15 @@ describe('.before()', function() {
     ]);
   });
 
-  it('.before(callback)', function() {
+  it('.before(callback)', function () {
     // 单个元素前插入通过函数返回的 html 字符串
-    const $result = $('.container h2').before(function() {
+    const $result = $('.container h2').before(function () {
       return '<p>test</p>';
     });
-    chai.assert.sameOrderedMembers(toTagNameArray($result), ['h2']);
+    assert.sameOrderedMembers(toTagNameArray($result), ['h2']);
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'p',
       'h2',
       'div',
@@ -191,16 +182,16 @@ describe('.before()', function() {
     ]);
   });
 
-  it('.before(callback)', function() {
+  it('.before(callback)', function () {
     // 单个元素前插入通过函数返回的单个元素
 
     // 新元素
-    $('.container h2').before(function() {
+    $('.container h2').before(function () {
       return $('<p>test</p>');
     });
 
     let $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'p',
       'h2',
       'div',
@@ -208,12 +199,12 @@ describe('.before()', function() {
     ]);
 
     // 已有元素
-    $('.container h2').before(function() {
+    $('.container h2').before(function () {
       return $('.container .inner:last-child');
     });
 
     $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'p',
       'div',
       'h2',
@@ -221,16 +212,16 @@ describe('.before()', function() {
     ]);
   });
 
-  it('.before(callback)', function() {
+  it('.before(callback)', function () {
     // 单个元素前插入通过函数返回的多个元素
 
     // 新元素
-    $('.container h2').before(function() {
+    $('.container h2').before(function () {
       return $('<p>test</p><span>test</span>');
     });
 
     let $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'p',
       'span',
       'h2',
@@ -239,11 +230,11 @@ describe('.before()', function() {
     ]);
 
     // 已有元素
-    $('.container span').before(function() {
+    $('.container span').before(function () {
       return $('.container div');
     });
     $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'p',
       'div',
       'div',
@@ -252,14 +243,14 @@ describe('.before()', function() {
     ]);
   });
 
-  it('.before(callback)', function() {
+  it('.before(callback)', function () {
     // 多个元素前插入通过函数返回的 html 字符串
-    $('.inner').before(function() {
+    $('.inner').before(function () {
       return $('<p>test</p><span>test</span>');
     });
 
     const $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'h2',
       'p',
       'span',
@@ -270,16 +261,16 @@ describe('.before()', function() {
     ]);
   });
 
-  it('.before(callback)', function() {
+  it('.before(callback)', function () {
     // 多个元素前插入通过函数返回的单个元素
 
     // 新元素
-    $('.inner').before(function() {
+    $('.inner').before(function () {
       return $('<p>test</p>');
     });
 
     let $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'h2',
       'p',
       'div',
@@ -288,11 +279,11 @@ describe('.before()', function() {
     ]);
 
     // 已有元素
-    $('.inner').before(function() {
+    $('.inner').before(function () {
       return $('.container h2');
     });
     $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'p',
       'div',
       'p',
@@ -301,26 +292,26 @@ describe('.before()', function() {
     ]);
   });
 
-  it('.before(callback)', function() {
+  it('.before(callback)', function () {
     // 多个元素前插入通过函数返回的多个元素
 
     // 新元素
     const _indexs: number[] = [];
     const _htmls: string[] = [];
     const _thisss: HTMLElement[] = [];
-    $('.inner').before(function(index, html) {
+    $('.inner').before(function (index, html) {
       _thisss.push(this);
       _indexs.push(index);
       _htmls.push(html);
 
       return $('<p>test1</p><span>test2</span>');
     });
-    chai.assert.sameOrderedMembers(_indexs, [0, 1]);
-    chai.assert.sameOrderedMembers(_htmls, ['Hello', 'Goodbye']);
-    chai.assert.sameOrderedMembers(_thisss, $('.inner').get());
+    assert.sameOrderedMembers(_indexs, [0, 1]);
+    assert.sameOrderedMembers(_htmls, ['Hello', 'Goodbye']);
+    assert.sameOrderedMembers(_thisss, $('.inner').get());
 
     let $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'h2',
       'p',
       'span',
@@ -331,11 +322,11 @@ describe('.before()', function() {
     ]);
 
     // 已有元素
-    $('.inner').before(function() {
+    $('.inner').before(function () {
       return $('.container span');
     });
     $children = $('.container').children();
-    chai.assert.sameOrderedMembers(toTagNameArray($children), [
+    assert.sameOrderedMembers(toTagNameArray($children), [
       'h2',
       'p',
       'div',
@@ -346,29 +337,29 @@ describe('.before()', function() {
     ]);
   });
 
-  it('.before(text)', function() {
+  it('.before(text)', function () {
     // 插入文本
     $('.inner').before('test');
 
     const text = $('.container').text();
 
-    chai.assert.equal(removeSpace(text), 'GreetingstestHellotestGoodbye');
+    assert.equal(removeSpace(text), 'GreetingstestHellotestGoodbye');
   });
 
-  it('.before(text_callback)', function() {
+  it('.before(text_callback)', function () {
     // 通过回调函数插入文本
-    $('.inner').before(function(index, html) {
+    $('.inner').before(function (index, html) {
       return html + index + 'new';
     });
 
     const text = $('.container').text();
-    chai.assert.equal(
+    assert.equal(
       removeSpace(text),
       'GreetingsHello0newHelloGoodbye1newGoodbye',
     );
   });
 
-  it('.before(tr)', function() {
+  it('.before(tr)', function () {
     // 插入特殊元素
     $('#test').html(`
 <table>
@@ -379,7 +370,7 @@ describe('.before()', function() {
     `);
 
     $('#test .second').before('<tr class="first"></tr>');
-    chai.assert.equal(
+    assert.equal(
       removeSpace($('#test').html()),
       '<table><tbody><trclass="first"></tr><trclass="second"></tr></tbody></table>',
     );

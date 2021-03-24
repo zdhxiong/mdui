@@ -1,7 +1,8 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('.get()', function() {
-  this.beforeEach(function() {
+describe('.get()', function () {
+  this.beforeEach(function () {
     $('#test').html(`
 <div>a</div>
 <div>b</div>
@@ -10,18 +11,18 @@ describe('.get()', function() {
     `);
   });
 
-  it('.get(index)', function() {
+  it('.get(index)', function () {
     const $divs = $('#test div');
 
-    chai.assert.equal($divs.get(1).innerHTML, 'b');
-    chai.assert.isUndefined($divs.get(4));
-    chai.assert.equal($divs.get(-1).innerHTML, 'd');
+    assert.equal($divs.get(1).innerHTML, 'b');
+    assert.isUndefined($divs.get(4));
+    assert.equal($divs.get(-1).innerHTML, 'd');
   });
 
-  it('.get()', function() {
+  it('.get()', function () {
     const ret = $('#test div').get();
-    chai.assert.isArray(ret);
-    chai.assert.lengthOf(ret, 4);
-    chai.assert.equal(ret[2].innerHTML, 'c');
+    assert.isArray(ret);
+    assert.lengthOf(ret, 4);
+    assert.equal(ret[2].innerHTML, 'c');
   });
 });

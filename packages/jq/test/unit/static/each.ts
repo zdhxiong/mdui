@@ -1,10 +1,11 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('$.each', function() {
-  it('$.each(array, callback)', function() {
+describe('$.each', function () {
+  it('$.each(array, callback)', function () {
     const arr = ['a', 'b'];
     const testObj: any[] = [];
-    const result = $.each(arr, function(i, item) {
+    const result = $.each(arr, function (i, item) {
       testObj.push({
         key: i,
         value: item,
@@ -12,8 +13,8 @@ describe('$.each', function() {
       });
     });
 
-    chai.assert.sameOrderedMembers(result as any[], arr);
-    chai.assert.sameDeepOrderedMembers(testObj, [
+    assert.sameOrderedMembers(result as any[], arr);
+    assert.sameDeepOrderedMembers(testObj, [
       {
         key: 0,
         value: 'a',
@@ -28,10 +29,10 @@ describe('$.each', function() {
   });
 
   // 返回 false 停止遍历
-  it('$.each(array, callback)', function() {
+  it('$.each(array, callback)', function () {
     const arr = ['a', 'b'];
     const testObj: any[] = [];
-    const result = $.each(arr, function(i, item) {
+    const result = $.each(arr, function (i, item) {
       testObj.push({
         key: i,
         value: item,
@@ -41,8 +42,8 @@ describe('$.each', function() {
       return false;
     });
 
-    chai.assert.sameOrderedMembers(result as any[], arr);
-    chai.assert.sameDeepOrderedMembers(testObj, [
+    assert.sameOrderedMembers(result as any[], arr);
+    assert.sameDeepOrderedMembers(testObj, [
       {
         key: 0,
         value: 'a',
@@ -51,10 +52,10 @@ describe('$.each', function() {
     ]);
   });
 
-  it('$.each(object, callback)', function() {
+  it('$.each(object, callback)', function () {
     const obj = { a: 'ww', b: 'mdui' };
     const testObj: any[] = [];
-    const result = $.each(obj, function(i, item) {
+    const result = $.each(obj, function (i, item) {
       testObj.push({
         key: i,
         value: item,
@@ -62,8 +63,8 @@ describe('$.each', function() {
       });
     });
 
-    chai.assert.deepEqual(result, obj);
-    chai.assert.sameDeepOrderedMembers(testObj, [
+    assert.deepEqual(result, obj);
+    assert.sameDeepOrderedMembers(testObj, [
       {
         key: 'a',
         value: 'ww',
@@ -78,10 +79,10 @@ describe('$.each', function() {
   });
 
   // 返回 false 停止遍历
-  it('$.each(object, callback)', function() {
+  it('$.each(object, callback)', function () {
     const obj = { a: 'ww', b: 'mdui' };
     const testObj: any[] = [];
-    const result = $.each(obj, function(i, item) {
+    const result = $.each(obj, function (i, item) {
       testObj.push({
         key: i,
         value: item,
@@ -91,8 +92,8 @@ describe('$.each', function() {
       return false;
     });
 
-    chai.assert.deepEqual(result, obj);
-    chai.assert.sameDeepOrderedMembers(testObj, [
+    assert.deepEqual(result, obj);
+    assert.sameDeepOrderedMembers(testObj, [
       {
         key: 'a',
         value: 'ww',

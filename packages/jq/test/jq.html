@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <title>mdui.jq Tests</title>
@@ -11,13 +11,12 @@
 <div id="mocha"></div>
 <div id="test"></div>
 
-<script src="../node_modules/chai/chai.js"></script>
 <script src="../node_modules/mocha/mocha.js"></script>
 <script>mocha.setup('bdd')</script>
 
-<script src="./dist.js"></script>
+<script type="module" src="./index.ts"></script>
 
-<script>
+<script type="module">
   mocha.run();
 </script>
 </body>

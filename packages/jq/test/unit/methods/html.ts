@@ -1,7 +1,8 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('.html()', function() {
-  beforeEach(function() {
+describe('.html()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <div id="div">
   <div class="box">Box</div>
@@ -14,49 +15,49 @@ describe('.html()', function() {
     `);
   });
 
-  it('.html()', function() {
+  it('.html()', function () {
     const $div = $('#div');
 
-    chai.assert.equal($div.find('.box').html(), 'Box');
+    assert.equal($div.find('.box').html(), 'Box');
 
     // 仅获取第一个元素
-    chai.assert.equal($div.find('li').html(), '<span>item 1</span>');
+    assert.equal($div.find('li').html(), '<span>item 1</span>');
 
     // 空集合
-    chai.assert.isUndefined($('#notfound').html());
+    assert.isUndefined($('#notfound').html());
 
     // $(window).html() jquery 会报错，不测试。
 
     // $(document).html() jquery 会报错，不测试。
   });
 
-  it('.html(content)', function() {
+  it('.html(content)', function () {
     const $box = $('#div .box');
     const $lis = $('#div li');
 
     const $boxResult = $box.html('<p>All new content. <em>You bet!</em></p>');
-    chai.assert.deepEqual($boxResult, $box);
-    chai.assert.equal($box.html(), '<p>All new content. <em>You bet!</em></p>');
+    assert.deepEqual($boxResult, $box);
+    assert.equal($box.html(), '<p>All new content. <em>You bet!</em></p>');
 
     $box.html(undefined);
-    chai.assert.equal($box.html(), '<p>All new content. <em>You bet!</em></p>');
+    assert.equal($box.html(), '<p>All new content. <em>You bet!</em></p>');
 
     $lis.html('<p>new li</p>');
-    chai.assert.equal($lis.eq(0).html(), '<p>new li</p>');
-    chai.assert.equal($lis.eq(1).html(), '<p>new li</p>');
-    chai.assert.equal($lis.html(), '<p>new li</p>');
+    assert.equal($lis.eq(0).html(), '<p>new li</p>');
+    assert.equal($lis.eq(1).html(), '<p>new li</p>');
+    assert.equal($lis.html(), '<p>new li</p>');
   });
 
-  it('.html(element)', function() {
+  it('.html(element)', function () {
     const $span = $('#div .span');
     const $lis = $('#div li');
 
     $lis.html($span[0]);
-    chai.assert.equal($lis.eq(0).html(), '<span class="span">Span</span>');
-    chai.assert.equal($lis.eq(1).html(), '<span class="span">Span</span>');
+    assert.equal($lis.eq(0).html(), '<span class="span">Span</span>');
+    assert.equal($lis.eq(1).html(), '<span class="span">Span</span>');
   });
 
-  it('.html(callback)', function() {
+  it('.html(callback)', function () {
     const $box = $('#div .box');
     const $lis = $('#div li');
 
@@ -64,7 +65,7 @@ describe('.html()', function() {
     const _indexs: number[] = [];
     const _oldValues: string[] = [];
 
-    const $lisResult = $lis.html(function(index, oldValue) {
+    const $lisResult = $lis.html(function (index, oldValue) {
       _thisss.push(this);
       _indexs.push(index);
       _oldValues.push(oldValue);
@@ -72,25 +73,25 @@ describe('.html()', function() {
       return `${oldValue}<label>${index}</label>`;
     });
 
-    chai.assert.deepEqual($lisResult, $lis);
-    chai.assert.sameOrderedMembers(_thisss, $lis.get());
-    chai.assert.sameOrderedMembers(_indexs, [0, 1]);
-    chai.assert.sameOrderedMembers(_oldValues, [
+    assert.deepEqual($lisResult, $lis);
+    assert.sameOrderedMembers(_thisss, $lis.get());
+    assert.sameOrderedMembers(_indexs, [0, 1]);
+    assert.sameOrderedMembers(_oldValues, [
       '<span>item 1</span>',
       '<span>item 2</span>',
     ]);
-    chai.assert.equal($lis.html(), '<span>item 1</span><label>0</label>');
-    chai.assert.equal($lis.eq(0).html(), '<span>item 1</span><label>0</label>');
-    chai.assert.equal($lis.eq(1).html(), '<span>item 2</span><label>1</label>');
+    assert.equal($lis.html(), '<span>item 1</span><label>0</label>');
+    assert.equal($lis.eq(0).html(), '<span>item 1</span><label>0</label>');
+    assert.equal($lis.eq(1).html(), '<span>item 2</span><label>1</label>');
 
-    $box.html(function() {
+    $box.html(function () {
       return undefined;
     });
-    chai.assert.equal($box.html(), 'Box');
+    assert.equal($box.html(), 'Box');
 
-    $box.html(function() {
+    $box.html(function () {
       // 不返回
     });
-    chai.assert.equal($box.html(), 'Box');
+    assert.equal($box.html(), 'Box');
   });
 });

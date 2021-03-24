@@ -1,6 +1,7 @@
-describe('.innerWidth()', function() {
+import { assert } from 'chai';
+describe('.innerWidth()', function () {
   // 已在 .width() 方法中测试
-  it('.innerWidth()', function() {
+  it('.innerWidth()', function () {
     return '';
   });
 });

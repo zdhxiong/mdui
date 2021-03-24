@@ -1,9 +1,0 @@
-{
-  "files": [
-	  "dist",
-		"es",
-		"LICENSE",
-		"package.json",
-		"README.md"
-	]
-}

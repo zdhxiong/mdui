@@ -1,7 +1,8 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('.offset()', function() {
-  beforeEach(function() {
+describe('.offset()', function () {
+  beforeEach(function () {
     $('#test')
       .html(
         `
@@ -53,41 +54,41 @@ describe('.offset()', function() {
       .css('overflow', 'hidden');
   });
 
-  it('.offset()', function() {
+  it('.offset()', function () {
     const $fixed = $('#fixed');
     const $absolute = $('#absolute');
     const $childAbsolute = $('#child-absolute');
     const $childStatic = $('#child-static');
 
-    chai.assert.isUndefined($().offset());
-    chai.assert.deepEqual($fixed.offset(), { top: 100, left: 200 });
-    chai.assert.deepEqual($absolute.offset(), { top: 200, left: 300 });
-    chai.assert.deepEqual($childAbsolute.offset(), { top: 150, left: 300 });
-    chai.assert.deepEqual($childStatic.offset(), { top: 100, left: 200 });
+    assert.isUndefined($().offset());
+    assert.deepEqual($fixed.offset(), { top: 100, left: 200 });
+    assert.deepEqual($absolute.offset(), { top: 200, left: 300 });
+    assert.deepEqual($childAbsolute.offset(), { top: 150, left: 300 });
+    assert.deepEqual($childStatic.offset(), { top: 100, left: 200 });
   });
 
-  it('.offset(value)', function() {
+  it('.offset(value)', function () {
     const $fixed = $('#fixed');
     const $childStatic = $('#child-static');
     const $topAuto = $('#top-auto');
 
     $fixed.offset({ top: 50, left: 100 });
-    chai.assert.deepEqual($fixed.offset(), { top: 50, left: 100 });
+    assert.deepEqual($fixed.offset(), { top: 50, left: 100 });
 
     $fixed.offset({ top: 60 });
-    chai.assert.deepEqual($fixed.offset(), { top: 60, left: 100 });
+    assert.deepEqual($fixed.offset(), { top: 60, left: 100 });
 
     $fixed.offset({ left: 80 });
-    chai.assert.deepEqual($fixed.offset(), { top: 60, left: 80 });
+    assert.deepEqual($fixed.offset(), { top: 60, left: 80 });
 
     $childStatic.offset({ top: 20, left: 80 });
-    chai.assert.deepEqual($childStatic.offset(), { top: 20, left: 80 });
+    assert.deepEqual($childStatic.offset(), { top: 20, left: 80 });
 
     $topAuto.offset({ top: 40, left: 60 });
-    chai.assert.deepEqual($topAuto.offset(), { top: 40, left: 60 });
+    assert.deepEqual($topAuto.offset(), { top: 40, left: 60 });
   });
 
-  it('.offset(callback)', function() {
+  it('.offset(callback)', function () {
     interface Coordinates {
       left: number;
       top: number;
@@ -98,7 +99,7 @@ describe('.offset()', function() {
     const _indexs: number[] = [];
     const _oldOffsets: Coordinates[] = [];
 
-    $fixed.offset(function(index, offset) {
+    $fixed.offset(function (index, offset) {
       _thiss.push(this);
       _indexs.push(index);
       _oldOffsets.push(offset);
@@ -109,9 +110,9 @@ describe('.offset()', function() {
       };
     });
 
-    chai.assert.sameOrderedMembers(_thiss, $fixed.get());
-    chai.assert.sameOrderedMembers(_indexs, [0]);
-    chai.assert.deepEqual(_oldOffsets, [{ top: 100, left: 200 }]);
-    chai.assert.deepEqual($fixed.offset(), { top: 120, left: 220 });
+    assert.sameOrderedMembers(_thiss, $fixed.get());
+    assert.sameOrderedMembers(_indexs, [0]);
+    assert.deepEqual(_oldOffsets, [{ top: 100, left: 200 }]);
+    assert.deepEqual($fixed.offset(), { top: 120, left: 220 });
   });
 });

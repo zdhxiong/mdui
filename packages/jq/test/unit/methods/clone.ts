@@ -1,7 +1,8 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('.clone()', function() {
-  beforeEach(function() {
+describe('.clone()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <div class="container">
   <div class="hello">Hello</div>
@@ -12,17 +13,15 @@ describe('.clone()', function() {
     `);
   });
 
-  it('.clone()', function() {
-    $('.hello')
-      .clone()
-      .appendTo('.goodbye');
+  it('.clone()', function () {
+    $('.hello').clone().appendTo('.goodbye');
 
-    chai.assert.lengthOf($('.container').children('.hello'), 1);
+    assert.lengthOf($('.container').children('.hello'), 1);
     const $goodbyeChildren = $('.goodbye').children();
-    chai.assert.lengthOf($goodbyeChildren, 2);
-    chai.assert.equal($goodbyeChildren[0].innerHTML, 'Goodbye');
-    chai.assert.equal($goodbyeChildren[1].innerHTML, 'Hello');
+    assert.lengthOf($goodbyeChildren, 2);
+    assert.equal($goodbyeChildren[0].innerHTML, 'Goodbye');
+    assert.equal($goodbyeChildren[1].innerHTML, 'Hello');
 
-    chai.assert.throw($(window).clone);
+    assert.throw($(window).clone);
   });
 });

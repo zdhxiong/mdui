@@ -1,7 +1,8 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('.serialize()', function() {
-  beforeEach(function() {
+describe('.serialize()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <form id="form">
   <select name="single">
@@ -40,29 +41,29 @@ describe('.serialize()', function() {
     `);
   });
 
-  it('.serialize(): string', function() {
-    chai.assert.equal(
+  it('.serialize(): string', function () {
+    assert.equal(
       $('#form').serialize(),
       'single=Single&multiple=Multiple&multiple=Multiple3&color=%23000040&date=2019-10-19&password=123456&text=text&number=123&range=50&hidden=hide&check=check2&check=check3&radio=radio1',
     );
 
-    chai.assert.equal(
+    assert.equal(
       $('#test input').serialize(),
       'color=%23000040&date=2019-10-19&password=123456&text=text&number=123&range=50&hidden=hide&check=check2&check=check3&radio=radio1&text=text&text=text',
     );
 
-    chai.assert.equal(
+    assert.equal(
       $('#test input[name="check"]').serialize(),
       'check=check2&check=check3',
     );
 
-    chai.assert.equal($().serialize(), '');
+    assert.equal($().serialize(), '');
 
-    chai.assert.deepEqual(
+    assert.deepEqual(
       $('#test input[name="text"]').serialize(),
       'text=text&text=text&text=text',
     );
 
-    chai.assert.deepEqual($('#test .form').serialize(), 'text=text&text=text');
+    assert.deepEqual($('#test .form').serialize(), 'text=text&text=text');
   });
 });

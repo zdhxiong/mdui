@@ -2,8 +2,6 @@
   "extends": "../tsconfig",
   "include": ["./**/*.ts"],
   "compilerOptions": {
-    "declaration": true,
-    "declarationDir": "../es",
-    "outDir": "../es"
+    "types": ["vite/client", "mocha"]
   }
 }

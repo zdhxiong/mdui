@@ -1,8 +1,9 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 import { toIdArray } from '../../utils';
 
-describe('.closest()', function() {
-  beforeEach(function() {
+describe('.closest()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <div id="child1" class="child">
   <div id="child2" class="child">
@@ -14,13 +15,13 @@ describe('.closest()', function() {
     `);
   });
 
-  it('.closest(selector)', function() {
+  it('.closest(selector)', function () {
     // $().closest(selector)
     let $dom = $('#child4').closest('.child');
-    chai.assert.sameOrderedMembers(toIdArray($dom), ['child2']);
+    assert.sameOrderedMembers(toIdArray($dom), ['child2']);
 
     // $().closest(selector) 当前元素已匹配
     $dom = $('#child4').closest('#child4');
-    chai.assert.sameOrderedMembers(toIdArray($dom), ['child4']);
+    assert.sameOrderedMembers(toIdArray($dom), ['child4']);
   });
 });

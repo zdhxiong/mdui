@@ -1,7 +1,8 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('.serializeArray()', function() {
-  beforeEach(function() {
+describe('.serializeArray()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <form id="form">
   <select name="single">
@@ -40,8 +41,8 @@ describe('.serializeArray()', function() {
     `);
   });
 
-  it('.serializeArray()', function() {
-    chai.assert.deepEqual($('#form').serializeArray(), [
+  it('.serializeArray()', function () {
+    assert.deepEqual($('#form').serializeArray(), [
       { name: 'single', value: 'Single' },
       { name: 'multiple', value: 'Multiple' },
       { name: 'multiple', value: 'Multiple3' },
@@ -57,7 +58,7 @@ describe('.serializeArray()', function() {
       { name: 'radio', value: 'radio1' },
     ]);
 
-    chai.assert.deepEqual($('#test input').serializeArray(), [
+    assert.deepEqual($('#test input').serializeArray(), [
       { name: 'color', value: '#000040' },
       { name: 'date', value: '2019-10-19' },
       { name: 'password', value: '123456' },
@@ -72,20 +73,20 @@ describe('.serializeArray()', function() {
       { name: 'text', value: 'text' },
     ]);
 
-    chai.assert.deepEqual($('#test input[name="check"]').serializeArray(), [
+    assert.deepEqual($('#test input[name="check"]').serializeArray(), [
       { name: 'check', value: 'check2' },
       { name: 'check', value: 'check3' },
     ]);
 
-    chai.assert.deepEqual($().serializeArray(), []);
+    assert.deepEqual($().serializeArray(), []);
 
-    chai.assert.deepEqual($('#test input[name="text"]').serializeArray(), [
+    assert.deepEqual($('#test input[name="text"]').serializeArray(), [
       { name: 'text', value: 'text' },
       { name: 'text', value: 'text' },
       { name: 'text', value: 'text' },
     ]);
 
-    chai.assert.deepEqual($('#test .form').serializeArray(), [
+    assert.deepEqual($('#test .form').serializeArray(), [
       { name: 'text', value: 'text' },
       { name: 'text', value: 'text' },
     ]);

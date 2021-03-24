@@ -1,7 +1,8 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('.position()', function() {
-  beforeEach(function() {
+describe('.position()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <div
   style="
@@ -36,13 +37,13 @@ describe('.position()', function() {
     `);
   });
 
-  it('.position()', function() {
+  it('.position()', function () {
     const childPosition = $('#child').position();
-    chai.assert.equal(childPosition.left, 100);
-    chai.assert.equal(childPosition.top, 200);
+    assert.equal(childPosition.left, 100);
+    assert.equal(childPosition.top, 200);
 
     const fixedPosition = $('#fixed').position();
-    chai.assert.equal(fixedPosition.left, 120);
-    chai.assert.equal(fixedPosition.top, 140);
+    assert.equal(fixedPosition.left, 120);
+    assert.equal(fixedPosition.top, 140);
   });
 });

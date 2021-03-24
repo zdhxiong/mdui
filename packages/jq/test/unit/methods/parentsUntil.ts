@@ -1,8 +1,9 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 import { toIdArray, toClassNameArray } from '../../utils';
 
-describe('.parentsUntil()', function() {
-  beforeEach(function() {
+describe('.parentsUntil()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <div id="child1" class="child1">
   <div id="child1-1" class="child2">
@@ -25,42 +26,27 @@ describe('.parentsUntil()', function() {
     `);
   });
 
-  it('.parentsUntil(selector, filter)', function() {
-    chai.assert.sameOrderedMembers(
-      $('#child1-1-2')
-        .parentsUntil()
-        .get(),
-      $('#child1-1-2')
-        .parents()
-        .get(),
+  it('.parentsUntil(selector, filter)', function () {
+    assert.sameOrderedMembers(
+      $('#child1-1-2').parentsUntil().get(),
+      $('#child1-1-2').parents().get(),
     );
 
-    chai.assert.sameOrderedMembers(
-      $('.child3')
-        .parentsUntil()
-        .get(),
-      $('.child3')
-        .parents()
-        .get(),
+    assert.sameOrderedMembers(
+      $('.child3').parentsUntil().get(),
+      $('.child3').parents().get(),
     );
 
-    chai.assert.sameOrderedMembers(
-      $('#child1-1-2')
-        .parentsUntil('#notfound')
-        .get(),
-      $('#child1-1-2')
-        .parents()
-        .get(),
+    assert.sameOrderedMembers(
+      $('#child1-1-2').parentsUntil('#notfound').get(),
+      $('#child1-1-2').parents().get(),
     );
 
     let $parents = $('#child1-1-1').parentsUntil('#child1');
-    chai.assert.sameOrderedMembers(toIdArray($parents), [
-      'child1-11',
-      'child1-1',
-    ]);
+    assert.sameOrderedMembers(toIdArray($parents), ['child1-11', 'child1-1']);
 
     $parents = $('.child3').parentsUntil('.child1');
-    chai.assert.sameOrderedMembers(toIdArray($parents), [
+    assert.sameOrderedMembers(toIdArray($parents), [
       'child2-11',
       'child2-1',
       'child1-11',
@@ -68,21 +54,15 @@ describe('.parentsUntil()', function() {
     ]);
 
     $parents = $('#child1-1-1').parentsUntil('#child1', '.child2');
-    chai.assert.sameOrderedMembers(toClassNameArray($parents), ['child2']);
+    assert.sameOrderedMembers(toClassNameArray($parents), ['child2']);
 
     $parents = $('.child3').parentsUntil('.child1', '.child2');
-    chai.assert.sameOrderedMembers(toClassNameArray($parents), [
-      'child2',
-      'child2',
-    ]);
+    assert.sameOrderedMembers(toClassNameArray($parents), ['child2', 'child2']);
 
     $parents = $('.child3').parentsUntil($('.child2'));
-    chai.assert.sameOrderedMembers(toIdArray($parents), [
-      'child2-11',
-      'child1-11',
-    ]);
+    assert.sameOrderedMembers(toIdArray($parents), ['child2-11', 'child1-11']);
 
     $parents = $('.child3').parentsUntil($('.child2')[0]);
-    chai.assert.lengthOf($parents, 7);
+    assert.lengthOf($parents, 7);
   });
 });

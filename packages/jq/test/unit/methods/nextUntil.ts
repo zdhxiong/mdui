@@ -1,8 +1,9 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 import { toIdArray } from '../../utils';
 
-describe('.nextUntil()', function() {
-  beforeEach(function() {
+describe('.nextUntil()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <p id="test1">test1</p>
 <p id="test2" class="haha">test2</p>
@@ -22,48 +23,40 @@ describe('.nextUntil()', function() {
     `);
   });
 
-  it('.nextUntil(selector, filter)', function() {
-    chai.assert.sameOrderedMembers(
-      $('#test2')
-        .nextUntil()
-        .get(),
-      $('#test2')
-        .nextAll()
-        .get(),
+  it('.nextUntil(selector, filter)', function () {
+    assert.sameOrderedMembers(
+      $('#test2').nextUntil().get(),
+      $('#test2').nextAll().get(),
     );
 
-    chai.assert.sameOrderedMembers(
-      $('#test2')
-        .nextUntil('#notfound')
-        .get(),
-      $('#test2')
-        .nextAll()
-        .get(),
+    assert.sameOrderedMembers(
+      $('#test2').nextUntil('#notfound').get(),
+      $('#test2').nextAll().get(),
     );
 
     let $nexts = $('#test1').nextUntil('#test4');
-    chai.assert.sameOrderedMembers(toIdArray($nexts), ['test2', 'test3']);
+    assert.sameOrderedMembers(toIdArray($nexts), ['test2', 'test3']);
 
     $nexts = $('.first').nextUntil('#child1-4');
-    chai.assert.sameOrderedMembers(toIdArray($nexts), [
+    assert.sameOrderedMembers(toIdArray($nexts), [
       'child1-2',
       'child1-3',
       'child2-2',
     ]);
 
     $nexts = $('#test1').nextUntil('.parent', '.haha');
-    chai.assert.sameOrderedMembers(toIdArray($nexts), ['test2', 'test3']);
+    assert.sameOrderedMembers(toIdArray($nexts), ['test2', 'test3']);
 
     $nexts = $('.first').nextUntil('.last', '#child1-3');
-    chai.assert.sameOrderedMembers(toIdArray($nexts), ['child1-3']);
+    assert.sameOrderedMembers(toIdArray($nexts), ['child1-3']);
 
     $nexts = $('.first').nextUntil('.last', '#notfound');
-    chai.assert.lengthOf($nexts, 0);
+    assert.lengthOf($nexts, 0);
 
     $nexts = $('#test1').nextUntil($('#test4'));
-    chai.assert.sameOrderedMembers(toIdArray($nexts), ['test2', 'test3']);
+    assert.sameOrderedMembers(toIdArray($nexts), ['test2', 'test3']);
 
     $nexts = $('#test1').nextUntil($('#test4')[0]);
-    chai.assert.sameOrderedMembers(toIdArray($nexts), ['test2', 'test3']);
+    assert.sameOrderedMembers(toIdArray($nexts), ['test2', 'test3']);
   });
 });

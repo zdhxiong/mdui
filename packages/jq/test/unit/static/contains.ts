@@ -1,7 +1,8 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('$.contains', function() {
-  beforeEach(function() {
+describe('$.contains', function () {
+  beforeEach(function () {
     $('#test').html(`
 <div id="child">
   <span></span>
@@ -9,24 +10,24 @@ describe('$.contains', function() {
     `);
   });
 
-  it('$.contains(parent, child)', function() {
-    chai.assert.isTrue($.contains(document.documentElement, document.body));
-    chai.assert.isTrue($.contains(document, document.body));
-    chai.assert.isFalse($.contains(document.body, document.documentElement));
-    chai.assert.isFalse($.contains(document.body, document));
-    chai.assert.isFalse(
+  it('$.contains(parent, child)', function () {
+    assert.isTrue($.contains(document.documentElement, document.body));
+    assert.isTrue($.contains(document, document.body));
+    assert.isFalse($.contains(document.body, document.documentElement));
+    assert.isFalse($.contains(document.body, document));
+    assert.isFalse(
       $.contains(document.getElementById('test'), document.documentElement),
     );
-    chai.assert.isTrue(
+    assert.isTrue(
       $.contains(document.documentElement, document.getElementById('test')),
     );
-    chai.assert.isTrue(
+    assert.isTrue(
       $.contains(
         document.getElementById('test'),
         document.getElementById('child'),
       ),
     );
-    chai.assert.isFalse(
+    assert.isFalse(
       $.contains(
         document.getElementById('child'),
         document.getElementById('test'),

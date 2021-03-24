@@ -1,7 +1,8 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('.siblings()', function() {
-  beforeEach(function() {
+describe('.siblings()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <div id="child1" class="child1">
   <div id="child1-1" class="child2">
@@ -14,27 +15,21 @@ describe('.siblings()', function() {
     `);
   });
 
-  it('.siblings()', function() {
-    chai.assert.sameMembers(
-      $('#child1-2')
-        .siblings()
-        .get(),
+  it('.siblings()', function () {
+    assert.sameMembers(
+      $('#child1-2').siblings().get(),
       $('#child1-1, #child1-3').get(),
     );
 
-    chai.assert.sameMembers(
-      $('#child1-1, #child1-3')
-        .siblings()
-        .get(),
+    assert.sameMembers(
+      $('#child1-1, #child1-3').siblings().get(),
       $('.child2').get(),
     );
   });
 
-  it('.siblings(selector)', function() {
-    chai.assert.sameMembers(
-      $('#child1-2')
-        .siblings('#child1-3')
-        .get(),
+  it('.siblings(selector)', function () {
+    assert.sameMembers(
+      $('#child1-2').siblings('#child1-3').get(),
       $('#child1-3').get(),
     );
   });

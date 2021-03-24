@@ -1,7 +1,8 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 
-describe('.map()', function() {
-  beforeEach(function() {
+describe('.map()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <div>a</div>
 <div>b</div>
@@ -10,14 +11,14 @@ describe('.map()', function() {
     `);
   });
 
-  it('.map(callback)', function() {
+  it('.map(callback)', function () {
     const $divs = $('#test div');
 
     const _thiss: HTMLElement[] = [];
     const _indexs: number[] = [];
     const _elements: HTMLElement[] = [];
 
-    const ret = $divs.map(function(i, element) {
+    const ret = $divs.map(function (i, element) {
       _thiss.push(this);
       _indexs.push(i);
       _elements.push(element);
@@ -29,19 +30,19 @@ describe('.map()', function() {
       return element;
     });
 
-    chai.assert.sameOrderedMembers(_thiss, $divs.get());
-    chai.assert.sameOrderedMembers(_indexs, [0, 1, 2, 3]);
-    chai.assert.sameOrderedMembers(_elements, $divs.get());
-    chai.assert.lengthOf(ret, 2);
-    chai.assert.equal(ret.text(), 'ad');
+    assert.sameOrderedMembers(_thiss, $divs.get());
+    assert.sameOrderedMembers(_indexs, [0, 1, 2, 3]);
+    assert.sameOrderedMembers(_elements, $divs.get());
+    assert.lengthOf(ret, 2);
+    assert.equal(ret.text(), 'ad');
 
     // 返回 index
     const ret2 = $divs
-      .map(function(index) {
+      .map(function (index) {
         return [index, index + 1];
       })
       .get()
       .join(',');
-    chai.assert.equal(ret2, '0,1,1,2,2,3,3,4');
+    assert.equal(ret2, '0,1,1,2,2,3,3,4');
   });
 });

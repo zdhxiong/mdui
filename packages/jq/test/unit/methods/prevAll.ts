@@ -1,8 +1,9 @@
+import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
 import { toIdArray } from '../../utils';
 
-describe('.prevAll()', function() {
-  beforeEach(function() {
+describe('.prevAll()', function () {
+  beforeEach(function () {
     $('#test').html(`
 <p id="test1">test1</p>
 <div id="test2">test2</div>
@@ -25,24 +26,24 @@ describe('.prevAll()', function() {
     `);
   });
 
-  it('.prevAll(selector): ', function() {
+  it('.prevAll(selector): ', function () {
     let $prevs = $('#test3').prevAll();
-    chai.assert.sameOrderedMembers(toIdArray($prevs), ['test2', 'test1']);
+    assert.sameOrderedMembers(toIdArray($prevs), ['test2', 'test1']);
 
     $prevs = $('#test6').prevAll();
-    chai.assert.sameOrderedMembers(toIdArray($prevs), ['test5', 'test4']);
+    assert.sameOrderedMembers(toIdArray($prevs), ['test5', 'test4']);
 
     $prevs = $('#test6').prevAll('#test4');
-    chai.assert.sameOrderedMembers(toIdArray($prevs), ['test4']);
+    assert.sameOrderedMembers(toIdArray($prevs), ['test4']);
 
     $prevs = $('.last').prevAll();
-    chai.assert.sameOrderedMembers(toIdArray($prevs), [
+    assert.sameOrderedMembers(toIdArray($prevs), [
       'child2-1',
       'child1-2',
       'child1-1',
     ]);
 
     $prevs = $('.last').prevAll('.first');
-    chai.assert.sameOrderedMembers(toIdArray($prevs), ['child2-1', 'child1-1']);
+    assert.sameOrderedMembers(toIdArray($prevs), ['child2-1', 'child1-1']);
   });
 });

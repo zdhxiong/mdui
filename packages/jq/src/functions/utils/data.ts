@@ -1,3 +1,3 @@
-const dataNS = '_mduiElementDataStorage';
+const weakMap = new WeakMap();
 
-export default dataNS;
+export { weakMap };

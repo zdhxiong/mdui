@@ -1,7 +1,7 @@
 import each from '../functions/each';
 import TypeOrArray from '../types/TypeOrArray';
 import { isUndefined, isString, toCamelCase } from '../utils';
-import dataNS from './utils/data';
+import { weakMap } from './utils/data';
 
 /**
  * 移除指定元素上存放的数据
@@ -37,30 +37,23 @@ function removeData(
   element: Element | Document | Window,
   name?: TypeOrArray<string>,
 ): void {
-  // @ts-ignore
-  if (!element[dataNS]) {
+  const data = weakMap.get(element);
+
+  if (isUndefined(data)) {
     return;
   }
 
   const remove = (nameItem: string): void => {
     nameItem = toCamelCase(nameItem);
-
-    // @ts-ignore
-    if (element[dataNS][nameItem]) {
-      // @ts-ignore
-      element[dataNS][nameItem] = null;
-      // @ts-ignore
-      delete element[dataNS][nameItem];
-    }
+    delete data[nameItem];
   };
 
   if (isUndefined(name)) {
-    // @ts-ignore
-    element[dataNS] = null;
-    // @ts-ignore
-    delete element[dataNS];
-    // @ts-ignore
-  } else if (isString(name)) {
+    weakMap.delete(element);
+    return;
+  }
+
+  if (isString(name)) {
     name
       .split(' ')
       .filter((nameItem) => nameItem)
@@ -68,6 +61,8 @@ function removeData(
   } else {
     each(name, (_, nameItem) => remove(nameItem));
   }
+
+  weakMap.set(element, data);
 }
 
 export default removeData;

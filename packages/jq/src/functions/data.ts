@@ -1,7 +1,15 @@
 import PlainObject from '../interfaces/PlainObject';
 import { isObjectLike, isUndefined, toCamelCase } from '../utils';
 import each from './each';
-import dataNS from './utils/data';
+import { weakMap } from './utils/data';
+
+/**
+ * 获取指定元素上的所有数据
+ * @param element
+ */
+function getDataInElement(element: Element | Document | Window) {
+  return weakMap.get(element) ?? {};
+}
 
 /**
  * 在元素上设置键值对数据
@@ -12,16 +20,13 @@ function setObjectToElement(
   element: Element | Document | Window,
   object: PlainObject,
 ): void {
-  // @ts-ignore
-  if (!element[dataNS]) {
-    // @ts-ignore
-    element[dataNS] = {};
-  }
+  const data = getDataInElement(element);
 
-  each(object, (key, value) => {
-    // @ts-ignore
-    element[dataNS][toCamelCase(key)] = value;
+  each(object, (key: string, value) => {
+    data[toCamelCase(key)] = value;
   });
+
+  weakMap.set(element, data);
 }
 
 /**
@@ -112,7 +117,6 @@ function data(
   // data(element, { 'key' : 'value' })
   if (isObjectLike(key)) {
     setObjectToElement(element, key);
-
     return key;
   }
 
@@ -120,24 +124,23 @@ function data(
   // data(element, 'key', 'value')
   if (!isUndefined(value)) {
     setObjectToElement(element, { [key as string]: value });
-
     return value;
   }
+
+  const data = getDataInElement(element);
 
   // 获取所有值
   // data(element)
   if (isUndefined(key)) {
-    // @ts-ignore
-    return element[dataNS] ? element[dataNS] : {};
+    return data;
   }
 
-  // 从 dataNS 中获取指定值
+  // 获取指定值
   // data(element, 'key')
   key = toCamelCase(key);
-  // @ts-ignore
-  if (element[dataNS] && key in element[dataNS]) {
-    // @ts-ignore
-    return element[dataNS][key];
+
+  if (key in data) {
+    return data[key];
   }
 
   return undefined;

@@ -1,5 +1,5 @@
 import extend from '../functions/extend';
-import AjaxOptions from '../interfaces/AjaxOptions';
+import { AjaxOptions } from '../interfaces/AjaxOptions';
 import { globalOptions } from './utils/ajax';
 
 /**
@@ -13,8 +13,8 @@ ajaxSetup({
 });
 ```
  */
-function ajaxSetup(options: AjaxOptions): AjaxOptions {
+const ajaxSetup = (options: AjaxOptions): AjaxOptions => {
   return extend(globalOptions, options);
-}
+};
 
 export default ajaxSetup;

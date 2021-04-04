@@ -56,11 +56,11 @@ $('<p>Hello</p>').before(function (index, html) {
  * 是否不是 HTML 字符串（包裹在 <> 中）
  * @param target
  */
-function isPlainText(target: string): boolean {
+const isPlainText = (target: string): boolean => {
   return (
     isString(target) && (target[0] !== '<' || target[target.length - 1] !== '>')
   );
-}
+};
 
 each(['before', 'after'], (nameIndex, name) => {
   $.fn[name] = function (this: JQ, ...args: any[]): JQ {

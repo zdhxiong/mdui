@@ -1,5 +1,5 @@
 import $ from '../$';
-import AjaxOptions from '../interfaces/AjaxOptions';
+import { AjaxOptions, AjaxOptionsParams } from '../interfaces/AjaxOptions';
 import '../methods/trigger';
 import {
   CallbackName,
@@ -15,7 +15,13 @@ import { isString, isUndefined } from '../utils';
 import each from './each';
 import extend from './extend';
 import param from './param';
-import { ajaxEvents, globalOptions } from './utils/ajax';
+import {
+  globalOptions,
+  ajaxStart,
+  ajaxSuccess,
+  ajaxError,
+  ajaxComplete,
+} from './utils/ajax';
 
 interface EventParams {
   data?: string;
@@ -27,26 +33,26 @@ interface EventParams {
  * 判断此请求方法是否通过查询字符串提交参数
  * @param method 请求方法，大写
  */
-function isQueryStringData(method: string): boolean {
+const isQueryStringData = (method: string): boolean => {
   return ['GET', 'HEAD'].indexOf(method) >= 0;
-}
+};
 
 /**
  * 添加参数到 URL 上，且 URL 中不存在 ? 时，自动把第一个 & 替换为 ?
  * @param url
  * @param query
  */
-function appendQuery(url: string, query: string): string {
+const appendQuery = (url: string, query: string): string => {
   return `${url}&${query}`.replace(/[&?]{1,2}/, '?');
-}
+};
 
 /**
  * 合并请求参数，参数优先级：options > globalOptions > defaults
  * @param options
  */
-function mergeOptions(options: AjaxOptions): AjaxOptions {
+const mergeOptions = (options: AjaxOptions) => {
   // 默认参数
-  const defaults: AjaxOptions = {
+  const defaults: Required<AjaxOptionsParams> & AjaxOptions = {
     url: '',
     method: 'GET',
     data: '',
@@ -75,13 +81,13 @@ function mergeOptions(options: AjaxOptions): AjaxOptions {
     ];
 
     // @ts-ignore
-    if (callbacks.indexOf(key) < 0 && !isUndefined(value)) {
-      defaults[key] = value;
+    if (!callbacks.includes(key) && !isUndefined(value)) {
+      defaults[key] = value as never;
     }
   });
 
   return extend({}, defaults, options);
-}
+};
 
 /**
  * 发送 ajax 请求
@@ -97,7 +103,7 @@ ajax({
 });
 ```
  */
-function ajax(options: AjaxOptions): Promise<any> {
+const ajax = (options: AjaxOptions): Promise<any> => {
   // 是否已取消请求
   let isCanceled = false;
 
@@ -106,22 +112,23 @@ function ajax(options: AjaxOptions): Promise<any> {
 
   // 参数合并
   const mergedOptions = mergeOptions(options);
-
-  let url = mergedOptions.url! || window.location.toString();
-  const method = mergedOptions.method!.toUpperCase();
-  let data = mergedOptions.data!;
-  const processData = mergedOptions.processData!;
-  const async = mergedOptions.async!;
-  const cache = mergedOptions.cache!;
-  const username = mergedOptions.username!;
-  const password = mergedOptions.password!;
-  const headers = mergedOptions.headers!;
-  const xhrFields = mergedOptions.xhrFields!;
-  const statusCode = mergedOptions.statusCode!;
-  const dataType = mergedOptions.dataType!;
-  const contentType = mergedOptions.contentType!;
-  const timeout = mergedOptions.timeout!;
-  const global = mergedOptions.global!;
+  const method = mergedOptions.method.toUpperCase();
+  let { data, url } = mergedOptions;
+  url = url || window.location.toString();
+  const {
+    processData,
+    async,
+    cache,
+    username,
+    password,
+    headers,
+    xhrFields,
+    statusCode,
+    dataType,
+    contentType,
+    timeout,
+    global,
+  } = mergedOptions;
 
   // 需要发送的数据
   // GET/HEAD 请求和 processData 为 true 时，转换为查询字符串格式，特殊格式不转换
@@ -151,12 +158,12 @@ function ajax(options: AjaxOptions): Promise<any> {
    * @param callback
    * @param args
    */
-  function trigger(
+  const trigger = (
     event: EventName,
     params: EventParams,
     callback: CallbackName,
     ...args: any[]
-  ): void {
+  ): void => {
     // 触发全局事件
     if (global) {
       $(document).trigger(event, params);
@@ -187,10 +194,10 @@ function ajax(options: AjaxOptions): Promise<any> {
         isCanceled = true;
       }
     }
-  }
+  };
 
   // XMLHttpRequest 请求
-  function XHR(): Promise<any> {
+  const XHR = (): Promise<any> => {
     let textStatus: TextStatus;
 
     return new Promise((resolve, reject): void => {
@@ -247,7 +254,7 @@ function ajax(options: AjaxOptions): Promise<any> {
 
       let xhrTimeout: any;
 
-      xhr.onload = function (): void {
+      xhr.onload = (): void => {
         if (xhrTimeout) {
           clearTimeout(xhrTimeout);
         }
@@ -277,20 +284,14 @@ function ajax(options: AjaxOptions): Promise<any> {
             } catch (err) {
               textStatus = 'parsererror';
 
-              trigger(
-                ajaxEvents.ajaxError,
-                eventParams,
-                'error',
-                xhr,
-                textStatus,
-              );
+              trigger(ajaxError, eventParams, 'error', xhr, textStatus);
 
               reject(new Error(textStatus));
             }
 
             if (textStatus !== 'parsererror') {
               trigger(
-                ajaxEvents.ajaxSuccess,
+                ajaxSuccess,
                 eventParams,
                 'success',
                 responseData,
@@ -310,7 +311,7 @@ function ajax(options: AjaxOptions): Promise<any> {
             eventParams.data = responseData;
 
             trigger(
-              ajaxEvents.ajaxSuccess,
+              ajaxSuccess,
               eventParams,
               'success',
               responseData,
@@ -323,7 +324,7 @@ function ajax(options: AjaxOptions): Promise<any> {
         } else {
           textStatus = 'error';
 
-          trigger(ajaxEvents.ajaxError, eventParams, 'error', xhr, textStatus);
+          trigger(ajaxError, eventParams, 'error', xhr, textStatus);
 
           reject(new Error(textStatus));
         }
@@ -349,33 +350,21 @@ function ajax(options: AjaxOptions): Promise<any> {
           },
         );
 
-        trigger(
-          ajaxEvents.ajaxComplete,
-          eventParams,
-          'complete',
-          xhr,
-          textStatus,
-        );
+        trigger(ajaxComplete, eventParams, 'complete', xhr, textStatus);
       };
 
-      xhr.onerror = function (): void {
+      xhr.onerror = (): void => {
         if (xhrTimeout) {
           clearTimeout(xhrTimeout);
         }
 
-        trigger(
-          ajaxEvents.ajaxError,
-          eventParams,
-          'error',
-          xhr,
-          xhr.statusText,
-        );
-        trigger(ajaxEvents.ajaxComplete, eventParams, 'complete', xhr, 'error');
+        trigger(ajaxError, eventParams, 'error', xhr, xhr.statusText);
+        trigger(ajaxComplete, eventParams, 'complete', xhr, 'error');
 
         reject(new Error(xhr.statusText));
       };
 
-      xhr.onabort = function (): void {
+      xhr.onabort = (): void => {
         let statusText: ErrorTextStatus = 'abort';
 
         if (xhrTimeout) {
@@ -383,20 +372,14 @@ function ajax(options: AjaxOptions): Promise<any> {
           clearTimeout(xhrTimeout);
         }
 
-        trigger(ajaxEvents.ajaxError, eventParams, 'error', xhr, statusText);
-        trigger(
-          ajaxEvents.ajaxComplete,
-          eventParams,
-          'complete',
-          xhr,
-          statusText,
-        );
+        trigger(ajaxError, eventParams, 'error', xhr, statusText);
+        trigger(ajaxComplete, eventParams, 'complete', xhr, statusText);
 
         reject(new Error(statusText));
       };
 
       // ajax start 回调
-      trigger(ajaxEvents.ajaxStart, eventParams, 'beforeSend', xhr);
+      trigger(ajaxStart, eventParams, 'beforeSend', xhr);
 
       if (isCanceled) {
         reject(new Error('cancel'));
@@ -414,9 +397,9 @@ function ajax(options: AjaxOptions): Promise<any> {
       // 发送 XHR
       xhr.send(data);
     });
-  }
+  };
 
   return XHR();
-}
+};
 
 export default ajax;

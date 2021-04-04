@@ -10,12 +10,12 @@ merge( [ 0, 1, 2 ], [ 2, 3, 4 ] )
 // [ 0, 1, 2, 2, 3, 4 ]
 ```
  */
-function merge<T, U>(first: T[], second: U[]): Array<T | U> {
+const merge = <T, U>(first: T[], second: U[]): Array<T | U> => {
   each(second, (_, value) => {
     first.push(value as any);
   });
 
   return first;
-}
+};
 
 export default merge;

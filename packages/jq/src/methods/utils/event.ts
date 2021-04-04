@@ -33,7 +33,9 @@ let mduiElementId = 1;
 /**
  * 为元素赋予一个唯一的ID
  */
-function getElementId(element: Element | Document | Window | Function): number {
+const getElementId = (
+  element: Element | Document | Window | Function,
+): number => {
   const key = '_mduiEventId';
 
   // @ts-ignore
@@ -44,26 +46,26 @@ function getElementId(element: Element | Document | Window | Function): number {
 
   // @ts-ignore
   return element[key];
-}
+};
 
 /**
  * 解析事件名中的命名空间
  */
-function parse(type: string): { type: string; ns: string } {
+const parse = (type: string): { type: string; ns: string } => {
   const parts = type.split('.');
 
   return {
     type: parts[0],
     ns: parts.slice(1).sort().join(' '),
   };
-}
+};
 
 /**
  * 命名空间匹配规则
  */
-function matcherFor(ns: string): RegExp {
+const matcherFor = (ns: string): RegExp => {
   return new RegExp('(?:^| )' + ns.replace(' ', ' .* ?') + '(?: |$)');
-}
+};
 
 /**
  * 获取匹配的事件
@@ -72,12 +74,12 @@ function matcherFor(ns: string): RegExp {
  * @param func
  * @param selector
  */
-function getHandlers(
+const getHandlers = (
   element: Element | Document | Window,
   type: string,
   func?: Function,
   selector?: string,
-): Handler[] {
+): Handler[] => {
   const event = parse(type);
 
   return (handlers[getElementId(element)] || []).filter(
@@ -88,7 +90,7 @@ function getHandlers(
       (!func || getElementId(handler.func) === getElementId(func)) &&
       (!selector || handler.selector === selector),
   );
-}
+};
 
 /**
  * 添加事件监听
@@ -98,13 +100,13 @@ function getHandlers(
  * @param data
  * @param selector
  */
-function add(
+const add = (
   element: Element | Document | Window,
   types: string,
   func: Function,
   data?: any,
   selector?: string,
-): void {
+): void => {
   const elementId = getElementId(element);
 
   if (!handlers[elementId]) {
@@ -124,7 +126,7 @@ function add(
 
     const event = parse(type);
 
-    function callFn(e: Event, elem: Element | Document | Window): void {
+    const callFn = (e: Event, elem: Element | Document | Window): void => {
       // 因为鼠标事件模拟事件的 detail 属性是只读的，因此在 e._detail 中存储参数
       const result = func.apply(
         elem,
@@ -136,9 +138,9 @@ function add(
         e.preventDefault();
         e.stopPropagation();
       }
-    }
+    };
 
-    function proxyFn(e: Event): void {
+    const proxyFn = (e: Event): void => {
       // @ts-ignore
       if (e._ns && !matcherFor(e._ns).test(event.ns)) {
         return;
@@ -165,7 +167,7 @@ function add(
         // 不使用事件代理
         callFn(e, element);
       }
-    }
+    };
 
     const handler: Handler = {
       type: event.type,
@@ -180,7 +182,7 @@ function add(
 
     element.addEventListener(handler.type, proxyFn, useCapture);
   });
-}
+};
 
 /**
  * 移除事件监听
@@ -189,12 +191,12 @@ function add(
  * @param func
  * @param selector
  */
-function remove(
+const remove = (
   element: Element | Document | Window,
   types?: string,
   func?: Function,
   selector?: string,
-): void {
+): void => {
   const handlersInElement = handlers[getElementId(element)] || [];
   const removeEvent = (handler: Handler): void => {
     delete handlersInElement[handler.id];
@@ -212,6 +214,6 @@ function remove(
       }
     });
   }
-}
+};
 
 export { EventCallback, parse, add, remove };

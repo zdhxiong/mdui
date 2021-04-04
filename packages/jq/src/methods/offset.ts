@@ -65,7 +65,7 @@ $('.box').offset();
   }
 }
 
-function get(element: Element): CoordinatesValue {
+const get = (element: Element): CoordinatesValue => {
   if (!element.getClientRects().length) {
     return { top: 0, left: 0 };
   }
@@ -77,9 +77,13 @@ function get(element: Element): CoordinatesValue {
     top: rect.top + win.pageYOffset,
     left: rect.left + win.pageXOffset,
   };
-}
+};
 
-function set(element: Element, value: CoordinatesParam, index: number): void {
+const set = (
+  element: Element,
+  value: CoordinatesParam,
+  index: number,
+): void => {
   const $element = $(element);
   const position = $element.css('position');
 
@@ -120,7 +124,7 @@ function set(element: Element, value: CoordinatesParam, index: number): void {
         ? computedValue.left - currentOffset.left + currentLeft
         : undefined,
   });
-}
+};
 
 $.fn.offset = function (this: JQ, value?: any): any {
   // 获取坐标

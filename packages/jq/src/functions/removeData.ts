@@ -33,10 +33,10 @@ removeData(document.body, ['name1', 'name2']);
 removeData(document.body);
 ```
  */
-function removeData(
+const removeData = (
   element: Element | Document | Window,
   name?: TypeOrArray<string>,
-): void {
+): void => {
   const data = weakMap.get(element);
 
   if (isUndefined(data)) {
@@ -63,6 +63,6 @@ function removeData(
   }
 
   weakMap.set(element, data);
-}
+};
 
 export default removeData;

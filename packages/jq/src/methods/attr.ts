@@ -109,7 +109,7 @@ $('div').attr('title');
 }
 
 each(['attr', 'prop', 'css'], (nameIndex, name) => {
-  function set(element: HTMLElement, key: string, value: any): void {
+  const set = (element: HTMLElement, key: string, value: any): void => {
     // 值为 undefined 时，不修改
     if (isUndefined(value)) {
       return;
@@ -141,9 +141,9 @@ each(['attr', 'prop', 'css'], (nameIndex, name) => {
           : value;
         break;
     }
-  }
+  };
 
-  function get(element: HTMLElement, key: string): any {
+  const get = (element: HTMLElement, key: string): any => {
     switch (nameIndex) {
       // attr
       case 0:
@@ -160,7 +160,7 @@ each(['attr', 'prop', 'css'], (nameIndex, name) => {
       default:
         return getStyle(element, key);
     }
-  }
+  };
 
   $.fn[name] = function (
     this: JQ,

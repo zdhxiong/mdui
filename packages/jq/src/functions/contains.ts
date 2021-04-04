@@ -11,11 +11,11 @@ contains( document.getElementById('test'), document ); // false
 contains( $('.container').get(0), $('.contains').get(0) ); // false
 ```
  */
-function contains(
+const contains = (
   container: Element | Document,
   contains: Element | Document,
-): boolean {
+): boolean => {
   return container !== contains && toElement(container).contains(contains);
-}
+};
 
 export default contains;

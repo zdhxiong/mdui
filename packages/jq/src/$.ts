@@ -11,7 +11,7 @@ import {
   isString,
 } from './utils';
 
-function get$(): JQStatic {
+const get$ = (): JQStatic => {
   const $ = function (
     selector?:
       | string
@@ -78,18 +78,7 @@ function get$(): JQStatic {
       }
 
       // 根据 CSS 选择器创建 JQ 对象
-      const isIdSelector = selector[0] === '#' && !selector.match(/[ .<>:~]/);
-
-      if (!isIdSelector) {
-        return new JQ(document.querySelectorAll(selector));
-      }
-
-      const element = document.getElementById(selector.slice(1));
-      if (element) {
-        return new JQ([element]);
-      }
-
-      return new JQ();
+      return new JQ(document.querySelectorAll(selector));
     }
 
     if (isArrayLike(selector) && !isNode(selector)) {
@@ -102,7 +91,7 @@ function get$(): JQStatic {
   $.fn = JQ.prototype;
 
   return $;
-}
+};
 
 const $ = get$();
 

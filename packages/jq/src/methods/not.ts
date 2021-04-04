@@ -41,7 +41,7 @@ $('#select option').not(function (idx, element) {
 $.fn.not = function (this: JQ, selector: any): JQ {
   const $excludes = this.filter(selector);
 
-  return this.map((_, element) =>
-    $excludes.index(element) > -1 ? undefined : element,
-  );
+  return this.map((_, element) => {
+    return $excludes.index(element) > -1 ? undefined : element;
+  });
 };

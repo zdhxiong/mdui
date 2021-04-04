@@ -57,7 +57,7 @@ each(['val', 'html', 'text'], (nameIndex, name) => {
   };
   const propName = props[nameIndex];
 
-  function get($elements: JQ): any {
+  const get = ($elements: JQ): any => {
     // text() 获取所有元素的文本
     if (nameIndex === 2) {
       // @ts-ignore
@@ -82,9 +82,9 @@ each(['val', 'html', 'text'], (nameIndex, name) => {
 
     // @ts-ignore
     return firstElement[propName];
-  }
+  };
 
-  function set(element: HTMLElement, value: any): void {
+  const set = (element: HTMLElement, value: any): void => {
     // text() 和 html() 赋值为 undefined，则保持原内容不变
     // val() 赋值为 undefined 则赋值为空
     if (isUndefined(value)) {
@@ -101,7 +101,7 @@ each(['val', 'html', 'text'], (nameIndex, name) => {
 
     // @ts-ignore
     element[propName] = value;
-  }
+  };
 
   $.fn[name] = function (this: JQ, value?: any): any {
     // 获取值

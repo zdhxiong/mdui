@@ -24,7 +24,7 @@ const elementDisplay: {
  * 获取元素的初始 display 值，用于 .show() 方法
  * @param nodeName
  */
-function defaultDisplay(nodeName: string): string {
+const defaultDisplay = (nodeName: string): string => {
   let element: HTMLElement;
   let display: string;
 
@@ -41,7 +41,7 @@ function defaultDisplay(nodeName: string): string {
   }
 
   return elementDisplay[nodeName];
-}
+};
 
 /**
  * 显示指定元素

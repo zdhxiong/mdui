@@ -73,14 +73,14 @@ type typeExtra = 'margin' | 'padding' | 'border';
  * @param includeMargin
  * @param multiply
  */
-function handleExtraWidth(
+const handleExtraWidth = (
   element: HTMLElement,
   name: typeName,
   value: number,
   funcIndex: typeFuncIndex,
   includeMargin: boolean,
   multiply: number, // 值乘以多少
-): number {
+): number => {
   // 获取元素的 padding, border, margin 宽度（两侧宽度的和）
   const getExtraWidthValue = (extra: typeExtra): number => {
     return (
@@ -121,7 +121,7 @@ function handleExtraWidth(
   }
 
   return value;
-}
+};
 
 /**
  * 获取元素的样式值
@@ -130,12 +130,12 @@ function handleExtraWidth(
  * @param funcIndex 0: innerWidth, innerHeight; 1: width, height; 2: outerWidth, outerHeight
  * @param includeMargin
  */
-function get(
+const get = (
   element: HTMLElement,
   name: typeName,
   funcIndex: typeFuncIndex,
   includeMargin: boolean,
-): number {
+): number => {
   const clientProp = `client${name}` as 'clientWidth' | 'clientHeight';
   const scrollProp = `scroll${name}` as 'scrollWidth' | 'scrollHeight';
   const offsetProp = `offset${name}` as 'offsetWidth' | 'offsetHeight';
@@ -169,7 +169,7 @@ function get(
   );
 
   return handleExtraWidth(element, name, value, funcIndex, includeMargin, 1);
-}
+};
 
 /**
  * 设置元素的样式值
@@ -180,14 +180,14 @@ function get(
  * @param includeMargin
  * @param value
  */
-function set(
+const set = (
   element: HTMLElement,
   elementIndex: number,
   name: typeName,
   funcIndex: typeFuncIndex,
   includeMargin: boolean,
   value: string | number,
-): void {
+): void => {
   let computedValue = isFunction(value)
     ? value.call(
         element,
@@ -218,7 +218,7 @@ function set(
     (suffix || 'px');
 
   $element.css(dimension, computedValue);
-}
+};
 
 each(['Width', 'Height'], (_, name: typeName) => {
   each(

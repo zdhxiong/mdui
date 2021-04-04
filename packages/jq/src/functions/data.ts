@@ -7,19 +7,19 @@ import { weakMap } from './utils/data';
  * 获取指定元素上的所有数据
  * @param element
  */
-function getDataInElement(element: Element | Document | Window) {
+const getDataInElement = (element: Element | Document | Window) => {
   return weakMap.get(element) ?? {};
-}
+};
 
 /**
  * 在元素上设置键值对数据
  * @param element
  * @param object
  */
-function setObjectToElement(
+const setObjectToElement = (
   element: Element | Document | Window,
   object: PlainObject,
-): void {
+): void => {
   const data = getDataInElement(element);
 
   each(object, (key: string, value) => {
@@ -27,7 +27,7 @@ function setObjectToElement(
   });
 
   weakMap.set(element, data);
-}
+};
 
 /**
  * `value` 为 `undefined` 时，相当于 `data(element, key)`，即获取指定元素上存储的数据

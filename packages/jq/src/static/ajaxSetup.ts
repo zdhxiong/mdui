@@ -1,6 +1,6 @@
 import $ from '../$';
 import ajaxSetup from '../functions/ajaxSetup';
-import AjaxOptions from '../interfaces/AjaxOptions';
+import { AjaxOptions } from '../interfaces/AjaxOptions';
 
 declare module '../interfaces/JQStatic' {
   interface JQStatic {

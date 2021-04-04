@@ -5,13 +5,13 @@ import { isElement } from '../../utils';
 import '../each';
 import '../is';
 
-export default function dir(
+const dir = (
   $elements: JQ,
   nameIndex: number,
   node: 'parentNode' | 'nextElementSibling' | 'previousElementSibling',
   selector?: any,
   filter?: string,
-): JQ {
+): JQ => {
   const ret: Element[] = [];
   let target;
 
@@ -53,4 +53,6 @@ export default function dir(
   });
 
   return new JQ(unique(ret));
-}
+};
+
+export default dir;

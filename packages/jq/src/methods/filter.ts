@@ -41,20 +41,20 @@ $('#select option').filter(function (idx, element) {
 
 $.fn.filter = function (this: JQ, selector: any): JQ {
   if (isFunction(selector)) {
-    return this.map((index, element) =>
-      selector.call(element, index, element) ? element : undefined,
-    );
+    return this.map((index, element) => {
+      return selector.call(element, index, element) ? element : undefined;
+    });
   }
 
   if (isString(selector)) {
-    return this.map((_, element) =>
-      $(element).is(selector) ? element : undefined,
-    );
+    return this.map((_, element) => {
+      return $(element).is(selector) ? element : undefined;
+    });
   }
 
   const $selector = $(selector);
 
-  return this.map((_, element) =>
-    $selector.get().indexOf(element) > -1 ? element : undefined,
-  );
+  return this.map((_, element) => {
+    return $selector.get().indexOf(element) > -1 ? element : undefined;
+  });
 };

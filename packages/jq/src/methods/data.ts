@@ -66,7 +66,7 @@ $('.box').data()
 const rbrace = /^(?:{[\w\W]*\}|\[[\w\W]*\])$/;
 
 // 从 `data-*` 中获取的值，需要经过该函数转换
-function getData(value: string): any {
+const getData = (value: string): any => {
   if (value === 'true') {
     return true;
   }
@@ -88,10 +88,10 @@ function getData(value: string): any {
   }
 
   return value;
-}
+};
 
 // 若 value 不存在，则从 `data-*` 中获取值
-function dataAttr(element: HTMLElement, key: string, value?: any): any {
+const dataAttr = (element: HTMLElement, key: string, value?: any): any => {
   if (isUndefined(value) && element.nodeType === 1) {
     const name = 'data-' + toKebabCase(key);
     value = element.getAttribute(name);
@@ -106,7 +106,7 @@ function dataAttr(element: HTMLElement, key: string, value?: any): any {
   }
 
   return value;
-}
+};
 
 $.fn.data = function (this: JQ, key?: string | PlainObject, value?: any): any {
   // 获取所有值

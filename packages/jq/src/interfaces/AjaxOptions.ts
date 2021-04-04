@@ -8,7 +8,54 @@ import {
 } from '../types/JQAjax';
 import PlainObject from './PlainObject';
 
-export default interface AjaxOptions {
+export type AjaxMethod =
+  | 'get'
+  | 'GET'
+  | 'delete'
+  | 'DELETE'
+  | 'head'
+  | 'HEAD'
+  | 'options'
+  | 'OPTIONS'
+  | 'post'
+  | 'POST'
+  | 'put'
+  | 'PUT'
+  | 'patch'
+  | 'PATCH'
+  | 'purge'
+  | 'PURGE'
+  | 'link'
+  | 'LINK'
+  | 'unlink'
+  | 'UNLINK';
+
+export type AjaxDataType = 'text' | 'json';
+
+export interface AjaxOptionsCallback {
+  /**
+   * 在请求发送之前调用。返回 false 时将取消 AJAX 请求
+   * @param xhr
+   */
+  beforeSend?: BeforeSendCallback;
+
+  /**
+   * 请求成功之后调用
+   */
+  success?: SuccessCallback;
+
+  /**
+   * 请求出错时调用
+   */
+  error?: ErrorCallback;
+
+  /**
+   * 请求完成之后调用
+   */
+  complete?: CompleteCallback;
+}
+
+export interface AjaxOptionsParams {
   /**
    * 请求的 URL 地址
    */
@@ -17,7 +64,7 @@ export default interface AjaxOptions {
   /**
    * 请求方式 (e.g. "POST", "GET", "PUT")
    */
-  method?: string;
+  method?: AjaxMethod;
 
   /**
    * 请求发送的数据
@@ -68,7 +115,7 @@ export default interface AjaxOptions {
   /**
    * 服务器返回的数据类型
    */
-  dataType?: 'text' | 'json';
+  dataType?: AjaxDataType;
 
   /**
    *内容的编码类型。为 false 时将不设置 Content-Type
@@ -84,25 +131,6 @@ export default interface AjaxOptions {
    * 是否触发全局 AJAX 事件
    */
   global?: boolean;
-
-  /**
-   * 在请求发送之前调用。返回 false 时将取消 AJAX 请求
-   * @param xhr
-   */
-  beforeSend?: BeforeSendCallback;
-
-  /**
-   * 请求成功之后调用
-   */
-  success?: SuccessCallback;
-
-  /**
-   * 请求出错时调用
-   */
-  error?: ErrorCallback;
-
-  /**
-   * 请求完成之后调用
-   */
-  complete?: CompleteCallback;
 }
+
+export interface AjaxOptions extends AjaxOptionsParams, AjaxOptionsCallback {}

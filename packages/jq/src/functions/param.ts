@@ -31,7 +31,7 @@ param([
 // name=mdui&password=123456
 ```
  */
-function param(obj: any[] | PlainObject): string {
+const param = (obj: any[] | PlainObject): string => {
   if (!isObjectLike(obj) && !Array.isArray(obj)) {
     return '';
   }
@@ -43,34 +43,25 @@ function param(obj: any[] | PlainObject): string {
 
     if (isObjectLike(value)) {
       each(value, (i, v) => {
-        if (Array.isArray(value) && !isObjectLike(v)) {
-          keyTmp = '';
-        } else {
-          keyTmp = i;
-        }
+        keyTmp = Array.isArray(value) && !isObjectLike(v) ? '' : i;
 
         destructure(`${key}[${keyTmp}]`, v);
       });
     } else {
-      if (value == null || value === '') {
-        keyTmp = '=';
-      } else {
-        keyTmp = `=${encodeURIComponent(value)}`;
-      }
+      keyTmp =
+        value == null || value === '' ? '=' : `=${encodeURIComponent(value)}`;
 
       args.push(encodeURIComponent(key) + keyTmp);
     }
   }
 
   if (Array.isArray(obj)) {
-    each(obj, function () {
-      destructure(this.name, this.value);
-    });
+    each(obj, (_, { name, value }) => destructure(name, value));
   } else {
     each(obj, destructure);
   }
 
   return args.join('&');
-}
+};
 
 export default param;

@@ -1,6 +1,6 @@
 import $ from '../$.js';
-import { AjaxOptions, AjaxOptionsParams } from '../interfaces/AjaxOptions.js';
 import '../methods/trigger.js';
+import { AjaxOptions, AjaxOptionsParams } from '../interfaces/AjaxOptions.js';
 import {
   CallbackName,
   ErrorCallback,
@@ -12,9 +12,10 @@ import {
   TextStatus,
 } from '../types/JQAjax.js';
 import { isString, isUndefined } from '../utils.js';
+import param from './param.js';
 import each from './each.js';
 import extend from './extend.js';
-import param from './param.js';
+
 import {
   globalOptions,
   ajaxStart,

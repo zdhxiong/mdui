@@ -1,5 +1,5 @@
-import extend from './extend.js';
 import { AjaxOptions } from '../interfaces/AjaxOptions.js';
+import extend from './extend.js';
 import { globalOptions } from './utils/ajax.js';
 
 /**

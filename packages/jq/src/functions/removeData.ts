@@ -1,6 +1,6 @@
-import each from './each.js';
 import TypeOrArray from '../types/TypeOrArray.js';
 import { isUndefined, isString, toCamelCase } from '../utils.js';
+import each from './each.js';
 import { weakMap } from './utils/data.js';
 
 /**

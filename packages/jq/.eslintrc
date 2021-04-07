@@ -17,7 +17,8 @@
     "@typescript-eslint/ban-types": 0,
     "@typescript-eslint/no-unused-vars": 0,
     "@typescript-eslint/explicit-module-boundary-types": 0,
-    "import/extensions": ["error", "always"]
+    "import/extensions": ["error", "always"],
+    "import/order": ["error"]
   },
   "extends": [
     "plugin:@typescript-eslint/recommended",

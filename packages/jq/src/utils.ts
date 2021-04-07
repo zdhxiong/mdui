@@ -72,9 +72,9 @@ const toElement = (target: Element | Document): Element => {
  * @param string
  */
 const toCamelCase = (string: string): string => {
-  return string.replace(/-([a-z])/g, (_, letter: string) =>
-    letter.toUpperCase(),
-  );
+  return string.replace(/-([a-z])/g, (_, letter: string) => {
+    return letter.toUpperCase();
+  });
 };
 
 /**
@@ -82,7 +82,9 @@ const toCamelCase = (string: string): string => {
  * @param string
  */
 const toKebabCase = (string: string): string => {
-  return string.replace(/[A-Z]/g, (replacer) => '-' + replacer.toLowerCase());
+  return string.replace(/[A-Z]/g, (replacer) => {
+    return '-' + replacer.toLowerCase();
+  });
 };
 
 /**

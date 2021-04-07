@@ -6,6 +6,7 @@
   },
   "plugins": [
     "@typescript-eslint",
+    "import",
     "prettier"
   ],
   "rules": {
@@ -15,7 +16,8 @@
     "prettier/prettier": "error",
     "@typescript-eslint/ban-types": 0,
     "@typescript-eslint/no-unused-vars": 0,
-    "@typescript-eslint/explicit-module-boundary-types": 0
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "import/extensions": ["error", "always"]
   },
   "extends": [
     "plugin:@typescript-eslint/recommended",

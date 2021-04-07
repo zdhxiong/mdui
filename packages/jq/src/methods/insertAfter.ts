@@ -1,9 +1,9 @@
-import HTMLString from '../types/HTMLString';
-import Selector from '../types/Selector';
-import TypeOrArray from '../types/TypeOrArray';
-import './insertBefore';
+import HTMLString from '../types/HTMLString.js';
+import Selector from '../types/Selector.js';
+import TypeOrArray from '../types/TypeOrArray.js';
+import './insertBefore.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 把当前集合中的元素插入到指定元素的后面，作为目标元素的兄弟元素

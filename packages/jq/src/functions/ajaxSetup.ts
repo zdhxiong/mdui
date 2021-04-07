@@ -1,6 +1,6 @@
-import extend from '../functions/extend';
-import { AjaxOptions } from '../interfaces/AjaxOptions';
-import { globalOptions } from './utils/ajax';
+import extend from './extend.js';
+import { AjaxOptions } from '../interfaces/AjaxOptions.js';
+import { globalOptions } from './utils/ajax.js';
 
 /**
  * 为 Ajax 请求设置全局配置参数

@@ -1,7 +1,7 @@
-import PlainObject from '../interfaces/PlainObject';
-import './attr';
+import PlainObject from '../interfaces/PlainObject.js';
+import './attr.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 设置元素的 CSS 属性

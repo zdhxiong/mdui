@@ -1,13 +1,13 @@
-import $ from '../$';
-import { JQ } from '../JQ';
-import Selector from '../types/Selector';
-import { isString } from '../utils';
-import './children';
-import './eq';
-import './get';
-import './parent';
+import $ from '../$.js';
+import { JQ } from '../JQ.js';
+import Selector from '../types/Selector.js';
+import { isString } from '../utils.js';
+import './children.js';
+import './eq.js';
+import './get.js';
+import './parent.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 如果没有传入参数，则返回当前集合中第一个元素相对于同辈元素的索引值。

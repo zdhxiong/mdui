@@ -1,12 +1,12 @@
-import $ from '../$';
-import each from '../functions/each';
-import PlainObject from '../interfaces/PlainObject';
-import { JQ } from '../JQ';
-import { isFunction, isObjectLike, returnFalse } from '../utils';
-import './each';
-import { EventCallback, remove } from './utils/event';
+import $ from '../$.js';
+import each from '../functions/each.js';
+import PlainObject from '../interfaces/PlainObject.js';
+import { JQ } from '../JQ.js';
+import { isFunction, isObjectLike, returnFalse } from '../utils.js';
+import './each.js';
+import { EventCallback, remove } from './utils/event.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 解除通过事件委托绑定的指定事件

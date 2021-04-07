@@ -1,15 +1,15 @@
-import each from './functions/each';
-import { JQStatic } from './interfaces/JQStatic';
-import PlainObject from './interfaces/PlainObject';
-import { JQ } from './JQ';
-import TypeOrArray from './types/TypeOrArray';
+import each from './functions/each.js';
+import { JQStatic } from './interfaces/JQStatic.js';
+import PlainObject from './interfaces/PlainObject.js';
+import { JQ } from './JQ.js';
+import TypeOrArray from './types/TypeOrArray.js';
 import {
   getChildNodesArray,
   isArrayLike,
   isFunction,
   isNode,
   isString,
-} from './utils';
+} from './utils.js';
 
 const get$ = (): JQStatic => {
   const $ = function (

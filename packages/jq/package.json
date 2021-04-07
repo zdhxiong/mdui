@@ -39,16 +39,17 @@
   },
   "homepage": "https://github.com/zdhxiong/mdui.jq#readme",
   "dependencies": {
-    "tslib": "^2.1.0"
+    "tslib": "^2.2.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.15",
+    "@types/chai": "^4.2.16",
     "@types/mocha": "^8.2.2",
-    "@typescript-eslint/eslint-plugin": "^4.19.0",
-    "@typescript-eslint/parser": "^4.19.0",
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
     "chai": "^4.3.4",
-    "eslint": "^7.22.0",
+    "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
     "husky": "^5.2.0",
     "jquery": "^3.6.0",
@@ -56,10 +57,10 @@
     "pinst": "^2.1.6",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.42.3",
+    "rollup": "^2.44.0",
     "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.2.3",
-    "vite": "^2.1.2"
+    "vite": "^2.1.5"
   },
   "engines": {
     "node": ">=14"

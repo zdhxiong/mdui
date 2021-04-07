@@ -1,11 +1,11 @@
-import $ from '../$';
-import { JQ } from '../JQ';
-import Selector from '../types/Selector';
-import './add';
-import './nextAll';
-import './prevAll';
+import $ from '../$.js';
+import { JQ } from '../JQ.js';
+import Selector from '../types/Selector.js';
+import './add.js';
+import './nextAll.js';
+import './prevAll.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 获取当前集合中，每个元素的兄弟元素

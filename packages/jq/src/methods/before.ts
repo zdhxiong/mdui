@@ -1,14 +1,19 @@
-import $ from '../$';
-import each from '../functions/each';
-import { JQ } from '../JQ';
-import HTMLString from '../types/HTMLString';
-import TypeOrArray from '../types/TypeOrArray';
-import { getChildNodesArray, isFunction, isString, isElement } from '../utils';
-import './each';
-import './insertAfter';
-import './insertBefore';
+import $ from '../$.js';
+import each from '../functions/each.js';
+import { JQ } from '../JQ.js';
+import HTMLString from '../types/HTMLString.js';
+import TypeOrArray from '../types/TypeOrArray.js';
+import {
+  getChildNodesArray,
+  isFunction,
+  isString,
+  isElement,
+} from '../utils.js';
+import './each.js';
+import './insertAfter.js';
+import './insertBefore.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 在当前元素前面插入指定内容，作为其兄弟节点。支持传入多个参数。

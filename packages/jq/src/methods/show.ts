@@ -1,9 +1,9 @@
-import $ from '../$';
-import { JQ } from '../JQ';
-import { getStyle } from '../utils';
-import './each';
+import $ from '../$.js';
+import { JQ } from '../JQ.js';
+import { getStyle } from '../utils.js';
+import './each.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 显示集合中的所有元素

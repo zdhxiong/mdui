@@ -1,7 +1,7 @@
-import Selector from '../types/Selector';
-import './parent';
+import Selector from '../types/Selector.js';
+import './parent.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 获取当前集合中，每个元素的所有父辈元素，直到遇到匹配元素为止（不包含匹配元素）。

@@ -1,10 +1,10 @@
-import $ from '../$';
-import removeData from '../functions/removeData';
-import { JQ } from '../JQ';
-import TypeOrArray from '../types/TypeOrArray';
-import './each';
+import $ from '../$.js';
+import removeData from '../functions/removeData.js';
+import { JQ } from '../JQ.js';
+import TypeOrArray from '../types/TypeOrArray.js';
+import './each.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 移除元素上存储的数据

@@ -1,12 +1,12 @@
-import $ from '../$';
-import each from '../functions/each';
-import extend from '../functions/extend';
-import PlainObject from '../interfaces/PlainObject';
+import $ from '../$.js';
+import each from '../functions/each.js';
+import extend from '../functions/extend.js';
+import PlainObject from '../interfaces/PlainObject.js';
 
 /**
  * 比 ../functions/extend 函数多了一个 extend<T>(target: T): this & T 的用法
  */
-declare module '../interfaces/JQStatic' {
+declare module '../interfaces/JQStatic.js' {
   interface JQStatic {
     /**
      * 将所有对象的属性都添加到第一个对象，并返回合并后的对象。

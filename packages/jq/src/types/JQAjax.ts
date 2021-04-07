@@ -1,5 +1,5 @@
 // 全局事件
-import { AjaxOptions } from '../interfaces/AjaxOptions';
+import { AjaxOptions } from '../interfaces/AjaxOptions.js';
 
 type EventName =
   | 'start.mdui.ajax'

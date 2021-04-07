@@ -1,8 +1,8 @@
-import $ from '../$';
-import ajax from '../functions/ajax';
-import { AjaxOptions } from '../interfaces/AjaxOptions';
+import $ from '../$.js';
+import ajax from '../functions/ajax.js';
+import { AjaxOptions } from '../interfaces/AjaxOptions.js';
 
-declare module '../interfaces/JQStatic' {
+declare module '../interfaces/JQStatic.js' {
   interface JQStatic {
     /**
      * 发送 ajax 请求

@@ -1,6 +1,6 @@
-import PlainObject from '../interfaces/PlainObject';
-import { isObjectLike } from '../utils';
-import each from './each';
+import PlainObject from '../interfaces/PlainObject.js';
+import { isObjectLike } from '../utils.js';
+import each from './each.js';
 
 /**
  * 将数组或对象序列化，序列化后的字符串可作为 URL 查询字符串使用

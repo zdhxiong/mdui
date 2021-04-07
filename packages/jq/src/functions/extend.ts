@@ -1,6 +1,6 @@
-import each from '../functions/each';
-import PlainObject from '../interfaces/PlainObject';
-import { isUndefined } from '../utils';
+import each from './each.js';
+import PlainObject from '../interfaces/PlainObject.js';
+import { isUndefined } from '../utils.js';
 
 /**
  * 将所有对象的属性都添加到第一个对象，并返回合并后的对象。

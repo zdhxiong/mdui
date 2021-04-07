@@ -1,11 +1,11 @@
-import $ from '../$';
-import { JQ } from '../JQ';
-import Selector from '../types/Selector';
-import './eq';
-import './is';
-import './parents';
+import $ from '../$.js';
+import { JQ } from '../JQ.js';
+import Selector from '../types/Selector.js';
+import './eq.js';
+import './is.js';
+import './parents.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 从当前元素向上逐级匹配，返回最先匹配到的元素

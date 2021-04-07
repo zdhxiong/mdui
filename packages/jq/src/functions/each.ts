@@ -1,5 +1,5 @@
-import PlainObject from '../interfaces/PlainObject';
-import { isArrayLike } from '../utils';
+import PlainObject from '../interfaces/PlainObject.js';
+import { isArrayLike } from '../utils.js';
 
 /**
  * 遍历数组，原样返回第一个参数

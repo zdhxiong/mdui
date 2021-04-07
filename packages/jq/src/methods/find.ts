@@ -1,11 +1,11 @@
-import $ from '../$';
-import merge from '../functions/merge';
-import { JQ } from '../JQ';
-import Selector from '../types/Selector';
-import './each';
-import './get';
+import $ from '../$.js';
+import merge from '../functions/merge.js';
+import { JQ } from '../JQ.js';
+import Selector from '../types/Selector.js';
+import './each.js';
+import './get.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 根据 CSS 选择器找到指定的后代节点的集合

@@ -1,15 +1,15 @@
-import $ from '../$';
-import each from '../functions/each';
-import { JQ } from '../JQ';
-import HTMLString from '../types/HTMLString';
-import Selector from '../types/Selector';
-import TypeOrArray from '../types/TypeOrArray';
-import './insertAfter';
-import './insertBefore';
-import './map';
-import './remove';
+import $ from '../$.js';
+import each from '../functions/each.js';
+import { JQ } from '../JQ.js';
+import HTMLString from '../types/HTMLString.js';
+import Selector from '../types/Selector.js';
+import TypeOrArray from '../types/TypeOrArray.js';
+import './insertAfter.js';
+import './insertBefore.js';
+import './map.js';
+import './remove.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 把当前元素追加到指定元素内部的后面

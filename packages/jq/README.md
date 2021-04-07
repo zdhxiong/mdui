@@ -9,6 +9,9 @@
 
 Note: 当前为 3.0 版本，正在开发中，将移除对 IE 浏览器的兼容
 
+3.0更新：
+移除对 IE 的兼容
+
 拥有和 jQuery 相似 API 的轻量级 JavaScript 工具库。已作为 [MDUI](https://github.com/zdhxiong/mdui) 内置工具库使用。
 
 mdui.jq 全部使用 typescript 开发，可获得完美的类型提示。

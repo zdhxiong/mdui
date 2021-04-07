@@ -1,5 +1,5 @@
-import PlainObject from '../interfaces/PlainObject';
-import each from './each';
+import PlainObject from '../interfaces/PlainObject.js';
+import each from './each.js';
 
 /**
  * 遍历数组，通过函数返回值生成一个新数组

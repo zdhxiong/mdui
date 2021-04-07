@@ -1,5 +1,5 @@
-import { JQ } from '../JQ';
-import PlainObject from './PlainObject';
+import { JQ } from '../JQ.js';
+import PlainObject from './PlainObject.js';
 
 /**
  * 为了使用模块扩充，这里不能使用默认导出

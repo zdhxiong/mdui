@@ -1,7 +1,7 @@
-import $ from '../$';
-import contains from '../functions/contains';
+import $ from '../$.js';
+import contains from '../functions/contains.js';
 
-declare module '../interfaces/JQStatic' {
+declare module '../interfaces/JQStatic.js' {
   interface JQStatic {
     /**
      * 检查 container 元素内是否包含 contains 元素

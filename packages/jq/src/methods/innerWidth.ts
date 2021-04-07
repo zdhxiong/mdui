@@ -1,6 +1,6 @@
-import './width';
+import './width.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 设置集合中所有元素的宽度（包含 `padding`，不包含 `border`, `margin` 的宽度）

@@ -1,9 +1,9 @@
-import $ from '../$';
-import map from '../functions/map';
-import { JQ } from '../JQ';
-import TypeOrArray from '../types/TypeOrArray';
+import $ from '../$.js';
+import map from '../functions/map.js';
+import { JQ } from '../JQ.js';
+import TypeOrArray from '../types/TypeOrArray.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 为当前集合中的每个元素都调用一个函数，生成一个包含函数返回值的新的集合

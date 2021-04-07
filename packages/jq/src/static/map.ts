@@ -1,8 +1,8 @@
-import $ from '../$';
-import map from '../functions/map';
-import PlainObject from '../interfaces/PlainObject';
+import $ from '../$.js';
+import map from '../functions/map.js';
+import PlainObject from '../interfaces/PlainObject.js';
 
-declare module '../interfaces/JQStatic' {
+declare module '../interfaces/JQStatic.js' {
   interface JQStatic {
     /**
      * 遍历数组，通过函数返回值生成一个新数组

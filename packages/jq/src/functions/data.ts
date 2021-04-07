@@ -1,7 +1,7 @@
-import PlainObject from '../interfaces/PlainObject';
-import { isObjectLike, isUndefined, toCamelCase } from '../utils';
-import each from './each';
-import { weakMap } from './utils/data';
+import PlainObject from '../interfaces/PlainObject.js';
+import { isObjectLike, isUndefined, toCamelCase } from '../utils.js';
+import each from './each.js';
+import { weakMap } from './utils/data.js';
 
 /**
  * 获取指定元素上的所有数据

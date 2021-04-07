@@ -1,6 +1,6 @@
-import './val';
+import './val.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 设置当前集合中，每个元素的文本内容

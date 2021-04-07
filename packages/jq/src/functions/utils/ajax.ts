@@ -1,5 +1,5 @@
-import { AjaxOptions } from '../../interfaces/AjaxOptions';
-import { EventName } from '../../types/JQAjax';
+import { AjaxOptions } from '../../interfaces/AjaxOptions.js';
+import { EventName } from '../../types/JQAjax.js';
 
 type AjaxEventsInterface = { [name: string]: EventName };
 

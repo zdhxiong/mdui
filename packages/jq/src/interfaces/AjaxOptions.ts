@@ -5,8 +5,8 @@ import {
   StatusCodeCallbacks,
   SuccessCallback,
   XHRFields,
-} from '../types/JQAjax';
-import PlainObject from './PlainObject';
+} from '../types/JQAjax.js';
+import PlainObject from './PlainObject.js';
 
 export type AjaxMethod =
   | 'get'

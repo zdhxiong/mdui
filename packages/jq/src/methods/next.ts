@@ -1,10 +1,10 @@
-import $ from '../$';
-import each from '../functions/each';
-import { JQ } from '../JQ';
-import Selector from '../types/Selector';
-import dir from './utils/dir';
+import $ from '../$.js';
+import each from '../functions/each.js';
+import { JQ } from '../JQ.js';
+import Selector from '../types/Selector.js';
+import dir from './utils/dir.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 获取当前集合中每个元素的后一个匹配的同辈元素

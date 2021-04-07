@@ -1,8 +1,8 @@
-import $ from '../$';
-import each from '../functions/each';
-import { JQ } from '../JQ';
+import $ from '../$.js';
+import each from '../functions/each.js';
+import { JQ } from '../JQ.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 遍历 JQ 对象，为每个元素执行一个函数

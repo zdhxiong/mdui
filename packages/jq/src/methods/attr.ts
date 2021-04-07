@@ -1,7 +1,7 @@
-import $ from '../$';
-import each from '../functions/each';
-import PlainObject from '../interfaces/PlainObject';
-import { JQ } from '../JQ';
+import $ from '../$.js';
+import each from '../functions/each.js';
+import PlainObject from '../interfaces/PlainObject.js';
+import { JQ } from '../JQ.js';
 import {
   cssNumber,
   getStyle,
@@ -12,10 +12,10 @@ import {
   isObjectLike,
   isUndefined,
   toCamelCase,
-} from '../utils';
-import './each';
+} from '../utils.js';
+import './each.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 设置元素的属性

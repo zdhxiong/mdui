@@ -1,8 +1,8 @@
-import $ from '../$';
-import { JQ } from '../JQ';
-import './eq';
+import $ from '../$.js';
+import { JQ } from '../JQ.js';
+import './eq.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 返回当前集合中最后一个元素的 JQ 对象

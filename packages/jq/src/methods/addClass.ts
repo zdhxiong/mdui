@@ -1,10 +1,10 @@
-import $ from '../$';
-import each from '../functions/each';
-import { JQ } from '../JQ';
-import { isElement, isFunction } from '../utils';
-import './each';
+import $ from '../$.js';
+import each from '../functions/each.js';
+import { JQ } from '../JQ.js';
+import { isElement, isFunction } from '../utils.js';
+import './each.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 在当前元素上添加 CSS 类

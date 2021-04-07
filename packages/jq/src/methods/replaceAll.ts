@@ -1,13 +1,13 @@
-import $ from '../$';
-import { JQ } from '../JQ';
-import Selector from '../types/Selector';
-import TypeOrArray from '../types/TypeOrArray';
-import './clone';
-import './get';
-import './map';
-import './replaceWith';
+import $ from '../$.js';
+import { JQ } from '../JQ.js';
+import Selector from '../types/Selector.js';
+import TypeOrArray from '../types/TypeOrArray.js';
+import './clone.js';
+import './get.js';
+import './map.js';
+import './replaceWith.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 用当前集合中的元素替换指定元素

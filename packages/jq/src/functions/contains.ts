@@ -1,4 +1,4 @@
-import { toElement } from '../utils';
+import { toElement } from '../utils.js';
 
 /**
  * 检查 container 元素内是否包含 contains 元素

@@ -1,7 +1,7 @@
-import $ from '../$';
-import { JQ } from '../JQ';
+import $ from '../$.js';
+import { JQ } from '../JQ.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 获取集合中指定索引位置的元素

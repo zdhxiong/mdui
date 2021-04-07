@@ -1,11 +1,11 @@
-import $ from '../$';
-import { JQ } from '../JQ';
-import Selector from '../types/Selector';
-import TypeOrArray from '../types/TypeOrArray';
-import './filter';
-import './map';
+import $ from '../$.js';
+import { JQ } from '../JQ.js';
+import Selector from '../types/Selector.js';
+import TypeOrArray from '../types/TypeOrArray.js';
+import './filter.js';
+import './map.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 从当前集合中筛选出与表达式不匹配的元素

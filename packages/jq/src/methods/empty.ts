@@ -1,8 +1,8 @@
-import $ from '../$';
-import { JQ } from '../JQ';
-import './each';
+import $ from '../$.js';
+import { JQ } from '../JQ.js';
+import './each.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 移除当前元素中所有的子元素

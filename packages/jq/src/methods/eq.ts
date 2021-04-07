@@ -1,8 +1,8 @@
-import $ from '../$';
-import { JQ } from '../JQ';
-import './slice';
+import $ from '../$.js';
+import { JQ } from '../JQ.js';
+import './slice.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 返回 JQ 对象中指定索引位置的元素的 JQ 对象

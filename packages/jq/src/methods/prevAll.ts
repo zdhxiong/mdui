@@ -1,7 +1,7 @@
-import Selector from '../types/Selector';
-import './prev';
+import Selector from '../types/Selector.js';
+import './prev.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 获取当前集合中，每个元素前面的所有匹配的同辈元素的集合

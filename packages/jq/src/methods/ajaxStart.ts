@@ -1,11 +1,11 @@
-import $ from '../$';
-import each from '../functions/each';
-import { ajaxEvents } from '../functions/utils/ajax';
-import { JQ } from '../JQ';
-import { GlobalCallback, GlobalSuccessCallback } from '../types/JQAjax';
-import './on';
+import $ from '../$.js';
+import each from '../functions/each.js';
+import { ajaxEvents } from '../functions/utils/ajax.js';
+import { JQ } from '../JQ.js';
+import { GlobalCallback, GlobalSuccessCallback } from '../types/JQAjax.js';
+import './on.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 监听全局 Ajax 开始事件

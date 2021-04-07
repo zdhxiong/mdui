@@ -1,11 +1,11 @@
-import $ from '../$';
-import { JQ } from '../JQ';
-import Selector from '../types/Selector';
-import TypeOrArray from '../types/TypeOrArray';
-import { isDocument, isFunction, isString, isWindow } from '../utils';
-import './each';
+import $ from '../$.js';
+import { JQ } from '../JQ.js';
+import Selector from '../types/Selector.js';
+import TypeOrArray from '../types/TypeOrArray.js';
+import { isDocument, isFunction, isString, isWindow } from '../utils.js';
+import './each.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 如果集合中至少一个元素和参数匹配，则返回 `true`，否则返回 `false`

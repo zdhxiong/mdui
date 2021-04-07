@@ -1,17 +1,17 @@
-import $ from '../$';
-import data from '../functions/data';
-import PlainObject from '../interfaces/PlainObject';
-import { JQ } from '../JQ';
+import $ from '../$.js';
+import data from '../functions/data.js';
+import PlainObject from '../interfaces/PlainObject.js';
+import { JQ } from '../JQ.js';
 import {
   isObjectLike,
   isString,
   isUndefined,
   toCamelCase,
   toKebabCase,
-} from '../utils';
-import './each';
+} from '../utils.js';
+import './each.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 在当前元素上存储数据

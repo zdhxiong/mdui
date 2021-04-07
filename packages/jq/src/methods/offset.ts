@@ -1,10 +1,10 @@
-import $ from '../$';
-import extend from '../functions/extend';
-import { JQ } from '../JQ';
-import { isFunction } from '../utils';
-import './css';
-import './each';
-import './position';
+import $ from '../$.js';
+import extend from '../functions/extend.js';
+import { JQ } from '../JQ.js';
+import { isFunction } from '../utils.js';
+import './css.js';
+import './each.js';
+import './position.js';
 
 /**
  * 获取坐标的返回值，left 和 top 都存在

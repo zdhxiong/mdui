@@ -1,4 +1,4 @@
-import each from './functions/each';
+import each from './functions/each.js';
 
 /**
  * 为了使用模块扩充，这里不能使用默认导出

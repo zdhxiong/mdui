@@ -1,6 +1,6 @@
-import $ from '../$';
+import $ from '../$.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 是否含有指定的 CSS 类

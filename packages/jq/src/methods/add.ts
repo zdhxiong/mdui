@@ -1,11 +1,11 @@
-import $ from '../$';
-import merge from '../functions/merge';
-import unique from '../functions/unique';
-import { JQ } from '../JQ';
-import TypeOrArray from '../types/TypeOrArray';
-import './get';
+import $ from '../$.js';
+import merge from '../functions/merge.js';
+import unique from '../functions/unique.js';
+import { JQ } from '../JQ.js';
+import TypeOrArray from '../types/TypeOrArray.js';
+import './get.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 添加元素到当前 JQ 对象中

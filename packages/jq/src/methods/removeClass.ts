@@ -1,6 +1,6 @@
-import './addClass';
+import './addClass.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 移除集合中每个元素上的 CSS 类

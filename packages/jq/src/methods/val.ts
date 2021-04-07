@@ -1,12 +1,12 @@
-import $ from '../$';
-import each from '../functions/each';
-import map from '../functions/map';
-import { JQ } from '../JQ';
-import { isElement, isFunction, isUndefined, toElement } from '../utils';
-import './each';
-import './is';
+import $ from '../$.js';
+import each from '../functions/each.js';
+import map from '../functions/map.js';
+import { JQ } from '../JQ.js';
+import { isElement, isFunction, isUndefined, toElement } from '../utils.js';
+import './each.js';
+import './is.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 设置集合中每个元素的值

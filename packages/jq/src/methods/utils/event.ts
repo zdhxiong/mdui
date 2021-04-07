@@ -1,7 +1,7 @@
-import $ from '../../$';
-import contains from '../../functions/contains';
-import { isObjectLike } from '../../utils';
-import '../find';
+import $ from '../../$.js';
+import contains from '../../functions/contains.js';
+import { isObjectLike } from '../../utils.js';
+import '../find.js';
 
 type EventCallback = (
   this: Element | Document | Window,

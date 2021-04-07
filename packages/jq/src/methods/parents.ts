@@ -1,7 +1,7 @@
-import Selector from '../types/Selector';
-import './parent';
+import Selector from '../types/Selector.js';
+import './parent.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 获取当前集合中，所有元素的祖先元素

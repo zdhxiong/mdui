@@ -1,16 +1,16 @@
-import $ from '../$';
-import { JQ } from '../JQ';
-import './css';
-import './eq';
-import './offset';
-import './offsetParent';
+import $ from '../$.js';
+import { JQ } from '../JQ.js';
+import './css.js';
+import './eq.js';
+import './offset.js';
+import './offsetParent.js';
 
 interface Coordinates {
   left: number;
   top: number;
 }
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 获取集合中第一个元素相对于父元素的偏移

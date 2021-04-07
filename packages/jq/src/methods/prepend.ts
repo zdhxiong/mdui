@@ -1,8 +1,8 @@
-import HTMLString from '../types/HTMLString';
-import TypeOrArray from '../types/TypeOrArray';
-import './append';
+import HTMLString from '../types/HTMLString.js';
+import TypeOrArray from '../types/TypeOrArray.js';
+import './append.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 在当前元素内部的前面插入指定内容。支持传入多个参数

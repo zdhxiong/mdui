@@ -1,8 +1,8 @@
-import $ from '../$';
-import ajaxSetup from '../functions/ajaxSetup';
-import { AjaxOptions } from '../interfaces/AjaxOptions';
+import $ from '../$.js';
+import ajaxSetup from '../functions/ajaxSetup.js';
+import { AjaxOptions } from '../interfaces/AjaxOptions.js';
 
-declare module '../interfaces/JQStatic' {
+declare module '../interfaces/JQStatic.js' {
   interface JQStatic {
     /**
      * 为 Ajax 请求设置全局配置参数

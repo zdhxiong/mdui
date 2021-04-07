@@ -1,9 +1,9 @@
-import $ from '../$';
-import { JQ } from '../JQ';
-import './css';
-import './map';
+import $ from '../$.js';
+import { JQ } from '../JQ.js';
+import './css.js';
+import './map.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 返回最近的用于定位的父元素

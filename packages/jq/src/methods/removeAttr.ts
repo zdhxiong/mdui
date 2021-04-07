@@ -1,9 +1,9 @@
-import $ from '../$';
-import each from '../functions/each';
-import { JQ } from '../JQ';
-import './each';
+import $ from '../$.js';
+import each from '../functions/each.js';
+import { JQ } from '../JQ.js';
+import './each.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 移除集合中每个元素上的指定属性

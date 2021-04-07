@@ -1,4 +1,4 @@
-import each from './each';
+import each from './each.js';
 
 /**
  * 把第二个数组的元素追加到第一个数组中，并返回合并后的数组

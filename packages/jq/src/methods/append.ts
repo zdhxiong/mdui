@@ -1,17 +1,17 @@
-import $ from '../$';
-import each from '../functions/each';
-import { JQ } from '../JQ';
-import HTMLString from '../types/HTMLString';
-import TypeOrArray from '../types/TypeOrArray';
-import { isFunction, isString } from '../utils';
-import './after';
-import './before';
-import './clone';
-import './each';
-import './map';
-import './remove';
+import $ from '../$.js';
+import each from '../functions/each.js';
+import { JQ } from '../JQ.js';
+import HTMLString from '../types/HTMLString.js';
+import TypeOrArray from '../types/TypeOrArray.js';
+import { isFunction, isString } from '../utils.js';
+import './after.js';
+import './before.js';
+import './clone.js';
+import './each.js';
+import './map.js';
+import './remove.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 在当前元素内部的后面插入指定内容。支持传入多个参数

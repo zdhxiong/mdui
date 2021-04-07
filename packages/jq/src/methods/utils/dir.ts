@@ -1,9 +1,9 @@
-import $ from '../../$';
-import unique from '../../functions/unique';
-import { JQ } from '../../JQ';
-import { isElement } from '../../utils';
-import '../each';
-import '../is';
+import $ from '../../$.js';
+import unique from '../../functions/unique.js';
+import { JQ } from '../../JQ.js';
+import { isElement } from '../../utils.js';
+import '../each.js';
+import '../is.js';
 
 const dir = (
   $elements: JQ,

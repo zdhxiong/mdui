@@ -1,9 +1,9 @@
-import $ from '../$';
-import each from '../functions/each';
-import PlainObject from '../interfaces/PlainObject';
-import { JQ } from '../JQ';
+import $ from '../$.js';
+import each from '../functions/each.js';
+import PlainObject from '../interfaces/PlainObject.js';
+import { JQ } from '../JQ.js';
 
-declare module '../JQ' {
+declare module '../JQ.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 在 $ 的原型链上扩展方法

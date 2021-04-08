@@ -1,8 +1,8 @@
 import $ from '../$.js';
 import param from '../functions/param.js';
-import PlainObject from '../interfaces/PlainObject.js';
+import { PlainObject } from '../shared/core.js';
 
-declare module '../interfaces/JQStatic.js' {
+declare module '../shared/core.js' {
   interface JQStatic {
     /**
      * 将数组或对象序列化，序列化后的字符串可作为 URL 查询字符串使用

@@ -1,6 +1,6 @@
 import './addClass.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 元素上的 CSS 类，有则删除，无则添加

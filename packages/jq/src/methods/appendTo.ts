@@ -1,15 +1,17 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
-import { JQ } from '../JQ.js';
-import HTMLString from '../types/HTMLString.js';
-import Selector from '../types/Selector.js';
-import TypeOrArray from '../types/TypeOrArray.js';
+import {
+  HTMLString,
+  Selector,
+  TypeOrArray,
+  JQ,
+  eachArray,
+} from '../shared/core.js';
 import './insertAfter.js';
 import './insertBefore.js';
 import './map.js';
 import './remove.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 把当前元素追加到指定元素内部的后面
@@ -25,7 +27,7 @@ $('<p>Hello</p>').appendTo('<p>I would like to say: </p>')
   }
 }
 
-each(['appendTo', 'prependTo'], (nameIndex, name) => {
+eachArray(['appendTo', 'prependTo'], (nameIndex, name) => {
   $.fn[name] = function (this: JQ, target: any): JQ {
     const extraChilds: HTMLElement[] = [];
     const $target = $(target).map((_, element: HTMLElement) => {

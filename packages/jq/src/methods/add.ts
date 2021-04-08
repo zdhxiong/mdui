@@ -1,11 +1,10 @@
 import $ from '../$.js';
 import merge from '../functions/merge.js';
 import unique from '../functions/unique.js';
-import { JQ } from '../JQ.js';
-import TypeOrArray from '../types/TypeOrArray.js';
+import { TypeOrArray, JQ } from '../shared/core.js';
 import './get.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 添加元素到当前 JQ 对象中

@@ -1,15 +1,15 @@
-import each from './functions/each.js';
-import { JQStatic } from './interfaces/JQStatic.js';
-import PlainObject from './interfaces/PlainObject.js';
-import { JQ } from './JQ.js';
-import TypeOrArray from './types/TypeOrArray.js';
 import {
-  getChildNodesArray,
-  isArrayLike,
+  PlainObject,
+  TypeOrArray,
+  JQ,
+  JQStatic,
   isFunction,
   isNode,
   isString,
-} from './utils.js';
+  isArrayLike,
+  eachObject,
+  getChildNodesArray,
+} from './shared/core.js';
 
 const get$ = (): JQStatic => {
   const $ = function (
@@ -65,7 +65,7 @@ const get$ = (): JQStatic => {
           option: 'select',
         };
 
-        each(tags, (childTag, parentTag) => {
+        eachObject(tags, (childTag, parentTag) => {
           if (html.indexOf(`<${childTag}`) === 0) {
             toCreate = parentTag;
             return false;

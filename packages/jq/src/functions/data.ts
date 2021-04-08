@@ -1,7 +1,11 @@
-import PlainObject from '../interfaces/PlainObject.js';
-import { isObjectLike, isUndefined, toCamelCase } from '../utils.js';
-import each from './each.js';
-import { weakMap } from './utils/data.js';
+import {
+  PlainObject,
+  isUndefined,
+  isObjectLike,
+  toCamelCase,
+  eachObject,
+} from '../shared/core.js';
+import { weakMap } from '../shared/data.js';
 
 /**
  * 获取指定元素上的所有数据
@@ -22,7 +26,7 @@ const setObjectToElement = (
 ): void => {
   const data = getDataInElement(element);
 
-  each(object, (key: string, value) => {
+  eachObject(object, (key: string, value) => {
     data[toCamelCase(key)] = value;
   });
 

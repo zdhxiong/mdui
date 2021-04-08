@@ -1,8 +1,8 @@
 import $ from '../$.js';
 import each from '../functions/each.js';
-import PlainObject from '../interfaces/PlainObject.js';
+import { PlainObject } from '../shared/core.js';
 
-declare module '../interfaces/JQStatic.js' {
+declare module '../shared/core.js' {
   interface JQStatic {
     /**
      * 遍历数组，原样返回第一个参数

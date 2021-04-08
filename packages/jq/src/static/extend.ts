@@ -1,12 +1,12 @@
 import $ from '../$.js';
 import each from '../functions/each.js';
 import extend from '../functions/extend.js';
-import PlainObject from '../interfaces/PlainObject.js';
+import { PlainObject } from '../shared/core.js';
 
 /**
  * 比 ../functions/extend 函数多了一个 extend<T>(target: T): this & T 的用法
  */
-declare module '../interfaces/JQStatic.js' {
+declare module '../shared/core.js' {
   interface JQStatic {
     /**
      * 将所有对象的属性都添加到第一个对象，并返回合并后的对象。
@@ -269,18 +269,14 @@ var object = extend(
   }
 }
 
-$.extend = function (...objectN: PlainObject[]): any {
-  if (objectN.length === 1) {
-    each(objectN[0], (prop, value) => {
+$.extend = function (target: PlainObject, ...objectN: PlainObject[]): any {
+  if (!objectN.length) {
+    each(target, (prop, value) => {
       this[prop] = value;
     });
 
     return this;
   }
 
-  return extend(
-    objectN.shift() as PlainObject,
-    objectN.shift() as PlainObject,
-    ...objectN,
-  );
+  return extend(target, ...objectN);
 };

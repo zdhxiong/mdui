@@ -1,7 +1,6 @@
 import $ from '../$.js';
 import extend from '../functions/extend.js';
-import { JQ } from '../JQ.js';
-import { isFunction } from '../utils.js';
+import { JQ, isFunction } from '../shared/core.js';
 import './css.js';
 import './each.js';
 import './position.js';
@@ -22,7 +21,7 @@ interface CoordinatesParam {
   top?: number;
 }
 
-declare module '../JQ' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 设置集合中所有元素相对于 `document` 的坐标

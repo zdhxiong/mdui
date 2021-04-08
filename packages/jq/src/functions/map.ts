@@ -1,4 +1,4 @@
-import PlainObject from '../interfaces/PlainObject.js';
+import { PlainObject } from '../shared/core.js';
 import each from './each.js';
 
 /**

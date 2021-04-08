@@ -1,6 +1,6 @@
 import './width.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 设置集合中所有元素的高度（不包含 `padding`, `border`, `margin` 的宽度）

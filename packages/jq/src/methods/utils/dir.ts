@@ -1,7 +1,6 @@
 import $ from '../../$.js';
 import unique from '../../functions/unique.js';
-import { JQ } from '../../JQ.js';
-import { isElement } from '../../utils.js';
+import { JQ, isElement } from '../../shared/core.js';
 import '../each.js';
 import '../is.js';
 

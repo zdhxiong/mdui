@@ -1,11 +1,13 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
-import { ajaxEvents } from '../functions/utils/ajax.js';
-import { JQ } from '../JQ.js';
-import { GlobalCallback, GlobalSuccessCallback } from '../types/JQAjax.js';
+import { JQ, eachObject } from '../shared/core.js';
+import {
+  GlobalCallback,
+  GlobalSuccessCallback,
+  ajaxEvents,
+} from '../shared/ajax.js';
 import './on.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 监听全局 Ajax 开始事件
@@ -25,7 +27,7 @@ $(document).ajaxStart(function (event, xhr, options) {});
   }
 }
 
-each(ajaxEvents, (name, eventName) => {
+eachObject(ajaxEvents, (name, eventName) => {
   $.fn[name] = function (
     this: JQ,
     fn: GlobalCallback | GlobalSuccessCallback,

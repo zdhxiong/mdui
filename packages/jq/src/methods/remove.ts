@@ -1,10 +1,9 @@
 import $ from '../$.js';
-import { JQ } from '../JQ.js';
-import Selector from '../types/Selector.js';
+import { Selector, JQ } from '../shared/core.js';
 import './each.js';
 import './is.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 从 DOM 中移除当前集合中的元素

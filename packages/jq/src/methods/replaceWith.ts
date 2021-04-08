@@ -1,14 +1,17 @@
 import $ from '../$.js';
-import { JQ } from '../JQ.js';
-import HTMLString from '../types/HTMLString.js';
-import TypeOrArray from '../types/TypeOrArray.js';
 import './before.js';
 import './clone.js';
 import './each.js';
 import './remove.js';
-import { isFunction, isString } from '../utils.js';
+import {
+  HTMLString,
+  TypeOrArray,
+  JQ,
+  isFunction,
+  isString,
+} from '../shared/core.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 用指定元素替换当前集合中的元素

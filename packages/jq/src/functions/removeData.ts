@@ -1,7 +1,11 @@
-import TypeOrArray from '../types/TypeOrArray.js';
-import { isUndefined, isString, toCamelCase } from '../utils.js';
+import {
+  TypeOrArray,
+  isUndefined,
+  isString,
+  toCamelCase,
+} from '../shared/core.js';
+import { weakMap } from '../shared/data.js';
 import each from './each.js';
-import { weakMap } from './utils/data.js';
 
 /**
  * 移除指定元素上存放的数据

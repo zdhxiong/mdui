@@ -1,8 +1,8 @@
 import $ from '../$.js';
-import { JQ } from '../JQ.js';
+import { JQ } from '../shared/core.js';
 import './each.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 删除集合中每个元素上的指定属性

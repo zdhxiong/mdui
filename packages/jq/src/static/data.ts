@@ -1,8 +1,8 @@
 import $ from '../$.js';
 import data from '../functions/data.js';
-import PlainObject from '../interfaces/PlainObject.js';
+import { PlainObject } from '../shared/core.js';
 
-declare module '../interfaces/JQStatic.js' {
+declare module '../shared/core.js' {
   interface JQStatic {
     /**
      * `value` 为 `undefined` 时，相当于 `$.data(element, key)`，即获取指定元素上存储的数据

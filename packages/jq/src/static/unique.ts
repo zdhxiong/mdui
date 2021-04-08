@@ -1,7 +1,7 @@
 import $ from '../$.js';
 import unique from '../functions/unique.js';
 
-declare module '../interfaces/JQStatic.js' {
+declare module '../shared/core.js' {
   interface JQStatic {
     /**
      * 过滤掉数组中的重复元素

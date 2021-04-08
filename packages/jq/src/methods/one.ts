@@ -1,10 +1,9 @@
 import $ from '../$.js';
-import PlainObject from '../interfaces/PlainObject.js';
-import { JQ } from '../JQ.js';
+import { PlainObject, JQ } from '../shared/core.js';
 import './on.js';
 import { EventCallback } from './utils/event.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 通过事件委托同时添加多个事件处理函数，触发一次后自动解绑

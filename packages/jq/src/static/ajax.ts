@@ -1,8 +1,8 @@
 import $ from '../$.js';
 import ajax from '../functions/ajax.js';
-import { AjaxOptions } from '../interfaces/AjaxOptions.js';
+import { Options } from '../shared/ajax.js';
 
-declare module '../interfaces/JQStatic.js' {
+declare module '../shared/core.js' {
   interface JQStatic {
     /**
      * 发送 ajax 请求
@@ -18,7 +18,7 @@ ajax({
 });
 ```
      */
-    ajax(options: AjaxOptions): Promise<any>;
+    ajax(options: Options): Promise<any>;
   }
 }
 

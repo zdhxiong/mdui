@@ -1,11 +1,10 @@
 import $ from '../$.js';
-import { JQ } from '../JQ.js';
-import Selector from '../types/Selector.js';
+import { Selector, JQ } from '../shared/core.js';
 import './eq.js';
 import './is.js';
 import './parents.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 从当前元素向上逐级匹配，返回最先匹配到的元素

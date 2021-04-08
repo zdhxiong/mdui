@@ -1,9 +1,9 @@
 import $ from '../$.js';
 import param from '../functions/param.js';
-import { JQ } from '../JQ.js';
+import { JQ } from '../shared/core.js';
 import './serializeArray.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 把表单元素的值编译为字符串

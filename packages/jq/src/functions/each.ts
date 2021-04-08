@@ -1,5 +1,9 @@
-import PlainObject from '../interfaces/PlainObject.js';
-import { isArrayLike } from '../utils.js';
+import {
+  PlainObject,
+  isArrayLike,
+  eachArray,
+  eachObject,
+} from '../shared/core.js';
 
 /**
  * 遍历数组，原样返回第一个参数
@@ -43,23 +47,10 @@ function each<T extends PlainObject, K extends keyof T>(
   callback: (this: T[K], key: K, value: T[K]) => any | void,
 ): T;
 
-function each(target: ArrayLike<any> | PlainObject, callback: Function): any {
-  if (isArrayLike(target)) {
-    for (let i = 0; i < target.length; i += 1) {
-      if (callback.call(target[i], i, target[i]) === false) {
-        return target;
-      }
-    }
-  } else {
-    const keys = Object.keys(target);
-    for (let i = 0; i < keys.length; i += 1) {
-      if (callback.call(target[keys[i]], keys[i], target[keys[i]]) === false) {
-        return target;
-      }
-    }
-  }
-
-  return target;
+function each(target: any, callback: any): any {
+  return isArrayLike(target)
+    ? eachArray(target, callback)
+    : eachObject(target, callback);
 }
 
 export default each;

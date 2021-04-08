@@ -24,8 +24,17 @@ describe('$.extend', function () {
     const obj1 = { key: 'val' };
     const obj2 = { key1: 'val1' };
     const obj3 = { key2: 'val2', key3: undefined, key4: null }; // 值为 undefined 不合并
-    const expected = { key: 'val', key1: 'val1', key2: 'val2', key4: null };
+    const expected = {
+      key: 'val',
+      key1: 'val1',
+      key2: 'val2',
+      key3: undefined,
+      key4: null,
+    };
     const result = $.extend(obj1, obj2, obj3);
+
+    console.log(obj1);
+    console.log(result);
 
     assert.deepEqual(obj1, expected);
     assert.deepEqual(result, expected);

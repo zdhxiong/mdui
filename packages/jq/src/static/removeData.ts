@@ -1,8 +1,8 @@
 import $ from '../$.js';
 import removeData from '../functions/removeData.js';
-import TypeOrArray from '../types/TypeOrArray.js';
+import { TypeOrArray } from '../shared/core.js';
 
-declare module '../interfaces/JQStatic.js' {
+declare module '../shared/core.js' {
   interface JQStatic {
     /**
      * 移除指定元素上存放的数据

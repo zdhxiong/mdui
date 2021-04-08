@@ -1,12 +1,17 @@
 import $ from '../$.js';
 import each from '../functions/each.js';
 import map from '../functions/map.js';
-import { JQ } from '../JQ.js';
-import { isElement, isFunction, isUndefined, toElement } from '../utils.js';
+import {
+  JQ,
+  isElement,
+  isFunction,
+  isUndefined,
+  toElement,
+} from '../shared/core.js';
 import './each.js';
 import './is.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 设置集合中每个元素的值

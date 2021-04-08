@@ -1,21 +1,23 @@
 import $ from '../$.js';
 import each from '../functions/each.js';
-import { JQ } from '../JQ.js';
 import {
+  JQ,
   isBoolean,
   isDocument,
   isFunction,
   isWindow,
   toElement,
+} from '../shared/core.js';
+import {
   isBorderBox,
   getExtraWidth,
   getComputedStyleValue,
-  isIE,
-} from '../utils.js';
+} from '../shared/css.js';
+import { isIE } from '../utils.js';
 import './css.js';
 import './each.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 设置集合中所有元素的宽度（不包含 `padding`, `border`, `margin` 的宽度）

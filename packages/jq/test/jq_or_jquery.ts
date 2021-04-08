@@ -1,7 +1,7 @@
-import JQ from '../src/index';
-import { JQStatic } from '../src/interfaces/JQStatic';
+import jq from '../es/index';
+import { JQStatic } from '../es/shared/core';
 
 // @ts-ignore
-const $ = typeof jQuery !== 'undefined' ? jQuery : JQ;
+const $ = typeof jQuery !== 'undefined' ? jQuery : jq;
 
 export default $ as JQStatic;

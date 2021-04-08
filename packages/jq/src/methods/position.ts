@@ -1,5 +1,5 @@
 import $ from '../$.js';
-import { JQ } from '../JQ.js';
+import { JQ } from '../shared/core.js';
 import './css.js';
 import './eq.js';
 import './offset.js';
@@ -10,7 +10,7 @@ interface Coordinates {
   top: number;
 }
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 获取集合中第一个元素相对于父元素的偏移

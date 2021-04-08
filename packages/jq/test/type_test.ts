@@ -2,7 +2,7 @@
  * 测试 typescript 的类型提示
  */
 import $ from '../es/index';
-import { JQ } from '../es/JQ';
+import { JQ } from '../es/shared/core';
 
 const getElementById = document.getElementById('test');
 const querySelector = document.querySelector('.test');

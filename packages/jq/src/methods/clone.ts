@@ -1,8 +1,8 @@
 import $ from '../$.js';
-import { JQ } from '../JQ.js';
+import { JQ } from '../shared/core.js';
 import './map.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 通过深度克隆来复制集合中的所有元素

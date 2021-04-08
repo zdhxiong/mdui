@@ -1,11 +1,9 @@
 import $ from '../$.js';
 import contains from '../functions/contains.js';
-import { JQ } from '../JQ.js';
-import Selector from '../types/Selector.js';
-import { isString } from '../utils.js';
+import { Selector, JQ, isString } from '../shared/core.js';
 import './find.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 保留含有指定子元素的元素，去掉不含有指定子元素的元素

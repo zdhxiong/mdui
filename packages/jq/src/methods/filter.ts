@@ -1,12 +1,15 @@
 import $ from '../$.js';
-import { JQ } from '../JQ.js';
-import Selector from '../types/Selector.js';
-import TypeOrArray from '../types/TypeOrArray.js';
-import { isFunction, isString } from '../utils.js';
+import {
+  Selector,
+  TypeOrArray,
+  JQ,
+  isFunction,
+  isString,
+} from '../shared/core.js';
 import './is.js';
 import './map.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 从当前对象中筛选出与指定表达式匹配的元素

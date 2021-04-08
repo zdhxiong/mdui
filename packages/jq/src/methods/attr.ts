@@ -1,21 +1,21 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
-import PlainObject from '../interfaces/PlainObject.js';
-import { JQ } from '../JQ.js';
 import {
-  cssNumber,
-  getStyle,
+  PlainObject,
+  JQ,
   isElement,
   isFunction,
   isNull,
   isNumber,
-  isObjectLike,
   isUndefined,
+  isObjectLike,
   toCamelCase,
-} from '../utils.js';
+  eachArray,
+  eachObject,
+} from '../shared/core.js';
+import { getStyle, cssNumber } from '../shared/css.js';
 import './each.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 设置元素的属性
@@ -108,7 +108,7 @@ $('div').attr('title');
   }
 }
 
-each(['attr', 'prop', 'css'], (nameIndex, name) => {
+eachArray(['attr', 'prop', 'css'], (nameIndex, name) => {
   const set = (element: HTMLElement, key: string, value: any): void => {
     // 值为 undefined 时，不修改
     if (isUndefined(value)) {
@@ -168,7 +168,7 @@ each(['attr', 'prop', 'css'], (nameIndex, name) => {
     value?: any,
   ): any {
     if (isObjectLike(key)) {
-      each(key, (k, v) => {
+      eachObject(key, (k, v) => {
         // @ts-ignore
         this[name](k, v);
       });

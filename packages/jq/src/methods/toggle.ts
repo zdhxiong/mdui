@@ -1,11 +1,11 @@
 import $ from '../$.js';
-import { JQ } from '../JQ.js';
-import { getStyle } from '../utils.js';
+import { JQ } from '../shared/core.js';
+import { getStyle } from '../shared/css.js';
 import './each.js';
 import './hide.js';
 import './show.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 切换集合中所有元素的显示状态

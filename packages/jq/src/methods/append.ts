@@ -1,9 +1,12 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
-import { JQ } from '../JQ.js';
-import HTMLString from '../types/HTMLString.js';
-import TypeOrArray from '../types/TypeOrArray.js';
-import { isFunction, isString } from '../utils.js';
+import {
+  HTMLString,
+  TypeOrArray,
+  JQ,
+  isFunction,
+  isString,
+  eachArray,
+} from '../shared/core.js';
 import './after.js';
 import './before.js';
 import './clone.js';
@@ -11,7 +14,7 @@ import './each.js';
 import './map.js';
 import './remove.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 在当前元素内部的后面插入指定内容。支持传入多个参数
@@ -55,7 +58,7 @@ $('<p>Hello</p>').append(function (index, html) {
   }
 }
 
-each(['prepend', 'append'], (nameIndex, name) => {
+eachArray(['prepend', 'append'], (nameIndex, name) => {
   $.fn[name] = function (this: JQ, ...args: any[]): JQ {
     return this.each((index, element) => {
       const childNodes = element.childNodes;

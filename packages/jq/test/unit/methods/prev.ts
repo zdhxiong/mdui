@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import $ from '../../jq_or_jquery';
-import { JQ } from '../../../src/JQ';
+import { JQ } from '../../../es/shared/core';
 
 describe('.prev()', function () {
   beforeEach(function () {

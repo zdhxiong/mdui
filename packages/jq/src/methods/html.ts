@@ -1,7 +1,7 @@
-import HTMLString from '../types/HTMLString.js';
+import { HTMLString } from '../shared/core.js';
 import './val.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 设置集合中所有元素的 HTML 内容

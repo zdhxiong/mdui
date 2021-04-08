@@ -1,6 +1,6 @@
 import $ from '../../$.js';
 import contains from '../../functions/contains.js';
-import { isObjectLike } from '../../utils.js';
+import { isObjectLike } from '../../shared/core.js';
 import '../find.js';
 
 type EventCallback = (

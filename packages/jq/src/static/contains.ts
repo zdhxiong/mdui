@@ -1,7 +1,7 @@
 import $ from '../$.js';
 import contains from '../functions/contains.js';
 
-declare module '../interfaces/JQStatic.js' {
+declare module '../shared/core.js' {
   interface JQStatic {
     /**
      * 检查 container 元素内是否包含 contains 元素

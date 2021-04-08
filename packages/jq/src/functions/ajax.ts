@@ -1,6 +1,6 @@
 import $ from '../$.js';
 import '../methods/trigger.js';
-import { AjaxOptions, AjaxOptionsParams } from '../interfaces/AjaxOptions.js';
+import { isString, isUndefined } from '../shared/core.js';
 import {
   CallbackName,
   ErrorCallback,
@@ -10,25 +10,18 @@ import {
   SuccessCallback,
   SuccessTextStatus,
   TextStatus,
-} from '../types/JQAjax.js';
-import { isString, isUndefined } from '../utils.js';
-import param from './param.js';
-import each from './each.js';
-import extend from './extend.js';
-
-import {
+  Options,
+  OptionsParams,
+  EventParams,
   globalOptions,
   ajaxStart,
   ajaxSuccess,
   ajaxError,
   ajaxComplete,
-} from './utils/ajax.js';
-
-interface EventParams {
-  data?: string;
-  xhr?: XMLHttpRequest;
-  options?: AjaxOptions;
-}
+} from '../shared/ajax.js';
+import param from './param.js';
+import each from './each.js';
+import extend from './extend.js';
 
 /**
  * 判断此请求方法是否通过查询字符串提交参数
@@ -51,9 +44,9 @@ const appendQuery = (url: string, query: string): string => {
  * 合并请求参数，参数优先级：options > globalOptions > defaults
  * @param options
  */
-const mergeOptions = (options: AjaxOptions) => {
+const mergeOptions = (options: Options) => {
   // 默认参数
-  const defaults: Required<AjaxOptionsParams> & AjaxOptions = {
+  const defaults: Required<OptionsParams> & Options = {
     url: '',
     method: 'GET',
     data: '',
@@ -104,7 +97,7 @@ ajax({
 });
 ```
  */
-const ajax = (options: AjaxOptions): Promise<any> => {
+const ajax = (options: Options): Promise<any> => {
   // 是否已取消请求
   let isCanceled = false;
 

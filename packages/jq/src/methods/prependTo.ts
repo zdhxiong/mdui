@@ -1,9 +1,7 @@
-import HTMLString from '../types/HTMLString.js';
-import Selector from '../types/Selector.js';
-import TypeOrArray from '../types/TypeOrArray.js';
+import { HTMLString, Selector, TypeOrArray } from '../shared/core.js';
 import './appendTo.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 把当前元素追加到指定元素内部的前面

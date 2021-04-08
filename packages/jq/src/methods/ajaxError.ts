@@ -1,7 +1,7 @@
-import { GlobalCallback } from '../types/JQAjax.js';
+import { GlobalCallback } from '../shared/ajax.js';
 import './ajaxStart.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 监听全局 Ajax 完成事件

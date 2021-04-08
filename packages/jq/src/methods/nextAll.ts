@@ -1,7 +1,7 @@
-import Selector from '../types/Selector.js';
+import { Selector } from '../shared/core.js';
 import './next.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 获取当前集合中，每个元素后面的所有匹配的同辈元素的集合

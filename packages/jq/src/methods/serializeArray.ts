@@ -1,5 +1,5 @@
 import $ from '../$.js';
-import { JQ } from '../JQ.js';
+import { JQ } from '../shared/core.js';
 import './each.js';
 import './val.js';
 
@@ -8,7 +8,7 @@ interface NameValuePair {
   value: any;
 }
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 把表单元素的值组合成由 `name` 和 `value` 的键值对组成的数组

@@ -1,8 +1,8 @@
 import $ from '../$.js';
 import map from '../functions/map.js';
-import PlainObject from '../interfaces/PlainObject.js';
+import { PlainObject } from '../shared/core.js';
 
-declare module '../interfaces/JQStatic.js' {
+declare module '../shared/core.js' {
   interface JQStatic {
     /**
      * 遍历数组，通过函数返回值生成一个新数组

@@ -1,7 +1,7 @@
 import $ from '../$.js';
 import merge from '../functions/merge.js';
 
-declare module '../interfaces/JQStatic.js' {
+declare module '../shared/core.js' {
   interface JQStatic {
     /**
      * 把第二个数组的元素追加到第一个数组中，并返回合并后的数组

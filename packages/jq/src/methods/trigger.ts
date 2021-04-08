@@ -1,10 +1,9 @@
 import $ from '../$.js';
-import PlainObject from '../interfaces/PlainObject.js';
-import { JQ } from '../JQ.js';
+import { PlainObject, JQ } from '../shared/core.js';
 import './each.js';
 import { parse } from './utils/event.js';
 
-declare module '../JQ.js' {
+declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
      * 触发指定的事件

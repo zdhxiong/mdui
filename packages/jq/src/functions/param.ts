@@ -1,5 +1,4 @@
-import PlainObject from '../interfaces/PlainObject.js';
-import { isObjectLike } from '../utils.js';
+import { PlainObject, isObjectLike } from '../shared/core.js';
 import each from './each.js';
 
 /**

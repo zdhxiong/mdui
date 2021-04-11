@@ -1,11 +1,11 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
 import {
   PlainObject,
   JQ,
   isString,
   isObjectLike,
   returnFalse,
+  eachObject,
 } from '../shared/core.js';
 import './each.js';
 import './off.js';
@@ -123,7 +123,7 @@ $.fn.on = function (
       selector = undefined;
     }
 
-    each(types, (type: string, fn: EventCallback | false) => {
+    eachObject(types, (type: string, fn: EventCallback | false) => {
       // selector 和 data 都可能是 undefined
       // @ts-ignore
       this.on(type, selector, data, fn, one);

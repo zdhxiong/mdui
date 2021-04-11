@@ -1,7 +1,6 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
 import extend from '../functions/extend.js';
-import { PlainObject } from '../shared/core.js';
+import { PlainObject, eachObject } from '../shared/core.js';
 
 /**
  * 比 ../functions/extend 函数多了一个 extend<T>(target: T): this & T 的用法
@@ -271,7 +270,7 @@ var object = extend(
 
 $.extend = function (target: PlainObject, ...objectN: PlainObject[]): any {
   if (!objectN.length) {
-    each(target, (prop, value) => {
+    eachObject(target, (prop, value) => {
       this[prop] = value;
     });
 

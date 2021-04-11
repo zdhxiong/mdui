@@ -1,6 +1,5 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
-import { Selector, JQ } from '../shared/core.js';
+import { Selector, JQ, eachArray } from '../shared/core.js';
 import dir from './utils/dir.js';
 
 declare module '../shared/core.js' {
@@ -23,7 +22,7 @@ $('.box').next('div')
   }
 }
 
-each(['', 'All', 'Until'], (nameIndex, name) => {
+eachArray(['', 'All', 'Until'], (nameIndex, name) => {
   $.fn[`next${name}`] = function (
     this: JQ,
     selector?: any,

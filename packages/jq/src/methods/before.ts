@@ -1,5 +1,4 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
 import {
   HTMLString,
   TypeOrArray,
@@ -8,6 +7,7 @@ import {
   isString,
   isElement,
   getChildNodesArray,
+  eachArray,
 } from '../shared/core.js';
 import './each.js';
 import './insertAfter.js';
@@ -67,7 +67,7 @@ const isPlainText = (target: string): boolean => {
   );
 };
 
-each(['before', 'after'], (nameIndex, name) => {
+eachArray(['before', 'after'], (nameIndex, name) => {
   $.fn[name] = function (this: JQ, ...args: any[]): JQ {
     // after 方法，多个参数需要按参数顺序添加到元素后面，所以需要将参数顺序反向处理
     if (nameIndex === 1) {
@@ -79,7 +79,7 @@ each(['before', 'after'], (nameIndex, name) => {
         ? [args[0].call(element, index, element.innerHTML)]
         : args;
 
-      each(targets, (_, target) => {
+      eachArray(targets, (_, target) => {
         let $target: JQ;
 
         if (isPlainText(target)) {

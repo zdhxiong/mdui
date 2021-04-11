@@ -1,11 +1,11 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
 import {
   PlainObject,
   JQ,
   isFunction,
   isObjectLike,
   returnFalse,
+  eachObject,
 } from '../shared/core.js';
 import './each.js';
 import { EventCallback, remove } from './utils/event.js';
@@ -114,7 +114,7 @@ $.fn.off = function (
 ): any {
   // types 是对象
   if (isObjectLike(types)) {
-    each(types, (type: string, fn: EventCallback | false) => {
+    eachObject(types, (type: string, fn: EventCallback | false) => {
       // this.off('click', undefined, function () {})
       // this.off('click', '.box', function () {})
       this.off(type, selector, fn);

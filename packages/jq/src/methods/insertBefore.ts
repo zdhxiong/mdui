@@ -1,6 +1,11 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
-import { HTMLString, Selector, TypeOrArray, JQ } from '../shared/core.js';
+import {
+  HTMLString,
+  Selector,
+  TypeOrArray,
+  JQ,
+  eachArray,
+} from '../shared/core.js';
 import './each.js';
 
 declare module '../shared/core.js' {
@@ -25,7 +30,7 @@ $('<p>I would like to say: </p>').insertBefore('<b>Hello</b>');
   }
 }
 
-each(['insertBefore', 'insertAfter'], (nameIndex, name) => {
+eachArray(['insertBefore', 'insertAfter'], (nameIndex, name) => {
   $.fn[name] = function (this: JQ, target: any): JQ {
     const $element = nameIndex ? $(this.get().reverse()) : this; // 顺序和 jQuery 保持一致
     const $target = $(target);

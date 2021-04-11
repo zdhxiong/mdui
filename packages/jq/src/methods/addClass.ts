@@ -1,6 +1,5 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
-import { JQ, isElement, isFunction } from '../shared/core.js';
+import { JQ, isElement, isFunction, eachArray } from '../shared/core.js';
 import './each.js';
 
 declare module '../shared/core.js' {
@@ -37,9 +36,9 @@ $('p').addClass(function (index, currentClassName) {
   }
 }
 
-type classListMethod = 'add' | 'remove' | 'toggle';
+type Method = 'add' | 'remove' | 'toggle';
 
-each(['add', 'remove', 'toggle'], (_, name: classListMethod) => {
+eachArray<Method>(['add', 'remove', 'toggle'], (_, name) => {
   $.fn[`${name}Class`] = function (
     this: JQ,
     className:
@@ -64,7 +63,7 @@ each(['add', 'remove', 'toggle'], (_, name: classListMethod) => {
         .split(' ')
         .filter((name) => name);
 
-      each(classes, (_, cls) => {
+      eachArray(classes, (_, cls) => {
         element.classList[name](cls);
       });
     });

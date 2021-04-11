@@ -1,6 +1,5 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
-import { JQ } from '../shared/core.js';
+import { JQ, eachArray } from '../shared/core.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
@@ -24,5 +23,5 @@ $('img').each(function (index, element) {
 }
 
 $.fn.each = function (this: JQ, callback: void | any): JQ {
-  return each(this, callback) as JQ;
+  return eachArray(this, callback) as JQ;
 };

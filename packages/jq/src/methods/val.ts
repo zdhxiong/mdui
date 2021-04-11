@@ -1,5 +1,4 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
 import map from '../functions/map.js';
 import {
   JQ,
@@ -7,6 +6,7 @@ import {
   isFunction,
   isUndefined,
   toElement,
+  eachArray,
 } from '../shared/core.js';
 import './each.js';
 import './is.js';
@@ -54,7 +54,7 @@ $('#input').val()
   }
 }
 
-each(['val', 'html', 'text'], (nameIndex, name) => {
+eachArray(['val', 'html', 'text'], (nameIndex, name) => {
   const props: { [index: number]: string } = {
     0: 'value',
     1: 'innerHTML',

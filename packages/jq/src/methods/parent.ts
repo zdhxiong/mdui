@@ -1,6 +1,5 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
-import { Selector, JQ } from '../shared/core.js';
+import { Selector, JQ, eachArray } from '../shared/core.js';
 import './get.js';
 import dir from './utils/dir.js';
 
@@ -24,7 +23,7 @@ $('.box').parent('.parent')
   }
 }
 
-each(['', 's', 'sUntil'], (nameIndex, name) => {
+eachArray(['', 's', 'sUntil'], (nameIndex, name) => {
   $.fn[`parent${name}`] = function (
     this: JQ,
     selector?: any,

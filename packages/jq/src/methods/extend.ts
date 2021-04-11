@@ -1,6 +1,5 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
-import { PlainObject, JQ } from '../shared/core.js';
+import { PlainObject, JQ, eachObject } from '../shared/core.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
@@ -22,7 +21,7 @@ $(document).customFunc()
 }
 
 $.fn.extend = function (this: JQ, obj: PlainObject): JQ {
-  each(obj, (prop, value) => {
+  eachObject(obj, (prop, value) => {
     // 在 JQ 对象上扩展方法时，需要自己添加 typescript 的类型定义
     $.fn[prop] = value;
   });

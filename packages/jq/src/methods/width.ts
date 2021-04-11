@@ -1,5 +1,4 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
 import {
   JQ,
   isBoolean,
@@ -7,6 +6,7 @@ import {
   isFunction,
   isWindow,
   toElement,
+  eachArray,
 } from '../shared/core.js';
 import {
   isBorderBox,
@@ -63,7 +63,6 @@ $('.box').width();
 }
 
 type typeName = 'Width' | 'Height';
-type typeFuncIndex = 0 | 1 | 2;
 type typeExtra = 'margin' | 'padding' | 'border';
 
 /**
@@ -79,7 +78,7 @@ const handleExtraWidth = (
   element: HTMLElement,
   name: typeName,
   value: number,
-  funcIndex: typeFuncIndex,
+  funcIndex: number,
   includeMargin: boolean,
   multiply: number, // 值乘以多少
 ): number => {
@@ -135,7 +134,7 @@ const handleExtraWidth = (
 const get = (
   element: HTMLElement,
   name: typeName,
-  funcIndex: typeFuncIndex,
+  funcIndex: number,
   includeMargin: boolean,
 ): number => {
   const clientProp = `client${name}` as 'clientWidth' | 'clientHeight';
@@ -186,7 +185,7 @@ const set = (
   element: HTMLElement,
   elementIndex: number,
   name: typeName,
-  funcIndex: typeFuncIndex,
+  funcIndex: number,
   includeMargin: boolean,
   value: string | number,
 ): void => {
@@ -222,10 +221,10 @@ const set = (
   $element.css(dimension, computedValue);
 };
 
-each(['Width', 'Height'], (_, name: typeName) => {
-  each(
+eachArray<typeName>(['Width', 'Height'], (_, name) => {
+  eachArray(
     [`inner${name}`, name.toLowerCase(), `outer${name}`],
-    (funcIndex: typeFuncIndex, funcName) => {
+    (funcIndex, funcName) => {
       $.fn[funcName] = function (
         this: JQ,
         margin?: any,

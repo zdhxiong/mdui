@@ -1,7 +1,6 @@
 import $ from '../$.js';
-import each from '../functions/each.js';
 import unique from '../functions/unique.js';
-import { Selector, JQ, isElement } from '../shared/core.js';
+import { Selector, JQ, isElement, eachArray } from '../shared/core.js';
 import './each.js';
 import './is.js';
 
@@ -29,7 +28,7 @@ $.fn.children = function (this: JQ, selector?: Selector): JQ {
   const children: Element[] = [];
 
   this.each((_, element) => {
-    each(element.childNodes, (__, childNode) => {
+    eachArray(element.childNodes, (__, childNode) => {
       if (!isElement(childNode)) {
         return;
       }

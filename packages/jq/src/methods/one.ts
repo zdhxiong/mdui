@@ -1,7 +1,7 @@
 import $ from '../$.js';
 import { PlainObject, JQ } from '../shared/core.js';
+import { EventCallback } from '../shared/event.js';
 import './on.js';
-import { EventCallback } from './utils/event.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

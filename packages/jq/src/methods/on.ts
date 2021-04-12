@@ -7,9 +7,9 @@ import {
   returnFalse,
   eachObject,
 } from '../shared/core.js';
+import { EventCallback, add } from '../shared/event.js';
 import './each.js';
 import './off.js';
-import { EventCallback, add } from './utils/event.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

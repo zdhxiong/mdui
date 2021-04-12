@@ -13,7 +13,6 @@ import {
   getExtraWidth,
   getComputedStyleValue,
 } from '../shared/css.js';
-import { isIE } from '../utils.js';
 import './css.js';
 import './each.js';
 
@@ -95,13 +94,6 @@ const handleExtraWidth = (
   }
 
   if (isBorderBox(element)) {
-    // IE 为 box-sizing: border-box 时，得到的值不含 border 和 padding，这里先修复
-    // 仅获取时需要处理，multiply === 1 为 get
-    if (isIE() && multiply === 1) {
-      value += getExtraWidthValue('border');
-      value += getExtraWidthValue('padding');
-    }
-
     if (funcIndex === 0) {
       value -= getExtraWidthValue('border');
     }

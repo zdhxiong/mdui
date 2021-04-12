@@ -1,27 +1,30 @@
-import { PlainObject } from './core.js';
+import extend from '../functions/extend.js';
+import { eachObject, isUndefined, PlainObject } from './core.js';
 
 // 请求方法名
-export type Method =
-  | 'get'
+export type MethodUpperCase =
   | 'GET'
-  | 'delete'
   | 'DELETE'
-  | 'head'
   | 'HEAD'
-  | 'options'
   | 'OPTIONS'
-  | 'post'
   | 'POST'
-  | 'put'
   | 'PUT'
-  | 'patch'
   | 'PATCH'
-  | 'purge'
   | 'PURGE'
-  | 'link'
   | 'LINK'
-  | 'unlink'
   | 'UNLINK';
+export type MethodLowerCase =
+  | 'get'
+  | 'delete'
+  | 'head'
+  | 'options'
+  | 'post'
+  | 'put'
+  | 'patch'
+  | 'purge'
+  | 'link'
+  | 'unlink';
+export type Method = MethodUpperCase | MethodLowerCase;
 
 // 请求响应类型
 export type DataType = 'text' | 'json';
@@ -613,3 +616,63 @@ export const ajaxEvents = {
 
 // 全局配置参数
 export const globalOptions: Options = {};
+
+/**
+ * 判断此请求方法是否通过查询字符串提交参数
+ * @param method 请求方法，大写
+ */
+export const isQueryStringData = (method: MethodUpperCase): boolean => {
+  return ['GET', 'HEAD'].indexOf(method) >= 0;
+};
+
+/**
+ * 添加参数到 URL 上，且 URL 中不存在 ? 时，自动把第一个 & 替换为 ?
+ * @param url
+ * @param query
+ */
+export const appendQuery = (url: string, query: string): string => {
+  return `${url}&${query}`.replace(/[&?]{1,2}/, '?');
+};
+
+/**
+ * 合并请求参数，参数优先级：options > globalOptions > defaults
+ * @param options
+ */
+export const mergeOptions = (options: Options) => {
+  // 默认参数
+  const defaults: Required<OptionsParams> & Options = {
+    url: '',
+    method: 'GET',
+    data: '',
+    processData: true,
+    async: true,
+    cache: true,
+    username: '',
+    password: '',
+    headers: {},
+    xhrFields: {},
+    statusCode: {},
+    dataType: 'text',
+    contentType: 'application/x-www-form-urlencoded',
+    timeout: 0,
+    global: true,
+  };
+
+  // globalOptions 中的回调函数不合并
+  eachObject(globalOptions, (key, value) => {
+    const callbacks: (CallbackName | 'statusCode')[] = [
+      'beforeSend',
+      'success',
+      'error',
+      'complete',
+      'statusCode',
+    ];
+
+    // @ts-ignore
+    if (!callbacks.includes(key) && !isUndefined(value)) {
+      defaults[key] = value as never;
+    }
+  });
+
+  return extend({}, defaults, options);
+};

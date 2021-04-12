@@ -138,11 +138,7 @@ export const isNode = (target: any): target is Node => {
 };
 
 export const isArrayLike = (target: any): target is ArrayLike<any> => {
-  if (isFunction(target) || isWindow(target)) {
-    return false;
-  }
-
-  return isNumber(target.length);
+  return !isFunction(target) && !isWindow(target) && isNumber(target.length);
 };
 
 export const isObjectLike = (target: any): target is Record<string, any> => {

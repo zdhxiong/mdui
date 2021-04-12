@@ -1,5 +1,4 @@
 import $ from '../$.js';
-import '../methods/trigger.js';
 import {
   isString,
   isUndefined,
@@ -7,6 +6,7 @@ import {
   eachArray,
 } from '../shared/core.js';
 import {
+  MethodUpperCase,
   CallbackName,
   ErrorCallback,
   ErrorTextStatus,
@@ -16,76 +16,18 @@ import {
   SuccessTextStatus,
   TextStatus,
   Options,
-  OptionsParams,
   EventParams,
   globalOptions,
   ajaxStart,
   ajaxSuccess,
   ajaxError,
   ajaxComplete,
+  isQueryStringData,
+  appendQuery,
+  mergeOptions,
 } from '../shared/ajax.js';
 import param from './param.js';
-import extend from './extend.js';
-
-/**
- * 判断此请求方法是否通过查询字符串提交参数
- * @param method 请求方法，大写
- */
-const isQueryStringData = (method: string): boolean => {
-  return ['GET', 'HEAD'].indexOf(method) >= 0;
-};
-
-/**
- * 添加参数到 URL 上，且 URL 中不存在 ? 时，自动把第一个 & 替换为 ?
- * @param url
- * @param query
- */
-const appendQuery = (url: string, query: string): string => {
-  return `${url}&${query}`.replace(/[&?]{1,2}/, '?');
-};
-
-/**
- * 合并请求参数，参数优先级：options > globalOptions > defaults
- * @param options
- */
-const mergeOptions = (options: Options) => {
-  // 默认参数
-  const defaults: Required<OptionsParams> & Options = {
-    url: '',
-    method: 'GET',
-    data: '',
-    processData: true,
-    async: true,
-    cache: true,
-    username: '',
-    password: '',
-    headers: {},
-    xhrFields: {},
-    statusCode: {},
-    dataType: 'text',
-    contentType: 'application/x-www-form-urlencoded',
-    timeout: 0,
-    global: true,
-  };
-
-  // globalOptions 中的回调函数不合并
-  eachObject(globalOptions, (key, value) => {
-    const callbacks: (CallbackName | 'statusCode')[] = [
-      'beforeSend',
-      'success',
-      'error',
-      'complete',
-      'statusCode',
-    ];
-
-    // @ts-ignore
-    if (!callbacks.includes(key) && !isUndefined(value)) {
-      defaults[key] = value as never;
-    }
-  });
-
-  return extend({}, defaults, options);
-};
+import '../methods/trigger.js';
 
 /**
  * 发送 ajax 请求
@@ -110,7 +52,7 @@ const ajax = (options: Options): Promise<any> => {
 
   // 参数合并
   const mergedOptions = mergeOptions(options);
-  const method = mergedOptions.method.toUpperCase();
+  const method = mergedOptions.method.toUpperCase() as MethodUpperCase;
   let { data, url } = mergedOptions;
   url = url || window.location.toString();
   const {

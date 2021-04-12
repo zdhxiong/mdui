@@ -1,5 +1,9 @@
-import { PlainObject, isObjectLike } from '../shared/core.js';
-import each from './each.js';
+import {
+  PlainObject,
+  isObjectLike,
+  eachObject,
+  eachArray,
+} from '../shared/core.js';
 
 /**
  * 将数组或对象序列化，序列化后的字符串可作为 URL 查询字符串使用
@@ -41,7 +45,7 @@ const param = (obj: any[] | PlainObject): string => {
     let keyTmp;
 
     if (isObjectLike(value)) {
-      each(value, (i, v) => {
+      eachObject(value, (i, v) => {
         keyTmp = Array.isArray(value) && !isObjectLike(v) ? '' : i;
 
         destructure(`${key}[${keyTmp}]`, v);
@@ -55,9 +59,9 @@ const param = (obj: any[] | PlainObject): string => {
   }
 
   if (Array.isArray(obj)) {
-    each(obj, (_, { name, value }) => destructure(name, value));
+    eachArray(obj, (_, { name, value }) => destructure(name, value));
   } else {
-    each(obj, destructure);
+    eachObject(obj, destructure);
   }
 
   return args.join('&');

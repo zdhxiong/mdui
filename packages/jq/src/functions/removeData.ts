@@ -1,11 +1,5 @@
-import {
-  TypeOrArray,
-  isUndefined,
-  isString,
-  toCamelCase,
-} from '../shared/core.js';
-import { weakMap } from '../shared/data.js';
-import each from './each.js';
+import { TypeOrArray, isUndefined, isString } from '../shared/core.js';
+import { removeAll, removeMultiple } from '../shared/data.js';
 
 /**
  * 移除指定元素上存放的数据
@@ -41,32 +35,15 @@ const removeData = (
   element: Element | Document | Window,
   name?: TypeOrArray<string>,
 ): void => {
-  const data = weakMap.get(element);
-
-  if (isUndefined(data)) {
-    return;
-  }
-
-  const remove = (nameItem: string): void => {
-    nameItem = toCamelCase(nameItem);
-    delete data[nameItem];
-  };
-
   if (isUndefined(name)) {
-    weakMap.delete(element);
-    return;
+    return removeAll(element);
   }
 
-  if (isString(name)) {
-    name
-      .split(' ')
-      .filter((nameItem) => nameItem)
-      .forEach((nameItem) => remove(nameItem));
-  } else {
-    each(name, (_, nameItem) => remove(nameItem));
-  }
+  const keys = isString(name)
+    ? name.split(' ').filter((nameItem) => nameItem)
+    : name;
 
-  weakMap.set(element, data);
+  removeMultiple(element, keys);
 };
 
 export default removeData;

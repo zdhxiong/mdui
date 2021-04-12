@@ -33,9 +33,6 @@ describe('$.extend', function () {
     };
     const result = $.extend(obj1, obj2, obj3);
 
-    console.log(obj1);
-    console.log(result);
-
     assert.deepEqual(obj1, expected);
     assert.deepEqual(result, expected);
   });

@@ -1,6 +1,11 @@
 import $ from '../$.js';
 import '../methods/trigger.js';
-import { isString, isUndefined } from '../shared/core.js';
+import {
+  isString,
+  isUndefined,
+  eachObject,
+  eachArray,
+} from '../shared/core.js';
 import {
   CallbackName,
   ErrorCallback,
@@ -20,7 +25,6 @@ import {
   ajaxComplete,
 } from '../shared/ajax.js';
 import param from './param.js';
-import each from './each.js';
 import extend from './extend.js';
 
 /**
@@ -65,7 +69,7 @@ const mergeOptions = (options: Options) => {
   };
 
   // globalOptions 中的回调函数不合并
-  each(globalOptions, (key, value) => {
+  eachObject(globalOptions, (key, value) => {
     const callbacks: (CallbackName | 'statusCode')[] = [
       'beforeSend',
       'success',
@@ -219,7 +223,7 @@ const ajax = (options: Options): Promise<any> => {
 
       // 添加 headers
       if (headers) {
-        each(headers, (key: string, value) => {
+        eachObject(headers, (key: string, value) => {
           // undefined 值不发送，string 和 null 需要发送
           if (!isUndefined(value)) {
             xhr.setRequestHeader(key, value + ''); // 把 null 转换成字符串
@@ -237,7 +241,7 @@ const ajax = (options: Options): Promise<any> => {
       }
 
       if (xhrFields) {
-        each(xhrFields, (key, value) => {
+        eachObject(xhrFields, (key, value) => {
           // @ts-ignore
           xhr[key] = value;
         });
@@ -324,7 +328,7 @@ const ajax = (options: Options): Promise<any> => {
         }
 
         // statusCode
-        each(
+        eachArray(
           [globalOptions.statusCode!, statusCode],
           (_, func: StatusCodeCallbacks) => {
             if (func && func[xhr.status]) {

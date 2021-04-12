@@ -1,14 +1,13 @@
 import $ from '../$.js';
-import data from '../functions/data.js';
 import {
   PlainObject,
   JQ,
-  isString,
   isUndefined,
   isObjectLike,
+  eachObject,
   toCamelCase,
-  toKebabCase,
 } from '../shared/core.js';
+import { dataAttr, get, getAll, set, setAll } from '../shared/data.js';
 import './each.js';
 
 declare module '../shared/core.js' {
@@ -63,51 +62,6 @@ $('.box').data()
   }
 }
 
-const rbrace = /^(?:{[\w\W]*\}|\[[\w\W]*\])$/;
-
-// 从 `data-*` 中获取的值，需要经过该函数转换
-const getData = (value: string): any => {
-  if (value === 'true') {
-    return true;
-  }
-
-  if (value === 'false') {
-    return false;
-  }
-
-  if (value === 'null') {
-    return null;
-  }
-
-  if (value === +value + '') {
-    return +value;
-  }
-
-  if (rbrace.test(value)) {
-    return JSON.parse(value);
-  }
-
-  return value;
-};
-
-// 若 value 不存在，则从 `data-*` 中获取值
-const dataAttr = (element: HTMLElement, key: string, value?: any): any => {
-  if (isUndefined(value) && element.nodeType === 1) {
-    const name = 'data-' + toKebabCase(key);
-    value = element.getAttribute(name);
-
-    if (isString(value)) {
-      try {
-        value = getData(value);
-      } catch (e) {}
-    } else {
-      value = undefined;
-    }
-  }
-
-  return value;
-};
-
 $.fn.data = function (this: JQ, key?: string | PlainObject, value?: any): any {
   // 获取所有值
   if (isUndefined(key)) {
@@ -116,25 +70,17 @@ $.fn.data = function (this: JQ, key?: string | PlainObject, value?: any): any {
     }
 
     const element = this[0];
-    const resultData = data(element);
+    const resultData = getAll(element);
 
-    // window, document 上不存在 `data-*` 属性
+    // window, document 上不存在 `dataset`
     if (element.nodeType !== 1) {
       return resultData;
     }
 
-    // 从 `data-*` 中获取值
-    const attrs = element.attributes;
-    let i = attrs.length;
-    while (i--) {
-      if (attrs[i]) {
-        let name = attrs[i].name;
-        if (name.indexOf('data-') === 0) {
-          name = toCamelCase(name.slice(5));
-          resultData[name] = dataAttr(element, name, resultData[name]);
-        }
-      }
-    }
+    // 若值未通过 data 方法设置，则从 `dataset` 中获取值。dataset 中读取的 key 会自动转为驼峰法
+    eachObject(element.dataset, (key: string) => {
+      resultData[key] = dataAttr(element, key, resultData[key]);
+    });
 
     return resultData;
   }
@@ -142,7 +88,7 @@ $.fn.data = function (this: JQ, key?: string | PlainObject, value?: any): any {
   // 同时设置多个值
   if (isObjectLike(key)) {
     return this.each(function () {
-      data(this, key);
+      setAll(this, key);
     });
   }
 
@@ -154,7 +100,7 @@ $.fn.data = function (this: JQ, key?: string | PlainObject, value?: any): any {
   // 设置值
   if (!isUndefined(value)) {
     return this.each(function () {
-      data(this, key as string, value);
+      set(this, key as string, value);
     });
   }
 
@@ -163,5 +109,5 @@ $.fn.data = function (this: JQ, key?: string | PlainObject, value?: any): any {
     return undefined;
   }
 
-  return dataAttr(this[0], key, data(this[0], key));
+  return dataAttr(this[0], toCamelCase(key), get(this[0], key));
 };

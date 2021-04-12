@@ -1,37 +1,5 @@
-import {
-  PlainObject,
-  isUndefined,
-  isObjectLike,
-  toCamelCase,
-  eachObject,
-} from '../shared/core.js';
-import { weakMap } from '../shared/data.js';
-
-/**
- * 获取指定元素上的所有数据
- * @param element
- */
-const getDataInElement = (element: Element | Document | Window) => {
-  return weakMap.get(element) ?? {};
-};
-
-/**
- * 在元素上设置键值对数据
- * @param element
- * @param object
- */
-const setObjectToElement = (
-  element: Element | Document | Window,
-  object: PlainObject,
-): void => {
-  const data = getDataInElement(element);
-
-  eachObject(object, (key: string, value) => {
-    data[toCamelCase(key)] = value;
-  });
-
-  weakMap.set(element, data);
-};
+import { PlainObject, isUndefined, isObjectLike } from '../shared/core.js';
+import { get, set, getAll, setAll } from '../shared/data.js';
 
 /**
  * `value` 为 `undefined` 时，相当于 `data(element, key)`，即获取指定元素上存储的数据
@@ -120,34 +88,26 @@ function data(
   // 根据键值对设置值
   // data(element, { 'key' : 'value' })
   if (isObjectLike(key)) {
-    setObjectToElement(element, key);
+    setAll(element, key);
     return key;
   }
 
   // 根据 key、value 设置值
   // data(element, 'key', 'value')
   if (!isUndefined(value)) {
-    setObjectToElement(element, { [key as string]: value });
+    set(element, key as string, value);
     return value;
   }
-
-  const data = getDataInElement(element);
 
   // 获取所有值
   // data(element)
   if (isUndefined(key)) {
-    return data;
+    return getAll(element);
   }
 
   // 获取指定值
   // data(element, 'key')
-  key = toCamelCase(key);
-
-  if (key in data) {
-    return data[key];
-  }
-
-  return undefined;
+  return get(element, key);
 }
 
 export default data;

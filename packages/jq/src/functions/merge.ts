@@ -1,4 +1,4 @@
-import each from './each.js';
+import { eachArray } from '../shared/core.js';
 
 /**
  * 把第二个数组的元素追加到第一个数组中，并返回合并后的数组
@@ -11,7 +11,7 @@ merge( [ 0, 1, 2 ], [ 2, 3, 4 ] )
 ```
  */
 const merge = <T, U>(first: T[], second: U[]): Array<T | U> => {
-  each(second, (_, value) => {
+  eachArray(second, (_, value) => {
     first.push(value as any);
   });
 

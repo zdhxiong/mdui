@@ -17,10 +17,10 @@ $('input').removeProp('disabled')
 }
 
 $.fn.removeProp = function (this: JQ, name: string): JQ {
-  return this.each(function () {
+  return this.each((_, element) => {
     try {
       // @ts-ignore
-      delete this[name];
+      delete element[name];
     } catch (e) {}
   });
 };

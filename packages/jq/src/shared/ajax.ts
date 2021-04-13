@@ -1,5 +1,5 @@
 import extend from '../functions/extend.js';
-import { eachObject, isUndefined, PlainObject } from './core.js';
+import { PlainObject, eachObject, isUndefined } from './core.js';
 
 // 请求方法名
 export type MethodUpperCase =
@@ -622,7 +622,7 @@ export const globalOptions: Options = {};
  * @param method 请求方法，大写
  */
 export const isQueryStringData = (method: MethodUpperCase): boolean => {
-  return ['GET', 'HEAD'].indexOf(method) >= 0;
+  return ['GET', 'HEAD'].includes(method);
 };
 
 /**

@@ -38,8 +38,9 @@ $.fn.trigger = function (this: JQ, type: string, extraParameters: any): JQ {
     bubbles: true,
     cancelable: true,
   };
-  const isMouseEvent =
-    ['click', 'mousedown', 'mouseup', 'mousemove'].indexOf(event.type) > -1;
+  const isMouseEvent = ['click', 'mousedown', 'mouseup', 'mousemove'].includes(
+    event.type,
+  );
 
   if (isMouseEvent) {
     // Note: MouseEvent 无法传入 detail 参数
@@ -55,7 +56,7 @@ $.fn.trigger = function (this: JQ, type: string, extraParameters: any): JQ {
   // @ts-ignore
   eventObject._ns = event.ns;
 
-  return this.each(function () {
-    this.dispatchEvent(eventObject);
+  return this.each((_, element) => {
+    element.dispatchEvent(eventObject);
   });
 };

@@ -58,6 +58,6 @@ $.fn.filter = function (this: JQ, selector: any): JQ {
   const $selector = $(selector);
 
   return this.map((_, element) => {
-    return $selector.get().indexOf(element) > -1 ? element : undefined;
+    return $selector.get().includes(element) ? element : undefined;
   });
 };

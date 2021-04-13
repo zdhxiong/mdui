@@ -16,7 +16,7 @@ $('.box').empty()
 }
 
 $.fn.empty = function (this: JQ): JQ {
-  return this.each(function () {
-    this.innerHTML = '';
+  return this.each((_, element) => {
+    element.innerHTML = '';
   });
 };

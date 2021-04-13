@@ -8,8 +8,8 @@ import {
   isString,
   isArrayLike,
   eachObject,
-  getChildNodesArray,
 } from './shared/core.js';
+import { getChildNodesArray } from './shared/dom.js';
 
 const get$ = (): JQStatic => {
   const $ = function (
@@ -53,7 +53,7 @@ const get$ = (): JQStatic => {
       const html = selector.trim();
 
       // 根据 HTML 字符串创建 JQ 对象
-      if (html[0] === '<' && html[html.length - 1] === '>') {
+      if (html.startsWith('<') && html.endsWith('>')) {
         let toCreate = 'div';
 
         const tags = {
@@ -66,7 +66,7 @@ const get$ = (): JQStatic => {
         };
 
         eachObject(tags, (childTag, parentTag) => {
-          if (html.indexOf(`<${childTag}`) === 0) {
+          if (html.startsWith(`<${childTag}`)) {
             toCreate = parentTag;
             return false;
           }

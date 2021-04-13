@@ -1,5 +1,6 @@
 import $ from '../$.js';
 import { JQ, eachArray } from '../shared/core.js';
+import { removeAttribute } from '../shared/attributes.js';
 import './each.js';
 
 declare module '../shared/core.js' {
@@ -27,7 +28,7 @@ $.fn.removeAttr = function (this: JQ, attributeName: string): JQ {
 
   return this.each(function () {
     eachArray(names, (_, name) => {
-      this.removeAttribute(name);
+      removeAttribute(this, name);
     });
   });
 };

@@ -16,7 +16,7 @@ $('.box').hide();
 }
 
 $.fn.hide = function (this: JQ): JQ {
-  return this.each(function () {
-    this.style.display = 'none';
+  return this.each((_, element) => {
+    element.style.display = 'none';
   });
 };

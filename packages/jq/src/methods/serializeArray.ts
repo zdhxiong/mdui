@@ -44,9 +44,9 @@ $.fn.serializeArray = function (this: JQ): NameValuePair[] {
         nodeName !== 'fieldset' &&
         (element as HTMLInputElement).name &&
         !(element as HTMLInputElement).disabled &&
-        ['input', 'select', 'textarea', 'keygen'].indexOf(nodeName) > -1 &&
-        ['submit', 'button', 'image', 'reset', 'file'].indexOf(type) === -1 &&
-        (['radio', 'checkbox'].indexOf(type) === -1 ||
+        ['input', 'select', 'textarea', 'keygen'].includes(nodeName) &&
+        !['submit', 'button', 'image', 'reset', 'file'].includes(type) &&
+        (!['radio', 'checkbox'].includes(type) ||
           (element as HTMLInputElement).checked)
       ) {
         const value = $element.val();

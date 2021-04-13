@@ -41,7 +41,7 @@ const param = (obj: any[] | PlainObject): string => {
 
   const args: any[] = [];
 
-  function destructure(key: any, value: any): void {
+  const destructure = (key: any, value: any): void => {
     let keyTmp;
 
     if (isObjectLike(value)) {
@@ -56,10 +56,12 @@ const param = (obj: any[] | PlainObject): string => {
 
       args.push(encodeURIComponent(key) + keyTmp);
     }
-  }
+  };
 
   if (Array.isArray(obj)) {
-    eachArray(obj, (_, { name, value }) => destructure(name, value));
+    eachArray(obj, (_, { name, value }) => {
+      return destructure(name, value);
+    });
   } else {
     eachObject(obj, destructure);
   }

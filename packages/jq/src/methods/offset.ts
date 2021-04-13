@@ -98,7 +98,7 @@ const set = (
 
   const calculatePosition =
     (position === 'absolute' || position === 'fixed') &&
-    (currentTopString + currentLeftString).indexOf('auto') > -1;
+    (currentTopString + currentLeftString).includes('auto');
 
   if (calculatePosition) {
     const currentPosition = $element.position();

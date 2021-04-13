@@ -35,5 +35,9 @@ $.fn.map = function (
   this: JQ<any>,
   callback: (this: any, index: number, element: any) => null | undefined | any,
 ): JQ {
-  return new JQ(map(this, (element, i) => callback.call(element, i, element)));
+  return new JQ(
+    map(this, (element, i) => {
+      return callback.call(element, i, element);
+    }),
+  );
 };

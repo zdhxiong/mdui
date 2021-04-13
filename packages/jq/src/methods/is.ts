@@ -55,10 +55,7 @@ $.fn.is = function (this: JQ, selector: any): boolean {
         return;
       }
 
-      // @ts-ignore
-      const matches = element.matches || element.msMatchesSelector;
-
-      if (matches.call(element, selector)) {
+      if (element.matches.call(element, selector)) {
         isMatched = true;
       }
     });

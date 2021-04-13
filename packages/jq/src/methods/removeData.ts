@@ -41,7 +41,7 @@ $('.box').removeData();
 }
 
 $.fn.removeData = function (this: JQ, name?: TypeOrArray<string>): JQ {
-  return this.each(function () {
-    removeData(this, name);
+  return this.each((_, element) => {
+    removeData(element, name);
   });
 };

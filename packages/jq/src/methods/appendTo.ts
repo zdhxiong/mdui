@@ -6,6 +6,7 @@ import {
   JQ,
   eachArray,
 } from '../shared/core.js';
+import { createElement, appendChild } from '../shared/dom.js';
 import './insertAfter.js';
 import './insertBefore.js';
 import './map.js';
@@ -38,8 +39,8 @@ eachArray(['appendTo', 'prependTo'], (nameIndex, name) => {
         return childNodes[nameIndex ? 0 : childLength - 1];
       }
 
-      const child = document.createElement('div');
-      element.appendChild(child);
+      const child = createElement('div');
+      appendChild(element, child);
       extraChilds.push(child);
 
       return child;

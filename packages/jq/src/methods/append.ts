@@ -7,6 +7,7 @@ import {
   isString,
   eachArray,
 } from '../shared/core.js';
+import { createElement, appendChild, removeChild } from '../shared/dom.js';
 import './after.js';
 import './before.js';
 import './clone.js';
@@ -66,10 +67,10 @@ eachArray(['prepend', 'append'], (nameIndex, name) => {
 
       const child = childLength
         ? childNodes[nameIndex ? childLength - 1 : 0]
-        : document.createElement('div');
+        : createElement('div');
 
       if (!childLength) {
-        element.appendChild(child);
+        appendChild(element, child);
       }
 
       let contents = isFunction(args[0])
@@ -86,7 +87,7 @@ eachArray(['prepend', 'append'], (nameIndex, name) => {
       $(child)[nameIndex ? 'after' : 'before'](...contents);
 
       if (!childLength) {
-        element.removeChild(child);
+        removeChild(element, child);
       }
     });
   };

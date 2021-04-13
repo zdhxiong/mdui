@@ -1,5 +1,6 @@
 import $ from '../$.js';
 import { Selector, JQ } from '../shared/core.js';
+import { removeChild } from '../shared/dom.js';
 import './each.js';
 import './is.js';
 
@@ -26,7 +27,7 @@ $('p').remove('.box')
 $.fn.remove = function (this: JQ, selector?: Selector): JQ {
   return this.each((_, element) => {
     if (element.parentNode && (!selector || $(element).is(selector))) {
-      element.parentNode.removeChild(element);
+      removeChild(element.parentNode, element);
     }
   });
 };

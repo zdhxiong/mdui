@@ -1,6 +1,7 @@
 import $ from '../$.js';
 import { JQ } from '../shared/core.js';
 import { getStyle } from '../shared/css.js';
+import { createElement, appendChild, removeChild } from '../shared/dom.js';
 import './each.js';
 
 declare module '../shared/core.js' {
@@ -29,10 +30,10 @@ const defaultDisplay = (nodeName: string): string => {
   let display: string;
 
   if (!elementDisplay[nodeName]) {
-    element = document.createElement(nodeName);
-    document.body.appendChild(element);
+    element = createElement(nodeName);
+    appendChild(document.body, element);
     display = getStyle(element, 'display');
-    element.parentNode!.removeChild(element);
+    removeChild(element.parentNode!, element);
     if (display === 'none') {
       display = 'block';
     }
@@ -48,13 +49,13 @@ const defaultDisplay = (nodeName: string): string => {
  * @returns {JQ}
  */
 $.fn.show = function (this: JQ): JQ {
-  return this.each(function () {
-    if (this.style.display === 'none') {
-      this.style.display = '';
+  return this.each((_, element) => {
+    if (element.style.display === 'none') {
+      element.style.display = '';
     }
 
-    if (getStyle(this, 'display') === 'none') {
-      this.style.display = defaultDisplay(this.nodeName);
+    if (getStyle(element, 'display') === 'none') {
+      element.style.display = defaultDisplay(element.nodeName);
     }
   });
 };

@@ -6,9 +6,9 @@ import {
   isFunction,
   isString,
   isElement,
-  getChildNodesArray,
   eachArray,
 } from '../shared/core.js';
+import { getChildNodesArray } from '../shared/dom.js';
 import './each.js';
 import './insertAfter.js';
 import './insertBefore.js';
@@ -62,9 +62,7 @@ $('<p>Hello</p>').before(function (index, html) {
  * @param target
  */
 const isPlainText = (target: string): boolean => {
-  return (
-    isString(target) && (target[0] !== '<' || target[target.length - 1] !== '>')
-  );
+  return isString(target) && !(target.startsWith('<') && target.endsWith('>'));
 };
 
 eachArray(['before', 'after'], (nameIndex, name) => {

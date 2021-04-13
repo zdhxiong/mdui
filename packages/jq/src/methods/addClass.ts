@@ -1,5 +1,6 @@
 import $ from '../$.js';
 import { JQ, isElement, isFunction, eachArray } from '../shared/core.js';
+import { getAttribute, setAttribute } from '../shared/attributes.js';
 import './each.js';
 
 declare module '../shared/core.js' {
@@ -47,7 +48,7 @@ eachArray<Method>(['add', 'remove', 'toggle'], (_, name) => {
   ): JQ {
     if (name === 'remove' && !arguments.length) {
       return this.each((_, element) => {
-        element.setAttribute('class', '');
+        setAttribute(element, 'class', '');
       });
     }
 
@@ -57,7 +58,7 @@ eachArray<Method>(['add', 'remove', 'toggle'], (_, name) => {
       }
 
       const classes = (isFunction(className)
-        ? className.call(element, i, element.getAttribute('class') || '')
+        ? className.call(element, i, getAttribute(element, 'class', ''))
         : className
       )
         .split(' ')

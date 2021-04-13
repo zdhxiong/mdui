@@ -9,7 +9,7 @@ import {
 
 type ElementTarget = Element | Document | Window;
 
-export const weakMap = new WeakMap();
+const weakMap = new WeakMap();
 
 /**
  * 获取元素上的所有数据

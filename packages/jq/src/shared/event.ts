@@ -20,33 +20,31 @@ type Handler = {
   selector?: string; // 选择器
 };
 
-type Handlers = {
-  // 元素ID
-  [elementIndex: number]: Handler[];
-};
-
-// 存储事件
-const handlers: Handlers = {};
-
-// 元素ID
-let mduiElementId = 1;
+type ElementIdKey = Element | Document | Window | Function;
+const elementIdMap = new WeakMap<ElementIdKey, number>();
+let elementId = 1;
 
 /**
  * 为元素赋予一个唯一的ID
  */
-const getElementId = (
-  element: Element | Document | Window | Function,
-): number => {
-  const key = '_mduiEventId';
-
-  // @ts-ignore
-  if (!element[key]) {
-    // @ts-ignore
-    element[key] = ++mduiElementId;
+const getElementId = (element: ElementIdKey): number => {
+  if (!elementIdMap.has(element)) {
+    elementIdMap.set(element, ++elementId);
   }
 
-  // @ts-ignore
-  return element[key];
+  return elementIdMap.get(element)!;
+};
+
+// 存储唯一ID及事件处理
+const handlersMap = new Map<number, Handler[]>();
+
+/**
+ * 获取元素上的事件处理器数组
+ * @param element
+ */
+const getHandlers = (element: ElementIdKey): Handler[] => {
+  const id = getElementId(element);
+  return handlersMap.get(id) || handlersMap.set(id, []).get(id)!;
 };
 
 /**
@@ -75,7 +73,7 @@ const matcherFor = (ns: string): RegExp => {
  * @param func
  * @param selector
  */
-const getHandlers = (
+const getMatchedHandlers = (
   element: Element | Document | Window,
   type: string,
   func?: Function,
@@ -83,14 +81,15 @@ const getHandlers = (
 ): Handler[] => {
   const event = parse(type);
 
-  return (handlers[getElementId(element)] || []).filter(
-    (handler) =>
+  return getHandlers(element).filter((handler) => {
+    return (
       handler &&
       (!event.type || handler.type === event.type) &&
       (!event.ns || matcherFor(event.ns).test(handler.ns)) &&
       (!func || getElementId(handler.func) === getElementId(func)) &&
-      (!selector || handler.selector === selector),
-  );
+      (!selector || handler.selector === selector)
+    );
+  });
 };
 
 /**
@@ -108,12 +107,6 @@ export const add = (
   data?: any,
   selector?: string,
 ): void => {
-  const elementId = getElementId(element);
-
-  if (!handlers[elementId]) {
-    handlers[elementId] = [];
-  }
-
   // 传入 data.useCapture 来设置 useCapture: true
   let useCapture = false;
   if (isObjectLike(data) && data.useCapture) {
@@ -175,11 +168,11 @@ export const add = (
       ns: event.ns,
       func,
       selector,
-      id: handlers[elementId].length,
+      id: getHandlers(element).length,
       proxy: proxyFn,
     };
 
-    handlers[elementId].push(handler);
+    getHandlers(element).push(handler);
 
     element.addEventListener(handler.type, proxyFn, useCapture);
   });
@@ -198,20 +191,22 @@ export const remove = (
   func?: Function,
   selector?: string,
 ): void => {
-  const handlersInElement = handlers[getElementId(element)] || [];
+  const handlersInElement = getHandlers(element);
   const removeEvent = (handler: Handler): void => {
     delete handlersInElement[handler.id];
     element.removeEventListener(handler.type, handler.proxy, false);
   };
 
   if (!types) {
-    handlersInElement.forEach((handler) => removeEvent(handler));
+    handlersInElement.forEach((handler) => {
+      removeEvent(handler);
+    });
   } else {
     types.split(' ').forEach((type) => {
       if (type) {
-        getHandlers(element, type, func, selector).forEach((handler) =>
-          removeEvent(handler),
-        );
+        getMatchedHandlers(element, type, func, selector).forEach((handler) => {
+          removeEvent(handler);
+        });
       }
     });
   }

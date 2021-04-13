@@ -55,18 +55,15 @@ $('#input').val()
 }
 
 eachArray(['val', 'html', 'text'], (nameIndex, name) => {
-  const props: { [index: number]: string } = {
-    0: 'value',
-    1: 'innerHTML',
-    2: 'textContent',
-  };
+  const props = ['value', 'innerHTML', 'textContent'];
   const propName = props[nameIndex];
 
   const get = ($elements: JQ): any => {
     // text() 获取所有元素的文本
     if (nameIndex === 2) {
-      // @ts-ignore
-      return map($elements, (element) => toElement(element)[propName]).join('');
+      return map($elements, (element) => {
+        return toElement(element)[propName as 'textContent'];
+      }).join('');
     }
 
     // 空集合时，val() 和 html() 返回 undefined
@@ -76,12 +73,13 @@ eachArray(['val', 'html', 'text'], (nameIndex, name) => {
 
     // val() 和 html() 仅获取第一个元素的内容
     const firstElement = $elements[0];
+    const $firstElement = $(firstElement);
 
     // select multiple 返回数组
-    if (nameIndex === 0 && $(firstElement).is('select[multiple]')) {
+    if (nameIndex === 0 && $firstElement.is('select[multiple]')) {
       return map(
-        $(firstElement).find('option:checked'),
-        (element) => (element as HTMLOptionElement).value,
+        $firstElement.find('option:checked') as JQ<HTMLOptionElement>,
+        (element) => element.value,
       );
     }
 
@@ -116,27 +114,25 @@ eachArray(['val', 'html', 'text'], (nameIndex, name) => {
 
     // 设置值
     return this.each((i, element) => {
+      const $element = $(element);
       const computedValue = isFunction(value)
-        ? value.call(element, i, get($(element)))
+        ? value.call(element, i, get($element))
         : value;
 
       // value 是数组，则选中数组中的元素，反选不在数组中的元素
       if (nameIndex === 0 && Array.isArray(computedValue)) {
         // select[multiple]
-        if ($(element).is('select[multiple]')) {
-          map(
-            $(element).find('option'),
-            (option) =>
-              ((option as HTMLOptionElement).selected =
-                computedValue.indexOf((option as HTMLOptionElement).value) >
-                -1),
-          );
+        if ($element.is('select[multiple]')) {
+          map($element.find('option') as JQ<HTMLOptionElement>, (option) => {
+            return (option.selected = computedValue.includes(option.value));
+          });
         }
 
         // 其他 checkbox, radio 等元素
         else {
-          (element as HTMLInputElement).checked =
-            computedValue.indexOf((element as HTMLInputElement).value) > -1;
+          (element as HTMLInputElement).checked = computedValue.includes(
+            (element as HTMLInputElement).value,
+          );
         }
       } else {
         set(element, computedValue);

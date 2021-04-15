@@ -183,7 +183,7 @@ describe('$.ajax', function () {
 
     const promise = $.ajax({
       method: 'GET',
-      url: './data/get_text.html',
+      url: './data/get_text.php',
       global: true,
       beforeSend: function (xhr) {
         callbackBeforeSend++;
@@ -310,7 +310,7 @@ describe('$.ajax', function () {
     return new Promise<void>((resolve, reject) => {
       $.ajax({
         method: 'get',
-        url: './data/not_fount.html',
+        url: './data/not_fount.php',
         global: true,
         beforeSend: function () {
           callbackBeforeSend++;
@@ -371,9 +371,13 @@ describe('$.ajax', function () {
           }
           assert.equal(textStatus, 'error');
         },
-      }).catch(function () {
-        resolve();
-      });
+      })
+        .then(function () {
+          reject('not found');
+        })
+        .catch(function () {
+          resolve();
+        });
     });
   });
 

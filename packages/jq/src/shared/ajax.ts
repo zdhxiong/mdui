@@ -635,6 +635,24 @@ export const appendQuery = (url: string, query: string): string => {
 };
 
 /**
+ * url 是否跨域
+ * @param url
+ */
+export const isCrossDomain = (url: string): boolean => {
+  return (
+    /^([\w-]+:)?\/\/([^/]+)/.test(url) && RegExp.$2 !== window.location.host
+  );
+};
+
+/**
+ * HTTP 状态码是否表示请求成功
+ * @param status
+ */
+export const isHttpStatusSuccess = (status: number): boolean => {
+  return (status >= 200 && status < 300) || [0, 304].includes(status);
+};
+
+/**
  * 合并请求参数，参数优先级：options > globalOptions > defaults
  * @param options
  */

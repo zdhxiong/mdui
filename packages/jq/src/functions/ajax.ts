@@ -23,6 +23,8 @@ import {
   ajaxError,
   ajaxComplete,
   isQueryStringData,
+  isCrossDomain,
+  isHttpStatusSuccess,
   appendQuery,
   mergeOptions,
 } from '../shared/ajax.js';
@@ -72,9 +74,10 @@ const ajax = (options: Options): Promise<any> => {
 
   // 需要发送的数据
   // GET/HEAD 请求和 processData 为 true 时，转换为查询字符串格式，特殊格式不转换
+  const isMethodQueryString = isQueryStringData(method);
   if (
     data &&
-    (isQueryStringData(method) || processData) &&
+    (isMethodQueryString || processData) &&
     !isString(data) &&
     !(data instanceof ArrayBuffer) &&
     !(data instanceof Blob) &&
@@ -85,7 +88,7 @@ const ajax = (options: Options): Promise<any> => {
   }
 
   // 对于 GET、HEAD 类型的请求，把 data 数据添加到 URL 中
-  if (data && isQueryStringData(method)) {
+  if (data && isMethodQueryString) {
     // 查询字符串拼接到 URL 中
     url = appendQuery(url, data);
     data = null;
@@ -94,45 +97,41 @@ const ajax = (options: Options): Promise<any> => {
   /**
    * 触发事件和回调函数
    * @param event
-   * @param params
    * @param callback
    * @param args
    */
   const trigger = (
     event: EventName,
-    params: EventParams,
     callback: CallbackName,
     ...args: any[]
   ): void => {
     // 触发全局事件
     if (global) {
-      $(document).trigger(event, params);
+      $(document).trigger(event, eventParams);
     }
 
     // 触发 ajax 回调和事件
-    let result1;
-    let result2;
+    let resultGlobal;
+    let resultCustom;
 
-    if (callback) {
-      // 全局回调
-      if (callback in globalOptions) {
-        // @ts-ignore
-        result1 = globalOptions[callback](...args);
-      }
+    // 全局回调
+    if (callback in globalOptions) {
+      // @ts-ignore
+      resultGlobal = globalOptions[callback](...args);
+    }
 
-      // 自定义回调
-      if (mergedOptions[callback]) {
-        // @ts-ignore
-        result2 = mergedOptions[callback](...args);
-      }
+    // 自定义回调
+    if (mergedOptions[callback]) {
+      // @ts-ignore
+      resultCustom = mergedOptions[callback](...args);
+    }
 
-      // beforeSend 回调返回 false 时取消 ajax 请求
-      if (
-        callback === 'beforeSend' &&
-        (result1 === false || result2 === false)
-      ) {
-        isCanceled = true;
-      }
+    // beforeSend 回调返回 false 时取消 ajax 请求
+    if (
+      callback === 'beforeSend' &&
+      [resultGlobal, resultCustom].includes(false)
+    ) {
+      isCanceled = true;
     }
   };
 
@@ -141,8 +140,12 @@ const ajax = (options: Options): Promise<any> => {
     let textStatus: TextStatus;
 
     return new Promise((resolve, reject): void => {
+      const doReject = (reason: string) => {
+        return reject(new Error(reason));
+      };
+
       // GET/HEAD 请求的缓存处理
-      if (isQueryStringData(method) && !cache) {
+      if (isMethodQueryString && !cache) {
         url = appendQuery(url, `_=${Date.now()}`);
       }
 
@@ -153,7 +156,7 @@ const ajax = (options: Options): Promise<any> => {
 
       if (
         contentType ||
-        (data && !isQueryStringData(method) && contentType !== false)
+        (data && !isMethodQueryString && contentType !== false)
       ) {
         xhr.setRequestHeader('Content-Type', contentType);
       }
@@ -164,30 +167,22 @@ const ajax = (options: Options): Promise<any> => {
       }
 
       // 添加 headers
-      if (headers) {
-        eachObject(headers, (key: string, value) => {
-          // undefined 值不发送，string 和 null 需要发送
-          if (!isUndefined(value)) {
-            xhr.setRequestHeader(key, value + ''); // 把 null 转换成字符串
-          }
-        });
-      }
+      eachObject(headers, (key: string, value) => {
+        // undefined 值不发送，string 和 null 需要发送
+        if (!isUndefined(value)) {
+          xhr.setRequestHeader(key, value + ''); // 把 null 转换成字符串
+        }
+      });
 
       // 检查是否是跨域请求，跨域请求时不添加 X-Requested-With
-      const crossDomain =
-        /^([\w-]+:)?\/\/([^/]+)/.test(url) &&
-        RegExp.$2 !== window.location.host;
-
-      if (!crossDomain) {
+      if (!isCrossDomain(url)) {
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       }
 
-      if (xhrFields) {
-        eachObject(xhrFields, (key, value) => {
-          // @ts-ignore
-          xhr[key] = value;
-        });
-      }
+      // 设置 xhr 选项
+      eachObject(xhrFields, (key, value) => {
+        xhr[key] = value as never;
+      });
 
       eventParams.xhr = xhr;
       eventParams.options = mergedOptions;
@@ -200,21 +195,17 @@ const ajax = (options: Options): Promise<any> => {
         }
 
         // AJAX 返回的 HTTP 响应码是否表示成功
-        const isHttpStatusSuccess =
-          (xhr.status >= 200 && xhr.status < 300) ||
-          xhr.status === 304 ||
-          xhr.status === 0;
+        const isSuccess = isHttpStatusSuccess(xhr.status);
 
         let responseData: any;
 
-        if (isHttpStatusSuccess) {
-          if (xhr.status === 204 || method === 'HEAD') {
-            textStatus = 'nocontent';
-          } else if (xhr.status === 304) {
-            textStatus = 'notmodified';
-          } else {
-            textStatus = 'success';
-          }
+        if (isSuccess) {
+          textStatus =
+            xhr.status === 204 || method === 'HEAD'
+              ? 'nocontent'
+              : xhr.status === 304
+              ? 'notmodified'
+              : 'success';
 
           if (dataType === 'json') {
             try {
@@ -224,21 +215,12 @@ const ajax = (options: Options): Promise<any> => {
             } catch (err) {
               textStatus = 'parsererror';
 
-              trigger(ajaxError, eventParams, 'error', xhr, textStatus);
-
-              reject(new Error(textStatus));
+              trigger(ajaxError, 'error', xhr, textStatus);
+              doReject(textStatus);
             }
 
             if (textStatus !== 'parsererror') {
-              trigger(
-                ajaxSuccess,
-                eventParams,
-                'success',
-                responseData,
-                textStatus,
-                xhr,
-              );
-
+              trigger(ajaxSuccess, 'success', responseData, textStatus, xhr);
               resolve(responseData);
             }
           } else {
@@ -250,23 +232,14 @@ const ajax = (options: Options): Promise<any> => {
                 : xhr.response;
             eventParams.data = responseData;
 
-            trigger(
-              ajaxSuccess,
-              eventParams,
-              'success',
-              responseData,
-              textStatus,
-              xhr,
-            );
-
+            trigger(ajaxSuccess, 'success', responseData, textStatus, xhr);
             resolve(responseData);
           }
         } else {
           textStatus = 'error';
 
-          trigger(ajaxError, eventParams, 'error', xhr, textStatus);
-
-          reject(new Error(textStatus));
+          trigger(ajaxError, 'error', xhr, textStatus);
+          doReject(textStatus);
         }
 
         // statusCode
@@ -274,7 +247,7 @@ const ajax = (options: Options): Promise<any> => {
           [globalOptions.statusCode!, statusCode],
           (_, func: StatusCodeCallbacks) => {
             if (func && func[xhr.status]) {
-              if (isHttpStatusSuccess) {
+              if (isSuccess) {
                 (func[xhr.status] as SuccessCallback)(
                   responseData,
                   textStatus as SuccessTextStatus,
@@ -290,7 +263,7 @@ const ajax = (options: Options): Promise<any> => {
           },
         );
 
-        trigger(ajaxComplete, eventParams, 'complete', xhr, textStatus);
+        trigger(ajaxComplete, 'complete', xhr, textStatus);
       };
 
       xhr.onerror = (): void => {
@@ -298,10 +271,9 @@ const ajax = (options: Options): Promise<any> => {
           clearTimeout(xhrTimeout);
         }
 
-        trigger(ajaxError, eventParams, 'error', xhr, xhr.statusText);
-        trigger(ajaxComplete, eventParams, 'complete', xhr, 'error');
-
-        reject(new Error(xhr.statusText));
+        trigger(ajaxError, 'error', xhr, xhr.statusText);
+        trigger(ajaxComplete, 'complete', xhr, 'error');
+        doReject(xhr.statusText);
       };
 
       xhr.onabort = (): void => {
@@ -312,26 +284,21 @@ const ajax = (options: Options): Promise<any> => {
           clearTimeout(xhrTimeout);
         }
 
-        trigger(ajaxError, eventParams, 'error', xhr, statusText);
-        trigger(ajaxComplete, eventParams, 'complete', xhr, statusText);
-
-        reject(new Error(statusText));
+        trigger(ajaxError, 'error', xhr, statusText);
+        trigger(ajaxComplete, 'complete', xhr, statusText);
+        doReject(statusText);
       };
 
       // ajax start 回调
-      trigger(ajaxStart, eventParams, 'beforeSend', xhr);
+      trigger(ajaxStart, 'beforeSend', xhr);
 
       if (isCanceled) {
-        reject(new Error('cancel'));
-
-        return;
+        return doReject('cancel');
       }
 
       // Timeout
       if (timeout > 0) {
-        xhrTimeout = setTimeout(() => {
-          xhr.abort();
-        }, timeout);
+        xhrTimeout = setTimeout(() => xhr.abort(), timeout);
       }
 
       // 发送 XHR

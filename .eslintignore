@@ -1,0 +1,8 @@
+.DS_STORE
+.idea
+.vscode
+.vs
+.git
+dist
+es
+node_modules

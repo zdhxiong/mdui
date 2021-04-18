@@ -39,12 +39,16 @@ $('p').addClass(function (index, currentClassName) {
 
 type Method = 'add' | 'remove' | 'toggle';
 
-eachArray<Method>(['add', 'remove', 'toggle'], (_, name) => {
-  $.fn[`${name}Class`] = function (
+eachArray<Method>(['add', 'remove', 'toggle'], (name) => {
+  $.fn[`${name}Class` as 'addClass'] = function (
     this: JQ,
     className:
       | string
-      | ((this: any, index: number, currentClassName: string) => string),
+      | ((
+          this: HTMLElement,
+          index: number,
+          currentClassName: string,
+        ) => string),
   ): JQ {
     if (name === 'remove' && !arguments.length) {
       return this.each((_, element) => {
@@ -56,15 +60,14 @@ eachArray<Method>(['add', 'remove', 'toggle'], (_, name) => {
       if (!isElement(element)) {
         return;
       }
-
       const classes = (isFunction(className)
-        ? className.call(element, i, getAttribute(element, 'class', ''))
+        ? className.call(element, i, <string>getAttribute(element, 'class', ''))
         : className
       )
         .split(' ')
         .filter((name) => name);
 
-      eachArray(classes, (_, cls) => {
+      eachArray(classes, (cls) => {
         element.classList[name](cls);
       });
     });

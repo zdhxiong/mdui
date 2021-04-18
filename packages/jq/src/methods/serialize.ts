@@ -4,7 +4,7 @@ import { JQ } from '../shared/core.js';
 import './serializeArray.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 把表单元素的值编译为字符串
      * @example

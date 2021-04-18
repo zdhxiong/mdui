@@ -18,7 +18,7 @@ ajax({
 });
 ```
      */
-    ajax(options: Options): Promise<any>;
+    ajax(options: Options): Promise<unknown>;
   }
 }
 

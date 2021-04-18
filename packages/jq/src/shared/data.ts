@@ -9,7 +9,7 @@ import {
 
 type ElementTarget = Element | Document | Window;
 
-const weakMap = new WeakMap();
+const weakMap = new WeakMap<ElementTarget, PlainObject>();
 
 /**
  * 获取元素上的所有数据
@@ -24,7 +24,7 @@ export const getAll = (element: ElementTarget): PlainObject => {
  * @param element
  * @param keyOriginal
  */
-export const get = (element: ElementTarget, keyOriginal: string) => {
+export const get = (element: ElementTarget, keyOriginal: string): unknown => {
   const data = getAll(element);
   const key = toCamelCase(keyOriginal);
 
@@ -36,7 +36,7 @@ export const get = (element: ElementTarget, keyOriginal: string) => {
  * @param element
  * @param object
  */
-export const setAll = (element: ElementTarget, object: PlainObject) => {
+export const setAll = (element: ElementTarget, object: PlainObject): void => {
   const data = getAll(element);
 
   eachObject(object, (keyOriginal: string, value) => {
@@ -55,8 +55,8 @@ export const setAll = (element: ElementTarget, object: PlainObject) => {
 export const set = (
   element: ElementTarget,
   keyOriginal: string,
-  value: any,
-) => {
+  value: unknown,
+): void => {
   setAll(element, { [keyOriginal]: value });
 };
 
@@ -64,7 +64,7 @@ export const set = (
  * 移除元素上所有数据
  * @param element
  */
-export const removeAll = (element: ElementTarget) => {
+export const removeAll = (element: ElementTarget): void => {
   weakMap.delete(element);
 };
 
@@ -76,10 +76,10 @@ export const removeAll = (element: ElementTarget) => {
 export const removeMultiple = (
   element: ElementTarget,
   keysOriginal: ArrayLike<string>,
-) => {
+): void => {
   const data = getAll(element);
 
-  eachArray(keysOriginal, (_, keyOriginal) => {
+  eachArray(keysOriginal, (keyOriginal) => {
     const key = toCamelCase(keyOriginal);
     delete data[key];
   });
@@ -93,7 +93,7 @@ const rbrace = /^(?:{[\w\W]*\}|\[[\w\W]*\])$/;
  * dataset 中的值读取时进行转换
  * @param value
  */
-const stringTransform = (value: string) => {
+const stringTransform = (value: string): unknown => {
   if (value === 'true') {
     return true;
   }
@@ -118,7 +118,11 @@ const stringTransform = (value: string) => {
 };
 
 // 若 value 不存在，则从 `dataset` 中获取值。key 需要自行转为驼峰法
-export const dataAttr = (element: HTMLElement, key: string, value?: any) => {
+export const dataAttr = (
+  element: HTMLElement,
+  key: string,
+  value?: unknown,
+): unknown => {
   if (isUndefined(value) && element.nodeType === 1) {
     value = element.dataset[key];
 

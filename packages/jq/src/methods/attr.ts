@@ -108,7 +108,8 @@ $('div').attr('title');
   }
 }
 
-eachArray(['attr', 'prop', 'css'], (nameIndex, name) => {
+eachArray(['attr', 'prop', 'css'], (name, nameIndex) => {
+  // eslint-disable-next-line
   const set = (element: HTMLElement, key: string, value: any): void => {
     // 值为 undefined 时，不修改
     if (isUndefined(value)) {
@@ -136,6 +137,7 @@ eachArray(['attr', 'prop', 'css'], (nameIndex, name) => {
       : value;
   };
 
+  // eslint-disable-next-line
   const get = (element: HTMLElement, key: string): any => {
     // attr
     if (nameIndex === 0) {
@@ -152,10 +154,12 @@ eachArray(['attr', 'prop', 'css'], (nameIndex, name) => {
     return getStyle(element, key);
   };
 
-  $.fn[name] = function (
+  $.fn[name as 'attr'] = function (
     this: JQ,
     key: string | PlainObject,
+    // eslint-disable-next-line
     value?: any,
+    // eslint-disable-next-line
   ): any {
     if (isObjectLike(key)) {
       eachObject(key, (k, v) => {

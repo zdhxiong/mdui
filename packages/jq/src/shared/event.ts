@@ -7,20 +7,20 @@ import '../methods/get.js';
 export type EventCallback = (
   this: Element | Document | Window,
   event: Event,
-  data?: any,
-  ...dataN: any[]
+  data?: unknown,
+  ...dataN: unknown[]
 ) => void | false;
 
 type Handler = {
   type: string; // 事件名
   ns: string; // 命名空间
-  func: Function; // 事件处理函数
+  func: EventCallback; // 事件处理函数
   id: number; // 事件ID
-  proxy: any;
+  proxy: (e: Event) => void;
   selector?: string; // 选择器
 };
 
-type ElementIdKey = Element | Document | Window | Function;
+type ElementIdKey = Element | Document | Window | EventCallback;
 const elementIdMap = new WeakMap<ElementIdKey, number>();
 let elementId = 1;
 
@@ -32,6 +32,7 @@ const getElementId = (element: ElementIdKey): number => {
     elementIdMap.set(element, ++elementId);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return elementIdMap.get(element)!;
 };
 
@@ -44,6 +45,7 @@ const handlersMap = new Map<number, Handler[]>();
  */
 const getHandlers = (element: ElementIdKey): Handler[] => {
   const id = getElementId(element);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return handlersMap.get(id) || handlersMap.set(id, []).get(id)!;
 };
 
@@ -76,7 +78,7 @@ const matcherFor = (ns: string): RegExp => {
 const getMatchedHandlers = (
   element: Element | Document | Window,
   type: string,
-  func?: Function,
+  func?: EventCallback,
   selector?: string,
 ): Handler[] => {
   const event = parse(type);
@@ -103,8 +105,8 @@ const getMatchedHandlers = (
 export const add = (
   element: Element | Document | Window,
   types: string,
-  func: Function,
-  data?: any,
+  func: EventCallback,
+  data?: unknown,
   selector?: string,
 ): void => {
   // 传入 data.useCapture 来设置 useCapture: true
@@ -145,15 +147,12 @@ export const add = (
 
       if (selector) {
         // 事件代理
-        $(element)
+        $(element as HTMLElement)
           .find(selector)
           .get()
           .reverse()
           .forEach((elem) => {
-            if (
-              elem === e.target ||
-              contains(elem as HTMLElement, e.target as HTMLElement)
-            ) {
+            if (elem === e.target || contains(elem, e.target as HTMLElement)) {
               callFn(e, elem);
             }
           });
@@ -188,7 +187,7 @@ export const add = (
 export const remove = (
   element: Element | Document | Window,
   types?: string,
-  func?: Function,
+  func?: EventCallback,
   selector?: string,
 ): void => {
   const handlersInElement = getHandlers(element);

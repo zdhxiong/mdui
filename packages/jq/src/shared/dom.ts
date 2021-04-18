@@ -6,8 +6,8 @@ export const appendChild = <T extends Node>(element: Node, child: T): T => {
   return element.appendChild(child);
 };
 
-export const removeChild = <T extends Node>(element: Node, child: T): T => {
-  return element.removeChild(child);
+export const removeChild = <T extends Node>(element: T): T => {
+  return element.parentNode ? element.parentNode.removeChild(element) : element;
 };
 
 /**

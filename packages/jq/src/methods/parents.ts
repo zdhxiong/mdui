@@ -2,7 +2,7 @@ import { Selector } from '../shared/core.js';
 import './parent.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 获取当前集合中，所有元素的祖先元素
      * @param selector CSS 选择器。若指定了该参数，则仅返回与该参数匹配的祖先元素的集合

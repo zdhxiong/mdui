@@ -5,7 +5,7 @@ import { createElement, appendChild, removeChild } from '../shared/dom.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 显示集合中的所有元素
      * @example
@@ -33,7 +33,7 @@ const defaultDisplay = (nodeName: string): string => {
     element = createElement(nodeName);
     appendChild(document.body, element);
     display = getStyle(element, 'display');
-    removeChild(element.parentNode!, element);
+    removeChild(element);
     if (display === 'none') {
       display = 'block';
     }

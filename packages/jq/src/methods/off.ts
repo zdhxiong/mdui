@@ -11,7 +11,7 @@ import { EventCallback, remove } from '../shared/event.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 解除通过事件委托绑定的指定事件
      * @param eventName
@@ -109,8 +109,11 @@ $('.wrapper').off();
 $.fn.off = function (
   this: JQ,
   types?: PlainObject<EventCallback | false> | string,
+  // eslint-disable-next-line
   selector?: any,
+  // eslint-disable-next-line
   callback?: any,
+  // eslint-disable-next-line
 ): any {
   // types 是对象
   if (isObjectLike(types)) {

@@ -2,7 +2,7 @@ import { GlobalCallback } from '../shared/ajax.js';
 import './ajaxStart.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 监听全局 Ajax 完成事件
      * 通过 $(document).on('error.mdui.ajax', function (event, params) {}) 调用时，包含两个参数

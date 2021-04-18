@@ -21,7 +21,7 @@ data(document.body, 'type', undefined)
       element: Element | Document | Window,
       key: string,
       value: undefined,
-    ): any;
+    ): unknown;
 
     /**
      * 在指定元素上存储数据，返回存储的值
@@ -48,7 +48,7 @@ data(document.body, 'type', 'image')
 data(document.body, 'key')
 ```
      */
-    data(element: Element | Document | Window, key: string): any;
+    data(element: Element | Document | Window, key: string): unknown;
 
     /**
      * 获取指定元素上存储的所有数据

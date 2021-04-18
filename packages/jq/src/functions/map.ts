@@ -87,15 +87,16 @@ function map<T extends PlainObject, K extends keyof T, TReturn>(
   ) => TReturn | TReturn[] | null | undefined,
 ): TReturn[];
 
-function map(elements: any, callback: Function): any {
+// eslint-disable-next-line
+function map(elements: any, callback: Function): unknown {
   let value;
-  const ret: any[] = [];
+  const ret: never[] = [];
 
   each(elements, (i, element) => {
     value = callback.call(window, element, i);
 
     if (value != null) {
-      ret.push(value);
+      ret.push(value as never);
     }
   });
 

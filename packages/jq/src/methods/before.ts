@@ -65,8 +65,9 @@ const isPlainText = (target: string): boolean => {
   return isString(target) && !(target.startsWith('<') && target.endsWith('>'));
 };
 
-eachArray(['before', 'after'], (nameIndex, name) => {
-  $.fn[name] = function (this: JQ, ...args: any[]): JQ {
+eachArray(['before', 'after'], (name, nameIndex) => {
+  // eslint-disable-next-line
+  $.fn[name as 'before'] = function (this: JQ, ...args: any[]): JQ {
     // after 方法，多个参数需要按参数顺序添加到元素后面，所以需要将参数顺序反向处理
     if (nameIndex === 1) {
       args = args.reverse();
@@ -77,7 +78,7 @@ eachArray(['before', 'after'], (nameIndex, name) => {
         ? [args[0].call(element, index, element.innerHTML)]
         : args;
 
-      eachArray(targets, (_, target) => {
+      eachArray(targets, (target) => {
         let $target: JQ;
 
         if (isPlainText(target)) {

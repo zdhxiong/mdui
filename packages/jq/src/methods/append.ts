@@ -59,8 +59,9 @@ $('<p>Hello</p>').append(function (index, html) {
   }
 }
 
-eachArray(['prepend', 'append'], (nameIndex, name) => {
-  $.fn[name] = function (this: JQ, ...args: any[]): JQ {
+eachArray(['prepend', 'append'], (name, nameIndex) => {
+  // eslint-disable-next-line
+  $.fn[name as 'append'] = function (this: JQ, ...args: any[]): JQ {
     return this.each((index, element) => {
       const childNodes = element.childNodes;
       const childLength = childNodes.length;
@@ -87,7 +88,7 @@ eachArray(['prepend', 'append'], (nameIndex, name) => {
       $(child)[nameIndex ? 'after' : 'before'](...contents);
 
       if (!childLength) {
-        removeChild(element, child);
+        removeChild(child);
       }
     });
   };

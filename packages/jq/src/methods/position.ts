@@ -11,7 +11,7 @@ interface Coordinates {
 }
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 获取集合中第一个元素相对于父元素的偏移
      * @example
@@ -28,6 +28,7 @@ const floatStyle = ($element: JQ, name: string): number => {
   return parseFloat($element.css(name));
 };
 
+// @ts-ignore
 $.fn.position = function (this: JQ): Coordinates | undefined {
   if (!this.length) {
     return undefined;

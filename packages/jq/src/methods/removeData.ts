@@ -4,7 +4,7 @@ import { TypeOrArray, JQ } from '../shared/core.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 移除元素上存储的数据
      *

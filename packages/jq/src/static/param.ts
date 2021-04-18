@@ -2,6 +2,9 @@ import $ from '../$.js';
 import param from '../functions/param.js';
 import { PlainObject } from '../shared/core.js';
 
+// @ts-ignore
+type Value = Record<string, Value> | string | number | boolean;
+
 declare module '../shared/core.js' {
   interface JQStatic {
     /**
@@ -33,7 +36,7 @@ param([
 // name=mdui&password=123456
 ```
  */
-    param(obj: any[] | PlainObject): string;
+    param(obj: { name: string; value: Value[] }[] | PlainObject): string;
   }
 }
 

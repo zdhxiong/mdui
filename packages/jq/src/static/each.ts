@@ -22,7 +22,7 @@ $.each( [ "a", "b", "c" ], function( index, value ){
      */
     each<T>(
       array: ArrayLike<T>,
-      callback: (this: T, index: number, value: T) => any | false,
+      callback: (this: T, index: number, value: T) => unknown,
     ): ArrayLike<T>;
 
     /**
@@ -43,7 +43,7 @@ $.each({ name: "John", lang: "JS" }, function( key, value ) {
      */
     each<T extends PlainObject, K extends keyof T>(
       obj: T,
-      callback: (this: T[K], key: K, value: T[K]) => any | false,
+      callback: (this: T[K], key: K, value: T[K]) => unknown,
     ): T;
   }
 }

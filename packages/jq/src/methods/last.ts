@@ -3,7 +3,7 @@ import { JQ } from '../shared/core.js';
 import './eq.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 返回当前集合中最后一个元素的 JQ 对象
      * @example

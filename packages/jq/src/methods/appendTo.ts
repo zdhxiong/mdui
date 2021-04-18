@@ -13,7 +13,7 @@ import './map.js';
 import './remove.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 把当前元素追加到指定元素内部的后面
      * @param target CSS 选择器、HTML 字符串、DOM 元素、DOM 元素数组、或 JQ 对象
@@ -28,8 +28,9 @@ $('<p>Hello</p>').appendTo('<p>I would like to say: </p>')
   }
 }
 
-eachArray(['appendTo', 'prependTo'], (nameIndex, name) => {
-  $.fn[name] = function (this: JQ, target: any): JQ {
+eachArray(['appendTo', 'prependTo'], (name, nameIndex) => {
+  // eslint-disable-next-line
+  $.fn[name as 'appendTo'] = function (this: JQ, target: any): JQ {
     const extraChilds: HTMLElement[] = [];
     const $target = $(target).map((_, element: HTMLElement) => {
       const childNodes = element.childNodes;

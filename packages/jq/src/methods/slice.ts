@@ -2,7 +2,7 @@ import $ from '../$.js';
 import { JQ } from '../shared/core.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 返回一个当前集合的子集
      *

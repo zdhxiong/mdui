@@ -4,7 +4,7 @@ import './css.js';
 import './map.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 返回最近的用于定位的父元素
      *

@@ -36,6 +36,7 @@ $('#select option').not(function (idx, element) {
   }
 }
 
+// eslint-disable-next-line
 $.fn.not = function (this: JQ, selector: any): JQ {
   const $excludes = this.filter(selector);
 

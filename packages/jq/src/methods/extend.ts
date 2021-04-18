@@ -2,7 +2,7 @@ import $ from '../$.js';
 import { PlainObject, JQ, eachObject } from '../shared/core.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 在 $ 的原型链上扩展方法
      * @param obj
@@ -23,7 +23,7 @@ $(document).customFunc()
 $.fn.extend = function (this: JQ, obj: PlainObject): JQ {
   eachObject(obj, (prop, value) => {
     // 在 JQ 对象上扩展方法时，需要自己添加 typescript 的类型定义
-    $.fn[prop] = value;
+    $.fn[prop as never] = value;
   });
 
   return this;

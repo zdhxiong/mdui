@@ -30,19 +30,19 @@ $('input').prop('checked', function () {
         | number
         | boolean
         | symbol
-        | object
+        | PlainObject
         | null
         | undefined
         | ((
             this: T,
             index: number,
-            oldPropValue: any,
+            oldPropValue: unknown,
           ) =>
             | string
             | number
             | boolean
             | symbol
-            | object
+            | PlainObject
             | null
             | void
             | undefined),
@@ -79,19 +79,19 @@ $('input').prop({
         | number
         | boolean
         | symbol
-        | object
+        | PlainObject
         | null
         | undefined
         | ((
             this: T,
             index: number,
-            oldPropValue: any,
+            oldPropValue: unknown,
           ) =>
             | string
             | number
             | boolean
             | symbol
-            | object
+            | PlainObject
             | null
             | void
             | undefined)
@@ -106,6 +106,6 @@ $('input').prop({
 $('input').prop('checked');
 ```
      */
-    prop(name: string): any;
+    prop(name: string): unknown;
   }
 }

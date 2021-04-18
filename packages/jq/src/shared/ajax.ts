@@ -2,7 +2,7 @@ import extend from '../functions/extend.js';
 import { PlainObject, eachObject, isUndefined } from './core.js';
 
 // 请求方法名
-export type MethodUpperCase =
+export type Method =
   | 'GET'
   | 'DELETE'
   | 'HEAD'
@@ -13,18 +13,6 @@ export type MethodUpperCase =
   | 'PURGE'
   | 'LINK'
   | 'UNLINK';
-export type MethodLowerCase =
-  | 'get'
-  | 'delete'
-  | 'head'
-  | 'options'
-  | 'post'
-  | 'put'
-  | 'patch'
-  | 'purge'
-  | 'link'
-  | 'unlink';
-export type Method = MethodUpperCase | MethodLowerCase;
 
 // 请求响应类型
 export type DataType = 'text' | 'json';
@@ -40,7 +28,7 @@ export type TextStatus = SuccessTextStatus | ErrorTextStatus;
 // 回调函数
 export type BeforeSendCallback = (xhr: XMLHttpRequest) => void | false;
 export type SuccessCallback = (
-  data: any,
+  data: unknown,
   textStatus: SuccessTextStatus,
   xhr: XMLHttpRequest,
 ) => void;
@@ -53,7 +41,7 @@ export type CompleteCallback = (
   textStatus: TextStatus,
 ) => void;
 
-export interface OptionsCallback {
+export interface OptionsCallback extends PlainObject {
   /**
    * 在请求发送之前调用。返回 false 时将取消 AJAX 请求
    * @param xhr
@@ -76,7 +64,7 @@ export interface OptionsCallback {
   complete?: CompleteCallback;
 }
 
-export interface OptionsParams {
+export interface OptionsParams extends PlainObject {
   /**
    * 请求的 URL 地址
    */
@@ -85,12 +73,12 @@ export interface OptionsParams {
   /**
    * 请求方式 (e.g. "POST", "GET", "PUT")
    */
-  method?: Method;
+  method?: Lowercase<Method> | Uppercase<Method>;
 
   /**
    * 请求发送的数据
    */
-  data?: any;
+  data?: unknown;
 
   /**
    * 是否把请求数据转换成查询字符串发送
@@ -167,7 +155,7 @@ export type GlobalSuccessCallback = (
   event: Event,
   xhr: XMLHttpRequest,
   options: Options,
-  data: any,
+  data: unknown,
 ) => void;
 
 // 状态码对应回调函数
@@ -588,10 +576,10 @@ export type XHRFields = Partial<
 >;
 
 // ajax 事件参数
-export interface EventParams {
-  data?: string;
-  xhr?: XMLHttpRequest;
-  options?: Options;
+export interface EventParams extends PlainObject {
+  data: string;
+  xhr: XMLHttpRequest;
+  options: Options;
 }
 
 // 全局事件名
@@ -621,7 +609,7 @@ export const globalOptions: Options = {};
  * 判断此请求方法是否通过查询字符串提交参数
  * @param method 请求方法，大写
  */
-export const isQueryStringData = (method: MethodUpperCase): boolean => {
+export const isQueryStringData = (method: Uppercase<Method>): boolean => {
   return ['GET', 'HEAD'].includes(method);
 };
 
@@ -656,7 +644,9 @@ export const isHttpStatusSuccess = (status: number): boolean => {
  * 合并请求参数，参数优先级：options > globalOptions > defaults
  * @param options
  */
-export const mergeOptions = (options: Options) => {
+export const mergeOptions = (
+  options: Options,
+): Required<OptionsParams> & Options => {
   // 默认参数
   const defaults: Required<OptionsParams> & Options = {
     url: '',
@@ -677,8 +667,8 @@ export const mergeOptions = (options: Options) => {
   };
 
   // globalOptions 中的回调函数不合并
-  eachObject(globalOptions, (key, value) => {
-    const callbacks: (CallbackName | 'statusCode')[] = [
+  eachObject(globalOptions, (key: string, value) => {
+    const callbacks: Array<CallbackName | 'statusCode'> = [
       'beforeSend',
       'success',
       'error',
@@ -686,9 +676,11 @@ export const mergeOptions = (options: Options) => {
       'statusCode',
     ];
 
-    // @ts-ignore
-    if (!callbacks.includes(key) && !isUndefined(value)) {
-      defaults[key] = value as never;
+    if (
+      !((callbacks as unknown) as string).includes(key) &&
+      !isUndefined(value)
+    ) {
+      defaults[key] = value;
     }
   });
 

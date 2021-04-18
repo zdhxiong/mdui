@@ -5,7 +5,7 @@ import { TypeOrArray, JQ } from '../shared/core.js';
 import './get.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 添加元素到当前 JQ 对象中
      * @param selector 可以是 HTML 字符串、CSS 选择器、JQ 对象、DOM 元素、DOM 元素数组、NodeList 等
@@ -19,6 +19,7 @@ $('.box').add('.selected');
   }
 }
 
+// eslint-disable-next-line
 $.fn.add = function (this: JQ, selector: any): JQ {
   return new JQ(unique(merge(this.get(), $(selector).get())));
 };

@@ -2,6 +2,7 @@ import $ from '../$.js';
 import {
   JQ,
   isBoolean,
+  isString,
   isDocument,
   isFunction,
   isWindow,
@@ -15,6 +16,8 @@ import {
 } from '../shared/css.js';
 import './css.js';
 import './each.js';
+
+type Value = string | number | null | undefined;
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
@@ -39,15 +42,8 @@ $('.box').width(10);
      */
     width(
       value:
-        | string
-        | number
-        | null
-        | undefined
-        | ((
-            this: T,
-            index: number,
-            oldValue: number,
-          ) => string | number | null | undefined | void),
+        | Value
+        | ((this: T, index: number, oldValue: number) => Value | void),
     ): this;
 
     /**
@@ -181,7 +177,7 @@ const set = (
   includeMargin: boolean,
   value: string | number,
 ): void => {
-  let computedValue = isFunction(value)
+  let computedValue: string | number = isFunction(value)
     ? value.call(
         element,
         elementIndex,
@@ -197,14 +193,17 @@ const set = (
   const dimension = name.toLowerCase();
 
   // 特殊的值，不需要计算 padding、border、margin
-  if (['auto', 'inherit', ''].includes(computedValue)) {
+  if (
+    isString(computedValue) &&
+    ['auto', 'inherit', ''].includes(computedValue)
+  ) {
     $element.css(dimension, computedValue);
     return;
   }
 
   // 其他值保留原始单位。注意：如果不使用 px 作为单位，则算出的值一般是不准确的
   const suffix = computedValue.toString().replace(/\b[0-9.]*/, '');
-  const numerical = parseFloat(computedValue);
+  const numerical = parseFloat(computedValue as string);
 
   computedValue =
     handleExtraWidth(element, name, numerical, funcIndex, includeMargin, -1) +
@@ -213,15 +212,18 @@ const set = (
   $element.css(dimension, computedValue);
 };
 
-eachArray<typeName>(['Width', 'Height'], (_, name) => {
+eachArray<typeName>(['Width', 'Height'], (name) => {
   eachArray(
     [`inner${name}`, name.toLowerCase(), `outer${name}`],
-    (funcIndex, funcName) => {
-      $.fn[funcName] = function (
+    (funcName, funcIndex) => {
+      $.fn[funcName as 'width'] = function (
         this: JQ,
+        // eslint-disable-next-line
         margin?: any,
+        // eslint-disable-next-line
         value?: any,
-      ): JQ | number | undefined {
+        // eslint-disable-next-line
+      ): any {
         // 是否是赋值操作
         const isSet = arguments.length && (funcIndex < 2 || !isBoolean(margin));
         const includeMargin = margin === true || value === true;

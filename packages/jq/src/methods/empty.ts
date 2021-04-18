@@ -3,7 +3,7 @@ import { JQ } from '../shared/core.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 移除当前元素中所有的子元素
      * @example

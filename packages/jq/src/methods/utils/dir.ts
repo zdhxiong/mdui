@@ -8,14 +8,15 @@ const dir = (
   $elements: JQ,
   nameIndex: number,
   node: 'parentNode' | 'nextElementSibling' | 'previousElementSibling',
+  // eslint-disable-next-line
   selector?: any,
   filter?: string,
 ): JQ => {
-  const ret: Element[] = [];
-  let target;
+  const ret: HTMLElement[] = [];
+  let target: HTMLElement;
 
   $elements.each((_, element) => {
-    target = element[node];
+    target = element[node] as HTMLElement;
 
     // 不能包含最顶层的 document 元素
     while (target && isElement(target)) {
@@ -46,8 +47,7 @@ const dir = (
         }
       }
 
-      // @ts-ignore
-      target = target[node];
+      target = target[node] as HTMLElement;
     }
   });
 

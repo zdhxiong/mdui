@@ -1,17 +1,17 @@
 import $ from '../$.js';
 import {
+  PlainObject,
   isString,
   isUndefined,
   eachObject,
   eachArray,
 } from '../shared/core.js';
 import {
-  MethodUpperCase,
+  Method,
   CallbackName,
   ErrorCallback,
   ErrorTextStatus,
   EventName,
-  StatusCodeCallbacks,
   SuccessCallback,
   SuccessTextStatus,
   TextStatus,
@@ -45,16 +45,16 @@ ajax({
 });
 ```
  */
-const ajax = (options: Options): Promise<any> => {
+const ajax = (options: Options): Promise<unknown> => {
   // 是否已取消请求
   let isCanceled = false;
 
   // 事件参数
-  const eventParams: EventParams = {};
+  const eventParams: Partial<EventParams> = {};
 
   // 参数合并
   const mergedOptions = mergeOptions(options);
-  const method = mergedOptions.method.toUpperCase() as MethodUpperCase;
+  const method = mergedOptions.method.toUpperCase() as Uppercase<Method>;
   let { data, url } = mergedOptions;
   url = url || window.location.toString();
   const {
@@ -84,13 +84,13 @@ const ajax = (options: Options): Promise<any> => {
     !(data instanceof Document) &&
     !(data instanceof FormData)
   ) {
-    data = param(data);
+    data = param(data as PlainObject);
   }
 
   // 对于 GET、HEAD 类型的请求，把 data 数据添加到 URL 中
   if (data && isMethodQueryString) {
     // 查询字符串拼接到 URL 中
-    url = appendQuery(url, data);
+    url = appendQuery(url, data as string);
     data = null;
   }
 
@@ -103,7 +103,7 @@ const ajax = (options: Options): Promise<any> => {
   const trigger = (
     event: EventName,
     callback: CallbackName,
-    ...args: any[]
+    ...args: unknown[]
   ): void => {
     // 触发全局事件
     if (global) {
@@ -136,7 +136,7 @@ const ajax = (options: Options): Promise<any> => {
   };
 
   // XMLHttpRequest 请求
-  const XHR = (): Promise<any> => {
+  const XHR = (): Promise<unknown> => {
     let textStatus: TextStatus;
 
     return new Promise((resolve, reject): void => {
@@ -187,7 +187,7 @@ const ajax = (options: Options): Promise<any> => {
       eventParams.xhr = xhr;
       eventParams.options = mergedOptions;
 
-      let xhrTimeout: any;
+      let xhrTimeout: number;
 
       xhr.onload = (): void => {
         if (xhrTimeout) {
@@ -197,7 +197,7 @@ const ajax = (options: Options): Promise<any> => {
         // AJAX 返回的 HTTP 响应码是否表示成功
         const isSuccess = isHttpStatusSuccess(xhr.status);
 
-        let responseData: any;
+        let responseData = '';
 
         if (isSuccess) {
           textStatus =
@@ -243,25 +243,22 @@ const ajax = (options: Options): Promise<any> => {
         }
 
         // statusCode
-        eachArray(
-          [globalOptions.statusCode!, statusCode],
-          (_, func: StatusCodeCallbacks) => {
-            if (func && func[xhr.status]) {
-              if (isSuccess) {
-                (func[xhr.status] as SuccessCallback)(
-                  responseData,
-                  textStatus as SuccessTextStatus,
-                  xhr,
-                );
-              } else {
-                (func[xhr.status] as ErrorCallback)(
-                  xhr,
-                  textStatus as ErrorTextStatus,
-                );
-              }
+        eachArray([globalOptions.statusCode ?? {}, statusCode], (func) => {
+          if (func[xhr.status]) {
+            if (isSuccess) {
+              (func[xhr.status] as SuccessCallback)(
+                responseData,
+                textStatus as SuccessTextStatus,
+                xhr,
+              );
+            } else {
+              (func[xhr.status] as ErrorCallback)(
+                xhr,
+                textStatus as ErrorTextStatus,
+              );
             }
-          },
-        );
+          }
+        });
 
         trigger(ajaxComplete, 'complete', xhr, textStatus);
       };
@@ -298,11 +295,11 @@ const ajax = (options: Options): Promise<any> => {
 
       // Timeout
       if (timeout > 0) {
-        xhrTimeout = setTimeout(() => xhr.abort(), timeout);
+        xhrTimeout = window.setTimeout(() => xhr.abort(), timeout);
       }
 
       // 发送 XHR
-      xhr.send(data);
+      xhr.send(data as BodyInit);
     });
   };
 

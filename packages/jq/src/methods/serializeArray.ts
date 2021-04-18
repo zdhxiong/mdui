@@ -5,11 +5,11 @@ import './val.js';
 
 interface NameValuePair {
   name: string;
-  value: any;
+  value: unknown;
 }
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 把表单元素的值组合成由 `name` 和 `value` 的键值对组成的数组
      *

@@ -4,7 +4,7 @@ import './get.js';
 import dir from './utils/dir.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 获取当前集合中，所有元素的直接父元素的集合
      * @param selector CSS 选择器。若指定了该参数，则仅返回与该参数匹配的父元素的集合
@@ -23,9 +23,10 @@ $('.box').parent('.parent')
   }
 }
 
-eachArray(['', 's', 'sUntil'], (nameIndex, name) => {
-  $.fn[`parent${name}`] = function (
+eachArray(['', 's', 'sUntil'], (name, nameIndex) => {
+  $.fn[`parent${name}` as 'parent'] = function (
     this: JQ,
+    // eslint-disable-next-line
     selector?: any,
     filter?: Selector,
   ): JQ {

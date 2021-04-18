@@ -31,10 +31,8 @@ const result = $('input.checked').map(function (i, element) {
   }
 }
 
-$.fn.map = function (
-  this: JQ<any>,
-  callback: (this: any, index: number, element: any) => null | undefined | any,
-): JQ {
+// eslint-disable-next-line
+$.fn.map = function (this: JQ, callback: any): any {
   return new JQ(
     map(this, (element, i) => {
       return callback.call(element, i, element);

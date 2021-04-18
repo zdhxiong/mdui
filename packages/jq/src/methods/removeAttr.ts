@@ -4,7 +4,7 @@ import { removeAttribute } from '../shared/attributes.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 移除集合中每个元素上的指定属性
      * @param attributeName 属性名，多个属性名可以用空格分隔
@@ -27,7 +27,7 @@ $.fn.removeAttr = function (this: JQ, attributeName: string): JQ {
   const names = attributeName.split(' ').filter((name) => name);
 
   return this.each(function () {
-    eachArray(names, (_, name) => {
+    eachArray(names, (name) => {
       removeAttribute(this, name);
     });
   });

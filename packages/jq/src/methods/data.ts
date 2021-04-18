@@ -11,7 +11,7 @@ import { dataAttr, get, getAll, set, setAll } from '../shared/data.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 在当前元素上存储数据
      *
@@ -24,7 +24,7 @@ declare module '../shared/core.js' {
 $('.box').data('type', 'image')
 ```
      */
-    data(key: string, value: any): this;
+    data(key: string, value: unknown): this;
 
     /**
      * 在当前元素上存储数据
@@ -48,7 +48,7 @@ $('.box').data('height')
 // 680
 ```
      */
-    data(key: string): any;
+    data(key: string): unknown;
 
     /**
      * 获取在当前元素上存储的所有数据
@@ -62,6 +62,7 @@ $('.box').data()
   }
 }
 
+// eslint-disable-next-line
 $.fn.data = function (this: JQ, key?: string | PlainObject, value?: any): any {
   // 获取所有值
   if (isUndefined(key)) {

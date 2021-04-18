@@ -12,7 +12,7 @@ import './each.js';
 import './off.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 通过事件委托同时添加多个事件处理函数
      * @param events
@@ -30,7 +30,7 @@ declare module '../shared/core.js' {
     on(
       events: PlainObject<EventCallback | false>,
       selector: string | null | undefined,
-      data?: any,
+      data?: unknown,
     ): this;
 
     /**
@@ -46,7 +46,7 @@ declare module '../shared/core.js' {
      *
      * 如果 `data` 是 `string` 类型，则必须提供 `selector` 参数；`selector` 参数可以是 `null`
      */
-    on(events: PlainObject<EventCallback | false>, data?: any): this;
+    on(events: PlainObject<EventCallback | false>, data?: unknown): this;
 
     /**
      * 通过事件委托添加事件处理函数，并传入参数
@@ -64,7 +64,7 @@ declare module '../shared/core.js' {
     on(
       eventName: string,
       selector: string | null | undefined,
-      data: any,
+      data: unknown,
       callback: EventCallback | false,
     ): this;
 
@@ -92,7 +92,7 @@ declare module '../shared/core.js' {
      * @param data 事件触发时，传递给事件处理函数的数据
      * @param callback 事件处理函数
      */
-    on(eventName: string, data: any, callback: EventCallback | false): this;
+    on(eventName: string, data: unknown, callback: EventCallback | false): this;
 
     /**
      * 添加事件处理函数
@@ -109,8 +109,11 @@ declare module '../shared/core.js' {
 $.fn.on = function (
   this: JQ,
   types: PlainObject<EventCallback | false> | string,
+  // eslint-disable-next-line
   selector: any,
+  // eslint-disable-next-line
   data?: any,
+  // eslint-disable-next-line
   callback?: any,
   one?: boolean, // 是否是 one 方法，只在 JQ 内部使用
 ): JQ {
@@ -159,16 +162,16 @@ $.fn.on = function (
   if (one) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const _this = this;
-    const origCallback: Function = callback;
+    const origCallback = callback;
 
     callback = function (
       this: Element | Document | Window,
       event: Event,
+      ...dataN: unknown[]
     ): void {
       _this.off(event.type, selector, callback);
 
-      // eslint-disable-next-line prefer-rest-params
-      return origCallback.apply(this, arguments);
+      return origCallback.call(this, event, ...dataN);
     };
   }
 

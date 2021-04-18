@@ -1,6 +1,4 @@
 import {
-  PlainObject,
-  TypeOrArray,
   JQ,
   JQStatic,
   isFunction,
@@ -12,15 +10,7 @@ import {
 import { getChildNodesArray } from './shared/dom.js';
 
 const get$ = (): JQStatic => {
-  const $ = function (
-    selector?:
-      | string
-      | TypeOrArray<Element>
-      | null
-      | JQ
-      | PlainObject
-      | Function,
-  ) {
+  const $ = function (selector?: unknown) {
     if (!selector) {
       return new JQ();
     }

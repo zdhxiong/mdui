@@ -1,7 +1,7 @@
 /**
  * 键名为字符串的对象
  */
-export type PlainObject<T = any> = {
+export type PlainObject<T = unknown> = {
   [key: string]: T;
 };
 
@@ -32,7 +32,7 @@ export class JQ<T = HTMLElement> implements ArrayLike<T> {
       return this;
     }
 
-    eachArray(arr, (i, item) => {
+    eachArray(arr, (item, i) => {
       this[i] = item;
     });
 
@@ -57,19 +57,9 @@ export interface JQStatic {
   (element: HTMLSelectElement): JQ<HTMLSelectElement>;
 
   /**
-   * 根据 DOM 元素或 DOM 元素数组创建 JQ 对象
-   */
-  <T extends Element>(elementOrElementArray: T | ArrayLike<T> | null): JQ<T>;
-
-  /**
    * 传入 JQ 对象，返回 JQ 对象
    */
   <T>(selection: JQ<T>): JQ<T>;
-
-  /**
-   * 根据 CSS 选择器，HTML 字符串，DOM 元素，DOM 元素数组创建 JQ 对象
-   */
-  <T extends Element>(element: string | T | ArrayLike<T> | null): JQ<T>;
 
   /**
    * Document 加载完成后执行函数
@@ -82,66 +72,78 @@ export interface JQStatic {
   <T extends PlainObject>(object: T): JQ<T>;
 
   /**
+   * 根据 DOM 元素，DOM 元素数组创建 JQ 对象
+   */
+  <T>(element: T | ArrayLike<T> | null): JQ<T>;
+
+  /**
    * 返回空的 JQ 对象
    */
   <T = HTMLElement>(): JQ<T>;
 
   // $.fn = JQ.prototype;
-  fn: any;
+  fn: JQ<unknown>;
 
   // $ 命名空间上的静态方法
-  [method: string]: Function;
+  [method: string]: unknown;
 }
 
 export const isNodeName = (element: Element, name: string): boolean => {
   return element.nodeName.toLowerCase() === name.toLowerCase();
 };
 
-export const isFunction = (target: any): target is Function => {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const isFunction = (target: unknown): target is Function => {
   return typeof target === 'function';
 };
 
-export const isString = (target: any): target is string => {
+export const isString = (target: unknown): target is string => {
   return typeof target === 'string';
 };
 
-export const isNumber = (target: any): target is number => {
+export const isNumber = (target: unknown): target is number => {
   return typeof target === 'number';
 };
 
-export const isBoolean = (target: any): target is boolean => {
+export const isBoolean = (target: unknown): target is boolean => {
   return typeof target === 'boolean';
 };
 
-export const isUndefined = (target: any): target is undefined => {
+export const isUndefined = (target: unknown): target is undefined => {
   return typeof target === 'undefined';
 };
 
-export const isNull = (target: any): target is null => {
+export const isNull = (target: unknown): target is null => {
   return target === null;
 };
 
-export const isWindow = (target: any): target is Window => {
+export const isWindow = (target: unknown): target is Window => {
   return target instanceof Window;
 };
 
-export const isDocument = (target: any): target is Document => {
+export const isDocument = (target: unknown): target is Document => {
   return target instanceof Document;
 };
 
-export const isElement = (target: any): target is Element => {
+export const isElement = (target: unknown): target is Element => {
   return target instanceof Element;
 };
 
-export const isNode = (target: any): target is Node => {
+export const isNode = (target: unknown): target is Node => {
   return target instanceof Node;
 };
 
-export const isArrayLike = (target: any): target is ArrayLike<any> => {
-  return !isFunction(target) && !isWindow(target) && isNumber(target.length);
+export const isArrayLike = (target: unknown): target is ArrayLike<unknown> => {
+  return (
+    !isFunction(target) &&
+    !isWindow(target) &&
+    isNumber((target as ArrayLike<unknown>).length)
+  );
 };
 
-export const isObjectLike = (target: any): target is Record<string, any> => {
+export const isObjectLike = (
+  target: unknown,
+): target is Record<string, unknown> => {
   return typeof target === 'object' && target !== null;
 };
 
@@ -183,10 +185,10 @@ export const returnFalse = (): boolean => {
  */
 export const eachArray = <T>(
   target: ArrayLike<T>,
-  callback: (this: T, index: number, value: T) => any | void,
+  callback: (this: T, value: T, index: number) => unknown,
 ): ArrayLike<T> => {
   for (let i = 0; i < target.length; i += 1) {
-    if (callback.call(target[i], i, target[i]) === false) {
+    if (callback.call(target[i], target[i], i) === false) {
       return target;
     }
   }
@@ -201,11 +203,14 @@ export const eachArray = <T>(
  */
 export const eachObject = <T extends PlainObject, K extends keyof T>(
   target: T,
-  callback: (this: T[K], key: K, value: T[K]) => any | void,
+  callback: (this: T[K], key: K, value: T[K]) => unknown | void,
 ): T => {
   const keys = Object.keys(target) as K[];
+
   for (let i = 0; i < keys.length; i += 1) {
-    if (callback.call(target[keys[i]], keys[i], target[keys[i]]) === false) {
+    const key = keys[i];
+
+    if (callback.call(target[key], key, target[key]) === false) {
       return target;
     }
   }

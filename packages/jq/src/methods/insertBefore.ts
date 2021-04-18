@@ -9,7 +9,7 @@ import {
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 把当前集合中的元素插入到指定元素的前面，作为目标元素的兄弟元素
      *
@@ -30,8 +30,9 @@ $('<p>I would like to say: </p>').insertBefore('<b>Hello</b>');
   }
 }
 
-eachArray(['insertBefore', 'insertAfter'], (nameIndex, name) => {
-  $.fn[name] = function (this: JQ, target: any): JQ {
+eachArray(['insertBefore', 'insertAfter'], (name, nameIndex) => {
+  // eslint-disable-next-line
+  $.fn[name as 'insertBefore'] = function (this: JQ, target: any): JQ {
     const $element = nameIndex ? $(this.get().reverse()) : this; // 顺序和 jQuery 保持一致
     const $target = $(target);
     const result: HTMLElement[] = [];

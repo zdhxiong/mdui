@@ -23,7 +23,7 @@ each( [ "a", "b", "c" ], function( index, value ){
  */
 function each<T>(
   array: ArrayLike<T>,
-  callback: (this: T, index: number, value: T) => any | void,
+  callback: (this: T, index: number, value: T) => unknown,
 ): ArrayLike<T>;
 
 /**
@@ -44,13 +44,17 @@ each({ name: "John", lang: "JS" }, function( key, value ) {
  */
 function each<T extends PlainObject, K extends keyof T>(
   obj: T,
-  callback: (this: T[K], key: K, value: T[K]) => any | void,
+  callback: (this: T[K], key: K, value: T[K]) => unknown,
 ): T;
 
-function each(target: any, callback: any): any {
+// eslint-disable-next-line
+function each(this: unknown, target: any, callback: Function): unknown {
+  // eachArray 回调函数是 value, key，这里的 each 函数是 key, value
   return isArrayLike(target)
-    ? eachArray(target, callback)
-    : eachObject(target, callback);
+    ? eachArray(target, (value, index) => {
+        return callback.call(value, index, value);
+      })
+    : eachObject(target, callback as never);
 }
 
 export default each;

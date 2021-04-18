@@ -13,141 +13,6 @@ declare module '../shared/core.js' {
      * @param object1 该对象的属性将合并到第一个参数
      * @param object2 该对象的属性将合并到第一个参数
      * @param object3 该对象的属性将合并到第一个参数
-     * @param object4 该对象的属性将合并到第一个参数
-     * @param object5 该对象的属性将合并到第一个参数
-     * @param object6 该对象的属性将合并到第一个参数
-     * @example
-```js
-var object = extend(
-  { key: value },
-  { key1: value1 },
-  { key2: value2 },
-  { key3: value3 },
-  { key4: value4 },
-  { key5: value5 },
-  { key6: value6 },
-);
-// 此时第一个对象和返回值都是
-{
-  key: value,
-  key1: value1,
-  key2: value2,
-  key3: value3,
-  key4: value4,
-  key5: value5,
-  key6: value6,
-}
-```
-     */
-    extend<
-      T extends PlainObject,
-      U extends PlainObject,
-      V extends PlainObject,
-      W extends PlainObject,
-      X extends PlainObject,
-      Y extends PlainObject,
-      Z extends PlainObject
-    >(
-      target: T,
-      object1: U,
-      object2: V,
-      object3: W,
-      object4: X,
-      object5: Y,
-      object6: Z,
-    ): T & U & V & W & X & Y & Z;
-
-    /**
-     * 将所有对象的属性都添加到第一个对象，并返回合并后的对象。
-     * @param target 其他参数的属性将合并到该参数
-     * @param object1 该对象的属性将合并到第一个参数
-     * @param object2 该对象的属性将合并到第一个参数
-     * @param object3 该对象的属性将合并到第一个参数
-     * @param object4 该对象的属性将合并到第一个参数
-     * @param object5 该对象的属性将合并到第一个参数
-     * @example
-```js
-var object = extend(
-  { key: value },
-  { key1: value1 },
-  { key2: value2 },
-  { key3: value3 },
-  { key4: value4 },
-  { key5: value5 },
-);
-// 此时第一个对象和返回值都是
-{
-  key: value,
-  key1: value1,
-  key2: value2,
-  key3: value3,
-  key4: value4,
-  key5: value5,
-}
-```
-     */
-    extend<
-      T extends PlainObject,
-      U extends PlainObject,
-      V extends PlainObject,
-      W extends PlainObject,
-      X extends PlainObject,
-      Y extends PlainObject
-    >(
-      target: T,
-      object1: U,
-      object2: V,
-      object3: W,
-      object4: X,
-      object5: Y,
-    ): T & U & V & W & X & Y;
-
-    /**
-     * 将所有对象的属性都添加到第一个对象，并返回合并后的对象。
-     * @param target 其他参数的属性将合并到该参数
-     * @param object1 该对象的属性将合并到第一个参数
-     * @param object2 该对象的属性将合并到第一个参数
-     * @param object3 该对象的属性将合并到第一个参数
-     * @param object4 该对象的属性将合并到第一个参数
-     * @example
-```js
-var object = extend(
-  { key: value },
-  { key1: value1 },
-  { key2: value2 },
-  { key3: value3 },
-  { key4: value4 },
-);
-// 此时第一个对象和返回值都是
-{
-  key: value,
-  key1: value1,
-  key2: value2,
-  key3: value3,
-  key4: value4,
-}
-```
-     */
-    extend<
-      T extends PlainObject,
-      U extends PlainObject,
-      V extends PlainObject,
-      W extends PlainObject,
-      X extends PlainObject
-    >(
-      target: T,
-      object1: U,
-      object2: V,
-      object3: W,
-      object4: X,
-    ): T & U & V & W & X;
-
-    /**
-     * 将所有对象的属性都添加到第一个对象，并返回合并后的对象。
-     * @param target 其他参数的属性将合并到该参数
-     * @param object1 该对象的属性将合并到第一个参数
-     * @param object2 该对象的属性将合并到第一个参数
-     * @param object3 该对象的属性将合并到第一个参数
      * @example
 ```js
 var object = extend(
@@ -268,7 +133,10 @@ var object = extend(
   }
 }
 
-$.extend = function (target: PlainObject, ...objectN: PlainObject[]): any {
+$.extend = function (
+  target: PlainObject,
+  ...objectN: PlainObject[]
+): PlainObject {
   if (!objectN.length) {
     eachObject(target, (prop, value) => {
       this[prop] = value;

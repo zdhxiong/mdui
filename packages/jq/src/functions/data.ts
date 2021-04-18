@@ -18,7 +18,7 @@ function data(
   element: Element | Document | Window,
   key: string,
   value: undefined,
-): any;
+): unknown;
 
 /**
  * 在指定元素上存储数据，返回存储的值。
@@ -49,7 +49,7 @@ function data<T>(
 data(document.body, 'key')
 ```
  */
-function data(element: Element | Document | Window, key: string): any;
+function data(element: Element | Document | Window, key: string): unknown;
 
 /**
  * 获取指定元素上存储的所有数据
@@ -83,8 +83,8 @@ function data<T extends PlainObject>(
 function data(
   element: Element | Document | Window,
   key?: string | PlainObject,
-  value?: any,
-): any {
+  value?: unknown,
+): unknown {
   // 根据键值对设置值
   // data(element, { 'key' : 'value' })
   if (isObjectLike(key)) {

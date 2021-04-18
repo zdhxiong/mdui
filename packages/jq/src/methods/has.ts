@@ -4,7 +4,7 @@ import { Selector, JQ, isString } from '../shared/core.js';
 import './find.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 保留含有指定子元素的元素，去掉不含有指定子元素的元素
      * @param selector CSS 选择器或 DOM 元素

@@ -45,6 +45,7 @@ $('.box').replaceWith(function (index, html) {
   }
 }
 
+// eslint-disable-next-line
 $.fn.replaceWith = function (this: JQ, newContent: any): JQ {
   this.each((index, element) => {
     let content = newContent;

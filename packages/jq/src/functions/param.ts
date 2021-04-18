@@ -5,6 +5,9 @@ import {
   eachArray,
 } from '../shared/core.js';
 
+// @ts-ignore
+type Value = Record<string, Value> | string | number | boolean;
+
 /**
  * 将数组或对象序列化，序列化后的字符串可作为 URL 查询字符串使用
  *
@@ -34,14 +37,16 @@ param([
 // name=mdui&password=123456
 ```
  */
-const param = (obj: any[] | PlainObject): string => {
+const param = (
+  obj: { name: string; value: Value }[] | PlainObject<Value>,
+): string => {
   if (!isObjectLike(obj) && !Array.isArray(obj)) {
     return '';
   }
 
-  const args: any[] = [];
+  const args: string[] = [];
 
-  const destructure = (key: any, value: any): void => {
+  const destructure = (key: string, value: Value): void => {
     let keyTmp;
 
     if (isObjectLike(value)) {
@@ -59,7 +64,7 @@ const param = (obj: any[] | PlainObject): string => {
   };
 
   if (Array.isArray(obj)) {
-    eachArray(obj, (_, { name, value }) => {
+    eachArray(obj, ({ name, value }) => {
       return destructure(name, value);
     });
   } else {

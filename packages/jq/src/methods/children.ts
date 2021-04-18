@@ -5,7 +5,7 @@ import './each.js';
 import './is.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 获取当前元素的直接子元素
      * @param selector CSS 选择器。若指定了该参数，则使用该参数对子元素进行过滤
@@ -25,16 +25,16 @@ $('#box').children('.box')
 }
 
 $.fn.children = function (this: JQ, selector?: Selector): JQ {
-  const children: Element[] = [];
+  const children: HTMLElement[] = [];
 
   this.each((_, element) => {
-    eachArray(element.childNodes, (__, childNode) => {
+    eachArray(element.childNodes, (childNode) => {
       if (!isElement(childNode)) {
         return;
       }
 
       if (!selector || $(childNode).is(selector)) {
-        children.push(childNode);
+        children.push(childNode as HTMLElement);
       }
     });
   });

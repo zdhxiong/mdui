@@ -4,7 +4,7 @@ import { parse } from '../shared/event.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 触发指定的事件
      * @param type 事件名
@@ -20,13 +20,15 @@ $('.box').trigger('click', {key1: 'value1', key2: 'value2'});
      */
     trigger(
       type: string,
-      extraParameters?: any[] | PlainObject | string | number | boolean,
+      extraParameters?: unknown[] | PlainObject | string | number | boolean,
     ): this;
   }
 }
 
+// eslint-disable-next-line
 $.fn.trigger = function (this: JQ, type: string, extraParameters: any): JQ {
   type EventParams = {
+    // eslint-disable-next-line
     detail?: any;
     bubbles: boolean;
     cancelable: boolean;

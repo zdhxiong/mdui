@@ -9,8 +9,8 @@ import { isNull } from './core.js';
 export const getAttribute = (
   element: Element,
   key: string,
-  defaultValue?: any,
-): any => {
+  defaultValue?: unknown,
+): unknown => {
   const value = element.getAttribute(key);
 
   return isNull(value) ? defaultValue : value;

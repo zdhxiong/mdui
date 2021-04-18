@@ -1,6 +1,7 @@
 import $ from '../$.js';
 import { JQ, eachObject } from '../shared/core.js';
 import {
+  EventParams,
   GlobalCallback,
   GlobalSuccessCallback,
   ajaxEvents,
@@ -8,7 +9,7 @@ import {
 import './on.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 监听全局 Ajax 开始事件
      * 通过 $(document).on('start.mdui.ajax', function (event, params) {}) 调用时，包含两个参数
@@ -31,9 +32,14 @@ eachObject(ajaxEvents, (name, eventName) => {
   $.fn[name] = function (
     this: JQ,
     fn: GlobalCallback | GlobalSuccessCallback,
-  ): any {
+  ): JQ {
     return this.on(eventName, (e, params) => {
-      fn(e, params.xhr, params.options, params.data);
+      fn(
+        e,
+        (params as EventParams).xhr,
+        (params as EventParams).options,
+        (params as EventParams).data,
+      );
     });
   };
 });

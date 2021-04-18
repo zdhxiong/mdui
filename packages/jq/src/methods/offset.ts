@@ -6,19 +6,11 @@ import './each.js';
 import './position.js';
 
 /**
- * 获取坐标的返回值，left 和 top 都存在
+ * 坐标值
  */
-interface CoordinatesValue {
+interface Coordinates {
   left: number;
   top: number;
-}
-
-/**
- * 设置坐标时，left 和 top 都是可选的
- */
-interface CoordinatesParam {
-  left?: number;
-  top?: number;
 }
 
 declare module '../shared/core.js' {
@@ -44,12 +36,12 @@ $('.box').offset(function () {
      */
     offset(
       value:
-        | CoordinatesParam
+        | Partial<Coordinates>
         | ((
             this: T,
             index: number,
-            oldOffset: CoordinatesValue,
-          ) => CoordinatesParam),
+            oldOffset: Coordinates,
+          ) => Partial<Coordinates>),
     ): this;
 
     /**
@@ -60,27 +52,28 @@ $('.box').offset();
 // { top: 20, left: 30 }
 ```
      */
-    offset(): CoordinatesValue;
+    offset(): Coordinates;
   }
 }
 
-const get = (element: Element): CoordinatesValue => {
+const get = (element: Element): Coordinates => {
   if (!element.getClientRects().length) {
     return { top: 0, left: 0 };
   }
 
-  const rect = element.getBoundingClientRect();
-  const win = (element.ownerDocument as Document).defaultView as Window;
+  const { top, left } = element.getBoundingClientRect();
+  const { pageYOffset, pageXOffset } = element.ownerDocument
+    .defaultView as Window;
 
   return {
-    top: rect.top + win.pageYOffset,
-    left: rect.left + win.pageXOffset,
+    top: top + pageYOffset,
+    left: left + pageXOffset,
   };
 };
 
 const set = (
   element: Element,
-  value: CoordinatesParam,
+  value: Partial<Coordinates>,
   index: number,
 ): void => {
   const $element = $(element);
@@ -109,7 +102,7 @@ const set = (
     currentLeft = parseFloat(currentLeftString);
   }
 
-  const computedValue = isFunction(value)
+  const computedValue: Coordinates = isFunction(value)
     ? value.call(element, index, extend({}, currentOffset))
     : value;
 
@@ -125,6 +118,7 @@ const set = (
   });
 };
 
+// eslint-disable-next-line
 $.fn.offset = function (this: JQ, value?: any): any {
   // 获取坐标
   if (!arguments.length) {

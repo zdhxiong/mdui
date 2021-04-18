@@ -18,10 +18,13 @@ $('img').each(function (index, element) {
 });
 ```
      */
-    each(callback: (this: T, index: number, element: T) => void | any): this;
+    each(callback: (this: T, index: number, element: T) => unknown): this;
   }
 }
 
+// eslint-disable-next-line
 $.fn.each = function (this: JQ, callback: void | any): JQ {
-  return eachArray(this, callback) as JQ;
+  return eachArray(this, (value, index) => {
+    return callback.call(value, index, value);
+  }) as JQ;
 };

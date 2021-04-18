@@ -10,9 +10,9 @@ merge( [ 0, 1, 2 ], [ 2, 3, 4 ] )
 // [ 0, 1, 2, 2, 3, 4 ]
 ```
  */
-const merge = <T, U>(first: T[], second: U[]): Array<T | U> => {
-  eachArray(second, (_, value) => {
-    first.push(value as any);
+const merge = <T, U>(first: (T | U)[], second: U[]): Array<T | U> => {
+  eachArray(second, (value) => {
+    first.push(value);
   });
 
   return first;

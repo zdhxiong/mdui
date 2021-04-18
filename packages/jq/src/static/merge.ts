@@ -13,7 +13,7 @@ $.merge( [ 0, 1, 2 ], [ 2, 3, 4 ] )
 // [ 0, 1, 2, 2, 3, 4 ]
 ```
      */
-    merge<T, U>(first: T[], second: U[]): Array<T | U>;
+    merge<T, U>(first: (T | U)[], second: U[]): Array<T | U>;
   }
 }
 

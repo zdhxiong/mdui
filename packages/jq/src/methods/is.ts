@@ -36,6 +36,7 @@ $('.box').is('.boxss'); // false
   }
 }
 
+// eslint-disable-next-line
 $.fn.is = function (this: JQ, selector: any): boolean {
   let isMatched = false;
 

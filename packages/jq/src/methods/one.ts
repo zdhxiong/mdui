@@ -4,7 +4,7 @@ import { EventCallback } from '../shared/event.js';
 import './on.js';
 
 declare module '../shared/core.js' {
-  interface JQ<T = HTMLElement> {
+  interface JQ {
     /**
      * 通过事件委托同时添加多个事件处理函数，触发一次后自动解绑
      * @param events
@@ -22,7 +22,7 @@ declare module '../shared/core.js' {
     one(
       events: PlainObject<EventCallback | false>,
       selector: string | null | undefined,
-      data?: any,
+      data?: unknown,
     ): this;
 
     /**
@@ -38,7 +38,7 @@ declare module '../shared/core.js' {
      *
      * 如果 `data` 是 `string` 类型，则必须提供 `selector` 参数；`selector` 参数可以是 `null`
      */
-    one(events: PlainObject<EventCallback | false>, data?: any): this;
+    one(events: PlainObject<EventCallback | false>, data?: unknown): this;
 
     /**
      * 通过事件委托添加事件处理函数，并传入参数，触发一次后自动解绑
@@ -56,7 +56,7 @@ declare module '../shared/core.js' {
     one(
       eventName: string,
       selector: string | null | undefined,
-      data: any,
+      data: unknown,
       callback: EventCallback | false,
     ): this;
 
@@ -84,7 +84,11 @@ declare module '../shared/core.js' {
      * @param data 事件触发时，传递给事件处理函数的数据
      * @param callback 事件处理函数
      */
-    one(eventName: string, data: any, callback: EventCallback | false): this;
+    one(
+      eventName: string,
+      data: unknown,
+      callback: EventCallback | false,
+    ): this;
 
     /**
      * 添加事件处理函数，触发一次后自动解绑
@@ -101,8 +105,11 @@ declare module '../shared/core.js' {
 $.fn.one = function (
   this: JQ,
   types: PlainObject<EventCallback | false> | string,
+  // eslint-disable-next-line
   selector?: any,
+  // eslint-disable-next-line
   data?: any,
+  // eslint-disable-next-line
   callback?: any,
 ): JQ {
   // @ts-ignore

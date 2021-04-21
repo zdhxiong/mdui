@@ -600,7 +600,7 @@ export const ajaxEvents = {
   ajaxSuccess,
   ajaxError,
   ajaxComplete,
-};
+} as const;
 
 // 全局配置参数
 export const globalOptions: Options = {};

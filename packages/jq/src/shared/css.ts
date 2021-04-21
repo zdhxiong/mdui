@@ -32,7 +32,9 @@ export const getExtraWidth = (
   extra: 'padding' | 'border' | 'margin',
 ): number => {
   const position =
-    direction === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
+    direction === 'width'
+      ? (['Left', 'Right'] as const)
+      : (['Top', 'Bottom'] as const);
 
   return [0, 1].reduce((prev, _, index) => {
     let prop = extra + position[index];

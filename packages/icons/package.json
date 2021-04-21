@@ -1,26 +1,35 @@
 {
   "name": "@mdui/icons",
   "version": "1.0.0",
-  "description": "> TODO: description",
-  "author": "zdhxiong <zdhxiong@gmail.com>",
-  "homepage": "https://github.com/zdhxiong/mdui#readme",
-  "license": "ISC",
-  "main": "lib/icons.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
+  "description": "material design 图标组件库",
+  "type": "module",
   "files": [
-    "lib"
+    "es",
+    "LICENSE",
+    "package.json",
+    "README.md"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zdhxiong/mdui.git"
   },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
-  },
+  "keywords": [
+    "material design",
+    "icon",
+    "web components"
+  ],
+  "author": "zdhxiong <zdhxiong@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/zdhxiong/mdui/issues"
+  },
+  "homepage": "https://github.com/zdhxiong/mdui",
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {
+    "lit-element": "^2.4.0",
+    "lit-html": "^1.3.0",
+    "tslib": "^2.2.0"
   }
 }

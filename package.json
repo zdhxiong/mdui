@@ -11,6 +11,7 @@
     "test": "npm-run-all test:*"
   },
   "devDependencies": {
+    "@material-icons/svg": "github:material-icons/material-icons#original",
     "@open-wc/eslint-config": "^4.2.0",
     "@rollup/plugin-alias": "^3.1.2",
     "@rollup/plugin-node-resolve": "^11.2.1",

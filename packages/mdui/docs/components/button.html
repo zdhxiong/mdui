@@ -6,24 +6,54 @@
   <meta name="renderer" content="webkit"/>
   <meta name="force-rendering" content="webkit"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <script type='module' src="../../es/index.js"></script>
 </head>
 <body>
-  <div id="demo"></div>
-
-  <script type="module">
-    import { html, render } from 'lit-html';
-    import '../../dist/index.js';
-
-    render(
-      html`
-          <h2>Buttons</h3>
-          <mdui-button>normal</mdui-button>
-          <mdui-button outlined>outlined</mdui-button>
-          <mdui-button raised>raised</mdui-button>
-          <mdui-button disabled>disabled</mdui-button>
-        `,
-      document.querySelector('#demo')
-    );
-  </script>
+<main>
+  <div class="demo-group">
+    <h2>Standard</h2>
+    <mdui-button>standard</mdui-button>
+    <mdui-button icon="code">standard</mdui-button>
+  </div>
+  <div class="demo-group">
+    <h2>Outlined</h2>
+    <mdui-button outlined>Outlined</mdui-button>
+    <mdui-button outlined icon="code">Outlined</mdui-button>
+  </div>
+  <div class="demo-group">
+    <h2>Raised</h2>
+    <mdui-button raised>Raised</mdui-button>
+    <mdui-button raised icon="code">Raised</mdui-button>
+  </div>
+  <div class="demo-group">
+    <h2>Unelevated</h2>
+    <mdui-button unelevated>Unelevated</mdui-button>
+    <mdui-button unelevated icon="code">Unelevated</mdui-button>
+  </div>
+  <div class="demo-group">
+    <h2>Dense</h2>
+    <mdui-button dense>Dense</mdui-button>
+    <mdui-button dense icon="code">Dense</mdui-button>
+  </div>
+  <div class="demo-group">
+    <h2>Trailing icon</h2>
+    <mdui-button icon="code" trailingicon>Trailing icon</mdui-button>
+    <mdui-button outlined icon="code" trailingicon>Trailing icon</mdui-button>
+    <mdui-button raised icon="code" trailingicon>Trailing icon</mdui-button>
+    <mdui-button unelevated icon="code" trailingicon>Trailing icon</mdui-button>
+  </div>
+  <div class="demo-group">
+    <h2>Disabled</h2>
+    <mdui-button disabled icon="code">Disabled</mdui-button>
+    <mdui-button disabled outlined icon="code">Trailing icon</mdui-button>
+    <mdui-button disabled raised icon="code">Trailing icon</mdui-button>
+    <mdui-button disabled unelevated icon="code">Trailing icon</mdui-button>
+  </div>
+  <div class="demo-group">
+    <h2>Full Width</h2>
+    <mdui-button fullwidth>Full Width</mdui-button>
+    <mdui-button fullwidth outlined icon="code">Full Width</mdui-button>
+  </div>
+</main>
 </body>
 </html>

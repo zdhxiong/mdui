@@ -28,9 +28,7 @@
   },
   "homepage": "https://github.com/zdhxiong/mdui",
   "dependencies": {
-    "tslib": "^2.2.0"
-  },
-  "engines": {
-    "node": ">=14"
+    "tslib": "^2.2.0",
+    "@mdui/shared": "^1.0.0"
   }
 }

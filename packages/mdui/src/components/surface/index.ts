@@ -8,7 +8,7 @@ class MduiSurface extends ElevationMixin(LitElement) {
   static styles = style;
 
   render() {
-    return html` <div>
+    return html`<div class="surface">
       <slot></slot>
     </div>`;
   }

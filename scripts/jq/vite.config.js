@@ -1,5 +1,5 @@
 export default {
   server: {
-    open: '/packages/jq/test/jq.html',
+    open: '/packages/jq/__test__/jq.html',
   },
 };

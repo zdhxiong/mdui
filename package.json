@@ -1,18 +1,21 @@
 {
   "private": true,
   "scripts": {
-    "eslint:jq": "eslint --fix packages/jq/src/**/*.ts",
-    "eslint": "npm-run-all eslint:*",
-    "build:jq": "npm run eslint:jq && rimraf packages/jq/es && tsc -p packages/jq/src/tsconfig.json",
+    "lint:mdui": "stylelint --fix --syntax less packages/mdui/src/**/*.less && eslint --fix packages/mdui/src/**/*.ts && prettier --write packages/mdui/src/**/*.ts",
+    "lint:jq": "eslint --fix packages/jq/src/**/*.ts",
+    "lint": "npm-run-all lint:*",
+    "build:mdui": "npm run lint:mdui && rimraf packages/mdui/es && tsc -p packages/mdui/src/tsconfig.json && node scripts/mdui/build.js",
+    "build:jq": "npm run lint:jq && rimraf packages/jq/es && tsc -p packages/jq/tsconfig.json",
     "build": "npm-run-all build:*",
+    "bundle:mdui": "npm run build:mdui && rimraf packages/mdui/dist && rollup -c scripts/mdui/rollup.config.js",
     "bundle:jq": "npm run build:jq && rimraf packages/jq/dist && rollup -c scripts/jq/rollup.config.js",
     "bundle": "npm-run-all bundle:*",
-    "test:jq": "eslint --fix packages/jq/test/**/*.ts && vite --config scripts/jq/vite.config.js",
-    "test": "npm-run-all test:*"
+    "test:jq": "eslint --fix packages/jq/__test__/**/*.ts && vite --config scripts/jq/vite.config.js",
+    "test": "npm-run-all test:*",
+    "dev:mdui": "rimraf packages/mdui/es && tsc -p packages/mdui/src/tsconfig.json && concurrently -k -r \"node scripts/mdui/dev.js\" \"tsc --watch --preserveWatchOutput\" \"wds --node-resolve --watch --open /docs/\""
   },
   "devDependencies": {
     "@material-icons/svg": "github:material-icons/material-icons#original",
-    "@open-wc/eslint-config": "^4.2.0",
     "@rollup/plugin-alias": "^3.1.2",
     "@rollup/plugin-node-resolve": "^11.2.1",
     "@types/chai": "^4.2.16",
@@ -36,7 +39,6 @@
     "mocha": "^8.3.2",
     "node-watch": "^0.7.1",
     "npm-run-all": "^4.1.5",
-    "pinst": "^2.1.6",
     "postcss": "^8.2.10",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
@@ -49,5 +51,18 @@
     "typescript": "^4.2.4",
     "vite": "^2.1.5",
     "web-component-analyzer": "^1.1.6"
+  },
+  "lint-staged": {
+    "*.less": [
+      "stylelint --fix"
+    ],
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "engines": {
+    "node": ">=15",
+    "npm": ">=7.4"
   }
 }

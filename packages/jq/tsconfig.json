@@ -4,8 +4,6 @@
   "compilerOptions": {
     "declaration": true,
     "declarationDir": "./es",
-    "outDir": "./es",
-    "sourceMap": true,
-    "inlineSources": true
+    "outDir": "./es"
   }
 }

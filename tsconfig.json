@@ -2,6 +2,8 @@
   "compilerOptions": {
     "strict": true,
     "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "importHelpers": true,
     "module": "ESNext",
     "target": "ESNext",
     "lib": ["esnext", "dom"]

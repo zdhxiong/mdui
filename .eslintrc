@@ -12,11 +12,25 @@
   "rules": {
     "@typescript-eslint/ban-ts-comment": 0,
     "prettier/prettier": "error",
-    "import/extensions": ["error", "always"],
+    "import/extensions": ["error", "always", { "ignorePackages": true }],
     "import/order": ["error"]
   },
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "prettier"
+  ],
+  "overrides": [
+    {
+      "files": ["**/__test__/**"],
+      "rules": {
+        "import/extensions": ["error", "never"]
+      }
+    },
+    {
+      "files": ["./scripts/**"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    }
   ]
 }

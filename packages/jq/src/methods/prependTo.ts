@@ -1,4 +1,4 @@
-import { HTMLString, Selector, TypeOrArray } from '../shared/core.js';
+import { HTMLString, Selector, TypeOrArray } from '@mdui/shared/helpers.js';
 import './appendTo.js';
 
 declare module '../shared/core.js' {

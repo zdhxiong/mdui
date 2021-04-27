@@ -4,8 +4,11 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "importHelpers": true,
-    "module": "ESNext",
-    "target": "ESNext",
-    "lib": ["esnext", "dom"]
+    "module": "es2015",
+    "target": "es2019",
+    "lib": ["es2019", "dom"],
+    "sourceMap": true,
+    "inlineSources": true,
+    "declaration": true
   }
 }

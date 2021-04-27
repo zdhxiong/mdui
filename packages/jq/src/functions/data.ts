@@ -1,4 +1,8 @@
-import { PlainObject, isUndefined, isObjectLike } from '../shared/core.js';
+import {
+  PlainObject,
+  isUndefined,
+  isObjectLike,
+} from '@mdui/shared/helpers.js';
 import { get, set, getAll, setAll } from '../shared/data.js';
 
 /**
@@ -14,7 +18,7 @@ import { get, set, getAll, setAll } from '../shared/data.js';
 data(document.body, 'type', undefined)
 ```
  */
-function data(
+export function data(
   element: Element | Document | Window,
   key: string,
   value: undefined,
@@ -31,7 +35,7 @@ data(document.body, 'type', 'image')
 // 'image'
 ```
  */
-function data<T>(
+export function data<T>(
   element: Element | Document | Window,
   key: string,
   value: T,
@@ -49,7 +53,10 @@ function data<T>(
 data(document.body, 'key')
 ```
  */
-function data(element: Element | Document | Window, key: string): unknown;
+export function data(
+  element: Element | Document | Window,
+  key: string,
+): unknown;
 
 /**
  * 获取指定元素上存储的所有数据
@@ -63,7 +70,7 @@ data(document.body)
 // { 'type': 'image', 'width': 1020, 'height': 680 }
 ```
  */
-function data(element: Element | Document | Window): PlainObject;
+export function data(element: Element | Document | Window): PlainObject;
 
 /**
  * 在指定元素上存储数据，返回存储的键值对数据
@@ -75,12 +82,12 @@ data(document.body, { 'width': 1020, 'height': 680 })
 // { 'width': 1020, 'height': 680 }
 ```
  */
-function data<T extends PlainObject>(
+export function data<T extends PlainObject>(
   element: Element | Document | Window,
   data: T,
 ): T;
 
-function data(
+export function data(
   element: Element | Document | Window,
   key?: string | PlainObject,
   value?: unknown,
@@ -109,5 +116,3 @@ function data(
   // data(element, 'key')
   return get(element, key);
 }
-
-export default data;

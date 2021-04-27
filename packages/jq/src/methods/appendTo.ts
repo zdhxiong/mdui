@@ -1,11 +1,11 @@
-import $ from '../$.js';
 import {
   HTMLString,
   Selector,
   TypeOrArray,
-  JQ,
   eachArray,
-} from '../shared/core.js';
+} from '@mdui/shared/helpers.js';
+import $ from '../$.js';
+import { JQ } from '../shared/core.js';
 import { createElement, appendChild } from '../shared/dom.js';
 import './insertAfter.js';
 import './insertBefore.js';

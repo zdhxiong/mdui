@@ -1,6 +1,6 @@
+import { PlainObject, eachObject } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import extend from '../functions/extend.js';
-import { PlainObject, eachObject } from '../shared/core.js';
+import { extend } from '../functions/extend.js';
 
 /**
  * 比 ../functions/extend 函数多了一个 extend<T>(target: T): this & T 的用法

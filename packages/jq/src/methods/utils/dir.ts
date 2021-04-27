@@ -1,10 +1,11 @@
+import { isElement } from '@mdui/shared/helpers.js';
 import $ from '../../$.js';
-import unique from '../../functions/unique.js';
-import { JQ, isElement } from '../../shared/core.js';
+import { unique } from '../../functions/unique.js';
+import { JQ } from '../../shared/core.js';
 import '../each.js';
 import '../is.js';
 
-const dir = (
+export const dir = (
   $elements: JQ,
   nameIndex: number,
   node: 'parentNode' | 'nextElementSibling' | 'previousElementSibling',
@@ -53,5 +54,3 @@ const dir = (
 
   return new JQ(unique(ret));
 };
-
-export default dir;

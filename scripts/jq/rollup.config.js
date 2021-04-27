@@ -1,4 +1,5 @@
 import { terser } from 'rollup-plugin-terser';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import pkg from '../../packages/jq/package.json';
 
 const banner = `
@@ -9,20 +10,22 @@ const banner = `
  */
 `.trim();
 
+// eslint-disable-next-line import/no-default-export
 export default {
-  input: './packages/jq/es/index.js',
+  input: './packages/jq/index.js',
+  plugins: [nodeResolve()],
   output: [
     {
       banner,
       format: 'es',
       sourcemap: false,
-      file: './packages/jq/dist/jq.esm.js',
+      file: './packages/jq/jq.js',
     },
     {
       banner,
       format: 'es',
       sourcemap: true,
-      file: './packages/jq/dist/jq.esm.min.js',
+      file: './packages/jq/jq.min.js',
       plugins: [terser()],
     },
   ],

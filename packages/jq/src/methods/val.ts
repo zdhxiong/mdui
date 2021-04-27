@@ -1,13 +1,13 @@
-import $ from '../$.js';
-import map from '../functions/map.js';
 import {
-  JQ,
   isElement,
   isFunction,
   isUndefined,
   toElement,
   eachArray,
-} from '../shared/core.js';
+} from '@mdui/shared/helpers.js';
+import $ from '../$.js';
+import { map } from '../functions/map.js';
+import { JQ } from '../shared/core.js';
 import './each.js';
 import './is.js';
 

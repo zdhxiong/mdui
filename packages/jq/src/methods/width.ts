@@ -1,6 +1,4 @@
-import $ from '../$.js';
 import {
-  JQ,
   isBoolean,
   isString,
   isDocument,
@@ -8,7 +6,9 @@ import {
   isWindow,
   toElement,
   eachArray,
-} from '../shared/core.js';
+} from '@mdui/shared/helpers.js';
+import $ from '../$.js';
+import { JQ } from '../shared/core.js';
 import {
   isBorderBox,
   getExtraWidth,

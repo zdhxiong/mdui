@@ -1,5 +1,6 @@
+import { Selector, TypeOrArray } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import { Selector, TypeOrArray, JQ } from '../shared/core.js';
+import { JQ } from '../shared/core.js';
 import './filter.js';
 import './map.js';
 

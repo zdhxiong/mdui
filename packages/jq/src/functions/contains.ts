@@ -1,4 +1,4 @@
-import { toElement } from '../shared/core.js';
+import { toElement } from '@mdui/shared/helpers.js';
 
 /**
  * 检查 container 元素内是否包含 contains 元素
@@ -11,11 +11,9 @@ contains( document.getElementById('test'), document ); // false
 contains( $('.container').get(0), $('.contains').get(0) ); // false
 ```
  */
-const contains = (
+export const contains = (
   container: Element | Document,
   contains: Element | Document,
 ): boolean => {
   return container !== contains && toElement(container).contains(contains);
 };
-
-export default contains;

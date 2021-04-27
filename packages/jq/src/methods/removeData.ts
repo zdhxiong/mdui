@@ -1,6 +1,7 @@
+import { TypeOrArray } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import removeData from '../functions/removeData.js';
-import { TypeOrArray, JQ } from '../shared/core.js';
+import { removeData } from '../functions/removeData.js';
+import { JQ } from '../shared/core.js';
 import './each.js';
 
 declare module '../shared/core.js' {

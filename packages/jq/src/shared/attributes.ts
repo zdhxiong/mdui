@@ -1,4 +1,4 @@
-import { isNull } from './core.js';
+import { isNull } from '@mdui/shared/helpers.js';
 
 /**
  * 获取属性值

@@ -1,4 +1,4 @@
-import { HTMLString } from '../shared/core.js';
+import { HTMLString } from '@mdui/shared/helpers.js';
 import './val.js';
 
 declare module '../shared/core.js' {

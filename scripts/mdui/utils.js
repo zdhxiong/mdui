@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const less = require('less');
+const { ESLint } = require('eslint');
 const postcss = require('postcss');
 const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
 const {
   minifyHTMLLiterals,
   defaultMinifyOptions,
@@ -34,12 +34,12 @@ function buildLessFile(filePath, optimization = true) {
         return output.css;
       }
 
-      return postcss([autoprefixer, cssnano])
+      return postcss([autoprefixer])
         .process(output.css, { from: undefined })
         .then((result) => result.css);
     })
     .then((output) => {
-      const outputFilePath = filePath.replace(/^(src)/, 'es');
+      const outputFilePath = filePath; //.replace(/src/, 'es');
       const outputDir = path.dirname(outputFilePath);
       try {
         fs.statSync(outputDir);
@@ -48,14 +48,24 @@ function buildLessFile(filePath, optimization = true) {
       }
 
       const isToJs = !outputDir.endsWith('styles');
-      const outputName = path.resolve(
-        outputFilePath.replace(/(less)$/, isToJs ? 'js' : 'css'),
-      );
-      const outputContent = isToJs
-        ? `import {css} from 'lit-element';export default css\`${output}\``
-        : output;
 
-      fs.writeFileSync(outputName, outputContent);
+      if (isToJs) {
+        const outputName = path.resolve(
+          outputFilePath.replace(/(less)$/, 'ts'),
+        );
+        const outputContent = `import {css} from 'lit';export const style = css\`${output}\`;`;
+        fs.writeFileSync(outputName, outputContent);
+
+        const eslint = new ESLint({ fix: true });
+        eslint
+          .lintFiles(outputName)
+          .then((results) => ESLint.outputFixes(results));
+      } else {
+        const outputName = path.resolve(
+          outputFilePath.replace(/(less)$/, 'css'),
+        );
+        fs.writeFileSync(outputName, output);
+      }
     })
     .catch((err) => {
       console.log(err);
@@ -73,9 +83,7 @@ function buildJsFile(filePath, optimization = true) {
     fileName: 'render.js',
     minifyOptions: {
       ...defaultMinifyOptions,
-      minifyCSS: false,
     },
-    shouldMinifyCSS: () => false,
   });
 
   const outputName = path.resolve(filePath);
@@ -85,6 +93,7 @@ function buildJsFile(filePath, optimization = true) {
   }
 }
 
+exports.packagePath = './packages/mdui';
 exports.traverseDirectory = traverseDirectory;
 exports.buildLessFile = buildLessFile;
 exports.buildJsFile = buildJsFile;

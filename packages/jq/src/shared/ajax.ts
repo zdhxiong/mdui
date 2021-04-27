@@ -1,5 +1,5 @@
-import extend from '../functions/extend.js';
-import { PlainObject, eachObject, isUndefined } from './core.js';
+import { PlainObject, eachObject, isUndefined } from '@mdui/shared/helpers.js';
+import { extend } from '../functions/extend.js';
 
 // 请求方法名
 export type Method =

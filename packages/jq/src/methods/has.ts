@@ -1,6 +1,7 @@
+import { Selector, isString } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import contains from '../functions/contains.js';
-import { Selector, JQ, isString } from '../shared/core.js';
+import { contains } from '../functions/contains.js';
+import { JQ } from '../shared/core.js';
 import './find.js';
 
 declare module '../shared/core.js' {

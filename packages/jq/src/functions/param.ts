@@ -3,7 +3,7 @@ import {
   isObjectLike,
   eachObject,
   eachArray,
-} from '../shared/core.js';
+} from '@mdui/shared/helpers.js';
 
 // @ts-ignore
 type Value = Record<string, Value> | string | number | boolean;
@@ -37,7 +37,7 @@ param([
 // name=mdui&password=123456
 ```
  */
-const param = (
+export const param = (
   obj: { name: string; value: Value }[] | PlainObject<Value>,
 ): string => {
   if (!isObjectLike(obj) && !Array.isArray(obj)) {
@@ -73,5 +73,3 @@ const param = (
 
   return args.join('&');
 };
-
-export default param;

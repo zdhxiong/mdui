@@ -1,4 +1,4 @@
-import { Selector } from '../shared/core.js';
+import { Selector } from '@mdui/shared/helpers.js';
 import './next.js';
 
 declare module '../shared/core.js' {

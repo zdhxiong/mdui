@@ -1,6 +1,6 @@
+import { isObjectLike } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import contains from '../functions/contains.js';
-import { isObjectLike } from './core.js';
+import { contains } from '../functions/contains.js';
 import '../methods/find.js';
 import '../methods/get.js';
 

@@ -1,4 +1,4 @@
-import { eachArray } from '../shared/core.js';
+import { eachArray } from '@mdui/shared/helpers.js';
 
 /**
  * 把第二个数组的元素追加到第一个数组中，并返回合并后的数组
@@ -10,12 +10,10 @@ merge( [ 0, 1, 2 ], [ 2, 3, 4 ] )
 // [ 0, 1, 2, 2, 3, 4 ]
 ```
  */
-const merge = <T, U>(first: (T | U)[], second: U[]): Array<T | U> => {
+export const merge = <T, U>(first: (T | U)[], second: U[]): Array<T | U> => {
   eachArray(second, (value) => {
     first.push(value);
   });
 
   return first;
 };
-
-export default merge;

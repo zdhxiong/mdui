@@ -7,8 +7,6 @@ unique([1, 2, 12, 3, 2, 1, 2, 1, 1]);
 // [1, 2, 12, 3]
 ```
  */
-const unique = <T>(arr: T[]): T[] => {
+export const unique = <T>(arr: T[]): T[] => {
   return [...new Set(arr)];
 };
-
-export default unique;

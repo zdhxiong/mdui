@@ -1,12 +1,12 @@
-import $ from '../$.js';
 import {
   PlainObject,
-  JQ,
   isUndefined,
   isObjectLike,
   eachObject,
   toCamelCase,
-} from '../shared/core.js';
+} from '@mdui/shared/helpers.js';
+import $ from '../$.js';
+import { JQ } from '../shared/core.js';
 import { dataAttr, get, getAll, set, setAll } from '../shared/data.js';
 import './each.js';
 

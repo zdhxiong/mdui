@@ -1,6 +1,7 @@
+import { TypeOrArray } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import map from '../functions/map.js';
-import { TypeOrArray, JQ } from '../shared/core.js';
+import { map } from '../functions/map.js';
+import { JQ } from '../shared/core.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

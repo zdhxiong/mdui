@@ -1,6 +1,7 @@
+import { isFunction } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import extend from '../functions/extend.js';
-import { JQ, isFunction } from '../shared/core.js';
+import { extend } from '../functions/extend.js';
+import { JQ } from '../shared/core.js';
 import './css.js';
 import './each.js';
 import './position.js';

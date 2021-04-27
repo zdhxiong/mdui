@@ -1,5 +1,5 @@
 import $ from '../$.js';
-import unique from '../functions/unique.js';
+import { unique } from '../functions/unique.js';
 
 declare module '../shared/core.js' {
   interface JQStatic {

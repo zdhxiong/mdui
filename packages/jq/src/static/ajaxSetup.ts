@@ -1,5 +1,5 @@
 import $ from '../$.js';
-import ajaxSetup from '../functions/ajaxSetup.js';
+import { ajaxSetup } from '../functions/ajaxSetup.js';
 import { Options } from '../shared/ajax.js';
 
 declare module '../shared/core.js' {

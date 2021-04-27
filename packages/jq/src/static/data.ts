@@ -1,6 +1,6 @@
+import { PlainObject } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import data from '../functions/data.js';
-import { PlainObject } from '../shared/core.js';
+import { data } from '../functions/data.js';
 
 declare module '../shared/core.js' {
   interface JQStatic {

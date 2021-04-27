@@ -1,11 +1,9 @@
 {
   "extends": "../../tsconfig",
   "include": ["./src/**/*.ts"],
+  "exclude": [],
   "compilerOptions": {
-    "declaration": true,
-    "declarationDir": "./es",
-    "outDir": "./es",
-    "sourceMap": true,
-    "inlineSources": true
+    "declarationDir": "./",
+    "outDir": "./"
   }
 }

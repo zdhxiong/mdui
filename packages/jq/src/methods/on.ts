@@ -1,12 +1,12 @@
-import $ from '../$.js';
 import {
   PlainObject,
-  JQ,
   isString,
   isObjectLike,
   returnFalse,
   eachObject,
-} from '../shared/core.js';
+} from '@mdui/shared/helpers.js';
+import $ from '../$.js';
+import { JQ } from '../shared/core.js';
 import { EventCallback, add } from '../shared/event.js';
 import './each.js';
 import './off.js';

@@ -1,5 +1,6 @@
+import { eachArray } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import { JQ, eachArray } from '../shared/core.js';
+import { JQ } from '../shared/core.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

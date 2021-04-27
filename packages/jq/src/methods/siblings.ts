@@ -1,5 +1,6 @@
+import { Selector } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import { Selector, JQ } from '../shared/core.js';
+import { JQ } from '../shared/core.js';
 import './add.js';
 import './nextAll.js';
 import './prevAll.js';

@@ -5,7 +5,7 @@ import {
   eachArray,
   isUndefined,
   isString,
-} from './core.js';
+} from '@mdui/shared/helpers.js';
 
 type ElementTarget = Element | Document | Window;
 

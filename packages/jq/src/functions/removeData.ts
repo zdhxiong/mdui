@@ -1,4 +1,4 @@
-import { TypeOrArray, isUndefined, isString } from '../shared/core.js';
+import { TypeOrArray, isUndefined, isString } from '@mdui/shared/helpers.js';
 import { removeAll, removeMultiple } from '../shared/data.js';
 
 /**
@@ -31,7 +31,7 @@ removeData(document.body, ['name1', 'name2']);
 removeData(document.body);
 ```
  */
-const removeData = (
+export const removeData = (
   element: Element | Document | Window,
   name?: TypeOrArray<string>,
 ): void => {
@@ -45,5 +45,3 @@ const removeData = (
 
   removeMultiple(element, keys);
 };
-
-export default removeData;

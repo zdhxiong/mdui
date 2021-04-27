@@ -1,13 +1,13 @@
-import $ from '../$.js';
 import {
   Selector,
   TypeOrArray,
-  JQ,
   isDocument,
   isFunction,
   isString,
   isWindow,
-} from '../shared/core.js';
+} from '@mdui/shared/helpers.js';
+import $ from '../$.js';
+import { JQ } from '../shared/core.js';
 import './each.js';
 
 declare module '../shared/core.js' {

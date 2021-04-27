@@ -1,4 +1,4 @@
-import { PlainObject } from '../shared/core.js';
+import { PlainObject } from '@mdui/shared/helpers.js';
 import './attr.js';
 
 declare module '../shared/core.js' {

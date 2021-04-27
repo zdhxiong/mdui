@@ -1,5 +1,6 @@
+import { eachObject } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import { JQ, eachObject } from '../shared/core.js';
+import { JQ } from '../shared/core.js';
 import {
   EventParams,
   GlobalCallback,

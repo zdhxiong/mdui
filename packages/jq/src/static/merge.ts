@@ -1,5 +1,5 @@
 import $ from '../$.js';
-import merge from '../functions/merge.js';
+import { merge } from '../functions/merge.js';
 
 declare module '../shared/core.js' {
   interface JQStatic {

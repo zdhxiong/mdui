@@ -1,6 +1,6 @@
+import { PlainObject } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import param from '../functions/param.js';
-import { PlainObject } from '../shared/core.js';
+import { param } from '../functions/param.js';
 
 // @ts-ignore
 type Value = Record<string, Value> | string | number | boolean;

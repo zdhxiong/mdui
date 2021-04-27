@@ -1,12 +1,11 @@
 import {
-  JQ,
-  JQStatic,
   isFunction,
   isNode,
   isString,
   isArrayLike,
   eachObject,
-} from './shared/core.js';
+} from '@mdui/shared/helpers.js';
+import { JQ, JQStatic } from './shared/core.js';
 import { getChildNodesArray } from './shared/dom.js';
 
 const get$ = (): JQStatic => {
@@ -85,4 +84,5 @@ const get$ = (): JQStatic => {
 
 const $ = get$();
 
+// eslint-disable-next-line import/no-default-export
 export default $;

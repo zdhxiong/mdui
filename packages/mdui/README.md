@@ -29,8 +29,8 @@ import 'mdui';
 ### ES6 模块中按需导入所需组件
 
 ```js
-import 'mdui/button/index.js';
-import 'mdui/checkbox/index.js';
+import 'mdui/button.js';
+import 'mdui/checkbox.js';
 ```
 
 ### ES6 中导入模块

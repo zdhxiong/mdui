@@ -1,6 +1,6 @@
+import { TypeOrArray } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import removeData from '../functions/removeData.js';
-import { TypeOrArray } from '../shared/core.js';
+import { removeData } from '../functions/removeData.js';
 
 declare module '../shared/core.js' {
   interface JQStatic {

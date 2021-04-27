@@ -1,12 +1,12 @@
-import $ from '../$.js';
 import {
   HTMLString,
   TypeOrArray,
-  JQ,
   isFunction,
   isString,
   eachArray,
-} from '../shared/core.js';
+} from '@mdui/shared/helpers.js';
+import $ from '../$.js';
+import { JQ } from '../shared/core.js';
 import { createElement, appendChild, removeChild } from '../shared/dom.js';
 import './after.js';
 import './before.js';

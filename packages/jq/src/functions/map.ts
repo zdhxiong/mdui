@@ -1,5 +1,5 @@
-import { PlainObject } from '../shared/core.js';
-import each from './each.js';
+import { PlainObject } from '@mdui/shared/helpers.js';
+import { each } from './each.js';
 
 /**
  * 遍历数组，通过函数返回值生成一个新数组
@@ -35,7 +35,7 @@ map([1, 2, 3], function(value, index){
 // [0, 1, 1, 2, 2, 3]
 ```
  */
-function map<T, TReturn>(
+export function map<T, TReturn>(
   array: ArrayLike<T>,
   callback: (
     this: Window,
@@ -78,7 +78,7 @@ map({ width: 1, height: 2 }, function(value, key){
 // ['width', 1, 'height', 2]
 ```
  */
-function map<T extends PlainObject, K extends keyof T, TReturn>(
+export function map<T extends PlainObject, K extends keyof T, TReturn>(
   obj: T,
   callback: (
     this: Window,
@@ -88,7 +88,7 @@ function map<T extends PlainObject, K extends keyof T, TReturn>(
 ): TReturn[];
 
 // eslint-disable-next-line
-function map(elements: any, callback: Function): unknown {
+export function map(elements: any, callback: Function): unknown {
   let value;
   const ret: never[] = [];
 
@@ -102,5 +102,3 @@ function map(elements: any, callback: Function): unknown {
 
   return [].concat(...ret);
 }
-
-export default map;

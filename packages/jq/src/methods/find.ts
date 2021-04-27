@@ -1,6 +1,7 @@
+import { Selector } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import merge from '../functions/merge.js';
-import { Selector, JQ } from '../shared/core.js';
+import { merge } from '../functions/merge.js';
+import { JQ } from '../shared/core.js';
 import './each.js';
 import './get.js';
 

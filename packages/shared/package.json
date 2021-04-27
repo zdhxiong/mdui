@@ -3,10 +3,19 @@
   "version": "1.0.0",
   "description": "mdui 项目的公共部分",
   "type": "module",
-  "module": "es/index.js",
-  "types": "es/index.d.ts",
   "files": [
-    "es",
+    "controllers",
+    "decorators",
+    "directives",
+    "helpers",
+    "icons",
+    "mixins",
+    "controllers.{d.ts,js,js.map}",
+    "decorators.{d.ts,js,js.map}",
+    "directives.{d.ts,js,js.map}",
+    "helpers.{d.ts,js,js.map}",
+    "icons.{d.ts,js,js.map}",
+    "mixins.{d.ts,js,js.map}",
     "LICENSE",
     "package.json",
     "README.md"
@@ -22,6 +31,8 @@
   },
   "homepage": "https://github.com/zdhxiong/mdui#readme",
   "dependencies": {
+    "@open-wc/dedupe-mixin": "^1.3.0",
+    "lit": "^2.0.0-rc.1",
     "tslib": "^2.2.0"
   },
   "engines": {

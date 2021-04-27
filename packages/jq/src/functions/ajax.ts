@@ -1,11 +1,11 @@
-import $ from '../$.js';
 import {
   PlainObject,
   isString,
   isUndefined,
   eachObject,
   eachArray,
-} from '../shared/core.js';
+} from '@mdui/shared/helpers.js';
+import $ from '../$.js';
 import {
   Method,
   CallbackName,
@@ -28,7 +28,7 @@ import {
   appendQuery,
   mergeOptions,
 } from '../shared/ajax.js';
-import param from './param.js';
+import { param } from './param.js';
 import '../methods/trigger.js';
 
 /**
@@ -45,7 +45,7 @@ ajax({
 });
 ```
  */
-const ajax = (options: Options): Promise<unknown> => {
+export const ajax = (options: Options): Promise<unknown> => {
   // 是否已取消请求
   let isCanceled = false;
 
@@ -305,5 +305,3 @@ const ajax = (options: Options): Promise<unknown> => {
 
   return XHR();
 };
-
-export default ajax;

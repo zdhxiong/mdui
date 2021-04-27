@@ -1,5 +1,6 @@
+import { PlainObject } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import { PlainObject, JQ } from '../shared/core.js';
+import { JQ } from '../shared/core.js';
 import { EventCallback } from '../shared/event.js';
 import './on.js';
 

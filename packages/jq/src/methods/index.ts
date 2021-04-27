@@ -1,5 +1,6 @@
+import { Selector, isString } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import { Selector, JQ, isString } from '../shared/core.js';
+import { JQ } from '../shared/core.js';
 import './children.js';
 import './eq.js';
 import './get.js';

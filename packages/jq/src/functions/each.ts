@@ -3,7 +3,7 @@ import {
   isArrayLike,
   eachArray,
   eachObject,
-} from '../shared/core.js';
+} from '@mdui/shared/helpers.js';
 
 /**
  * 遍历数组，原样返回第一个参数
@@ -21,7 +21,7 @@ each( [ "a", "b", "c" ], function( index, value ){
 });
 ```
  */
-function each<T>(
+export function each<T>(
   array: ArrayLike<T>,
   callback: (this: T, index: number, value: T) => unknown,
 ): ArrayLike<T>;
@@ -42,13 +42,13 @@ each({ name: "John", lang: "JS" }, function( key, value ) {
 });
 ```
  */
-function each<T extends PlainObject, K extends keyof T>(
+export function each<T extends PlainObject, K extends keyof T>(
   obj: T,
   callback: (this: T[K], key: K, value: T[K]) => unknown,
 ): T;
 
 // eslint-disable-next-line
-function each(this: unknown, target: any, callback: Function): unknown {
+export function each(this: unknown, target: any, callback: Function): unknown {
   // eachArray 回调函数是 value, key，这里的 each 函数是 key, value
   return isArrayLike(target)
     ? eachArray(target, (value, index) => {
@@ -56,5 +56,3 @@ function each(this: unknown, target: any, callback: Function): unknown {
       })
     : eachObject(target, callback as never);
 }
-
-export default each;

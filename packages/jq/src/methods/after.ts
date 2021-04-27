@@ -1,4 +1,4 @@
-import { HTMLString, TypeOrArray } from '../shared/core.js';
+import { HTMLString, TypeOrArray } from '@mdui/shared/helpers.js';
 import './before.js';
 
 declare module '../shared/core.js' {

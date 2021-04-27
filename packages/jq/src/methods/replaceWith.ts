@@ -1,15 +1,15 @@
+import {
+  HTMLString,
+  TypeOrArray,
+  isFunction,
+  isString,
+} from '@mdui/shared/helpers.js';
+import { JQ } from '../shared/core.js';
 import $ from '../$.js';
 import './before.js';
 import './clone.js';
 import './each.js';
 import './remove.js';
-import {
-  HTMLString,
-  TypeOrArray,
-  JQ,
-  isFunction,
-  isString,
-} from '../shared/core.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

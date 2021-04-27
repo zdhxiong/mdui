@@ -1,6 +1,7 @@
+import { Selector, eachArray } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
-import { Selector, JQ, eachArray } from '../shared/core.js';
-import dir from './utils/dir.js';
+import { JQ } from '../shared/core.js';
+import { dir } from './utils/dir.js';
 
 declare module '../shared/core.js' {
   interface JQ {

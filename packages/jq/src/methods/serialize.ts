@@ -1,5 +1,5 @@
 import $ from '../$.js';
-import param from '../functions/param.js';
+import { param } from '../functions/param.js';
 import { JQ } from '../shared/core.js';
 import './serializeArray.js';
 

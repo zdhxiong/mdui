@@ -39,33 +39,14 @@ function buildLessFile(filePath, optimization = true) {
         .then((result) => result.css);
     })
     .then((output) => {
-      const outputFilePath = filePath; //.replace(/src/, 'es');
-      const outputDir = path.dirname(outputFilePath);
-      try {
-        fs.statSync(outputDir);
-      } catch (err) {
-        fs.mkdirSync(outputDir);
-      }
+      const outputName = path.resolve(filePath.replace(/(less)$/, 'ts'));
+      const outputContent = `import {css} from 'lit';export const style = css\`${output}\`;`;
+      fs.writeFileSync(outputName, outputContent);
 
-      const isToJs = !outputDir.endsWith('styles');
-
-      if (isToJs) {
-        const outputName = path.resolve(
-          outputFilePath.replace(/(less)$/, 'ts'),
-        );
-        const outputContent = `import {css} from 'lit';export const style = css\`${output}\`;`;
-        fs.writeFileSync(outputName, outputContent);
-
-        const eslint = new ESLint({ fix: true });
-        eslint
-          .lintFiles(outputName)
-          .then((results) => ESLint.outputFixes(results));
-      } else {
-        const outputName = path.resolve(
-          outputFilePath.replace(/(less)$/, 'css'),
-        );
-        fs.writeFileSync(outputName, output);
-      }
+      const eslint = new ESLint({ fix: true });
+      eslint
+        .lintFiles(outputName)
+        .then((results) => ESLint.outputFixes(results));
     })
     .catch((err) => {
       console.log(err);

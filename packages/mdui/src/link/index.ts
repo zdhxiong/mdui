@@ -10,9 +10,6 @@ export class MduiLink extends ButtonBase {
   @property({ reflect: true })
   download!: string;
 
-  /**
-   * 若指定了该参数，则按钮内部会渲染为 `<a>` 元素
-   */
   @property({ reflect: true })
   href = '';
 

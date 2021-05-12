@@ -52,7 +52,7 @@ export class MduiButton extends ButtonBase {
 
     return html`
       <button
-        class="${classMap(this.getButtonClasses())}"
+        class="button ${classMap(this.getButtonClasses())}"
         type="${ifDefined(type)}"
         form="${ifDefined(form)}"
         name="${ifDefined(name)}"

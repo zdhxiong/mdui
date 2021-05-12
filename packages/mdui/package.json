@@ -11,7 +11,6 @@
     "checkbox",
     "icon",
     "link",
-    "styles",
     "surface",
     "button.{d.ts,js,js.map}",
     "checkbox.{d.ts,js,js.map}",
@@ -43,9 +42,10 @@
   },
   "homepage": "https://mdui.org",
   "dependencies": {
-    "lit": "^2.0.0-rc.1",
+    "lit": "^2.0.0-rc.2",
     "tslib": "^2.2.0",
     "@mdui/shared": "^1.0.0",
+    "@mdui/themes": "^1.0.0",
     "@mdui/jq": "^3.0.0"
   }
 }

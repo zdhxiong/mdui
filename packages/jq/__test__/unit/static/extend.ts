@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from '@open-wc/testing';
 import $ from '../../jq_or_jquery';
 
 describe('$.extend', function () {
@@ -15,7 +15,9 @@ describe('$.extend', function () {
     });
 
     assert.deepEqual(merged, $);
+    // @ts-ignore
     assert.equal($.testFunc(), 'testFunc');
+    // @ts-ignore
     assert.equal($.testFunc2(), 'testFunc2');
     assert.deepEqual(_this, merged); // this 指向 $
   });

@@ -1,4 +1,5 @@
-import { assert } from 'chai';
+import { assert } from '@open-wc/testing';
+import { JQ } from '../../../shared/core';
 import $ from '../../jq_or_jquery';
 
 describe('.extend()', function () {
@@ -11,10 +12,10 @@ describe('.extend()', function () {
 
   it('.extend(object): JQ', function () {
     $.fn.extend({
-      testFunc1: function () {
+      testFunc1: function (this: JQ) {
         this.addClass('class1');
       },
-      testFunc2: function () {
+      testFunc2: function (this: JQ) {
         this.addClass('class2');
       },
     });

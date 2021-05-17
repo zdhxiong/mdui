@@ -1,6 +1,6 @@
-import { assert } from 'chai';
+import { assert } from '@open-wc/testing';
 import $ from '../../jq_or_jquery';
-import { JQ } from '../../../es/shared/core';
+import { JQ } from '../../../shared/core';
 
 describe('.next()', function () {
   beforeEach(function () {

@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from '@open-wc/testing';
 import $ from '../../jq_or_jquery';
 
 const hasPHP = true;
@@ -39,7 +39,7 @@ describe('$.ajax', function () {
     //   options: AJAX 请求的配置参数
     //   data: AJAX 请求返回的数据
     // }
-    $(document).on('start.mdui.ajax', function (event, params) {
+    $(document).on('start.mdui.ajax', function (event, params: any) {
       assert.instanceOf(params.xhr, XMLHttpRequest);
       // @ts-ignore
       assert.instanceOf(event._detail.xhr, XMLHttpRequest);
@@ -56,7 +56,7 @@ describe('$.ajax', function () {
       assert.equal(eventComplete, 0);
     });
 
-    $(document).on('success.mdui.ajax', function (event, params) {
+    $(document).on('success.mdui.ajax', function (event, params: any) {
       assert.instanceOf(params.xhr, XMLHttpRequest);
       // @ts-ignore
       assert.instanceOf(event._detail.xhr, XMLHttpRequest);
@@ -73,7 +73,7 @@ describe('$.ajax', function () {
       assert.equal(eventComplete, 0);
     });
 
-    $(document).on('error.mdui.ajax', function (event, params) {
+    $(document).on('error.mdui.ajax', function (event, params: any) {
       assert.instanceOf(params.xhr, XMLHttpRequest);
       // @ts-ignore
       assert.instanceOf(event._detail.xhr, XMLHttpRequest);
@@ -86,7 +86,7 @@ describe('$.ajax', function () {
       eventError++;
     });
 
-    $(document).on('complete.mdui.ajax', function (event, params) {
+    $(document).on('complete.mdui.ajax', function (event, params: any) {
       assert.instanceOf(params.xhr, XMLHttpRequest);
       // @ts-ignore
       assert.instanceOf(event._detail.xhr, XMLHttpRequest);
@@ -617,14 +617,14 @@ describe('$.ajax', function () {
           method: 'get',
           url: `${phpPath}/json.php`,
           dataType: 'json',
-          success: function (data) {
+          success: function (data: any) {
             assert.isObject(data);
             assert.equal(data.key1, 'val1');
             assert.equal(data.key2, 'val2');
           },
         });
       })
-      .then(function (data) {
+      .then(function (data: any) {
         assert.isObject(data);
         assert.equal(data.key1, 'val1');
         assert.equal(data.key2, 'val2');
@@ -651,6 +651,7 @@ describe('$.ajax', function () {
       url: `${phpPath}/json.php`,
       cache: false,
       success: function (_, __, xhr) {
+        // @ts-ignore
         if (!isJquery && !(window.ActiveXObject || 'ActiveXObject' in window)) {
           assert.isTrue(xhr.responseURL.indexOf('_=') > 0);
         }
@@ -664,6 +665,7 @@ describe('$.ajax', function () {
           success: function (_, __, xhr) {
             if (
               !isJquery &&
+              // @ts-ignore
               !(window.ActiveXObject || 'ActiveXObject' in window)
             ) {
               assert.isTrue(xhr.responseURL.indexOf('_=') > 0);
@@ -679,6 +681,7 @@ describe('$.ajax', function () {
           success: function (_, __, xhr) {
             if (
               !isJquery &&
+              // @ts-ignore
               !(window.ActiveXObject || 'ActiveXObject' in window)
             ) {
               assert.isFalse(xhr.responseURL.indexOf('_=') > 0);

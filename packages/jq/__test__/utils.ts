@@ -1,4 +1,4 @@
-import { JQ } from '../es/shared/core';
+import { JQ } from '../shared/core';
 
 function toTagNameArray($elements: JQ): string[] {
   return $elements.get().map((e) => e.tagName.toLowerCase());

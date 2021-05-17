@@ -61,9 +61,14 @@ eachArray<Method>(['add', 'remove', 'toggle'], (name) => {
       if (!isElement(element)) {
         return;
       }
-      const classes = (isFunction(className)
-        ? className.call(element, i, <string>getAttribute(element, 'class', ''))
-        : className
+      const classes = (
+        isFunction(className)
+          ? className.call(
+              element,
+              i,
+              <string>getAttribute(element, 'class', ''),
+            )
+          : className
       )
         .split(' ')
         .filter((name) => name);

@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from '@open-wc/testing';
 import $ from '../../jq_or_jquery';
 
 describe('.data(), .removeData()', function () {
@@ -73,11 +73,11 @@ describe('.data(), .removeData()', function () {
     // 存储数组
     const testArrayData = [1, 2, 3, 4];
     $intro.data('array', testArrayData);
-    assert.sameOrderedMembers($intro.data('array'), testArrayData);
+    assert.sameOrderedMembers($intro.data('array') as number[], testArrayData);
 
     // .data(key, undefined) 不设置数据，直接返回原对象
     assert.isTrue($intro.data('array', undefined).is($intro));
-    assert.sameOrderedMembers($intro.data('array'), testArrayData);
+    assert.sameOrderedMembers($intro.data('array') as number[], testArrayData);
 
     // .data(key, null) 将存储 null 值
     assert.isTrue($intro.data('array', null).is($intro));

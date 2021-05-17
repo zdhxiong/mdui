@@ -34,7 +34,7 @@ var object = extend(
       T extends PlainObject,
       U extends PlainObject,
       V extends PlainObject,
-      W extends PlainObject
+      W extends PlainObject,
     >(
       target: T,
       object1: U,

@@ -4,6 +4,7 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
     "module": "es2015",
     "target": "es2019",
     "lib": ["es2019", "dom"],

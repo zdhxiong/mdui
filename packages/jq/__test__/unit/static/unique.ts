@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from '@open-wc/testing';
 import $ from '../../jq_or_jquery';
 
 describe('$.unique', function () {
@@ -22,12 +22,10 @@ describe('$.unique', function () {
     // 过滤数组中的重复元素（jQuery 不支持非 DOM 元素组成的数组）
     // @ts-ignore
     if (typeof jQuery === 'undefined') {
-      assert.sameOrderedMembers($.unique([1, 2, 12, 3, 2, 1, 2, 1, 1, 1, 1]), [
-        1,
-        2,
-        12,
-        3,
-      ]);
+      assert.sameOrderedMembers(
+        $.unique([1, 2, 12, 3, 2, 1, 2, 1, 1, 1, 1]),
+        [1, 2, 12, 3],
+      );
     }
   });
 });

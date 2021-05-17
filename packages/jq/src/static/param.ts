@@ -2,8 +2,14 @@ import { PlainObject } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
 import { param } from '../functions/param.js';
 
-// @ts-ignore
-type Value = Record<string, Value> | string | number | boolean;
+type Value =
+  | Record<string, Value>[]
+  | string[]
+  | number[]
+  | boolean[]
+  | string
+  | number
+  | boolean;
 
 declare module '../shared/core.js' {
   interface JQStatic {
@@ -36,7 +42,7 @@ param([
 // name=mdui&password=123456
 ```
  */
-    param(obj: { name: string; value: Value[] }[] | PlainObject): string;
+    param(obj: { name: string; value: Value }[] | PlainObject): string;
   }
 }
 

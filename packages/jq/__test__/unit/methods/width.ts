@@ -1,4 +1,4 @@
-import { assert } from 'chai';
+import { assert } from '@open-wc/testing';
 import $ from '../../jq_or_jquery';
 
 // 测试 width、height、innerWidth、innerHeight、outerWidth、outerHeight

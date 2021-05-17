@@ -1,8 +1,8 @@
 /**
  * 测试 typescript 的类型提示
  */
-import $ from '../es/index';
-import { JQ } from '../es/shared/core';
+import $ from '../index';
+import { JQ } from '../shared/core';
 
 const getElementById = document.getElementById('test');
 const querySelector = document.querySelector('.test');
@@ -29,7 +29,9 @@ $(arr);
 $('.selector');
 $('<div>');
 
-function test(selector: string | HTMLElement | ArrayLike<HTMLElement>): JQ {
+function test<T = string | HTMLElement | ArrayLike<HTMLElement>>(
+  selector: T,
+): JQ<T> {
   return $(selector).eq(0);
 }
 
@@ -554,6 +556,7 @@ $elements.prop('obj', { a: 1, b: 2 });
 $elements.prop('title', null);
 $elements.prop('title', undefined);
 $elements.prop('title', function (index, oldPropValue) {
+  // @ts-ignore
   return oldPropValue + index;
 });
 $elements.prop('title', function () {

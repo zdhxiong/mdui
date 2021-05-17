@@ -677,7 +677,7 @@ export const mergeOptions = (
     ];
 
     if (
-      !((callbacks as unknown) as string).includes(key) &&
+      !(callbacks as unknown as string).includes(key) &&
       !isUndefined(value)
     ) {
       defaults[key] = value;

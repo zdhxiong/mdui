@@ -45,7 +45,7 @@ ajax({
 });
 ```
  */
-export const ajax = (options: Options): Promise<unknown> => {
+export const ajax = <T = unknown>(options: Options): Promise<T> => {
   // 是否已取消请求
   let isCanceled = false;
 
@@ -136,10 +136,10 @@ export const ajax = (options: Options): Promise<unknown> => {
   };
 
   // XMLHttpRequest 请求
-  const XHR = (): Promise<unknown> => {
+  const XHR = () => {
     let textStatus: TextStatus;
 
-    return new Promise((resolve, reject): void => {
+    return new Promise<T>((resolve, reject) => {
       const doReject = (reason: string) => {
         return reject(new Error(reason));
       };
@@ -221,7 +221,7 @@ export const ajax = (options: Options): Promise<unknown> => {
 
             if (textStatus !== 'parsererror') {
               trigger(ajaxSuccess, 'success', responseData, textStatus, xhr);
-              resolve(responseData);
+              resolve(responseData as unknown as T);
             }
           } else {
             responseData =
@@ -233,7 +233,7 @@ export const ajax = (options: Options): Promise<unknown> => {
             eventParams.data = responseData;
 
             trigger(ajaxSuccess, 'success', responseData, textStatus, xhr);
-            resolve(responseData);
+            resolve(responseData as unknown as T);
           }
         } else {
           textStatus = 'error';

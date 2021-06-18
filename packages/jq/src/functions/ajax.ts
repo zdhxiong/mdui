@@ -211,7 +211,7 @@ export const ajax = <T = unknown>(options: Options): Promise<T> => {
             try {
               responseData =
                 method === 'HEAD' ? undefined : JSON.parse(xhr.responseText);
-              eventParams.data = responseData;
+              eventParams.response = responseData;
             } catch (err) {
               textStatus = 'parsererror';
 
@@ -230,7 +230,7 @@ export const ajax = <T = unknown>(options: Options): Promise<T> => {
                 : xhr.responseType === 'text' || xhr.responseType === ''
                 ? xhr.responseText
                 : xhr.response;
-            eventParams.data = responseData;
+            eventParams.response = responseData;
 
             trigger(ajaxSuccess, 'success', responseData, textStatus, xhr);
             resolve(responseData as unknown as T);
@@ -287,7 +287,7 @@ export const ajax = <T = unknown>(options: Options): Promise<T> => {
       };
 
       // ajax start 回调
-      trigger(ajaxStart, 'beforeSend', xhr);
+      trigger(ajaxStart, 'beforeSend', xhr, mergedOptions);
 
       if (isCanceled) {
         return doReject('cancel');

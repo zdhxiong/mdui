@@ -10,7 +10,12 @@
 Note: 当前为 3.0 版本，正在开发中，将移除对 IE 浏览器的兼容
 
 3.0更新：
-移除对 IE 的兼容
+* 移除对 IE 的兼容
+* data 方法的 data-* 属性改为从 dataset 中读取
+* ajax 全局事件名改为 ajaxStart、ajaxSuccess、ajaxError、ajaxComplete
+* 废弃 ajaxStart、ajaxSuccess、ajaxError、ajaxComplete 方法，现在统一通过 $(document).on() 监听 ajax 事件
+  其中 ajaxStart、ajaxError、ajaxComplete 事件的回调函数第二个参数为 { xhr, options }，
+  ajaxSuccess 事件的回调函数第二个参数为 { xhr, options, response }
 
 拥有和 jQuery 相似 API 的轻量级 JavaScript 工具库。已作为 [MDUI](https://github.com/zdhxiong/mdui) 内置工具库使用。
 
@@ -47,10 +52,6 @@ import $ from '@mdui/jq/$.js';
 import '@mdui/jq/methods/add.js';
 import '@mdui/jq/methods/addClass.js';
 import '@mdui/jq/methods/after.js';
-import '@mdui/jq/methods/ajaxComplete.js';
-import '@mdui/jq/methods/ajaxError.js';
-import '@mdui/jq/methods/ajaxStart.js';
-import '@mdui/jq/methods/ajaxSuccess.js';
 import '@mdui/jq/methods/append.js';
 import '@mdui/jq/methods/appendTo.js';
 import '@mdui/jq/methods/attr.js';

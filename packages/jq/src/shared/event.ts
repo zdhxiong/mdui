@@ -7,8 +7,10 @@ import '../methods/get.js';
 export type EventCallback = (
   this: Element | Document | Window,
   event: Event,
-  data?: unknown,
-  ...dataN: unknown[]
+  // eslint-disable-next-line
+  data?: any,
+  // eslint-disable-next-line
+  ...dataN: any[]
 ) => void | false;
 
 type Handler = {

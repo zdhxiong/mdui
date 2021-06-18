@@ -14,9 +14,6 @@ export type Method =
   | 'LINK'
   | 'UNLINK';
 
-// 请求响应类型
-export type DataType = 'text' | 'json';
-
 // 回调函数名称
 export type CallbackName = 'beforeSend' | 'success' | 'error' | 'complete';
 
@@ -26,9 +23,12 @@ export type ErrorTextStatus = 'timeout' | 'error' | 'abort' | 'parsererror';
 export type TextStatus = SuccessTextStatus | ErrorTextStatus;
 
 // 回调函数
-export type BeforeSendCallback = (xhr: XMLHttpRequest) => void | false;
+export type BeforeSendCallback = (
+  xhr: XMLHttpRequest,
+  options: Required<OptionsParams> & Options,
+) => void | false;
 export type SuccessCallback = (
-  data: unknown,
+  response: unknown,
   textStatus: SuccessTextStatus,
   xhr: XMLHttpRequest,
 ) => void;
@@ -124,7 +124,7 @@ export interface OptionsParams extends PlainObject {
   /**
    * 服务器返回的数据类型
    */
-  dataType?: DataType;
+  dataType?: 'text' | 'json';
 
   /**
    *内容的编码类型。为 false 时将不设置 Content-Type
@@ -143,20 +143,6 @@ export interface OptionsParams extends PlainObject {
 }
 
 export interface Options extends OptionsParams, OptionsCallback {}
-
-// 全局回调函数
-export type GlobalCallback = (
-  event: Event,
-  xhr: XMLHttpRequest,
-  options: Options,
-) => void;
-
-export type GlobalSuccessCallback = (
-  event: Event,
-  xhr: XMLHttpRequest,
-  options: Options,
-  data: unknown,
-) => void;
 
 // 状态码对应回调函数
 export type StatusCodeCallbacks = {
@@ -575,18 +561,18 @@ export type XHRFields = Partial<
   >
 >;
 
-// ajax 事件参数
+// ajax 事件参数 (ajaxStart, ajaxError, ajaxComplete 不含 response，仅 ajaxSuccess 含 response)
 export interface EventParams extends PlainObject {
-  data: string;
   xhr: XMLHttpRequest;
-  options: Options;
+  options: Required<OptionsParams> & Options;
+  response?: string;
 }
 
 // 全局事件名
-export const ajaxStart = 'start.mdui.ajax';
-export const ajaxSuccess = 'success.mdui.ajax';
-export const ajaxError = 'error.mdui.ajax';
-export const ajaxComplete = 'complete.mdui.ajax';
+export const ajaxStart = 'ajaxStart';
+export const ajaxSuccess = 'ajaxSuccess';
+export const ajaxError = 'ajaxError';
+export const ajaxComplete = 'ajaxComplete';
 
 // 事件名称
 export type EventName =
@@ -595,13 +581,6 @@ export type EventName =
   | typeof ajaxError
   | typeof ajaxComplete;
 
-export const ajaxEvents = {
-  ajaxStart,
-  ajaxSuccess,
-  ajaxError,
-  ajaxComplete,
-} as const;
-
 // 全局配置参数
 export const globalOptions: Options = {};
 
@@ -609,7 +588,9 @@ export const globalOptions: Options = {};
  * 判断此请求方法是否通过查询字符串提交参数
  * @param method 请求方法，大写
  */
-export const isQueryStringData = (method: Uppercase<Method>): boolean => {
+export const isQueryStringData = (
+  method: Uppercase<Method>,
+): method is 'GET' | 'HEAD' => {
   return ['GET', 'HEAD'].includes(method);
 };
 

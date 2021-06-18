@@ -11,6 +11,10 @@ import { EventCallback, add } from '../shared/event.js';
 import './each.js';
 import './off.js';
 
+// 该方法也用于监听 ajaxStart, ajaxSuccess, ajaxError, ajaxComplete 事件
+// 其中 ajaxStart, ajaxError, ajaxComplete 事件的回调函数第二个参数为 { xhr, options }
+// ajaxSuccess 事件的回调函数的第二个参数为 { xhr, options, response }
+
 declare module '../shared/core.js' {
   interface JQ {
     /**
@@ -108,7 +112,8 @@ declare module '../shared/core.js' {
 
 $.fn.on = function (
   this: JQ,
-  types: PlainObject<EventCallback | false> | string,
+  // eslint-disable-next-line
+  types: any,
   // eslint-disable-next-line
   selector: any,
   // eslint-disable-next-line
@@ -126,7 +131,7 @@ $.fn.on = function (
       selector = undefined;
     }
 
-    eachObject(types, (type: string, fn: EventCallback | false) => {
+    eachObject(types, (type: string, fn: unknown) => {
       // selector 和 data 都可能是 undefined
       // @ts-ignore
       this.on(type, selector, data, fn, one);

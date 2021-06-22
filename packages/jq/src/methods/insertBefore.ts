@@ -7,6 +7,7 @@ import {
 import $ from '../$.js';
 import { JQ } from '../shared/core.js';
 import './each.js';
+import './get.js';
 
 declare module '../shared/core.js' {
   interface JQ {

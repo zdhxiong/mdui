@@ -1,4 +1,4 @@
-import { isFunction } from '@mdui/shared/helpers.js';
+import { isFunction, PlainObject } from '@mdui/shared/helpers.js';
 import $ from '../$.js';
 import { extend } from '../functions/extend.js';
 import { JQ } from '../shared/core.js';
@@ -9,7 +9,7 @@ import './position.js';
 /**
  * 坐标值
  */
-interface Coordinates {
+interface Coordinates extends PlainObject {
   left: number;
   top: number;
 }

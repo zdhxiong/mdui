@@ -10,6 +10,7 @@ import { map } from '../functions/map.js';
 import { JQ } from '../shared/core.js';
 import './each.js';
 import './is.js';
+import './find.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

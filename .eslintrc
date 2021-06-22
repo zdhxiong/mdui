@@ -24,12 +24,6 @@
   ],
   "overrides": [
     {
-      "files": ["**/__test__/**"],
-      "rules": {
-        "import/extensions": ["error", "never"]
-      }
-    },
-    {
       "files": ["./scripts/**"],
       "rules": {
         "@typescript-eslint/no-var-requires": "off"

@@ -28,7 +28,8 @@ export type BeforeSendCallback = (
   options: Required<OptionsParams> & Options,
 ) => void | false;
 export type SuccessCallback = (
-  response: unknown,
+  // eslint-disable-next-line
+  response: any,
   textStatus: SuccessTextStatus,
   xhr: XMLHttpRequest,
 ) => void;
@@ -122,9 +123,9 @@ export interface OptionsParams extends PlainObject {
   statusCode?: StatusCodeCallbacks;
 
   /**
-   * 服务器返回的数据类型
+   * 服务器返回的数据类型，若为空字符串，则将根据响应的 Content-Type 解析
    */
-  dataType?: 'text' | 'json';
+  dataType?: 'text' | 'json' | '';
 
   /**
    *内容的编码类型。为 false 时将不设置 Content-Type
@@ -641,7 +642,7 @@ export const mergeOptions = (
     headers: {},
     xhrFields: {},
     statusCode: {},
-    dataType: 'text',
+    dataType: '',
     contentType: 'application/x-www-form-urlencoded',
     timeout: 0,
     global: true,

@@ -1,34 +1,37 @@
-import { JQ } from '../shared/core';
+import jQuery from 'jquery';
+import { assert } from '@open-wc/testing';
+import jq from '../$.js';
+import { JQStatic } from '../shared/core.js';
+import { JQ } from '../shared/core.js';
 
-function toTagNameArray($elements: JQ): string[] {
-  return $elements.get().map((e) => e.tagName.toLowerCase());
-}
+export { jQuery, jq, assert, JQStatic, JQ };
 
-function toClassNameArray($elements: JQ): string[] {
-  return $elements.get().map((e) => e.className.toLowerCase());
-}
+export const toTagNameArray = ($elements: JQ): string[] => {
+  return Array.from($elements).map((e) => e.tagName.toLowerCase());
+};
 
-function toInnerTextArray($elements: JQ): string[] {
-  return $elements.get().map((e) => e.innerText);
-}
+export const toClassNameArray = ($elements: JQ): string[] => {
+  return Array.from($elements).map((e) => e.className.toLowerCase());
+};
 
-function toInnerHtmlArray($elements: JQ): string[] {
-  return $elements.get().map((e) => e.innerHTML);
-}
+export const toTextContentArray = ($elements: JQ): string[] => {
+  return Array.from($elements).map((e) => e.textContent!);
+};
 
-function toIdArray($elements: JQ): string[] {
-  return $elements.get().map((e) => e.getAttribute('id') || '');
-}
+export const toInnerHtmlArray = ($elements: JQ): string[] => {
+  return Array.from($elements).map((e) => e.innerHTML);
+};
 
-function removeSpace(text: string): string {
+export const toIdArray = ($elements: JQ): string[] => {
+  return Array.from($elements).map((e) => e.getAttribute('id') || '');
+};
+
+export const selectorToArray = (selector: string): Element[] => {
+  const nodeList = document.querySelectorAll(selector);
+
+  return Array.from(nodeList);
+};
+
+export const removeSpace = (text: string): string => {
   return text.replace(/\ +/g, '').replace(/[\r\n]/g, '');
-}
-
-export {
-  toTagNameArray,
-  toClassNameArray,
-  toInnerTextArray,
-  toInnerHtmlArray,
-  toIdArray,
-  removeSpace,
 };

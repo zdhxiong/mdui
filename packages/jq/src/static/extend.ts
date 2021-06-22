@@ -108,7 +108,6 @@ $.customFunc()
     /**
      * 将所有对象的属性都添加到第一个对象，并返回合并后的对象。
      * @param target 其他参数的属性将合并到该参数
-     * @param object1 该对象的属性将合并到第一个参数
      * @param objectN 额外的对象，这些对象的属性将合并到第一个对象
      * @example
 ```js
@@ -125,11 +124,7 @@ var object = extend(
 }
 ```
      */
-    extend(
-      target: PlainObject,
-      object1: PlainObject,
-      ...objectN: PlainObject[]
-    ): PlainObject;
+    extend(target: PlainObject, ...objectN: PlainObject[]): PlainObject;
   }
 }
 

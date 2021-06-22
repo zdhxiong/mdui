@@ -18,7 +18,8 @@ ajax({
 });
 ```
      */
-    ajax(options: Options): Promise<unknown>;
+    // eslint-disable-next-line
+    ajax<T = any>(options: Options): Promise<T>;
   }
 }
 

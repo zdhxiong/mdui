@@ -106,8 +106,15 @@ export const toKebabCase = (string: string): string => {
 /**
  * 始终返回 false 的函数
  */
-export const returnFalse = (): boolean => {
+export const returnFalse = (): false => {
   return false;
+};
+
+/**
+ * 始终返回 true 的函数
+ */
+export const returnTrue = (): true => {
+  return true;
 };
 
 /**

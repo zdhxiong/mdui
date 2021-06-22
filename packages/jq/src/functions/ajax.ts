@@ -45,7 +45,8 @@ ajax({
 });
 ```
  */
-export const ajax = <T = unknown>(options: Options): Promise<T> => {
+// eslint-disable-next-line
+export const ajax = <T = any>(options: Options): Promise<T> => {
   // 是否已取消请求
   let isCanceled = false;
 
@@ -107,6 +108,11 @@ export const ajax = <T = unknown>(options: Options): Promise<T> => {
   ): void => {
     // 触发全局事件
     if (global) {
+      // complete 回调 和 ajaxComplete 事件中，不存在 response
+      if (callback === 'complete') {
+        delete eventParams.response;
+      }
+
       $(document).trigger(event, eventParams);
     }
 
@@ -207,7 +213,11 @@ export const ajax = <T = unknown>(options: Options): Promise<T> => {
               ? 'notmodified'
               : 'success';
 
-          if (dataType === 'json') {
+          if (
+            dataType === 'json' ||
+            (!dataType &&
+              (xhr.getResponseHeader('content-type') || '').includes('json'))
+          ) {
             try {
               responseData =
                 method === 'HEAD' ? undefined : JSON.parse(xhr.responseText);

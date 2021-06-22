@@ -3,6 +3,7 @@ import $ from '../$.js';
 import { contains } from '../functions/contains.js';
 import { JQ } from '../shared/core.js';
 import './find.js';
+import './map.js';
 
 declare module '../shared/core.js' {
   interface JQ {

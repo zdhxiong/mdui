@@ -3,6 +3,7 @@ import $ from '../$.js';
 import { JQ } from '../shared/core.js';
 import './filter.js';
 import './map.js';
+import './index.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

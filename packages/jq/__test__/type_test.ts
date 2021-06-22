@@ -1,8 +1,7 @@
 /**
  * 测试 typescript 的类型提示
  */
-import $ from '../index';
-import { JQ } from '../shared/core';
+import { jq as $, JQ } from './utils.js';
 
 const getElementById = document.getElementById('test');
 const querySelector = document.querySelector('.test');

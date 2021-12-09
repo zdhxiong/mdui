@@ -6,4 +6,5 @@ node_modules
 packages/**/*.js
 packages/**/*.d.ts
 packages/**/*.js.map
+lerna-debug.log
 stats.html

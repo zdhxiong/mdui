@@ -1,6 +1,17 @@
-# `icons`
+# @mdui/functions
 
-> TODO: description
+mdui 的函数库
+
+## 安装
+
+```bash
+npm install @mdui/functions --save
+```
+
+
+
+
+
 
 ## Usage
 

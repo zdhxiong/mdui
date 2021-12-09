@@ -74,7 +74,7 @@ function buildJsFile(filePath, optimization = true) {
   }
 }
 
-exports.packagePath = './packages/mdui';
+exports.packagePath = './packages/components';
 exports.traverseDirectory = traverseDirectory;
 exports.buildLessFile = buildLessFile;
 exports.buildJsFile = buildJsFile;

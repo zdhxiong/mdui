@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@mdui/shared": "^1.0.0",
-    "lit": "^2.0.0-rc.2",
+    "lit": "^2.0.0",
     "tslib": "^2.2.0"
   }
 }

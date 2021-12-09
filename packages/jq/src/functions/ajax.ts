@@ -309,7 +309,7 @@ export const ajax = <T = any>(options: Options): Promise<T> => {
       }
 
       // 发送 XHR
-      xhr.send(data as BodyInit);
+      xhr.send(data as XMLHttpRequestBodyInit);
     });
   };
 

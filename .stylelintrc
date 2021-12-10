@@ -3,8 +3,14 @@
     "stylelint-config-standard",
     "stylelint-config-rational-order"
   ],
+  "overrides": [
+    {
+      "files": ["packages/**/*.less"],
+      "customSyntax": "postcss-less"
+    }
+  ],
   "rules": {
     "no-duplicate-selectors": null,
-    "no-descending-specificity": null
+    "max-line-length": null
   }
 }

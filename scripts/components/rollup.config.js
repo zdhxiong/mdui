@@ -1,8 +1,6 @@
 import { terser } from 'rollup-plugin-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import { visualizer } from 'rollup-plugin-visualizer';
-import alias from '@rollup/plugin-alias';
-import copy from 'rollup-plugin-copy';
 import pkg from '../../packages/components/package.json';
 
 const banner = `

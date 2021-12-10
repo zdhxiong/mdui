@@ -42,7 +42,9 @@
   },
   "homepage": "https://mdui.org",
   "dependencies": {
-    "tslib": "^2.2.0",
+    "tslib": "^2.3.1",
+    "@mdui/components": "^1.0.0",
+    "@mdui/functions": "^1.0.0",
     "@mdui/shared": "^1.0.0",
     "@mdui/themes": "^1.0.0",
     "@mdui/jq": "^3.0.0"

@@ -23,8 +23,5 @@
   "bugs": {
     "url": "https://github.com/zdhxiong/mdui/issues"
   },
-  "homepage": "https://github.com/zdhxiong/mdui",
-  "engines": {
-    "node": ">=14"
-  }
+  "homepage": "https://github.com/zdhxiong/mdui"
 }

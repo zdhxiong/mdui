@@ -3,8 +3,9 @@
 .vscode
 .vs
 node_modules
+coverage
 packages/**/*.js
 packages/**/*.d.ts
 packages/**/*.js.map
-lerna-debug.log
+.pnpm-debug.log
 stats.html

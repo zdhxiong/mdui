@@ -5,6 +5,7 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,
+    "useDefineForClassFields": false,
     "module": "es2015",
     "target": "es2019",
     "lib": ["es2019", "dom"],

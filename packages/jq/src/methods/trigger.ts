@@ -27,34 +27,24 @@ $('.box').trigger('click', {key1: 'value1', key2: 'value2'});
 }
 
 // eslint-disable-next-line
-$.fn.trigger = function (this: JQ, type: string, extraParameters: any): JQ {
+$.fn.trigger = function (this: JQ, type: string, extraParameters: any = null): JQ {
   type EventParams = {
     // eslint-disable-next-line
-    detail?: any;
+    detail: any;
     bubbles: boolean;
     cancelable: boolean;
+    composed: boolean;
   };
 
   const event = parse(type);
-  let eventObject: MouseEvent | CustomEvent;
   const eventParams: EventParams = {
+    detail: extraParameters,
     bubbles: true,
     cancelable: true,
+    composed: true,
   };
-  const isMouseEvent = ['click', 'mousedown', 'mouseup', 'mousemove'].includes(
-    event.type,
-  );
 
-  if (isMouseEvent) {
-    // Note: MouseEvent 无法传入 detail 参数
-    eventObject = new MouseEvent(event.type, eventParams);
-  } else {
-    eventParams.detail = extraParameters;
-    eventObject = new CustomEvent(event.type, eventParams);
-  }
-
-  // @ts-ignore
-  eventObject._detail = extraParameters;
+  const eventObject = new CustomEvent(event.type, eventParams);
 
   // @ts-ignore
   eventObject._ns = event.ns;

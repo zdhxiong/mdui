@@ -125,11 +125,10 @@ export const add = (
     const event = parse(type);
 
     const callFn = (e: Event, elem: Element | Document | Window): void => {
-      // 因为鼠标事件模拟事件的 detail 属性是只读的，因此在 e._detail 中存储参数
       const result = func.apply(
         elem,
         // @ts-ignore
-        e._detail === undefined ? [e] : [e].concat(e._detail),
+        e.detail === null ? [e] : [e].concat(e.detail),
       );
 
       if (result === false) {

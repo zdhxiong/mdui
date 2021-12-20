@@ -233,7 +233,7 @@ const test = ($: JQStatic, type: string): void => {
             // @ts-ignore
             assert.isUndefined(isJquery ? event.data : event._data);
             // @ts-ignore
-            !isJquery && assert.isUndefined(event._detail);
+            !isJquery && assert.isNull(event.detail);
           },
           change: function (event, data) {
             eventCount++;
@@ -243,7 +243,7 @@ const test = ($: JQStatic, type: string): void => {
             // @ts-ignore
             assert.isUndefined(isJquery ? event.data : event._data);
             // @ts-ignore
-            !isJquery && assert.equal(event._detail, 'val');
+            !isJquery && assert.equal(event.detail, 'val');
           },
         },
         '#button',
@@ -287,7 +287,7 @@ const test = ($: JQStatic, type: string): void => {
             // @ts-ignore
             assert.equal(isJquery ? event.data : event._data, 'test-data');
             // @ts-ignore
-            !isJquery && assert.isUndefined(event._detail);
+            !isJquery && assert.isNull(event.detail);
           },
           change: (event, data1, data2) => {
             eventCount++;
@@ -297,7 +297,7 @@ const test = ($: JQStatic, type: string): void => {
             assert.equal(isJquery ? event.data : event._data, 'test-data');
             if (!isJquery) {
               // @ts-ignore
-              assert.sameOrderedMembers(event._detail, ['data1', 'data2']);
+              assert.sameOrderedMembers(event.detail, ['data1', 'data2']);
             }
           },
         },

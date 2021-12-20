@@ -84,28 +84,28 @@ const test = ($: JQStatic, type: string): void => {
               eventCount++;
               assert.equal(data, 'click-data');
               // @ts-ignore
-              !isJquery && assert.equal(event._detail, 'click-data');
+              !isJquery && assert.equal(event.detail, 'click-data');
               break;
 
             case 'input':
               eventCount++;
               assert.deepEqual(data, { key: 'val' });
               // @ts-ignore
-              !isJquery && assert.deepEqual(event._detail, { key: 'val' });
+              !isJquery && assert.deepEqual(event.detail, { key: 'val' });
               break;
 
             case 'change':
               eventCount++;
               assert.deepEqual(data, 22);
               // @ts-ignore
-              !isJquery && assert.deepEqual(event._detail, 22);
+              !isJquery && assert.deepEqual(event.detail, 22);
               break;
 
             case 'dbclick':
               eventCount++;
               assert.isTrue(data);
               // @ts-ignore
-              !isJquery && assert.isTrue(event._detail);
+              !isJquery && assert.isTrue(event.detail);
               break;
 
             case 'customEvent':
@@ -114,7 +114,7 @@ const test = ($: JQStatic, type: string): void => {
               assert.equal(data2, 'custom-value');
               if (!isJquery) {
                 // @ts-ignore
-                assert.sameOrderedMembers(event._detail, [
+                assert.sameOrderedMembers(event.detail, [
                   'custom-data',
                   'custom-value',
                 ]);
@@ -295,7 +295,7 @@ const test = ($: JQStatic, type: string): void => {
             // @ts-ignore
             assert.isUndefined(isJquery ? event.data : event._data);
             // @ts-ignore
-            !isJquery && assert.isUndefined(event._detail);
+            !isJquery && assert.isNull(event.detail);
           },
           change: function (event, data) {
             eventCount++;
@@ -305,7 +305,7 @@ const test = ($: JQStatic, type: string): void => {
             // @ts-ignore
             assert.isUndefined(isJquery ? event.data : event._data);
             // @ts-ignore
-            !isJquery && assert.equal(event._detail, 'val');
+            !isJquery && assert.equal(event.detail, 'val');
           },
         },
         '#button',
@@ -345,7 +345,7 @@ const test = ($: JQStatic, type: string): void => {
             // @ts-ignore
             assert.equal(isJquery ? event.data : event._data, 'test-data');
             // @ts-ignore
-            !isJquery && assert.isUndefined(event._detail);
+            !isJquery && assert.isNull(event.detail);
           },
           change: function (event, data1, data2) {
             eventCount++;
@@ -355,7 +355,7 @@ const test = ($: JQStatic, type: string): void => {
             assert.equal(isJquery ? event.data : event._data, 'test-data');
             if (!isJquery) {
               // @ts-ignore
-              assert.sameOrderedMembers(event._detail, ['data1', 'data2']);
+              assert.sameOrderedMembers(event.detail, ['data1', 'data2']);
             }
           },
         },

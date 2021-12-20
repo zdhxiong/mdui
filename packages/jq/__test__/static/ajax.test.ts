@@ -174,7 +174,7 @@ const test = ($: JQStatic, type: string): void => {
           assert.equal(data.options.method, 'GET');
           assert.isUndefined(data.response);
           // @ts-ignore
-          assert.instanceOf(event._detail.xhr, XMLHttpRequest);
+          assert.instanceOf(event.detail.xhr, XMLHttpRequest);
         }
 
         eventStart++;
@@ -191,7 +191,7 @@ const test = ($: JQStatic, type: string): void => {
           assert.equal(data.options.method, 'GET');
           assert.equal(data.response, 'is a text');
           // @ts-ignore
-          assert.instanceOf(event._detail.xhr, XMLHttpRequest);
+          assert.instanceOf(event.detail.xhr, XMLHttpRequest);
         }
 
         eventSuccess++;
@@ -208,7 +208,7 @@ const test = ($: JQStatic, type: string): void => {
           assert.equal(data.options.method, 'GET');
           assert.isUndefined(data.response);
           // @ts-ignore
-          assert.instanceOf(event._detail.xhr, XMLHttpRequest);
+          assert.instanceOf(event.detail.xhr, XMLHttpRequest);
         }
 
         eventError++;
@@ -221,7 +221,7 @@ const test = ($: JQStatic, type: string): void => {
           assert.equal(data.options.method, 'GET');
           assert.isUndefined(data.response);
           // @ts-ignore
-          assert.instanceOf(event._detail.xhr, XMLHttpRequest);
+          assert.instanceOf(event.detail.xhr, XMLHttpRequest);
         }
 
         eventComplete++;
@@ -242,38 +242,38 @@ const test = ($: JQStatic, type: string): void => {
       // }
       document.addEventListener('ajaxStart', (event) => {
         // @ts-ignore
-        assert.instanceOf(event._detail.xhr, XMLHttpRequest);
+        assert.instanceOf(event.detail.xhr, XMLHttpRequest);
         // @ts-ignore
-        assert.isObject(event._detail.options);
+        assert.isObject(event.detail.options);
         // @ts-ignore
-        assert.isUndefined(event._detail.response);
+        assert.isUndefined(event.detail.response);
       });
 
       document.addEventListener('ajaxSuccess', (event) => {
         // @ts-ignore
-        assert.instanceOf(event._detail.xhr, XMLHttpRequest);
+        assert.instanceOf(event.detail.xhr, XMLHttpRequest);
         // @ts-ignore
-        assert.isObject(event._detail.options);
+        assert.isObject(event.detail.options);
         // @ts-ignore
-        assert.exists(event._detail.response);
+        assert.exists(event.detail.response);
       });
 
       document.addEventListener('ajaxError', (event) => {
         // @ts-ignore
-        assert.instanceOf(event._detail.xhr, XMLHttpRequest);
+        assert.instanceOf(event.detail.xhr, XMLHttpRequest);
         // @ts-ignore
-        assert.isObject(event._detail.options);
+        assert.isObject(event.detail.options);
         // @ts-ignore
-        assert.isUndefined(event._detail.response);
+        assert.isUndefined(event.detail.response);
       });
 
       document.addEventListener('ajaxComplete', (event) => {
         // @ts-ignore
-        assert.instanceOf(event._detail.xhr, XMLHttpRequest);
+        assert.instanceOf(event.detail.xhr, XMLHttpRequest);
         // @ts-ignore
-        assert.isObject(event._detail.options);
+        assert.isObject(event.detail.options);
         // @ts-ignore
-        assert.isUndefined(event._detail.response);
+        assert.isUndefined(event.detail.response);
       });
 
       // 用于测试回调函数触发顺序

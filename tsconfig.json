@@ -11,6 +11,7 @@
     "lib": ["es2019", "dom"],
     "sourceMap": true,
     "inlineSources": true,
-    "declaration": true
+    "declaration": true,
+    "declarationMap": true
   }
 }

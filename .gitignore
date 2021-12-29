@@ -5,7 +5,8 @@
 node_modules
 coverage
 packages/**/*.js
-packages/**/*.d.ts
 packages/**/*.js.map
+packages/**/*.d.ts
+packages/**/*.d.ts.map
 .pnpm-debug.log
 stats.html

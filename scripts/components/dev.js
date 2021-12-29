@@ -4,7 +4,7 @@ const {
   traverseDirectory,
   buildLessFile,
   buildJsFile,
-} = require('./utils');
+} = require('./utils.js');
 
 const watchOptions = {
   recursive: true,

@@ -1,4 +1,4 @@
-const { packagePath, traverseDirectory, buildJsFile } = require('./utils');
+const { packagePath, traverseDirectory, buildJsFile } = require('./utils.js');
 
 traverseDirectory(`${packagePath}/src`, (srcFilePath) => {
   if (srcFilePath.endsWith('ts')) {

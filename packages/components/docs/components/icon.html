@@ -1,18 +1,138 @@
 <!doctype html>
 <html lang="zh-cmn-Hans">
 <head>
+  <title>Icon</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
   <meta name="renderer" content="webkit"/>
   <meta name="force-rendering" content="webkit"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    .green {
+      color: green;
+    }
+  </style>
   <script type="module" src="../../index.js"></script>
 </head>
 <body>
 <div id="demo">
-  <h2>Icon</h2>
-  <mdui-icon>code</mdui-icon>
+  <h1>Icon</h1>
+
+  <section>
+    <h2>Material Icons 五种图标</h2>
+    <table>
+      <tbody>
+      <tr>
+        <td>Material Icons Outlined</td>
+        <td>
+          <mdui-icon variant="outlined" name="settings"></mdui-icon>
+          <mdui-icon variant="outlined" name="schedule"></mdui-icon>
+          <mdui-icon variant="outlined" name="thumb_up" class="green"></mdui-icon>
+          <mdui-icon variant="outlined" name="people_alt" style="color: red"></mdui-icon>
+          <mdui-icon variant="outlined" name="upcoming"></mdui-icon>
+        </td>
+      </tr>
+      <tr>
+        <td>Material Icons Filled (default)</td>
+        <td>
+          <mdui-icon name="settings"></mdui-icon>
+          <mdui-icon name="schedule"></mdui-icon>
+          <mdui-icon name="thumb_up" class="green"></mdui-icon>
+          <mdui-icon name="people_alt" style="color: red"></mdui-icon>
+          <mdui-icon name="upcoming"></mdui-icon>
+        </td>
+      </tr>
+      <tr>
+        <td>Material Icons Round</td>
+        <td>
+          <mdui-icon variant="round" name="settings"></mdui-icon>
+          <mdui-icon variant="round" name="schedule"></mdui-icon>
+          <mdui-icon variant="round" name="thumb_up" class="green"></mdui-icon>
+          <mdui-icon variant="round" name="people_alt" style="color: red"></mdui-icon>
+          <mdui-icon variant="round" name="upcoming"></mdui-icon>
+        </td>
+      </tr>
+      <tr>
+        <td>Material Icons Sharp</td>
+        <td>
+          <mdui-icon variant="sharp" name="settings"></mdui-icon>
+          <mdui-icon variant="sharp" name="schedule"></mdui-icon>
+          <mdui-icon variant="sharp" name="thumb_up" class="green"></mdui-icon>
+          <mdui-icon variant="sharp" name="people_alt" style="color: red"></mdui-icon>
+          <mdui-icon variant="sharp" name="upcoming"></mdui-icon>
+        </td>
+      </tr>
+      <tr>
+        <td>Material Icons Two Tone</td>
+        <td>
+          <mdui-icon variant="two-tone" name="settings"></mdui-icon>
+          <mdui-icon variant="two-tone" name="schedule"></mdui-icon>
+          <mdui-icon variant="two-tone" name="thumb_up" class="green"></mdui-icon>
+          <mdui-icon variant="two-tone" name="people_alt" style="color: red"></mdui-icon>
+          <mdui-icon variant="two-tone" name="upcoming"></mdui-icon>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>通过 src 属性传入 svg 文件路径</h2>
+    <mdui-icon src="https://cdn.jsdelivr.net/npm/@material-icons/svg@1.0.23/svg/settings/outline.svg"></mdui-icon>
+    <mdui-icon src="https://cdn.jsdelivr.net/npm/@material-icons/svg@1.0.23/svg/schedule/outline.svg"></mdui-icon>
+    <mdui-icon src="https://cdn.jsdelivr.net/npm/@material-icons/svg@1.0.23/svg/thumb_up/outline.svg" class="green"></mdui-icon>
+    <mdui-icon src="https://cdn.jsdelivr.net/npm/@material-icons/svg@1.0.23/svg/people_alt/outline.svg" style="color: red"></mdui-icon>
+    <mdui-icon src="https://cdn.jsdelivr.net/npm/@material-icons/svg@1.0.23/svg/upcoming/outline.svg"></mdui-icon>
+  </section>
+
+  <section>
+    <h2>slot 中传入图标 CSS（Bootstrap Icons 为例）</h2>
+    <mdui-icon>
+      <i class="bi bi-alarm"></i>
+    </mdui-icon>
+    <mdui-icon class="green">
+      <i class="bi bi-alarm-fill"></i>
+    </mdui-icon>
+    <mdui-icon style="color: red">
+      <i class="bi bi-arrow-up-circle-fill"></i>
+    </mdui-icon>
+  </section>
+
+  <section>
+    <h2>slot 中传入 svg</h2>
+    <mdui-icon>
+      <svg t="1640830196574" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1308" width="1em" height="1em">
+        <path d="M171.52 923.4432c-38.5536 0-69.9392-31.3856-69.9392-69.9392s31.3856-69.9392 69.9392-69.9392 69.9392 31.3856 69.9392 69.9392-31.3856 69.9392-69.9392 69.9392z m0-104.0384c-18.7904 0-34.0992 15.3088-34.0992 34.0992s15.3088 34.0992 34.0992 34.0992 34.0992-15.3088 34.0992-34.0992-15.3088-34.0992-34.0992-34.0992z" fill="#E2E5F1" p-id="1309"></path>
+        <path d="M868.1984 152.9344m-34.6624 0a34.6624 34.6624 0 1 0 69.3248 0 34.6624 34.6624 0 1 0-69.3248 0Z" fill="#E2E5F1" p-id="1310"></path>
+        <path d="M687.616 906.8032h96.0512c8.4992 0 15.36-6.8608 15.36-15.36s-6.8608-15.36-15.36-15.36H687.616c-8.4992 0-15.36 6.8608-15.36 15.36s6.912 15.36 15.36 15.36z" fill="#E2E5F1" p-id="1311"></path>
+        <path d="M833.28 892.5696m-17.3568 0a17.3568 17.3568 0 1 0 34.7136 0 17.3568 17.3568 0 1 0-34.7136 0Z" fill="#CBDCFF" p-id="1312"></path>
+        <path d="M730.4704 145.5104a48.80384 48.80384 0 0 0-43.2128-26.0096H338.8416c-18.432 0-35.2768 10.3424-43.6224 26.7776l-41.4208 81.7152h520.2944l-43.6224-82.4832z" fill="#9E80E8" p-id="1313"></path>
+        <path d="M238.1312 399.2064l28.6208 415.5904c3.0208 43.776 39.424 77.7728 83.3024 77.7728h319.4368c43.5712 0 79.7696-33.4848 83.2512-76.9024l33.1264-416.4608H238.1312z" fill="#FAC573" p-id="1314"></path>
+        <path d="M825.1392 399.2064H198.8608a43.0592 43.0592 0 0 1-43.0592-43.0592V271.0528a43.0592 43.0592 0 0 1 43.0592-43.0592h626.3296a43.0592 43.0592 0 0 1 43.0592 43.0592v85.0944a43.10016 43.10016 0 0 1-43.1104 43.0592z" fill="#FF6C73" p-id="1315"></path>
+        <path d="M719.6672 407.8592l-30.3104 399.36a29.3632 29.3632 0 0 1-29.2352 27.136H359.8336c-39.2192 0-69.632-4.4032-83.3536-25.9584 3.4304 26.9824 15.2064 79.9232 105.4208 79.9232h287.744c29.6448 0 77.2096-27.648 83.712-80.2304 6.5024-52.5824 27.0848-400.1792 27.0848-400.1792h-60.7744z" fill="#EF981A" p-id="1316"></path>
+        <path d="M808.5504 240.5376v86.4256c0 7.4752-6.0928 13.568-13.568 13.568H159.5904S150.016 399.2064 221.5936 399.2064h587.9296c29.44 0 58.6752-13.568 58.6752-50.176V275.1488c0-21.6576-17.152-46.3872-59.648-34.6112z" fill="#FF4E51" p-id="1317"></path>
+        <path d="M656.896 121.088l32.3584 61.7984H283.392l-21.7088 45.056h520.2432l-68.2496-110.1312z" fill="#8669E0" p-id="1318"></path>
+        <path d="M825.1392 207.5136h-38.7072l-37.888-71.5776a69.16096 69.16096 0 0 0-61.3376-36.9152H338.8416c-26.2656 0-49.9712 14.5408-61.8496 37.9904l-35.7376 70.5024h-42.3936c-35.0208 0-63.5392 28.5184-63.5392 63.5392v85.0944c0 35.0208 28.5184 63.5392 63.5392 63.5392h20.1728l27.3408 396.544c3.7376 54.3232 49.3056 96.8192 103.7312 96.8192h319.4368c53.8624 0 99.3792-42.0352 103.68-95.744l31.5904-397.6192h20.3776c35.0208 0 63.5392-28.5184 63.5392-63.5392V271.0528c-0.0512-35.072-28.5184-63.5392-63.5904-63.5392zM313.4976 155.4944a28.24704 28.24704 0 0 1 25.344-15.5648h348.416c10.5472 0 20.1728 5.7856 25.088 15.104l27.7504 52.4288H287.1808l26.3168-51.968zM732.3648 814.08c-2.56 32.5632-30.1568 58.0096-62.8224 58.0096h-319.488c-32.9728 0-60.6208-25.8048-62.8736-58.6752l-27.136-393.728h503.6032L732.3648 814.08z m115.3536-457.9328c0 12.4416-10.1376 22.5792-22.5792 22.5792H198.8608c-12.4416 0-22.5792-10.1376-22.5792-22.5792V271.0528c0-12.4416 10.1376-22.5792 22.5792-22.5792h626.3296c12.4416 0 22.5792 10.1376 22.5792 22.5792v85.0944z" fill="#211D38" p-id="1319"></path>
+        <path d="M512.9728 600.5248m-95.0784 0a95.0784 95.0784 0 1 0 190.1568 0 95.0784 95.0784 0 1 0-190.1568 0Z" fill="#C5DAFF" p-id="1320"></path>
+        <path d="M500.3776 518.2976s61.44 33.8432 61.44 80.384-39.0144 82.3808-97.28 83.6608c71.7824 10.3424 143.5648-5.5296 143.5648-81.8688s-75.0592-91.2896-107.7248-82.176z" fill="#9AC0EF" p-id="1321"></path>
+        <path d="M512.9728 716.1344c-63.744 0-115.5584-51.8656-115.5584-115.5584s51.8656-115.5584 115.5584-115.5584 115.5584 51.8656 115.5584 115.5584-51.8144 115.5584-115.5584 115.5584z m0-190.208c-41.1648 0-74.5984 33.4848-74.5984 74.5984s33.4848 74.5984 74.5984 74.5984 74.5984-33.4848 74.5984-74.5984-33.4336-74.5984-74.5984-74.5984z" fill="#211D38" p-id="1322"></path>
+        <path d="M470.6816 165.7344H351.0784a12.8 12.8 0 0 1 0-25.6h119.6032a12.8 12.8 0 0 1 0 25.6zM558.1312 279.1936H517.12a12.8 12.8 0 0 1 0-25.6h41.0112a12.8 12.8 0 0 1 0 25.6zM194.3552 317.44a12.8 12.8 0 0 1-12.8-12.8v-21.7088c0-16.1792 13.1584-29.3376 29.3376-29.3376h226.6112a12.8 12.8 0 0 1 0 25.6H210.8928c-2.048 0-3.7376 1.6896-3.7376 3.7376v21.7088c0 7.0656-5.6832 12.8-12.8 12.8zM297.1136 728.5248c-6.6048 0-12.1856-5.0688-12.7488-11.776l-20.5824-252.7232c-0.5632-7.0656 4.6592-13.2096 11.7248-13.824 7.0144-0.512 13.2096 4.6592 13.824 11.7248l20.5824 252.7232c0.5632 7.0656-4.6592 13.2096-11.7248 13.824-0.4096 0-0.768 0.0512-1.0752 0.0512zM454.4 626.432c-6.4512 0-12.032-4.864-12.6976-11.4176-5.632-52.6336 28.1088-77.1072 46.7456-82.688 6.7584-2.048 13.9264 1.792 15.9232 8.6016a12.8512 12.8512 0 0 1-8.4992 15.9232c-3.5328 1.1264-33.3824 12.0832-28.7232 55.5008 0.768 7.0144-4.352 13.312-11.3664 14.08-0.4608-0.0512-0.9216 0-1.3824 0z" fill="#FFFFFF" p-id="1323"></path>
+      </svg>
+    </mdui-icon>
+    <mdui-icon class="green">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-alarm-fill" viewBox="0 0 16 16">
+        <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07a7.001 7.001 0 0 1 3.274 12.474l.601.602a.5.5 0 0 1-.707.708l-.746-.746A6.97 6.97 0 0 1 8 16a6.97 6.97 0 0 1-3.422-.892l-.746.746a.5.5 0 0 1-.707-.708l.602-.602A7.001 7.001 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zm2.5 5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5zM.86 5.387A2.5 2.5 0 1 1 4.387 1.86 8.035 8.035 0 0 0 .86 5.387zM11.613 1.86a2.5 2.5 0 1 1 3.527 3.527 8.035 8.035 0 0 0-3.527-3.527z"/>
+      </svg>
+    </mdui-icon>
+    <mdui-icon style="color: red">
+      <svg t="1640844701771" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1483" width="200" height="200">
+        <path d="M512 12.64c-282.752 0-512 229.216-512 512 0 226.208 146.72 418.144 350.144 485.824 25.6 4.736 35.008-11.104 35.008-24.64 0-12.192-0.48-52.544-0.704-95.328-142.464 30.976-172.512-60.416-172.512-60.416-23.296-59.168-56.832-74.912-56.832-74.912-46.464-31.776 3.52-31.136 3.52-31.136 51.392 3.616 78.464 52.768 78.464 52.768 45.664 78.272 119.776 55.648 148.992 42.56 4.576-33.088 17.856-55.68 32.512-68.48-113.728-12.928-233.28-56.864-233.28-253.024 0-55.904 20-101.568 52.768-137.44-5.312-12.896-22.848-64.96 4.96-135.488 0 0 43.008-13.76 140.832 52.48a491.296 491.296 0 0 1 128.16-17.248c43.488 0.192 87.328 5.888 128.256 17.248 97.728-66.24 140.64-52.48 140.64-52.48 27.872 70.528 10.336 122.592 5.024 135.488 32.832 35.84 52.704 81.536 52.704 137.44 0 196.64-119.776 239.936-233.792 252.64 18.368 15.904 34.72 47.04 34.72 94.816 0 68.512-0.608 123.648-0.608 140.512 0 13.632 9.216 29.6 35.168 24.576C877.472 942.624 1024 750.784 1024 524.64c0-282.784-229.248-512-512-512z" p-id="1484"></path>
+      </svg>
+    </mdui-icon>
+  </section>
+
 </div>
 </body>
 </html>

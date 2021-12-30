@@ -125,6 +125,7 @@ importers:
     specifiers:
       '@mdui/components': ^1.0.0
       '@mdui/functions': ^1.0.0
+      '@mdui/icons': ^1.0.0
       '@mdui/jq': ^3.0.0
       '@mdui/shared': ^1.0.0
       '@mdui/themes': ^1.0.0
@@ -132,6 +133,7 @@ importers:
     dependencies:
       '@mdui/components': link:../components
       '@mdui/functions': link:../functions
+      '@mdui/icons': link:../icons
       '@mdui/jq': link:../jq
       '@mdui/shared': link:../shared
       '@mdui/themes': link:../themes

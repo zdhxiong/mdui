@@ -7,3 +7,4 @@ node_modules
 packages/**/*.js
 packages/**/*.d.ts
 packages/**/*.js.map
+packages/icons/src/index.ts

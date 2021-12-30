@@ -1,10 +1,9 @@
 const watch = require('node-watch');
 const {
-  packagePath,
   traverseDirectory,
   buildLessFile,
   buildJsFile,
-} = require('./utils.js');
+} = require('../utils.js');
 
 const watchOptions = {
   recursive: true,
@@ -17,7 +16,7 @@ const watchOptions = {
   },
 };
 
-traverseDirectory(`${packagePath}/src`, (srcFilePath) => {
+traverseDirectory('./packages/components/src', (srcFilePath) => {
   if (srcFilePath.endsWith('ts')) {
     const filePath = srcFilePath
       .replace('/src/', '/')
@@ -28,7 +27,7 @@ traverseDirectory(`${packagePath}/src`, (srcFilePath) => {
   }
 });
 
-traverseDirectory(`${packagePath}/src`, (filePath) => {
+traverseDirectory('./packages/components/src', (filePath) => {
   if (filePath.endsWith('less')) {
     buildLessFile(filePath, false);
   }
@@ -36,7 +35,7 @@ traverseDirectory(`${packagePath}/src`, (filePath) => {
 
 let updating = false;
 
-watch(`${packagePath}/src`, watchOptions, (_, filePath) => {
+watch('./packages/components/src', watchOptions, (_, filePath) => {
   if (updating) {
     return;
   }

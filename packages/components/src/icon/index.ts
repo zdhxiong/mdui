@@ -57,7 +57,7 @@ export class Icon extends LitElement {
       return html`${until(ajax({ url: this.src }).then(unsafeSVG))}`;
     }
 
-    return html`<span><slot></slot></span>`;
+    return html`<slot></slot>`;
   }
 }
 

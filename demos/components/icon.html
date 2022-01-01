@@ -28,9 +28,9 @@
         <td>Material Icons Outlined</td>
         <td>
           <mdui-icon variant="outlined" name="settings"></mdui-icon>
-          <mdui-icon variant="outlined" name="schedule"></mdui-icon>
+          <mdui-icon variant="outlined" name="schedule" style="color: red"></mdui-icon>
           <mdui-icon variant="outlined" name="thumb_up" class="green"></mdui-icon>
-          <mdui-icon variant="outlined" name="people_alt" style="color: red"></mdui-icon>
+          <mdui-icon variant="outlined" name="people_alt"></mdui-icon>
           <mdui-icon variant="outlined" name="upcoming"></mdui-icon>
         </td>
       </tr>
@@ -38,9 +38,9 @@
         <td>Material Icons Filled (default)</td>
         <td>
           <mdui-icon name="settings"></mdui-icon>
-          <mdui-icon name="schedule"></mdui-icon>
+          <mdui-icon name="schedule" style="color: red"></mdui-icon>
           <mdui-icon name="thumb_up" class="green"></mdui-icon>
-          <mdui-icon name="people_alt" style="color: red"></mdui-icon>
+          <mdui-icon name="people_alt"></mdui-icon>
           <mdui-icon name="upcoming"></mdui-icon>
         </td>
       </tr>
@@ -48,9 +48,9 @@
         <td>Material Icons Round</td>
         <td>
           <mdui-icon variant="round" name="settings"></mdui-icon>
-          <mdui-icon variant="round" name="schedule"></mdui-icon>
+          <mdui-icon variant="round" name="schedule" style="color: red"></mdui-icon>
           <mdui-icon variant="round" name="thumb_up" class="green"></mdui-icon>
-          <mdui-icon variant="round" name="people_alt" style="color: red"></mdui-icon>
+          <mdui-icon variant="round" name="people_alt"></mdui-icon>
           <mdui-icon variant="round" name="upcoming"></mdui-icon>
         </td>
       </tr>
@@ -58,9 +58,9 @@
         <td>Material Icons Sharp</td>
         <td>
           <mdui-icon variant="sharp" name="settings"></mdui-icon>
-          <mdui-icon variant="sharp" name="schedule"></mdui-icon>
+          <mdui-icon variant="sharp" name="schedule" style="color: red"></mdui-icon>
           <mdui-icon variant="sharp" name="thumb_up" class="green"></mdui-icon>
-          <mdui-icon variant="sharp" name="people_alt" style="color: red"></mdui-icon>
+          <mdui-icon variant="sharp" name="people_alt"></mdui-icon>
           <mdui-icon variant="sharp" name="upcoming"></mdui-icon>
         </td>
       </tr>
@@ -68,9 +68,9 @@
         <td>Material Icons Two Tone</td>
         <td>
           <mdui-icon variant="two-tone" name="settings"></mdui-icon>
-          <mdui-icon variant="two-tone" name="schedule"></mdui-icon>
+          <mdui-icon variant="two-tone" name="schedule" style="color: red"></mdui-icon>
           <mdui-icon variant="two-tone" name="thumb_up" class="green"></mdui-icon>
-          <mdui-icon variant="two-tone" name="people_alt" style="color: red"></mdui-icon>
+          <mdui-icon variant="two-tone" name="people_alt"></mdui-icon>
           <mdui-icon variant="two-tone" name="upcoming"></mdui-icon>
         </td>
       </tr>
@@ -81,21 +81,19 @@
   <section>
     <h2>通过 src 属性传入 svg 文件路径</h2>
     <mdui-icon src="https://cdn.jsdelivr.net/npm/@material-icons/svg@1.0.23/svg/settings/outline.svg"></mdui-icon>
-    <mdui-icon src="https://cdn.jsdelivr.net/npm/@material-icons/svg@1.0.23/svg/schedule/outline.svg"></mdui-icon>
-    <mdui-icon src="https://cdn.jsdelivr.net/npm/@material-icons/svg@1.0.23/svg/thumb_up/outline.svg" class="green"></mdui-icon>
-    <mdui-icon src="https://cdn.jsdelivr.net/npm/@material-icons/svg@1.0.23/svg/people_alt/outline.svg" style="color: red"></mdui-icon>
-    <mdui-icon src="https://cdn.jsdelivr.net/npm/@material-icons/svg@1.0.23/svg/upcoming/outline.svg"></mdui-icon>
+    <mdui-icon src="https://cdn.jsdelivr.net/npm/ionicons@6.0.0/dist/collection/components/icon/svg/accessibility.svg" style="color: red"></mdui-icon>
+    <mdui-icon src="https://cdn.jsdelivr.net/npm/@material-icons/svg@1.0.23/svg/settings/twotone.svg" class="green"></mdui-icon>
   </section>
 
   <section>
-    <h2>slot 中传入图标 CSS（Bootstrap Icons 为例）</h2>
+    <h2>slot 中传入图标 iconfont（以 Bootstrap Icons 为例）</h2>
     <mdui-icon>
       <i class="bi bi-alarm"></i>
     </mdui-icon>
-    <mdui-icon class="green">
+    <mdui-icon style="color: red">
       <i class="bi bi-alarm-fill"></i>
     </mdui-icon>
-    <mdui-icon style="color: red">
+    <mdui-icon class="green">
       <i class="bi bi-arrow-up-circle-fill"></i>
     </mdui-icon>
   </section>
@@ -121,14 +119,20 @@
         <path d="M470.6816 165.7344H351.0784a12.8 12.8 0 0 1 0-25.6h119.6032a12.8 12.8 0 0 1 0 25.6zM558.1312 279.1936H517.12a12.8 12.8 0 0 1 0-25.6h41.0112a12.8 12.8 0 0 1 0 25.6zM194.3552 317.44a12.8 12.8 0 0 1-12.8-12.8v-21.7088c0-16.1792 13.1584-29.3376 29.3376-29.3376h226.6112a12.8 12.8 0 0 1 0 25.6H210.8928c-2.048 0-3.7376 1.6896-3.7376 3.7376v21.7088c0 7.0656-5.6832 12.8-12.8 12.8zM297.1136 728.5248c-6.6048 0-12.1856-5.0688-12.7488-11.776l-20.5824-252.7232c-0.5632-7.0656 4.6592-13.2096 11.7248-13.824 7.0144-0.512 13.2096 4.6592 13.824 11.7248l20.5824 252.7232c0.5632 7.0656-4.6592 13.2096-11.7248 13.824-0.4096 0-0.768 0.0512-1.0752 0.0512zM454.4 626.432c-6.4512 0-12.032-4.864-12.6976-11.4176-5.632-52.6336 28.1088-77.1072 46.7456-82.688 6.7584-2.048 13.9264 1.792 15.9232 8.6016a12.8512 12.8512 0 0 1-8.4992 15.9232c-3.5328 1.1264-33.3824 12.0832-28.7232 55.5008 0.768 7.0144-4.352 13.312-11.3664 14.08-0.4608-0.0512-0.9216 0-1.3824 0z" fill="#FFFFFF" p-id="1323"></path>
       </svg>
     </mdui-icon>
-    <mdui-icon class="green">
+    <mdui-icon style="color: red">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-alarm-fill" viewBox="0 0 16 16">
         <path d="M6 .5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1H9v1.07a7.001 7.001 0 0 1 3.274 12.474l.601.602a.5.5 0 0 1-.707.708l-.746-.746A6.97 6.97 0 0 1 8 16a6.97 6.97 0 0 1-3.422-.892l-.746.746a.5.5 0 0 1-.707-.708l.602-.602A7.001 7.001 0 0 1 7 2.07V1h-.5A.5.5 0 0 1 6 .5zm2.5 5a.5.5 0 0 0-1 0v3.362l-1.429 2.38a.5.5 0 1 0 .858.515l1.5-2.5A.5.5 0 0 0 8.5 9V5.5zM.86 5.387A2.5 2.5 0 1 1 4.387 1.86 8.035 8.035 0 0 0 .86 5.387zM11.613 1.86a2.5 2.5 0 1 1 3.527 3.527 8.035 8.035 0 0 0-3.527-3.527z"/>
       </svg>
     </mdui-icon>
-    <mdui-icon style="color: red">
+    <mdui-icon class="green">
       <svg t="1640844701771" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1483" width="200" height="200">
         <path d="M512 12.64c-282.752 0-512 229.216-512 512 0 226.208 146.72 418.144 350.144 485.824 25.6 4.736 35.008-11.104 35.008-24.64 0-12.192-0.48-52.544-0.704-95.328-142.464 30.976-172.512-60.416-172.512-60.416-23.296-59.168-56.832-74.912-56.832-74.912-46.464-31.776 3.52-31.136 3.52-31.136 51.392 3.616 78.464 52.768 78.464 52.768 45.664 78.272 119.776 55.648 148.992 42.56 4.576-33.088 17.856-55.68 32.512-68.48-113.728-12.928-233.28-56.864-233.28-253.024 0-55.904 20-101.568 52.768-137.44-5.312-12.896-22.848-64.96 4.96-135.488 0 0 43.008-13.76 140.832 52.48a491.296 491.296 0 0 1 128.16-17.248c43.488 0.192 87.328 5.888 128.256 17.248 97.728-66.24 140.64-52.48 140.64-52.48 27.872 70.528 10.336 122.592 5.024 135.488 32.832 35.84 52.704 81.536 52.704 137.44 0 196.64-119.776 239.936-233.792 252.64 18.368 15.904 34.72 47.04 34.72 94.816 0 68.512-0.608 123.648-0.608 140.512 0 13.632 9.216 29.6 35.168 24.576C877.472 942.624 1024 750.784 1024 524.64c0-282.784-229.248-512-512-512z" p-id="1484"></path>
+      </svg>
+    </mdui-icon>
+    <mdui-icon style="color: blue">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+        <path opacity=".3" d="M19.28 8.6l-.7-1.21l-1.27.51l-1.06.43l-.91-.7c-.39-.3-.8-.54-1.23-.71l-1.06-.43l-.16-1.13L12.7 4h-1.4l-.19 1.35l-.16 1.13l-1.06.44c-.41.17-.82.41-1.25.73l-.9.68l-1.05-.42l-1.27-.52l-.7 1.21l1.08.84l.89.7l-.14 1.13c-.03.3-.05.53-.05.73s.02.43.05.73l.14 1.13l-.89.7l-1.08.84l.7 1.21l1.27-.51l1.06-.43l.91.7c.39.3.8.54 1.23.71l1.06.43l.16 1.13l.19 1.36h1.39l.19-1.35l.16-1.13l1.06-.43c.41-.17.82-.41 1.25-.73l.9-.68l1.04.42l1.27.51l.7-1.21l-1.08-.84l-.89-.7l.14-1.13c.04-.31.05-.52.05-.73c0-.21-.02-.43-.05-.73l-.14-1.13l.89-.7l1.1-.84zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4s4 1.79 4 4s-1.79 4-4 4z"/>
+        <path d="M19.43 12.98c.04-.32.07-.64.07-.98c0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46a.5.5 0 0 0-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65A.488.488 0 0 0 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1a.566.566 0 0 0-.18-.03c-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46a.5.5 0 0 0 .61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.06.02.12.03.18.03c.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zm-1.98-1.71c.04.31.05.52.05.73c0 .21-.02.43-.05.73l-.14 1.13l.89.7l1.08.84l-.7 1.21l-1.27-.51l-1.04-.42l-.9.68c-.43.32-.84.56-1.25.73l-1.06.43l-.16 1.13l-.2 1.35h-1.4l-.19-1.35l-.16-1.13l-1.06-.43c-.43-.18-.83-.41-1.23-.71l-.91-.7l-1.06.43l-1.27.51l-.7-1.21l1.08-.84l.89-.7l-.14-1.13c-.03-.31-.05-.54-.05-.74s.02-.43.05-.73l.14-1.13l-.89-.7l-1.08-.84l.7-1.21l1.27.51l1.04.42l.9-.68c.43-.32.84-.56 1.25-.73l1.06-.43l.16-1.13l.2-1.35h1.39l.19 1.35l.16 1.13l1.06.43c.43.18.83.41 1.23.71l.91.7l1.06-.43l1.27-.51l.7 1.21l-1.07.85l-.89.7l.14 1.13zM12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4s4-1.79 4-4s-1.79-4-4-4zm0 6c-1.1 0-2-.9-2-2s.9-2 2-2s2 .9 2 2s-.9 2-2 2z"/>
       </svg>
     </mdui-icon>
   </section>

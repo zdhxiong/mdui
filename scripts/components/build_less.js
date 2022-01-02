@@ -1,7 +1,5 @@
-const { traverseDirectory, buildLessFile } = require('../utils.js');
+const { traverseDirectory, buildLitStyleFile } = require('../utils.js');
 
-traverseDirectory('./packages/components/src', (filePath) => {
-  if (filePath.endsWith('less')) {
-    buildLessFile(filePath, true);
-  }
+traverseDirectory('./packages/components/src', 'less', (filePath) => {
+  buildLitStyleFile(filePath);
 });

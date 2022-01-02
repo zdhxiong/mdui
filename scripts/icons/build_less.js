@@ -1,3 +1,3 @@
-const { buildLessFile } = require('../utils.js');
+const { buildLitStyleFile } = require('../utils.js');
 
-buildLessFile('./packages/icons/src/style.less', true);
+buildLitStyleFile('./packages/icons/src/style.less');

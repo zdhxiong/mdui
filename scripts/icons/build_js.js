@@ -1,3 +1,10 @@
-const { buildJsFile } = require('../utils.js');
+const { traverseDirectory, buildJsFile } = require('../utils.js');
 
-buildJsFile('./packages/icons/index.js', true);
+traverseDirectory('./packages/icons/src', 'ts', (srcFilePath) => {
+  const filePath = srcFilePath
+    .replace('/src/', '/')
+    .replace('\\src\\', '\\')
+    .replace('.ts', '.js');
+
+  buildJsFile(filePath);
+});

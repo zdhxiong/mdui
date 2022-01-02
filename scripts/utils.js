@@ -3,34 +3,48 @@ const path = require('path');
 const less = require('less');
 const { ESLint } = require('eslint');
 const postcss = require('postcss');
+const CleanCSS = require('clean-css');
 const autoprefixer = require('autoprefixer');
 const {
   minifyHTMLLiterals,
   defaultMinifyOptions,
 } = require('minify-html-literals');
 
-function traverseDirectory(dir, callback) {
+// 是否是开发模式
+const isDev = process.argv.slice(2)[0] === '--dev';
+
+/**
+ * 遍历文件夹中的文件
+ * @param dir 文件夹路径
+ * @param suffix 文件后缀
+ * @param callback 回调函数，参数为文件路径
+ */
+function traverseDirectory(dir, suffix, callback) {
   const arr = fs.readdirSync(dir);
 
   arr.forEach((item) => {
     const filePath = path.join(dir, item);
 
     if (fs.statSync(filePath).isDirectory()) {
-      traverseDirectory(filePath, callback);
-    } else {
+      traverseDirectory(filePath, suffix, callback);
+    } else if (filePath.endsWith(suffix)) {
       callback(filePath);
     }
   });
 }
 
-function buildLessFile(filePath, optimization = true) {
+/**
+ * lit 的 style.less 文件构建成 style.ts 文件
+ * @param filePath less 文件路径
+ */
+function buildLitStyleFile(filePath) {
   const lessInput = fs.readFileSync(filePath).toString();
   const lessOptions = { filename: path.resolve(filePath) };
 
   return less
     .render(lessInput, lessOptions)
     .then((output) => {
-      if (!optimization) {
+      if (isDev) {
         return output.css;
       }
 
@@ -53,8 +67,12 @@ function buildLessFile(filePath, optimization = true) {
     });
 }
 
-function buildJsFile(filePath, optimization = true) {
-  if (!optimization) {
+/**
+ * lit 组件生成 js 文件后，进行构建
+ * @param filePath js 文件路径
+ */
+function buildJsFile(filePath) {
+  if (isDev) {
     return;
   }
 
@@ -74,6 +92,36 @@ function buildJsFile(filePath, optimization = true) {
   }
 }
 
+/**
+ * less 文件构建
+ * @param filePath less 文件路径
+ * @param outputPath 输出的 css 文件路径
+ */
+function buildLessFile(filePath, outputPath) {
+  const lessInput = fs.readFileSync(filePath).toString();
+  const lessOptions = { filename: path.resolve(filePath) };
+
+  return less
+    .render(lessInput, lessOptions)
+    .then((output) => {
+      if (isDev) {
+        return output.css;
+      }
+
+      return postcss([autoprefixer])
+        .process(output.css, { from: undefined })
+        .then((result) => new CleanCSS().minify(result.css).styles);
+    })
+    .then((output) => {
+      fs.writeFileSync(outputPath, output);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
 exports.traverseDirectory = traverseDirectory;
-exports.buildLessFile = buildLessFile;
+exports.buildLitStyleFile = buildLitStyleFile;
 exports.buildJsFile = buildJsFile;
+exports.buildLessFile = buildLessFile;
+exports.isDev = isDev;

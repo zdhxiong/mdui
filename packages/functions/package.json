@@ -21,5 +21,13 @@
   "bugs": {
     "url": "https://github.com/zdhxiong/mdui/issues"
   },
-  "homepage": "https://github.com/zdhxiong/mdui"
+  "homepage": "https://github.com/zdhxiong/mdui",
+  "dependencies": {
+    "@mdui/jq": "^3.0.0",
+    "@mdui/shared": "^1.0.0",
+    "@mdui/icons": "^1.0.0",
+    "@mdui/components": "^1.0.0",
+    "lit": "^2.0.2",
+    "tslib": "^2.3.1"
+  }
 }

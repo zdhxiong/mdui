@@ -25,6 +25,7 @@ importers:
       eslint-plugin-prettier: ^4.0.0
       jquery: ^3.6.0
       less: ^4.1.2
+      less-plugin-npm-import: ^2.1.0
       lint-staged: ^12.1.4
       minify-html-literals: ^1.3.5
       node-watch: ^0.7.2
@@ -66,6 +67,7 @@ importers:
       eslint-plugin-prettier: 4.0.0_1c588f61426b1faf18812943f1678311
       jquery: 3.6.0
       less: 4.1.2
+      less-plugin-npm-import: 2.1.0
       lint-staged: 12.1.4
       minify-html-literals: 1.3.5
       node-watch: 0.7.2
@@ -1389,6 +1391,10 @@ packages:
   /arrify/1.0.1:
     resolution: {integrity: sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /asap/2.0.6:
+    resolution: {integrity: sha1-5QNHYR1+aQlDIIu9r+vLwvuGbUY=}
     dev: true
 
   /assign-symbols/1.0.0:
@@ -4058,6 +4064,14 @@ packages:
       - supports-color
     dev: true
 
+  /less-plugin-npm-import/2.1.0:
+    resolution: {integrity: sha1-gj5phskzGKmBccqFiEi2vq1Vvz4=}
+    engines: {node: '>=0.4.2'}
+    dependencies:
+      promise: 7.0.4
+      resolve: 1.1.7
+    dev: true
+
   /less/4.1.2:
     resolution: {integrity: sha512-EoQp/Et7OSOVu0aJknJOtlXZsnr8XE8KwuzTHOLeVSEx8pVWUICc8Q0VYRHgzyjX78nMEyC/oztWFbgyhtNfDA==}
     engines: {node: '>=6'}
@@ -5214,6 +5228,12 @@ packages:
     engines: {node: '>=0.4.0'}
     dev: true
 
+  /promise/7.0.4:
+    resolution: {integrity: sha1-Nj6EpMNsg1a4kP7WLJHOhdAu1Tk=}
+    dependencies:
+      asap: 2.0.6
+    dev: true
+
   /proper-lockfile/4.1.2:
     resolution: {integrity: sha512-TjNPblN4BwAWMXU8s9AEz4JmQxnD1NNL7bNOY/AKUzyamc379FWASUhc/K1pL2noVb+XmZKLL68cjzLsiOAMaA==}
     dependencies:
@@ -5504,6 +5524,10 @@ packages:
   /resolve-url/0.2.1:
     resolution: {integrity: sha1-LGN/53yJOv0qZj/iGqkIAGjiBSo=}
     deprecated: https://github.com/lydell/resolve-url#deprecated
+    dev: true
+
+  /resolve/1.1.7:
+    resolution: {integrity: sha1-IDEU2CrSxe2ejgQRs5ModeiJ6Xs=}
     dev: true
 
   /resolve/1.20.0:

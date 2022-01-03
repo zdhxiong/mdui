@@ -1,0 +1,187 @@
+/**
+ * 颜色值：https://m3.material.io/styles/color/the-color-system/tokens
+ */
+// 亮色模式下的颜色
+@mdui-sys-color-primary-light: @mdui-ref-palette-primary-40;
+@mdui-sys-color-primary-container-light: @mdui-ref-palette-primary-90;
+@mdui-sys-color-secondary-light: @mdui-ref-palette-secondary-40;
+@mdui-sys-color-secondary-container-light: @mdui-ref-palette-secondary-90;
+@mdui-sys-color-tertiary-light: @mdui-ref-palette-tertiary-40;
+@mdui-sys-color-tertiary-container-light: @mdui-ref-palette-tertiary-90;
+@mdui-sys-color-surface-light: @mdui-ref-palette-neutral-99;
+@mdui-sys-color-surface-variant-light: @mdui-ref-palette-neutral-variant-90;
+@mdui-sys-color-background-light: @mdui-ref-palette-neutral-99;
+@mdui-sys-color-error-light: @mdui-ref-palette-error-40;
+@mdui-sys-color-error-container-light: @mdui-ref-palette-error-90;
+@mdui-sys-color-on-primary-light: @mdui-ref-palette-primary-100;
+@mdui-sys-color-on-primary-container-light: @mdui-ref-palette-primary-10;
+@mdui-sys-color-on-secondary-light: @mdui-ref-palette-secondary-100;
+@mdui-sys-color-on-secondary-container-light: @mdui-ref-palette-secondary-10;
+@mdui-sys-color-on-tertiary-light: @mdui-ref-palette-tertiary-100;
+@mdui-sys-color-on-tertiary-container-light: @mdui-ref-palette-tertiary-10;
+@mdui-sys-color-on-surface-light: @mdui-ref-palette-neutral-10;
+@mdui-sys-color-on-surface-variant-light: @mdui-ref-palette-neutral-variant-30;
+@mdui-sys-color-on-error-light: @mdui-ref-palette-error-100;
+@mdui-sys-color-on-error-container-light: @mdui-ref-palette-error-10;
+@mdui-sys-color-on-background-light: @mdui-ref-palette-neutral-10;
+@mdui-sys-color-outline-light: @mdui-ref-palette-neutral-variant-50;
+@mdui-sys-color-shadow-light: @mdui-ref-palette-neutral-0;
+@mdui-sys-color-inverse-surface-light: @mdui-ref-palette-neutral-20;
+@mdui-sys-color-inverse-on-surface-light: @mdui-ref-palette-neutral-95;
+@mdui-sys-color-inverse-primary-light: @mdui-ref-palette-primary-80;
+
+// 暗色模式下的颜色
+@mdui-sys-color-primary-dark: @mdui-ref-palette-primary-80;
+@mdui-sys-color-primary-container-dark: @mdui-ref-palette-primary-30;
+@mdui-sys-color-secondary-dark: @mdui-ref-palette-secondary-80;
+@mdui-sys-color-secondary-container-dark: @mdui-ref-palette-secondary-30;
+@mdui-sys-color-tertiary-dark: @mdui-ref-palette-tertiary-80;
+@mdui-sys-color-tertiary-container-dark: @mdui-ref-palette-tertiary-30;
+@mdui-sys-color-surface-dark: @mdui-ref-palette-neutral-10;
+@mdui-sys-color-surface-variant-dark: @mdui-ref-palette-neutral-variant-30;
+@mdui-sys-color-background-dark: @mdui-ref-palette-neutral-10;
+@mdui-sys-color-error-dark: @mdui-ref-palette-error-80;
+@mdui-sys-color-error-container-dark: @mdui-ref-palette-error-30;
+@mdui-sys-color-on-primary-dark: @mdui-ref-palette-primary-20;
+@mdui-sys-color-on-primary-container-dark: @mdui-ref-palette-primary-90;
+@mdui-sys-color-on-secondary-dark: @mdui-ref-palette-secondary-20;
+@mdui-sys-color-on-secondary-container-dark: @mdui-ref-palette-secondary-90;
+@mdui-sys-color-on-tertiary-dark: @mdui-ref-palette-tertiary-20;
+@mdui-sys-color-on-tertiary-container-dark: @mdui-ref-palette-tertiary-90;
+@mdui-sys-color-on-surface-dark: @mdui-ref-palette-neutral-90;
+@mdui-sys-color-on-surface-variant-dark: @mdui-ref-palette-neutral-variant-80;
+@mdui-sys-color-on-error-dark: @mdui-ref-palette-error-20;
+@mdui-sys-color-on-error-container-dark: @mdui-ref-palette-error-80;
+@mdui-sys-color-on-background-dark: @mdui-ref-palette-neutral-90;
+@mdui-sys-color-outline-dark: @mdui-ref-palette-neutral-variant-60;
+@mdui-sys-color-shadow-dark: @mdui-ref-palette-neutral-0;
+@mdui-sys-color-inverse-surface-dark: @mdui-ref-palette-neutral-90;
+@mdui-sys-color-inverse-on-surface-dark: @mdui-ref-palette-neutral-20;
+@mdui-sys-color-inverse-primary-dark: @mdui-ref-palette-primary-40;
+
+// 默认使用亮色模式的颜色
+@mdui-sys-color-primary: @mdui-sys-color-primary-light;
+@mdui-sys-color-primary-container: @mdui-sys-color-primary-container-light;
+@mdui-sys-color-secondary: @mdui-sys-color-secondary-light;
+@mdui-sys-color-secondary-container: @mdui-sys-color-secondary-container-light;
+@mdui-sys-color-tertiary: @mdui-sys-color-tertiary-light;
+@mdui-sys-color-tertiary-container: @mdui-sys-color-tertiary-container-light;
+@mdui-sys-color-surface: @mdui-sys-color-surface-light;
+@mdui-sys-color-surface-variant: @mdui-sys-color-surface-variant-light;
+@mdui-sys-color-background: @mdui-sys-color-background-light;
+@mdui-sys-color-error: @mdui-sys-color-error-light;
+@mdui-sys-color-error-container: @mdui-sys-color-error-container-light;
+@mdui-sys-color-on-primary: @mdui-sys-color-on-primary-light;
+@mdui-sys-color-on-primary-container: @mdui-sys-color-on-primary-container-light;
+@mdui-sys-color-on-secondary: @mdui-sys-color-on-secondary-light;
+@mdui-sys-color-on-secondary-container: @mdui-sys-color-on-secondary-container-light;
+@mdui-sys-color-on-tertiary: @mdui-sys-color-on-tertiary-light;
+@mdui-sys-color-on-tertiary-container: @mdui-sys-color-on-tertiary-container-light;
+@mdui-sys-color-on-surface: @mdui-sys-color-on-surface-light;
+@mdui-sys-color-on-surface-variant: @mdui-sys-color-on-surface-variant-light;
+@mdui-sys-color-on-error: @mdui-sys-color-on-error-light;
+@mdui-sys-color-on-error-container: @mdui-sys-color-on-error-container-light;
+@mdui-sys-color-on-background: @mdui-sys-color-on-background-light;
+@mdui-sys-color-outline: @mdui-sys-color-outline-light;
+@mdui-sys-color-shadow: @mdui-sys-color-shadow-light;
+@mdui-sys-color-inverse-surface: @mdui-sys-color-inverse-surface-light;
+@mdui-sys-color-inverse-on-surface: @mdui-sys-color-inverse-on-surface-light;
+@mdui-sys-color-inverse-primary: @mdui-sys-color-inverse-primary-light;
+
+/**
+ * 排版值：https://m3.material.io/styles/typography/tokens
+ */
+// display
+@mdui-sys-typescale-display-large-font: @mdui-ref-typeface-brand-regular;
+@mdui-sys-typescale-display-large-line-height: unit((64 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-display-large-size: unit((57 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-display-large-tracking: unit((0 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-display-large-weight: @mdui-ref-typeface-weight-regular;
+
+@mdui-sys-typescale-display-medium-font: @mdui-ref-typeface-brand-regular;
+@mdui-sys-typescale-display-medium-line-height: unit((52 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-display-medium-size: unit((45 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-display-medium-tracking: unit((0 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-display-medium-weight: @mdui-ref-typeface-weight-regular;
+
+@mdui-sys-typescale-display-small-font: @mdui-ref-typeface-brand-regular;
+@mdui-sys-typescale-display-small-line-height: unit((44 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-display-small-size: unit((36 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-display-small-tracking: unit((0 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-display-small-weight: @mdui-ref-typeface-weight-regular;
+
+// headline
+@mdui-sys-typescale-headline-large-font: @mdui-ref-typeface-brand-regular;
+@mdui-sys-typescale-headline-large-line-height: unit((40 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-headline-large-size: unit((32 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-headline-large-tracking: unit((0 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-headline-large-weight: @mdui-ref-typeface-weight-regular;
+
+@mdui-sys-typescale-headline-medium-font: @mdui-ref-typeface-brand-regular;
+@mdui-sys-typescale-headline-medium-line-height: unit((36 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-headline-medium-size: unit((28 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-headline-medium-tracking: unit((0 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-headline-medium-weight: @mdui-ref-typeface-weight-regular;
+
+@mdui-sys-typescale-headline-small-font: @mdui-ref-typeface-brand-regular;
+@mdui-sys-typescale-headline-small-line-height: unit((32 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-headline-small-size: unit((24 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-headline-small-tracking: unit((0 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-headline-small-weight: @mdui-ref-typeface-weight-regular;
+
+// title
+@mdui-sys-typescale-title-large-font: @mdui-ref-typeface-brand-regular;
+@mdui-sys-typescale-title-large-line-height: unit((28 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-title-large-size: unit((22 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-title-large-tracking: unit((0 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-title-large-weight: @mdui-ref-typeface-weight-regular;
+
+@mdui-sys-typescale-title-medium-font: @mdui-ref-typeface-plain-medium;
+@mdui-sys-typescale-title-medium-line-height: unit((24 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-title-medium-size: unit((16 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-title-medium-tracking: unit((0.15 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-title-medium-weight: @mdui-ref-typeface-weight-medium;
+
+@mdui-sys-typescale-title-small-font: @mdui-ref-typeface-plain-medium;
+@mdui-sys-typescale-title-small-line-height: unit((20 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-title-small-size: unit((14 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-title-small-tracking: unit((0.1 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-title-small-weight: @mdui-ref-typeface-weight-medium;
+
+// label
+@mdui-sys-typescale-label-large-font: @mdui-ref-typeface-plain-medium;
+@mdui-sys-typescale-label-large-line-height: unit((20 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-label-large-size: unit((14 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-label-large-tracking: unit((0.1 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-label-large-weight: @mdui-ref-typeface-weight-medium;
+
+@mdui-sys-typescale-label-medium-font: @mdui-ref-typeface-plain-medium;
+@mdui-sys-typescale-label-medium-line-height: unit((16 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-label-medium-size: unit((12 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-label-medium-tracking: unit((0.5 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-label-medium-weight: @mdui-ref-typeface-weight-medium;
+
+@mdui-sys-typescale-label-small-font: @mdui-ref-typeface-plain-medium;
+@mdui-sys-typescale-label-small-line-height: unit((6 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-label-small-size: unit((11 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-label-small-tracking: unit((0.5 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-label-small-weight: @mdui-ref-typeface-weight-medium;
+
+// body
+@mdui-sys-typescale-body-large-font: @mdui-ref-typeface-plain-medium;
+@mdui-sys-typescale-body-large-line-height: unit((24 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-body-large-size: unit((16 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-body-large-tracking: unit((0.15 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-body-large-weight: @mdui-ref-typeface-weight-regular;
+
+@mdui-sys-typescale-body-medium-font: @mdui-ref-typeface-plain-medium;
+@mdui-sys-typescale-body-medium-line-height: unit((20 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-body-medium-size: unit((14 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-body-medium-tracking: unit((0.25 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-body-medium-weight: @mdui-ref-typeface-weight-regular;
+
+@mdui-sys-typescale-body-small-font: @mdui-ref-typeface-plain-medium;
+@mdui-sys-typescale-body-small-line-height: unit((16 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-body-small-size: unit((12 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-body-small-tracking: unit((0.4 / @mdui-ref-html-font-size), rem);
+@mdui-sys-typescale-body-small-weight: @mdui-ref-typeface-weight-regular;

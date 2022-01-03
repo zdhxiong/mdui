@@ -1,5 +1,3 @@
-@import "./mixin";
-
 :root {
   /**
    * 颜色值：https://m3.material.io/styles/color/the-color-system/tokens
@@ -137,101 +135,86 @@
    */
   // display
   --mdui-sys-typescale-display-large-font: var(--mdui-ref-typeface-brand-regular);
-  .rem(--mdui-sys-typescale-display-large-line-height, 64);
-  .rem(--mdui-sys-typescale-display-large-size, 57);
-  .rem(--mdui-sys-typescale-display-large-tracking, 0);
-
+  --mdui-sys-typescale-display-large-line-height: @mdui-sys-typescale-display-large-line-height;
+  --mdui-sys-typescale-display-large-size: @mdui-sys-typescale-display-large-size;
+  --mdui-sys-typescale-display-large-tracking: @mdui-sys-typescale-display-large-tracking;
   --mdui-sys-typescale-display-large-weight: var(--mdui-ref-typeface-weight-regular);
   --mdui-sys-typescale-display-medium-font: var(--mdui-ref-typeface-brand-regular);
-  .rem(--mdui-sys-typescale-display-medium-line-height, 52);
-  .rem(--mdui-sys-typescale-display-medium-size, 45);
-  .rem(--mdui-sys-typescale-display-medium-tracking, 0);
-
+  --mdui-sys-typescale-display-medium-line-height: @mdui-sys-typescale-display-medium-line-height;
+  --mdui-sys-typescale-display-medium-size: @mdui-sys-typescale-display-medium-size;
+  --mdui-sys-typescale-display-medium-tracking: @mdui-sys-typescale-display-medium-tracking;
   --mdui-sys-typescale-display-medium-weight: var(--mdui-ref-typeface-weight-regular);
   --mdui-sys-typescale-display-small-font: var(--mdui-ref-typeface-brand-regular);
-  .rem(--mdui-sys-typescale-display-small-line-height, 44);
-  .rem(--mdui-sys-typescale-display-small-size, 36);
-  .rem(--mdui-sys-typescale-display-small-tracking, 0);
-
+  --mdui-sys-typescale-display-small-line-height: @mdui-sys-typescale-display-small-line-height;
+  --mdui-sys-typescale-display-small-size: @mdui-sys-typescale-display-small-size;
+  --mdui-sys-typescale-display-small-tracking: @mdui-sys-typescale-display-small-tracking;
   --mdui-sys-typescale-display-small-weight: var(--mdui-ref-typeface-weight-regular);
 
   // headline
   --mdui-sys-typescale-headline-large-font: var(--mdui-ref-typeface-brand-regular);
-  .rem(--mdui-sys-typescale-headline-large-line-height, 40);
-  .rem(--mdui-sys-typescale-headline-large-size, 32);
-  .rem(--mdui-sys-typescale-headline-large-tracking, 0);
-
+  --mdui-sys-typescale-headline-large-line-height: @mdui-sys-typescale-headline-large-line-height;
+  --mdui-sys-typescale-headline-large-size: @mdui-sys-typescale-headline-large-size;
+  --mdui-sys-typescale-headline-large-tracking: @mdui-sys-typescale-headline-large-tracking;
   --mdui-sys-typescale-headline-large-weight: var(--mdui-ref-typeface-weight-regular);
   --mdui-sys-typescale-headline-medium-font: var(--mdui-ref-typeface-brand-regular);
-  .rem(--mdui-sys-typescale-headline-medium-line-height, 36);
-  .rem(--mdui-sys-typescale-headline-medium-size, 28);
-  .rem(--mdui-sys-typescale-headline-medium-tracking, 0);
-
+  --mdui-sys-typescale-headline-medium-line-height: @mdui-sys-typescale-headline-medium-line-height;
+  --mdui-sys-typescale-headline-medium-size: @mdui-sys-typescale-headline-medium-size;
+  --mdui-sys-typescale-headline-medium-tracking: @mdui-sys-typescale-headline-medium-tracking;
   --mdui-sys-typescale-headline-medium-weight: var(--mdui-ref-typeface-weight-regular);
   --mdui-sys-typescale-headline-small-font: var(--mdui-ref-typeface-brand-regular);
-  .rem(--mdui-sys-typescale-headline-small-line-height, 32);
-  .rem(--mdui-sys-typescale-headline-small-size, 24);
-  .rem(--mdui-sys-typescale-headline-small-tracking, 0);
-
+  --mdui-sys-typescale-headline-small-line-height: @mdui-sys-typescale-headline-small-line-height;
+  --mdui-sys-typescale-headline-small-size: @mdui-sys-typescale-headline-small-size;
+  --mdui-sys-typescale-headline-small-tracking: @mdui-sys-typescale-headline-small-tracking;
   --mdui-sys-typescale-headline-small-weight: var(--mdui-ref-typeface-weight-regular);
 
   // title
   --mdui-sys-typescale-title-large-font: var(--mdui-ref-typeface-brand-regular);
-  .rem(--mdui-sys-typescale-title-large-line-height, 28);
-  .rem(--mdui-sys-typescale-title-large-size, 22);
-  .rem(--mdui-sys-typescale-title-large-tracking, 0);
-
+  --mdui-sys-typescale-title-large-line-height: @mdui-sys-typescale-title-large-line-height;
+  --mdui-sys-typescale-title-large-size: @mdui-sys-typescale-title-large-size;
+  --mdui-sys-typescale-title-large-tracking: @mdui-sys-typescale-title-large-tracking;
   --mdui-sys-typescale-title-large-weight: var(--mdui-ref-typeface-weight-regular);
   --mdui-sys-typescale-title-medium-font: var(--mdui-ref-typeface-plain-medium);
-  .rem(--mdui-sys-typescale-title-medium-line-height, 24);
-  .rem(--mdui-sys-typescale-title-medium-size, 16);
-  .rem(--mdui-sys-typescale-title-medium-tracking, 0.15);
-
+  --mdui-sys-typescale-title-medium-line-height: @mdui-sys-typescale-title-medium-line-height;
+  --mdui-sys-typescale-title-medium-size: @mdui-sys-typescale-title-medium-size;
+  --mdui-sys-typescale-title-medium-tracking: @mdui-sys-typescale-title-medium-tracking;
   --mdui-sys-typescale-title-medium-weight: var(--mdui-ref-typeface-weight-medium);
   --mdui-sys-typescale-title-small-font: var(--mdui-ref-typeface-plain-medium);
-  .rem(--mdui-sys-typescale-title-small-line-height, 20);
-  .rem(--mdui-sys-typescale-title-small-size, 14);
-  .rem(--mdui-sys-typescale-title-small-tracking, 0.1);
-
+  --mdui-sys-typescale-title-small-line-height: @mdui-sys-typescale-title-small-line-height;
+  --mdui-sys-typescale-title-small-size: @mdui-sys-typescale-title-small-size;
+  --mdui-sys-typescale-title-small-tracking: @mdui-sys-typescale-title-small-tracking;
   --mdui-sys-typescale-title-small-weight: var(--mdui-ref-typeface-weight-medium);
 
   // label
   --mdui-sys-typescale-label-large-font: var(--mdui-ref-typeface-plain-medium);
-  .rem(--mdui-sys-typescale-label-large-line-height, 20);
-  .rem(--mdui-sys-typescale-label-large-size, 14);
-  .rem(--mdui-sys-typescale-label-large-tracking, 0.1);
-
+  --mdui-sys-typescale-label-large-line-height: @mdui-sys-typescale-label-large-line-height;
+  --mdui-sys-typescale-label-large-size: @mdui-sys-typescale-label-large-size;
+  --mdui-sys-typescale-label-large-tracking: @mdui-sys-typescale-label-large-tracking;
   --mdui-sys-typescale-label-large-weight: var(--mdui-ref-typeface-weight-medium);
   --mdui-sys-typescale-label-medium-font: var(--mdui-ref-typeface-plain-medium);
-  .rem(--mdui-sys-typescale-label-medium-line-height, 16);
-  .rem(--mdui-sys-typescale-label-medium-size, 12);
-  .rem(--mdui-sys-typescale-label-medium-tracking, 0.5);
-
+  --mdui-sys-typescale-label-medium-line-height: @mdui-sys-typescale-label-medium-line-height;
+  --mdui-sys-typescale-label-medium-size: @mdui-sys-typescale-label-medium-size;
+  --mdui-sys-typescale-label-medium-tracking: @mdui-sys-typescale-label-medium-tracking;
   --mdui-sys-typescale-label-medium-weight: var(--mdui-ref-typeface-weight-medium);
   --mdui-sys-typescale-label-small-font: var(--mdui-ref-typeface-plain-medium);
-  .rem(--mdui-sys-typescale-label-small-line-height, 6);
-  .rem(--mdui-sys-typescale-label-small-size, 11);
-  .rem(--mdui-sys-typescale-label-small-tracking, 0.5);
-
+  --mdui-sys-typescale-label-small-line-height: @mdui-sys-typescale-label-small-line-height;
+  --mdui-sys-typescale-label-small-size: @mdui-sys-typescale-label-small-size;
+  --mdui-sys-typescale-label-small-tracking: @mdui-sys-typescale-label-small-tracking;
   --mdui-sys-typescale-label-small-weight: var(--mdui-ref-typeface-weight-medium);
 
   // body
   --mdui-sys-typescale-body-large-font: var(--mdui-ref-typeface-plain-medium);
-  .rem(--mdui-sys-typescale-body-large-line-height, 24);
-  .rem(--mdui-sys-typescale-body-large-size, 16);
-  .rem(--mdui-sys-typescale-body-large-tracking, 0.15);
-
+  --mdui-sys-typescale-body-large-line-height: @mdui-sys-typescale-body-large-line-height;
+  --mdui-sys-typescale-body-large-size: @mdui-sys-typescale-body-large-size;
+  --mdui-sys-typescale-body-large-tracking: @mdui-sys-typescale-body-large-tracking;
   --mdui-sys-typescale-body-large-weight: var(--mdui-ref-typeface-weight-regular);
   --mdui-sys-typescale-body-medium-font: var(--mdui-ref-typeface-plain-medium);
-  .rem(--mdui-sys-typescale-body-medium-line-height, 20);
-  .rem(--mdui-sys-typescale-body-medium-size, 14);
-  .rem(--mdui-sys-typescale-body-medium-tracking, 0.25);
-
+  --mdui-sys-typescale-body-medium-line-height: @mdui-sys-typescale-body-medium-line-height;
+  --mdui-sys-typescale-body-medium-size: @mdui-sys-typescale-body-medium-size;
+  --mdui-sys-typescale-body-medium-tracking: @mdui-sys-typescale-body-medium-tracking;
   --mdui-sys-typescale-body-medium-weight: var(--mdui-ref-typeface-weight-regular);
   --mdui-sys-typescale-body-small-font: var(--mdui-ref-typeface-plain-medium);
-  .rem(--mdui-sys-typescale-body-small-line-height, 16);
-  .rem(--mdui-sys-typescale-body-small-size, 12);
-  .rem(--mdui-sys-typescale-body-small-tracking, 0.4);
-
+  --mdui-sys-typescale-body-small-line-height: @mdui-sys-typescale-body-small-line-height;
+  --mdui-sys-typescale-body-small-size: @mdui-sys-typescale-body-small-size;
+  --mdui-sys-typescale-body-small-tracking: @mdui-sys-typescale-body-small-tracking;
   --mdui-sys-typescale-body-small-weight: var(--mdui-ref-typeface-weight-regular);
 }

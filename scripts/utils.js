@@ -5,6 +5,7 @@ const { ESLint } = require('eslint');
 const postcss = require('postcss');
 const CleanCSS = require('clean-css');
 const autoprefixer = require('autoprefixer');
+const NpmImportPlugin = require('less-plugin-npm-import');
 const {
   minifyHTMLLiterals,
   defaultMinifyOptions,
@@ -39,7 +40,10 @@ function traverseDirectory(dir, suffix, callback) {
  */
 function buildLitStyleFile(filePath) {
   const lessInput = fs.readFileSync(filePath).toString();
-  const lessOptions = { filename: path.resolve(filePath) };
+  const lessOptions = {
+    filename: path.resolve(filePath),
+    plugins: [new NpmImportPlugin({ prefix: '~' })],
+  };
 
   return less
     .render(lessInput, lessOptions)
@@ -99,7 +103,10 @@ function buildJsFile(filePath) {
  */
 function buildLessFile(filePath, outputPath) {
   const lessInput = fs.readFileSync(filePath).toString();
-  const lessOptions = { filename: path.resolve(filePath) };
+  const lessOptions = {
+    filename: path.resolve(filePath),
+    plugins: [new NpmImportPlugin({ prefix: '~' })],
+  };
 
   return less
     .render(lessInput, lessOptions)

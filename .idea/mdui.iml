@@ -13,6 +13,7 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/shared/directives" />
       <excludeFolder url="file://$MODULE_DIR$/packages/shared/helpers" />
       <excludeFolder url="file://$MODULE_DIR$/packages/shared/mixins" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/shared/variables" />
       <excludeFolder url="file://$MODULE_DIR$/packages/mdui/src/icons" />
       <excludeFolder url="file://$MODULE_DIR$/packages/mdui/components" />
       <excludeFolder url="file://$MODULE_DIR$/packages/mdui/icons" />

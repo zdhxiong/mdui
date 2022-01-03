@@ -4,6 +4,8 @@
   "description": "mdui 项目的公共部分",
   "type": "module",
   "files": [
+    "variables",
+    "variables.less",
     "controllers",
     "decorators",
     "directives",

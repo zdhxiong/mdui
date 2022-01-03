@@ -9,7 +9,6 @@
   "files": [
     "components",
     "icons",
-    "src/styles",
     "mdui.css",
     "LICENSE",
     "package.json",

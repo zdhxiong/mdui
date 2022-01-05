@@ -6,17 +6,17 @@
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/packages/components/icon" />
+	  <excludeFolder url="file://$MODULE_DIR$/packages/icons/shared" />
       <excludeFolder url="file://$MODULE_DIR$/packages/jq/functions" />
       <excludeFolder url="file://$MODULE_DIR$/packages/jq/methods" />
       <excludeFolder url="file://$MODULE_DIR$/packages/jq/shared" />
       <excludeFolder url="file://$MODULE_DIR$/packages/jq/static" />
+	  <excludeFolder url="file://$MODULE_DIR$/packages/mdui/components" />
+	  <excludeFolder url="file://$MODULE_DIR$/packages/shared/decorators" />
       <excludeFolder url="file://$MODULE_DIR$/packages/shared/directives" />
       <excludeFolder url="file://$MODULE_DIR$/packages/shared/helpers" />
       <excludeFolder url="file://$MODULE_DIR$/packages/shared/mixins" />
       <excludeFolder url="file://$MODULE_DIR$/packages/shared/variables" />
-      <excludeFolder url="file://$MODULE_DIR$/packages/mdui/src/icons" />
-      <excludeFolder url="file://$MODULE_DIR$/packages/mdui/components" />
-      <excludeFolder url="file://$MODULE_DIR$/packages/mdui/icons" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

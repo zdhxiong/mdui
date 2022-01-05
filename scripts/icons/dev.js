@@ -10,7 +10,7 @@ const watchOptions = {
 
 let updating = false;
 
-watch('./packages/icons/src', watchOptions, (_, filePath) => {
+watch('./packages/icons/src/shared', watchOptions, (_, filePath) => {
   if (updating) {
     return;
   }

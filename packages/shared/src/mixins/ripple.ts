@@ -1,6 +1,6 @@
 import { Constructor, dedupeMixin } from '@open-wc/dedupe-mixin';
 import { LitElement } from 'lit';
-import { property } from '../decorators.js';
+import { property } from 'lit/decorators/property.js';
 
 export interface Ripple {
   /**

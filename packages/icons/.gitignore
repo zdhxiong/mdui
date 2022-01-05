@@ -1,2 +1,2 @@
-src/index.ts
-src/style.ts
+src/shared/style.ts
+src/*.ts

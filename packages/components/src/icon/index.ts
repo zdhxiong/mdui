@@ -1,6 +1,9 @@
 import { html, LitElement, TemplateResult, CSSResultGroup } from 'lit';
-import { customElement, property } from '@mdui/shared/decorators.js';
-import { styleMap, unsafeSVG, until } from '@mdui/shared/directives.js';
+import { customElement } from '@mdui/shared/decorators/custom-element.js';
+import { property } from '@mdui/shared/decorators/property.js';
+import { styleMap } from '@mdui/shared/directives/style-map.js';
+import { unsafeSVG } from '@mdui/shared/directives/unsafe-svg.js';
+import { until } from '@mdui/shared/directives/until.js';
 import { ajax } from '@mdui/jq/functions/ajax.js';
 import { style } from './style.js';
 

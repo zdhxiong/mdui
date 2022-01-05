@@ -3,12 +3,9 @@
   "version": "1.0.0",
   "description": "material design 图标组件库",
   "type": "module",
-  "main": "index.js",
-  "module": "index.js",
-  "types": "index.d.ts",
   "files": [
-    "index.{js,js.map,d.ts,d.ts.map}",
-    "style.{js,js.map,d.ts,d.ts.map}",
+    "shared",
+    "*.{js,js.map,d.ts,d.ts.map}",
     "LICENSE",
     "package.json",
     "README.md"

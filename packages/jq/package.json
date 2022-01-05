@@ -11,9 +11,9 @@
     "methods",
     "shared",
     "static",
-    "$.{d.ts,js,js.map}",
-    "functions.{d.ts,js,js.map}",
-    "index.{d.ts,js,js.map}",
+    "$.{js,js.map,d.ts,d.ts.map}",
+    "functions.{js,js.map,d.ts,d.ts.map}",
+    "index.{js,js.map,d.ts,d.ts.map}",
     "LICENSE",
     "package.json",
     "README.md"

@@ -1,5 +1,5 @@
 import { PlainObject } from '@mdui/shared/helpers.js';
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { each } from '../functions/each.js';
 
 declare module '../shared/core.js' {

@@ -1,4 +1,4 @@
-import $ from './$.js';
+import { $ } from './$.js';
 
 // $ 函数的静态方法
 import './static/ajax.js';
@@ -87,5 +87,4 @@ import './methods/trigger.js';
 import './methods/val.js';
 import './methods/width.js';
 
-// eslint-disable-next-line import/no-default-export
-export default $;
+export { $ };

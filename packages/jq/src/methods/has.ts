@@ -1,5 +1,5 @@
 import { Selector, isString } from '@mdui/shared/helpers.js';
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { contains } from '../functions/contains.js';
 import { JQ } from '../shared/core.js';
 import './find.js';

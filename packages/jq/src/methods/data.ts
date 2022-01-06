@@ -5,7 +5,7 @@ import {
   eachObject,
   toCamelCase,
 } from '@mdui/shared/helpers.js';
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import { dataAttr, get, getAll, set, setAll } from '../shared/data.js';
 import './each.js';

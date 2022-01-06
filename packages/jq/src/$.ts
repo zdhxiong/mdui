@@ -82,7 +82,4 @@ const get$ = (): JQStatic => {
   return $;
 };
 
-const $ = get$();
-
-// eslint-disable-next-line import/no-default-export
-export default $;
+export const $ = get$();

@@ -1,5 +1,5 @@
 import { TypeOrArray } from '@mdui/shared/helpers.js';
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { merge } from '../functions/merge.js';
 import { unique } from '../functions/unique.js';
 import { JQ } from '../shared/core.js';

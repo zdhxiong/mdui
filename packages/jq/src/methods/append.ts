@@ -5,7 +5,7 @@ import {
   isString,
   eachArray,
 } from '@mdui/shared/helpers.js';
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import { createElement, appendChild, removeChild } from '../shared/dom.js';
 import './after.js';

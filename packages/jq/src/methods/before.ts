@@ -6,7 +6,7 @@ import {
   isElement,
   eachArray,
 } from '@mdui/shared/helpers.js';
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import { getChildNodesArray } from '../shared/dom.js';
 import './each.js';

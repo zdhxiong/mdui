@@ -1,5 +1,5 @@
 import { Selector } from '@mdui/shared/helpers.js';
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import { removeChild } from '../shared/dom.js';
 import './each.js';

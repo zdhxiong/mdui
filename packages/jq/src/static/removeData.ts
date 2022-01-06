@@ -1,5 +1,5 @@
 import { TypeOrArray } from '@mdui/shared/helpers.js';
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { removeData } from '../functions/removeData.js';
 
 declare module '../shared/core.js' {

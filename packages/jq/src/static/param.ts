@@ -1,5 +1,5 @@
 import { PlainObject } from '@mdui/shared/helpers.js';
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { param } from '../functions/param.js';
 
 type Value =

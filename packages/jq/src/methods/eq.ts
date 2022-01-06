@@ -1,4 +1,4 @@
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import './slice.js';
 

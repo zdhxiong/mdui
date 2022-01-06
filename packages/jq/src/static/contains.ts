@@ -1,4 +1,4 @@
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { contains } from '../functions/contains.js';
 
 declare module '../shared/core.js' {

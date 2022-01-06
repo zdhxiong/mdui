@@ -1,5 +1,5 @@
 import { isElement, isFunction, eachArray } from '@mdui/shared/helpers.js';
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import { getAttribute, setAttribute } from '../shared/attributes.js';
 import './each.js';

@@ -1,5 +1,5 @@
 import { isElement } from '@mdui/shared/helpers.js';
-import $ from '../../$.js';
+import { $ } from '../../$.js';
 import { unique } from '../../functions/unique.js';
 import { JQ } from '../../shared/core.js';
 import '../each.js';

@@ -5,7 +5,7 @@ import {
   eachObject,
   eachArray,
 } from '@mdui/shared/helpers.js';
-import $ from '../$.js';
+import { $ } from '../$.js';
 import {
   Method,
   CallbackName,

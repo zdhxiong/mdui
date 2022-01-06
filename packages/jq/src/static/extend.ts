@@ -1,5 +1,5 @@
 import { PlainObject, eachObject } from '@mdui/shared/helpers.js';
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { extend } from '../functions/extend.js';
 
 /**

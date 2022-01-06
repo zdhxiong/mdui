@@ -1,4 +1,4 @@
-import $ from '../$.js';
+import { $ } from '../$.js';
 import { ajaxSetup } from '../functions/ajaxSetup.js';
 import { Options } from '../shared/ajax.js';
 

@@ -5,7 +5,7 @@ import {
   isString,
 } from '@mdui/shared/helpers.js';
 import { JQ } from '../shared/core.js';
-import $ from '../$.js';
+import { $ } from '../$.js';
 import './before.js';
 import './clone.js';
 import './each.js';

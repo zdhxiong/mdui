@@ -1,21 +1,39 @@
-@import "../../node_modules/@mdui/themes/material.less";
+@import "~@mdui/shared/variables.less";
 
 :host {
   display: inline-block;
   width: auto;
   min-width: var(--mdui-button-min-width, 64px);
-  height: var(--mdui-button-height, 36px);
+  height: unit((40 / @mdui-ref-html-font-size), rem);
   color: var(--mdui-theme-primary, #6200ee);
-  font-weight: medium;
   font-size: var(--mdui-typography-button-font-size, 14px);
   letter-spacing: var(--mdui-typography-button-letter-spacing, 1.25);
   text-align: center;
-  text-transform: uppercase;
-  border-radius: var(--mdui-button-border-radius, 4px);
+  border-radius: unit((20 / @mdui-ref-html-font-size), rem);
 }
 
 :host([fullwidth]) {
   width: 100%;
+}
+
+:host([variant="filled"]) {
+  color: red;
+}
+
+:host([variant="tonal"]) {
+  color: red;
+}
+
+:host([variant="elevated"]) {
+  color: red;
+}
+
+:host([variant="outlined"]) {
+  color: red;
+}
+
+:host([variant="icon"]) {
+  color: red;
 }
 
 :host([disabled]) {

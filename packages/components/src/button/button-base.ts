@@ -1,63 +1,78 @@
-import { LitElement, CSSResultGroup } from 'lit';
-import { property } from '@mdui/shared/decorators.js';
-import { ClassInfo } from '@mdui/shared/directives.js';
-import { RippleMixin } from '@mdui/shared/mixins.js';
-import { style } from './button-base-style.js';
+import { LitElement } from 'lit';
+import { property } from 'lit/decorators/property.js';
+import { ClassInfo } from 'lit/directives/class-map.js';
 
-export class ButtonBase extends RippleMixin(LitElement) {
-  static styles: CSSResultGroup = style;
-
-  /**
-   * 是否使按钮浮动
-   */
-  @property({ type: Boolean, reflect: true })
-  raised = false;
-
-  /**
-   * 是否取消按钮的阴影
-   */
-  @property({ type: Boolean, reflect: true })
-  unelevated = false;
-
-  /**
-   * 是否使按钮包含轮廓
-   */
-  @property({ type: Boolean, reflect: true })
-  outlined = false;
-
-  /**
-   * 是否使按钮更密集
-   */
-  @property({ type: Boolean, reflect: true })
-  dense = false;
-
-  /**
-   * 是否使按钮宽度 100%
-   */
-  @property({ type: Boolean, reflect: true })
-  fullwidth = false;
-
-  /**
-   * 图标
-   */
+export class ButtonBase extends LitElement {
   @property({ reflect: true })
-  icon!: string;
+  href!: string;
 
-  /**
-   * 是否使图标位于右侧
-   */
+  @property({ reflect: true })
+  download!: string;
+
+  @property({ reflect: true })
+  target!: string;
+
   @property({ type: Boolean, reflect: true })
-  trailingIcon = false;
+  autofocus = false;
+
+  @property({ reflect: true })
+  name!: string;
+
+  @property({ reflect: true })
+  value!: string;
+
+  @property({ reflect: true })
+  type!: string;
+
+  @property({ reflect: true })
+  form!: string;
+
+  @property({ reflect: true })
+  formAction!: string;
+
+  @property({ reflect: true })
+  formEnctype!: string;
+
+  @property({ reflect: true })
+  formMethod!: string;
+
+  @property({ type: Boolean, reflect: true })
+  formNovalidate = false;
+
+  @property({ reflect: true })
+  formTarget!: string;
 
   protected getButtonClasses(): ClassInfo {
-    const { raised, unelevated, outlined, dense, fullwidth } = this;
+    const {
+      href,
+      download,
+      target,
+      autofocus,
+      name,
+      value,
+      type,
+      form,
+      formAction,
+      formEnctype,
+      formMethod,
+      formNovalidate,
+      formTarget,
+    } = this;
 
     return {
-      raised,
-      unelevated,
-      outlined,
-      dense,
-      fullwidth,
+      href,
+      download,
+      target,
+      autofocus,
+      name,
+      value,
+      type,
+      form,
+      formAction,
+      formEnctype,
+      formMethod,
+      formNovalidate,
+      formTarget,
     };
   }
 }

@@ -4,55 +4,91 @@
   <title>Button</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
   <link rel="subsection" href="../../packages/mdui/mdui.css"/>
   <script type="module" src="../../packages/components/index.js"></script>
 </head>
 <body>
 <main>
-  <div class="demo-group">
-    <h2>Standard</h2>
-    <mdui-button>standard</mdui-button>
-    <mdui-button icon="code">standard</mdui-button>
-  </div>
-  <div class="demo-group">
-    <h2>Outlined</h2>
-    <mdui-button outlined>Outlined</mdui-button>
-    <mdui-button outlined icon="code">Outlined</mdui-button>
-  </div>
-  <div class="demo-group">
-    <h2>Raised</h2>
-    <mdui-button raised>Raised</mdui-button>
-    <mdui-button raised icon="code">Raised</mdui-button>
-  </div>
-  <div class="demo-group">
-    <h2>Unelevated</h2>
-    <mdui-button unelevated>Unelevated</mdui-button>
-    <mdui-button unelevated icon="code">Unelevated</mdui-button>
-  </div>
-  <div class="demo-group">
-    <h2>Dense</h2>
-    <mdui-button dense>Dense</mdui-button>
-    <mdui-button dense icon="code">Dense</mdui-button>
-  </div>
-  <div class="demo-group">
-    <h2>Trailing icon</h2>
-    <mdui-button icon="code" trailingicon>Trailing icon</mdui-button>
-    <mdui-button outlined icon="code" trailingicon>Trailing icon</mdui-button>
-    <mdui-button raised icon="code" trailingicon>Trailing icon</mdui-button>
-    <mdui-button unelevated icon="code" trailingicon>Trailing icon</mdui-button>
-  </div>
-  <div class="demo-group">
-    <h2>Disabled</h2>
-    <mdui-button disabled icon="code">Disabled</mdui-button>
-    <mdui-button disabled outlined icon="code">Trailing icon</mdui-button>
-    <mdui-button disabled raised icon="code">Trailing icon</mdui-button>
-    <mdui-button disabled unelevated icon="code">Trailing icon</mdui-button>
-  </div>
-  <div class="demo-group">
-    <h2>Full Width</h2>
-    <mdui-button fullwidth>Full Width</mdui-button>
-    <mdui-button fullwidth outlined icon="code">Full Width</mdui-button>
-  </div>
+  <section>
+    <h2>Elevation Button</h2>
+    <mdui-button variant="elevated">button</mdui-button>
+    <mdui-button variant="elevated" disabled>disabled</mdui-button>
+    <mdui-button variant="elevated" icon="settings">button</mdui-button>
+    <mdui-button variant="elevated" icon="settings" trailingIcon>button</mdui-button>
+  </section>
+
+  <section>
+    <h2>Filled Button</h2>
+    <mdui-button variant="filled">button</mdui-button>
+    <mdui-button variant="filled" disabled>disabled</mdui-button>
+    <mdui-button variant="filled" icon="settings">button</mdui-button>
+    <mdui-button variant="filled" icon="settings" trailingIcon>button</mdui-button>
+  </section>
+
+  <section>
+    <h2>Filled tonal Button</h2>
+    <mdui-button variant="tonal">button</mdui-button>
+    <mdui-button variant="tonal" disabled>disabled</mdui-button>
+    <mdui-button variant="tonal" icon="settings">button</mdui-button>
+    <mdui-button variant="tonal" icon="settings" trailingIcon>button</mdui-button>
+  </section>
+
+  <section>
+    <h2>Outlined Button</h2>
+    <mdui-button variant="outlined">button</mdui-button>
+    <mdui-button variant="outlined" disabled>disabled</mdui-button>
+    <mdui-button variant="outlined" icon="settings">button</mdui-button>
+    <mdui-button variant="outlined" icon="settings" trailingIcon>button</mdui-button>
+  </section>
+
+  <section>
+    <h2>Text Button</h2>
+    <mdui-button>button</mdui-button>
+    <mdui-button variant="text" disabled>disabled</mdui-button>
+    <mdui-button variant="text" icon="settings">button</mdui-button>
+    <mdui-button variant="text" icon="settings" trailingIcon>button</mdui-button>
+  </section>
+
+  <section>
+    <h2>Icon Button</h2>
+    <mdui-button variant="icon"></mdui-button>
+    <mdui-button variant="icon" disabled></mdui-button>
+  </section>
+
+  <section>
+    <h2>loading</h2>
+    <mdui-button variant="elevated" loading>button</mdui-button>
+    <mdui-button variant="elevated" disabled loading>button</mdui-button>
+    <mdui-button variant="elevated" icon="settings" loading>button</mdui-button>
+    <mdui-button variant="elevated" icon="settings" trailingIcon loading>button</mdui-button>
+  </section>
+
+  <section>
+    <h2>fullwidth</h2>
+    <div style="width: 200px">
+      <mdui-button variant="elevated" fullwidth>button</mdui-button>
+    </div>
+  </section>
+
+  <section>
+    <h2>href</h2>
+    <mdui-button variant="elevated" href="https://www.mdui.org" target="_blank">link</mdui-button>
+    <mdui-button variant="elevated" href="https://www.mdui.org" target="_blank" disabled>disabled</mdui-button>
+  </section>
+
+  <section>
+    <h2>slot icon</h2>
+    <mdui-button variant="elevated">
+      <mdui-icon name="settings" slot="icon"></mdui-icon>
+      button
+    </mdui-button>
+    <mdui-button variant="elevated" trailingIcon>
+      <mdui-icon name="settings" slot="icon"></mdui-icon>
+      button
+    </mdui-button>
+  </section>
+
 </main>
 </body>
 </html>

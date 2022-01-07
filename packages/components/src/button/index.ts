@@ -1,68 +1,83 @@
 import { html, TemplateResult, CSSResultGroup } from 'lit';
-import { customElement, property } from '@mdui/shared/decorators.js';
-import { ifDefined, classMap } from '@mdui/shared/directives.js';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { when } from 'lit/directives/when.js';
 import { ButtonBase } from './button-base.js';
+import { style } from './style.js';
 
 const templateSlot = html`<slot name="icon"></slot> <slot></slot>`;
 
 @customElement('mdui-button')
 export class MduiButton extends ButtonBase {
-  static get styles(): CSSResultGroup {
-    return [super.styles];
-  }
+  static override styles: CSSResultGroup = style;
 
-  /**
-   * 是否在页面加载完后自动聚焦到该按钮
-   */
-  @property({ type: Boolean, reflect: true })
-  autofocus = false;
-
-  /**
-   * 是否禁用按钮
-   */
   @property({ type: Boolean, reflect: true })
   disabled = false;
 
-  /**
-   * 此 button 元素关联的 form 元素的 id 属性
-   */
-  @property({ reflect: true })
-  form!: string;
+  @property({ type: Boolean, reflect: true })
+  loading = false;
 
-  /**
-   * button的名称，与表单数据一起提交。
-   */
   @property({ reflect: true })
-  name!: string;
+  variant!: string;
 
-  /**
-   * button的类型。可选值：`submit`, `reset`, `button`, `menu`
-   */
-  @property({ reflect: true })
-  type!: string;
+  @property({ type: Boolean, reflect: true })
+  fullwidth = false;
 
-  /**
-   * button的初始值，与表单数据一起提交。
-   */
   @property({ reflect: true })
-  value!: string;
+  icon!: string;
+
+  @property({ type: Boolean, reflect: true })
+  trailingIcon = false;
 
   render(): TemplateResult {
-    const { autofocus, disabled, form, name, type, value } = this;
+    const {
+      disabled,
+      href,
+      download,
+      target,
+      autofocus,
+      name,
+      value,
+      type,
+      form,
+      formAction,
+      formEnctype,
+      formMethod,
+      formNovalidate,
+      formTarget,
+    } = this;
 
-    return html`
-      <button
-        class="button ${classMap(this.getButtonClasses())}"
-        type="${ifDefined(type)}"
-        form="${ifDefined(form)}"
-        name="${ifDefined(name)}"
-        value="${ifDefined(value)}"
-        ?autofocus="${autofocus}"
-        ?disabled="${disabled}"
+    return html`${when(
+      this.href,
+      () =>
+        html`${when(
+          disabled,
+          () => html`<span>${templateSlot}</span>`,
+          () => html`<a
+            href=${href}
+            download=${ifDefined(download)}
+            target=${ifDefined(target)}
+          >
+            ${templateSlot}
+          </a>`,
+        )}`,
+      () => html`<button
+        name=${ifDefined(name)}
+        value=${ifDefined(value)}
+        type=${ifDefined(type)}
+        form=${ifDefined(form)}
+        formaction=${ifDefined(formAction)}
+        formenctype=${ifDefined(formEnctype)}
+        formmethod=${ifDefined(formMethod)}
+        formtarget=${ifDefined(formTarget)}
+        ?formnovalidate=${formNovalidate}
+        ?autofocus=${autofocus}
+        ?disabled=${disabled}
       >
         ${templateSlot}
-      </button>
-    `;
+      </button>`,
+    )} `;
   }
 }
 

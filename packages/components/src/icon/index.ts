@@ -1,9 +1,9 @@
 import { html, LitElement, TemplateResult, CSSResultGroup } from 'lit';
-import { customElement } from '@mdui/shared/decorators/custom-element.js';
-import { property } from '@mdui/shared/decorators/property.js';
-import { styleMap } from '@mdui/shared/directives/style-map.js';
-import { unsafeSVG } from '@mdui/shared/directives/unsafe-svg.js';
-import { until } from '@mdui/shared/directives/until.js';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
+import { styleMap } from 'lit/directives/style-map.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import { until } from 'lit/directives/until.js';
 import { ajax } from '@mdui/jq/functions/ajax.js';
 import { style } from './style.js';
 
@@ -14,21 +14,21 @@ export class Icon extends LitElement {
   /**
    * Material Icons 图标名
    */
-  @property()
-  name = '';
+  @property({ reflect: true })
+  name!: string;
 
   /**
    * Material Icons 的五种变体：outlined, filled, round, sharp, two-tone。默认为 filled。
    * 仅在设置了 name 属性时，该属性才有效
    */
-  @property()
-  variant: string | undefined;
+  @property({ reflect: true })
+  variant!: string;
 
   /**
    * svg 图标的路径
    */
-  @property()
-  src = '';
+  @property({ reflect: true })
+  src!: string;
 
   /**
    * 根据 variant 属性获取 Material Icons 的 font-family 名称

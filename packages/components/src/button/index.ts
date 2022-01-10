@@ -5,21 +5,17 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 import { ButtonBase } from './button-base.js';
 import { style } from './style.js';
-
-const templateSlot = html`<slot name="icon"></slot> <slot></slot>`;
+import '../icon.js';
 
 @customElement('mdui-button')
 export class MduiButton extends ButtonBase {
   static override styles: CSSResultGroup = style;
 
   @property({ type: Boolean, reflect: true })
-  disabled = false;
-
-  @property({ type: Boolean, reflect: true })
   loading = false;
 
   @property({ reflect: true })
-  variant!: string;
+  variant = 'text';
 
   @property({ type: Boolean, reflect: true })
   fullwidth = false;
@@ -27,10 +23,42 @@ export class MduiButton extends ButtonBase {
   @property({ reflect: true })
   icon!: string;
 
+  @property({ reflect: true })
+  iconVariant!: string;
+
   @property({ type: Boolean, reflect: true })
   trailingIcon = false;
 
-  render(): TemplateResult {
+  protected renderLabel(): TemplateResult {
+    return html`<span class="label"><slot></slot></span>`;
+  }
+
+  protected renderLeadingIcon(): TemplateResult {
+    return html`${when(!this.trailingIcon, () => this.renderIcon())}`;
+  }
+
+  protected renderTrailingIcon(): TemplateResult {
+    return html`${when(this.trailingIcon, () => this.renderIcon())}`;
+  }
+
+  protected renderIcon(): TemplateResult {
+    return when(
+      this.icon,
+      () =>
+        html`<mdui-icon
+          class="icon"
+          name=${this.icon}
+          variant=${ifDefined(this.iconVariant)}
+        ></mdui-icon>`,
+      () => html`<slot name="icon"></slot>`,
+    );
+  }
+
+  protected renderInner(): TemplateResult {
+    return html`${this.renderLeadingIcon()}${this.renderLabel()}${this.renderTrailingIcon()}`;
+  }
+
+  protected override render(): TemplateResult {
     const {
       disabled,
       href,
@@ -53,16 +81,18 @@ export class MduiButton extends ButtonBase {
       () =>
         html`${when(
           disabled,
-          () => html`<span>${templateSlot}</span>`,
+          () => html`<span class="button">${this.renderInner()}</span>`,
           () => html`<a
+            class="button"
             href=${href}
             download=${ifDefined(download)}
             target=${ifDefined(target)}
           >
-            ${templateSlot}
+            ${this.renderInner()}
           </a>`,
         )}`,
       () => html`<button
+        class="button"
         name=${ifDefined(name)}
         value=${ifDefined(value)}
         type=${ifDefined(type)}
@@ -75,7 +105,7 @@ export class MduiButton extends ButtonBase {
         ?autofocus=${autofocus}
         ?disabled=${disabled}
       >
-        ${templateSlot}
+        ${this.renderInner()}
       </button>`,
     )} `;
   }

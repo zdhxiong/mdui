@@ -3,6 +3,9 @@ import { property } from 'lit/decorators/property.js';
 import { ClassInfo } from 'lit/directives/class-map.js';
 
 export class ButtonBase extends LitElement {
+  @property({ type: Boolean, reflect: true })
+  disabled = false;
+
   @property({ reflect: true })
   href!: string;
 

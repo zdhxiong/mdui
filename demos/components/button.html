@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
   <link rel="subsection" href="../../packages/mdui/mdui.css"/>
   <script type="module" src="../../packages/components/index.js"></script>
+  <script type="module" src="../../packages/icons/settings.js"></script>
 </head>
 <body>
 <main>
@@ -15,7 +16,7 @@
     <mdui-button variant="elevated">button</mdui-button>
     <mdui-button variant="elevated" disabled>disabled</mdui-button>
     <mdui-button variant="elevated" icon="settings">button</mdui-button>
-    <mdui-button variant="elevated" icon="settings" trailingIcon>button</mdui-button>
+    <mdui-button variant="elevated" icon="settings" iconVariant="outlined" trailingIcon>button</mdui-button>
   </section>
 
   <section>
@@ -23,7 +24,7 @@
     <mdui-button variant="filled">button</mdui-button>
     <mdui-button variant="filled" disabled>disabled</mdui-button>
     <mdui-button variant="filled" icon="settings">button</mdui-button>
-    <mdui-button variant="filled" icon="settings" trailingIcon>button</mdui-button>
+    <mdui-button variant="filled" icon="settings" iconVariant="outlined" trailingIcon>button</mdui-button>
   </section>
 
   <section>
@@ -31,7 +32,7 @@
     <mdui-button variant="tonal">button</mdui-button>
     <mdui-button variant="tonal" disabled>disabled</mdui-button>
     <mdui-button variant="tonal" icon="settings">button</mdui-button>
-    <mdui-button variant="tonal" icon="settings" trailingIcon>button</mdui-button>
+    <mdui-button variant="tonal" icon="settings" iconVariant="outlined" trailingIcon>button</mdui-button>
   </section>
 
   <section>
@@ -39,7 +40,7 @@
     <mdui-button variant="outlined">button</mdui-button>
     <mdui-button variant="outlined" disabled>disabled</mdui-button>
     <mdui-button variant="outlined" icon="settings">button</mdui-button>
-    <mdui-button variant="outlined" icon="settings" trailingIcon>button</mdui-button>
+    <mdui-button variant="outlined" icon="settings" iconVariant="outlined" trailingIcon>button</mdui-button>
   </section>
 
   <section>
@@ -47,27 +48,29 @@
     <mdui-button>button</mdui-button>
     <mdui-button variant="text" disabled>disabled</mdui-button>
     <mdui-button variant="text" icon="settings">button</mdui-button>
-    <mdui-button variant="text" icon="settings" trailingIcon>button</mdui-button>
+    <mdui-button variant="text" icon="settings" iconVariant="outlined" trailingIcon>button</mdui-button>
   </section>
 
   <section>
     <h2>Icon Button</h2>
-    <mdui-button variant="icon"></mdui-button>
-    <mdui-button variant="icon" disabled></mdui-button>
+    <mdui-button variant="icon" icon="settings"></mdui-button>
+    <mdui-button variant="icon" icon="settings" iconVariant="outlined" disabled></mdui-button>
   </section>
 
   <section>
     <h2>loading</h2>
     <mdui-button variant="elevated" loading>button</mdui-button>
-    <mdui-button variant="elevated" disabled loading>button</mdui-button>
-    <mdui-button variant="elevated" icon="settings" loading>button</mdui-button>
-    <mdui-button variant="elevated" icon="settings" trailingIcon loading>button</mdui-button>
+    <mdui-button variant="filled" disabled loading>button</mdui-button>
+    <mdui-button variant="tonal" icon="settings" loading>button</mdui-button>
+    <mdui-button variant="outlined" icon="settings" iconVariant="outlined" trailingIcon loading>button</mdui-button>
+    <mdui-button variant="text" icon="settings" loading>button</mdui-button>
+    <mdui-button variant="icon" icon="settings" loading></mdui-button>
   </section>
 
   <section>
     <h2>fullwidth</h2>
-    <div style="width: 200px">
-      <mdui-button variant="elevated" fullwidth>button</mdui-button>
+    <div style="width: 300px">
+      <mdui-button variant="elevated" icon="settings" fullwidth>button</mdui-button>
     </div>
   </section>
 
@@ -75,6 +78,8 @@
     <h2>href</h2>
     <mdui-button variant="elevated" href="https://www.mdui.org" target="_blank">link</mdui-button>
     <mdui-button variant="elevated" href="https://www.mdui.org" target="_blank" disabled>disabled</mdui-button>
+    <mdui-button variant="elevated" icon="settings">button</mdui-button>
+    <mdui-button variant="elevated" icon="settings" iconVariant="outlined" trailingIcon>button</mdui-button>
   </section>
 
   <section>
@@ -84,9 +89,37 @@
       button
     </mdui-button>
     <mdui-button variant="elevated" trailingIcon>
-      <mdui-icon name="settings" slot="icon"></mdui-icon>
+      <mdui-icon name="settings" variant="outlined" slot="icon"></mdui-icon>
       button
     </mdui-button>
+    <mdui-button variant="elevated">
+      <mdui-icon-settings slot="icon"></mdui-icon-settings>
+      button
+    </mdui-button>
+  </section>
+
+  <section>
+    <h2>custom style</h2>
+    <style>
+      .custom1 {
+        height: 32px;
+        font-size: 12px;
+        border: 4px solid #bbb;
+        background-color: aquamarine;
+        box-shadow: 0 0 4px 4px red;
+        border-radius: 4px;
+      }
+    </style>
+    <mdui-button class="custom1">custom</mdui-button>
+
+    <style>
+      .custom2 {
+        height: 48px;
+        font-size: 24px;
+        width: 300px;
+      }
+    </style>
+    <mdui-button class="custom2" icon="settings" variant="filled">custom</mdui-button>
   </section>
 
 </main>

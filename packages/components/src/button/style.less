@@ -1,68 +1,132 @@
 @import "~@mdui/shared/variables.less";
 
+/**
+ * 默认为 variant="text"
+ */
 :host {
   display: inline-block;
-  width: auto;
-  min-width: var(--mdui-button-min-width, 64px);
-  height: unit((40 / @mdui-ref-html-font-size), rem);
-  color: var(--mdui-theme-primary, #6200ee);
-  font-size: var(--mdui-typography-button-font-size, 14px);
-  letter-spacing: var(--mdui-typography-button-letter-spacing, 1.25);
+  box-sizing: border-box;
   text-align: center;
-  border-radius: unit((20 / @mdui-ref-html-font-size), rem);
+  cursor: pointer;
+  transition: box-shadow 200ms @mdui-sys-motion-easing-legacy;
+  -webkit-tap-highlight-color: transparent;
+  .minWidth(48);
+  .fontSize(label-large-size);
+  .fontWeight(label-large-weight);
+  .height(40);
+  .borderRadius(20);
+  .color(primary);
+  .padding(0, 16);
+  .letterSpacing(label-large-tracking);
 }
 
 :host([fullwidth]) {
-  width: 100%;
-}
-
-:host([variant="filled"]) {
-  color: red;
-}
-
-:host([variant="tonal"]) {
-  color: red;
+  display: block;
 }
 
 :host([variant="elevated"]) {
-  color: red;
+  .elevation(1);
+  .backgroundColor(surface);
+}
+
+:host([variant="filled"]) {
+  .color(on-primary);
+  .backgroundColor(primary);
+}
+
+:host([variant="tonal"]) {
+  .color(on-secondary-container);
+  .backgroundColor(secondary-container);
 }
 
 :host([variant="outlined"]) {
-  color: red;
+  .border(1px, solid, outline);
 }
 
 :host([variant="icon"]) {
-  color: red;
+  min-width: 0;
+  padding: 0;
+  .color(on-secondary-container);
+  .width(40);
+
+  .label {
+    display: none;
+  }
 }
 
 :host([disabled]) {
-  color: red;
+  cursor: default;
+  .color(on-surface, 38%);
+}
+
+:host([variant="elevated"]:hover) {
+  .elevation(2);
+}
+
+:host([variant="filled"]:hover) {
+  .elevation(1);
+}
+
+:host([variant="tonal"]:hover) {
+  .elevation(1);
+}
+
+:host([variant="outlined"]:focus-within) {
+  .borderColor(primary);
+}
+
+:host([variant="elevated"][disabled]) {
+  .backgroundColor(on-surface, 12%);
+  .elevation(0);
+}
+
+:host([variant="filled"][disabled]) {
+  .backgroundColor(on-surface, 12%);
+  .elevation(0);
+}
+
+:host([variant="tonal"][disabled]) {
+  .backgroundColor(on-surface, 12%);
+  .elevation(0);
+}
+
+:host([variant="outlined"][disabled]) {
+  .borderColor(on-surface, 12%);
+}
+
+.label {
+  .paddingRight(8);
+  .paddingLeft(8);
+}
+
+.icon,
+::slotted([slot="icon"]) {
+  display: inline-flex;
+  // 图标 font-size 为 18px，文案为 14px
+  font-size: unit((18 / 14), em);
 }
 
 .button {
   position: relative;
-  box-sizing: border-box;
-  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
-
-  /* padding 根据按钮类型区分 */
+  padding: 0;
   overflow: hidden;
+  color: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
   white-space: nowrap;
-  text-align: inherit;
-  text-transform: inherit;
+  text-align: center;
   text-decoration: none;
   vertical-align: middle;
-  background-color: transparent;
+  background: transparent;
   border: none;
   outline: none;
-  cursor: pointer;
-
-  /* transition: all .2s @animation-curve-default,
-      box-shadow .2s @animation-curve-fast-out-linear-in; */
+  cursor: inherit;
   user-select: none;
-  touch-action: manipulation;
-  will-change: box-shadow;
+  touch-action: manipulation; // 移除点击延迟触发
   zoom: 1;
   -webkit-user-drag: none;
 }

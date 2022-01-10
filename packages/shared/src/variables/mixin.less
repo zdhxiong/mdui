@@ -1,0 +1,206 @@
+/**
+ * px 值转 rem
+ * 输入: .px(font-size: 24)
+ * 输出: font-size: 1.5rem
+ */
+.px(@name, @px) {
+  @{name}: unit((@px / 16), rem);
+}
+
+/**
+ * 系统变量
+ * 输入: .sys(font-size, typescale-label-large-size)
+ * 输出: font-size: var(--mdui-sys-typescale-label-large-size, 0.875rem)
+ */
+.sys(@name, @value) {
+  @cssVariable: "--mdui-sys-@{value}";
+  @lessVariable: "mdui-sys-@{value}";
+
+  @{name}: ~"var(@{cssVariable}, @{@{lessVariable}})";
+}
+
+/**
+ * 颜色值
+ *
+ * 输入: .color(background-color, on-primary)
+ * 输出: background-color: rgb(var(--mdui-sys-color-on-primary, 255, 255, 255))
+ *
+ * 输入: .color(background-color, on-primary, 30%)
+ * 输出: background-color: rgba(var(--mdui-sys-color-on-primary, 255, 255, 255), 30%)
+ */
+._color(@name, @rgb, @opacity: 1) {
+  @cssVariable: "--mdui-sys-color-@{rgb}";
+  @lessVariable: "mdui-sys-color-@{rgb}";
+
+  & when (@opacity = 1) {
+    @{name}: ~"rgb(var(@{cssVariable}, @{@{lessVariable}}))";
+  }
+
+  & when not (@opacity = 1) {
+    @{name}: ~"rgba(var(@{cssVariable}, @{@{lessVariable}}), @{opacity})";
+  }
+}
+
+/**
+ * 设置边框
+ *
+ * 输入: .border(border, 1px, solid, primary)
+ * 输出: border: 1px solid rgb(103,80,164)
+ *
+ * 输入: .border(border-top, 1px solid, primary, 30%)
+ * 输出: border-top: 1px solid rgba(103,80,164,30%)
+ */
+._border(@name, @width, @style, @rgb, @opacity: 1) {
+  @cssVariable: "--mdui-sys-color-@{rgb}";
+  @lessVariable: "mdui-sys-color-@{rgb}";
+
+  & when (@opacity = 1) {
+    @{name}: ~"@{width} @{style} rgb(var(@{cssVariable}, @{@{lessVariable}}))";
+  }
+
+  & when not (@opacity = 1) {
+    @{name}: ~"@{width} @{style} rgba(var(@{cssVariable}, @{@{lessVariable}}), @{opacity})";
+  }
+}
+
+/**
+ * padding 或 margin 值中的 px 转 rem。传 1 - 4 个参数都行
+ *
+ * 输入: .padding(24)
+ * 输出: padding: 1.5rem
+ */
+.paddingOrMargin(@name, @top, @right: null, @bottom: null, @left: null) {
+  & when (@right = null) and (@bottom = null) and (@left = null) {
+    @{name}: unit((@top / 16), rem);
+  }
+
+  & when (not(@right = null)) and (@bottom = null) and (@left = null) {
+    @{name}: unit((@top / 16), rem) unit((@right / 16), rem);
+  }
+
+  & when (not(@right = null)) and (not(@bottom = null)) and (@left = null) {
+    @{name}: unit((@top / 16), rem) unit((@right / 16), rem) unit((@bottom / 16), rem);
+  }
+
+  & when (not(@right = null)) and (not(@bottom = null)) and (not(@left = null)) {
+    @{name}: unit((@top / 16), rem) unit((@right / 16), rem) unit((@bottom / 16), rem) unit((@left / 16), rem);
+  }
+}
+
+/**
+ * 设置 box-shadow
+ *
+ * 输入: .elevation(2)
+ */
+.elevation(@value) {
+  @cssVariable: "--mdui-sys-elevation-level@{value}";
+  @lessVariable: "mdui-sys-elevation-level@{value}";
+
+  box-shadow: ~"var(@{cssVariable}, @{@{lessVariable}})";
+}
+
+.color(@rgb, @opacity: 1) {
+  ._color(color, @rgb, @opacity);
+}
+
+.backgroundColor(@rgb, @opacity: 1) {
+  ._color(background-color, @rgb, @opacity);
+}
+
+.borderColor(@rgb, @opacity: 1) {
+  ._color(border-color, @rgb, @opacity);
+}
+
+.padding(@top, @right: null, @bottom: null, @left: null) {
+  .paddingOrMargin(padding, @top, @right, @bottom, @left);
+}
+
+.margin(@top, @right: null, @bottom: null, @left: null) {
+  .paddingOrMargin(margin, @top, @right, @bottom, @left);
+}
+
+.paddingTop(@value) {
+  .px(padding-top, @value);
+}
+
+.paddingRight(@value) {
+  .px(padding-right, @value);
+}
+
+.paddingBottom(@value) {
+  .px(padding-bottom, @value);
+}
+
+.paddingLeft(@value) {
+  .px(padding-left, @value);
+}
+
+.marginTop(@value) {
+  .px(margin-top, @value);
+}
+
+.marginRight(@value) {
+  .px(margin-right, @value);
+}
+
+.marginBottom(@value) {
+  .px(margin-bottom, @value);
+}
+
+.marginLeft(@value) {
+  .px(margin-left, @value);
+}
+
+.border(@width, @style, @rgb, @opacity: 1) {
+  ._border(border, @width, @style, @rgb, @opacity: 1);
+}
+
+.borderTop(@width, @style, @rgb, @opacity: 1) {
+  ._border(border-top, @width, @style, @rgb, @opacity);
+}
+
+.borderRight(@width, @style, @rgb, @opacity: 1) {
+  ._border(border-right, @width, @style, @rgb, @opacity);
+}
+
+.borderBottom(@width, @style, @rgb, @opacity: 1) {
+  ._border(border-bottom, @width, @style, @rgb, @opacity);
+}
+
+.borderLeft(@width, @style, @rgb, @opacity: 1) {
+  ._border(border-left, @width, @style, @rgb, @opacity);
+}
+
+.borderRadius(@radius) {
+  .px(border-radius, 20);
+}
+
+.fontSize(@value) {
+  & when (isnumber(@value)) {
+    .px(font-size, @value);
+  }
+
+  & when not (isnumber(@value)) {
+    .sys(font-size, ~"typescale-@{value}");
+  }
+}
+
+.fontWeight(@value) {
+  .sys(font-weight, ~"typescale-@{value}");
+}
+
+.letterSpacing(@value) {
+  .sys(letter-spacing, ~"typescale-@{value}");
+}
+
+.height(@value) {
+  .px(height, @value);
+}
+
+.width(@value) {
+  .px(width, @value);
+}
+
+.minWidth(@value) {
+  .px(min-width, @value);
+}

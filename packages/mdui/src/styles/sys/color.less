@@ -88,45 +88,45 @@
   --mdui-sys-color-inverse-surface: var(--mdui-sys-color-inverse-surface-light);
   --mdui-sys-color-inverse-on-surface: var(--mdui-sys-color-inverse-on-surface-light);
   --mdui-sys-color-inverse-primary: var(--mdui-sys-color-inverse-primary-light);
+}
 
-  // 强制使用暗色模式、或设置成自动适配且处于暗色模式的颜色
-  .theme-dark() {
-    --mdui-sys-color-primary: var(--mdui-sys-color-primary-dark);
-    --mdui-sys-color-primary-container: var(--mdui-sys-color-primary-container-dark);
-    --mdui-sys-color-secondary: var(--mdui-sys-color-secondary-dark);
-    --mdui-sys-color-secondary-container: var(--mdui-sys-color-secondary-container-dark);
-    --mdui-sys-color-tertiary: var(--mdui-sys-color-tertiary-dark);
-    --mdui-sys-color-tertiary-container: var(--mdui-sys-color-tertiary-container-dark);
-    --mdui-sys-color-surface: var(--mdui-sys-color-surface-dark);
-    --mdui-sys-color-surface-variant: var(--mdui-sys-color-surface-variant-dark);
-    --mdui-sys-color-background: var(--mdui-sys-color-background-dark);
-    --mdui-sys-color-error: var(--mdui-sys-color-error-dark);
-    --mdui-sys-color-error-container: var(--mdui-sys-color-error-container-dark);
-    --mdui-sys-color-on-primary: var(--mdui-sys-color-on-primary-dark);
-    --mdui-sys-color-on-primary-container: var(--mdui-sys-color-on-primary-container-dark);
-    --mdui-sys-color-on-secondary: var(--mdui-sys-color-on-secondary-dark);
-    --mdui-sys-color-on-secondary-container: var(--mdui-sys-color-on-secondary-container-dark);
-    --mdui-sys-color-on-tertiary: var(--mdui-sys-color-on-tertiary-dark);
-    --mdui-sys-color-on-tertiary-container: var(--mdui-sys-color-on-tertiary-container-dark);
-    --mdui-sys-color-on-surface: var(--mdui-sys-color-on-surface-dark);
-    --mdui-sys-color-on-surface-variant: var(--mdui-sys-color-on-surface-variant-dark);
-    --mdui-sys-color-on-error: var(--mdui-sys-color-on-error-dark);
-    --mdui-sys-color-on-error-container: var(--mdui-sys-color-on-error-container-dark);
-    --mdui-sys-color-on-background: var(--mdui-sys-color-on-background-dark);
-    --mdui-sys-color-outline: var(--mdui-sys-color-outline-dark);
-    --mdui-sys-color-shadow: var(--mdui-sys-color-shadow-dark);
-    --mdui-sys-color-inverse-surface: var(--mdui-sys-color-inverse-surface-dark);
-    --mdui-sys-color-inverse-on-surface: var(--mdui-sys-color-inverse-on-surface-dark);
-    --mdui-sys-color-inverse-primary: var(--mdui-sys-color-inverse-primary-dark);
-  }
+// 强制使用暗色模式、或设置成自动适配且处于暗色模式的颜色
+.theme-dark() {
+  --mdui-sys-color-primary: var(--mdui-sys-color-primary-dark);
+  --mdui-sys-color-primary-container: var(--mdui-sys-color-primary-container-dark);
+  --mdui-sys-color-secondary: var(--mdui-sys-color-secondary-dark);
+  --mdui-sys-color-secondary-container: var(--mdui-sys-color-secondary-container-dark);
+  --mdui-sys-color-tertiary: var(--mdui-sys-color-tertiary-dark);
+  --mdui-sys-color-tertiary-container: var(--mdui-sys-color-tertiary-container-dark);
+  --mdui-sys-color-surface: var(--mdui-sys-color-surface-dark);
+  --mdui-sys-color-surface-variant: var(--mdui-sys-color-surface-variant-dark);
+  --mdui-sys-color-background: var(--mdui-sys-color-background-dark);
+  --mdui-sys-color-error: var(--mdui-sys-color-error-dark);
+  --mdui-sys-color-error-container: var(--mdui-sys-color-error-container-dark);
+  --mdui-sys-color-on-primary: var(--mdui-sys-color-on-primary-dark);
+  --mdui-sys-color-on-primary-container: var(--mdui-sys-color-on-primary-container-dark);
+  --mdui-sys-color-on-secondary: var(--mdui-sys-color-on-secondary-dark);
+  --mdui-sys-color-on-secondary-container: var(--mdui-sys-color-on-secondary-container-dark);
+  --mdui-sys-color-on-tertiary: var(--mdui-sys-color-on-tertiary-dark);
+  --mdui-sys-color-on-tertiary-container: var(--mdui-sys-color-on-tertiary-container-dark);
+  --mdui-sys-color-on-surface: var(--mdui-sys-color-on-surface-dark);
+  --mdui-sys-color-on-surface-variant: var(--mdui-sys-color-on-surface-variant-dark);
+  --mdui-sys-color-on-error: var(--mdui-sys-color-on-error-dark);
+  --mdui-sys-color-on-error-container: var(--mdui-sys-color-on-error-container-dark);
+  --mdui-sys-color-on-background: var(--mdui-sys-color-on-background-dark);
+  --mdui-sys-color-outline: var(--mdui-sys-color-outline-dark);
+  --mdui-sys-color-shadow: var(--mdui-sys-color-shadow-dark);
+  --mdui-sys-color-inverse-surface: var(--mdui-sys-color-inverse-surface-dark);
+  --mdui-sys-color-inverse-on-surface: var(--mdui-sys-color-inverse-on-surface-dark);
+  --mdui-sys-color-inverse-primary: var(--mdui-sys-color-inverse-primary-dark);
+}
 
-  .mdui-theme-dark {
+.mdui-theme-dark {
+  .theme-dark();
+}
+
+@media (prefers-color-scheme: dark) {
+  .mdui-theme-auto {
     .theme-dark();
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .mdui-theme-auto {
-      .theme-dark();
-    }
   }
 }

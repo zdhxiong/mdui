@@ -11,6 +11,8 @@
   ],
   "rules": {
     "no-duplicate-selectors": null,
-    "max-line-length": null
+    "max-line-length": null,
+    "font-family-no-missing-generic-family-keyword": null,
+    "color-function-notation": null
   }
 }

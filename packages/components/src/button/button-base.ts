@@ -1,8 +1,11 @@
-import { LitElement } from 'lit';
+import { LitElement, CSSResultGroup } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { ClassInfo } from 'lit/directives/class-map.js';
+import { style } from './button-base-style.js';
 
 export class ButtonBase extends LitElement {
+  static override styles: CSSResultGroup = style;
+
   @property({ type: Boolean, reflect: true })
   disabled = false;
 

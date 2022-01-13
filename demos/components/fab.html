@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <title>Fab</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+  <script type="module" src="../../packages/mdui/mdui.css"></script>
+  <script type="module" src="../../packages/components/index.js"></script>
+  <script type="module" src="../../packages/icons/edit.js"></script>
+</head>
+<body>
+<main>
+  <section>
+    <h2>Primary</h2>
+    <mdui-fab icon="edit" size="small"></mdui-fab>
+    <mdui-fab icon="edit"></mdui-fab>
+    <mdui-fab icon="edit" size="large" variant="primary"></mdui-fab>
+    <mdui-fab icon="edit" size="small" extended>edit</mdui-fab>
+    <mdui-fab icon="edit" extended>edit</mdui-fab>
+    <mdui-fab icon="edit" size="large" extended>edit</mdui-fab>
+    <mdui-fab icon="edit" lowered></mdui-fab>
+    <mdui-fab icon="edit" extended lowered>edit</mdui-fab>
+    <mdui-fab icon="edit" disabled></mdui-fab>
+    <mdui-fab icon="edit" extended disabled>edit</mdui-fab>
+  </section>
+
+  <section>
+    <h2>Surface</h2>
+    <mdui-fab variant="surface" icon="edit" size="small"></mdui-fab>
+    <mdui-fab variant="surface" icon="edit" size="normal"></mdui-fab>
+    <mdui-fab variant="surface" icon="edit" size="large"></mdui-fab>
+    <mdui-fab variant="surface" icon="edit" size="small" extended>edit</mdui-fab>
+    <mdui-fab variant="surface" icon="edit" size="normal" extended> edit</mdui-fab>
+    <mdui-fab variant="surface" icon="edit" size="large" extended>edit</mdui-fab>
+    <mdui-fab variant="surface" icon="edit" size="normal" lowered></mdui-fab>
+    <mdui-fab variant="surface" icon="edit" size="normal" extended lowered> edit</mdui-fab>
+    <mdui-fab variant="surface" icon="edit" size="normal" disabled></mdui-fab>
+    <mdui-fab variant="surface" icon="edit" size="normal" extended disabled> edit</mdui-fab>
+  </section>
+
+  <section>
+    <h2>Secondary</h2>
+    <mdui-fab variant="secondary" icon="edit" size="small"></mdui-fab>
+    <mdui-fab variant="secondary" icon="edit"></mdui-fab>
+    <mdui-fab variant="secondary" icon="edit" size="large"></mdui-fab>
+    <mdui-fab variant="secondary" icon="edit" size="small" extended>edit</mdui-fab>
+    <mdui-fab variant="secondary" icon="edit" extended>edit</mdui-fab>
+    <mdui-fab variant="secondary" icon="edit" size="large" extended>edit</mdui-fab>
+    <mdui-fab variant="secondary" icon="edit" lowered></mdui-fab>
+    <mdui-fab variant="secondary" icon="edit" extended lowered>edit</mdui-fab>
+    <mdui-fab variant="secondary" icon="edit" disabled></mdui-fab>
+    <mdui-fab variant="secondary" icon="edit" extended disabled>edit</mdui-fab>
+  </section>
+
+  <section>
+    <h2>Tertiary</h2>
+    <mdui-fab variant="tertiary" icon="edit" size="small"></mdui-fab>
+    <mdui-fab variant="tertiary" icon="edit"></mdui-fab>
+    <mdui-fab variant="tertiary" icon="edit" size="large"></mdui-fab>
+    <mdui-fab variant="tertiary" icon="edit" size="small" extended>edit</mdui-fab>
+    <mdui-fab variant="tertiary" icon="edit" extended>edit</mdui-fab>
+    <mdui-fab variant="tertiary" icon="edit" size="large" extended>edit</mdui-fab>
+    <mdui-fab variant="tertiary" icon="edit" lowered></mdui-fab>
+    <mdui-fab variant="tertiary" icon="edit" extended lowered>edit</mdui-fab>
+    <mdui-fab variant="tertiary" icon="edit" disabled></mdui-fab>
+    <mdui-fab variant="tertiary" icon="edit" extended disabled>edit</mdui-fab>
+  </section>
+
+  <section>
+    <h2>loading</h2>
+    <mdui-fab icon="edit" loading size="small"></mdui-fab>
+    <mdui-fab icon="edit" loading></mdui-fab>
+    <mdui-fab icon="edit" loading size="large"></mdui-fab>
+    <mdui-fab icon="edit" extended loading size="small">edit</mdui-fab>
+    <mdui-fab icon="edit" extended loading>edit</mdui-fab>
+    <mdui-fab icon="edit" extended loading size="large">edit</mdui-fab>
+  </section>
+
+  <section>
+    <h2>no icon</h2>
+    <mdui-fab size="small" extended>edit</mdui-fab>
+    <mdui-fab extended>edit</mdui-fab>
+    <mdui-fab size="large" extended>edit</mdui-fab>
+  </section>
+
+  <section>
+    <h2>href</h2>
+    <mdui-fab icon="edit" href="https://www.mdui.org"></mdui-fab>
+    <mdui-fab icon="edit" extended href="https://www.mdui.org">edit</mdui-fab>
+  </section>
+
+  <section>
+    <h2>slot icon</h2>
+    <mdui-fab>
+      <mdui-icon name="edit" slot="icon"></mdui-icon>
+    </mdui-fab>
+    <mdui-fab>
+      <mdui-icon name="edit" variant="outlined" slot="icon"></mdui-icon>
+    </mdui-fab>
+    <mdui-fab extended>
+      <mdui-icon slot="icon" name="edit"></mdui-icon>
+      edit
+    </mdui-fab>
+    <mdui-fab extended>
+      <mdui-icon-edit slot="icon"></mdui-icon-edit>
+      edit
+    </mdui-fab>
+  </section>
+
+  <section>
+    <h2>custom style</h2>
+    <style>
+      .custom1 {
+        width: 100px;
+        height: 100px;
+        font-size: 36px;
+        border: 4px solid #bbb;
+        background-color: aquamarine;
+        box-shadow: 0 0 4px 4px red;
+        border-radius: 4px;
+      }
+    </style>
+    <mdui-fab icon="edit" class="custom1"></mdui-fab>
+
+    <style>
+      .custom2 {
+        height: 80px;
+        font-size: 16px;
+        color: red;
+        padding: 0 40px;
+      }
+    </style>
+    <mdui-fab icon="edit" extended class="custom2">edit</mdui-fab>
+  </section>
+</main>
+</body>
+</html>

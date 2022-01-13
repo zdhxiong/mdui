@@ -1,24 +1,23 @@
 import { html, TemplateResult, CSSResultGroup } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
-import { ButtonBase } from './button-base.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { ButtonBase } from '../button/button-base.js';
 import { style } from './style.js';
-import '../icon.js';
 
-@customElement('mdui-button')
-export class MduiButton extends ButtonBase {
+@customElement('mdui-fab')
+export class MduiFab extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   @property({ type: Boolean, reflect: true })
   loading = false;
 
   @property({ reflect: true })
-  variant = 'text';
+  variant = 'primary';
 
-  @property({ type: Boolean, reflect: true })
-  fullwidth = false;
+  @property({ reflect: true })
+  size = 'normal';
 
   @property({ reflect: true })
   icon!: string;
@@ -26,19 +25,11 @@ export class MduiButton extends ButtonBase {
   @property({ reflect: true })
   iconVariant!: string;
 
-  @property({ type: Boolean, reflect: true })
-  trailingIcon = false;
+  @property({ reflect: true })
+  tooltip!: string;
 
   protected renderLabel(): TemplateResult {
     return html`<span class="label"><slot></slot></span>`;
-  }
-
-  protected renderLeadingIcon(): TemplateResult {
-    return html`${when(!this.trailingIcon, () => this.renderIcon())}`;
-  }
-
-  protected renderTrailingIcon(): TemplateResult {
-    return html`${when(this.trailingIcon, () => this.renderIcon())}`;
   }
 
   protected renderIcon(): TemplateResult {
@@ -55,7 +46,7 @@ export class MduiButton extends ButtonBase {
   }
 
   protected renderInner(): TemplateResult {
-    return html`${this.renderLeadingIcon()}${this.renderLabel()}${this.renderTrailingIcon()}`;
+    return html`${this.renderIcon()}${this.renderLabel()}`;
   }
 
   protected override render(): TemplateResult {
@@ -113,6 +104,6 @@ export class MduiButton extends ButtonBase {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mdui-button': MduiButton;
+    'mdui-fab': MduiFab;
   }
 }

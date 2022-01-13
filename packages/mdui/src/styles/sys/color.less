@@ -90,6 +90,11 @@
   --mdui-sys-color-inverse-primary: var(--mdui-sys-color-inverse-primary-light);
 }
 
+body {
+  .color(on-background);
+  .backgroundColor(background);
+}
+
 // 强制使用暗色模式、或设置成自动适配且处于暗色模式的颜色
 .theme-dark() {
   --mdui-sys-color-primary: var(--mdui-sys-color-primary-dark);
@@ -119,6 +124,9 @@
   --mdui-sys-color-inverse-surface: var(--mdui-sys-color-inverse-surface-dark);
   --mdui-sys-color-inverse-on-surface: var(--mdui-sys-color-inverse-on-surface-dark);
   --mdui-sys-color-inverse-primary: var(--mdui-sys-color-inverse-primary-dark);
+
+  .color(on-background);
+  .backgroundColor(background);
 }
 
 .mdui-theme-dark {

@@ -1,0 +1,38 @@
+@import "~@mdui/shared/variables.less";
+
+/**
+ * mdui-card 组件。默认为 variant="elevated"
+ */
+:host {
+  display: inline-block;
+  box-sizing: border-box;
+  transition: box-shadow 200ms @mdui-sys-motion-easing-legacy;
+  -webkit-tap-highlight-color: transparent;
+  .borderRadius(12);
+}
+
+:host([variant="elevated"]) {
+  .backgroundColor(surface);
+  .elevation(1);
+}
+
+:host([variant="filled"]) {
+  .backgroundColor(surface-variant);
+}
+
+:host([variant="outlined"]) {
+  .backgroundColor(surface);
+  .border(1px, solid, outline);
+}
+
+:host([variant="elevated"]:hover) {
+  .elevation(2);
+}
+
+:host([variant="filled"]:hover) {
+  .elevation(1);
+}
+
+:host([variant="outlined"]:hover) {
+  .elevation(1);
+}

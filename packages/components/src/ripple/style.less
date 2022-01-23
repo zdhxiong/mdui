@@ -1,0 +1,85 @@
+@import "~@mdui/shared/variables.less";
+
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.surface {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition-duration: 280ms;
+  transition-property: background-color;
+  pointer-events: none;
+  .transitionTimingFunction(legacy);
+}
+
+.hover {
+  background-color: ~"rgba(var(--mdui-comp-ripple-state-hover-state-layer-color, @{mdui-sys-color-on-surface}), @{mdui-sys-state-hover-state-layer-opacity})";
+}
+
+.focused {
+  background-color: ~"rgba(var(--mdui-comp-ripple-state-focus-state-layer-color, @{mdui-sys-color-on-surface}), @{mdui-sys-state-focus-state-layer-opacity})";
+}
+
+.dragged {
+  background-color: ~"rgba(var(--mdui-comp-ripple-state-dragged-state-layer-color, @{mdui-sys-color-on-surface}), @{mdui-sys-state-dragged-state-layer-opacity})";
+}
+
+.wave {
+  position: absolute;
+  z-index: 1;
+  background-color: ~"rgb(var(--mdui-comp-ripple-state-hover-state-layer-color, @{mdui-sys-color-on-surface}))";
+  border-radius: 50%;
+  transform: translate3d(0, 0, 0) scale(0.4);
+  opacity: 0;
+  animation: 225ms ease 0s 1 normal forwards running mdui-comp-ripple-radius-in, 75ms ease 0s 1 normal forwards running mdui-comp-ripple-opacity-in;
+  pointer-events: none;
+}
+
+.out {
+  transform: translate3d(var(--mdui-comp-ripple-transition-x, 0), var(--mdui-comp-ripple-transition-y, 0), 0) scale(1);
+  animation: 150ms ease 0s 1 normal none running mdui-comp-ripple-opacity-out;
+}
+
+@keyframes mdui-comp-ripple-radius-in {
+  from {
+    transform: translate3d(0, 0, 0) scale(0.4);
+    .animationTimingFunction(legacy);
+  }
+
+  to {
+    transform: translate3d(var(--mdui-comp-ripple-transition-x, 0), var(--mdui-comp-ripple-transition-y, 0), 0) scale(1);
+  }
+}
+
+@keyframes mdui-comp-ripple-opacity-in {
+  from {
+    opacity: 0;
+    animation-timing-function: linear;
+  }
+
+  to {
+    .opacity(pressed);
+  }
+}
+
+@keyframes mdui-comp-ripple-opacity-out {
+  from {
+    animation-timing-function: linear;
+    .opacity(pressed);
+  }
+
+  to {
+    opacity: 0;
+  }
+}

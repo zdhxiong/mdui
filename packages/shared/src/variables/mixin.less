@@ -204,3 +204,15 @@
 .minWidth(@value) {
   .px(min-width, @value);
 }
+
+.opacity(@value) {
+  .sys(opacity, ~"state-@{value}-state-layer-opacity");
+}
+
+.animationTimingFunction(@value) {
+  .sys(animation-timing-function, ~"motion-easing-@{value}");
+}
+
+.transitionTimingFunction(@value) {
+  .sys(transition-timing-function, ~"motion-easing-@{value}");
+}

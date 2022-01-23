@@ -1,42 +1,28 @@
 <!doctype html>
 <html lang="zh">
 <head>
-  <title>Card</title>
+  <title>Ripple</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
   <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
   <script type="module" src="../../packages/mdui/mdui.css"></script>
   <script type="module" src="../../packages/components/index.js"></script>
   <style>
-    mdui-card {
-      width: 200px;
-      height: 120px;
-    }
-
-    @media (max-width: 750px) {
-      mdui-card {
-        width: 100%;
-        height: 200px;
-      }
+    .demo {
+      position: relative;
+      width: 100px;
+      height: 60px;
+      border: 1px solid #888;
     }
   </style>
 </head>
 <body>
 <main>
   <section>
-    <h2>Elevated</h2>
-    <mdui-card></mdui-card>
-    <mdui-card variant="elevated"></mdui-card>
-  </section>
-
-  <section>
-    <h2>Filled</h2>
-    <mdui-card variant="filled"></mdui-card>
-  </section>
-
-  <section>
-    <h2>Outlined</h2>
-    <mdui-card variant="outlined"></mdui-card>
+    <h2>Ripple</h2>
+    <div class="demo">
+      <mdui-ripple></mdui-ripple>
+    </div>
   </section>
 </main>
 </body>

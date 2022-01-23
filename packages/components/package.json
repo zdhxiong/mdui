@@ -42,6 +42,7 @@
   },
   "homepage": "https://mdui.org",
   "dependencies": {
+    "@open-wc/dedupe-mixin": "^1.3.0",
     "@mdui/jq": "^3.0.0",
     "@mdui/shared": "^1.0.0",
     "@mdui/icons": "^1.0.0",

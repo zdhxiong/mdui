@@ -18,8 +18,7 @@ export const RippleMixin = dedupeMixin(
     superclass: T,
   ): T & Constructor<LitElement> => {
     class Mixin extends superclass {
-      protected rippleTarget!: HTMLElement;
-      protected rippleElement!: MduiRipple;
+      protected ripple!: MduiRipple;
 
       protected canRun(event: Event): boolean {
         if (isAllow(event)) {
@@ -36,7 +35,7 @@ export const RippleMixin = dedupeMixin(
           return;
         }
 
-        const $rippleTarget = $(this.rippleTarget);
+        const $target = $(this);
 
         // 手指触摸触发涟漪
         if (event.type === 'touchstart') {
@@ -45,7 +44,7 @@ export const RippleMixin = dedupeMixin(
           // 手指触摸后，延迟一段时间触发涟漪，避免手指滑动时也触发涟漪
           let timer = setTimeout(() => {
             timer = 0;
-            this.rippleElement.startPress(event);
+            this.ripple.startPress(event);
           }, 70) as unknown as number;
 
           const hideRipple = () => {
@@ -53,15 +52,15 @@ export const RippleMixin = dedupeMixin(
             if (timer) {
               clearTimeout(timer);
               timer = 0;
-              this.rippleElement.startPress(event);
+              this.ripple.startPress(event);
             }
 
             if (!hidden) {
               hidden = true;
-              this.rippleElement.endPress();
+              this.ripple.endPress();
             }
 
-            $rippleTarget.off('touchend touchcancel', hideRipple);
+            $target.off('touchend touchcancel', hideRipple);
           };
 
           // 手指移动后，移除涟漪动画
@@ -71,10 +70,10 @@ export const RippleMixin = dedupeMixin(
               timer = 0;
             }
 
-            $rippleTarget.off('touchmove', touchMove);
+            $target.off('touchmove', touchMove);
           };
 
-          $rippleTarget
+          $target
             .on('touchmove', touchMove)
             .on('touchend touchcancel', hideRipple);
         }
@@ -82,59 +81,59 @@ export const RippleMixin = dedupeMixin(
         // 鼠标点击触发涟漪，点击后立即触发涟漪（鼠标右键不触发涟漪）
         if (event.type === 'mousedown' && (event as MouseEvent).button !== 2) {
           const hideRipple = () => {
-            this.rippleElement.endPress();
-            $rippleTarget.off(`${endEvent} ${cancelEvent}`, hideRipple);
+            this.ripple.endPress();
+            $target.off(`${endEvent} ${cancelEvent}`, hideRipple);
           };
 
-          this.rippleElement.startPress(event);
-          $rippleTarget.on(`${endEvent} ${cancelEvent}`, hideRipple);
+          this.ripple.startPress(event);
+          $target.on(`${endEvent} ${cancelEvent}`, hideRipple);
         }
       }
 
       protected endPress(event: Event): void {
         if (this.canRun(event)) {
-          this.rippleElement.endPress();
+          this.ripple.endPress();
         }
       }
 
       protected startHover(event: Event): void {
         if (this.canRun(event)) {
-          this.rippleElement.startHover();
+          this.ripple.startHover();
         }
       }
 
       protected endHover(event: Event): void {
         if (this.canRun(event)) {
-          this.rippleElement.endHover();
+          this.ripple.endHover();
         }
       }
 
       protected startFocus(event: Event): void {
         if (this.canRun(event)) {
-          this.rippleElement.startFocus();
+          this.ripple.startFocus();
         }
       }
 
       protected endFocus(event: Event): void {
         if (this.canRun(event)) {
-          this.rippleElement.endFocus();
+          this.ripple.endFocus();
         }
       }
 
       protected startDrag(event: Event): void {
         if (this.canRun(event)) {
-          this.rippleElement.startDrag();
+          this.ripple.startDrag();
         }
       }
 
       protected endDrag(event: Event): void {
         if (this.canRun(event)) {
-          this.rippleElement.endDrag();
+          this.ripple.endDrag();
         }
       }
 
       protected async firstUpdated() {
-        $(this.rippleTarget)
+        $(this)
           .on(startEvent, (e) => this.startPress(e))
           .on('mouseenter', (e) => this.startHover(e))
           .on('mouseleave', (e) => this.endHover(e))

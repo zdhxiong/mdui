@@ -4,8 +4,10 @@
  * mdui-fab 组件。默认为 variant="primary" size="normal"
  */
 :host {
+  position: relative;
   display: inline-block;
   box-sizing: border-box;
+  overflow: hidden;
   text-align: center;
   cursor: pointer;
   transition: box-shadow 200ms @mdui-sys-motion-easing-legacy;
@@ -15,8 +17,6 @@
   .fontWeight(label-large-weight);
   .height(56);
   .borderRadius(16);
-  .color(on-primary-container);
-  .backgroundColor(primary-container);
   .elevation(3);
   .letterSpacing(label-large-tracking);
 }
@@ -38,19 +38,32 @@
   .elevation(2);
 }
 
+:host([variant="primary"]) {
+  .color(on-primary-container);
+  .backgroundColor(primary-container);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-primary-container;
+}
+
 :host([variant="surface"]) {
   .color(primary);
   .backgroundColor(surface);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-primary;
 }
 
 :host([variant="secondary"]) {
   .color(on-secondary-container);
   .backgroundColor(secondary-container);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-secondary-container;
 }
 
 :host([variant="tertiary"]) {
   .color(on-tertiary-container);
   .backgroundColor(tertiary-container);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-tertiary-container;
 }
 
 :host([size="small"]) {

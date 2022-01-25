@@ -39,7 +39,7 @@
     "dev:icons": "node scripts/icons/dev.js --dev",
     "dev:components": "node scripts/components/dev.js --dev",
     "dev:mdui": "node scripts/mdui/dev.js --dev",
-    "dev": "npm run build-dev && concurrently -k -r \"npm:watch:*\" \"npm:dev:*\" \"vite --config scripts/vite.config.js\"",
+    "dev": "npm run build-dev && concurrently -k -r \"npm:watch:*\" \"npm:dev:*\" \"vite --config scripts/vite.config.js --host\"",
     "pack": "npm run build && npm pack --workspaces"
   },
   "devDependencies": {

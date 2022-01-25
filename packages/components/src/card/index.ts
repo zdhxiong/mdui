@@ -10,11 +10,8 @@ import { style } from './style.js';
 export class MduiCard extends RippleMixin(LitElement) {
   static override styles: CSSResultGroup = style;
 
-  @query('.card', true)
-  rippleTarget!: HTMLElement;
-
   @query('mdui-ripple', true)
-  rippleElement!: MduiRipple;
+  ripple!: MduiRipple;
 
   @property({ reflect: true })
   variant = 'elevated';

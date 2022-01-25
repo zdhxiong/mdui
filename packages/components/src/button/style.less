@@ -4,8 +4,10 @@
  * mdui-button 组件。默认为 variant="text"
  */
 :host {
+  position: relative;
   display: inline-block;
   box-sizing: border-box;
+  overflow: hidden;
   text-align: center;
   cursor: pointer;
   transition: box-shadow 200ms @mdui-sys-motion-easing-legacy;
@@ -27,20 +29,32 @@
 :host([variant="elevated"]) {
   .elevation(1);
   .backgroundColor(surface);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-primary;
 }
 
 :host([variant="filled"]) {
   .color(on-primary);
   .backgroundColor(primary);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-primary;
 }
 
 :host([variant="tonal"]) {
   .color(on-secondary-container);
   .backgroundColor(secondary-container);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-secondary-container;
 }
 
 :host([variant="outlined"]) {
   .border(1px, solid, outline);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-primary;
+}
+
+:host([variant="text"]) {
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-primary;
 }
 
 :host([variant="icon"]) {
@@ -48,6 +62,8 @@
   padding: 0;
   .color(on-secondary-container);
   .width(40);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-primary;
 }
 
 :host([disabled]) {

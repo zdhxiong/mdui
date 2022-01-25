@@ -11,6 +11,8 @@
   transition: box-shadow 200ms @mdui-sys-motion-easing-legacy;
   -webkit-tap-highlight-color: transparent;
   .borderRadius(12);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-surface;
 }
 
 :host([variant="elevated"]) {
@@ -27,7 +29,7 @@
   .border(1px, solid, outline);
 }
 
-/*:host([variant="elevated"]:hover) {
+/* :host([variant="elevated"]:hover) {
   .elevation(2);
 }
 
@@ -37,14 +39,7 @@
 
 :host([variant="outlined"]:hover) {
   .elevation(1);
-}*/
-
-mdui-ripple {
-  --mdui-comp-ripple-state-hover-state-layer-color: @mdui-sys-color-on-surface;
-  --mdui-comp-ripple-state-focus-state-layer-color: @mdui-sys-color-on-surface;
-  --mdui-comp-ripple-state-pressed-state-layer-color: @mdui-sys-color-on-surface;
-  --mdui-comp-ripple-state-dragged-state-layer-color: @mdui-sys-color-on-surface;
-}
+} */
 
 .card {
   width: 100%;

@@ -67,38 +67,38 @@ export class MduiFab extends ButtonBase {
       formTarget,
     } = this;
 
-    return html`${when(
-      this.href,
-      () =>
-        html`${when(
-          disabled,
-          () => html`<span class="button">${this.renderInner()}</span>`,
-          () => html`<a
-            class="button"
-            href=${href}
-            download=${ifDefined(download)}
-            target=${ifDefined(target)}
-          >
-            ${this.renderInner()}
-          </a>`,
-        )}`,
-      () => html`<button
-        class="button"
-        name=${ifDefined(name)}
-        value=${ifDefined(value)}
-        type=${ifDefined(type)}
-        form=${ifDefined(form)}
-        formaction=${ifDefined(formAction)}
-        formenctype=${ifDefined(formEnctype)}
-        formmethod=${ifDefined(formMethod)}
-        formtarget=${ifDefined(formTarget)}
-        ?formnovalidate=${formNovalidate}
-        ?autofocus=${autofocus}
-        ?disabled=${disabled}
-      >
-        ${this.renderInner()}
-      </button>`,
-    )} `;
+    return html`<mdui-ripple></mdui-ripple>${when(
+        this.href,
+        () =>
+          html`${when(
+            disabled,
+            () => html`<span class="button">${this.renderInner()}</span>`,
+            () => html`<a
+              class="button"
+              href=${href}
+              download=${ifDefined(download)}
+              target=${ifDefined(target)}
+            >
+              ${this.renderInner()}
+            </a>`,
+          )}`,
+        () => html`<button
+          class="button"
+          name=${ifDefined(name)}
+          value=${ifDefined(value)}
+          type=${ifDefined(type)}
+          form=${ifDefined(form)}
+          formaction=${ifDefined(formAction)}
+          formenctype=${ifDefined(formEnctype)}
+          formmethod=${ifDefined(formMethod)}
+          formtarget=${ifDefined(formTarget)}
+          ?formnovalidate=${formNovalidate}
+          ?autofocus=${autofocus}
+          ?disabled=${disabled}
+        >
+          ${this.renderInner()}
+        </button>`,
+      )} `;
   }
 }
 

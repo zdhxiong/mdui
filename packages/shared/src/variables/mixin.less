@@ -55,11 +55,27 @@
   @lessVariable: "mdui-sys-color-@{rgb}";
 
   & when (@opacity = 1) {
-    @{name}: ~"@{width} @{style} rgb(var(@{cssVariable}, @{@{lessVariable}}))";
+    & when (isnumber(@width)) {
+      @widthRem: unit((@width / 16), rem);
+
+      @{name}: ~"@{widthRem} @{style} rgb(var(@{cssVariable}, @{@{lessVariable}}))";
+    }
+
+    & when not (isnumber(@width)) {
+      @{name}: ~"@{width} @{style} rgb(var(@{cssVariable}, @{@{lessVariable}}))";
+    }
   }
 
   & when not (@opacity = 1) {
-    @{name}: ~"@{width} @{style} rgba(var(@{cssVariable}, @{@{lessVariable}}), @{opacity})";
+    & when (isnumber(@width)) {
+      @widthRem: unit((@width / 16), rem);
+
+      @{name}: ~"@{widthRem} @{style} rgba(var(@{cssVariable}, @{@{lessVariable}}), @{opacity})";
+    }
+
+    & when not (isnumber(@width)) {
+      @{name}: ~"@{width} @{style} rgba(var(@{cssVariable}, @{@{lessVariable}}), @{opacity})";
+    }
   }
 }
 
@@ -203,6 +219,22 @@
 
 .minWidth(@value) {
   .px(min-width, @value);
+}
+
+.top(@value) {
+  .px(top, @value);
+}
+
+.right(@value) {
+  .px(right, @value);
+}
+
+.bottom(@value) {
+  .px(bottom, @value);
+}
+
+.left(@value) {
+  .px(left, @value);
 }
 
 .opacity(@value) {

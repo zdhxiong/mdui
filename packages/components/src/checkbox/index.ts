@@ -1,28 +1,77 @@
-import { html, css, LitElement, TemplateResult } from 'lit';
-import { property, customElement } from '@mdui/shared/decorators.js';
+import {
+  html,
+  LitElement,
+  TemplateResult,
+  CSSResultGroup,
+  PropertyValues,
+} from 'lit';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
+import { query } from 'lit/decorators/query.js';
+import { RippleMixin } from '../ripple/ripple-mixin.js';
+import { MduiRipple } from '../ripple/index.js';
+import { style } from './style.js';
 
 @customElement('mdui-checkbox')
-export class MduiCheckbox extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      padding: 25px;
-      color: var(--mdui-button-text-color, #000);
+export class MduiCheckbox extends RippleMixin(LitElement) {
+  static override styles: CSSResultGroup = style;
+
+  @query('mdui-ripple', true)
+  ripple!: MduiRipple;
+
+  @query('input', true)
+  inputElement!: HTMLInputElement;
+
+  @property({ type: Boolean, reflect: true })
+  disabled = false;
+
+  @property({ type: Boolean, reflect: true })
+  checked = false;
+
+  @property({ type: Boolean, reflect: true })
+  indeterminate = false;
+
+  @property({ type: Boolean, reflect: true })
+  required = false;
+
+  @property({ type: Boolean })
+  autofocus = false;
+
+  @property({ reflect: true })
+  form!: string;
+
+  @property({ reflect: true })
+  name!: string;
+
+  @property({ reflect: true })
+  value = 'on';
+
+  protected override updated(changedProperties: PropertyValues) {
+    if (changedProperties.has('indeterminate')) {
+      this.inputElement.indeterminate = this.indeterminate;
     }
-  `;
-
-  @property({ type: String }) title = 'Hey there';
-
-  @property({ type: Number }) counter = 5;
-
-  __increment(): void {
-    this.counter += 1;
   }
 
-  render(): TemplateResult {
-    return html`
-      <h2>${this.title} Nr. ${this.counter}!</h2>
-      <button @click=${this.__increment}>increment</button>
-    `;
+  protected override render(): TemplateResult {
+    const { disabled, checked, autofocus } = this;
+
+    return html`<label>
+      <input
+        type="checkbox"
+        ?disabled=${disabled}
+        ?checked=${checked}
+        ?autofocus=${autofocus}
+      />
+      <i>
+        <mdui-ripple></mdui-ripple>
+      </i>
+      <slot></slot>
+    </label>`;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mdui-checkbox': MduiCheckbox;
   }
 }

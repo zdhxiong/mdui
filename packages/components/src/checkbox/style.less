@@ -1,0 +1,136 @@
+@import "~@mdui/shared/variables.less";
+
+:host {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  .height(40);
+  .fontSize(label-large-size);
+  .fontWeight(label-large-weight);
+  .letterSpacing(label-large-tracking);
+  .borderRadius(2);
+}
+
+:host([disabled]) {
+  cursor: default;
+}
+
+label {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  cursor: inherit;
+  user-select: none;
+  touch-action: manipulation;
+  zoom: 1;
+  -webkit-user-drag: none;
+}
+
+/* 隐藏系统 input 标签，用自定义的图标代替 */
+input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+i {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+  .width(40);
+  .height(40);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-surface;
+
+  // 图标的边框和背景
+  &::after {
+    z-index: 0;
+    box-sizing: border-box;
+    transition: all 280ms @mdui-sys-motion-easing-legacy;
+    content: " ";
+    .width(18);
+    .height(18);
+    .borderRadius(2);
+    .border(2, solid, on-surface);
+  }
+
+  // 选中状态图标内部的勾
+  &::before {
+    position: absolute;
+    z-index: 1;
+    box-sizing: border-box;
+    transform: rotateZ(43deg) scale(0);
+    transform-origin: 100% 100%;
+    opacity: 0;
+    transition: all 280ms @mdui-sys-motion-easing-legacy;
+    content: " ";
+    .top(13);
+    .left(11.7);
+    .width(6);
+    .height(12.8);
+    .borderRight(1.8, solid, surface);
+    .borderBottom(1.8, solid, surface);
+  }
+}
+
+input {
+  // 选中状态的图标
+  &:checked + i {
+    --mdui-comp-ripple-state-layer-color: @mdui-sys-color-primary;
+
+    &::after {
+      .backgroundColor(primary);
+      .borderColor(primary);
+    }
+
+    &::before {
+      transform: rotateZ(43deg) scale(1);
+      opacity: 1;
+    }
+  }
+
+  // 不确定状态的图标
+  &:indeterminate + i {
+    --mdui-comp-ripple-state-layer-color: @mdui-sys-color-primary;
+
+    &::after {
+      .backgroundColor(primary);
+      .borderColor(primary);
+    }
+
+    &::before {
+      width: 12px;
+      height: 0;
+      border-right: none;
+      border-radius: 1px;
+      transform: rotateZ(0) scale(1);
+      opacity: 1;
+      .top(19);
+      .left(14);
+      .borderBottom(2, solid, surface);
+    }
+  }
+
+  // 禁用状态的图标
+  &:disabled + i {
+    &::after {
+      .borderColor(primary, 38%);
+    }
+  }
+
+  // 禁用且选中状态、禁用且不确定状态
+  &:disabled:checked + i,
+  &:disabled:indeterminate + i {
+    &::after {
+      border-color: transparent;
+      .backgroundColor(primary, 38%);
+    }
+  }
+}

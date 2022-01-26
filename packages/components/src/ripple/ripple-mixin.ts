@@ -19,8 +19,13 @@ export const RippleMixin = dedupeMixin(
   ): T & Constructor<LitElement> => {
     class Mixin extends superclass {
       protected ripple!: MduiRipple;
+      protected disabled!: boolean;
 
       protected canRun(event: Event): boolean {
+        if (this.disabled) {
+          return false;
+        }
+
         if (isAllow(event)) {
           register(event);
 

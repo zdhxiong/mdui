@@ -1,0 +1,80 @@
+@import "~@mdui/shared/variables.less";
+
+:host {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  .backgroundColor(surface-variant);
+  .height(4);
+}
+
+.determinate,
+.indeterminate {
+  .backgroundColor(primary);
+}
+
+.determinate {
+  height: 100%;
+  transition: width 280ms @mdui-sys-motion-easing-linear;
+}
+
+.indeterminate {
+  &::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: inherit;
+    animation: mdui-comp-progress-indeterminate 2s @mdui-sys-motion-easing-linear infinite;
+    content: " ";
+  }
+
+  &::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: inherit;
+    animation: mdui-comp-progress-indeterminate-short 2s @mdui-sys-motion-easing-linear infinite;
+    content: " ";
+  }
+}
+
+@keyframes mdui-comp-progress-indeterminate {
+  0% {
+    left: 0;
+    width: 0;
+  }
+
+  50% {
+    left: 30%;
+    width: 70%;
+  }
+
+  75% {
+    left: 100%;
+    width: 0;
+  }
+}
+
+@keyframes mdui-comp-progress-indeterminate-short {
+  0% {
+    left: 0;
+    width: 0;
+  }
+
+  50% {
+    left: 0;
+    width: 0;
+  }
+
+  75% {
+    left: 0;
+    width: 25%;
+  }
+
+  100% {
+    left: 100%;
+    width: 0;
+  }
+}

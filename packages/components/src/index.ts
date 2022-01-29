@@ -3,6 +3,7 @@ export * from './card.js';
 export * from './checkbox.js';
 export * from './fab.js';
 export * from './icon.js';
+export * from './linear-progress.js';
 export * from './radio.js';
 export * from './ripple.js';
 export * from './switch.js';

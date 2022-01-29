@@ -1,0 +1,134 @@
+@import "~@mdui/shared/variables.less";
+
+:host {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  .height(40);
+  .fontSize(label-large-size);
+  .fontWeight(label-large-weight);
+  .letterSpacing(label-large-tracking);
+  .borderRadius(2);
+}
+
+:host([disabled]) {
+  cursor: default;
+}
+
+label {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  cursor: inherit;
+  user-select: none;
+  touch-action: manipulation;
+  zoom: 1;
+  -webkit-user-drag: none;
+}
+
+/* 隐藏系统 input 标签，用自定义的图标代替 */
+input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+/* 轨道 */
+.track {
+  position: absolute;
+  transition: background-color 150ms @mdui-sys-motion-easing-legacy;
+  .margin(0, 2);
+  .borderRadius(7);
+  .width(36);
+  .height(14);
+  .backgroundColor(outline);
+}
+
+/* 指示器容器 */
+.handle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+  transform: translateX(unit((-8 / 16), rem));
+  transition: all 150ms @mdui-sys-motion-easing-legacy;
+  .width(40);
+  .height(40);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-surface;
+
+  &::after,
+  &::before {
+    position: absolute;
+    border-radius: 50%;
+    content: " ";
+    .width(20);
+    .height(20);
+    .backgroundColor(surface);
+  }
+
+  /* 指示器 */
+  &::after {
+    transition: all 150ms @mdui-sys-motion-easing-legacy;
+    .backgroundColor(on-primary);
+    .elevation(1);
+  }
+
+  /* 指示器的背景，目前仅用于禁用状态。因为指示器是半透明的，会显示底部轨道颜色，所以添加纯色背景 */
+  &::before {
+    display: none;
+  }
+}
+
+.track,
+.handle {
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-surface;
+}
+
+input {
+  // 选中状态
+  &:checked + .track {
+    .backgroundColor(primary-container);
+
+    & + .handle {
+      transform: translateX(unit((8 / 16), rem));
+
+      --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-surface;
+
+      &::after {
+        .backgroundColor(primary);
+      }
+    }
+  }
+
+  &:checked + .track,
+  &:checked + .track + .handle {
+    --mdui-comp-ripple-state-layer-color: @mdui-sys-color-primary;
+  }
+
+  // 禁用状态
+  &:disabled + .track {
+    .backgroundColor(on-surface, 12%);
+
+    & + .handle {
+      &::after {
+        .elevation(0);
+        .backgroundColor(on-surface, 38%);
+      }
+
+      &::before {
+        display: inline-block;
+      }
+    }
+  }
+
+  &:disabled:checked + .track {
+    .backgroundColor(on-surface, 12%);
+  }
+}

@@ -127,6 +127,10 @@
   ._color(border-color, @rgb, @opacity);
 }
 
+.stroke(@rgb, @opacity: 1) {
+  ._color(stroke, @rgb, @opacity);
+}
+
 .padding(@top, @right: null, @bottom: null, @left: null) {
   .paddingOrMargin(padding, @top, @right, @bottom, @left);
 }

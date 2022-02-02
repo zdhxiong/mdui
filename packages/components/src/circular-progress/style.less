@@ -1,0 +1,160 @@
+@import "~@mdui/shared/variables.less";
+
+:host {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
+
+.progress {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  transition: opacity 250ms 0ms @mdui-sys-motion-easing-linear;
+}
+
+.determinate {
+  svg {
+    transform: rotate(-90deg);
+    fill: transparent;
+  }
+
+  .track {
+    stroke: transparent;
+  }
+
+  .circle {
+    transition: stroke-dashoffset 500ms 0ms @mdui-sys-motion-easing-decelerated;
+    .stroke(primary);
+  }
+}
+
+.indeterminate {
+  font-size: 0;
+  letter-spacing: 0;
+  white-space: nowrap;
+  animation: mdui-comp-circular-progress-rotate 1568ms @mdui-sys-motion-easing-linear infinite;
+
+  .layer,
+  .circle {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .layer {
+    animation: mdui-comp-circular-progress-layer-rotate 5332ms @mdui-sys-motion-easing-legacy infinite both;
+  }
+
+  .circle {
+    fill: transparent;
+    .stroke(primary);
+  }
+
+  .gap-patch {
+    position: absolute;
+    top: 0;
+    left: 47.5%;
+    box-sizing: border-box;
+    width: 5%;
+    height: 100%;
+    overflow: hidden;
+
+    .circle {
+      left: -900%;
+      width: 2000%;
+      transform: rotate(180deg);
+    }
+  }
+
+  .clipper {
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+
+    .circle {
+      width: 200%;
+    }
+
+    &.left .circle {
+      animation: mdui-comp-circular-progress-left-spin 1333ms @mdui-sys-motion-easing-legacy infinite both;
+    }
+
+    &.right .circle {
+      left: -100%;
+      animation: mdui-comp-circular-progress-right-spin 1333ms @mdui-sys-motion-easing-legacy infinite both;
+    }
+  }
+}
+
+@keyframes mdui-comp-circular-progress-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes mdui-comp-circular-progress-layer-rotate {
+  12.5% {
+    transform: rotate(135deg);
+  }
+
+  25% {
+    transform: rotate(270deg);
+  }
+
+  37.5% {
+    transform: rotate(405deg);
+  }
+
+  50% {
+    transform: rotate(540deg);
+  }
+
+  62.5% {
+    transform: rotate(675deg);
+  }
+
+  75% {
+    transform: rotate(810deg);
+  }
+
+  87.5% {
+    transform: rotate(945deg);
+  }
+
+  to {
+    transform: rotate(1080deg);
+  }
+}
+
+@keyframes mdui-comp-circular-progress-left-spin {
+  from {
+    transform: rotate(265deg);
+  }
+
+  50% {
+    transform: rotate(130deg);
+  }
+
+  to {
+    transform: rotate(265deg);
+  }
+}
+
+@keyframes mdui-comp-circular-progress-right-spin {
+  from {
+    transform: rotate(-265deg);
+  }
+
+  50% {
+    transform: rotate(-130deg);
+  }
+
+  to {
+    transform: rotate(-265deg);
+  }
+}

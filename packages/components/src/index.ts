@@ -1,6 +1,7 @@
 export * from './button.js';
 export * from './card.js';
 export * from './checkbox.js';
+export * from './circular-progress.js';
 export * from './fab.js';
 export * from './icon.js';
 export * from './linear-progress.js';

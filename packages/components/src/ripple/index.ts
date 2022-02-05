@@ -20,7 +20,7 @@ import '@mdui/jq/methods/remove.js';
 import { style } from './style.js';
 
 @customElement('mdui-ripple')
-export class MduiRipple extends LitElement {
+export class Ripple extends LitElement {
   static override styles: CSSResultGroup = style;
 
   @query('.surface', true)
@@ -168,6 +168,6 @@ export class MduiRipple extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mdui-ripple': MduiRipple;
+    'mdui-ripple': Ripple;
   }
 }

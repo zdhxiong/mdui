@@ -5,7 +5,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { style } from './style.js';
 
 @customElement('mdui-circular-progress')
-export class MduiCircularProgress extends LitElement {
+export class CircularProgress extends LitElement {
   static override styles: CSSResultGroup = style;
 
   @property({ type: Number, reflect: true })
@@ -89,6 +89,6 @@ export class MduiCircularProgress extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mdui-circular-progress': MduiCircularProgress;
+    'mdui-circular-progress': CircularProgress;
   }
 }

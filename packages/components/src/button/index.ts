@@ -8,7 +8,7 @@ import { style } from './style.js';
 import '../icon.js';
 
 @customElement('mdui-button')
-export class MduiButton extends ButtonBase {
+export class Button extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   @property({ type: Boolean, reflect: true })
@@ -113,6 +113,6 @@ export class MduiButton extends ButtonBase {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mdui-button': MduiButton;
+    'mdui-button': Button;
   }
 }

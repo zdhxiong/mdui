@@ -3,14 +3,14 @@ import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { ClassInfo } from 'lit/directives/class-map.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
-import { MduiRipple } from '../ripple/index.js';
+import { Ripple } from '../ripple/index.js';
 import { style } from './button-base-style.js';
 
 export class ButtonBase extends RippleMixin(LitElement) {
   static override styles: CSSResultGroup = style;
 
   @query('mdui-ripple', true)
-  ripple!: MduiRipple;
+  ripple!: Ripple;
 
   @property({ type: Boolean, reflect: true })
   disabled = false;

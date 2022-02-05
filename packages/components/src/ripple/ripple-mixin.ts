@@ -11,14 +11,14 @@ import {
   endEvent,
   cancelEvent,
 } from '@mdui/shared/src/helpers/touchHandler';
-import { MduiRipple } from './index.js';
+import { Ripple } from './index.js';
 
 export const RippleMixin = dedupeMixin(
   <T extends Constructor<LitElement>>(
     superclass: T,
   ): T & Constructor<LitElement> => {
     class Mixin extends superclass {
-      protected ripple!: MduiRipple;
+      protected ripple!: Ripple;
       protected disabled!: boolean;
 
       protected canRun(event: Event): boolean {

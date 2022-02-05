@@ -6,7 +6,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { style } from './style.js';
 
 @customElement('mdui-linear-progress')
-export class MduiLinearProgress extends LitElement {
+export class LinearProgress extends LitElement {
   static override styles: CSSResultGroup = style;
 
   @property({ type: Number, reflect: true })
@@ -35,6 +35,6 @@ export class MduiLinearProgress extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mdui-linear-progress': MduiLinearProgress;
+    'mdui-linear-progress': LinearProgress;
   }
 }

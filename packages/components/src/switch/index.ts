@@ -3,15 +3,15 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
-import { MduiRipple } from '../ripple/index.js';
+import { Ripple } from '../ripple/index.js';
 import { style } from './style.js';
 
 @customElement('mdui-switch')
-export class MduiSwitch extends RippleMixin(LitElement) {
+export class Switch extends RippleMixin(LitElement) {
   static override styles: CSSResultGroup = style;
 
   @query('mdui-ripple', true)
-  ripple!: MduiRipple;
+  ripple!: Ripple;
 
   @property({ type: Boolean, reflect: true })
   disabled = false;
@@ -55,6 +55,6 @@ export class MduiSwitch extends RippleMixin(LitElement) {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mdui-switch': MduiSwitch;
+    'mdui-switch': Switch;
   }
 }

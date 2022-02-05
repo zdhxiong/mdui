@@ -7,7 +7,7 @@ import { ButtonBase } from '../button/button-base.js';
 import { style } from './style.js';
 
 @customElement('mdui-fab')
-export class MduiFab extends ButtonBase {
+export class Fab extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   @property({ type: Boolean, reflect: true })
@@ -104,6 +104,6 @@ export class MduiFab extends ButtonBase {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mdui-fab': MduiFab;
+    'mdui-fab': Fab;
   }
 }

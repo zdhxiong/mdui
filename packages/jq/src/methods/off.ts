@@ -11,7 +11,8 @@ import { EventCallback, remove } from '../shared/event.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 解除通过事件委托绑定的指定事件
      * @param eventName

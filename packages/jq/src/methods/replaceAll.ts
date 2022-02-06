@@ -7,7 +7,8 @@ import './map.js';
 import './replaceWith.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 用当前集合中的元素替换指定元素
      * @param target 被替换的元素。可以是 CSS 选择器、DOM 元素、DOM 元素数组、或 JQ 对象

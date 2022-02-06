@@ -6,7 +6,8 @@ import './each.js';
 import './is.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 从 DOM 中移除当前集合中的元素
      * @param selector CSS 选择器。若指定了该参数，则仅移除当前集合中和该参数匹配的元素

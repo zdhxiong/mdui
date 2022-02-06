@@ -3,7 +3,8 @@ import { JQ } from '../shared/core.js';
 import './map.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 通过深度克隆来复制集合中的所有元素
      *

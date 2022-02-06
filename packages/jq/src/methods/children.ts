@@ -6,7 +6,8 @@ import './each.js';
 import './is.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 获取当前元素的直接子元素
      * @param selector CSS 选择器。若指定了该参数，则使用该参数对子元素进行过滤

@@ -5,7 +5,8 @@ import './get.js';
 import { dir } from './utils/dir.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 获取当前集合中每个元素的前一个匹配的同辈元素
      * @param selector CSS 选择器。指定该参数时，将仅返回和该参数匹配的元素的集合

@@ -4,7 +4,8 @@ import { JQ } from '../shared/core.js';
 import './serializeArray.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 把表单元素的值编译为字符串
      * @example

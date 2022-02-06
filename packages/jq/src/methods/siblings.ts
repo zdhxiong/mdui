@@ -6,7 +6,8 @@ import './nextAll.js';
 import './prevAll.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 获取当前集合中，每个元素的兄弟元素
      * @param selector CSS 选择器。若指定了该参数，则只返回和该参数匹配的兄弟元素

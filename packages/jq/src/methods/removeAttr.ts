@@ -5,7 +5,8 @@ import { removeAttribute } from '../shared/attributes.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 移除集合中每个元素上的指定属性
      * @param attributeName 属性名，多个属性名可以用空格分隔

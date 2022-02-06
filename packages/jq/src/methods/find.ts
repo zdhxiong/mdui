@@ -6,7 +6,8 @@ import './each.js';
 import './get.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 根据 CSS 选择器找到指定的后代节点的集合
      * @param selector CSS 选择器

@@ -6,7 +6,8 @@ import './find.js';
 import './map.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 保留含有指定子元素的元素，去掉不含有指定子元素的元素
      * @param selector CSS 选择器或 DOM 元素

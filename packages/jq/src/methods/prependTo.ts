@@ -2,7 +2,8 @@ import { HTMLString, Selector, TypeOrArray } from '@mdui/shared/helpers.js';
 import './appendTo.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 把当前元素追加到指定元素内部的前面
      * @param target CSS 选择器、HTML 字符串、DOM 元素、DOM 元素数组、或 JQ 对象

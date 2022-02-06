@@ -9,7 +9,8 @@ interface NameValuePair {
 }
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 把表单元素的值组合成由 `name` 和 `value` 的键值对组成的数组
      *

@@ -3,7 +3,8 @@ import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 在 $ 的原型链上扩展方法
      * @param obj

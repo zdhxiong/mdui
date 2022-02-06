@@ -3,7 +3,8 @@ import { JQ } from '../shared/core.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 隐藏集合中所有元素
      * @example

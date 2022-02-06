@@ -5,7 +5,8 @@ import { parse } from '../shared/event.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 触发指定的事件
      * @param type 事件名

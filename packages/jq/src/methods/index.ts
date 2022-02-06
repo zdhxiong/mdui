@@ -7,7 +7,8 @@ import './get.js';
 import './parent.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 如果没有传入参数，则返回当前集合中第一个元素相对于同辈元素的索引值。
      *

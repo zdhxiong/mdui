@@ -2,7 +2,8 @@ import { HTMLString, Selector, TypeOrArray } from '@mdui/shared/helpers.js';
 import './insertBefore.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 把当前集合中的元素插入到指定元素的后面，作为目标元素的兄弟元素
      *

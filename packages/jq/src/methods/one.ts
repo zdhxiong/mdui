@@ -5,7 +5,8 @@ import { EventCallback } from '../shared/event.js';
 import './on.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 通过事件委托同时添加多个事件处理函数，触发一次后自动解绑
      * @param events

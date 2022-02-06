@@ -4,7 +4,8 @@ import './css.js';
 import './map.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 返回最近的用于定位的父元素
      *

@@ -6,7 +6,8 @@ import './hide.js';
 import './show.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 切换集合中所有元素的显示状态
      * @example

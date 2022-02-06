@@ -5,7 +5,8 @@ import { createElement, appendChild, removeChild } from '../shared/dom.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 显示集合中的所有元素
      * @example

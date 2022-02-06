@@ -5,7 +5,8 @@ import { JQ } from '../shared/core.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 移除元素上存储的数据
      *

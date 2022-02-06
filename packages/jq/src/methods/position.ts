@@ -11,7 +11,8 @@ interface Coordinates {
 }
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 获取集合中第一个元素相对于父元素的偏移
      * @example

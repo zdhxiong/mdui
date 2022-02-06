@@ -16,7 +16,8 @@ import './off.js';
 // ajaxSuccess 事件的回调函数的第二个参数为 { xhr, options, response }
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 通过事件委托同时添加多个事件处理函数
      * @param events

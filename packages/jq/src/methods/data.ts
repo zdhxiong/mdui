@@ -11,7 +11,8 @@ import { dataAttr, get, getAll, set, setAll } from '../shared/data.js';
 import './each.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 在当前元素上存储数据
      *

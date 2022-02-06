@@ -2,7 +2,8 @@ import { Selector } from '@mdui/shared/helpers.js';
 import './next.js';
 
 declare module '../shared/core.js' {
-  interface JQ {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  interface JQ<T = HTMLElement> {
     /**
      * 获取当前集合中，每个元素后面所有的同辈元素，直到遇到匹配元素为止（不包含匹配元素）。
      * @param selector

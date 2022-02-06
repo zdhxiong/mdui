@@ -28,7 +28,7 @@
     "bundle:components": "rollup -c scripts/components/rollup.config.js",
     "bundle": "run-s build bundle:*",
     "test:jq": "eslint --fix packages/jq/__test__/**/*.ts && tsc -p packages/jq/__test__/tsconfig.json && web-test-runner --config scripts/jq/web-test-runner.config.js",
-    "test:components": "eslint --fix packages/components/src/*/__test__/**/*.ts && web-test-runner --config scripts/components/web-test-runner.config.js",
+    "test:components": "eslint --fix packages/components/__test__/**/*.ts && tsc -p packages/components/__test__/tsconfig.json && web-test-runner --config scripts/components/web-test-runner.config.js",
     "test": "run-s test:*",
     "watch:shared": "tsc --watch --preserveWatchOutput -p packages/shared/tsconfig.json",
     "watch:jq": "tsc --watch --preserveWatchOutput -p packages/jq/tsconfig.json",

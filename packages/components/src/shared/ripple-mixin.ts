@@ -11,7 +11,7 @@ import {
   endEvent,
   cancelEvent,
 } from '@mdui/shared/src/helpers/touchHandler';
-import { Ripple } from './index.js';
+import { Ripple } from '../ripple/index.js';
 
 export const RippleMixin = dedupeMixin(
   <T extends Constructor<LitElement>>(

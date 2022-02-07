@@ -55,6 +55,7 @@ export class Fab extends ButtonBase {
       href,
       download,
       target,
+      rel,
       autofocus,
       name,
       value,
@@ -78,6 +79,7 @@ export class Fab extends ButtonBase {
               href=${href}
               download=${ifDefined(download)}
               target=${ifDefined(target)}
+              rel=${ifDefined(rel)}
             >
               ${this.renderInner()}
             </a>`,

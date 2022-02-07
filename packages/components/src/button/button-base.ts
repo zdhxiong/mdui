@@ -24,6 +24,9 @@ export class ButtonBase extends RippleMixin(LitElement) {
   @property({ reflect: true })
   target!: string;
 
+  @property({ reflect: true })
+  rel!: string;
+
   @property({ type: Boolean, reflect: true })
   autofocus = false;
 
@@ -59,6 +62,7 @@ export class ButtonBase extends RippleMixin(LitElement) {
       href,
       download,
       target,
+      rel,
       autofocus,
       name,
       value,
@@ -75,6 +79,7 @@ export class ButtonBase extends RippleMixin(LitElement) {
       href,
       download,
       target,
+      rel,
       autofocus,
       name,
       value,

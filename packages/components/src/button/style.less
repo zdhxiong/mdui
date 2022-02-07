@@ -71,32 +71,39 @@
   .color(on-surface, 38%);
 }
 
-:host([variant="elevated"]:hover) {
-  .elevation(2);
-}
-
-:host([variant="filled"]:hover) {
+:host([variant="elevated"][focused]) {
   .elevation(1);
 }
 
-:host([variant="tonal"]:hover) {
-  .elevation(1);
+:host([variant="filled"][focused]),
+:host([variant="tonal"][focused]) {
+  .elevation(0);
 }
 
-:host([variant="outlined"]:focus-within) {
+:host([variant="outlined"][focused]) {
   .borderColor(primary);
 }
 
-:host([variant="elevated"][disabled]) {
-  .backgroundColor(on-surface, 12%);
+:host([variant="elevated"][pressed]) {
+  .elevation(1);
+}
+
+:host([variant="filled"][pressed]),
+:host([variant="tonal"][pressed]) {
   .elevation(0);
 }
 
-:host([variant="filled"][disabled]) {
-  .backgroundColor(on-surface, 12%);
-  .elevation(0);
+:host([variant="elevated"][hover]) {
+  .elevation(2);
 }
 
+:host([variant="filled"][hover]),
+:host([variant="tonal"][hover]) {
+  .elevation(1);
+}
+
+:host([variant="elevated"][disabled]),
+:host([variant="filled"][disabled]),
 :host([variant="tonal"][disabled]) {
   .backgroundColor(on-surface, 12%);
   .elevation(0);

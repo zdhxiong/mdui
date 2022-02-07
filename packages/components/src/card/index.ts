@@ -11,10 +11,13 @@ export class Card extends RippleMixin(LitElement) {
   static override styles: CSSResultGroup = style;
 
   @query('mdui-ripple', true)
-  ripple!: Ripple;
+  rippleElement!: Ripple;
 
   @property({ reflect: true })
   variant = 'elevated';
+
+  @property({ type: Boolean, reflect: true })
+  disabled = false;
 
   protected override render(): TemplateResult {
     return html`<mdui-ripple></mdui-ripple>

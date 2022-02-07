@@ -19,6 +19,11 @@ import '@mdui/jq/methods/addClass.js';
 import '@mdui/jq/methods/remove.js';
 import { style } from './style.js';
 
+/**
+ * 处理点击时的涟漪动画；及添加 hover、focused、dragged 的背景色
+ * 背景色通过在 .surface 元素上添加对应的 class 实现
+ * 阴影在 ripple-mixin 中处理，通过在 :host 元素上添加 attribute 供 CSS 选择器添加样式
+ */
 @customElement('mdui-ripple')
 export class Ripple extends LitElement {
   static override styles: CSSResultGroup = style;

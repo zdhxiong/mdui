@@ -10,7 +10,7 @@ export class ButtonBase extends RippleMixin(LitElement) {
   static override styles: CSSResultGroup = style;
 
   @query('mdui-ripple', true)
-  ripple!: Ripple;
+  rippleElement!: Ripple;
 
   @property({ type: Boolean, reflect: true })
   disabled = false;

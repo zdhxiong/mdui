@@ -29,17 +29,25 @@
   .border(1px, solid, outline);
 }
 
-/* :host([variant="elevated"]:hover) {
+:host([variant="elevated"][focused]),
+:host([variant="elevated"][pressed]) {
+  .elevation(1);
+}
+
+:host([variant="elevated"][hover]) {
   .elevation(2);
 }
 
-:host([variant="filled"]:hover) {
+:host([variant="filled"][hover]),
+:host([variant="outlined"][hover]) {
   .elevation(1);
 }
 
-:host([variant="outlined"]:hover) {
-  .elevation(1);
-} */
+:host([variant="elevated"][dragged]),
+:host([variant="filled"][dragged]),
+:host([variant="outlined"][dragged]) {
+  .elevation(3);
+}
 
 .card {
   width: 100%;

@@ -21,21 +21,37 @@
   .letterSpacing(label-large-tracking);
 }
 
-:host(:hover) {
+:host([lowered]) {
+  .elevation(1);
+}
+
+:host([focused]) {
+  .elevation(3);
+}
+
+:host([lowered][focused]) {
+  .elevation(1);
+}
+
+:host([pressed]) {
+  .elevation(3);
+}
+
+:host([lowered][pressed]) {
+  .elevation(1);
+}
+
+:host([hover]) {
   .elevation(4);
+}
+
+:host([lowered][hover]) {
+  .elevation(2);
 }
 
 :host([extended]) {
   .minWidth(80);
   .padding(0, 16);
-}
-
-:host([lowered]) {
-  .elevation(1);
-}
-
-:host([lowered]:hover) {
-  .elevation(2);
 }
 
 :host([variant="primary"]) {

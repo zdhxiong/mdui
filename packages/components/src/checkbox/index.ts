@@ -17,7 +17,7 @@ export class Checkbox extends RippleMixin(LitElement) {
   static override styles: CSSResultGroup = style;
 
   @query('mdui-ripple', true)
-  ripple!: Ripple;
+  rippleElement!: Ripple;
 
   @query('input', true)
   inputElement!: HTMLInputElement;

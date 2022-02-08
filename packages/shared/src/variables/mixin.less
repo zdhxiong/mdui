@@ -195,6 +195,10 @@
   .px(border-radius, @radius);
 }
 
+.borderWidth(@width) {
+  .px(border-width, @width);
+}
+
 .fontSize(@value) {
   & when (isnumber(@value)) {
     .px(font-size, @value);

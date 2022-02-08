@@ -1,0 +1,164 @@
+@import "~@mdui/shared/variables.less";
+
+/**
+ * mdui-chip 组件。默认为 variant="assist"
+ */
+:host {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 200ms @mdui-sys-motion-easing-legacy;
+  -webkit-tap-highlight-color: transparent;
+  .fontSize(label-large-size);
+  .fontWeight(label-large-weight);
+  .paddingRight(7);
+  .paddingLeft(7);
+  .height(32);
+  .borderRadius(8);
+  .letterSpacing(label-large-tracking);
+  .backgroundColor(surface);
+  .border(1px, solid, outline);
+  .color(on-surface-variant);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-surface-variant;
+}
+
+:host([variant="assist"]) {
+  .color(on-surface);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-surface;
+}
+
+:host([variant="input"]) {
+  .paddingRight(3);
+  .paddingLeft(3);
+}
+
+:host([selected]) {
+  .color(on-secondary-container);
+  .backgroundColor(secondary-container);
+  .borderWidth(0);
+  .paddingRight(8);
+  .paddingLeft(8);
+
+  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-secondary-container;
+}
+
+:host([elevated]) {
+  border-width: 0;
+  .elevation(1);
+  .paddingRight(8);
+  .paddingLeft(8);
+}
+
+:host([disabled]) {
+  cursor: default;
+  .borderColor(on-surface, 12%);
+  .color(on-surface, 38%);
+  .elevation(0);
+}
+
+:host([disabled][elevated]),
+:host([disabled][selected]) {
+  .backgroundColor(on-surface, 12%);
+}
+
+:host([selected][hover]) {
+  .elevation(1);
+}
+
+:host([evelated][hover]) {
+  .color(on-secondary-container);
+  .elevation(2);
+}
+
+:host([variant="input"][hover]) {
+  .elevation(0);
+}
+
+:host([variant="filter"][hover]),
+:host([variant="input"][hover]),
+:host([variant="suggestion"][hover]) {
+  .color(on-surface-variant);
+}
+
+:host([variant="filter"][focused]),
+:host([variant="input"][focused]),
+:host([variant="suggestion"][focused]) {
+  .borderColor(on-surface-variant);
+}
+
+:host([dragged]),
+:host([dragged][hover]) {
+  .elevation(4);
+}
+
+.label {
+  display: inline-flex;
+  .paddingRight(8);
+  .paddingLeft(8);
+}
+
+.icon,
+::slotted([slot="icon"]) {
+  display: inline-flex;
+  // 图标 font-size 为 18px，文案为 14px
+  font-size: unit((18 / 14), em);
+  .color(on-surface-variant);
+
+  :host([variant="assist"]) & {
+    .color(primary);
+  }
+
+  :host([variant="input"]) & {
+    .marginLeft(4);
+  }
+
+  :host([selected]) & {
+    .color(on-secondary-container);
+  }
+
+  :host([disabled]) & {
+    opacity: 0.38;
+    .color(on-surface);
+  }
+}
+
+.avatar {
+  background-size: cover;
+  .width(24);
+  .height(24);
+  .borderRadius(12);
+
+  :host([disabled]) & {
+    opacity: 0.38;
+  }
+}
+
+.delete {
+  display: inline-flex;
+  .padding(4);
+  .borderRadius(13);
+  .marginRight(-4);
+  .marginLeft(-4);
+  .color(on-surface-variant);
+
+  :host([variant="assiat"]) & {
+    .color(primary);
+  }
+
+  :host([variant="input"]) & {
+    .marginRight(4);
+  }
+
+  :host([disabled]) & {
+    .color(on-surface, 38%);
+  }
+
+  * {
+    // 图标 font-size 为 18px，文案为 14px
+    font-size: unit((18 / 14), em);
+  }
+}

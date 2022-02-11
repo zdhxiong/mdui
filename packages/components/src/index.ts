@@ -3,6 +3,7 @@ export * from './card.js';
 export * from './checkbox.js';
 export * from './chip.js';
 export * from './circular-progress.js';
+export * from './divider.js';
 export * from './fab.js';
 export * from './icon.js';
 export * from './linear-progress.js';

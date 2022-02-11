@@ -1,0 +1,14 @@
+@import "~@mdui/shared/variables.less";
+
+:host {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  .height(1);
+  .backgroundColor(on-surface, 12%);
+}
+
+:host([vertical]) {
+  height: 100%;
+  .width(1);
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <title>Avatar</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+  <script type="module" src="../../packages/mdui/mdui.css"></script>
+  <script type="module" src="../../packages/components/index.js"></script>
+  <script type="module" src="../../packages/icons/settings.js"></script>
+</head>
+<body>
+<main>
+  <section>
+    <h2>图片</h2>
+    <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
+    <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" alt="zdhxiong"></mdui-avatar>
+    <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" variant="rounded"></mdui-avatar>
+    <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" variant="square"></mdui-avatar>
+  </section>
+
+  <section>
+    <h2>Fit</h2>
+    <mdui-avatar src="https://picsum.photos/300/200"></mdui-avatar>
+    <mdui-avatar src="https://picsum.photos/300/200" fit="contain"></mdui-avatar>
+    <mdui-avatar src="https://picsum.photos/300/200" fit="cover"></mdui-avatar>
+    <mdui-avatar src="https://picsum.photos/300/200" fit="fill"></mdui-avatar>
+    <mdui-avatar src="https://picsum.photos/300/200" fit="none"></mdui-avatar>
+    <mdui-avatar src="https://picsum.photos/300/200" fit="scale-down"></mdui-avatar>
+  </section>
+
+  <section>
+    <h2>Icon</h2>
+    <mdui-avatar icon="person"></mdui-avatar>
+    <mdui-avatar icon="person" iconVariant="outlined"></mdui-avatar>
+    <mdui-avatar icon="person" variant="rounded"></mdui-avatar>
+    <mdui-avatar icon="person" variant="square"></mdui-avatar>
+  </section>
+
+  <section>
+    <h2>Slot</h2>
+    <mdui-avatar>M</mdui-avatar>
+    <mdui-avatar>zdhxiong</mdui-avatar>
+    <mdui-avatar>中</mdui-avatar>
+    <mdui-avatar>中国</mdui-avatar>
+    <mdui-avatar>
+      <img src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"/>
+    </mdui-avatar>
+    <mdui-avatar>
+      <mdui-icon name="person"></mdui-icon>
+    </mdui-avatar>
+    <mdui-avatar>
+      <mdui-icon-settings></mdui-icon-settings>
+    </mdui-avatar>
+  </section>
+
+  <section>
+    <h2>Custom</h2>
+    <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" style="width: 24px; height: 24px;"></mdui-avatar>
+    <mdui-avatar icon="person" style="border-radius: 10px;"></mdui-avatar>
+    <mdui-avatar icon="person" style="color: red; background-color: blue;"></mdui-avatar>
+    <mdui-avatar icon="person" style="font-size: 12px;"></mdui-avatar>
+    <mdui-avatar style="font-size: 12px;">M</mdui-avatar>
+    <mdui-avatar style="font-size: 20px;">M</mdui-avatar>
+  </section>
+</main>
+</body>
+</html>

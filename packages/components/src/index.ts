@@ -8,6 +8,8 @@ export * from './divider.js';
 export * from './fab.js';
 export * from './icon.js';
 export * from './linear-progress.js';
+export * from './list.js';
+export * from './list-item.js';
 export * from './radio.js';
 export * from './ripple.js';
 export * from './switch.js';

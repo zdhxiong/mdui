@@ -104,7 +104,7 @@
 }
 
 /**
- * 设置 box-shadow
+ * 设置 box-shadow，同时通过 :before 添加对应的背景色
  *
  * 输入: .elevation(2)
  */
@@ -113,6 +113,36 @@
   @lessVariable: "mdui-sys-elevation-level@{value}";
 
   box-shadow: ~"var(@{cssVariable}, @{@{lessVariable}})";
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    content: " ";
+
+    & when (@value = 0) {
+      background-color: transparent;
+    }
+
+    & when (@value = 1) {
+      .backgroundColor(primary, 5%);
+    }
+
+    & when (@value = 2) {
+      .backgroundColor(primary, 8%);
+    }
+
+    & when (@value = 3) {
+      .backgroundColor(primary, 11%);
+    }
+
+    & when (@value = 4) {
+      .backgroundColor(primary, 12%);
+    }
+
+    & when (@value = 5) {
+      .backgroundColor(primary, 14%);
+    }
+  }
 }
 
 .color(@rgb, @opacity: 1) {

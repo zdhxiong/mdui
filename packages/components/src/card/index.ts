@@ -20,8 +20,7 @@ export class Card extends RippleMixin(LitElement) {
   disabled = false;
 
   protected override render(): TemplateResult {
-    return html`<mdui-ripple></mdui-ripple>
-      <div class="card"><slot></slot></div>`;
+    return html`<mdui-ripple></mdui-ripple><slot></slot>`;
   }
 }
 

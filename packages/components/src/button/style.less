@@ -66,11 +66,6 @@
   --mdui-comp-ripple-state-layer-color: @mdui-sys-color-primary;
 }
 
-:host([disabled]) {
-  cursor: default;
-  .color(on-surface, 38%);
-}
-
 :host([variant="elevated"][focused]) {
   .elevation(1);
 }
@@ -102,11 +97,16 @@
   .elevation(1);
 }
 
+:host([disabled]) {
+  cursor: default;
+  .color(on-surface, 38%);
+  .elevation(0);
+}
+
 :host([variant="elevated"][disabled]),
 :host([variant="filled"][disabled]),
 :host([variant="tonal"][disabled]) {
   .backgroundColor(on-surface, 12%);
-  .elevation(0);
 }
 
 :host([variant="outlined"][disabled]) {

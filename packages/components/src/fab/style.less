@@ -104,6 +104,13 @@
   .paddingRight(28);
 }
 
+:host([disabled]) {
+  cursor: default;
+  .color(on-surface, 38%);
+  .backgroundColor(on-surface, 12%);
+  .elevation(0);
+}
+
 .label {
   .paddingLeft(4);
   .paddingRight(4);

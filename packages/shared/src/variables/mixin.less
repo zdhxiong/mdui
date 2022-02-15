@@ -161,6 +161,13 @@
   ._color(stroke, @rgb, @opacity);
 }
 
+.stateLayerColor(@rgb) {
+  @cssVariable: "--mdui-sys-color-@{rgb}";
+  @lessVariable: "mdui-sys-color-@{rgb}";
+
+  --mdui-comp-ripple-state-layer-color: ~"var(@{cssVariable}, @{lessVariable})";
+}
+
 .padding(@top, @right: null, @bottom: null, @left: null) {
   .paddingOrMargin(padding, @top, @right, @bottom, @left);
 }

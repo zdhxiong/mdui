@@ -60,8 +60,7 @@ input {
   transition: all 150ms @mdui-sys-motion-easing-legacy;
   .width(40);
   .height(40);
-
-  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-surface;
+  .stateLayerColor(on-surface);
 
   &::after,
   &::before {
@@ -88,7 +87,7 @@ input {
 
 .track,
 .handle {
-  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-surface;
+  .stateLayerColor(on-surface);
 }
 
 input {
@@ -98,8 +97,7 @@ input {
 
     & + .handle {
       transform: translateX(unit((8 / 16), rem));
-
-      --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-surface;
+      .stateLayerColor(on-surface);
 
       &::after {
         .backgroundColor(primary);
@@ -109,7 +107,7 @@ input {
 
   &:checked + .track,
   &:checked + .track + .handle {
-    --mdui-comp-ripple-state-layer-color: @mdui-sys-color-primary;
+    .stateLayerColor(primary);
   }
 
   // 禁用状态

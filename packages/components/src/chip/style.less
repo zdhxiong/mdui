@@ -21,14 +21,12 @@
   .backgroundColor(surface);
   .border(1px, solid, outline);
   .color(on-surface-variant);
-
-  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-surface-variant;
+  .stateLayerColor(on-surface-variant);
 }
 
 :host([variant="assist"]) {
   .color(on-surface);
-
-  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-surface;
+  .stateLayerColor(on-surface);
 }
 
 :host([variant="input"]) {
@@ -42,8 +40,7 @@
   .borderWidth(0);
   .paddingRight(8);
   .paddingLeft(8);
-
-  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-secondary-container;
+  .stateLayerColor(on-secondary-container);
 }
 
 :host([elevated]) {

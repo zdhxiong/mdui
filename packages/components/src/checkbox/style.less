@@ -46,8 +46,7 @@ i {
   border-radius: 50%;
   .width(40);
   .height(40);
-
-  --mdui-comp-ripple-state-layer-color: @mdui-sys-color-on-surface;
+  .stateLayerColor(on-surface);
 
   // 图标的边框和背景
   &::after {
@@ -81,7 +80,7 @@ i {
 input {
   // 选中状态的图标
   &:checked + i {
-    --mdui-comp-ripple-state-layer-color: @mdui-sys-color-primary;
+    .stateLayerColor(primary);
 
     &::after {
       .backgroundColor(primary);
@@ -96,7 +95,7 @@ input {
 
   // 不确定状态的图标
   &:indeterminate + i {
-    --mdui-comp-ripple-state-layer-color: @mdui-sys-color-primary;
+    .stateLayerColor(primary);
 
     &::after {
       .backgroundColor(primary);

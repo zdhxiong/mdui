@@ -1,0 +1,135 @@
+@import "~@mdui/shared/variables.less";
+
+:host {
+  position: relative;
+  z-index: 0;
+  flex: 1;
+  overflow: hidden;
+  .minWidth(48);
+  .stateLayerColor(on-surface-variant);
+
+  .icon,
+  .active-icon,
+  ::slotted([slot="icon"]),
+  ::slotted([slot="activeIcon"]) {
+    .color(on-surface-variant);
+  }
+}
+
+a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 100%;
+  text-decoration: none;
+  transition: padding 225ms @mdui-sys-motion-easing-legacy;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  .paddingTop(12);
+  .paddingBottom(12);
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  .height(32);
+  .width(32);
+  .borderRadius(16);
+}
+
+.icon-container,
+:host([active]) .icon-container {
+  transition: background-color 75ms @mdui-sys-motion-easing-legacy-decelerate, width 225ms @mdui-sys-motion-easing-legacy-decelerate;
+}
+
+.dot,
+.badge {
+  .backgroundColor(error);
+}
+
+.dot {
+  .width(6);
+  .height(6);
+  .borderRadius(3);
+}
+
+.badge {
+  .color(on-error);
+  .fontSize(label-small-size);
+  .fontWeight(label-small-weight);
+  .letterSpacing(label-small-tracking);
+  .height(16);
+  .borderRadius(8);
+}
+
+.icon,
+.active-icon,
+::slotted([slot="icon"]),
+::slotted([slot="activeIcon"]) {
+  .fontSize(24);
+}
+
+.active-icon,
+::slotted([slot="activeIcon"]) {
+  display: none;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  transition: opacity 300ms @mdui-sys-motion-easing-legacy;
+  .height(16);
+  .color(on-surface-variant);
+  .fontSize(label-medium-size);
+  .fontWeight(label-medium-weight);
+  .letterSpacing(label-medium-tracking);
+  .marginTop(4);
+  .marginBottom(4);
+}
+
+:host([labelVisibility="unlabeled"]),
+:host([labelVisibility="selected"]:not([active])) {
+  a {
+    .paddingTop(24);
+    .paddingBottom(0);
+  }
+
+  .label {
+    opacity: 0;
+  }
+}
+
+:host([active]) {
+  .stateLayerColor(on-surface);
+
+  .icon-container {
+    .width(64);
+    .backgroundColor(secondary-container);
+  }
+
+  .icon,
+  .active-icon,
+  ::slotted([slot="icon"]),
+  ::slotted([slot="activeIcon"]) {
+    .color(on-secondary-container);
+  }
+
+  // todo
+  .active-icon,
+  slot[name="activeIcon"] {
+    display: inline-block;
+
+    & + .icon,
+    & + slot[name="icon"]::slotted([slot="icon"]) {
+      display: none;
+    }
+  }
+
+  .label {
+    .color(on-surface);
+  }
+}

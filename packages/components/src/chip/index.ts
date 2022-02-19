@@ -6,6 +6,7 @@ import { when } from 'lit/directives/when.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ButtonBase } from '../button/button-base.js';
 import { style } from './style.js';
+import '../icon.js';
 import '@mdui/icons/check.js';
 import '@mdui/icons/clear.js';
 
@@ -17,7 +18,7 @@ export class Chip extends ButtonBase {
   public loading = false;
 
   @property({ reflect: true })
-  public variant = 'assist';
+  public variant: 'assist' | 'filter' | 'input' | 'suggestion' = 'assist';
 
   @property({ type: Boolean, reflect: true })
   public elevated = false;
@@ -35,7 +36,7 @@ export class Chip extends ButtonBase {
   public icon!: string;
 
   @property({ reflect: true })
-  public iconVariant!: string;
+  public iconVariant!: 'outlined' | 'filled' | 'round' | 'sharp' | 'two-tone';
 
   @property({ reflect: true })
   public avatar!: string;

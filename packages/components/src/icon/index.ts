@@ -15,20 +15,20 @@ export class Icon extends LitElement {
    * Material Icons 图标名
    */
   @property({ reflect: true })
-  name!: string;
+  public name!: string;
 
   /**
    * Material Icons 的五种变体：outlined, filled, round, sharp, two-tone。默认为 filled。
    * 仅在设置了 name 属性时，该属性才有效
    */
   @property({ reflect: true })
-  variant!: string;
+  public variant!: 'outlined' | 'filled' | 'round' | 'sharp' | 'two-tone'; // 这个类型很多组件会用到，但目前 vscode.html-custom-data.json 不支持引用类型，所以只能每个要用到的地方都写一遍
 
   /**
    * svg 图标的路径
    */
   @property({ reflect: true })
-  src!: string;
+  public src!: string;
 
   /**
    * 根据 variant 属性获取 Material Icons 的 font-family 名称

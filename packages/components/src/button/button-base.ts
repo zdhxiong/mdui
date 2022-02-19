@@ -10,52 +10,55 @@ export class ButtonBase extends RippleMixin(LitElement) {
   static override styles: CSSResultGroup = style;
 
   @query('mdui-ripple', true)
-  rippleElement!: Ripple;
+  protected rippleElement!: Ripple;
 
   @property({ type: Boolean, reflect: true })
-  disabled = false;
+  public disabled = false;
 
   @property({ reflect: true })
-  href!: string;
+  public href!: string;
 
   @property({ reflect: true })
-  download!: string;
+  public download!: string;
 
   @property({ reflect: true })
-  target!: string;
+  public target!: string;
 
   @property({ reflect: true })
-  rel!: string;
+  public rel!: string;
 
   @property({ type: Boolean, reflect: true })
-  autofocus = false;
+  public autofocus = false;
 
   @property({ reflect: true })
-  name!: string;
+  public name!: string;
 
   @property({ reflect: true })
-  value!: string;
+  public value!: string;
 
   @property({ reflect: true })
-  type!: string;
+  public type!: 'submit' | 'reset' | 'button';
 
   @property({ reflect: true })
-  form!: string;
+  public form!: string;
 
   @property({ reflect: true })
-  formAction!: string;
+  public formAction!: string;
 
   @property({ reflect: true })
-  formEnctype!: string;
+  public formEnctype!:
+    | 'application/x-www-form-urlencoded'
+    | 'multipart/form-data'
+    | 'text/plain';
 
   @property({ reflect: true })
-  formMethod!: string;
+  public formMethod!: 'post' | 'get';
 
   @property({ type: Boolean, reflect: true })
-  formNovalidate = false;
+  public formNovalidate = false;
 
   @property({ reflect: true })
-  formTarget!: string;
+  public formTarget!: '_self' | '_blank' | '_parent' | '_top';
 
   protected getButtonClasses(): ClassInfo {
     const {

@@ -17,7 +17,7 @@ export class NavigationBarItem extends RippleMixin(LitElement) {
    * 仅供父组件 navigation-bar 调用
    */
   @property({ reflect: true })
-  public labelVisibility!: string;
+  public labelVisibility!: 'selected' | 'labeled' | 'unlabeled';
 
   @query('mdui-ripple', true)
   protected rippleElement!: Ripple;
@@ -41,13 +41,18 @@ export class NavigationBarItem extends RippleMixin(LitElement) {
   public icon!: string;
 
   @property({ reflect: true })
-  public iconVariant!: string;
+  public iconVariant!: 'outlined' | 'filled' | 'round' | 'sharp' | 'two-tone';
 
   @property({ reflect: true })
   public activeIcon!: string;
 
   @property({ reflect: true })
-  public activeIconVariant!: string;
+  public activeIconVariant!:
+    | 'outlined'
+    | 'filled'
+    | 'round'
+    | 'sharp'
+    | 'two-tone';
 
   @property({ reflect: true })
   public badge!: string;

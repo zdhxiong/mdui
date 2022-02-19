@@ -6,6 +6,8 @@
   "main": "index.js",
   "module": "index.js",
   "types": "index.d.ts",
+  "customElements": "custom-elements.json",
+  "web-types": "web-types.json",
   "files": [
     "button",
     "checkbox",

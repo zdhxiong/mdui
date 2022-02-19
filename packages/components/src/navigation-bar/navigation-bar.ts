@@ -16,7 +16,8 @@ export class NavigationBar extends LitElement {
   public hideOnScroll = false;
 
   @property({ reflect: true })
-  public labelVisibility = 'auto';
+  public labelVisibility: 'auto' | 'selected' | 'labeled' | 'unlabeled' =
+    'auto';
 
   private _value = '';
 

@@ -12,22 +12,28 @@ export class Button extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   @property({ type: Boolean, reflect: true })
-  loading = false;
+  public loading = false;
 
   @property({ reflect: true })
-  variant = 'text';
+  public variant:
+    | 'elevated'
+    | 'filled'
+    | 'tonal'
+    | 'outlined'
+    | 'text'
+    | 'icon' = 'text';
 
   @property({ type: Boolean, reflect: true })
-  fullwidth = false;
+  public fullwidth = false;
 
   @property({ reflect: true })
-  icon!: string;
+  public icon!: string;
 
   @property({ reflect: true })
-  iconVariant!: string;
+  public iconVariant!: 'outlined' | 'filled' | 'round' | 'sharp' | 'two-tone';
 
   @property({ type: Boolean, reflect: true })
-  trailingIcon = false;
+  public trailingIcon = false;
 
   protected renderLabel(): TemplateResult {
     return html`<span class="label"><slot></slot></span>`;

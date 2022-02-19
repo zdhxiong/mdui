@@ -1,5 +1,6 @@
 .DS_STORE
-.vscode
+.vscode/*
+!.vscode/settings.json
 .vs
 node_modules
 coverage

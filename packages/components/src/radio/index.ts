@@ -11,28 +11,28 @@ export class Radio extends RippleMixin(LitElement) {
   static override styles: CSSResultGroup = style;
 
   @query('mdui-ripple', true)
-  rippleElement!: Ripple;
+  protected rippleElement!: Ripple;
 
   @property({ type: Boolean, reflect: true })
-  disabled = false;
+  public disabled = false;
 
   @property({ type: Boolean, reflect: true })
-  checked = false;
+  public checked = false;
 
   @property({ type: Boolean, reflect: true })
-  required = false;
+  public required = false;
 
   @property({ type: Boolean })
-  autofocus = false;
+  public autofocus = false;
 
   @property({ reflect: true })
-  form!: string;
+  public form!: string;
 
   @property({ reflect: true })
-  name!: string;
+  public name!: string;
 
   @property({ reflect: true })
-  value = 'on';
+  public value = 'on';
 
   protected override render(): TemplateResult {
     const { disabled, checked, autofocus, name } = this;

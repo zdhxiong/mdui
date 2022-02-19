@@ -17,34 +17,34 @@ export class Checkbox extends RippleMixin(LitElement) {
   static override styles: CSSResultGroup = style;
 
   @query('mdui-ripple', true)
-  rippleElement!: Ripple;
+  protected rippleElement!: Ripple;
 
   @query('input', true)
-  inputElement!: HTMLInputElement;
+  protected inputElement!: HTMLInputElement;
 
   @property({ type: Boolean, reflect: true })
-  disabled = false;
+  public disabled = false;
 
   @property({ type: Boolean, reflect: true })
-  checked = false;
+  public checked = false;
 
   @property({ type: Boolean, reflect: true })
-  indeterminate = false;
+  public indeterminate = false;
 
   @property({ type: Boolean, reflect: true })
-  required = false;
+  public required = false;
 
   @property({ type: Boolean })
-  autofocus = false;
+  public autofocus = false;
 
   @property({ reflect: true })
-  form!: string;
+  public form!: string;
 
   @property({ reflect: true })
-  name!: string;
+  public name!: string;
 
   @property({ reflect: true })
-  value = 'on';
+  public value = 'on';
 
   protected override updated(changedProperties: PropertyValues) {
     if (changedProperties.has('indeterminate')) {

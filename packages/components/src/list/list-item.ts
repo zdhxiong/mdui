@@ -7,6 +7,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { RippleMixin } from '../shared/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { style } from './list-item-style.js';
+import '../icon.js';
 
 @customElement('mdui-list-item')
 export class ListItem extends RippleMixin(LitElement) {
@@ -35,6 +36,9 @@ export class ListItem extends RippleMixin(LitElement) {
 
   @property({ reflect: true })
   public icon!: string;
+
+  @property({ reflect: true })
+  public iconVariant!: 'outlined' | 'filled' | 'round' | 'sharp' | 'two-tone';
 
   @property({ reflect: true })
   public avatar!: string;

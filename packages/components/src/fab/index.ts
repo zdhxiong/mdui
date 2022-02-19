@@ -5,28 +5,29 @@ import { when } from 'lit/directives/when.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ButtonBase } from '../button/button-base.js';
 import { style } from './style.js';
+import '../icon.js';
 
 @customElement('mdui-fab')
 export class Fab extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   @property({ type: Boolean, reflect: true })
-  loading = false;
+  public loading = false;
 
   @property({ reflect: true })
-  variant = 'primary';
+  public variant: 'primary' | 'surface' | 'secondary' | 'tertiary' = 'primary';
 
   @property({ reflect: true })
-  size = 'normal';
+  public size: 'normal' | 'small' | 'large' = 'normal';
 
   @property({ reflect: true })
-  icon!: string;
+  public icon!: string;
 
   @property({ reflect: true })
-  iconVariant!: string;
+  public iconVariant!: 'outlined' | 'filled' | 'round' | 'sharp' | 'two-tone';
 
   @property({ reflect: true })
-  tooltip!: string;
+  public tooltip!: string;
 
   protected renderLabel(): TemplateResult {
     return html`<span class="label"><slot></slot></span>`;

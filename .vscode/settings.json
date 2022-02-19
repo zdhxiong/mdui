@@ -1,0 +1,6 @@
+{
+  "html.customData": [
+    "./packages/components/vscode.html-custom-data.json",
+    "./packages/icons/vscode.html-custom-data.json"
+  ]
+}

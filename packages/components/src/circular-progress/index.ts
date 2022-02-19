@@ -9,10 +9,10 @@ export class CircularProgress extends LitElement {
   static override styles: CSSResultGroup = style;
 
   @property({ type: Number, reflect: true })
-  max!: number;
+  public max!: number;
 
   @property({ type: Number, reflect: true })
-  value!: number;
+  public value!: number;
 
   protected renderDeterminate(): TemplateResult {
     const { max, value } = this;

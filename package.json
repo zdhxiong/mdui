@@ -46,7 +46,8 @@
     "dev:components": "node scripts/components/dev.js --dev",
     "dev:mdui": "node scripts/mdui/dev.js --dev",
     "dev": "npm run build-dev && concurrently -k -r \"npm:watch:*\" \"npm:dev:*\" \"vite --config scripts/vite.config.js --host\"",
-    "pack": "npm run build && npm pack --workspaces"
+    "pack": "npm run build && npm pack --workspaces",
+    "export-png-icons": "node scripts/icons/export-png.js"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.5.7",
@@ -87,6 +88,7 @@
     "stylelint": "^14.2.0",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^24.0.0",
+    "svgexport": "^0.4.2",
     "typescript": "^4.5.4",
     "vite": "^2.7.10",
     "yorkie": "^2.0.0"

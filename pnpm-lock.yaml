@@ -42,6 +42,7 @@ importers:
       stylelint: ^14.2.0
       stylelint-config-rational-order: ^0.1.2
       stylelint-config-standard: ^24.0.0
+      svgexport: ^0.4.2
       typescript: ^4.5.4
       vite: ^2.7.10
       yorkie: ^2.0.0
@@ -84,6 +85,7 @@ importers:
       stylelint: 14.2.0
       stylelint-config-rational-order: 0.1.2
       stylelint-config-standard: 24.0.0_stylelint@14.2.0
+      svgexport: 0.4.2
       typescript: 4.5.4
       vite: 2.7.10_less@4.1.2
       yorkie: 2.0.0
@@ -1253,6 +1255,11 @@ packages:
     hasBin: true
     dev: true
 
+  /agent-base/5.1.1:
+    resolution: {integrity: sha512-TMeqbNl2fMW0nMjTEPOwe3J/PRFP4vqeoNuQMG0HlMrtm5QxKqdvAkZ1pRBQ/ulIyDD5Yq0nJ7YbdD8ey0TO3g==}
+    engines: {node: '>= 6.0.0'}
+    dev: true
+
   /agent-base/6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
@@ -1457,6 +1464,10 @@ packages:
     resolution: {integrity: sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==}
     dependencies:
       lodash: 4.17.21
+    dev: true
+
+  /async/3.2.3:
+    resolution: {integrity: sha512-spZRyzKL5l5BZQrr/6m/SqFdBN0q3OCI0f9rjfBzCMBIP4p75P620rR3gTmaksNOhmzgdxcaxdNfMy6anrbM0g==}
     dev: true
 
   /atob/2.1.2:
@@ -3435,6 +3446,16 @@ packages:
       toidentifier: 1.0.1
     dev: true
 
+  /https-proxy-agent/4.0.0:
+    resolution: {integrity: sha512-zoDhWrkR3of1l9QAL8/scJZyLu8j/gBkcwcaQOZh7Gyh/+uJQzGVETdgT30akuwkpL8HTRfssqI3BZuV18teDg==}
+    engines: {node: '>= 6.0.0'}
+    dependencies:
+      agent-base: 5.1.1
+      debug: 4.3.3
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /https-proxy-agent/5.0.0:
     resolution: {integrity: sha512-EkYm5BcKUGiduxzSt3Eppko+PiNWNEpa4ySk9vTC6wDsQJW9rHSa+UhGNJoRYp7bz6Ht1eaRIa6QaJqO5rCFbA==}
     engines: {node: '>= 6'}
@@ -5357,6 +5378,28 @@ packages:
       - utf-8-validate
     dev: true
 
+  /puppeteer/3.3.0:
+    resolution: {integrity: sha512-23zNqRltZ1PPoK28uRefWJ/zKb5Jhnzbbwbpcna2o5+QMn17F0khq5s1bdH3vPlyj+J36pubccR8wiNA/VE0Vw==}
+    engines: {node: '>=10.18.1'}
+    deprecated: Version no longer supported. Upgrade to @latest
+    requiresBuild: true
+    dependencies:
+      debug: 4.3.3
+      extract-zip: 2.0.1
+      https-proxy-agent: 4.0.0
+      mime: 2.6.0
+      progress: 2.0.3
+      proxy-from-env: 1.1.0
+      rimraf: 3.0.2
+      tar-fs: 2.1.1
+      unbzip2-stream: 1.4.3
+      ws: 7.5.6
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+    dev: true
+
   /qs/6.10.2:
     resolution: {integrity: sha512-mSIdjzqznWgfd4pMii7sHtaYF8rx8861hBO80SraY5GT0XQibWZWJSid0avzHGkDIZLImux2S5mXO0Hfct2QCw==}
     engines: {node: '>=0.6'}
@@ -6326,6 +6369,18 @@ packages:
 
   /svg-tags/1.0.0:
     resolution: {integrity: sha1-WPcc7jvVGbWdSyqEO2x95krAR2Q=}
+    dev: true
+
+  /svgexport/0.4.2:
+    resolution: {integrity: sha512-EZqt7MvqPM5gI6lj4hyllWKBoHPiOSWrf6R8x3g+0zI71Qb8OXFzFDmSgUUaPGBoZHQZkgN8ymfDRN6k6ZA+CA==}
+    hasBin: true
+    dependencies:
+      async: 3.2.3
+      puppeteer: 3.3.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
     dev: true
 
   /table-layout/1.0.2:

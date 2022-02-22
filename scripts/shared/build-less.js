@@ -1,7 +1,7 @@
 const fs = require('fs');
 const child_process = require('child_process');
 
-child_process.spawn('cp', [
+child_process.spawnSync('cp', [
   '-r',
   './packages/shared/src/variables',
   './packages/shared/variables',

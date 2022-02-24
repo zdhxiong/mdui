@@ -4,7 +4,7 @@ import {
   isObjectLike,
   returnFalse,
   eachObject,
-} from '@mdui/shared/helpers.js';
+} from '../shared/helper.js';
 import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import { EventCallback, remove } from '../shared/event.js';

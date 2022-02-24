@@ -1,4 +1,4 @@
-import { toElement } from '@mdui/shared/helpers.js';
+import { toElement } from '../shared/helper.js';
 
 /**
  * 检查 container 元素内是否包含 contains 元素

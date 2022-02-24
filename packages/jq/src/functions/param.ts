@@ -3,7 +3,7 @@ import {
   isObjectLike,
   eachObject,
   eachArray,
-} from '@mdui/shared/helpers.js';
+} from '../shared/helper.js';
 
 // @ts-ignore
 type Value = Record<string, Value> | string | number | boolean;

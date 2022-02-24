@@ -5,7 +5,7 @@ import {
   isFunction,
   isString,
   isWindow,
-} from '@mdui/shared/helpers.js';
+} from '../shared/helper.js';
 import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import './each.js';

@@ -1,4 +1,4 @@
-import { TypeOrArray } from '@mdui/shared/helpers.js';
+import { TypeOrArray } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { removeData } from '../functions/removeData.js';
 

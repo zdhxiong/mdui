@@ -1,4 +1,4 @@
-import { eachArray } from '@mdui/shared/helpers.js';
+import { eachArray } from '../shared/helper.js';
 
 /**
  * 把第二个数组的元素追加到第一个数组中，并返回合并后的数组

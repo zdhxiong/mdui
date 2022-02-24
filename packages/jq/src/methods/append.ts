@@ -4,7 +4,7 @@ import {
   isFunction,
   isString,
   eachArray,
-} from '@mdui/shared/helpers.js';
+} from '../shared/helper.js';
 import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import { createElement, appendChild, removeChild } from '../shared/dom.js';

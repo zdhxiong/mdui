@@ -1,4 +1,4 @@
-import { Selector } from '@mdui/shared/helpers.js';
+import { Selector } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { merge } from '../functions/merge.js';
 import { JQ } from '../shared/core.js';

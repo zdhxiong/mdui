@@ -3,7 +3,7 @@ import {
   isArrayLike,
   eachArray,
   eachObject,
-} from '@mdui/shared/helpers.js';
+} from '../shared/helper.js';
 
 /**
  * 遍历数组，原样返回第一个参数

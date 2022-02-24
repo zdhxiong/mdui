@@ -3,7 +3,7 @@ import {
   isUndefined,
   eachObject,
   eachArray,
-} from '@mdui/shared/helpers.js';
+} from '../shared/helper.js';
 
 /**
  * 将所有对象的属性都添加到第一个对象，并返回合并后的对象。（属性值为 `undefined` 的不会合并）

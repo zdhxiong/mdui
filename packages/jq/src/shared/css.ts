@@ -1,4 +1,4 @@
-import { toKebabCase } from '@mdui/shared/helpers.js';
+import { toKebabCase } from './helper.js';
 
 /**
  * 获取元素的样式值

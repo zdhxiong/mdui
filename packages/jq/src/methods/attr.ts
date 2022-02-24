@@ -8,7 +8,7 @@ import {
   toCamelCase,
   eachArray,
   eachObject,
-} from '@mdui/shared/helpers.js';
+} from '../shared/helper.js';
 import { JQ } from '../shared/core.js';
 import { $ } from '../$.js';
 import { getStyle, cssNumber } from '../shared/css.js';

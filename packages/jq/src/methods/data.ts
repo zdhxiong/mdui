@@ -4,7 +4,7 @@ import {
   isObjectLike,
   eachObject,
   toCamelCase,
-} from '@mdui/shared/helpers.js';
+} from '../shared/helper.js';
 import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import { dataAttr, get, getAll, set, setAll } from '../shared/data.js';

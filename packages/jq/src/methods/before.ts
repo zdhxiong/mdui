@@ -5,7 +5,7 @@ import {
   isString,
   isElement,
   eachArray,
-} from '@mdui/shared/helpers.js';
+} from '../shared/helper.js';
 import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import { getChildNodesArray } from '../shared/dom.js';

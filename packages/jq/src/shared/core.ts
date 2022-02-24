@@ -1,4 +1,4 @@
-import { PlainObject, eachArray } from '@mdui/shared/helpers.js';
+import { PlainObject, eachArray } from './helper.js';
 
 /**
  * 为了使用模块扩充，这里不能使用默认导出

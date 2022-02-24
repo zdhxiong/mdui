@@ -1,4 +1,4 @@
-import { isElement, isFunction, eachArray } from '@mdui/shared/helpers.js';
+import { isElement, isFunction, eachArray } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import { getAttribute, setAttribute } from '../shared/attributes.js';

@@ -1,4 +1,4 @@
-import { isFunction, PlainObject } from '@mdui/shared/helpers.js';
+import { isFunction, PlainObject } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { extend } from '../functions/extend.js';
 import { JQ } from '../shared/core.js';

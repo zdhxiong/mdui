@@ -4,7 +4,7 @@ import {
   isUndefined,
   eachObject,
   eachArray,
-} from '@mdui/shared/helpers.js';
+} from '../shared/helper.js';
 import { $ } from '../$.js';
 import {
   Method,

@@ -4,7 +4,7 @@ import {
   isString,
   isArrayLike,
   eachObject,
-} from '@mdui/shared/helpers.js';
+} from './shared/helper.js';
 import { JQ, JQStatic } from './shared/core.js';
 import { getChildNodesArray } from './shared/dom.js';
 

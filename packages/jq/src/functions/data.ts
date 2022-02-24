@@ -1,8 +1,4 @@
-import {
-  PlainObject,
-  isUndefined,
-  isObjectLike,
-} from '@mdui/shared/helpers.js';
+import { PlainObject, isUndefined, isObjectLike } from '../shared/helper.js';
 import { get, set, getAll, setAll } from '../shared/data.js';
 
 /**

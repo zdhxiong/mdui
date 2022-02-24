@@ -4,7 +4,7 @@ import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { query } from 'lit/decorators/query.js';
 import { state } from 'lit/decorators/state.js';
-import { RippleMixin } from '../shared/ripple-mixin.js';
+import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { style } from './navigation-bar-item-style.js';
 import '../icon.js';

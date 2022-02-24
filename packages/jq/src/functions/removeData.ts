@@ -1,4 +1,4 @@
-import { TypeOrArray, isUndefined, isString } from '@mdui/shared/helpers.js';
+import { TypeOrArray, isUndefined, isString } from '../shared/helper.js';
 import { removeAll, removeMultiple } from '../shared/data.js';
 
 /**

@@ -3,7 +3,7 @@ import {
   TypeOrArray,
   isFunction,
   isString,
-} from '@mdui/shared/helpers.js';
+} from '../shared/helper.js';
 import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import './is.js';

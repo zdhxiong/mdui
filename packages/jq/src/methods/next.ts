@@ -1,4 +1,4 @@
-import { Selector, eachArray } from '@mdui/shared/helpers.js';
+import { Selector, eachArray } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import { dir } from './utils/dir.js';

@@ -1,4 +1,4 @@
-import { PlainObject, eachObject } from '@mdui/shared/helpers.js';
+import { PlainObject, eachObject } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 

@@ -1,4 +1,4 @@
-import { Selector, TypeOrArray } from '@mdui/shared/helpers.js';
+import { Selector, TypeOrArray } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { JQ } from '../shared/core.js';
 import './filter.js';

@@ -54,9 +54,6 @@ export class Fab extends ButtonBase {
     const {
       disabled,
       href,
-      download,
-      target,
-      rel,
       autofocus,
       name,
       value,
@@ -70,20 +67,16 @@ export class Fab extends ButtonBase {
     } = this;
 
     return html`<mdui-ripple></mdui-ripple>${when(
-        this.href,
+        href,
         () =>
           html`${when(
             disabled,
             () => html`<span class="button">${this.renderInner()}</span>`,
-            () => html`<a
-              class="button"
-              href=${href}
-              download=${ifDefined(download)}
-              target=${ifDefined(target)}
-              rel=${ifDefined(rel)}
-            >
-              ${this.renderInner()}
-            </a>`,
+            () =>
+              this.renderAnchor({
+                className: 'button',
+                content: this.renderInner(),
+              }),
           )}`,
         () => html`<button
           class="button"
@@ -101,7 +94,7 @@ export class Fab extends ButtonBase {
         >
           ${this.renderInner()}
         </button>`,
-      )} `;
+      )}`;
   }
 }
 

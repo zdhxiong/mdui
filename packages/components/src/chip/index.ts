@@ -86,9 +86,6 @@ export class Chip extends ButtonBase {
     const {
       disabled,
       href,
-      download,
-      target,
-      rel,
       autofocus,
       name,
       value,
@@ -102,20 +99,16 @@ export class Chip extends ButtonBase {
     } = this;
 
     return html`<mdui-ripple></mdui-ripple>${when(
-        this.href,
+        href,
         () =>
           html`${when(
             disabled,
             () => html`<span class="button chip">${this.renderInner()}</span>`,
-            () => html`<a
-              class="button chip"
-              href=${href}
-              download=${ifDefined(download)}
-              target=${ifDefined(target)}
-              rel=${ifDefined(rel)}
-            >
-              ${this.renderInner()}
-            </a>`,
+            () =>
+              this.renderAnchor({
+                className: 'button chip',
+                content: this.renderInner(),
+              }),
           )}`,
         () => html`<button
           class="button chip"

@@ -1,12 +1,12 @@
 import { LitElement, CSSResultGroup } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
-import { ClassInfo } from 'lit/directives/class-map.js';
+import { AnchorMixin } from '@mdui/shared/mixins/anchor-mixin.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { style } from './button-base-style.js';
 
-export class ButtonBase extends RippleMixin(LitElement) {
+export class ButtonBase extends AnchorMixin(RippleMixin(LitElement)) {
   static override styles: CSSResultGroup = style;
 
   @query('mdui-ripple', true)
@@ -14,18 +14,6 @@ export class ButtonBase extends RippleMixin(LitElement) {
 
   @property({ type: Boolean, reflect: true })
   public disabled = false;
-
-  @property({ reflect: true })
-  public href!: string;
-
-  @property({ reflect: true })
-  public download!: string;
-
-  @property({ reflect: true })
-  public target!: string;
-
-  @property({ reflect: true })
-  public rel!: string;
 
   @property({ type: Boolean, reflect: true })
   public autofocus = false;
@@ -59,40 +47,4 @@ export class ButtonBase extends RippleMixin(LitElement) {
 
   @property({ reflect: true })
   public formTarget!: '_self' | '_blank' | '_parent' | '_top';
-
-  protected getButtonClasses(): ClassInfo {
-    const {
-      href,
-      download,
-      target,
-      rel,
-      autofocus,
-      name,
-      value,
-      type,
-      form,
-      formAction,
-      formEnctype,
-      formMethod,
-      formNovalidate,
-      formTarget,
-    } = this;
-
-    return {
-      href,
-      download,
-      target,
-      rel,
-      autofocus,
-      name,
-      value,
-      type,
-      form,
-      formAction,
-      formEnctype,
-      formMethod,
-      formNovalidate,
-      formTarget,
-    };
-  }
 }

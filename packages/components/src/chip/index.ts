@@ -1,5 +1,5 @@
 import { customElement } from 'lit/decorators/custom-element.js';
-import { CSSResultGroup, html, nothing, TemplateResult } from 'lit';
+import { CSSResultGroup, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
@@ -68,65 +68,37 @@ export class Chip extends ButtonBase {
     return html`<slot name="icon"></slot>`;
   }
 
-  protected renderTrailingIcon(): TemplateResult | typeof nothing {
-    if (this.deletable) {
-      return html`<span class="delete">
+  protected renderTrailingIcon(): TemplateResult {
+    return when(
+      this.deletable,
+      () => html`<span class="delete">
         <mdui-icon-clear></mdui-icon-clear>
-      </span>`;
-    }
-
-    return nothing;
+      </span>`,
+    );
   }
 
-  protected renderInner(): TemplateResult {
-    return html`${this.renderLeadingIcon()}${this.renderLabel()}${this.renderTrailingIcon()}`;
+  protected renderInner(): TemplateResult[] {
+    return [
+      this.renderLeadingIcon(),
+      this.renderLabel(),
+      this.renderTrailingIcon(),
+    ];
   }
 
   protected override render(): TemplateResult {
-    const {
-      disabled,
-      href,
-      autofocus,
-      name,
-      value,
-      type,
-      form,
-      formAction,
-      formEnctype,
-      formMethod,
-      formNovalidate,
-      formTarget,
-    } = this;
+    const { disabled, href } = this;
 
-    return html`<mdui-ripple></mdui-ripple>${when(
-        href,
-        () =>
-          html`${when(
-            disabled,
-            () => html`<span class="button chip">${this.renderInner()}</span>`,
-            () =>
-              this.renderAnchor({
-                className: 'button chip',
-                content: this.renderInner(),
-              }),
-          )}`,
-        () => html`<button
-          class="button chip"
-          name=${ifDefined(name)}
-          value=${ifDefined(value)}
-          type=${ifDefined(type)}
-          form=${ifDefined(form)}
-          formaction=${ifDefined(formAction)}
-          formenctype=${ifDefined(formEnctype)}
-          formmethod=${ifDefined(formMethod)}
-          formtarget=${ifDefined(formTarget)}
-          ?formnovalidate=${formNovalidate}
-          ?autofocus=${autofocus}
-          ?disabled=${disabled}
-        >
-          ${this.renderInner()}
-        </button>`,
-      )}`;
+    return html`<mdui-ripple></mdui-ripple>${href
+        ? disabled
+          ? html`<span class="button chip">${this.renderInner()}</span>`
+          : this.renderAnchor({
+              className: 'button chip',
+              content: this.renderInner(),
+            })
+        : this.renderButton({
+            className: 'button chip',
+            content: this.renderInner(),
+          })}`;
   }
 }
 

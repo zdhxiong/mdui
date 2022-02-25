@@ -48,67 +48,37 @@ export class Button extends ButtonBase {
   }
 
   protected renderIcon(): TemplateResult {
-    return when(
-      this.icon,
-      () =>
-        html`<mdui-icon
+    return this.icon
+      ? html`<mdui-icon
           class="icon"
           name=${this.icon}
           variant=${ifDefined(this.iconVariant)}
-        ></mdui-icon>`,
-      () => html`<slot name="icon"></slot>`,
-    );
+        ></mdui-icon>`
+      : html`<slot name="icon"></slot>`;
   }
 
-  protected renderInner(): TemplateResult {
-    return html`${this.renderLeadingIcon()}${this.renderLabel()}${this.renderTrailingIcon()}`;
+  protected renderInner(): TemplateResult[] {
+    return [
+      this.renderLeadingIcon(),
+      this.renderLabel(),
+      this.renderTrailingIcon(),
+    ];
   }
 
   protected override render(): TemplateResult {
-    const {
-      disabled,
-      href,
-      autofocus,
-      name,
-      value,
-      type,
-      form,
-      formAction,
-      formEnctype,
-      formMethod,
-      formNovalidate,
-      formTarget,
-    } = this;
+    const { disabled, href } = this;
 
-    return html`<mdui-ripple></mdui-ripple>${when(
-        href,
-        () =>
-          html`${when(
-            disabled,
-            () => html`<span class="button">${this.renderInner()}</span>`,
-            () =>
-              this.renderAnchor({
-                className: 'button',
-                content: this.renderInner(),
-              }),
-          )}`,
-        () => html`<button
-          class="button"
-          name=${ifDefined(name)}
-          value=${ifDefined(value)}
-          type=${ifDefined(type)}
-          form=${ifDefined(form)}
-          formaction=${ifDefined(formAction)}
-          formenctype=${ifDefined(formEnctype)}
-          formmethod=${ifDefined(formMethod)}
-          formtarget=${ifDefined(formTarget)}
-          ?formnovalidate=${formNovalidate}
-          ?autofocus=${autofocus}
-          ?disabled=${disabled}
-        >
-          ${this.renderInner()}
-        </button>`,
-      )} `;
+    return html`<mdui-ripple></mdui-ripple>${href
+        ? disabled
+          ? html`<span class="button">${this.renderInner()}</span>`
+          : this.renderAnchor({
+              className: 'button',
+              content: this.renderInner(),
+            })
+        : this.renderButton({
+            className: 'button',
+            content: this.renderInner(),
+          })}`;
   }
 }
 

@@ -1,7 +1,6 @@
 import { html, TemplateResult, CSSResultGroup } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { when } from 'lit/directives/when.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ButtonBase } from '../button/button-base.js';
 import { style } from './style.js';
@@ -34,67 +33,33 @@ export class Fab extends ButtonBase {
   }
 
   protected renderIcon(): TemplateResult {
-    return when(
-      this.icon,
-      () =>
-        html`<mdui-icon
+    return this.icon
+      ? html`<mdui-icon
           class="icon"
           name=${this.icon}
           variant=${ifDefined(this.iconVariant)}
-        ></mdui-icon>`,
-      () => html`<slot name="icon"></slot>`,
-    );
+        ></mdui-icon>`
+      : html`<slot name="icon"></slot>`;
   }
 
-  protected renderInner(): TemplateResult {
-    return html`${this.renderIcon()}${this.renderLabel()}`;
+  protected renderInner(): TemplateResult[] {
+    return [this.renderIcon(), this.renderLabel()];
   }
 
   protected override render(): TemplateResult {
-    const {
-      disabled,
-      href,
-      autofocus,
-      name,
-      value,
-      type,
-      form,
-      formAction,
-      formEnctype,
-      formMethod,
-      formNovalidate,
-      formTarget,
-    } = this;
+    const { disabled, href } = this;
 
-    return html`<mdui-ripple></mdui-ripple>${when(
-        href,
-        () =>
-          html`${when(
-            disabled,
-            () => html`<span class="button">${this.renderInner()}</span>`,
-            () =>
-              this.renderAnchor({
-                className: 'button',
-                content: this.renderInner(),
-              }),
-          )}`,
-        () => html`<button
-          class="button"
-          name=${ifDefined(name)}
-          value=${ifDefined(value)}
-          type=${ifDefined(type)}
-          form=${ifDefined(form)}
-          formaction=${ifDefined(formAction)}
-          formenctype=${ifDefined(formEnctype)}
-          formmethod=${ifDefined(formMethod)}
-          formtarget=${ifDefined(formTarget)}
-          ?formnovalidate=${formNovalidate}
-          ?autofocus=${autofocus}
-          ?disabled=${disabled}
-        >
-          ${this.renderInner()}
-        </button>`,
-      )}`;
+    return html`<mdui-ripple></mdui-ripple>${href
+        ? disabled
+          ? html`<span class="button">${this.renderInner()}</span>`
+          : this.renderAnchor({
+              className: 'button',
+              content: this.renderInner(),
+            })
+        : this.renderButton({
+            className: 'button',
+            content: this.renderInner(),
+          })}`;
   }
 }
 

@@ -1,13 +1,8 @@
-import {
-  html,
-  LitElement,
-  TemplateResult,
-  CSSResultGroup,
-  PropertyValues,
-} from 'lit';
+import { html, LitElement, TemplateResult, CSSResultGroup } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
+import { watch } from '@mdui/shared/decorators/watch.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { style } from './style.js';
@@ -46,10 +41,10 @@ export class Checkbox extends RippleMixin(LitElement) {
   @property({ reflect: true })
   public value = 'on';
 
-  protected override updated(changedProperties: PropertyValues) {
-    if (changedProperties.has('indeterminate')) {
-      this.inputElement.indeterminate = this.indeterminate;
-    }
+  @watch('indeterminate')
+  private async onIndeterminateChange() {
+    await this.updateComplete;
+    this.inputElement.indeterminate = this.indeterminate;
   }
 
   protected override render(): TemplateResult {

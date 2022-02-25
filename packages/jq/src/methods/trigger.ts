@@ -41,7 +41,7 @@ $.fn.trigger = function (this: JQ, type: string, extraParameters: any = null): J
   const eventParams: EventParams = {
     detail: extraParameters,
     bubbles: true,
-    cancelable: true,
+    cancelable: false,
     composed: true,
   };
 

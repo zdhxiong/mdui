@@ -1,8 +1,8 @@
 import { html, TemplateResult, CSSResultGroup } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
+import type { MaterialIconsName } from '../icon.js';
 import { ButtonBase } from './button-base.js';
 import { style } from './style.js';
 import '../icon.js';
@@ -27,10 +27,7 @@ export class Button extends ButtonBase {
   public fullwidth = false;
 
   @property({ reflect: true })
-  public icon!: string;
-
-  @property({ reflect: true })
-  public iconVariant!: 'outlined' | 'filled' | 'round' | 'sharp' | 'two-tone';
+  public icon!: MaterialIconsName;
 
   @property({ type: Boolean, reflect: true })
   public trailingIcon = false;
@@ -49,11 +46,7 @@ export class Button extends ButtonBase {
 
   protected renderIcon(): TemplateResult {
     return this.icon
-      ? html`<mdui-icon
-          class="icon"
-          name=${this.icon}
-          variant=${ifDefined(this.iconVariant)}
-        ></mdui-icon>`
+      ? html`<mdui-icon class="icon" name=${this.icon}></mdui-icon>`
       : html`<slot name="icon"></slot>`;
   }
 

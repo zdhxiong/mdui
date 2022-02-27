@@ -3,6 +3,7 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import type { MaterialIconsName } from '../icon.js';
 import { style } from './style.js';
 import '../icon.js';
 
@@ -31,13 +32,7 @@ export class Avatar extends LitElement {
    * 图标头像的图标名称
    */
   @property({ reflect: true })
-  public icon!: string;
-
-  /**
-   * 图标头像的图标变体
-   */
-  @property({ reflect: true })
-  public iconVariant!: 'outlined' | 'filled' | 'round' | 'sharp' | 'two-tone';
+  public icon!: MaterialIconsName;
 
   /**
    * 头像形状。可选值为：
@@ -65,7 +60,7 @@ export class Avatar extends LitElement {
   public fit!: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
 
   protected override render(): TemplateResult {
-    const { alt, src, icon, iconVariant, fit } = this;
+    const { alt, src, icon, fit } = this;
 
     if (src) {
       return html`<img
@@ -76,10 +71,7 @@ export class Avatar extends LitElement {
     }
 
     if (icon) {
-      return html`<mdui-icon
-        name=${icon}
-        variant=${ifDefined(iconVariant)}
-      ></mdui-icon>`;
+      return html`<mdui-icon name=${icon}></mdui-icon>`;
     }
 
     return html`<slot></slot>`;

@@ -7,6 +7,8 @@ import { until } from 'lit/directives/until.js';
 import { ajax } from '@mdui/jq/functions/ajax.js';
 import { style } from './style.js';
 
+export type MaterialIconsName = string;
+
 @customElement('mdui-icon')
 export class Icon extends LitElement {
   static override styles: CSSResultGroup = style;
@@ -15,14 +17,7 @@ export class Icon extends LitElement {
    * Material Icons 图标名
    */
   @property({ reflect: true })
-  public name!: string;
-
-  /**
-   * Material Icons 的五种变体：outlined, filled, round, sharp, two-tone。默认为 filled。
-   * 仅在设置了 name 属性时，该属性才有效
-   */
-  @property({ reflect: true })
-  public variant!: 'outlined' | 'filled' | 'round' | 'sharp' | 'two-tone'; // 这个类型很多组件会用到，但目前 vscode.html-custom-data.json 不支持引用类型，所以只能每个要用到的地方都写一遍
+  public name!: MaterialIconsName;
 
   /**
    * svg 图标的路径
@@ -30,30 +25,22 @@ export class Icon extends LitElement {
   @property({ reflect: true })
   public src!: string;
 
-  /**
-   * 根据 variant 属性获取 Material Icons 的 font-family 名称
-   */
-  private getFontFamily(): string | undefined {
-    if (!this.variant) {
-      return;
-    }
-
-    const familyMap = new Map([
-      ['outlined', 'Material Icons Outlined'],
-      ['filled', 'Material Icons'],
-      ['round', 'Material Icons Round'],
-      ['sharp', 'Material Icons Sharp'],
-      ['two-tone', 'Material Icons Two Tone'],
-    ]);
-
-    return familyMap.get(this.variant);
-  }
-
   protected override render(): TemplateResult {
     if (this.name) {
-      return html`<span style=${styleMap({ fontFamily: this.getFontFamily() })}
-        >${this.name}</span
-      >`;
+      const [name, variant] = this.name.split('--');
+      const familyMap = new Map([
+        ['outlined', 'Material Icons Outlined'],
+        ['filled', 'Material Icons'],
+        ['round', 'Material Icons Round'],
+        ['sharp', 'Material Icons Sharp'],
+        ['two-tone', 'Material Icons Two Tone'],
+      ]);
+
+      return html`<span
+        style=${styleMap({ fontFamily: familyMap.get(variant) })}
+      >
+        ${name}
+      </span>`;
     }
 
     if (this.src) {

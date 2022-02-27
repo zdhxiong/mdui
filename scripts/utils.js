@@ -186,8 +186,31 @@ function getAllComponents(metadataPath) {
  */
 function buildVSCodeData(metadataPath) {
   const dir = path.dirname(metadataPath);
+  const isComponentsPackage = dir.endsWith('components');
   const components = getAllComponents(metadataPath);
-  const vscode = { version: 1.1, tags: [] };
+  const vscode = {
+    version: 1.1,
+    tags: [],
+  };
+
+  // components 子包添加 icon valueSets
+  if (isComponentsPackage) {
+    const iconVscodeJson = JSON.parse(
+      fs.readFileSync(
+        path.resolve('./packages/icons/vscode.html-custom-data.json'),
+        'utf8',
+      ),
+    );
+    vscode.valueSets = [
+      {
+        name: 'icon',
+        values: iconVscodeJson.tags.map((tag) => ({
+          name: tag.name.split('mdui-icon-')[1],
+          description: tag.description,
+        })),
+      },
+    ];
+  }
 
   components.map((component) => {
     if (!component.tagName) {
@@ -197,6 +220,7 @@ function buildVSCodeData(metadataPath) {
     const attributes = component.attributes?.map((attr) => {
       const type = attr.type?.text;
       let values = [];
+      let valueSet = undefined;
 
       if (type) {
         // 枚举类型，每个枚举项都可以带有注释
@@ -213,7 +237,6 @@ function buildVSCodeData(metadataPath) {
             val = val.replace(enumCommentReg, '').trim();
           }
 
-          // 只处理 string 和 number
           const isString = val.startsWith(`'`);
           const isNumber = Number(val).toString() === val;
 
@@ -222,9 +245,14 @@ function buildVSCodeData(metadataPath) {
           }
 
           if (enumComment) {
+            // 枚举类型
             values.push({ name: val, description: enumComment[1] });
           } else if (isNumber || isString) {
+            // string 和 number
             values.push({ name: val });
+          } else if (val === 'MaterialIconsName') {
+            // MaterialIconsName valueSets
+            valueSet = 'icon';
           }
         });
       }
@@ -233,6 +261,7 @@ function buildVSCodeData(metadataPath) {
         name: attr.name,
         description: attr.description,
         values: values.length ? values : undefined,
+        valueSet,
       };
     });
 
@@ -258,7 +287,7 @@ function buildVSCodeData(metadataPath) {
           description: component.summary,
           attributes,
         },
-        dir.endsWith('components') ? { references: componentsReferences } : {},
+        isComponentsPackage ? { references: componentsReferences } : {},
       ),
     );
   });
@@ -277,6 +306,7 @@ function buildVSCodeData(metadataPath) {
  */
 function buildWebTypes(metadataPath) {
   const dir = path.dirname(metadataPath);
+  const isComponentsPackage = dir.endsWith('components');
   const packagePath = path.join(dir, 'package.json');
   const packageInfo = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
   const components = getAllComponents(metadataPath);
@@ -348,7 +378,7 @@ function buildWebTypes(metadataPath) {
           attributes,
         },
         properties && events ? { js: { properties, events } } : {},
-        dir.endsWith('components')
+        isComponentsPackage
           ? {
               priority: 'high',
               'doc-url': `https://www.mdui.org/docs/${component.tagName

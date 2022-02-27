@@ -1,10 +1,10 @@
 import { customElement } from 'lit/decorators/custom-element.js';
 import { CSSResultGroup, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ButtonBase } from '../button/button-base.js';
+import type { MaterialIconsName } from '../icon.js';
 import { style } from './style.js';
 import '../icon.js';
 import '@mdui/icons/check.js';
@@ -33,10 +33,7 @@ export class Chip extends ButtonBase {
   public deletable = false;
 
   @property({ reflect: true })
-  public icon!: string;
-
-  @property({ reflect: true })
-  public iconVariant!: 'outlined' | 'filled' | 'round' | 'sharp' | 'two-tone';
+  public icon!: MaterialIconsName;
 
   @property({ reflect: true })
   public avatar!: string;
@@ -51,11 +48,7 @@ export class Chip extends ButtonBase {
     }
 
     if (this.icon) {
-      return html`<mdui-icon
-        class="icon"
-        name=${this.icon}
-        variant=${ifDefined(this.iconVariant)}
-      ></mdui-icon>`;
+      return html`<mdui-icon class="icon" name=${this.icon}></mdui-icon>`;
     }
 
     if (this.avatar) {

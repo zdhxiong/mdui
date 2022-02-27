@@ -6,6 +6,7 @@ import { when } from 'lit/directives/when.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
+import type { MaterialIconsName } from '../icon.js';
 import { style } from './list-item-style.js';
 import '../icon.js';
 
@@ -35,10 +36,7 @@ export class ListItem extends RippleMixin(LitElement) {
   public autofocus = false;
 
   @property({ reflect: true })
-  public icon!: string;
-
-  @property({ reflect: true })
-  public iconVariant!: 'outlined' | 'filled' | 'round' | 'sharp' | 'two-tone';
+  public icon!: MaterialIconsName;
 
   @property({ reflect: true })
   public avatar!: string;

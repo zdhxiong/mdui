@@ -6,6 +6,7 @@ import { query } from 'lit/decorators/query.js';
 import { state } from 'lit/decorators/state.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
+import type { MaterialIconsName } from '../icon.js';
 import { style } from './navigation-bar-item-style.js';
 import '../icon.js';
 
@@ -38,21 +39,10 @@ export class NavigationBarItem extends RippleMixin(LitElement) {
   public rel!: string;
 
   @property({ reflect: true })
-  public icon!: string;
+  public icon!: MaterialIconsName;
 
   @property({ reflect: true })
-  public iconVariant!: 'outlined' | 'filled' | 'round' | 'sharp' | 'two-tone';
-
-  @property({ reflect: true })
-  public activeIcon!: string;
-
-  @property({ reflect: true })
-  public activeIconVariant!:
-    | 'outlined'
-    | 'filled'
-    | 'round'
-    | 'sharp'
-    | 'two-tone';
+  public activeIcon!: MaterialIconsName;
 
   @property({ reflect: true })
   public badge!: string;
@@ -68,11 +58,7 @@ export class NavigationBarItem extends RippleMixin(LitElement) {
 
   protected renderIcon(): TemplateResult {
     if (this.icon) {
-      return html`<mdui-icon
-        class="icon"
-        name=${this.icon}
-        variant=${ifDefined(this.iconVariant)}
-      ></mdui-icon>`;
+      return html`<mdui-icon class="icon" name=${this.icon}></mdui-icon>`;
     }
 
     return html`<slot name="icon"></slot>`;
@@ -83,7 +69,6 @@ export class NavigationBarItem extends RippleMixin(LitElement) {
       return html`<mdui-icon
         class="active-icon"
         name=${this.activeIcon}
-        variant=${ifDefined(this.activeIconVariant)}
       ></mdui-icon>`;
     }
 

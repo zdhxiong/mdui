@@ -1,8 +1,8 @@
 import { html, TemplateResult, CSSResultGroup } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { ButtonBase } from '../button/button-base.js';
+import type { MaterialIconsName } from '../icon.js';
 import { style } from './style.js';
 import '../icon.js';
 
@@ -20,10 +20,7 @@ export class Fab extends ButtonBase {
   public size: 'normal' | 'small' | 'large' = 'normal';
 
   @property({ reflect: true })
-  public icon!: string;
-
-  @property({ reflect: true })
-  public iconVariant!: 'outlined' | 'filled' | 'round' | 'sharp' | 'two-tone';
+  public icon!: MaterialIconsName;
 
   @property({ reflect: true })
   public tooltip!: string;
@@ -34,11 +31,7 @@ export class Fab extends ButtonBase {
 
   protected renderIcon(): TemplateResult {
     return this.icon
-      ? html`<mdui-icon
-          class="icon"
-          name=${this.icon}
-          variant=${ifDefined(this.iconVariant)}
-        ></mdui-icon>`
+      ? html`<mdui-icon class="icon" name=${this.icon}></mdui-icon>`
       : html`<slot name="icon"></slot>`;
   }
 

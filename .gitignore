@@ -1,5 +1,12 @@
+## .gitignore file
+
+# Logs
+logs
+*.log
+# NPM and Yarn
+.npm
+.yarn-integrity
+node_modules
+# Editors
+.vscode/
 .idea/
-.vs/
-es/
-node_modules/
-yarn.lock

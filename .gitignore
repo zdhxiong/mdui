@@ -6,6 +6,7 @@ logs
 # NPM and Yarn
 .npm
 .yarn-integrity
+yarn.lock
 node_modules
 # Editors
 .vscode/

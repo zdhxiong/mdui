@@ -1,6 +1,7 @@
 import { html, TemplateResult, CSSResultGroup } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { queryAll } from 'lit/decorators/query-all.js';
 import { ButtonBase } from '../button/button-base.js';
 import type { MaterialIconsName } from '../icon.js';
 import { style } from './style.js';
@@ -9,6 +10,9 @@ import '../icon.js';
 @customElement('mdui-fab')
 export class Fab extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
+
+  @queryAll('.button')
+  protected focusProxiedElements!: HTMLElement[];
 
   @property({ type: Boolean, reflect: true })
   public loading = false;

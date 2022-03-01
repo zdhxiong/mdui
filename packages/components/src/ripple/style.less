@@ -27,8 +27,10 @@
   background-color: ~"rgba(var(--mdui-comp-ripple-state-layer-color, var(--mdui-sys-color-on-surface, @{mdui-sys-color-on-surface})), @{mdui-sys-state-hover-state-layer-opacity})";
 }
 
-.focused {
-  background-color: ~"rgba(var(--mdui-comp-ripple-state-layer-color, var(--mdui-sys-color-on-surface, @{mdui-sys-color-on-surface})), @{mdui-sys-state-focus-state-layer-opacity})";
+:host-context(:focus-visible) {
+  .focused {
+    background-color: ~"rgba(var(--mdui-comp-ripple-state-layer-color, var(--mdui-sys-color-on-surface, @{mdui-sys-color-on-surface})), @{mdui-sys-state-focus-state-layer-opacity})";
+  }
 }
 
 .dragged {

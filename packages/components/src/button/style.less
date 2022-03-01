@@ -22,6 +22,10 @@
   .letterSpacing(label-large-tracking);
 }
 
+:host(:focus-visible) {
+  outline: none;
+}
+
 :host([fullwidth]) {
   display: block;
 }
@@ -61,16 +65,16 @@
   .stateLayerColor(primary);
 }
 
-:host([variant="elevated"][focused]) {
+:host([variant="elevated"]:focus-visible) {
   .elevation(1);
 }
 
-:host([variant="filled"][focused]),
-:host([variant="tonal"][focused]) {
+:host([variant="filled"]:focus-visible),
+:host([variant="tonal"]:focus-visible) {
   .elevation(0);
 }
 
-:host([variant="outlined"][focused]) {
+:host([variant="outlined"]:focus-visible) {
   .borderColor(primary);
 }
 

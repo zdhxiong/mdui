@@ -3,12 +3,13 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
+import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { style } from './style.js';
 
 @customElement('mdui-checkbox')
-export class Checkbox extends RippleMixin(LitElement) {
+export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
   static override styles: CSSResultGroup = style;
 
   @query('mdui-ripple', true)
@@ -16,6 +17,10 @@ export class Checkbox extends RippleMixin(LitElement) {
 
   @query('input', true)
   protected inputElement!: HTMLInputElement;
+
+  protected get focusProxiedElements(): HTMLElement[] {
+    return [this.inputElement];
+  }
 
   @property({ type: Boolean, reflect: true })
   public disabled = false;

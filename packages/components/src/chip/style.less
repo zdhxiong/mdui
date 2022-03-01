@@ -24,6 +24,10 @@
   .stateLayerColor(on-surface-variant);
 }
 
+:host(:focus-visible) {
+  outline: none;
+}
+
 :host([variant="assist"]) {
   .color(on-surface);
   .stateLayerColor(on-surface);
@@ -81,9 +85,9 @@
   .color(on-surface-variant);
 }
 
-:host([variant="filter"][focused]),
-:host([variant="input"][focused]),
-:host([variant="suggestion"][focused]) {
+:host([variant="filter"]:focus-visible),
+:host([variant="input"]:focus-visible),
+:host([variant="suggestion"]:focus-visible) {
   .borderColor(on-surface-variant);
 }
 

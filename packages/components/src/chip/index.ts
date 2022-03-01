@@ -1,6 +1,7 @@
 import { customElement } from 'lit/decorators/custom-element.js';
 import { CSSResultGroup, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
+import { queryAll } from 'lit/decorators/query-all.js';
 import { when } from 'lit/directives/when.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ButtonBase } from '../button/button-base.js';
@@ -13,6 +14,9 @@ import '@mdui/icons/clear.js';
 @customElement('mdui-chip')
 export class Chip extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
+
+  @queryAll('.button')
+  protected focusProxiedElements!: HTMLElement[];
 
   @property({ type: Boolean, reflect: true })
   public loading = false;

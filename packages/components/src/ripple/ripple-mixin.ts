@@ -1,5 +1,5 @@
 import { Constructor, dedupeMixin } from '@open-wc/dedupe-mixin';
-import { LitElement } from 'lit';
+import { LitElement, PropertyValues } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
@@ -171,12 +171,15 @@ export const RippleMixin = dedupeMixin(
         }
       }
 
-      protected async firstUpdated() {
+      protected async firstUpdated(changes: PropertyValues) {
+        super.firstUpdated(changes);
         $(this)
           .on(startEvent, (e) => this.startPress(e))
           .on('mouseenter', (e) => this.startHover(e))
           .on('mouseleave', (e) => this.endHover(e))
-          .on(unlockEvent, register);
+          .on(unlockEvent, register)
+          .on('focus', (e) => this.startFocus(e))
+          .on('blur', (e) => this.endFocus(e));
       }
     }
 

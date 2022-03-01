@@ -3,7 +3,9 @@ import { html, LitElement, nothing, CSSResultGroup, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { query } from 'lit/decorators/query.js';
+import { queryAll } from 'lit/decorators/query-all.js';
 import { state } from 'lit/decorators/state.js';
+import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import type { MaterialIconsName } from '../icon.js';
@@ -11,7 +13,7 @@ import { style } from './navigation-bar-item-style.js';
 import '../icon.js';
 
 @customElement('mdui-navigation-bar-item')
-export class NavigationBarItem extends RippleMixin(LitElement) {
+export class NavigationBarItem extends RippleMixin(FocusableMixin(LitElement)) {
   static override styles: CSSResultGroup = style;
 
   /**
@@ -22,6 +24,9 @@ export class NavigationBarItem extends RippleMixin(LitElement) {
 
   @query('mdui-ripple', true)
   protected rippleElement!: Ripple;
+
+  @queryAll('.item')
+  protected focusProxiedElements!: HTMLElement[];
 
   @state()
   protected disabled = false;

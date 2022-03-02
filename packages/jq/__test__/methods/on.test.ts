@@ -666,6 +666,39 @@ const test = ($: JQStatic, type: string): void => {
       $inner.trigger('click');
       assert.equal(eventCount, 0);
     });
+
+    if (!isJquery) {
+      it('.trigger(type, detail, options)', () => {
+        const $inner = $('#inner');
+
+        $inner.on('click input', function (event, detail) {
+          switch (event.type) {
+            case 'click':
+              assert.isUndefined(detail);
+              assert.isFalse(event.cancelable);
+              assert.isTrue(event.composed);
+              assert.isTrue(event.bubbles);
+              break;
+            case 'input':
+              assert.deepEqual(detail, { key: 'val' });
+              assert.isTrue(event.cancelable);
+              assert.isFalse(event.composed);
+              assert.isFalse(event.bubbles);
+          }
+        });
+
+        $inner.trigger('click');
+        $inner.trigger(
+          'input',
+          { key: 'val' },
+          {
+            cancelable: true,
+            composed: false,
+            bubbles: false,
+          },
+        );
+      });
+    }
   });
 };
 

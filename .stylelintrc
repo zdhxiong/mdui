@@ -14,6 +14,7 @@
     "max-line-length": null,
     "font-family-no-missing-generic-family-keyword": null,
     "color-function-notation": null,
-    "no-descending-specificity": null
+    "no-descending-specificity": null,
+    "function-no-unknown": null
   }
 }

@@ -10,7 +10,8 @@ declare module '../shared/core.js' {
     /**
      * 触发指定的事件
      * @param type 事件名
-     * @param extraParameters 传给事件处理函数的额外参数
+     * @param detail 传给事件处理函数的额外参数
+     * @param options CustomEvent 的初始化参数
      * @example ````触发 .box 元素上的 click 事件
 ```js
 $('.box').trigger('click');
@@ -22,35 +23,28 @@ $('.box').trigger('click', {key1: 'value1', key2: 'value2'});
      */
     trigger(
       type: string,
-      extraParameters?: unknown[] | PlainObject | string | number | boolean,
+      detail?: unknown[] | PlainObject | string | number | boolean,
+      options?: EventInit,
     ): this;
   }
 }
 
 // eslint-disable-next-line
-$.fn.trigger = function (this: JQ, type: string, extraParameters: any = null): JQ {
-  type EventParams = {
-    // eslint-disable-next-line
-    detail: any;
-    bubbles: boolean;
-    cancelable: boolean;
-    composed: boolean;
-  };
+$.fn.trigger = function (this: JQ, name: string, detail: any = null, options?: CustomEventInit): JQ {
+  const { type, ns } = parse(name);
 
-  const event = parse(type);
-  const eventParams: EventParams = {
-    detail: extraParameters,
+  const event = new CustomEvent(type, {
+    detail,
     bubbles: true,
     cancelable: false,
     composed: true,
-  };
-
-  const eventObject = new CustomEvent(event.type, eventParams);
+    ...options,
+  });
 
   // @ts-ignore
-  eventObject._ns = event.ns;
+  event._ns = ns;
 
   return this.each((_, element) => {
-    element.dispatchEvent(eventObject);
+    element.dispatchEvent(event);
   });
 };

@@ -1,6 +1,6 @@
 import jQuery from 'jquery';
 import { assert } from '@open-wc/testing';
-import jq from '../$.js';
+import { $ as jq } from '../$.js';
 import { JQStatic } from '../shared/core.js';
 import { JQ } from '../shared/core.js';
 

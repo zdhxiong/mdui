@@ -3,7 +3,6 @@
 :host {
   position: relative;
   display: inline-block;
-  box-sizing: border-box;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   .height(40);
@@ -11,10 +10,6 @@
   .fontWeight(label-large-weight);
   .letterSpacing(label-large-tracking);
   .borderRadius(2);
-}
-
-:host(:focus-visible) {
-  outline: none;
 }
 
 :host([disabled]) {
@@ -54,7 +49,6 @@ i {
 
   // 图标的边框和背景
   &::after {
-    box-sizing: border-box;
     transition: all 180ms @mdui-sys-motion-easing-legacy;
     content: " ";
     .width(18);
@@ -66,7 +60,6 @@ i {
   // 选中状态图标内部的勾
   &::before {
     position: absolute;
-    box-sizing: border-box;
     transform: rotateZ(43deg) scale(0);
     transform-origin: 100% 100%;
     opacity: 0;

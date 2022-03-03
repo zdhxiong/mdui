@@ -3,7 +3,6 @@
 :host {
   position: relative;
   display: inline-block;
-  box-sizing: border-box;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   .height(40);
@@ -11,10 +10,6 @@
   .fontWeight(label-large-weight);
   .letterSpacing(label-large-tracking);
   .borderRadius(2);
-}
-
-:host(:focus-visible) {
-  outline: none;
 }
 
 :host([disabled]) {
@@ -54,7 +49,6 @@ i {
 
   /* 图标外圈 */
   &::after {
-    box-sizing: border-box;
     border-radius: 50%;
     transition: all 180ms @mdui-sys-motion-easing-legacy;
     content: " ";
@@ -66,7 +60,6 @@ i {
   // 图标内部圆圈
   &::before {
     position: absolute;
-    box-sizing: border-box;
     border-radius: 50%;
     transform: scale(0);
     opacity: 0;

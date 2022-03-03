@@ -3,7 +3,6 @@
 :host {
   position: relative;
   display: inline-block;
-  box-sizing: border-box;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   .height(40);
@@ -11,10 +10,6 @@
   .fontWeight(label-large-weight);
   .letterSpacing(label-large-tracking);
   .borderRadius(2);
-}
-
-:host(:focus-visible) {
-  outline: none;
 }
 
 :host([disabled]) {

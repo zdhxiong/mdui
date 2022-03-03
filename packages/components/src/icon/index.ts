@@ -5,13 +5,14 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { until } from 'lit/directives/until.js';
 import { ajax } from '@mdui/jq/functions/ajax.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 
 export type MaterialIconsName = string;
 
 @customElement('mdui-icon')
 export class Icon extends LitElement {
-  static override styles: CSSResultGroup = style;
+  static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * Material Icons 图标名

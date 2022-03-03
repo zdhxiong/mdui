@@ -6,7 +6,6 @@
 :host {
   position: relative;
   display: inline-block;
-  box-sizing: border-box;
   overflow: hidden;
   text-align: center;
   cursor: pointer;
@@ -20,10 +19,6 @@
   .color(primary);
   .padding(0, 16);
   .letterSpacing(label-large-tracking);
-}
-
-:host(:focus-visible) {
-  outline: none;
 }
 
 :host([fullwidth]) {

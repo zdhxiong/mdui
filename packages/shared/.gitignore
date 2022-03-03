@@ -1,2 +1,3 @@
-/variables
-/variables.less
+src/lit-styles/*style.ts
+variables
+variables.less

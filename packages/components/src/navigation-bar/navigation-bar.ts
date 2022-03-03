@@ -2,12 +2,13 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { html, LitElement, CSSResultGroup, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
-import { style } from './navigation-bar-style.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { navigationBarStyle } from './navigation-bar-style.js';
 import { NavigationBarItem } from './navigation-bar-item.js';
 
 @customElement('mdui-navigation-bar')
 export class NavigationBar extends LitElement {
-  static override styles: CSSResultGroup = style;
+  static override styles: CSSResultGroup = [componentStyle, navigationBarStyle];
 
   @queryAssignedElements({ flatten: true })
   protected itemElements!: NavigationBarItem[] | null;

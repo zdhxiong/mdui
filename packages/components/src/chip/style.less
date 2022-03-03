@@ -6,7 +6,6 @@
 :host {
   position: relative;
   display: inline-block;
-  box-sizing: border-box;
   overflow: hidden;
   cursor: pointer;
   transition: box-shadow 200ms @mdui-sys-motion-easing-legacy;
@@ -22,10 +21,6 @@
   .border(1px, solid, outline);
   .color(on-surface-variant);
   .stateLayerColor(on-surface-variant);
-}
-
-:host(:focus-visible) {
-  outline: none;
 }
 
 :host([variant="assist"]) {

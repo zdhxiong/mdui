@@ -58,7 +58,10 @@ function buildLitStyleFile(filePath) {
     })
     .then((output) => {
       const outputName = path.resolve(filePath.replace(/(less)$/, 'ts'));
-      const outputContent = `import {css} from 'lit';export const style = css\`${output}\`;`;
+      const moduleName = path
+        .basename(filePath, '.less')
+        .replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+      const outputContent = `import {css} from 'lit';export const ${moduleName} = css\`${output}\`;`;
       fs.writeFileSync(outputName, outputContent);
 
       const eslint = new ESLint({ fix: true });

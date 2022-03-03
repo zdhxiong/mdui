@@ -6,15 +6,19 @@ import { query } from 'lit/decorators/query.js';
 import { queryAll } from 'lit/decorators/query-all.js';
 import { state } from 'lit/decorators/state.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import type { MaterialIconsName } from '../icon.js';
-import { style } from './navigation-bar-item-style.js';
+import { navigationBarItemStyle } from './navigation-bar-item-style.js';
 import '../icon.js';
 
 @customElement('mdui-navigation-bar-item')
 export class NavigationBarItem extends RippleMixin(FocusableMixin(LitElement)) {
-  static override styles: CSSResultGroup = style;
+  static override styles: CSSResultGroup = [
+    componentStyle,
+    navigationBarItemStyle,
+  ];
 
   /**
    * 仅供父组件 navigation-bar 调用

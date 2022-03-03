@@ -3,6 +3,7 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import type { MaterialIconsName } from '../icon.js';
 import { style } from './style.js';
 import '../icon.js';
@@ -14,7 +15,7 @@ import '../icon.js';
  */
 @customElement('mdui-avatar')
 export class Avatar extends LitElement {
-  static override styles: CSSResultGroup = style;
+  static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * 图片头像图片的 alt

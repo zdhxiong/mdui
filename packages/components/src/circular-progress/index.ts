@@ -2,11 +2,12 @@ import { html, LitElement, CSSResultGroup, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 
 @customElement('mdui-circular-progress')
 export class CircularProgress extends LitElement {
-  static override styles: CSSResultGroup = style;
+  static override styles: CSSResultGroup = [componentStyle, style];
 
   @property({ type: Number, reflect: true })
   public max!: number;

@@ -4,15 +4,16 @@ import { query } from 'lit/decorators/query.js';
 import { property } from 'lit/decorators/property.js';
 import { when } from 'lit/directives/when.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import type { MaterialIconsName } from '../icon.js';
-import { style } from './list-item-style.js';
+import { listItemStyle } from './list-item-style.js';
 import '../icon.js';
 
 @customElement('mdui-list-item')
 export class ListItem extends RippleMixin(LitElement) {
-  static override styles: CSSResultGroup = style;
+  static override styles: CSSResultGroup = [componentStyle, listItemStyle];
 
   @query('mdui-ripple', true)
   protected rippleElement!: Ripple;

@@ -17,6 +17,7 @@ import '@mdui/jq/methods/data.js';
 import '@mdui/jq/methods/filter.js';
 import '@mdui/jq/methods/addClass.js';
 import '@mdui/jq/methods/remove.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 
 /**
@@ -26,7 +27,7 @@ import { style } from './style.js';
  */
 @customElement('mdui-ripple')
 export class Ripple extends LitElement {
-  static override styles: CSSResultGroup = style;
+  static override styles: CSSResultGroup = [componentStyle, style];
 
   @query('.surface', true)
   protected surface!: HTMLElement;

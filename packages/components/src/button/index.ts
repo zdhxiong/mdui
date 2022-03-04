@@ -8,6 +8,13 @@ import { ButtonBase } from './button-base.js';
 import { style } from './style.js';
 import '../icon.js';
 
+/**
+ * @slot - 按钮的文本
+ * @slot icon - 按钮的图标
+ *
+ * @csspart label - 文本
+ * @csspart icon - 图标
+ */
 @customElement('mdui-button')
 export class Button extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
@@ -15,29 +22,44 @@ export class Button extends ButtonBase {
   @queryAll('.button')
   protected focusProxiedElements!: HTMLElement[];
 
+  /**
+   * 是否加载中状态
+   */
   @property({ type: Boolean, reflect: true })
   public loading = false;
 
+  /**
+   * 按钮形式
+   */
   @property({ reflect: true })
   public variant:
-    | 'elevated'
-    | 'filled'
-    | 'tonal'
-    | 'outlined'
-    | 'text'
-    | 'icon' = 'text';
+    | 'elevated' /*预览图*/
+    | 'filled' /*预览图*/
+    | 'tonal' /*预览图*/
+    | 'outlined' /*预览图*/
+    | 'text' /*预览图*/
+    | 'icon' /*预览图*/ = 'text';
 
+  /**
+   * 是否填满父元素宽度
+   */
   @property({ type: Boolean, reflect: true })
   public fullwidth = false;
 
+  /**
+   * 图标名
+   */
   @property({ reflect: true })
   public icon!: MaterialIconsName;
 
+  /**
+   * 图标是否置于右侧
+   */
   @property({ type: Boolean, reflect: true })
   public trailingIcon = false;
 
   protected renderLabel(): TemplateResult {
-    return html`<span class="label"><slot></slot></span>`;
+    return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
   protected renderLeadingIcon(): TemplateResult {
@@ -50,8 +72,8 @@ export class Button extends ButtonBase {
 
   protected renderIcon(): TemplateResult {
     return this.icon
-      ? html`<mdui-icon class="icon" name=${this.icon}></mdui-icon>`
-      : html`<slot name="icon"></slot>`;
+      ? html`<mdui-icon part="icon" class="icon" name=${this.icon}></mdui-icon>`
+      : html`<slot part="icon" name="icon"></slot>`;
   }
 
   protected renderInner(): TemplateResult[] {

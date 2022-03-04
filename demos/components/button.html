@@ -105,6 +105,24 @@
   </section>
 
   <section>
+    <h2>css part</h2>
+    <style>
+      #part1::part(label) { color: red; }
+      #part1::part(icon) { color: green; }
+    </style>
+    <mdui-button id="part1" icon="settings">button</mdui-button>
+
+    <style>
+      #part2::part(label) { color: red; }
+      #part2::part(icon) { color: green; }
+    </style>
+    <mdui-button id="part2">
+      <mdui-icon name="settings" slot="icon"></mdui-icon>
+      button
+    </mdui-button>
+  </section>
+
+  <section>
     <h2>custom style</h2>
     <style>
       .custom1 {

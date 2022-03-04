@@ -208,6 +208,10 @@
   .px(margin-left, @value);
 }
 
+.translate(@x, @y: 0) {
+  transform: translate(unit((@x / 16), rem), unit((@y / 16), rem));
+}
+
 .border(@width, @style, @rgb, @opacity: 1) {
   ._border(border, @width, @style, @rgb, @opacity: 1);
 }

@@ -11,6 +11,16 @@ import '../icon.js';
 import '@mdui/icons/check.js';
 import '@mdui/icons/clear.js';
 
+/**
+ * @slot - 文本
+ * @slot icon - 图标
+ *
+ * @csspart label - 文本
+ * @csspart check - 选中状态图标
+ * @csspart icon - 图标
+ * @csspart avatar - 头像
+ * @csspart delete - 删除图标
+ */
 @customElement('mdui-chip')
 export class Chip extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
@@ -43,32 +53,40 @@ export class Chip extends ButtonBase {
   public avatar!: string;
 
   protected renderLabel(): TemplateResult {
-    return html`<span class="label"><slot></slot></span>`;
+    return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
   protected renderLeadingIcon(): TemplateResult {
     if (this.selected && ['assist', 'filter'].includes(this.variant)) {
-      return html`<mdui-icon-check class="icon"></mdui-icon-check>`;
+      return html`<mdui-icon-check
+        part="check"
+        class="icon"
+      ></mdui-icon-check>`;
     }
 
     if (this.icon) {
-      return html`<mdui-icon class="icon" name=${this.icon}></mdui-icon>`;
+      return html`<mdui-icon
+        part="icon"
+        class="icon"
+        name=${this.icon}
+      ></mdui-icon>`;
     }
 
     if (this.avatar) {
       return html`<span
+        part="avatar"
         class="avatar"
         style=${styleMap({ backgroundImage: `url(${this.avatar})` })}
       ></span>`;
     }
 
-    return html`<slot name="icon"></slot>`;
+    return html`<slot part="icon" name="icon"></slot>`;
   }
 
   protected renderTrailingIcon(): TemplateResult {
     return when(
       this.deletable,
-      () => html`<span class="delete">
+      () => html`<span part="delete" class="delete">
         <mdui-icon-clear></mdui-icon-clear>
       </span>`,
     );

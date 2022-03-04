@@ -2,12 +2,20 @@ import { html, LitElement, CSSResultGroup, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
+import { when } from 'lit/directives/when.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { style } from './style.js';
 
+/**
+ * @slot - 文本
+ *
+ * @csspart control - 选择框
+ * @csspart label - 文本
+ */
 @customElement('mdui-radio')
 export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   static override styles: CSSResultGroup = [componentStyle, style];
@@ -21,6 +29,8 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   protected get focusProxiedElements(): HTMLElement[] {
     return [this.inputElement];
   }
+
+  private readonly hasSlotController = new HasSlotController(this, '[default]');
 
   @property({ type: Boolean, reflect: true })
   public disabled = false;
@@ -45,6 +55,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
 
   protected override render(): TemplateResult {
     const { disabled, checked, autofocus, name } = this;
+    const hasLabel = this.hasSlotController.test('[default]');
 
     return html`<label>
       <input
@@ -54,10 +65,10 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
         ?checked=${checked}
         ?autofocus=${autofocus}
       />
-      <i>
+      <i part="control">
         <mdui-ripple></mdui-ripple>
       </i>
-      <slot></slot>
+      ${when(hasLabel, () => html`<span part="label"><slot></slot></span>`)}
     </label>`;
   }
 }

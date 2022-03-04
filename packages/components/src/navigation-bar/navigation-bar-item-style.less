@@ -30,7 +30,8 @@ a {
   .paddingBottom(12);
 }
 
-.icon-container {
+.indicator {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,13 +41,15 @@ a {
   .borderRadius(16);
 }
 
-.icon-container,
-:host([active]) .icon-container {
+.indicator,
+:host([active]) .indicator {
   transition: background-color 75ms @mdui-sys-motion-easing-legacy-decelerate, width 225ms @mdui-sys-motion-easing-legacy-decelerate;
 }
 
 .dot,
 .badge {
+  position: absolute;
+  .translate(12, -12);
   .backgroundColor(error);
 }
 
@@ -57,11 +60,17 @@ a {
 }
 
 .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  .paddingLeft(4);
+  .paddingRight(4);
   .color(on-error);
   .fontSize(label-small-size);
   .fontWeight(label-small-weight);
   .letterSpacing(label-small-tracking);
   .height(16);
+  .minWidth(16);
   .borderRadius(8);
 }
 
@@ -105,7 +114,7 @@ a {
 :host([active]) {
   .stateLayerColor(on-surface);
 
-  .icon-container {
+  .indicator {
     .width(64);
     .backgroundColor(secondary-container);
   }
@@ -117,15 +126,16 @@ a {
     .color(on-secondary-container);
   }
 
-  // todo
   .active-icon,
-  slot[name="activeIcon"] {
+  .has-active-icon ::slotted([slot="activeIcon"]) {
     display: inline-block;
+  }
 
-    & + .icon,
-    & + slot[name="icon"]::slotted([slot="icon"]) {
-      display: none;
-    }
+  .active-icon + .icon,
+  .active-icon + ::slotted([slot="icon"]),
+  .has-active-icon .icon,
+  .has-active-icon ::slotted([slot="icon"]) {
+    display: none;
   }
 
   .label {

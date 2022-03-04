@@ -12,6 +12,9 @@ import '../icon.js';
  * @summary 头像组件
  *
  * @slot - 自定义头像中的内容，可以为字母、汉字、`<img> 元素`、图标等
+ *
+ * @csspart image - 图片
+ * @csspart icon - 图标
  */
 @customElement('mdui-avatar')
 export class Avatar extends LitElement {
@@ -51,11 +54,11 @@ export class Avatar extends LitElement {
   /**
    * 图片如何适应容器框，同原生的 object-fit。可选值为：
    *
-   * `contain`：
-   * `cover`：
-   * `fill`：
-   * `none`：
-   * `scale-down`：
+   * * `contain`：
+   * * `cover`：
+   * * `fill`：
+   * * `none`：
+   * * `scale-down`：
    */
   @property({ reflect: true })
   public fit!: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
@@ -65,6 +68,7 @@ export class Avatar extends LitElement {
 
     if (src) {
       return html`<img
+        part="image"
         alt=${ifDefined(alt)}
         src=${src}
         style=${styleMap({ objectFit: fit })}
@@ -72,7 +76,7 @@ export class Avatar extends LitElement {
     }
 
     if (icon) {
-      return html`<mdui-icon name=${icon}></mdui-icon>`;
+      return html`<mdui-icon part="icon" name=${icon}></mdui-icon>`;
     }
 
     return html`<slot></slot>`;

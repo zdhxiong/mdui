@@ -8,6 +8,10 @@ import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { style } from './style.js';
 
+/**
+ * @csspart track - 轨道
+ * @csspart handle - 图标
+ */
 @customElement('mdui-switch')
 export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   static override styles: CSSResultGroup = [componentStyle, style];
@@ -54,8 +58,8 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
         ?checked=${checked}
         ?autofocus=${autofocus}
       />
-      <i class="track"></i>
-      <i class="handle">
+      <i part="track" class="track"></i>
+      <i part="handle" class="handle">
         <mdui-ripple></mdui-ripple>
       </i>
     </label>`;

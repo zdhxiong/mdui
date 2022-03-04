@@ -5,14 +5,27 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { query } from 'lit/decorators/query.js';
 import { queryAll } from 'lit/decorators/query-all.js';
 import { state } from 'lit/decorators/state.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import type { MaterialIconsName } from '../icon.js';
 import { navigationBarItemStyle } from './navigation-bar-item-style.js';
 import '../icon.js';
 
+/**
+ * @slot - 文本
+ * @slot icon - 图标
+ * @slot activeIcon - 激活状态的图标
+ *
+ * @csspart label - 文本
+ * @csspart dot - 圆点
+ * @csspart badge - 小徽标
+ * @csspart icon - 图标
+ * @csspart active-icon - 激活状态的图标
+ */
 @customElement('mdui-navigation-bar-item')
 export class NavigationBarItem extends RippleMixin(FocusableMixin(LitElement)) {
   static override styles: CSSResultGroup = [
@@ -31,6 +44,13 @@ export class NavigationBarItem extends RippleMixin(FocusableMixin(LitElement)) {
 
   @queryAll('.item')
   protected focusProxiedElements!: HTMLElement[];
+
+  private readonly hasSlotController = new HasSlotController(
+    this,
+    '[default]',
+    'icon',
+    'activeIcon',
+  );
 
   @state()
   protected disabled = false;
@@ -67,21 +87,26 @@ export class NavigationBarItem extends RippleMixin(FocusableMixin(LitElement)) {
 
   protected renderIcon(): TemplateResult {
     if (this.icon) {
-      return html`<mdui-icon class="icon" name=${this.icon}></mdui-icon>`;
+      return html`<mdui-icon
+        part="icon"
+        class="icon"
+        name=${this.icon}
+      ></mdui-icon>`;
     }
 
-    return html`<slot name="icon"></slot>`;
+    return html`<slot part="icon" name="icon"></slot>`;
   }
 
   protected renderActiveIcon(): TemplateResult {
     if (this.activeIcon) {
       return html`<mdui-icon
+        part="active-icon"
         class="active-icon"
         name=${this.activeIcon}
       ></mdui-icon>`;
     }
 
-    return html`<slot name="activeIcon"></slot>`;
+    return html`<slot part="active-icon" name="activeIcon"></slot>`;
   }
 
   protected renderBadge(): TemplateResult | typeof nothing {
@@ -92,14 +117,14 @@ export class NavigationBarItem extends RippleMixin(FocusableMixin(LitElement)) {
     }
 
     if (!badge) {
-      return html`<span class="dot"></span>`;
+      return html`<span part="dot" class="dot"></span>`;
     }
 
-    return html`<span class="badge">${badge}</span>`;
+    return html`<span part="badge" class="badge">${badge}</span>`;
   }
 
   protected renderLabel(): TemplateResult {
-    return html`<span class="label"><slot></slot></span>`;
+    return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
   protected override render(): TemplateResult {
@@ -113,7 +138,11 @@ export class NavigationBarItem extends RippleMixin(FocusableMixin(LitElement)) {
         target=${ifDefined(target)}
         rel=${ifDefined(rel)}
       >
-        <span class="icon-container">
+        <span
+          class="indicator ${classMap({
+            'has-active-icon': this.hasSlotController.test('activeIcon'),
+          })}"
+        >
           ${this.renderBadge()}${this.renderActiveIcon()}${this.renderIcon()}
         </span>
         ${this.renderLabel()}

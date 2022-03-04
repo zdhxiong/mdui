@@ -6,6 +6,9 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 
+/**
+ * @csspart indicator - 指示器
+ */
 @customElement('mdui-linear-progress')
 export class LinearProgress extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];
@@ -21,6 +24,7 @@ export class LinearProgress extends LitElement {
     const isDeterminate = value !== undefined;
 
     return html`<div
+      part="indicator"
       class="${classMap({
         determinate: isDeterminate,
         indeterminate: !isDeterminate,

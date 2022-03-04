@@ -7,6 +7,13 @@ import type { MaterialIconsName } from '../icon.js';
 import { style } from './style.js';
 import '../icon.js';
 
+/**
+ * @slot - 文本
+ * @slot icon - 图标
+ *
+ * @csspart label - 文本
+ * @csspart icon - 图标
+ */
 @customElement('mdui-fab')
 export class Fab extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
@@ -30,13 +37,13 @@ export class Fab extends ButtonBase {
   public tooltip!: string;
 
   protected renderLabel(): TemplateResult {
-    return html`<span class="label"><slot></slot></span>`;
+    return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
   protected renderIcon(): TemplateResult {
     return this.icon
-      ? html`<mdui-icon class="icon" name=${this.icon}></mdui-icon>`
-      : html`<slot name="icon"></slot>`;
+      ? html`<mdui-icon part="icon" class="icon" name=${this.icon}></mdui-icon>`
+      : html`<slot part="icon" name="icon"></slot>`;
   }
 
   protected renderInner(): TemplateResult[] {

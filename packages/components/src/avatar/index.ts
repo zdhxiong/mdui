@@ -11,6 +11,8 @@ import '../icon.js';
 /**
  * @summary 头像组件
  *
+ * @event click - 点击时触发
+ *
  * @slot - 自定义头像中的内容，可以为字母、汉字、`<img> 元素`、图标等
  *
  * @csspart image - 图片

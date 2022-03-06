@@ -10,6 +10,9 @@ import { style } from './style.js';
 
 export type MaterialIconsName = string;
 
+/**
+ * @event click - 点击时触发
+ */
 @customElement('mdui-icon')
 export class Icon extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];

@@ -9,6 +9,10 @@ import { style } from './style.js';
 import '../icon.js';
 
 /**
+ * @event click - 点击时触发
+ * @event focus - 获得焦点时触发
+ * @event blur - 失去焦点时触发
+ *
  * @slot - 按钮的文本
  * @slot icon - 按钮的图标
  *

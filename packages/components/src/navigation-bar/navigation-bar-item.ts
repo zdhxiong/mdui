@@ -20,6 +20,10 @@ import '../icon.js';
  * @slot icon - 图标
  * @slot activeIcon - 激活状态的图标
  *
+ * @event click - 点击时触发
+ * @event focus - 获得焦点时触发
+ * @event blur - 失去焦点时触发
+ *
  * @csspart label - 文本
  * @csspart dot - 圆点
  * @csspart badge - 小徽标

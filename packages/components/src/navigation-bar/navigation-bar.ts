@@ -3,9 +3,16 @@ import { html, LitElement, CSSResultGroup, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { emit } from '@mdui/shared/helpers/event.js';
 import { navigationBarStyle } from './navigation-bar-style.js';
 import { NavigationBarItem } from './navigation-bar-item.js';
 
+/**
+ * @slot - `mdui-navigation-bar-item` 组件
+ *
+ * @event click - 点击时触发
+ * @event change - 值变化时触发（可取消）
+ */
 @customElement('mdui-navigation-bar')
 export class NavigationBar extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, navigationBarStyle];
@@ -70,15 +77,16 @@ export class NavigationBar extends LitElement {
 
   private selectItem(item: NavigationBarItem): void {
     const value = item.getAttribute('value');
-    if (!value) {
+    if (!value || this.value === value) {
       return;
     }
+
     const oldValue = this.value;
     this.value = value;
 
-    const applyDefault = this.dispatchEvent(
-      new Event('change', { cancelable: true }),
-    );
+    const applyDefault = emit(this, 'change', {
+      cancelable: true,
+    });
     if (!applyDefault) {
       this.value = oldValue;
     } else {

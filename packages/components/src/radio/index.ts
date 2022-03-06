@@ -6,11 +6,18 @@ import { when } from 'lit/directives/when.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
+import { emit } from '@mdui/shared/helpers/event.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { style } from './style.js';
 
 /**
+ * @event click - 点击时触发
+ * @event focus - 获得焦点时触发
+ * @event blur - 失去焦点时触发
+ * @event change - 选中状态变更时触发
+ * @event input - 选中状态变更时触发
+ *
  * @slot - 文本
  *
  * @csspart control - 选择框
@@ -53,6 +60,14 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   @property({ reflect: true })
   public value = 'on';
 
+  /**
+   * input[type="radio"] 的 change 事件无法冒泡越过 shadow dom
+   */
+  private onChange() {
+    this.checked = this.inputElement.checked;
+    emit(this, 'change');
+  }
+
   protected override render(): TemplateResult {
     const { disabled, checked, autofocus, name } = this;
     const hasLabel = this.hasSlotController.test('[default]');
@@ -64,6 +79,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
         ?disabled=${disabled}
         ?checked=${checked}
         ?autofocus=${autofocus}
+        @change=${this.onChange}
       />
       <i part="control">
         <mdui-ripple></mdui-ripple>

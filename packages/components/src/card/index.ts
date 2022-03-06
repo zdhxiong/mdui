@@ -7,6 +7,9 @@ import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { style } from './style.js';
 
+/**
+ * @event click - 点击时触发
+ */
 @customElement('mdui-card')
 export class Card extends RippleMixin(LitElement) {
   static override styles: CSSResultGroup = [componentStyle, style];

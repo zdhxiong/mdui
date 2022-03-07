@@ -7,11 +7,14 @@
   position: relative;
   display: inline-block;
   overflow: hidden;
-  cursor: pointer;
   transition: box-shadow 200ms @mdui-sys-motion-easing-legacy;
   -webkit-tap-highlight-color: transparent;
   .borderRadius(12);
   .stateLayerColor(on-surface);
+}
+
+:host([clickable]) {
+  cursor: pointer;
 }
 
 :host([variant="elevated"]) {
@@ -46,4 +49,17 @@
 :host([variant="filled"][dragged]),
 :host([variant="outlined"][dragged]) {
   .elevation(3);
+}
+
+.link {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  font-size: inherit;
+  letter-spacing: inherit;
+  text-decoration: none;
+  touch-action: manipulation;
+  -webkit-user-drag: none;
 }

@@ -56,10 +56,6 @@ export class Chip extends ButtonBase {
   @property({ reflect: true })
   public avatar!: string;
 
-  protected renderLabel(): TemplateResult {
-    return html`<span part="label" class="label"><slot></slot></span>`;
-  }
-
   protected renderLeadingIcon(): TemplateResult {
     if (this.selected && ['assist', 'filter'].includes(this.variant)) {
       return html`<mdui-icon-check
@@ -85,6 +81,10 @@ export class Chip extends ButtonBase {
     }
 
     return html`<slot part="icon" name="icon"></slot>`;
+  }
+
+  protected renderLabel(): TemplateResult {
+    return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
   protected renderTrailingIcon(): TemplateResult {

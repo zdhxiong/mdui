@@ -7,22 +7,16 @@
   overflow: hidden;
   .minWidth(48);
   .stateLayerColor(on-surface-variant);
-
-  .icon,
-  .active-icon,
-  ::slotted([slot="icon"]),
-  ::slotted([slot="activeIcon"]) {
-    .color(on-surface-variant);
-  }
 }
 
-a {
+.item {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
   text-decoration: none;
+  cursor: pointer;
   transition: padding 225ms @mdui-sys-motion-easing-legacy;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -78,6 +72,7 @@ a {
 .active-icon,
 ::slotted([slot="icon"]),
 ::slotted([slot="activeIcon"]) {
+  .color(on-surface-variant);
   .fontSize(24);
 }
 
@@ -101,7 +96,7 @@ a {
 
 :host([labelVisibility="unlabeled"]),
 :host([labelVisibility="selected"]:not([active])) {
-  a {
+  .item {
     .paddingTop(24);
     .paddingBottom(0);
   }
@@ -126,16 +121,16 @@ a {
     .color(on-secondary-container);
   }
 
-  .active-icon,
-  .has-active-icon ::slotted([slot="activeIcon"]) {
-    display: inline-block;
-  }
+  .has-active-icon {
+    .active-icon,
+    ::slotted([slot="activeIcon"]) {
+      display: inline-block;
+    }
 
-  .active-icon + .icon,
-  .active-icon + ::slotted([slot="icon"]),
-  .has-active-icon .icon,
-  .has-active-icon ::slotted([slot="icon"]) {
-    display: none;
+    .icon,
+    ::slotted([slot="icon"]) {
+      display: none;
+    }
   }
 
   .label {

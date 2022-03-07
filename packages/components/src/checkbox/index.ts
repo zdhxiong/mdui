@@ -2,11 +2,9 @@ import { html, LitElement, TemplateResult, CSSResultGroup } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
-import { when } from 'lit/directives/when.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
-import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
@@ -37,8 +35,6 @@ export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
   protected get focusProxiedElements(): HTMLElement[] {
     return [this.inputElement];
   }
-
-  private readonly hasSlotController = new HasSlotController(this, '[default]');
 
   @property({ type: Boolean, reflect: true })
   public disabled = false;
@@ -80,7 +76,6 @@ export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
 
   protected override render(): TemplateResult {
     const { disabled, checked, autofocus } = this;
-    const hasLabel = this.hasSlotController.test('[default]');
 
     return html`<label>
       <input
@@ -93,7 +88,7 @@ export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
       <i part="control">
         <mdui-ripple></mdui-ripple>
       </i>
-      ${when(hasLabel, () => html`<span part="label"><slot></slot></span>`)}
+      <span part="label"><slot></slot></span>
     </label>`;
   }
 }

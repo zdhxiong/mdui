@@ -62,12 +62,12 @@ export class Button extends ButtonBase {
   @property({ type: Boolean, reflect: true })
   public trailingIcon = false;
 
-  protected renderLabel(): TemplateResult {
-    return html`<span part="label" class="label"><slot></slot></span>`;
-  }
-
   protected renderLeadingIcon(): TemplateResult {
     return html`${when(!this.trailingIcon, () => this.renderIcon())}`;
+  }
+
+  protected renderLabel(): TemplateResult {
+    return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
   protected renderTrailingIcon(): TemplateResult {

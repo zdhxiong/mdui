@@ -42,11 +42,9 @@
   .stateLayerColor(on-secondary-container);
 }
 
-:host([elevated]) {
-  border-width: 0;
-  .elevation(1);
-  .paddingRight(8);
-  .paddingLeft(8);
+:host([selected][variant="input"]) {
+  .paddingRight(4);
+  .paddingLeft(4);
 }
 
 :host([disabled]) {
@@ -70,10 +68,6 @@
   .elevation(2);
 }
 
-:host([variant="input"][hover]) {
-  .elevation(0);
-}
-
 :host([variant="filter"][hover]),
 :host([variant="input"][hover]),
 :host([variant="suggestion"][hover]) {
@@ -86,9 +80,20 @@
   .borderColor(on-surface-variant);
 }
 
+:host([elevated]) {
+  border-width: 0;
+  .elevation(1);
+  .paddingRight(8);
+  .paddingLeft(8);
+}
+
 :host([dragged]),
 :host([dragged][hover]) {
   .elevation(4);
+}
+
+.chip {
+  overflow: visible;
 }
 
 .label {
@@ -135,18 +140,25 @@
 
 .delete {
   display: inline-flex;
+  transition-duration: 200ms;
+  transition-property: background-color;
+  .transitionTimingFunction(legacy);
   .padding(4);
   .borderRadius(13);
   .marginRight(-4);
   .marginLeft(-4);
   .color(on-surface-variant);
 
+  &:hover {
+    .backgroundColor(on-surface-variant, 12%);
+  }
+
   :host([variant="assiat"]) & {
     .color(primary);
   }
 
   :host([variant="input"]) & {
-    .marginRight(4);
+    .marginRight(1);
   }
 
   :host([disabled]) & {

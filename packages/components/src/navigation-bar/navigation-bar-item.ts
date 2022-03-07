@@ -1,12 +1,12 @@
 import { customElement } from 'lit/decorators/custom-element.js';
 import { html, LitElement, nothing, CSSResultGroup, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { query } from 'lit/decorators/query.js';
 import { queryAll } from 'lit/decorators/query-all.js';
 import { state } from 'lit/decorators/state.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
+import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
@@ -31,7 +31,9 @@ import '../icon.js';
  * @csspart active-icon - 激活状态的图标
  */
 @customElement('mdui-navigation-bar-item')
-export class NavigationBarItem extends RippleMixin(FocusableMixin(LitElement)) {
+export class NavigationBarItem extends AnchorMixin(
+  RippleMixin(FocusableMixin(LitElement)),
+) {
   static override styles: CSSResultGroup = [
     componentStyle,
     navigationBarItemStyle,
@@ -60,18 +62,6 @@ export class NavigationBarItem extends RippleMixin(FocusableMixin(LitElement)) {
   protected disabled = false;
 
   @property({ reflect: true })
-  public href!: string;
-
-  @property({ reflect: true })
-  public download!: string;
-
-  @property({ reflect: true })
-  public target!: string;
-
-  @property({ reflect: true })
-  public rel!: string;
-
-  @property({ reflect: true })
   public icon!: MaterialIconsName;
 
   @property({ reflect: true })
@@ -89,30 +79,6 @@ export class NavigationBarItem extends RippleMixin(FocusableMixin(LitElement)) {
   @property({ reflect: true })
   public value!: string;
 
-  protected renderIcon(): TemplateResult {
-    if (this.icon) {
-      return html`<mdui-icon
-        part="icon"
-        class="icon"
-        name=${this.icon}
-      ></mdui-icon>`;
-    }
-
-    return html`<slot part="icon" name="icon"></slot>`;
-  }
-
-  protected renderActiveIcon(): TemplateResult {
-    if (this.activeIcon) {
-      return html`<mdui-icon
-        part="active-icon"
-        class="active-icon"
-        name=${this.activeIcon}
-      ></mdui-icon>`;
-    }
-
-    return html`<slot part="active-icon" name="activeIcon"></slot>`;
-  }
-
   protected renderBadge(): TemplateResult | typeof nothing {
     const { badge } = this;
 
@@ -127,30 +93,48 @@ export class NavigationBarItem extends RippleMixin(FocusableMixin(LitElement)) {
     return html`<span part="badge" class="badge">${badge}</span>`;
   }
 
+  protected renderActiveIcon(): TemplateResult {
+    return this.activeIcon
+      ? html`<mdui-icon
+          part="active-icon"
+          class="active-icon"
+          name=${this.activeIcon}
+        ></mdui-icon>`
+      : html`<slot part="active-icon" name="activeIcon"></slot>`;
+  }
+
+  protected renderIcon(): TemplateResult {
+    return this.icon
+      ? html`<mdui-icon part="icon" class="icon" name=${this.icon}></mdui-icon>`
+      : html`<slot part="icon" name="icon"></slot>`;
+  }
+
   protected renderLabel(): TemplateResult {
     return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
+  protected renderInner(): TemplateResult {
+    return html`<span
+        class="indicator ${classMap({
+          'has-active-icon':
+            this.activeIcon || this.hasSlotController.test('activeIcon'),
+        })}"
+      >
+        ${this.renderBadge()}${this.renderActiveIcon()}${this.renderIcon()}
+      </span>
+      ${this.renderLabel()}`;
+  }
+
   protected override render(): TemplateResult {
-    const { href, download, target, rel } = this;
+    const { href } = this;
 
     return html`<mdui-ripple></mdui-ripple>
-      <a
-        class="item"
-        href=${href ?? 'javascript:;'}
-        download=${ifDefined(download)}
-        target=${ifDefined(target)}
-        rel=${ifDefined(rel)}
-      >
-        <span
-          class="indicator ${classMap({
-            'has-active-icon': this.hasSlotController.test('activeIcon'),
-          })}"
-        >
-          ${this.renderBadge()}${this.renderActiveIcon()}${this.renderIcon()}
-        </span>
-        ${this.renderLabel()}
-      </a>`;
+      ${href
+        ? this.renderAnchor({
+            className: 'item',
+            content: this.renderInner(),
+          })
+        : html`<span class="item">${this.renderInner()}</span>`} `;
   }
 }
 

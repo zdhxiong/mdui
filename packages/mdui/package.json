@@ -8,6 +8,7 @@
   "types": "index.d.ts",
   "files": [
     "components",
+    "functions",
     "icons",
     "index.{js,js.map,d.ts,d.ts.map}",
     "mdui.css",

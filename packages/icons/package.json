@@ -10,7 +10,10 @@
     "*.{js,js.map,d.ts,d.ts.map}",
     "LICENSE",
     "package.json",
-    "README.md"
+    "README.md",
+    "custom-elements.json",
+    "vscode.html-custom-data.json",
+    "web-types.json"
   ],
   "repository": {
     "type": "git",

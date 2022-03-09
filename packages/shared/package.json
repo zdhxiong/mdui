@@ -4,14 +4,14 @@
   "description": "mdui 项目的公共部分",
   "type": "module",
   "files": [
-    "variables",
-    "variables.less",
     "controllers",
     "decorators",
     "directives",
     "helpers",
+    "lit-styles",
     "mixins",
-    "helpers.{js,js.map,d.ts,d.ts.map}",
+    "variables",
+    "variables.less",
     "LICENSE",
     "package.json",
     "README.md"

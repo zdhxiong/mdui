@@ -20,15 +20,31 @@ export class NavigationBar extends LitElement {
   @queryAssignedElements({ flatten: true })
   protected itemElements!: NavigationBarItem[] | null;
 
+  /**
+   * 在页面向上滚动时，是否隐藏组件
+   */
   @property({ type: Boolean, reflect: true })
   public hideOnScroll = false;
 
+  /**
+   * 文本的可视状态。可选值为：
+   * * `auto`
+   * * `selected`
+   * * `labeled`
+   * * `unlabeled`
+   */
   @property({ reflect: true })
-  public labelVisibility: 'auto' | 'selected' | 'labeled' | 'unlabeled' =
-    'auto';
+  public labelVisibility:
+    | 'auto' /*小于等于3个选项时，始终显示；大于3个选项时，仅显示选中状态的文本*/
+    | 'selected' /*仅选中状态显示文本*/
+    | 'labeled' /*始终显示文本*/
+    | 'unlabeled' /*始终不显示文本*/ = 'auto';
 
   private _value = '';
 
+  /**
+   * 当前选中的选项的 value 值
+   */
   @property({ reflect: true })
   public get value(): string {
     return this._value;
@@ -108,6 +124,7 @@ export class NavigationBar extends LitElement {
         : this.labelVisibility;
 
     itemElements.forEach((itemElement) => {
+      // @ts-ignore
       itemElement.labelVisibility = labelVisibility;
     });
 

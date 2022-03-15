@@ -23,6 +23,7 @@ import '../icon.js';
  * @event click - 点击时触发
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
+ * @event keydown - 聚焦状态下，按下按键时触发
  *
  * @csspart label - 文本
  * @csspart dot - 圆点
@@ -43,7 +44,7 @@ export class NavigationBarItem extends AnchorMixin(
    * 仅供父组件 navigation-bar 调用
    */
   @property({ reflect: true })
-  public labelVisibility!: 'selected' | 'labeled' | 'unlabeled';
+  protected labelVisibility!: 'selected' | 'labeled' | 'unlabeled';
 
   @query('mdui-ripple', true)
   protected rippleElement!: Ripple;
@@ -61,20 +62,32 @@ export class NavigationBarItem extends AnchorMixin(
   @state()
   protected disabled = false;
 
+  /**
+   * 未激活状态的 Material Icons 图标名
+   */
   @property({ reflect: true })
   public icon!: MaterialIconsName;
 
+  /**
+   * 激活状态的 Material Icons 图标名
+   */
   @property({ reflect: true })
   public activeIcon!: MaterialIconsName;
 
+  /**
+   * 角标。若为空字符串，则仅显示小红点；若指定了字符串值，则显示指定字符串
+   */
   @property({ reflect: true })
   public badge!: string;
 
+  /**
+   * 是否为激活状态
+   */
   @property({ type: Boolean, reflect: true })
   public active = false;
 
   /**
-   * value，若未指定，则默认为 index
+   * 在 `mdui-navigation-bar` 组件上获取当前选中的选项的值。若未指定，则默认为当前选项的索引位置
    */
   @property({ reflect: true })
   public value!: string;
@@ -130,7 +143,8 @@ export class NavigationBarItem extends AnchorMixin(
 
     return html`<mdui-ripple></mdui-ripple>
       ${href
-        ? this.renderAnchor({
+        ? // @ts-ignore
+          this.renderAnchor({
             className: 'item',
             content: this.renderInner(),
           })

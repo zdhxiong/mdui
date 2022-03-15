@@ -13,7 +13,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
 ): T & Constructor<LitElement> => {
   class FocusableMixinClass extends superclass {
     /**
-     * 渲染完组件后，自动聚焦到该组件
+     * 是否在页面加载时自动获得焦点
      */
     @property({ type: Boolean })
     public autofocus = false;
@@ -33,6 +33,9 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     private manipulatingTabindex = false;
     private _tabIndex = 0;
 
+    /**
+     * 通过 Tab 键在元素之间切换焦点时，tabIndex 属性指定了元素获取焦点的顺序
+     */
     @property({ type: Number })
     public get tabIndex(): number {
       return Number($(this).attr('tabindex')) || -1;
@@ -49,16 +52,25 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       }
     }
 
+    /**
+     * 将焦点设置在当前元素上
+     */
     public focus(options?: FocusOptions): void {
       if (!this.disabled) {
         HTMLElement.prototype.focus.apply(this, [options]);
       }
     }
 
+    /**
+     * 从当前元素中移除焦点
+     */
     public blur(): void {
       HTMLElement.prototype.blur.apply(this);
     }
 
+    /**
+     * 模拟鼠标点击元素
+     */
     public click(): void {
       if (!this.disabled) {
         HTMLElement.prototype.click.apply(this);

@@ -25,7 +25,6 @@ export interface ButtonMixinInterface {
   formMethod?: 'post' | 'get';
   formNovalidate?: boolean;
   formTarget?: '_self' | '_blank' | '_parent' | '_top';
-  renderButton(options: RenderButtonOptions): TemplateResult;
 }
 
 export const ButtonMixin = <T extends Constructor<LitElement>>(
@@ -36,45 +35,106 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
     public disabled = false;
 
     /**
-     * 自动聚焦
+     * 是否在页面加载时自动获得焦点
      */
     @property({ type: Boolean, reflect: true })
     public autofocus = false;
 
+    /**
+     * 按钮的名称，将与表单数据一起提交
+     *
+     * **Note**：仅在未指定 `href` 属性时可用
+     */
     @property({ reflect: true })
     public name!: string;
 
+    /**
+     * 按钮的初始值，将与表单数据一起提交
+     *
+     * **Note**：仅在未指定 `href` 属性时可用
+     */
     @property({ reflect: true })
     public value!: string;
 
     /**
-     * 按钮默认改为 button，和原生 button 元素不一样
+     * 按钮的类型。默认值为 `button`。可选值为：
+     * * `submit`：点击按钮将表单数据提交给服务器
+     * * `reset`：点击按钮将表单中所有组件重置为初始值
+     * * `button`：按钮没有默认行为
+     *
+     * **Note**：仅在未指定 `href` 属性时可用
      */
     @property({ reflect: true })
-    public type: 'submit' | 'reset' | 'button' = 'button';
+    public type:
+      | 'submit' /*此按钮将表单数据提交给服务器*/
+      | 'reset' /*此按钮重置所有组件为初始值*/
+      | 'button' /*此按钮没有默认行为*/ = 'button';
 
+    /**
+     * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
+     *
+     * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
+     *
+     * **Note**：仅在未指定 `href` 属性时可用
+     */
     @property({ reflect: true })
     public form!: string;
 
+    /**
+     *
+     * 覆盖 `form` 元素的 `action` 属性。
+     *
+     * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
+     */
     @property({ reflect: true })
     public formAction!: string;
 
+    /**
+     * 覆盖 `form` 元素的 `enctype` 属性。可选值为：
+     * * `application/x-www-form-urlencoded`：未指定时的默认值
+     * * `multipart/form-data`
+     * * `text/plain`
+     *
+     * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
+     */
     @property({ reflect: true })
     public formEnctype!:
       | 'application/x-www-form-urlencoded'
       | 'multipart/form-data'
       | 'text/plain';
 
+    /**
+     * 覆盖 `form` 元素的 `method` 属性。可选值为：
+     * * `post`
+     * * `get`
+     *
+     * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
+     */
     @property({ reflect: true })
     public formMethod!: 'post' | 'get';
 
+    /**
+     *
+     * 覆盖 `form` 元素的 `novalidate` 属性。
+     *
+     * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
+     */
     @property({ type: Boolean, reflect: true })
     public formNovalidate = false;
 
+    /**
+     * 覆盖 `form` 元素的 `target` 属性。可选值为：
+     * * `_self`
+     * * `_blank`
+     * * `_parent`
+     * * `_top`
+     *
+     * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
+     */
     @property({ reflect: true })
     public formTarget!: '_self' | '_blank' | '_parent' | '_top';
 
-    public renderButton({
+    protected renderButton({
       id,
       className,
       tabindex,

@@ -8,6 +8,9 @@ import { style } from './style.js';
 export class Divider extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];
 
+  /**
+   * 是否显示垂直分割线
+   */
   @property({ type: Boolean, reflect: true })
   public vertical = false;
 

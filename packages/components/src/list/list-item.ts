@@ -36,6 +36,9 @@ export class ListItem extends RippleMixin(LitElement) {
   @property({ type: Boolean, reflect: true })
   public autofocus = false;
 
+  /**
+   * Material Icons 图标名
+   */
   @property({ reflect: true })
   public icon!: MaterialIconsName;
 

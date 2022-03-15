@@ -35,24 +35,41 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
     return [this.inputElement];
   }
 
+  /**
+   * 是否为禁用状态
+   */
   @property({ type: Boolean, reflect: true })
   public disabled = false;
 
+  /**
+   * 是否为选中状态
+   */
   @property({ type: Boolean, reflect: true })
   public checked = false;
 
+  /**
+   * 提交表单时，是否必须选中该单选框
+   */
   @property({ type: Boolean, reflect: true })
   public required = false;
 
-  @property({ type: Boolean })
-  public autofocus = false;
-
+  /**
+   * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
+   *
+   * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
+   */
   @property({ reflect: true })
   public form!: string;
 
+  /**
+   * 复选框名称，将与表单数据一起提交
+   */
   @property({ reflect: true })
   public name!: string;
 
+  /**
+   * 复选框的值，将于表单数据一起提交
+   */
   @property({ reflect: true })
   public value = 'on';
 

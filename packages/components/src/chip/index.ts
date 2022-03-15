@@ -15,6 +15,9 @@ import '@mdui/icons/clear.js';
  * @event click - 点击时触发
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
+ * @event keydown - 聚焦状态下，按下按键时触发
+ * @event change - 选中状态变更时触发
+ * @event delete - 点击删除图标时触发
  *
  * @slot - 文本
  * @slot icon - 图标
@@ -32,27 +35,59 @@ export class Chip extends ButtonBase {
   @queryAll('.button')
   protected focusProxiedElements!: HTMLElement[];
 
+  /**
+   * 是否加载中状态
+   */
   @property({ type: Boolean, reflect: true })
   public loading = false;
 
+  /**
+   * 纸片形状。可选值为：
+   * * `assist`
+   * * `filter`
+   * * `input`
+   * * `suggestion`
+   */
   @property({ reflect: true })
-  public variant: 'assist' | 'filter' | 'input' | 'suggestion' = 'assist';
+  public variant:
+    | 'assist' /*预览图*/
+    | 'filter' /*预览图*/
+    | 'input' /*预览图*/
+    | 'suggestion' = 'assist';
 
+  /**
+   * 是否包含阴影
+   */
   @property({ type: Boolean, reflect: true })
   public elevated = false;
 
+  /**
+   * 是否可选中
+   */
   @property({ type: Boolean, reflect: true })
   public selectable = false;
 
+  /**
+   * 是否为选中状态
+   */
   @property({ type: Boolean, reflect: true })
   public selected = false;
 
+  /**
+   * 是否可删除。为 `true` 时，在右侧会显示删除图标
+   */
   @property({ type: Boolean, reflect: true })
   public deletable = false;
 
+  /**
+   * 左侧的 Material Icons 图标名
+   */
   @property({ reflect: true })
   public icon!: MaterialIconsName;
 
+  /**
+   * 左侧的头像链接
+   */
   @property({ reflect: true })
   public avatar!: string;
 
@@ -110,11 +145,13 @@ export class Chip extends ButtonBase {
     return html`<mdui-ripple></mdui-ripple>${href
         ? disabled
           ? html`<span class="button chip">${this.renderInner()}</span>`
-          : this.renderAnchor({
+          : // @ts-ignore
+            this.renderAnchor({
               className: 'button chip',
               content: this.renderInner(),
             })
-        : this.renderButton({
+        : // @ts-ignore
+          this.renderButton({
             className: 'button chip',
             content: this.renderInner(),
           })}`;

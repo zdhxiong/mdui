@@ -13,6 +13,7 @@ import '../icon.js';
  * @event click - 点击时触发
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
+ * @event keydown - 聚焦状态下，按下按键时触发
  *
  * @slot - 文本
  * @slot icon - 图标
@@ -29,21 +30,51 @@ export class Fab extends ButtonBase {
 
   private readonly hasSlotController = new HasSlotController(this, 'icon');
 
+  /**
+   * 是否为加载中状态
+   */
   @property({ type: Boolean, reflect: true })
   public loading = false;
 
+  /**
+   * fab 形状。可选值为：
+   * * `primary`
+   * * `surface`
+   * * `secondary`
+   * * `tertiary`
+   */
   @property({ reflect: true })
-  public variant: 'primary' | 'surface' | 'secondary' | 'tertiary' = 'primary';
+  public variant:
+    | 'primary' /*预览图*/
+    | 'surface' /*预览图*/
+    | 'secondary' /*预览图*/
+    | 'tertiary' /*预览图*/ = 'primary';
 
+  /**
+   * fab 大小。可选值为：
+   * * `normal`
+   * * `small`
+   * * `large`
+   */
   @property({ reflect: true })
-  public size: 'normal' | 'small' | 'large' = 'normal';
+  public size: 'normal' /*普通大小*/ | 'small' /*小型*/ | 'large' /*大型*/ =
+    'normal';
 
+  /**
+   * Material Icons 图标名
+   */
   @property({ reflect: true })
   public icon!: MaterialIconsName;
 
+  /**
+   * todo
+   */
   @property({ reflect: true })
   public tooltip!: string;
 
+  /**
+   * 是否为展开状态
+   */
   @property({ type: Boolean, reflect: true })
   public extended = false;
 
@@ -96,11 +127,13 @@ export class Fab extends ButtonBase {
     return html`<mdui-ripple></mdui-ripple>${href
         ? disabled
           ? html`<span class=${className}>${this.renderInner()}</span>`
-          : this.renderAnchor({
+          : // @ts-ignore
+            this.renderAnchor({
               className,
               content: this.renderInner(),
             })
-        : this.renderButton({
+        : // @ts-ignore
+          this.renderButton({
             className,
             content: this.renderInner(),
           })}`;

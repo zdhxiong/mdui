@@ -11,7 +11,7 @@ import {
   unlockEvent,
   endEvent,
   cancelEvent,
-} from '@mdui/shared/helpers/touchHandler';
+} from '@mdui/shared/helpers/touchHandler.js';
 import { Ripple } from './index.js';
 
 /**

@@ -15,6 +15,7 @@ import { style } from './style.js';
  * @event click - 点击时触发
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
+ * @event keydown - 聚焦状态下，按下按键时触发
  */
 @customElement('mdui-card')
 export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
@@ -31,13 +32,19 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
   protected rippleElement!: Ripple;
 
   /**
-   * 卡片形状
+   * 卡片形状。可选值为：
+   * * `elevated`
+   * * `filled`
+   * * `outlined`
    */
   @property({ reflect: true })
-  public variant: 'elevated' | 'filled' | 'outlined' = 'elevated';
+  public variant:
+    | 'elevated' /*预览图*/
+    | 'filled' /*预览图*/
+    | 'outlined' /*预览图*/ = 'elevated';
 
   /**
-   * 是否可点击，默认为 false。为 true 时，会添加鼠标悬浮效果、及点击涟漪效果
+   * 是否可点击。为 `true` 时，会添加鼠标悬浮效果、及点击涟漪效果
    */
   @property({ type: Boolean, reflect: true })
   public clickable = false;
@@ -46,6 +53,7 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
     const { href, clickable } = this;
 
     if (href) {
+      // @ts-ignore
       return html`<mdui-ripple></mdui-ripple>${this.renderAnchor({
           className: 'link',
           content: html`<slot></slot>`,

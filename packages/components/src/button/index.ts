@@ -12,6 +12,7 @@ import '../icon.js';
  * @event click - 点击时触发
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
+ * @event keydown - 聚焦状态下，按下按键时触发
  *
  * @slot - 按钮的文本
  * @slot icon - 按钮的图标
@@ -27,13 +28,19 @@ export class Button extends ButtonBase {
   protected focusProxiedElements!: HTMLElement[];
 
   /**
-   * 是否加载中状态
+   * 是否为加载中状态
    */
   @property({ type: Boolean, reflect: true })
   public loading = false;
 
   /**
-   * 按钮形式
+   * 按钮形状。可选值为：
+   * * `elevated`
+   * * `filled`
+   * * `tonal`
+   * * `outlined`
+   * * `text`
+   * * `icon`
    */
   @property({ reflect: true })
   public variant:
@@ -42,7 +49,7 @@ export class Button extends ButtonBase {
     | 'tonal' /*预览图*/
     | 'outlined' /*预览图*/
     | 'text' /*预览图*/
-    | 'icon' /*预览图*/ = 'text';
+    | 'icon' /*预览图*/ = 'filled';
 
   /**
    * 是否填满父元素宽度
@@ -51,7 +58,7 @@ export class Button extends ButtonBase {
   public fullwidth = false;
 
   /**
-   * 图标名
+   * Material Icons 图标名
    */
   @property({ reflect: true })
   public icon!: MaterialIconsName;
@@ -94,11 +101,13 @@ export class Button extends ButtonBase {
     return html`<mdui-ripple></mdui-ripple>${href
         ? disabled
           ? html`<span class="button">${this.renderInner()}</span>`
-          : this.renderAnchor({
+          : // @ts-ignore
+            this.renderAnchor({
               className: 'button',
               content: this.renderInner(),
             })
-        : this.renderButton({
+        : // @ts-ignore
+          this.renderButton({
             className: 'button',
             content: this.renderInner(),
           })}`;

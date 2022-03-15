@@ -13,9 +13,15 @@ import { style } from './style.js';
 export class LinearProgress extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];
 
+  /**
+   * 进度指示器的最大值
+   */
   @property({ type: Number, reflect: true })
   public max!: number;
 
+  /**
+   * 进度指示器的当前值。若未指定该值，则为不确定状态
+   */
   @property({ type: Number, reflect: true })
   public value!: number;
 

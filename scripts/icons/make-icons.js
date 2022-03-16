@@ -92,10 +92,10 @@ dirMap.forEach((dir, folder) => {
 
     // 写入 packages/icons/src 中的文件
     const componentContent = template
-      .replaceAll('TemplateClassName', TemplateClassName)
-      .replaceAll('TemplateTagName', `mdui-icon-${componentFilename}`)
-      .replaceAll('TemplatePreviewPng', TemplatePreviewPng)
-      .replaceAll('TemplateSvgContent', svgContent);
+      .replace(/TemplateClassName/g, TemplateClassName)
+      .replace(/TemplateTagName/g, `mdui-icon-${componentFilename}`)
+      .replace(/TemplatePreviewPng/g, TemplatePreviewPng)
+      .replace(/TemplateSvgContent/g, svgContent);
 
     fs.writeFileSync(
       `./packages/icons/src/${componentFilename}.ts`,

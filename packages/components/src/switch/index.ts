@@ -15,7 +15,6 @@ import { style } from './style.js';
  * @event blur - 失去焦点时触发
  * @event change - 选中状态变更时触发
  * @event input - 选中状态变更时触发
- * @event keydown - 聚焦状态下，按下按键时触发
  *
  * @csspart track - 轨道
  * @csspart handle - 图标

@@ -15,7 +15,6 @@ import '@mdui/icons/clear.js';
  * @event click - 点击时触发
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
- * @event keydown - 聚焦状态下，按下按键时触发
  * @event change - 选中状态变更时触发
  * @event delete - 点击删除图标时触发
  *

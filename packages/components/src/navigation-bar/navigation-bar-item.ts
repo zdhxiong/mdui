@@ -23,7 +23,6 @@ import '../icon.js';
  * @event click - 点击时触发
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
- * @event keydown - 聚焦状态下，按下按键时触发
  *
  * @csspart label - 文本
  * @csspart dot - 圆点

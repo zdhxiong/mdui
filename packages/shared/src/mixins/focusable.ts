@@ -4,6 +4,7 @@ import { property } from 'lit/decorators/property.js';
 import { $ } from '@mdui/jq/$.js';
 import { watch } from '../decorators/watch.js';
 import '@mdui/jq/methods/attr.js';
+import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/each.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/off.js';
@@ -18,6 +19,9 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     @property({ type: Boolean })
     public autofocus = false;
 
+    /**
+     * 使用该 mixin 的类必须拥有 disabled 属性
+     */
     protected get disabled(): boolean {
       throw new Error('Must implement disabled getter!');
     }
@@ -77,17 +81,6 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    protected manageAutoFocus(): void {
-      if (this.autofocus) {
-        this.dispatchEvent(
-          new KeyboardEvent('keydown', {
-            code: 'Tab',
-          }),
-        );
-        this.focus();
-      }
-    }
-
     protected firstUpdated(changes: PropertyValues): void {
       super.firstUpdated(changes);
 
@@ -95,13 +88,17 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
         this.tabIndex = 0;
       }
 
-      this.manageAutoFocus();
+      if (this.autofocus) {
+        this.focus();
+      }
     }
 
     @watch('disabled')
     protected async onDisabledUpdate() {
       this.manipulatingTabindex = true;
-      $(this).attr('tabindex', this.disabled ? -1 : this._tabIndex);
+      $(this)
+        .attr('tabindex', this.disabled ? -1 : this._tabIndex)
+        .css('pointer-events', this.disabled ? 'none' : '');
 
       await this.updateComplete;
 

@@ -58,6 +58,14 @@ export class NavigationBarItem extends AnchorMixin(
     'activeIcon',
   );
 
+  protected get focusableDisabled(): boolean {
+    return this.disabled;
+  }
+
+  protected get rippleDisabled(): boolean {
+    return this.disabled;
+  }
+
   @state()
   protected disabled = false;
 

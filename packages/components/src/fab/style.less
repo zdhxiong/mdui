@@ -88,7 +88,32 @@
   .borderRadius(28);
 }
 
-:host([disabled]) {
+:host([loading]) {
+  mdui-ripple,
+  .button {
+    opacity: 0;
+  }
+
+  mdui-circular-progress {
+    position: absolute;
+    top: calc(50% - unit((24 / 14), em) / 2);
+    left: calc(50% - unit((24 / 14), em) / 2);
+    width: unit((24 / 14), em);
+    height: unit((24 / 14), em);
+  }
+}
+
+:host([loading][size="large"]) {
+  mdui-circular-progress {
+    top: calc(50% - unit((36 / 14), em) / 2);
+    left: calc(50% - unit((36 / 14), em) / 2);
+    width: unit((36 / 14), em);
+    height: unit((36 / 14), em);
+  }
+}
+
+:host([disabled]),
+:host([loading]) {
   cursor: default;
   .color(on-surface, 38%);
   .backgroundColor(on-surface, 12%);

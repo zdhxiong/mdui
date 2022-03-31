@@ -26,6 +26,7 @@ import '@mdui/icons/clear.js';
  * @csspart icon - 图标
  * @csspart avatar - 头像
  * @csspart delete - 删除图标
+ * @csspart loading - 加载中动画
  */
 @customElement('mdui-chip')
 export class Chip extends ButtonBase {
@@ -33,12 +34,6 @@ export class Chip extends ButtonBase {
 
   @queryAll('.button')
   protected focusProxiedElements!: HTMLElement[];
-
-  /**
-   * 是否加载中状态
-   */
-  @property({ type: Boolean, reflect: true })
-  public loading = false;
 
   /**
    * 纸片形状。可选值为：
@@ -153,7 +148,7 @@ export class Chip extends ButtonBase {
           this.renderButton({
             className: 'button chip',
             content: this.renderInner(),
-          })}`;
+          })}${this.renderLoading()}`;
   }
 }
 

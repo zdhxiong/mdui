@@ -11,11 +11,11 @@ type RenderButtonOptions = {
 };
 
 export interface ButtonMixinInterface {
-  disabled?: boolean;
-  autofocus?: boolean;
+  disabled: boolean;
+  autofocus: boolean;
   name?: string;
   value?: string;
-  type?: 'submit' | 'reset' | 'button';
+  type: 'submit' | 'reset' | 'button';
   form?: string;
   formAction?: string;
   formEnctype?:
@@ -23,7 +23,7 @@ export interface ButtonMixinInterface {
     | 'multipart/form-data'
     | 'text/plain';
   formMethod?: 'post' | 'get';
-  formNovalidate?: boolean;
+  formNovalidate: boolean;
   formTarget?: '_self' | '_blank' | '_parent' | '_top';
 }
 
@@ -31,6 +31,9 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
   superclass: T,
 ): Constructor<ButtonMixinInterface> & T => {
   class ButtonMixinClass extends superclass {
+    /**
+     * 是否禁用
+     */
     @property({ type: Boolean, reflect: true })
     public disabled = false;
 

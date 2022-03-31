@@ -47,7 +47,23 @@
   .paddingLeft(4);
 }
 
-:host([disabled]) {
+:host([loading]) {
+  mdui-ripple,
+  .chip {
+    opacity: 0;
+  }
+
+  mdui-circular-progress {
+    position: absolute;
+    top: calc(50% - unit((18 / 14), em) / 2);
+    left: calc(50% - unit((18 / 14), em) / 2);
+    width: unit((18 / 14), em);
+    height: unit((18 / 14), em);
+  }
+}
+
+:host([disabled]),
+:host([loading]) {
   cursor: default;
   .borderColor(on-surface, 12%);
   .color(on-surface, 38%);

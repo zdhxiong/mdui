@@ -2,7 +2,6 @@ import { Constructor } from '@open-wc/dedupe-mixin';
 import { LitElement, PropertyValues } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { $ } from '@mdui/jq/$.js';
-import { watch } from '../decorators/watch.js';
 import '@mdui/jq/methods/attr.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/each.js';
@@ -20,10 +19,10 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     public autofocus = false;
 
     /**
-     * 使用该 mixin 的类必须拥有 disabled 属性
+     * 父类要实现该属性，表示是否禁用 focus 状态
      */
-    protected get disabled(): boolean {
-      throw new Error('Must implement disabled getter!');
+    protected get focusableDisabled(): boolean {
+      throw new Error('Must implement focusableDisabled getter!');
     }
 
     /**
@@ -52,7 +51,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
 
       if (tabIndex !== this.tabIndex) {
         this._tabIndex = tabIndex;
-        $(this).attr('tabindex', this.disabled ? -1 : tabIndex);
+        $(this).attr('tabindex', this.focusableDisabled ? -1 : tabIndex);
       }
     }
 
@@ -60,7 +59,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
      * 将焦点设置在当前元素上
      */
     public focus(options?: FocusOptions): void {
-      if (!this.disabled) {
+      if (!this.focusableDisabled) {
         HTMLElement.prototype.focus.apply(this, [options]);
       }
     }
@@ -76,7 +75,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
      * 模拟鼠标点击元素
      */
     public click(): void {
-      if (!this.disabled) {
+      if (!this.focusableDisabled) {
         HTMLElement.prototype.click.apply(this);
       }
     }
@@ -93,16 +92,19 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    @watch('disabled')
+    /**
+     * 需要在父类中监听指定属性，并调用该方法
+     * 如 @watch('disabled') @watch('loading')
+     */
     protected async onDisabledUpdate() {
       this.manipulatingTabindex = true;
       $(this)
-        .attr('tabindex', this.disabled ? -1 : this._tabIndex)
-        .css('pointer-events', this.disabled ? 'none' : '');
+        .attr('tabindex', this.focusableDisabled ? -1 : this._tabIndex)
+        .css('pointer-events', this.focusableDisabled ? 'none' : '');
 
       await this.updateComplete;
 
-      if (this.disabled) {
+      if (this.focusableDisabled) {
         this.blur();
       }
     }

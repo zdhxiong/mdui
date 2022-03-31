@@ -18,6 +18,10 @@ export class ListItem extends RippleMixin(LitElement) {
   @query('mdui-ripple', true)
   protected rippleElement!: Ripple;
 
+  protected get rippleDisabled(): boolean {
+    return this.disabled;
+  }
+
   @property({ type: Boolean, reflect: true })
   public disabled = false;
 

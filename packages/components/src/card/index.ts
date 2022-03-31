@@ -24,6 +24,14 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
     return !this.href && !this.clickable;
   }
 
+  protected get focusableDisabled(): boolean {
+    return this.disabled;
+  }
+
+  protected get rippleDisabled(): boolean {
+    return this.disabled;
+  }
+
   @queryAll('.link')
   protected focusProxiedElements!: HTMLElement[];
 

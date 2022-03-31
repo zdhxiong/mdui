@@ -91,7 +91,23 @@
   .elevation(1);
 }
 
-:host([disabled]) {
+:host([loading]) {
+  mdui-ripple,
+  .button {
+    opacity: 0;
+  }
+
+  mdui-circular-progress {
+    position: absolute;
+    top: calc(50% - unit((18 / 14), em) / 2);
+    left: calc(50% - unit((18 / 14), em) / 2);
+    width: unit((18 / 14), em);
+    height: unit((18 / 14), em);
+  }
+}
+
+:host([disabled]),
+:host([loading]) {
   cursor: default;
   .color(on-surface, 38%);
   .elevation(0);
@@ -99,11 +115,15 @@
 
 :host([variant="elevated"][disabled]),
 :host([variant="filled"][disabled]),
-:host([variant="tonal"][disabled]) {
+:host([variant="tonal"][disabled]),
+:host([variant="elevated"][loading]),
+:host([variant="filled"][loading]),
+:host([variant="tonal"][loading]) {
   .backgroundColor(on-surface, 12%);
 }
 
-:host([variant="outlined"][disabled]) {
+:host([variant="outlined"][disabled]),
+:host([variant="outlined"][loading]) {
   .borderColor(on-surface, 12%);
 }
 

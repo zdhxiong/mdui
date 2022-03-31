@@ -11,9 +11,6 @@ export class List extends LitElement {
   @property({ type: Boolean, reflect: true })
   public divider = false;
 
-  @property({ type: Boolean, reflect: true })
-  public loading = false;
-
   protected override render(): TemplateResult {
     return html`<slot></slot>`;
   }

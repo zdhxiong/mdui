@@ -32,10 +32,10 @@ export const RippleMixin = dedupeMixin(
       }
 
       /**
-       * 父类必须实现该属性，disabled 时，ripple 不生效
+       * 父类要实现该属性，表示是否禁用 ripple
        */
-      protected get disabled(): boolean {
-        throw new Error('Must implement disabled getter!');
+      protected get rippleDisabled(): boolean {
+        throw new Error('Must implement rippleDisabled getter!');
       }
 
       @property({ type: Boolean, reflect: true })
@@ -51,7 +51,7 @@ export const RippleMixin = dedupeMixin(
       protected dragged = false;
 
       protected canRun(event: Event): boolean {
-        if (this.disabled) {
+        if (this.rippleDisabled) {
           return false;
         }
 

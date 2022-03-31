@@ -19,6 +19,7 @@ import '../icon.js';
  *
  * @csspart label - 文本
  * @csspart icon - 图标
+ * @csspart loading - 加载中动画
  */
 @customElement('mdui-fab')
 export class Fab extends ButtonBase {
@@ -28,12 +29,6 @@ export class Fab extends ButtonBase {
   protected focusProxiedElements!: HTMLElement[];
 
   private readonly hasSlotController = new HasSlotController(this, 'icon');
-
-  /**
-   * 是否为加载中状态
-   */
-  @property({ type: Boolean, reflect: true })
-  public loading = false;
 
   /**
    * fab 形状。可选值为：
@@ -135,7 +130,7 @@ export class Fab extends ButtonBase {
           this.renderButton({
             className,
             content: this.renderInner(),
-          })}`;
+          })}${this.renderLoading()}`;
   }
 }
 

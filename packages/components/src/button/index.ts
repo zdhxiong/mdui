@@ -18,6 +18,7 @@ import '../icon.js';
  *
  * @csspart label - 文本
  * @csspart icon - 图标
+ * @csspart loading - 加载中动画
  */
 @customElement('mdui-button')
 export class Button extends ButtonBase {
@@ -25,12 +26,6 @@ export class Button extends ButtonBase {
 
   @queryAll('.button')
   protected focusProxiedElements!: HTMLElement[];
-
-  /**
-   * 是否为加载中状态
-   */
-  @property({ type: Boolean, reflect: true })
-  public loading = false;
 
   /**
    * 按钮形状。可选值为：
@@ -109,7 +104,7 @@ export class Button extends ButtonBase {
           this.renderButton({
             className: 'button',
             content: this.renderInner(),
-          })}`;
+          })}${this.renderLoading()}`;
   }
 }
 

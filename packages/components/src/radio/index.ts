@@ -35,6 +35,14 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
     return [this.inputElement];
   }
 
+  protected get focusableDisabled(): boolean {
+    return this.disabled;
+  }
+
+  protected get rippleDisabled(): boolean {
+    return this.disabled;
+  }
+
   /**
    * 是否为禁用状态
    */

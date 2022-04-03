@@ -27,7 +27,7 @@
   }
 
   .circle {
-    transition: stroke-dashoffset 500ms 0ms @mdui-sys-motion-easing-decelerated;
+    transition: stroke-dashoffset 500ms 0ms @mdui-sys-motion-easing-standard;
     .stroke(primary);
   }
 }
@@ -46,7 +46,7 @@
   }
 
   .layer {
-    animation: mdui-comp-circular-progress-layer-rotate 5332ms @mdui-sys-motion-easing-legacy infinite both;
+    animation: mdui-comp-circular-progress-layer-rotate 5332ms @mdui-sys-motion-easing-standard infinite both;
   }
 
   .circle {
@@ -81,12 +81,12 @@
     }
 
     &.left .circle {
-      animation: mdui-comp-circular-progress-left-spin 1333ms @mdui-sys-motion-easing-legacy infinite both;
+      animation: mdui-comp-circular-progress-left-spin 1333ms @mdui-sys-motion-easing-standard infinite both;
     }
 
     &.right .circle {
       left: -100%;
-      animation: mdui-comp-circular-progress-right-spin 1333ms @mdui-sys-motion-easing-legacy infinite both;
+      animation: mdui-comp-circular-progress-right-spin 1333ms @mdui-sys-motion-easing-standard infinite both;
     }
   }
 }

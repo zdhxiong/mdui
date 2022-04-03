@@ -20,7 +20,7 @@
   transition-duration: 280ms;
   transition-property: background-color;
   pointer-events: none;
-  .transitionTimingFunction(legacy);
+  .transitionTimingFunction(standard);
 }
 
 .hover {
@@ -56,7 +56,7 @@
 @keyframes mdui-comp-ripple-radius-in {
   from {
     transform: translate3d(0, 0, 0) scale(0.4);
-    .animationTimingFunction(legacy);
+    .animationTimingFunction(standard);
   }
 
   to {

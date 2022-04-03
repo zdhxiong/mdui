@@ -10,8 +10,10 @@
   text-align: center;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  // 先不启用动画，等首次渲染完后再设置 transitionProperty: width
-  transition: none 200ms @mdui-sys-motion-easing-legacy;
+  transition-timing-function: @mdui-sys-motion-easing-standard;
+  transition-duration: 200ms;
+  // 先不启用动画，等首次渲染完后再设置 transitionProperty: box-shadow, width
+  transition-property: box-shadow;
   .padding(0, 16);
   .fontSize(label-large-size);
   .fontWeight(label-large-weight);
@@ -125,7 +127,7 @@
 }
 
 .label {
-  transition: opacity 75ms @mdui-sys-motion-easing-legacy-accelerate 125ms;
+  transition: opacity 75ms @mdui-sys-motion-easing-accelerate 125ms;
 
   .paddingLeft(4);
   .paddingRight(4);

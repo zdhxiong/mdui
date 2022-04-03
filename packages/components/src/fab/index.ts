@@ -95,7 +95,7 @@ export class Fab extends ButtonBase {
     if (!hasUpdated) {
       // 延迟设置动画，避免首次渲染时也执行动画
       await new Promise((r) => setTimeout(r, 0));
-      this.style.transitionProperty = 'width';
+      this.style.transitionProperty = 'box-shadow, width';
     }
   }
 

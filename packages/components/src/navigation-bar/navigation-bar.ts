@@ -92,7 +92,7 @@ export class NavigationBar extends LitElement {
   }
 
   private selectItem(item: NavigationBarItem): void {
-    const value = item.getAttribute('value');
+    const value = item.value;
     if (!value || this.value === value) {
       return;
     }
@@ -114,7 +114,6 @@ export class NavigationBar extends LitElement {
 
   protected onSlotChange() {
     const itemElements = this.itemElements ?? [];
-
     // 为 navigation-bar-item 设置 labelVisibility 属性
     const labelVisibility =
       this.labelVisibility === 'auto'
@@ -145,6 +144,11 @@ export class NavigationBar extends LitElement {
     if (!this.value) {
       this.value = itemElements[0].value;
     }
+
+    // 重新选中默认值
+    itemElements.forEach((itemElement) => {
+      itemElement.active = itemElement.value === this.value;
+    });
   }
 }
 

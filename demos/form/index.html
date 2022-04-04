@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh">
 <head>
-  <title>Button</title>
+  <title>Form</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
@@ -12,6 +12,11 @@
     body {
       font-family: Roboto;
     }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+    }
   </style>
 </head>
 <body>
@@ -19,12 +24,34 @@
   <section>
     <h2>表单提交</h2>
     <form method="get">
-      <mdui-checkbox name="checkbox"></mdui-checkbox>
-      <mdui-checkbox name="checkbox-custom-value" value="haha"></mdui-checkbox>
-      <mdui-checkbox name="checkbox-disabled" disabled value="disabled"></mdui-checkbox>
-      <mdui-checkbox name="checkbox-required" required value="required"></mdui-checkbox>
+      <div>
+        <mdui-checkbox name="checkbox[]" value="checkbox-value1">Checkbox1</mdui-checkbox>
+        <mdui-checkbox name="checkbox[]" value="checkbox-value2">Checkbox2</mdui-checkbox>
+      </div>
+      <div>
+        <mdui-radio name="radio" value="radio-value1">Radio1</mdui-radio>
+        <mdui-radio name="radio" value="radio-value2">Radio2</mdui-radio>
+      </div>
+      <mdui-switch name="switch" value="switch-value"></mdui-switch>
 
-      <mdui-button type="submit" name="name1" value="value1">value: submit</mdui-button>
+      <mdui-button type="submit" name="submit" value="submit-value">value: submit</mdui-button>
+    </form>
+  </section>
+
+  <section>
+    <h2>Required</h2>
+    <form method="get">
+      <div>
+        <mdui-checkbox name="checkbox[]" value="checkbox-value1" required>Checkbox1</mdui-checkbox>
+        <mdui-checkbox name="checkbox[]" value="checkbox-value2" required>Checkbox2</mdui-checkbox>
+      </div>
+      <div>
+        <mdui-radio name="radio" value="radio-value1" required>Radio1</mdui-radio>
+        <mdui-radio name="radio" value="radio-value2" required>Radio2</mdui-radio>
+      </div>
+      <mdui-switch name="switch" value="switch-value" required></mdui-switch>
+
+      <mdui-button type="submit" name="submit" value="submit-value">value: submit</mdui-button>
     </form>
   </section>
 </main>

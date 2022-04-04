@@ -4,6 +4,7 @@ import { property } from 'lit/decorators/property.js';
 import { queryAll } from 'lit/decorators/query-all.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
+import { delay } from '@mdui/shared/helpers/delay.js';
 import { ButtonBase } from '../button/button-base.js';
 import type { MaterialIconsName } from '../icon.js';
 import { style } from './style.js';
@@ -88,13 +89,13 @@ export class Fab extends ButtonBase {
     await this.updateComplete;
 
     if (this.extended && !hasUpdated) {
-      await new Promise((r) => setTimeout(r, 0));
+      await delay();
       this.style.width = `${this.scrollWidth}px`;
     }
 
     if (!hasUpdated) {
       // 延迟设置动画，避免首次渲染时也执行动画
-      await new Promise((r) => setTimeout(r, 0));
+      await delay();
       this.style.transitionProperty = 'box-shadow, width';
     }
   }

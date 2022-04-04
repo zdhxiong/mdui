@@ -21,17 +21,7 @@ export class ButtonBase extends ButtonMixin(
   @query('mdui-ripple', true)
   protected rippleElement!: Ripple;
 
-  protected readonly formController: FormController = new FormController(this, {
-    form: (button: ButtonBase) => {
-      if (button.hasAttribute('form')) {
-        const document = button.getRootNode() as Document | ShadowRoot;
-        const formId = button.getAttribute('form')!;
-        return document.getElementById(formId) as HTMLFormElement;
-      }
-
-      return button.closest('form');
-    },
-  });
+  protected readonly formController: FormController = new FormController(this);
 
   /**
    * 是否为加载中状态

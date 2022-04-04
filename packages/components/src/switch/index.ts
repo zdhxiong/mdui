@@ -1,11 +1,16 @@
 import { html, LitElement, CSSResultGroup, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
+import { state } from 'lit/decorators/state.js';
 import { query } from 'lit/decorators/query.js';
+import { live } from 'lit/directives/live.js';
+import { classMap } from 'lit/directives/class-map.js';
+import { watch } from '@mdui/shared/decorators/watch.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { style } from './style.js';
@@ -16,6 +21,7 @@ import { style } from './style.js';
  * @event blur - 失去焦点时触发
  * @event change - 选中状态变更时触发
  * @event input - 选中状态变更时触发
+ * @event invalid - 表单字段验证不通过时触发
  *
  * @csspart track - 轨道
  * @csspart handle - 图标
@@ -45,6 +51,12 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   protected readonly formController: FormController = new FormController(this, {
     value: (control: Switch) => (control.checked ? control.value : undefined),
   });
+
+  /**
+   * 是否验证未通过
+   */
+  @state()
+  private invalid = false;
 
   /**
    * 是否为禁用状态
@@ -84,6 +96,14 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   @property({ reflect: true })
   public value = 'on';
 
+  @watch('disabled', true)
+  @watch('checked', true)
+  @watch('required', true)
+  private async onDisabledChange() {
+    await this.updateComplete;
+    this.invalid = !this.inputElement.checkValidity();
+  }
+
   /**
    * input[type="checkbox"] 的 change 事件无法冒泡越过 shadow dom
    */
@@ -92,16 +112,44 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
     emit(this, 'change');
   }
 
+  /**
+   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
+   */
+  public checkValidity(): boolean {
+    return this.inputElement.checkValidity();
+  }
+
+  /**
+   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`。
+   *
+   * 验证未通过时，还将在组件上显示未通过的提示。
+   */
+  public reportValidity(): boolean {
+    this.invalid = !this.inputElement.reportValidity();
+    return !this.invalid;
+  }
+
+  /**
+   * 设置验证未通过时的提示文字
+   *
+   * @param message 验证未通过时的提示文字
+   */
+  public setCustomValidity(message: string): void {
+    this.inputElement.setCustomValidity(message);
+  }
+
   protected override render(): TemplateResult {
-    const { disabled, checked, autofocus, name } = this;
+    const { disabled, checked, name, value, required, invalid } = this;
 
     return html`<label>
       <input
+        class=${classMap({ invalid })}
         type="checkbox"
-        name=${name}
-        ?disabled=${disabled}
-        ?checked=${checked}
-        ?autofocus=${autofocus}
+        name=${ifDefined(name)}
+        value=${ifDefined(value)}
+        .disabled=${disabled}
+        .checked=${live(checked)}
+        .required=${required}
         @change=${this.onChange}
       />
       <i part="track" class="track"></i>

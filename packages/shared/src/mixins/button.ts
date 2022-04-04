@@ -143,13 +143,12 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
       tabindex,
       content = html`<slot></slot>`,
     }: RenderButtonOptions): TemplateResult {
-      const { disabled, autofocus } = this;
+      const { disabled } = this;
       return html`<button
         id=${ifDefined(id)}
         class=${ifDefined(className)}
         tabindex=${ifDefined(tabindex)}
         ?disabled=${disabled}
-        ?autofocus=${autofocus}
       >
         ${content}
       </button>`;

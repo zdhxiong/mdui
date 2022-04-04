@@ -27,13 +27,27 @@
   </section>
 
   <section>
-    <h2>Switch</h2>
+    <h2>Checked</h2>
     <mdui-switch checked></mdui-switch>
     <mdui-switch checked disabled></mdui-switch>
     <div class="mdui-theme-dark">
       <mdui-switch checked></mdui-switch>
       <mdui-switch checked disabled></mdui-switch>
     </div>
+  </section>
+
+  <section>
+    <h2>Required</h2>
+    <form>
+      <mdui-switch name="switch[]" required></mdui-switch>
+      <mdui-switch name="switch[]" required disabled></mdui-switch>
+      <div class="mdui-theme-dark">
+        <mdui-switch name="switch[]" required></mdui-switch>
+        <mdui-switch name="switch[]" required disabled></mdui-switch>
+      </div>
+      <br/>
+      <mdui-button type="submit">Submit</mdui-button>
+    </form>
   </section>
 
 </main>

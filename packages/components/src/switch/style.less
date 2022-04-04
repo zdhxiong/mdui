@@ -30,10 +30,12 @@ label {
 /* 隐藏系统 input 标签，用自定义的图标代替 */
 input {
   position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
+  padding: 0;
   opacity: 0;
+  pointer-events: none;
+  .width(20);
+  .height(20);
+  .margin(0, 0, 0, 10);
 }
 
 /* 轨道 */
@@ -107,6 +109,19 @@ input {
   &:checked + .track,
   &:checked + .track + .handle {
     .stateLayerColor(primary);
+  }
+
+  // 验证未通过状态
+  &.invalid + .track {
+    .backgroundColor(error-container);
+
+    & + .handle {
+      .stateLayerColor(error);
+
+      &::after {
+        .backgroundColor(error);
+      }
+    }
   }
 
   // 禁用状态

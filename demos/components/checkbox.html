@@ -18,7 +18,7 @@
 <main>
   <section>
     <h2>Checkbox</h2>
-    <mdui-checkbox></mdui-checkbox>
+    <mdui-checkbox required></mdui-checkbox>
     <mdui-checkbox>Checkbox</mdui-checkbox>
     <mdui-checkbox disabled></mdui-checkbox>
     <mdui-checkbox disabled>Checkbox</mdui-checkbox>
@@ -56,6 +56,24 @@
       <mdui-checkbox indeterminate disabled></mdui-checkbox>
       <mdui-checkbox indeterminate disabled>Checkbox</mdui-checkbox>
     </div>
+  </section>
+
+  <section>
+    <h2>Required</h2>
+    <form>
+      <mdui-checkbox name="checkbox[]" required></mdui-checkbox>
+      <mdui-checkbox name="checkbox[]" required>Checkbox</mdui-checkbox>
+      <mdui-checkbox name="checkbox[]" required disabled></mdui-checkbox>
+      <mdui-checkbox name="checkbox[]" required disabled indeterminate>Checkbox</mdui-checkbox>
+      <div class="mdui-theme-dark">
+        <mdui-checkbox name="checkbox[]" required></mdui-checkbox>
+        <mdui-checkbox name="checkbox[]" required>Checkbox</mdui-checkbox>
+        <mdui-checkbox name="checkbox[]" required disabled></mdui-checkbox>
+        <mdui-checkbox name="checkbox[]" required disabled indeterminate>Checkbox</mdui-checkbox>
+      </div>
+      <br/>
+      <mdui-button type="submit">Submit</mdui-button>
+    </form>
   </section>
 
 </main>

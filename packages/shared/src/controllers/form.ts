@@ -25,7 +25,15 @@ export class FormController implements ReactiveController {
   ) {
     (this.host = host).addController(this);
     this.options = {
-      form: (input) => (input as HTMLInputElement).closest('form'),
+      form: (input) => {
+        if (input.hasAttribute('form')) {
+          const document = input.getRootNode() as Document | ShadowRoot;
+          const formId = input.getAttribute('form')!;
+          return document.getElementById(formId) as HTMLFormElement;
+        }
+
+        return input.closest('form');
+      },
       name: (input) => (input as HTMLInputElement).name,
       value: (input) => (input as HTMLInputElement).value,
       disabled: (input) => (input as HTMLInputElement).disabled,

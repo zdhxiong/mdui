@@ -143,34 +143,13 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
       tabindex,
       content = html`<slot></slot>`,
     }: RenderButtonOptions): TemplateResult {
-      const {
-        disabled,
-        autofocus,
-        name,
-        value,
-        type,
-        form,
-        formAction,
-        formEnctype,
-        formMethod,
-        formNovalidate,
-        formTarget,
-      } = this;
+      const { disabled, autofocus } = this;
       return html`<button
         id=${ifDefined(id)}
         class=${ifDefined(className)}
         tabindex=${ifDefined(tabindex)}
         ?disabled=${disabled}
         ?autofocus=${autofocus}
-        name=${ifDefined(name)}
-        value=${ifDefined(value)}
-        type=${ifDefined(type)}
-        form=${ifDefined(form)}
-        formaction=${ifDefined(formAction)}
-        formenctype=${ifDefined(formEnctype)}
-        formmethod=${ifDefined(formMethod)}
-        formtarget=${ifDefined(formTarget)}
-        ?formnovalidate=${formNovalidate}
       >
         ${content}
       </button>`;

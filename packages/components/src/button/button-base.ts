@@ -7,6 +7,7 @@ import { ButtonMixin } from '@mdui/shared/mixins/button.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
+import { FormController } from '@mdui/shared/controllers/form.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { buttonBaseStyle } from './button-base-style.js';
@@ -19,6 +20,18 @@ export class ButtonBase extends ButtonMixin(
 
   @query('mdui-ripple', true)
   protected rippleElement!: Ripple;
+
+  protected readonly formController: FormController = new FormController(this, {
+    form: (button: ButtonBase) => {
+      if (button.hasAttribute('form')) {
+        const document = button.getRootNode() as Document | ShadowRoot;
+        const formId = button.getAttribute('form')!;
+        return document.getElementById(formId) as HTMLFormElement;
+      }
+
+      return button.closest('form');
+    },
+  });
 
   /**
    * 是否为加载中状态
@@ -39,6 +52,15 @@ export class ButtonBase extends ButtonMixin(
   protected _() {
     // @ts-ignore
     this.onDisabledUpdate();
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.addEventListener('click', () => {
+      if (this.type === 'submit') {
+        this.formController.submit(this);
+      }
+    });
   }
 
   protected renderLoading(): TemplateResult {

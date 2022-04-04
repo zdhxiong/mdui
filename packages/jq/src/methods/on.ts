@@ -32,8 +32,8 @@ declare module '../shared/core.js' {
      *
      * 如果 `data` 是 `string` 类型，则必须提供 `selector` 参数；`selector` 参数可以是 `null`
      */
-    on(
-      events: PlainObject<EventCallback | false>,
+    on<TEvent extends Event>(
+      events: PlainObject<EventCallback<TEvent> | false>,
       selector: string | null | undefined,
       data?: unknown,
     ): this;
@@ -51,7 +51,10 @@ declare module '../shared/core.js' {
      *
      * 如果 `data` 是 `string` 类型，则必须提供 `selector` 参数；`selector` 参数可以是 `null`
      */
-    on(events: PlainObject<EventCallback | false>, data?: unknown): this;
+    on<TEvent extends Event>(
+      events: PlainObject<EventCallback<TEvent> | false>,
+      data?: unknown,
+    ): this;
 
     /**
      * 通过事件委托添加事件处理函数，并传入参数
@@ -66,11 +69,11 @@ declare module '../shared/core.js' {
      * 如果 `data` 是 `string` 类型，则必须提供 `selector` 参数；`selector` 参数可以是 `null`
      * @param callback 事件处理函数
      */
-    on(
+    on<TEvent extends Event>(
       eventName: string,
       selector: string | null | undefined,
       data: unknown,
-      callback: EventCallback | false,
+      callback: EventCallback<TEvent> | false,
     ): this;
 
     /**
@@ -82,10 +85,10 @@ declare module '../shared/core.js' {
      * @param selector CSS 选择器
      * @param callback 事件处理函数
      */
-    on(
+    on<TEvent extends Event>(
       eventName: string,
       selector: string,
-      callback: EventCallback | false,
+      callback: EventCallback<TEvent> | false,
     ): this;
 
     /**
@@ -97,7 +100,11 @@ declare module '../shared/core.js' {
      * @param data 事件触发时，传递给事件处理函数的数据
      * @param callback 事件处理函数
      */
-    on(eventName: string, data: unknown, callback: EventCallback | false): this;
+    on<TEvent extends Event>(
+      eventName: string,
+      data: unknown,
+      callback: EventCallback<TEvent> | false,
+    ): this;
 
     /**
      * 添加事件处理函数
@@ -107,7 +114,10 @@ declare module '../shared/core.js' {
      * 事件名中可以包含命名空间，如 `click.myPlugin`
      * @param callback 事件处理函数
      */
-    on(eventName: string, callback: EventCallback | false): this;
+    on<TEvent extends Event>(
+      eventName: string,
+      callback: EventCallback<TEvent> | false,
+    ): this;
   }
 }
 

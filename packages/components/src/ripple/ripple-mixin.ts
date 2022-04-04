@@ -173,13 +173,14 @@ export const RippleMixin = dedupeMixin(
 
       protected async firstUpdated(changes: PropertyValues) {
         super.firstUpdated(changes);
-        $(this)
-          .on(startEvent, (e) => this.startPress(e))
-          .on('mouseenter', (e) => this.startHover(e))
-          .on('mouseleave', (e) => this.endHover(e))
-          .on(unlockEvent, register)
-          .on('focus', (e) => this.startFocus(e))
-          .on('blur', (e) => this.endFocus(e));
+        $(this).on({
+          [startEvent]: this.startPress,
+          mouseenter: this.startHover,
+          mouseleave: this.endHover,
+          [unlockEvent]: register,
+          focus: this.startFocus,
+          blur: this.endFocus,
+        });
       }
     }
 

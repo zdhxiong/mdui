@@ -5,6 +5,7 @@ import { query } from 'lit/decorators/query.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import { FormController } from '@mdui/shared/controllers/form.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { style } from './style.js';
@@ -42,6 +43,10 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   protected get rippleDisabled(): boolean {
     return this.disabled;
   }
+
+  protected readonly formController: FormController = new FormController(this, {
+    value: (radio: Radio) => (radio.checked ? radio.value : undefined),
+  });
 
   /**
    * 是否为禁用状态

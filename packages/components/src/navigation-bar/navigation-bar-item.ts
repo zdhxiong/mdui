@@ -2,7 +2,6 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { html, LitElement, nothing, CSSResultGroup, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
-import { queryAll } from 'lit/decorators/query-all.js';
 import { state } from 'lit/decorators/state.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -48,8 +47,8 @@ export class NavigationBarItem extends AnchorMixin(
   @query('mdui-ripple', true)
   protected rippleElement!: Ripple;
 
-  @queryAll('.item')
-  protected focusProxiedElements!: HTMLElement[];
+  @query('.item')
+  protected focusProxiedElement!: HTMLElement;
 
   private readonly hasSlotController = new HasSlotController(
     this,

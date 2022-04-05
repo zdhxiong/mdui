@@ -1,7 +1,7 @@
 import { html, TemplateResult, CSSResultGroup } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { queryAll } from 'lit/decorators/query-all.js';
+import { query } from 'lit/decorators/query.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { delay } from '@mdui/shared/helpers/delay.js';
@@ -26,8 +26,8 @@ import '../icon.js';
 export class Fab extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
-  @queryAll('.button')
-  protected focusProxiedElements!: HTMLElement[];
+  @query('.button')
+  protected focusProxiedElement!: HTMLElement;
 
   private readonly hasSlotController = new HasSlotController(this, 'icon');
 

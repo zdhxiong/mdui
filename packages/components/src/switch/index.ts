@@ -36,8 +36,8 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   @query('input', true)
   protected inputElement!: HTMLInputElement;
 
-  protected get focusProxiedElements(): HTMLElement[] {
-    return [this.inputElement];
+  protected get focusProxiedElement(): HTMLElement {
+    return this.inputElement;
   }
 
   protected get focusableDisabled(): boolean {

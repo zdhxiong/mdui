@@ -5,7 +5,6 @@ import { query } from 'lit/decorators/query.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
-import { queryAll } from 'lit/decorators/query-all.js';
 import { when } from 'lit/directives/when.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
@@ -32,8 +31,8 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
     return this.disabled;
   }
 
-  @queryAll('.link')
-  protected focusProxiedElements!: HTMLElement[];
+  @query('.link')
+  protected focusProxiedElement!: HTMLElement;
 
   @query('mdui-ripple')
   protected rippleElement!: Ripple;

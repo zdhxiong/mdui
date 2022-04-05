@@ -1,7 +1,7 @@
 import { html, TemplateResult, CSSResultGroup } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { queryAll } from 'lit/decorators/query-all.js';
+import { query } from 'lit/decorators/query.js';
 import { when } from 'lit/directives/when.js';
 import type { MaterialIconsName } from '../icon.js';
 import { ButtonBase } from './button-base.js';
@@ -24,8 +24,8 @@ import '../icon.js';
 export class Button extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
-  @queryAll('.button')
-  protected focusProxiedElements!: HTMLElement[];
+  @query('.button')
+  protected focusProxiedElement!: HTMLElement;
 
   /**
    * 按钮形状。可选值为：

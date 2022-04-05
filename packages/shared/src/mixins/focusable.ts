@@ -27,10 +27,10 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
 
     /**
      * 被代理的元素
-     * focusProxiedElements 的元素获得焦点时，焦点会代理到 this 上
+     * focusProxiedElement 的元素获得焦点时，焦点会代理到 this 上
      */
-    protected get focusProxiedElements(): HTMLElement[] {
-      throw new Error('Must implement focusProxiedElements getter!');
+    protected get focusProxiedElement(): HTMLElement | null {
+      throw new Error('Must implement focusProxiedElement getter!');
     }
 
     private manipulatingTabindex = false;
@@ -90,6 +90,12 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       if (this.autofocus) {
         this.focus();
       }
+
+      this.addEventListener('keydown', (event) => {
+        if (document.activeElement === this && event.code === 'Space') {
+          this.focusProxiedElement?.click();
+        }
+      });
     }
 
     /**
@@ -116,11 +122,11 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     protected updated(changed: PropertyValues): void {
       super.updated(changed);
 
-      if (!this.focusProxiedElements.length) {
+      if (!this.focusProxiedElement) {
         return;
       }
 
-      $(this.focusProxiedElements)
+      $(this.focusProxiedElement)
         .off('focus')
         .on('focus', this.proxyFocus)
         .each((_, element) => (element.tabIndex = -1));

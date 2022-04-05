@@ -27,7 +27,7 @@
     "@mdui/shared": "^1.0.0",
     "@mdui/icons": "^1.0.0",
     "@mdui/components": "^1.0.0",
-    "lit": "^2.1.1",
+    "lit": "^2.2.1",
     "tslib": "^2.3.1"
   }
 }

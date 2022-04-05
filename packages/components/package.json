@@ -71,7 +71,7 @@
     "@mdui/jq": "^3.0.0",
     "@mdui/shared": "^1.0.0",
     "@mdui/icons": "^1.0.0",
-    "lit": "^2.1.1",
+    "lit": "^2.2.1",
     "@lit-labs/motion": "^1.0.2",
     "@lit-labs/observers": "^1.0.1",
     "tslib": "^2.3.1"

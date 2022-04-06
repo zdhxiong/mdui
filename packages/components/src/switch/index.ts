@@ -10,6 +10,7 @@ import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
+import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
@@ -23,8 +24,11 @@ import { style } from './style.js';
  * @event input - 选中状态变更时触发
  * @event invalid - 表单字段验证不通过时触发
  *
+ * @slot - 文本
+ *
  * @csspart track - 轨道
  * @csspart handle - 图标
+ * @csspart label - 文本
  */
 @customElement('mdui-switch')
 export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
@@ -48,9 +52,11 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
     return this.disabled;
   }
 
-  protected readonly formController: FormController = new FormController(this, {
+  private readonly formController: FormController = new FormController(this, {
     value: (control: Switch) => (control.checked ? control.value : undefined),
   });
+
+  private readonly hasSlotController = new HasSlotController(this, '[default]');
 
   /**
    * 是否验证未通过
@@ -156,6 +162,14 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
       <i part="handle" class="handle">
         <mdui-ripple></mdui-ripple>
       </i>
+      <span
+        part="label"
+        class=${classMap({
+          'has-label': this.hasSlotController.test('[default]'),
+        })}
+      >
+        <slot></slot>
+      </span>
     </label>`;
   }
 }

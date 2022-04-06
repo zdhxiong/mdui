@@ -91,6 +91,14 @@ input {
   .stateLayerColor(on-surface);
 }
 
+span {
+  .color(on-surface);
+
+  &.has-label {
+    .paddingLeft(8);
+  }
+}
+
 input {
   // 选中状态
   &:checked + .track {
@@ -121,6 +129,10 @@ input {
       &::after {
         .backgroundColor(error);
       }
+
+      & + span {
+        .color(error);
+      }
     }
   }
 
@@ -136,6 +148,10 @@ input {
 
       &::before {
         display: inline-block;
+      }
+
+      & + span {
+        .color(on-surface, 38%);
       }
     }
   }

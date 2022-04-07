@@ -14,6 +14,18 @@ export class Divider extends LitElement {
   @property({ type: Boolean, reflect: true })
   public vertical = false;
 
+  /**
+   * 是否左侧缩进
+   */
+  @property({ type: Boolean, reflect: true })
+  public inset = false;
+
+  /**
+   * 是否左右两侧缩进
+   */
+  @property({ type: Boolean, reflect: true })
+  public middle = false;
+
   protected override render(): TemplateResult {
     return html``;
   }

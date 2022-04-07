@@ -10,6 +10,7 @@ export * from './icon.js';
 export * from './linear-progress.js';
 export * from './list.js';
 export * from './list-item.js';
+export * from './list-subheader.js';
 export * from './navigation-bar.js';
 export * from './navigation-bar-item.js';
 export * from './radio.js';

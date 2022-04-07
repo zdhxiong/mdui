@@ -262,6 +262,16 @@
   .px(height, @value);
 }
 
+.lineHeight(@value) {
+  & when (isnumber(@value)) {
+    .px(line-height, @value);
+  }
+
+  & when not (isnumber(@value)) {
+    .sys(line-height, ~"typescale-@{value}");
+  }
+}
+
 .width(@value) {
   .px(width, @value);
 }

@@ -12,61 +12,178 @@
     body {
       font-family: Roboto;
     }
+
+    mdui-list {
+      width: 360px;
+    }
+
+    @media (max-width: 750px) {
+      mdui-list {
+        width: 100%;
+      }
+    }
   </style>
+  <script>
+    const onNonclickableChange = () => {
+      const changeNonclickable = document.getElementById('change-nonclickable');
+      document.querySelectorAll('mdui-list').forEach(element => {
+        element.nonclickable = changeNonclickable.checked;
+      });
+    }
+    const onRoundedChange = () => {
+      const changeRounded = document.getElementById('change-rounded');
+      document.querySelectorAll('mdui-list').forEach(element => {
+        element.rounded = changeRounded.checked;
+      })
+    }
+  </script>
 </head>
 <body>
 <main>
   <section>
+    <mdui-checkbox id="change-nonclickable" onchange="onNonclickableChange()">不可点击</mdui-checkbox>
+    <mdui-checkbox id="change-rounded" onchange="onRoundedChange()">圆角</mdui-checkbox>
+  </section>
+
+  <section>
     <h2>Single line</h2>
     <mdui-list>
-      <mdui-list-item>List item</mdui-list-item>
-      <mdui-list-item>List item</mdui-list-item>
-      <mdui-list-item>List item</mdui-list-item>
+      <mdui-list-subheader>Normal</mdui-list-subheader>
+      <mdui-list-item title="List item"></mdui-list-item>
+      <mdui-list-item disabled title="List item disabled"></mdui-list-item>
+      <mdui-list-item nonclickable title="List item nonclickable"></mdui-list-item>
+      <mdui-list-item active title="List item active"></mdui-list-item>
+      <mdui-list-item title="List item long long long long long long long long long long"></mdui-list-item>
+
+      <mdui-divider></mdui-divider>
+      <mdui-list-subheader>Link</mdui-list-subheader>
+      <mdui-list-item href="https://www.mdui.org" title="Link"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" disabled title="Link disabled"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" nonclickable title="Link nonclickable"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" active title="Link active"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" title="Link active long long long long long long long long long"></mdui-list-item>
     </mdui-list>
   </section>
 
   <section>
-    <h2>Single line with icon</h2>
+    <h2>With subtitle</h2>
     <mdui-list>
-      <mdui-list-item icon="settings">List item</mdui-list-item>
-      <mdui-list-item icon="bluetooth">List item</mdui-list-item>
-      <mdui-list-item icon="help">List item</mdui-list-item>
+      <mdui-list-subheader>Normal</mdui-list-subheader>
+      <mdui-list-item title="List item" subtitle="subtitle"></mdui-list-item>
+      <mdui-list-item disabled title="List item disabled" subtitle="subtitle"></mdui-list-item>
+      <mdui-list-item nonclickable title="List item nonclickable" subtitle="subtitle"></mdui-list-item>
+      <mdui-list-item active title="List item active" subtitle="subtitle"></mdui-list-item>
+      <mdui-list-item title="List item long long long long long long long long" subtitle="subtitle long long long long long long long long"></mdui-list-item>
+
+      <mdui-divider></mdui-divider>
+      <mdui-list-subheader>Link</mdui-list-subheader>
+      <mdui-list-item href="https://www.mdui.org" title="Link" subtitle="subtitle"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" disabled title="Link disabled" subtitle="subtitle"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" nonclickable title="Link nonclickable" subtitle="subtitle"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" active title="Link active" subtitle="subtitle"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" title="Link active long long long long long long long long long" subtitle="subtitle long long long long long long long long long"></mdui-list-item>
     </mdui-list>
   </section>
 
   <section>
-    <h2>Single line with avatar</h2>
+    <h2>title and subtitle with html</h2>
     <mdui-list>
-      <mdui-list-item avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4">List item</mdui-list-item>
-      <mdui-list-item avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4">List item</mdui-list-item>
-      <mdui-list-item avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4">List item</mdui-list-item>
+      <mdui-list-item>
+        <div slot="title" style="color: red">Brunch this weekend?</div>
+        <div slot="subtitle" style="font-size: 14px;"><span style="font-weight: bold; font-size: 12px;">Ali Connors — </span>I'll be in your neighborhood doing errands this weekend. Do you want to hang out?</div>
+      </mdui-list-item>
     </mdui-list>
   </section>
 
   <section>
-    <h2>Two line</h2>
+    <h2>Custom content</h2>
     <mdui-list>
-      <mdui-list-item title="Two-line item" description="Secondary text"></mdui-list-item>
-      <mdui-list-item description="Secondary text">Two-line item</mdui-list-item>
-      <mdui-list-item description="Secondary text">Two-line item</mdui-list-item>
+      <mdui-list-item>
+        <div style="display: flex;">
+          <img src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"/>
+          <div class="title">test</div>
+        </div>
+      </mdui-list-item>
     </mdui-list>
   </section>
 
   <section>
-    <h2>Two line with icon</h2>
+    <h2>With start slot</h2>
     <mdui-list>
-      <mdui-list-item icon="settings" title="Two-line item" description="Secondary text"></mdui-list-item>
-      <mdui-list-item icon="bluetooth" title="Two-line item" description="Secondary text"></mdui-list-item>
-      <mdui-list-item icon="help" title="Two-line item" description="Secondary text"></mdui-list-item>
+      <mdui-list-item title="List item">
+        <mdui-checkbox slot="start" tabindex="-1"></mdui-checkbox>
+      </mdui-list-item>
+      <mdui-list-item title="List item" subtitle="Subtitle">
+        <mdui-radio slot="start"></mdui-radio>
+      </mdui-list-item>
+      <mdui-list-item title="List item long long long long long long long long long long" subtitle="Subtitle long long long long long long long long long long long long">
+        <mdui-switch slot="start"></mdui-switch>
+      </mdui-list-item>
+      <mdui-list-item title="List item">
+        <mdui-icon slot="start" name="settings"></mdui-icon>
+      </mdui-list-item>
+      <mdui-list-item title="List item">
+        <mdui-avatar slot="start" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
+      </mdui-list-item>
+      <mdui-list-item title="List item">
+        <img slot="start" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"/>
+      </mdui-list-item>
+      <mdui-list-item title="List item">
+        <span slot="start">text</span>
+      </mdui-list-item>
     </mdui-list>
   </section>
 
   <section>
-    <h2>Two line with avatar</h2>
+    <h2>With end slot</h2>
     <mdui-list>
-      <mdui-list-item avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" title="Two-line item" description="Secondary text"></mdui-list-item>
-      <mdui-list-item avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" title="Two-line item" description="Secondary text"></mdui-list-item>
-      <mdui-list-item avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" title="Two-line item" description="Secondary text"></mdui-list-item>
+      <mdui-list-item title="List item">
+        <mdui-checkbox slot="end"></mdui-checkbox>
+      </mdui-list-item>
+      <mdui-list-item title="List item" subtitle="Subtitle">
+        <mdui-radio slot="end"></mdui-radio>
+      </mdui-list-item>
+      <mdui-list-item title="List item long long long long long long long long long long" subtitle="Subtitle long long long long long long long long long long long long">
+        <mdui-switch slot="end"></mdui-switch>
+      </mdui-list-item>
+      <mdui-list-item title="List item">
+        <mdui-icon slot="end" name="settings"></mdui-icon>
+      </mdui-list-item>
+      <mdui-list-item title="List item">
+        <mdui-avatar slot="end" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
+      </mdui-list-item>
+      <mdui-list-item title="List item">
+        <img slot="end" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"/>
+      </mdui-list-item>
+      <mdui-list-item title="List item">
+        <span slot="end">text</span>
+      </mdui-list-item>
+    </mdui-list>
+  </section>
+
+  <section>
+    <h2>With start and end slot</h2>
+    <mdui-list>
+      <mdui-list-item title="List item">
+        <mdui-checkbox slot="start"></mdui-checkbox>
+        <span slot="end">text</span>
+      </mdui-list-item>
+      <mdui-list-item title="List item" subtitle="Subtitle">
+        <mdui-radio slot="start"></mdui-radio>
+        <mdui-icon slot="end" name="settings"></mdui-icon>
+      </mdui-list-item>
+      <mdui-list-item title="List item long long long long long long long long long long" subtitle="Subtitle long long long long long long long long long long long long">
+        <mdui-avatar slot="start" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
+        <mdui-switch slot="end"></mdui-switch>
+      </mdui-list-item>
+      <mdui-list-item title="List item">
+        <mdui-icon slot="start" name="settings"></mdui-icon>
+        <span slot="end">text</span>
+      </mdui-list-item>
+      <mdui-list-item title="List item">
+        <img slot="start" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"/>
+        <mdui-checkbox slot="end"></mdui-checkbox>
+      </mdui-list-item>
     </mdui-list>
   </section>
 </main>

@@ -6,6 +6,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 type RenderButtonOptions = {
   id?: string;
   className?: string;
+  part?: string; // csspart 名称
   content?: TemplateResult | TemplateResult[];
   tabindex?: number;
 };
@@ -140,6 +141,7 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
     protected renderButton({
       id,
       className,
+      part,
       tabindex,
       content = html`<slot></slot>`,
     }: RenderButtonOptions): TemplateResult {
@@ -147,6 +149,7 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
       return html`<button
         id=${ifDefined(id)}
         class=${ifDefined(className)}
+        part=${ifDefined(part)}
         tabindex=${ifDefined(tabindex)}
         ?disabled=${disabled}
       >

@@ -12,8 +12,6 @@
   -webkit-tap-highlight-color: transparent;
   .fontSize(label-large-size);
   .fontWeight(label-large-weight);
-  .paddingRight(7);
-  .paddingLeft(7);
   .height(32);
   .borderRadius(8);
   .letterSpacing(label-large-tracking);
@@ -23,33 +21,46 @@
   .stateLayerColor(on-surface-variant);
 }
 
+.button {
+  .paddingRight(7);
+  .paddingLeft(7);
+
+  :host([variant="input"]) & {
+    .paddingRight(3);
+    .paddingLeft(3);
+  }
+
+  :host([selected]) & {
+    .paddingRight(8);
+    .paddingLeft(8);
+  }
+
+  :host([selected][variant="input"]) & {
+    .paddingRight(4);
+    .paddingLeft(4);
+  }
+
+  :host([elevated]) & {
+    .paddingRight(8);
+    .paddingLeft(8);
+  }
+}
+
 :host([variant="assist"]) {
   .color(on-surface);
   .stateLayerColor(on-surface);
-}
-
-:host([variant="input"]) {
-  .paddingRight(3);
-  .paddingLeft(3);
 }
 
 :host([selected]) {
   .color(on-secondary-container);
   .backgroundColor(secondary-container);
   .borderWidth(0);
-  .paddingRight(8);
-  .paddingLeft(8);
   .stateLayerColor(on-secondary-container);
-}
-
-:host([selected][variant="input"]) {
-  .paddingRight(4);
-  .paddingLeft(4);
 }
 
 :host([loading]) {
   mdui-ripple,
-  .chip {
+  .button {
     opacity: 0;
   }
 
@@ -99,8 +110,6 @@
 :host([elevated]) {
   border-width: 0;
   .elevation(1);
-  .paddingRight(8);
-  .paddingLeft(8);
 }
 
 :host([dragged]),
@@ -108,7 +117,7 @@
   .elevation(4);
 }
 
-.chip {
+.button {
   overflow: visible;
 }
 

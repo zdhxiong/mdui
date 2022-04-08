@@ -21,6 +21,7 @@ import '@mdui/icons/clear.js';
  * @slot - 文本
  * @slot icon - 图标
  *
+ * @csspart button - 内部的 button 或 a 元素
  * @csspart label - 文本
  * @csspart check - 选中状态图标
  * @csspart icon - 图标
@@ -138,15 +139,19 @@ export class Chip extends ButtonBase {
 
     return html`<mdui-ripple></mdui-ripple>${href
         ? disabled
-          ? html`<span class="button chip">${this.renderInner()}</span>`
+          ? html`<span part="button" class="button">
+              ${this.renderInner()}
+            </span>`
           : // @ts-ignore
             this.renderAnchor({
-              className: 'button chip',
+              className: 'button',
+              part: 'button',
               content: this.renderInner(),
             })
         : // @ts-ignore
           this.renderButton({
-            className: 'button chip',
+            className: 'button',
+            part: 'button',
             content: this.renderInner(),
           })}${this.renderLoading()}`;
   }

@@ -18,6 +18,7 @@ import '../icon.js';
  * @slot - 文本
  * @slot icon - 图标
  *
+ * @csspart button - 内部的 button 或 a 元素
  * @csspart label - 文本
  * @csspart icon - 图标
  * @csspart loading - 加载中动画
@@ -121,15 +122,19 @@ export class Fab extends ButtonBase {
 
     return html`<mdui-ripple></mdui-ripple>${href
         ? disabled
-          ? html`<span class=${className}>${this.renderInner()}</span>`
+          ? html`<span part="button" class=${className}>
+              ${this.renderInner()}
+            </span>`
           : // @ts-ignore
             this.renderAnchor({
               className,
+              part: 'button',
               content: this.renderInner(),
             })
         : // @ts-ignore
           this.renderButton({
             className,
+            part: 'button',
             content: this.renderInner(),
           })}${this.renderLoading()}`;
   }

@@ -6,6 +6,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 type RenderAnchorOptions = {
   id?: string;
   className?: string;
+  part?: string; // csspart 名称
   content?: TemplateResult | TemplateResult[];
   tabindex?: number;
 };
@@ -60,6 +61,7 @@ export const AnchorMixin = <T extends Constructor<LitElement>>(
     protected renderAnchor({
       id,
       className,
+      part,
       tabindex,
       content = html`<slot></slot>`,
     }: RenderAnchorOptions): TemplateResult {
@@ -68,6 +70,7 @@ export const AnchorMixin = <T extends Constructor<LitElement>>(
       return html`<a
         id=${ifDefined(id)}
         class=${ifDefined(className)}
+        part=${ifDefined(part)}
         tabindex=${ifDefined(tabindex)}
         href=${ifDefined(href)}
         download=${ifDefined(download)}

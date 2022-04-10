@@ -47,38 +47,38 @@
   min-width: 0;
 }
 
-.with-title,
-.with-subtitle {
+.with-primary,
+.with-secondary {
   display: flex;
 }
 
-.title,
-.subtitle {
+.primary,
+.secondary {
   display: none;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.title {
+.primary {
   .fontSize(body-large-size);
   .fontWeight(body-large-weight);
   .letterSpacing(body-large-tracking);
   .lineHeight(body-large-line-height);
   .color(on-surface);
 
-  .with-title & {
+  .with-primary & {
     .paddingTop(8);
     .paddingBottom(8);
   }
 
-  .with-title.with-subtitle & {
+  .with-primary.with-secondary & {
     .paddingTop(2);
     .paddingBottom(2);
   }
 }
 
-.subtitle {
+.secondary {
   .fontSize(body-medium-size);
   .fontWeight(body-medium-weight);
   .letterSpacing(body-medium-tracking);
@@ -86,8 +86,8 @@
   .color(on-surface-variant);
 }
 
-.has-title,
-.has-subtitle {
+.has-primary,
+.has-secondary {
   display: block;
 }
 

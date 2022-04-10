@@ -49,48 +49,48 @@
     <h2>Single line</h2>
     <mdui-list>
       <mdui-list-subheader>Normal</mdui-list-subheader>
-      <mdui-list-item title="List item"></mdui-list-item>
-      <mdui-list-item disabled title="List item disabled"></mdui-list-item>
-      <mdui-list-item nonclickable title="List item nonclickable"></mdui-list-item>
-      <mdui-list-item active title="List item active"></mdui-list-item>
-      <mdui-list-item title="List item long long long long long long long long long long"></mdui-list-item>
+      <mdui-list-item primary="List item"></mdui-list-item>
+      <mdui-list-item disabled primary="List item disabled"></mdui-list-item>
+      <mdui-list-item nonclickable primary="List item nonclickable"></mdui-list-item>
+      <mdui-list-item active primary="List item active"></mdui-list-item>
+      <mdui-list-item primary="List item long long long long long long long long long long"></mdui-list-item>
 
       <mdui-divider></mdui-divider>
       <mdui-list-subheader>Link</mdui-list-subheader>
-      <mdui-list-item href="https://www.mdui.org" title="Link"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" disabled title="Link disabled"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" nonclickable title="Link nonclickable"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" active title="Link active"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" title="Link active long long long long long long long long long"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" primary="Link"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" disabled primary="Link disabled"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" nonclickable primary="Link nonclickable"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" active primary="Link active"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" primary="Link active long long long long long long long long long"></mdui-list-item>
     </mdui-list>
   </section>
 
   <section>
-    <h2>With subtitle</h2>
+    <h2>With secondary</h2>
     <mdui-list>
       <mdui-list-subheader>Normal</mdui-list-subheader>
-      <mdui-list-item title="List item" subtitle="subtitle"></mdui-list-item>
-      <mdui-list-item disabled title="List item disabled" subtitle="subtitle"></mdui-list-item>
-      <mdui-list-item nonclickable title="List item nonclickable" subtitle="subtitle"></mdui-list-item>
-      <mdui-list-item active title="List item active" subtitle="subtitle"></mdui-list-item>
-      <mdui-list-item title="List item long long long long long long long long" subtitle="subtitle long long long long long long long long"></mdui-list-item>
+      <mdui-list-item primary="List item" secondary="secondary"></mdui-list-item>
+      <mdui-list-item disabled primary="List item disabled" secondary="secondary"></mdui-list-item>
+      <mdui-list-item nonclickable primary="List item nonclickable" secondary="secondary"></mdui-list-item>
+      <mdui-list-item active primary="List item active" secondary="secondary"></mdui-list-item>
+      <mdui-list-item primary="List item long long long long long long long long" secondary="secondary long long long long long long long long"></mdui-list-item>
 
       <mdui-divider></mdui-divider>
       <mdui-list-subheader>Link</mdui-list-subheader>
-      <mdui-list-item href="https://www.mdui.org" title="Link" subtitle="subtitle"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" disabled title="Link disabled" subtitle="subtitle"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" nonclickable title="Link nonclickable" subtitle="subtitle"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" active title="Link active" subtitle="subtitle"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" title="Link active long long long long long long long long long" subtitle="subtitle long long long long long long long long long"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" primary="Link" secondary="secondary"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" disabled primary="Link disabled" secondary="secondary"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" nonclickable primary="Link nonclickable" secondary="secondary"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" active primary="Link active" secondary="secondary"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" primary="Link active long long long long long long long long long" secondary="secondary long long long long long long long long long"></mdui-list-item>
     </mdui-list>
   </section>
 
   <section>
-    <h2>title and subtitle with html</h2>
+    <h2>primary and secondary with html</h2>
     <mdui-list>
       <mdui-list-item>
-        <div slot="title" style="color: red">Brunch this weekend?</div>
-        <div slot="subtitle" style="font-size: 14px;"><span style="font-weight: bold; font-size: 12px;">Ali Connors — </span>I'll be in your neighborhood doing errands this weekend. Do you want to hang out?</div>
+        <div slot="primary" style="color: red">Brunch this weekend?</div>
+        <div slot="secondary" style="font-size: 14px;"><span style="font-weight: bold; font-size: 12px;">Ali Connors — </span>I'll be in your neighborhood doing errands this weekend. Do you want to hang out?</div>
       </mdui-list-item>
     </mdui-list>
   </section>
@@ -110,25 +110,25 @@
   <section>
     <h2>With start slot</h2>
     <mdui-list>
-      <mdui-list-item title="List item">
+      <mdui-list-item primary="List item">
         <mdui-checkbox slot="start" tabindex="-1"></mdui-checkbox>
       </mdui-list-item>
-      <mdui-list-item title="List item" subtitle="Subtitle">
+      <mdui-list-item primary="List item" secondary="secondary">
         <mdui-radio slot="start"></mdui-radio>
       </mdui-list-item>
-      <mdui-list-item title="List item long long long long long long long long long long" subtitle="Subtitle long long long long long long long long long long long long">
+      <mdui-list-item primary="List item long long long long long long long long long long" secondary="secondary long long long long long long long long long long long long">
         <mdui-switch slot="start"></mdui-switch>
       </mdui-list-item>
-      <mdui-list-item title="List item">
+      <mdui-list-item primary="List item">
         <mdui-icon slot="start" name="settings"></mdui-icon>
       </mdui-list-item>
-      <mdui-list-item title="List item">
+      <mdui-list-item primary="List item">
         <mdui-avatar slot="start" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
       </mdui-list-item>
-      <mdui-list-item title="List item">
+      <mdui-list-item primary="List item">
         <img slot="start" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"/>
       </mdui-list-item>
-      <mdui-list-item title="List item">
+      <mdui-list-item primary="List item">
         <span slot="start">text</span>
       </mdui-list-item>
     </mdui-list>
@@ -137,25 +137,25 @@
   <section>
     <h2>With end slot</h2>
     <mdui-list>
-      <mdui-list-item title="List item">
+      <mdui-list-item primary="List item">
         <mdui-checkbox slot="end"></mdui-checkbox>
       </mdui-list-item>
-      <mdui-list-item title="List item" subtitle="Subtitle">
+      <mdui-list-item primary="List item" secondary="secondary">
         <mdui-radio slot="end"></mdui-radio>
       </mdui-list-item>
-      <mdui-list-item title="List item long long long long long long long long long long" subtitle="Subtitle long long long long long long long long long long long long">
+      <mdui-list-item primary="List item long long long long long long long long long long" secondary="secondary long long long long long long long long long long long long">
         <mdui-switch slot="end"></mdui-switch>
       </mdui-list-item>
-      <mdui-list-item title="List item">
+      <mdui-list-item primary="List item">
         <mdui-icon slot="end" name="settings"></mdui-icon>
       </mdui-list-item>
-      <mdui-list-item title="List item">
+      <mdui-list-item primary="List item">
         <mdui-avatar slot="end" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
       </mdui-list-item>
-      <mdui-list-item title="List item">
+      <mdui-list-item primary="List item">
         <img slot="end" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"/>
       </mdui-list-item>
-      <mdui-list-item title="List item">
+      <mdui-list-item primary="List item">
         <span slot="end">text</span>
       </mdui-list-item>
     </mdui-list>
@@ -164,23 +164,23 @@
   <section>
     <h2>With start and end slot</h2>
     <mdui-list>
-      <mdui-list-item title="List item">
+      <mdui-list-item primary="List item">
         <mdui-checkbox slot="start"></mdui-checkbox>
         <span slot="end">text</span>
       </mdui-list-item>
-      <mdui-list-item title="List item" subtitle="Subtitle">
+      <mdui-list-item primary="List item" secondary="secondary">
         <mdui-radio slot="start"></mdui-radio>
         <mdui-icon slot="end" name="settings"></mdui-icon>
       </mdui-list-item>
-      <mdui-list-item title="List item long long long long long long long long long long" subtitle="Subtitle long long long long long long long long long long long long">
+      <mdui-list-item primary="List item long long long long long long long long long long" secondary="secondary long long long long long long long long long long long long">
         <mdui-avatar slot="start" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
         <mdui-switch slot="end"></mdui-switch>
       </mdui-list-item>
-      <mdui-list-item title="List item">
+      <mdui-list-item primary="List item">
         <mdui-icon slot="start" name="settings"></mdui-icon>
         <span slot="end">text</span>
       </mdui-list-item>
-      <mdui-list-item title="List item">
+      <mdui-list-item primary="List item">
         <img slot="start" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"/>
         <mdui-checkbox slot="end"></mdui-checkbox>
       </mdui-list-item>

@@ -17,16 +17,16 @@ import { listItemStyle } from './list-item-style.js';
  * @event blur - 失去焦点时触发
  *
  * @slot - 任意内容
- * @slot title - 主文本
- * @slot subtitle - 副文本
+ * @slot primary - 主文本
+ * @slot secondary - 副文本
  * @slot start - 左侧 slot
  * @slot end - 右侧 slot
  *
  * @csspart start - 左侧 slot
  * @csspart end - 右侧 slot
  * @csspart body - 中间部分
- * @csspart title - 主标题
- * @csspart subtitle - 副标题
+ * @csspart primary - 主标题
+ * @csspart secondary - 副标题
  */
 @customElement('mdui-list-item')
 export class ListItem extends AnchorMixin(
@@ -55,8 +55,8 @@ export class ListItem extends AnchorMixin(
   private readonly hasSlotController = new HasSlotController(
     this,
     '[default]',
-    'title',
-    'subtitle',
+    'primary',
+    'secondary',
     'start',
     'end',
   );
@@ -65,13 +65,13 @@ export class ListItem extends AnchorMixin(
    * 主文本
    */
   @property({ reflect: true })
-  public title!: string;
+  public primary!: string;
 
   /**
    * 副文本
    */
   @property({ reflect: true })
-  public subtitle!: string;
+  public secondary!: string;
 
   /**
    * 是否禁用该列表项，列表项将置灰，且其中的 checkbox、radio、switch 等都将禁用
@@ -98,9 +98,9 @@ export class ListItem extends AnchorMixin(
   public rounded = false;
 
   protected renderInner(): TemplateResult {
-    const { title, subtitle } = this;
-    const hasTitleSlot = this.hasSlotController.test('title');
-    const hasSubtitleSlot = this.hasSlotController.test('subtitle');
+    const { primary, secondary } = this;
+    const hasPrimarySlot = this.hasSlotController.test('primary');
+    const hasSecondarySlot = this.hasSlotController.test('secondary');
     const hasStartSlot = this.hasSlotController.test('start');
     const hasEndSlot = this.hasSlotController.test('end');
 
@@ -113,23 +113,25 @@ export class ListItem extends AnchorMixin(
       <div
         part="body"
         class="body ${classMap({
-          'with-title': title || hasTitleSlot,
-          'with-subtitle': subtitle || hasSubtitleSlot,
+          'with-primary': primary || hasPrimarySlot,
+          'with-secondary': secondary || hasSecondarySlot,
         })}"
       >
         <div
-          part="title"
-          class="title ${classMap({ 'has-title': title || hasTitleSlot })}"
-        >
-          <slot name="title"></slot>${title}
-        </div>
-        <div
-          part="subtitle"
-          class="subtitle ${classMap({
-            'has-subtitle': subtitle || hasSubtitleSlot,
+          part="primary"
+          class="primary ${classMap({
+            'has-primary': primary || hasPrimarySlot,
           })}"
         >
-          <slot name="subtitle"></slot>${subtitle}
+          <slot name="primary"></slot>${primary}
+        </div>
+        <div
+          part="secondary"
+          class="secondary ${classMap({
+            'has-secondary': secondary || hasSecondarySlot,
+          })}"
+        >
+          <slot name="secondary"></slot>${secondary}
         </div>
       </div>
       <div part="end" class="end ${classMap({ 'has-end': hasEndSlot })}">

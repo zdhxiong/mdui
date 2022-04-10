@@ -2,7 +2,6 @@ import { html, TemplateResult, CSSResultGroup } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
-import { when } from 'lit/directives/when.js';
 import type { MaterialIconsName } from '../icon.js';
 import { ButtonBase } from './button-base.js';
 import { style } from './style.js';
@@ -14,11 +13,13 @@ import '../icon.js';
  * @event blur - 失去焦点时触发
  *
  * @slot - 按钮的文本
- * @slot icon - 按钮的图标
+ * @slot start - 按钮左侧元素
+ * @slot end - 按钮右侧元素
  *
  * @csspart button - 内部的 button 或 a 元素
  * @csspart label - 文本
- * @csspart icon - 图标
+ * @csspart start - 左侧的元素
+ * @csspart end - 右侧的元素
  * @csspart loading - 加载中动画
  */
 @customElement('mdui-button')
@@ -53,41 +54,43 @@ export class Button extends ButtonBase {
   public fullwidth = false;
 
   /**
-   * Material Icons 图标名
+   * 左侧的 Material Icons 图标名
    */
   @property({ reflect: true })
   public icon!: MaterialIconsName;
 
   /**
-   * 图标是否置于右侧
+   * 右侧的 Material Icons 图标名
    */
-  @property({ type: Boolean, reflect: true })
-  public trailingIcon = false;
+  @property({ reflect: true })
+  public endIcon!: MaterialIconsName;
 
-  protected renderLeadingIcon(): TemplateResult {
-    return html`${when(!this.trailingIcon, () => this.renderIcon())}`;
+  protected renderStart(): TemplateResult {
+    return this.icon
+      ? html`<mdui-icon
+          part="start"
+          class="icon"
+          name=${this.icon}
+        ></mdui-icon>`
+      : html`<slot part="start" name="start"></slot>`;
   }
 
   protected renderLabel(): TemplateResult {
     return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
-  protected renderTrailingIcon(): TemplateResult {
-    return html`${when(this.trailingIcon, () => this.renderIcon())}`;
-  }
-
-  protected renderIcon(): TemplateResult {
-    return this.icon
-      ? html`<mdui-icon part="icon" class="icon" name=${this.icon}></mdui-icon>`
-      : html`<slot part="icon" name="icon"></slot>`;
+  protected renderEnd(): TemplateResult {
+    return this.endIcon
+      ? html`<mdui-icon
+          part="end"
+          class="icon"
+          name=${this.endIcon}
+        ></mdui-icon>`
+      : html`<slot part="end" name="end"></slot>`;
   }
 
   protected renderInner(): TemplateResult[] {
-    return [
-      this.renderLeadingIcon(),
-      this.renderLabel(),
-      this.renderTrailingIcon(),
-    ];
+    return [this.renderStart(), this.renderLabel(), this.renderEnd()];
   }
 
   protected override render(): TemplateResult {

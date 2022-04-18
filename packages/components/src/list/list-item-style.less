@@ -8,7 +8,7 @@
 }
 
 :host([rounded]) {
-  .borderRadius(28);
+  .borderRadius(24);
 }
 
 :host([active]) {
@@ -20,13 +20,9 @@
 }
 
 .item {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  .padding(8, 16);
 
   :host([disabled]) & {
     cursor: default;
@@ -39,56 +35,71 @@
   }
 }
 
+.preset {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  .padding(8, 16);
+  .minHeight(48);
+}
+
 .body {
-  display: none;
+  display: flex;
   flex: 1 1 100%;
   flex-direction: column;
   justify-content: center;
   min-width: 0;
 }
 
-.with-primary,
-.with-secondary {
-  display: flex;
-}
-
-.primary,
-.secondary {
-  display: none;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
 .primary {
+  display: block;
   .fontSize(body-large-size);
   .fontWeight(body-large-weight);
   .letterSpacing(body-large-tracking);
   .lineHeight(body-large-line-height);
   .color(on-surface);
-
-  .with-primary & {
-    .paddingTop(8);
-    .paddingBottom(8);
-  }
-
-  .with-primary.with-secondary & {
-    .paddingTop(2);
-    .paddingBottom(2);
-  }
 }
 
 .secondary {
+  display: none;
   .fontSize(body-medium-size);
   .fontWeight(body-medium-weight);
   .letterSpacing(body-medium-tracking);
   .lineHeight(body-medium-line-height);
   .color(on-surface-variant);
+  .paddingTop(4);
 }
 
-.has-primary,
 .has-secondary {
   display: block;
+}
+
+:host([primaryline="1"]) .primary,
+:host([secondaryline="1"]) .secondary {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+:host([primaryline="2"]) .primary,
+:host([secondaryline="2"]) .secondary,
+:host([primaryline="3"]) .primary,
+:host([secondaryline="3"]) .secondary {
+  // stylelint-disable-next-line
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+}
+
+:host([primaryline="2"]) .primary,
+:host([secondaryline="2"]) .secondary {
+  -webkit-line-clamp: 2;
+}
+
+:host([primaryline="3"]) .primary,
+:host([secondaryline="3"]) .secondary {
+  -webkit-line-clamp: 3;
 }
 
 .start,
@@ -107,10 +118,7 @@
   display: flex;
 
   ::slotted(mdui-icon) {
-    .width(40);
-    .height(40);
     .fontSize(24);
-    .padding(8);
   }
 }
 

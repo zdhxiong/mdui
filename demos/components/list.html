@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
   <script type="module" src="../../packages/mdui/mdui.css"></script>
-  <script type="module" src="../../packages/components/index.js"></script>
   <style>
     body {
       font-family: Roboto;
@@ -23,65 +22,58 @@
       }
     }
   </style>
-  <script>
-    const onNonclickableChange = () => {
-      const changeNonclickable = document.getElementById('change-nonclickable');
-      document.querySelectorAll('mdui-list').forEach(element => {
-        element.nonclickable = changeNonclickable.checked;
+  <script type="module">
+    import { $ } from '../../packages/mdui/index.js';
+
+    $(() => {
+      $('#change-nonclickable').on('change', function() {
+        $('mdui-list').prop('nonclickable', $(this).prop('checked'));
       });
-    }
-    const onRoundedChange = () => {
-      const changeRounded = document.getElementById('change-rounded');
-      document.querySelectorAll('mdui-list').forEach(element => {
-        element.rounded = changeRounded.checked;
-      })
-    }
+
+      $('#change-rounded').on('change', function() {
+        $('mdui-list').prop('rounded', $(this).prop('checked'));
+      });
+    });
   </script>
 </head>
 <body>
 <main>
   <section>
-    <mdui-checkbox id="change-nonclickable" onchange="onNonclickableChange()">不可点击</mdui-checkbox>
-    <mdui-checkbox id="change-rounded" onchange="onRoundedChange()">圆角</mdui-checkbox>
+    <mdui-checkbox id="change-nonclickable">不可点击</mdui-checkbox>
+    <mdui-checkbox id="change-rounded">圆角</mdui-checkbox>
   </section>
 
   <section>
-    <h2>Single line</h2>
+    <h2>Normal</h2>
     <mdui-list>
-      <mdui-list-subheader>Normal</mdui-list-subheader>
-      <mdui-list-item primary="List item"></mdui-list-item>
-      <mdui-list-item disabled primary="List item disabled"></mdui-list-item>
-      <mdui-list-item nonclickable primary="List item nonclickable"></mdui-list-item>
-      <mdui-list-item active primary="List item active"></mdui-list-item>
-      <mdui-list-item primary="List item long long long long long long long long long long"></mdui-list-item>
-
-      <mdui-divider></mdui-divider>
-      <mdui-list-subheader>Link</mdui-list-subheader>
-      <mdui-list-item href="https://www.mdui.org" primary="Link"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" disabled primary="Link disabled"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" nonclickable primary="Link nonclickable"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" active primary="Link active"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" primary="Link active long long long long long long long long long"></mdui-list-item>
+      <mdui-list-item primaryLine="1" primary="Primary one line. Primary one line. Primary one line. Primary one line. Primary one line."></mdui-list-item>
+      <mdui-list-item primaryLine="2" primary="Primary two line. Primary two line. Primary two line. Primary two line. Primary two line. Primary two line."></mdui-list-item>
+      <mdui-list-item primaryLine="3" primary="Primary three line. Primary three line. Primary three line. Primary three line. Primary three line. Primary three line. Primary three line. Primary three line."></mdui-list-item>
+      <mdui-list-item primary="Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line."></mdui-list-item>
+      <mdui-list-item secondaryLine="1" primary="Primary" secondary="Secondary one line. Secondary one line. Secondary one line. Secondary one line."></mdui-list-item>
+      <mdui-list-item secondaryLine="2" primary="Primary" secondary="Secondary two line. Secondary two line. Secondary two line. Secondary two line. Secondary two line. Secondary two line."></mdui-list-item>
+      <mdui-list-item secondaryLine="3" primary="Primary" secondary="Secondary three line. Secondary three line. Secondary three line. Secondary three line. Secondary three line. Secondary three line. Secondary three line. "></mdui-list-item>
+      <mdui-list-item primary="Primary" secondary="Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line."></mdui-list-item>
+      <mdui-list-item>Primary slot<span slot="secondary">Secondary slot</span></mdui-list-item>
     </mdui-list>
   </section>
 
   <section>
-    <h2>With secondary</h2>
+    <h2>State</h2>
     <mdui-list>
-      <mdui-list-subheader>Normal</mdui-list-subheader>
-      <mdui-list-item primary="List item" secondary="secondary"></mdui-list-item>
-      <mdui-list-item disabled primary="List item disabled" secondary="secondary"></mdui-list-item>
-      <mdui-list-item nonclickable primary="List item nonclickable" secondary="secondary"></mdui-list-item>
-      <mdui-list-item active primary="List item active" secondary="secondary"></mdui-list-item>
-      <mdui-list-item primary="List item long long long long long long long long" secondary="secondary long long long long long long long long"></mdui-list-item>
+      <mdui-list-item>Normal</mdui-list-item>
+      <mdui-list-item disabled>Disabled</mdui-list-item>
+      <mdui-list-item nonclickable active>Nonclickable and active</mdui-list-item>
+      <mdui-list-item nonclickable>Nonclickable</mdui-list-item>
+      <mdui-list-item active>Active</mdui-list-item>
 
       <mdui-divider></mdui-divider>
       <mdui-list-subheader>Link</mdui-list-subheader>
-      <mdui-list-item href="https://www.mdui.org" primary="Link" secondary="secondary"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" disabled primary="Link disabled" secondary="secondary"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" nonclickable primary="Link nonclickable" secondary="secondary"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" active primary="Link active" secondary="secondary"></mdui-list-item>
-      <mdui-list-item href="https://www.mdui.org" primary="Link active long long long long long long long long long" secondary="secondary long long long long long long long long long"></mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org">Normal</mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" disabled>Disabled</mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" nonclickable active>Nonclickable and active</mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" nonclickable>Nonclickable</mdui-list-item>
+      <mdui-list-item href="https://www.mdui.org" active>Active</mdui-list-item>
     </mdui-list>
   </section>
 
@@ -89,7 +81,7 @@
     <h2>primary and secondary with html</h2>
     <mdui-list>
       <mdui-list-item>
-        <div slot="primary" style="color: red">Brunch this weekend?</div>
+        <div style="color: red">Brunch this weekend?</div>
         <div slot="secondary" style="font-size: 14px;"><span style="font-weight: bold; font-size: 12px;">Ali Connors — </span>I'll be in your neighborhood doing errands this weekend. Do you want to hang out?</div>
       </mdui-list-item>
     </mdui-list>
@@ -99,9 +91,9 @@
     <h2>Custom content</h2>
     <mdui-list>
       <mdui-list-item>
-        <div style="display: flex;">
+        <div style="display: flex;" slot="custom">
           <img src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"/>
-          <div class="title">test</div>
+          <div>test</div>
         </div>
       </mdui-list-item>
     </mdui-list>

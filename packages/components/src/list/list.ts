@@ -26,14 +26,41 @@ export class List extends LitElement {
   @property({ type: Boolean, reflect: true })
   public rounded = false;
 
+  /**
+   * 主文本行数，超过行数限制后会截断显示。默认为没有行数限制
+   */
+  @property({ type: Number, reflect: true })
+  public primaryLine!: 1 | 2 | 3;
+
+  /**
+   * 副文本行数，超过行数限制后会截断显示。默认为没有行数限制
+   */
+  @property({ type: Number, reflect: true })
+  public secondaryLine!: 1 | 2 | 3;
+
   @watch('rounded')
   @watch('nonclickable')
+  @watch('primaryLine')
+  @watch('secondaryLine')
   private onSlotChange() {
     const itemElements = this.itemElements ?? [];
 
     itemElements.forEach((itemElement) => {
-      itemElement.rounded = this.rounded;
-      itemElement.nonclickable = this.nonclickable;
+      if (this.rounded) {
+        itemElement.rounded = this.rounded;
+      }
+
+      if (this.nonclickable) {
+        itemElement.nonclickable = this.nonclickable;
+      }
+
+      if (this.primaryLine) {
+        itemElement.primaryLine = this.primaryLine;
+      }
+
+      if (this.secondaryLine) {
+        itemElement.secondaryLine = this.secondaryLine;
+      }
     });
   }
 

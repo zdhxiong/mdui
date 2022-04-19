@@ -165,7 +165,7 @@
   @cssVariable: "--mdui-sys-color-@{rgb}";
   @lessVariable: "mdui-sys-color-@{rgb}";
 
-  --mdui-comp-ripple-state-layer-color: ~"var(@{cssVariable}, @{lessVariable})";
+  --mdui-comp-ripple-state-layer-color: ~"var(@{cssVariable}, @{@{lessVariable}})";
 }
 
 .padding(@top, @right: null, @bottom: null, @left: null) {

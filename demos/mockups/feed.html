@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <title>List</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+  <script type="module" src="../../packages/mdui/mdui.css"></script>
+  <style>
+    body {
+      font-family: Roboto;
+      margin: 0;
+    }
+
+    .demo {
+      position: relative;
+      float: left;
+      width: 375px;
+      min-width: 375px;
+      height: 750px;
+      overflow: hidden;
+      border: 4px solid #000;
+      border-radius: 24px;
+    }
+
+    .demo + .demo {
+      margin-left: 32px;
+    }
+
+    .fab {
+      position: absolute;
+      right: 24px;
+      bottom: 104px;
+      z-index: 100;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      padding-bottom: 12px;
+    }
+    .header .body {
+      flex: 1;
+      padding-left: 12px;
+      font-size: 12px;
+    }
+    .header .body .time {
+      padding-top: 4px;
+    }
+
+    .feed {
+      padding: 16px 16px 96px 16px;
+      box-sizing: border-box;
+      height: 100%;
+      overflow: auto;
+    }
+
+    .custom-color-cards {
+      display: flex;
+      justify-content: space-evenly;
+      margin-bottom: 16px;
+    }
+    .custom-color-cards mdui-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      flex: 1;
+      height: 100px;
+    }
+    .custom-color-cards mdui-card + mdui-card {
+      margin-left: 16px;
+    }
+
+    .item {
+      padding: 16px;
+      width: 100%;
+    }
+    .item + .item,
+    .card-wrapper + .item,
+    .card-wrapper + .card-wrapper {
+      margin-top: 8px;
+    }
+    .title {
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 28px;
+    }
+    .summary {
+      font-size: 14px;
+      letter-spacing: 0.25px;
+      line-height: 20px;
+      padding-top: 4px;
+    }
+    .actions {
+      display: flex;
+      margin-top: 24px;
+    }
+    .actions mdui-button {
+      flex: 1;
+    }
+    .actions mdui-button + mdui-button {
+      margin-left: 16px;
+    }
+  </style>
+  <script type="module">
+    import { $, setTheme, getThemeFromImage } from '../../packages/mdui/index.js';
+
+    $(() => {
+      const customColors = [
+        { name: 'yellow', value: '#ebc248' },
+        { name: 'orange', value: '#fd9b40' },
+        { name: 'green', value: '#6e970c' }
+      ];
+      $('#change-dark-mode').on('change', (e) => {
+        $('body')[e.target.checked ? 'addClass' : 'removeClass']('mdui-theme-dark');
+      });
+      $('#change-theme-global').on('input', (e) => {
+        setTheme(e.target.value, {
+          customColors,
+        });
+      });
+      $('#change-theme-demo').on('input', (e) => {
+        setTheme(e.target.value, {
+          target: document.querySelector('.demo')
+        });
+      });
+      $('#change-theme-card').on('input', (e) => {
+        setTheme(e.target.value, {
+          target: document.querySelector('.card1')
+        });
+      });
+      $('#change-theme-from-image').on('change', (e) => {
+        if (!e.target.files.length) {
+          return;
+        }
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = evt => {
+          $('body').css({
+            backgroundImage: `url(${evt.target.result})`
+          })
+          const image = new Image();
+          image.src = evt.target.result;
+          getThemeFromImage(image).then(setTheme);
+        }
+        reader.readAsDataURL(file);
+      })
+    });
+  </script>
+</head>
+<body>
+
+<div style="display: flex">
+  <div class="demo">
+    <div class="feed">
+      <div class="custom-color-cards">
+        <mdui-card class="mdui-custom-color-yellow-container">
+          Yellow
+          <mdui-button class="mdui-custom-color-yellow-content">Button</mdui-button>
+        </mdui-card>
+        <mdui-card class="mdui-custom-color-orange-container">
+          Orange
+          <mdui-button class="mdui-custom-color-orange-content">Button</mdui-button>
+        </mdui-card>
+        <mdui-card class="mdui-custom-color-green-container">
+          Green
+          <mdui-button class="mdui-custom-color-green-content">Button</mdui-button>
+        </mdui-card>
+      </div>
+      <div class="card-wrapper card1">
+        <mdui-card clickable variant="filled" class="item">
+          <div class="header">
+            <mdui-avatar src="https://i.pravatar.cc/80?img=1"></mdui-avatar>
+            <div class="body">
+              <strong class="username">So Duri</strong>
+              <div class="time">20 min ago</div>
+            </div>
+            <mdui-button class="action" icon="star_outline" variant="icon"></mdui-button>
+          </div>
+          <div class="title">Dinner Club</div>
+          <div class="summary">I think it’s time for us to finally try that new noodle shop downtown that doesn’t use menus. Anyone...</div>
+        </mdui-card>
+      </div>
+      <div class="card-wrapper card2">
+        <mdui-card clickable variant="filled" class="item card2">
+          <div class="header">
+            <mdui-avatar src="https://i.pravatar.cc/80?img=2"></mdui-avatar>
+            <div class="body">
+              <div class="username">Lily MacDonald</div>
+              <div class="time">2 hours ago</div>
+            </div>
+            <mdui-button icon="star_outline" variant="icon"></mdui-button>
+          </div>
+          <div class="title">This food show is made for you</div>
+          <div class="summary">Ping — you’d love this new food show I started watching. It’s produced by a Thai drummer who started getting recognized for the amazing vegan...</div>
+          <div class="actions">
+            <mdui-button variant="elevated">Reply</mdui-button>
+            <mdui-button variant="elevated">Reply All</mdui-button>
+          </div>
+        </mdui-card>
+      </div>
+      <mdui-card clickable variant="filled" class="item">
+        <div class="header">
+          <mdui-avatar src="https://i.pravatar.cc/80?img=3"></mdui-avatar>
+          <div class="body">
+            <div class="username">Ziad Aouad</div>
+            <div class="time">6 hours ago</div>
+          </div>
+          <mdui-button icon="star_outline" variant="icon"></mdui-button>
+        </div>
+        <div class="title">Volunteer EMT with me?</div>
+        <div class="summary">What do you think about training to be a volunteer EMTs? We could do it together for moral support. Think about it??</div>
+      </mdui-card>
+    </div>
+
+    <mdui-fab icon="edit--outlined" size="large" class="fab"></mdui-fab>
+
+    <mdui-navigation-bar style="position: absolute;bottom: 0;z-index: 99">
+      <mdui-navigation-bar-item icon="inbox--outlined" activeicon="inbox--filled" badge="4">Inbox</mdui-navigation-bar-item>
+      <mdui-navigation-bar-item icon="subject--outlined" activeicon="subject--filled">Articles</mdui-navigation-bar-item>
+      <mdui-navigation-bar-item icon="chat_bubble_outline" activeicon="chat_bubble">Direct Message</mdui-navigation-bar-item>
+      <mdui-navigation-bar-item icon="videocam--outlined" activeicon="videocam--filled">Video Chat</mdui-navigation-bar-item>
+    </mdui-navigation-bar>
+  </div>
+
+  <div style="padding-left: 32px;display: flex;flex-direction: column">
+    <mdui-switch id="change-dark-mode">暗色模式</mdui-switch>
+    <label style="margin-top: 32px;">全局主题：<input type="color" id="change-theme-global"/></label>
+    <label style="margin-top: 32px;">demo主题：<input type="color" id="change-theme-demo"/></label>
+    <label style="margin-top: 32px;">第一张卡片主题：<input type="color" id="change-theme-card"/></label>
+    <input type="file" accept="image/png, image/jpeg" id="change-theme-from-image" style="margin-top: 32px;"/>
+  </div>
+</div>
+
+</body>
+</html>

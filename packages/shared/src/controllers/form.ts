@@ -4,6 +4,7 @@ import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/off.js';
 
+/* eslint-disable */
 export interface FormControllerOptions {
   form: (input: any) => HTMLFormElement | null;
   name: (input: any) => string | undefined;
@@ -13,6 +14,7 @@ export interface FormControllerOptions {
   disabled: (input: any) => boolean;
   reportValidity: (input: any) => boolean;
 }
+/* eslint-enable */
 
 export class FormController implements ReactiveController {
   host: ReactiveControllerHost & Element;

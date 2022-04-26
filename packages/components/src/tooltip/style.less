@@ -1,0 +1,35 @@
+@import "~@mdui/shared/variables.less";
+
+:host {
+  display: contents;
+}
+
+.tooltip {
+  position: fixed;
+}
+
+.arrow {
+  position: absolute;
+  z-index: -1;
+  transform: rotate(45deg);
+  .width(14);
+  .height(14);
+  .backgroundColor(primary);
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .minWidth(28);
+  .maxWidth(320);
+  .minHeight(28);
+  .padding(6, 8);
+  .margin(8);
+  .borderRadius(14);
+  .backgroundColor(primary);
+  .color(on-primary);
+  .fontSize(body-small-size);
+  .fontWeight(body-small-weight);
+  .letterSpacing(body-small-tracking);
+}

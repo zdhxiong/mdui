@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <title>Tooltip</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+  <script type="module" src="../../packages/mdui/mdui.css"></script>
+  <script type="module" src="../../packages/components/index.js"></script>
+  <style>
+    body {
+      font-family: Roboto;
+    }
+
+    mdui-button {
+      display: inline-block;
+    }
+  </style>
+  <script type="module">
+    import { $ } from '../../packages/mdui/index.js';
+
+    $(() => {
+      const $tooltip = $('.manual-tooltip')
+      $('#manual-open').on('click', () => {
+        $tooltip.each((_, tooltip) => {
+          tooltip.open = true;
+        });
+      });
+      $('#manual-close').on('click', () => {
+        $tooltip.each((_, tooltip) => {
+          tooltip.open = false;
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+<main>
+  <section>
+    <h2>Trigger</h2>
+    <mdui-tooltip trigger="click" content="click">
+      <mdui-button variant="elevated">Click</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip trigger="hover" content="hover">
+      <mdui-button variant="elevated">Hover</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip trigger="focus" content="focus">
+      <mdui-button variant="elevated">Focus</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip trigger="click hover" content="click hover">
+      <mdui-button variant="elevated">Click Hover</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip trigger="click focus" content="click focus">
+      <mdui-button variant="elevated">Click Focus</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip trigger="click hover focus" content="click hover focus">
+      <mdui-button variant="elevated">Click Hover Focus</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip trigger="manual" content="manual" class="manual-tooltip">
+      <mdui-button variant="elevated">Manual</mdui-button>
+    </mdui-tooltip>
+    <div class="mdui-theme-dark" style="padding: 20px 0">
+      <mdui-tooltip trigger="click" content="click">
+        <mdui-button variant="elevated">Click</mdui-button>
+      </mdui-tooltip>
+      <mdui-tooltip trigger="hover" content="hover">
+        <mdui-button variant="elevated">Hover</mdui-button>
+      </mdui-tooltip>
+      <mdui-tooltip trigger="focus" content="focus">
+        <mdui-button variant="elevated">Focus</mdui-button>
+      </mdui-tooltip>
+      <mdui-tooltip trigger="click hover" content="click hover">
+        <mdui-button variant="elevated">Click Hover</mdui-button>
+      </mdui-tooltip>
+      <mdui-tooltip trigger="click focus" content="click focus">
+        <mdui-button variant="elevated">Click Focus</mdui-button>
+      </mdui-tooltip>
+      <mdui-tooltip trigger="click hover focus" content="click hover focus">
+        <mdui-button variant="elevated">Click Hover Focus</mdui-button>
+      </mdui-tooltip>
+      <mdui-tooltip trigger="manual" content="manual" class="manual-tooltip">
+        <mdui-button variant="elevated">Manual</mdui-button>
+      </mdui-tooltip>
+    </div>
+    <mdui-button variant="elevated" id="manual-open">open</mdui-button>
+    <mdui-button variant="elevated" id="manual-close">close</mdui-button>
+  </section>
+
+  <section>
+    <h2>placement</h2>
+    <mdui-tooltip placement="auto" content="auto">
+      <mdui-button variant="elevated">Auto</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip placement="top" content="top">
+      <mdui-button variant="elevated">Top</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip placement="bottom" content="bottom">
+      <mdui-button variant="elevated">Bottom</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip placement="left" content="left">
+      <mdui-button variant="elevated">Left</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip placement="right" content="right">
+      <mdui-button variant="elevated">Right</mdui-button>
+    </mdui-tooltip>
+    <div class="mdui-theme-dark" style="padding: 20px 0">
+      <mdui-tooltip placement="auto" content="auto">
+        <mdui-button variant="elevated">Auto</mdui-button>
+      </mdui-tooltip>
+      <mdui-tooltip placement="top" content="top">
+        <mdui-button variant="elevated">Top</mdui-button>
+      </mdui-tooltip>
+      <mdui-tooltip placement="bottom" content="bottom">
+        <mdui-button variant="elevated">Bottom</mdui-button>
+      </mdui-tooltip>
+      <mdui-tooltip placement="left" content="left">
+        <mdui-button variant="elevated">Left</mdui-button>
+      </mdui-tooltip>
+      <mdui-tooltip placement="right" content="right">
+        <mdui-button variant="elevated">Right</mdui-button>
+      </mdui-tooltip>
+    </div>
+  </section>
+
+  <section>
+    <h2>delay</h2>
+    <mdui-tooltip content="openDelay 1000" openDelay="1000">
+      <mdui-button variant="elevated">openDelay 1000</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip content="closeDelay 1000" closeDelay="1000">
+      <mdui-button variant="elevated">closeDelay 1000</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip content="openDelay 1000, closeDelay 1000" openDelay="1000" closeDelay="1000">
+      <mdui-button variant="elevated">openDelay 1000, closeDelay 1000</mdui-button>
+    </mdui-tooltip>
+    <div class="mdui-theme-dark" style="padding: 20px 0">
+      <mdui-tooltip content="openDelay 1000" openDelay="1000">
+        <mdui-button variant="elevated">openDelay 1000</mdui-button>
+      </mdui-tooltip>
+      <mdui-tooltip content="closeDelay 1000" closeDelay="1000">
+        <mdui-button variant="elevated">closeDelay 1000</mdui-button>
+      </mdui-tooltip>
+      <mdui-tooltip content="openDelay 1000, closeDelay 1000" openDelay="1000" closeDelay="1000">
+        <mdui-button variant="elevated">openDelay 1000, closeDelay 1000</mdui-button>
+      </mdui-tooltip>
+    </div>
+  </section>
+
+  <section>
+    <h2>disabled</h2>
+    <mdui-tooltip disabled content="disabled">
+      <mdui-button variant="elevated">disabled</mdui-button>
+    </mdui-tooltip>
+  </section>
+
+  <section>
+    <h2>content slot</h2>
+    <mdui-tooltip>
+      <div slot="content"><mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar> Avatar</div>
+      <mdui-button variant="elevated">avatar slot</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip>
+      <div slot="content"><span style="color: red">red</span> default</div>
+      <mdui-button variant="elevated">color</mdui-button>
+    </mdui-tooltip>
+    <div class="mdui-theme-dark" style="padding: 20px 0">
+      <mdui-tooltip>
+        <div slot="content"><mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar> Avatar</div>
+        <mdui-button variant="elevated">avatar slot</mdui-button>
+      </mdui-tooltip>
+      <mdui-tooltip>
+        <div slot="content"><span style="color: red">red</span> default</div>
+        <mdui-button variant="elevated">color</mdui-button>
+      </mdui-tooltip>
+    </div>
+  </section>
+
+  <section>
+    <h2>zIndex</h2>
+    <mdui-tooltip content="default">
+      <mdui-button variant="elevated">default</mdui-button>
+    </mdui-tooltip>
+    <mdui-tooltip content="zIndex: 2000" zindex="2000">
+      <mdui-button variant="elevated">zIndex: 2000</mdui-button>
+    </mdui-tooltip>
+  </section>
+
+  <section>
+    <h2>default open</h2>
+    <mdui-tooltip content="default open" open>
+      <mdui-button variant="elevated">default open</mdui-button>
+    </mdui-tooltip>
+  </section>
+</main>
+</body>
+</html>

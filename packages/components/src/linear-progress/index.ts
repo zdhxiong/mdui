@@ -1,6 +1,5 @@
 import { html, LitElement, CSSResultGroup, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
@@ -28,18 +27,17 @@ export class LinearProgress extends LitElement {
     const { max, value } = this;
     const isDeterminate = value !== undefined;
 
-    return html`<div
-      part="indicator"
-      class="${classMap({
-        determinate: isDeterminate,
-        indeterminate: !isDeterminate,
-      })}"
-      style="${styleMap({
-        width: isDeterminate
-          ? `${(value / Math.max(max ?? value, value)) * 100}%`
-          : undefined,
-      })}"
-    ></div>`;
+    if (isDeterminate) {
+      return html`<div
+        part="indicator"
+        class="determinate"
+        style="${styleMap({
+          width: `${(value / Math.max(max ?? value, value)) * 100}%`,
+        })}"
+      ></div>`;
+    }
+
+    return html`<div part="indicator" class="indeterminate"></div>`;
   }
 }
 

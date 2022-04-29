@@ -1,6 +1,5 @@
 import { html, LitElement, CSSResultGroup, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 
@@ -82,13 +81,14 @@ export class CircularProgress extends LitElement {
   protected override render(): TemplateResult {
     const isDeterminate = this.value !== undefined;
 
-    return html`<div
-      class="progress ${classMap({
-        determinate: isDeterminate,
-        indeterminate: !isDeterminate,
-      })}"
-    >
-      ${isDeterminate ? this.renderDeterminate() : this.renderInDeterminate()}
+    if (isDeterminate) {
+      return html`<div class="progress determinate">
+        ${this.renderDeterminate()}
+      </div>`;
+    }
+
+    return html`<div class="progress indeterminate">
+      ${this.renderInDeterminate()}
     </div>`;
   }
 }

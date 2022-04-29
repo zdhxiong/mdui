@@ -17,7 +17,7 @@ import { Ripple } from './index.js';
 /**
  * hover, focused, pressed, dragged 四个属性用于添加到 :host 元素上，供 CSS 选择题添加样式
  *
- * todo: focused, dragged 功能
+ * TODO: focused, dragged 功能
  */
 export const RippleMixin = dedupeMixin(
   <T extends Constructor<LitElement>>(

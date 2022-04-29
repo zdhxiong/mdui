@@ -1,0 +1,19 @@
+@import "~@mdui/shared/variables.less";
+
+:host {
+  position: relative;
+  display: block;
+  .backgroundColor(surface);
+  .elevation(2);
+  .borderRadius(4);
+  .minWidth(112);
+  .maxWidth(280);
+  .paddingTop(8);
+  .paddingBottom(8);
+  .stateLayerColor(on-surface);
+}
+
+::slotted(mdui-divider) {
+  .marginTop(8);
+  .marginBottom(8);
+}

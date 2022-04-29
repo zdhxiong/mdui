@@ -42,7 +42,7 @@ export class Tooltip extends LitElement {
   private hoverTimeout!: number;
 
   /**
-   * tooltip 的位置。可选值为：
+   * tooltip 的方位。可选值为：
    * * `auto`
    * * `top`
    * * `bottom`
@@ -80,7 +80,7 @@ export class Tooltip extends LitElement {
    * * `click`
    * * `hover`
    * * `focus`
-   * * `manual`：使用了该值时，只能使用编程方式打开和关闭tooltip，且不能再指定其他触发方式
+   * * `manual`：使用了该值时，只能使用编程方式打开和关闭 tooltip，且不能再指定其他触发方式
    */
   @property({ reflect: true })
   public trigger:

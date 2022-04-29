@@ -17,3 +17,5 @@ export * from './radio.js';
 export * from './ripple.js';
 export * from './switch.js';
 export * from './tooltip.js';
+export * from './menu.js';
+export * from './menu-item.js';

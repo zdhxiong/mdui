@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>Menu</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <script type="module" src="../../packages/mdui/mdui.css"></script>
+  <script type="module" src="../../packages/icons/add-circle.js"></script>
+  <style>
+    body {
+      font-family: Roboto;
+    }
+
+    .custom-item {
+      padding: 4px 12px;
+    }
+
+    .custom-item .secondary {
+      display: none;
+      color: #888;
+      font-size: 13px;
+    }
+
+    .custom-item:hover .secondary {
+      display: block
+    }
+  </style>
+  <script type="module">
+    import { $ } from '../../packages/mdui/index.js';
+
+    $(() => {
+      $('#change-dense').on('change', function () {
+        $('mdui-menu').prop('dense', $(this).prop('checked'));
+      });
+
+      $('#selects-single').on('change', function () {
+        $('#selects-single-value').text(this.value);
+      });
+
+      $('#selects-multiple').on('change', function () {
+        $('#selects-multiple-value').text(this.value);
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <main>
+    <section>
+      <mdui-checkbox id="change-dense">密集型</mdui-checkbox>
+    </section>
+
+    <section>
+      <h2>Normal</h2>
+      <mdui-menu>
+        <mdui-menu-item>Item 1</mdui-menu-item>
+        <mdui-menu-item disabled>Item 2</mdui-menu-item>
+        <mdui-divider></mdui-divider>
+        <mdui-menu-item>Item 3</mdui-menu-item>
+      </mdui-menu>
+    </section>
+
+    <section>
+      <h2>Icon</h2>
+      <mdui-menu>
+        <mdui-menu-item icon="visibility--outlined" endIcon="add_circle">含左右图标</mdui-menu-item>
+        <mdui-menu-item>
+          <mdui-icon slot="start" name="person_add_alt_1--outlined"></mdui-icon>
+          含左右图标
+          <mdui-icon-add-circle slot="end"></mdui-icon-add-circle>
+        </mdui-menu-item>
+        <mdui-menu-item disabled>
+          <mdui-icon slot="start" name="person_add_alt_1--outlined"></mdui-icon>
+          含左右图标且禁用
+          <mdui-icon-add-circle slot="end"></mdui-icon-add-circle>
+        </mdui-menu-item>
+        <mdui-menu-item icon>
+          含左侧占位图标，右侧文本
+          <span slot="end-text">Ctrl+Shift+X</span>
+        </mdui-menu-item>
+        <mdui-menu-item>不含图标</mdui-menu-item>
+        <mdui-menu-item disabled>
+          <mdui-avatar slot="start" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
+          含头像
+        </mdui-menu-item>
+      </mdui-menu>
+    </section>
+
+    <section>
+      <h2>selects="single"</h2>
+      <mdui-menu selects="single" id="selects-single">
+        <mdui-menu-item icon="visibility--outlined" value="one">Item 1</mdui-menu-item>
+        <mdui-menu-item value="two">Item 2</mdui-menu-item>
+        <mdui-menu-item value="three">Item 3</mdui-menu-item>
+      </mdui-menu>
+      <div>selected: <span id="selects-single-value"></span></div>
+    </section>
+
+    <section>
+      <h2>selects="multiple"</h2>
+      <mdui-menu selects="multiple" id="selects-multiple">
+        <mdui-menu-item icon="visibility--outlined" value="one">Item 1</mdui-menu-item>
+        <mdui-menu-item value="two">Item 2</mdui-menu-item>
+        <mdui-menu-item value="three">Item 3</mdui-menu-item>
+      </mdui-menu>
+      <div>selected: <span id="selects-multiple-value"></span></div>
+    </section>
+
+    <section>
+      <h2>Custom Item</h2>
+      <mdui-menu>
+        <mdui-menu-item>
+          <div slot="custom" class="custom-item">
+            <div class="primary">ABS</div>
+            <div class="secondary">取数值的绝对值</div>
+          </div>
+        </mdui-menu-item>
+        <mdui-menu-item>
+          <div slot="custom" class="custom-item">
+            <div class="primary">ACOS</div>
+            <div class="secondary">数值的反余弦值，以弧度表示</div>
+          </div>
+        </mdui-menu-item>
+        <mdui-menu-item>
+          <div slot="custom" class="custom-item">
+            <div class="primary">ACOSH</div>
+            <div class="secondary">数值的反双曲余弦值</div>
+          </div>
+        </mdui-menu-item>
+      </mdui-menu>
+    </section>
+
+    <section>
+      <h2>Sub Menu</h2>
+      <mdui-menu>
+        <mdui-menu-item>Item 1</mdui-menu-item>
+        <mdui-menu-item disabled>Item 2</mdui-menu-item>
+        <mdui-divider></mdui-divider>
+        <mdui-menu-item>
+          Nested submenu
+          <mdui-menu slot="submenu">
+            <mdui-menu-item>Item 1</mdui-menu-item>
+            <mdui-menu-item>Item 2</mdui-menu-item>
+            <mdui-menu-item>
+              Item 3
+              <mdui-menu slot="submenu">
+                <mdui-menu-item>Item 1</mdui-menu-item>
+                <mdui-menu-item>Item 2</mdui-menu-item>
+                <mdui-menu-item>Item 3</mdui-menu-item>
+                <mdui-menu-item>Item 4</mdui-menu-item>
+              </mdui-menu>
+            </mdui-menu-item>
+            <mdui-menu-item>Item 4</mdui-menu-item>
+          </mdui-menu>
+        </mdui-menu-item>
+        <mdui-menu-item>Item 4</mdui-menu-item>
+      </mdui-menu>
+      <div class="mdui-theme-dark" style="padding: 20px 0; margin-top: 16px">
+        <mdui-menu>
+          <mdui-menu-item>Item 1</mdui-menu-item>
+          <mdui-menu-item disabled>Item 2</mdui-menu-item>
+          <mdui-divider></mdui-divider>
+          <mdui-menu-item>
+            Item 3
+            <mdui-menu slot="submenu">
+              <mdui-menu-item>Item 1</mdui-menu-item>
+              <mdui-menu-item>Item 2</mdui-menu-item>
+              <mdui-menu-item>
+                Item 3
+                <mdui-menu slot="submenu">
+                  <mdui-menu-item>Item 1</mdui-menu-item>
+                  <mdui-menu-item>Item 2</mdui-menu-item>
+                  <mdui-menu-item>Item 3</mdui-menu-item>
+                  <mdui-menu-item>Item 4</mdui-menu-item>
+                </mdui-menu>
+              </mdui-menu-item>
+              <mdui-menu-item>Item 4</mdui-menu-item>
+            </mdui-menu>
+          </mdui-menu-item>
+          <mdui-menu-item>Item 4</mdui-menu-item>
+        </mdui-menu>
+      </div>
+    </section>
+
+    <section>
+      <h2>submenu trigger</h2>
+      <mdui-menu submenuTrigger="click" style="margin-bottom: 8px">
+        <mdui-menu-item>
+          Click
+          <mdui-menu slot="submenu">
+            <mdui-menu-item>Item 1</mdui-menu-item>
+          </mdui-menu>
+        </mdui-menu-item>
+      </mdui-menu>
+
+      <mdui-menu submenuTrigger="hover" style="margin-bottom: 8px">
+        <mdui-menu-item>
+          Hover
+          <mdui-menu slot="submenu">
+            <mdui-menu-item>Item 1</mdui-menu-item>
+          </mdui-menu>
+        </mdui-menu-item>
+      </mdui-menu>
+
+      <mdui-menu submenuTrigger="focus" style="margin-bottom: 8px">
+        <mdui-menu-item>
+          Focus
+          <mdui-menu slot="submenu">
+            <mdui-menu-item>Item 1</mdui-menu-item>
+          </mdui-menu>
+        </mdui-menu-item>
+      </mdui-menu>
+
+      <mdui-menu submenuTrigger="manual" style="margin-bottom: 8px">
+        <mdui-menu-item>
+          Manual
+          <mdui-menu slot="submenu">
+            <mdui-menu-item>Item 1</mdui-menu-item>
+          </mdui-menu>
+        </mdui-menu-item>
+      </mdui-menu>
+
+      <mdui-menu submenuTrigger="click hover" style="margin-bottom: 8px">
+        <mdui-menu-item>
+          Click Hover
+          <mdui-menu slot="submenu">
+            <mdui-menu-item>Item 1</mdui-menu-item>
+          </mdui-menu>
+        </mdui-menu-item>
+      </mdui-menu>
+
+      <mdui-menu submenuTrigger="click focus" style="margin-bottom: 8px">
+        <mdui-menu-item>
+          Click Focus
+          <mdui-menu slot="submenu">
+            <mdui-menu-item>Item 1</mdui-menu-item>
+          </mdui-menu>
+        </mdui-menu-item>
+      </mdui-menu>
+
+      <mdui-menu submenuTrigger="hover focus" style="margin-bottom: 8px">
+        <mdui-menu-item>
+          Hover Focus
+          <mdui-menu slot="submenu">
+            <mdui-menu-item>Item 1</mdui-menu-item>
+          </mdui-menu>
+        </mdui-menu-item>
+      </mdui-menu>
+    </section>
+  </main>
+</body>
+
+</html>

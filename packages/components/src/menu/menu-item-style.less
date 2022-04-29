@@ -1,0 +1,106 @@
+@import "~@mdui/shared/variables.less";
+
+:host {
+  position: relative;
+  display: block;
+}
+
+:host([selected]) {
+  .backgroundColor(primary, 12%);
+}
+
+:host([disabled]) {
+  pointer-events: none;
+}
+
+.item {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  :host([disabled]) & {
+    cursor: default;
+    opacity: 0.38;
+  }
+}
+
+.preset {
+  display: flex;
+  align-items: center;
+  .height(48);
+  .padding(0, 12);
+
+  &.dense {
+    .height(32);
+  }
+}
+
+.label {
+  flex: 1 1 100%;
+  min-width: 0;
+  .color(on-surface);
+  .fontSize(label-large-size);
+  .lineHeight(label-large-line-height);
+  .letterSpacing(label-large-tracking);
+  .fontWeight(label-large-weight);
+}
+
+.label-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.start-icon,
+.end-icon,
+.end-text {
+  display: none;
+  .color(on-surface-variant);
+}
+
+.has-start,
+.has-end,
+.has-end-text {
+  display: flex;
+}
+
+.start-icon,
+.end-icon {
+  ::slotted(mdui-avatar) {
+    .width(24);
+    .height(24);
+  }
+
+  .dense & {
+
+    *,
+    ::slotted(*) {
+      .fontSize(18);
+    }
+
+    ::slotted(mdui-avatar) {
+      .width(18);
+      .height(18);
+    }
+  }
+}
+
+.end-text {
+  .lineHeight(label-large-line-height);
+  .fontSize(label-large-size);
+  .letterSpacing(label-large-tracking);
+  .fontWeight(label-large-weight);
+}
+
+.start-icon {
+  .marginRight(12);
+}
+
+.end-icon,
+.end-text {
+  .marginLeft(12);
+}
+
+.submenu {
+  position: absolute;
+}

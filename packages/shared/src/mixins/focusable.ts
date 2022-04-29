@@ -1,6 +1,6 @@
 import { Constructor } from '@open-wc/dedupe-mixin';
 import { LitElement, PropertyValues } from 'lit';
-import { property } from 'lit/decorators/property.js';
+import { property } from 'lit/decorators.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/attr.js';
 import '@mdui/jq/methods/css.js';

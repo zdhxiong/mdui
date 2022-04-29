@@ -1,7 +1,6 @@
 import { html, CSSResultGroup, LitElement, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
-import { componentStyle } from '@mdui/shared/src/lit-styles/component-style.js';
-import { property } from 'lit/decorators/property.js';
+import { customElement, property } from 'lit/decorators.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { tableColumnStyle } from './table-column-style.js';
 
 /**

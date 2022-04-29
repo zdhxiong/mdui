@@ -1,7 +1,5 @@
 import { LitElement, html, TemplateResult, CSSResultGroup } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
-import { query } from 'lit/decorators/query.js';
-import { state } from 'lit/decorators/state.js';
+import { customElement, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { $ } from '@mdui/jq/$.js';
 import { JQ } from '@mdui/jq/shared/core.js';

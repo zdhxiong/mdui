@@ -1,7 +1,5 @@
 import { CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
-import { query } from 'lit/decorators/query.js';
-import { property } from 'lit/decorators/property.js';
+import { customElement, query, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';

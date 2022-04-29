@@ -1,8 +1,5 @@
-import { customElement } from 'lit/decorators/custom-element.js';
 import { html, LitElement, nothing, CSSResultGroup, TemplateResult } from 'lit';
-import { property } from 'lit/decorators/property.js';
-import { query } from 'lit/decorators/query.js';
-import { state } from 'lit/decorators/state.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';

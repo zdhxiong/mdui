@@ -1,7 +1,9 @@
 import { CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
-import { property } from 'lit/decorators/property.js';
-import { queryAssignedElements } from 'lit/decorators/query-assigned-elements.js';
+import {
+  customElement,
+  property,
+  queryAssignedElements,
+} from 'lit/decorators.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { ListItem } from './list-item.js';

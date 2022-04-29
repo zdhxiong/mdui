@@ -1,7 +1,5 @@
 import { html, TemplateResult, CSSResultGroup } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
-import { property } from 'lit/decorators/property.js';
-import { query } from 'lit/decorators/query.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { delay } from '@mdui/shared/helpers/delay.js';

@@ -1,8 +1,5 @@
 import { html, LitElement, TemplateResult, CSSResultGroup } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
-import { property } from 'lit/decorators/property.js';
-import { state } from 'lit/decorators/state.js';
-import { query } from 'lit/decorators/query.js';
+import { customElement, property, state, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { classMap } from 'lit/directives/class-map.js';

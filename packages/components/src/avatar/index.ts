@@ -1,6 +1,5 @@
 import { CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
-import { property } from 'lit/decorators/property.js';
+import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';

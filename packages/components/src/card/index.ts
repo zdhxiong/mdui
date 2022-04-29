@@ -1,11 +1,9 @@
 import { LitElement, html, TemplateResult, CSSResultGroup } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
-import { property } from 'lit/decorators/property.js';
-import { query } from 'lit/decorators/query.js';
+import { customElement, property, query } from 'lit/decorators.js';
+import { when } from 'lit/directives/when.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
-import { when } from 'lit/directives/when.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { style } from './style.js';

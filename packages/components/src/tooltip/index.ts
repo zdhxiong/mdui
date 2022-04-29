@@ -1,11 +1,9 @@
 import { CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
-import { property } from 'lit/decorators/property.js';
-import { query } from 'lit/decorators/query.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
 import { animate } from '@lit-labs/motion';
-import { componentStyle } from '@mdui/shared/src/lit-styles/component-style';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
@@ -13,8 +11,8 @@ import '@mdui/jq/methods/off.js';
 import '@mdui/jq/methods/width.js';
 import '@mdui/jq/methods/height.js';
 import '@mdui/jq/methods/css.js';
-import { emit } from '@mdui/shared/src/helpers/event';
-import { Easing } from '@mdui/shared/src/helpers/motion';
+import { emit } from '@mdui/shared/helpers/event.js';
+import { Easing } from '@mdui/shared/helpers/motion.js';
 import { style } from './style.js';
 
 /**

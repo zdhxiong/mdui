@@ -1,7 +1,5 @@
-import { customElement } from 'lit/decorators/custom-element.js';
 import { CSSResultGroup, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators/property.js';
-import { query } from 'lit/decorators/query.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ButtonBase } from '../button/button-base.js';

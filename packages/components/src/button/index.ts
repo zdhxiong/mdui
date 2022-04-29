@@ -1,7 +1,5 @@
 import { html, TemplateResult, CSSResultGroup } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
-import { property } from 'lit/decorators/property.js';
-import { query } from 'lit/decorators/query.js';
+import { customElement, property, query } from 'lit/decorators.js';
 import type { MaterialIconsName } from '../icon.js';
 import { ButtonBase } from './button-base.js';
 import { style } from './style.js';

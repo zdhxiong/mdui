@@ -62,6 +62,17 @@ export class Ripple extends LitElement {
           : (event as MouseEvent);
 
       const offset = $surface.offset();
+
+      // 点击位置不在 surface 内，不执行
+      if (
+        touchPosition.pageX < offset.left ||
+        touchPosition.pageX > offset.left + surfaceWidth ||
+        touchPosition.pageY < offset.top ||
+        touchPosition.pageY > offset.top + surfaceHeight
+      ) {
+        return;
+      }
+
       touchStartX = touchPosition.pageX - offset.left;
       touchStartY = touchPosition.pageY - offset.top;
     }

@@ -20,14 +20,8 @@ export default [
       {
         banner,
         format: 'es',
-        sourcemap: false,
-        file: './packages/mdui/mdui.js',
-      },
-      {
-        banner,
-        format: 'es',
         sourcemap: true,
-        file: './packages/mdui/mdui.min.js',
+        file: './packages/mdui/mdui.js',
         plugins: [
           terser({
             format: {

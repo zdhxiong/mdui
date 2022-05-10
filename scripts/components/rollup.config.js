@@ -1,6 +1,5 @@
 import { terser } from 'rollup-plugin-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import { visualizer } from 'rollup-plugin-visualizer';
 import pkg from '../../packages/components/package.json';
 
 const banner = `
@@ -15,7 +14,7 @@ const banner = `
 export default [
   {
     input: './packages/components/index.js',
-    plugins: [nodeResolve(), visualizer()],
+    plugins: [nodeResolve()],
     output: [
       {
         banner,

@@ -32,7 +32,7 @@
   "homepage": "https://github.com/zdhxiong/mdui",
   "dependencies": {
     "@mdui/shared": "^1.0.0",
-    "lit": "^2.2.1",
-    "tslib": "^2.3.1"
+    "lit": "^2.2.3",
+    "tslib": "^2.4.0"
   }
 }

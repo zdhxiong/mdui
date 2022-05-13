@@ -16,7 +16,7 @@
   @cssVariable: "--mdui-sys-@{value}";
   @lessVariable: "mdui-sys-@{value}";
 
-  @{name}: ~"var(@{cssVariable}, @{@{lessVariable}})";
+  @{name}:~"var(@{cssVariable}, @{@{lessVariable}})";
 }
 
 /**
@@ -32,12 +32,12 @@
   @cssVariable: "--mdui-sys-color-@{rgb}";
   @lessVariable: "mdui-sys-color-@{rgb}";
 
-  & when (@opacity = 1) {
-    @{name}: ~"rgb(var(@{cssVariable}, @{@{lessVariable}}))";
+  & when (@opacity =1) {
+    @{name}:~"rgb(var(@{cssVariable}, @{@{lessVariable}}))";
   }
 
-  & when not (@opacity = 1) {
-    @{name}: ~"rgba(var(@{cssVariable}, @{@{lessVariable}}), @{opacity})";
+  & when not (@opacity =1) {
+    @{name}:~"rgba(var(@{cssVariable}, @{@{lessVariable}}), @{opacity})";
   }
 }
 
@@ -54,27 +54,27 @@
   @cssVariable: "--mdui-sys-color-@{rgb}";
   @lessVariable: "mdui-sys-color-@{rgb}";
 
-  & when (@opacity = 1) {
+  & when (@opacity =1) {
     & when (isnumber(@width)) {
       @widthRem: unit((@width / 16), rem);
 
-      @{name}: ~"@{widthRem} @{style} rgb(var(@{cssVariable}, @{@{lessVariable}}))";
+      @{name}:~"@{widthRem} @{style} rgb(var(@{cssVariable}, @{@{lessVariable}}))";
     }
 
     & when not (isnumber(@width)) {
-      @{name}: ~"@{width} @{style} rgb(var(@{cssVariable}, @{@{lessVariable}}))";
+      @{name}:~"@{width} @{style} rgb(var(@{cssVariable}, @{@{lessVariable}}))";
     }
   }
 
-  & when not (@opacity = 1) {
+  & when not (@opacity =1) {
     & when (isnumber(@width)) {
       @widthRem: unit((@width / 16), rem);
 
-      @{name}: ~"@{widthRem} @{style} rgba(var(@{cssVariable}, @{@{lessVariable}}), @{opacity})";
+      @{name}:~"@{widthRem} @{style} rgba(var(@{cssVariable}, @{@{lessVariable}}), @{opacity})";
     }
 
     & when not (isnumber(@width)) {
-      @{name}: ~"@{width} @{style} rgba(var(@{cssVariable}, @{@{lessVariable}}), @{opacity})";
+      @{name}:~"@{width} @{style} rgba(var(@{cssVariable}, @{@{lessVariable}}), @{opacity})";
     }
   }
 }
@@ -86,19 +86,19 @@
  * 输出: padding: 1.5rem
  */
 .paddingOrMargin(@name, @top, @right: null, @bottom: null, @left: null) {
-  & when (@right = null) and (@bottom = null) and (@left = null) {
+  & when (@right =null) and (@bottom =null) and (@left =null) {
     @{name}: unit((@top / 16), rem);
   }
 
-  & when (not(@right = null)) and (@bottom = null) and (@left = null) {
+  & when (not(@right =null)) and (@bottom =null) and (@left =null) {
     @{name}: unit((@top / 16), rem) unit((@right / 16), rem);
   }
 
-  & when (not(@right = null)) and (not(@bottom = null)) and (@left = null) {
+  & when (not(@right =null)) and (not(@bottom =null)) and (@left =null) {
     @{name}: unit((@top / 16), rem) unit((@right / 16), rem) unit((@bottom / 16), rem);
   }
 
-  & when (not(@right = null)) and (not(@bottom = null)) and (not(@left = null)) {
+  & when (not(@right =null)) and (not(@bottom =null)) and (not(@left =null)) {
     @{name}: unit((@top / 16), rem) unit((@right / 16), rem) unit((@bottom / 16), rem) unit((@left / 16), rem);
   }
 }
@@ -109,38 +109,92 @@
  * 输入: .elevation(2)
  */
 .elevation(@value) {
-  @cssVariable: "--mdui-sys-elevation-level@{value}";
-  @lessVariable: "mdui-sys-elevation-level@{value}";
-
-  box-shadow: ~"var(@{cssVariable}, @{@{lessVariable}})";
+  .sys(box-shadow, ~"elevation-level@{value}");
 
   &::before {
     position: absolute;
     inset: 0;
     content: " ";
 
-    & when (@value = 0) {
+    & when (@value =0) {
       background-color: transparent;
     }
 
-    & when (@value = 1) {
+    & when (@value =1) {
       .backgroundColor(primary, 5%);
     }
 
-    & when (@value = 2) {
+    & when (@value =2) {
       .backgroundColor(primary, 8%);
     }
 
-    & when (@value = 3) {
+    & when (@value =3) {
       .backgroundColor(primary, 11%);
     }
 
-    & when (@value = 4) {
+    & when (@value =4) {
       .backgroundColor(primary, 12%);
     }
 
-    & when (@value = 5) {
+    & when (@value =5) {
       .backgroundColor(primary, 14%);
+    }
+  }
+}
+
+/**
+ * 设置 border-radius
+ *
+ * 输入：.corner(medium)
+ * 输出：border-radius: 0.75rem;
+ */
+.borderRadius(@value, @placement: null) {
+  @cssVariable: "--mdui-sys-shape-corner-@{value}";
+  @lessVariable: "mdui-sys-shape-corner-@{value}";
+
+  & when (@placement =null) {
+    border-radius: ~"var(@{cssVariable}, @{@{lessVariable}})";
+  }
+
+  & when (@placement =top) {
+    border-radius: ~"var(@{cssVariable}, @{@{lessVariable}}) var(@{cssVariable}, @{@{lessVariable}}) 0 0";
+  }
+
+  & when (@placement =bottom) {
+    border-radius: ~"0 0 var(@{cssVariable}, @{@{lessVariable}}) var(@{cssVariable}, @{@{lessVariable}})";
+  }
+
+  & when (@placement =start) {
+    border-radius: ~"var(@{cssVariable}, @{@{lessVariable}}) 0 0 var(@{cssVariable}, @{@{lessVariable}})";
+  }
+
+  & when (@placement =end) {
+    border-radius: ~"0 var(@{cssVariable}, @{@{lessVariable}}) var(@{cssVariable}, @{@{lessVariable}}) 0";
+  }
+
+  & when (isnumber(@value)) {
+    & when (@placement =null) {
+      .px(border-radius, @value);
+    }
+
+    & when (@placement =top) {
+      .px(border-top-left-radius, @value);
+      .px(border-top-right-radius, @value);
+    }
+
+    & when (@placement =bottom) {
+      .px(border-bottom-right-radius, @value);
+      .px(border-bottom-left-radius, @value);
+    }
+
+    & when (@placement =start) {
+      .px(border-top-left-radius, @value);
+      .px(border-bottom-left-radius, @value);
+    }
+
+    & when (@placement =end) {
+      .px(border-top-right-radius, @value);
+      .px(border-bottom-right-radius, @value);
     }
   }
 }
@@ -162,10 +216,7 @@
 }
 
 .stateLayerColor(@rgb) {
-  @cssVariable: "--mdui-sys-color-@{rgb}";
-  @lessVariable: "mdui-sys-color-@{rgb}";
-
-  --mdui-comp-ripple-state-layer-color: ~"var(@{cssVariable}, @{@{lessVariable}})";
+  .sys(--mdui-comp-ripple-state-layer-color, ~"color-@{rgb}");
 }
 
 .padding(@top, @right: null, @bottom: null, @left: null) {
@@ -230,10 +281,6 @@
 
 .borderLeft(@width, @style, @rgb, @opacity: 1) {
   ._border(border-left, @width, @style, @rgb, @opacity);
-}
-
-.borderRadius(@radius) {
-  .px(border-radius, @radius);
 }
 
 .borderWidth(@width) {

@@ -93,6 +93,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
 
       this.addEventListener('keydown', (event) => {
         if (document.activeElement === this && event.code === 'Space') {
+          event.preventDefault();
           this.focusProxiedElement?.click();
         }
       });

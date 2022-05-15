@@ -16,7 +16,7 @@
   transition-property: box-shadow;
   .width(56);
   .height(56);
-  .borderRadius(16);
+  .shapeCorner(large);
   .elevation(3);
   .typescale(label-large);
 }
@@ -88,13 +88,13 @@
 :host([size="small"]) {
   .width(40);
   .height(40);
-  .borderRadius(12);
+  .shapeCorner(small);
 }
 
 :host([size="large"]) {
   .width(96);
   .height(96);
-  .borderRadius(28);
+  .shapeCorner(extra-large);
 }
 
 :host([loading]) {

@@ -114,7 +114,7 @@
  * 输入：.corner(medium)
  * 输出：border-radius: 0.75rem;
  */
-.borderRadius(@value, @placement: null) {
+.shapeCorner(@value, @placement: null) {
   @cssVariable: "--mdui-sys-shape-corner-@{value}";
 
   & when (@placement =null) {
@@ -136,31 +136,31 @@
   & when (@placement =end) {
     border-radius: ~"0 var(@{cssVariable}) var(@{cssVariable}) 0";
   }
+}
 
-  & when (isnumber(@value)) {
-    & when (@placement =null) {
-      .px(border-radius, @value);
-    }
+.borderRadius(@value, @placement: null) {
+  & when (@placement =null) {
+    .px(border-radius, @value);
+  }
 
-    & when (@placement =top) {
-      .px(border-top-left-radius, @value);
-      .px(border-top-right-radius, @value);
-    }
+  & when (@placement =top) {
+    .px(border-top-left-radius, @value);
+    .px(border-top-right-radius, @value);
+  }
 
-    & when (@placement =bottom) {
-      .px(border-bottom-right-radius, @value);
-      .px(border-bottom-left-radius, @value);
-    }
+  & when (@placement =bottom) {
+    .px(border-bottom-right-radius, @value);
+    .px(border-bottom-left-radius, @value);
+  }
 
-    & when (@placement =start) {
-      .px(border-top-left-radius, @value);
-      .px(border-bottom-left-radius, @value);
-    }
+  & when (@placement =start) {
+    .px(border-top-left-radius, @value);
+    .px(border-bottom-left-radius, @value);
+  }
 
-    & when (@placement =end) {
-      .px(border-top-right-radius, @value);
-      .px(border-bottom-right-radius, @value);
-    }
+  & when (@placement =end) {
+    .px(border-top-right-radius, @value);
+    .px(border-bottom-right-radius, @value);
   }
 }
 

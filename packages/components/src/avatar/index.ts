@@ -28,19 +28,6 @@ export class Avatar extends LitElement {
   public src!: string;
 
   /**
-   * 头像形状。可选值为：
-   *
-   * * `square`：正方形
-   * * `circular`：圆形
-   * * `rounded`：带圆角的正方形
-   */
-  @property({ reflect: true })
-  public variant:
-    | 'square' /*正方形*/
-    | 'circular' /*圆形*/
-    | 'rounded' /*带圆角的正方形*/ = 'circular';
-
-  /**
    * 图片如何适应容器框，同原生的 object-fit。可选值为：
    *
    * * `contain`：保持原有尺寸比例。内容被缩放

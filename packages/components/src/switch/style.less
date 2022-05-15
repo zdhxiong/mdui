@@ -1,4 +1,4 @@
-@import "~@mdui/shared/variables.less";
+@import "~@mdui/shared/mixin.less";
 
 :host {
   position: relative;
@@ -6,10 +6,8 @@
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   .height(40);
-  .fontSize(label-large-size);
-  .fontWeight(label-large-weight);
-  .letterSpacing(label-large-tracking);
   .borderRadius(2);
+  .typescale(label-large);
 }
 
 :host([disabled]) {
@@ -42,7 +40,7 @@ input {
 /* 轨道 */
 .track {
   position: absolute;
-  transition: background-color 150ms @mdui-sys-motion-easing-standard;
+  transition: background-color 150ms var(--mdui-sys-motion-easing-standard);
   .margin(0, 2);
   .borderRadius(7);
   .width(36);
@@ -58,8 +56,8 @@ input {
   justify-content: center;
   overflow: hidden;
   border-radius: 50%;
-  transform: translateX(unit((-8 / 16), rem));
-  transition: all 150ms @mdui-sys-motion-easing-standard;
+  transform: translateX(unit((-8 / @root-font-size), rem));
+  transition: all 150ms var(--mdui-sys-motion-easing-standard);
   .width(40);
   .height(40);
   .stateLayerColor(on-surface);
@@ -76,7 +74,7 @@ input {
 
   /* 指示器 */
   &::after {
-    transition: all 150ms @mdui-sys-motion-easing-standard;
+    transition: all 150ms var(--mdui-sys-motion-easing-standard);
     .backgroundColor(on-surface);
     .elevation(1);
   }
@@ -106,7 +104,7 @@ input {
     .backgroundColor(primary-container);
 
     & + .handle {
-      transform: translateX(unit((8 / 16), rem));
+      transform: translateX(unit((8 / @root-font-size), rem));
       .stateLayerColor(on-surface);
 
       &::after {

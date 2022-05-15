@@ -1,4 +1,4 @@
-@import "~@mdui/shared/variables.less";
+@import "~@mdui/shared/mixin.less";
 
 :host {
   position: absolute;
@@ -24,23 +24,23 @@
 }
 
 .hover {
-  background-color: ~"rgba(var(--mdui-comp-ripple-state-layer-color, var(--mdui-sys-color-on-surface, @{mdui-sys-color-on-surface})), @{mdui-sys-state-hover-state-layer-opacity})";
+  background-color: rgba(var(--mdui-comp-ripple-state-layer-color, var(--mdui-sys-color-on-surface)), var(--mdui-sys-state-hover-state-layer-opacity));
 }
 
 :host-context(:focus-visible) {
   .focused {
-    background-color: ~"rgba(var(--mdui-comp-ripple-state-layer-color, var(--mdui-sys-color-on-surface, @{mdui-sys-color-on-surface})), @{mdui-sys-state-focus-state-layer-opacity})";
+    background-color: rgba(var(--mdui-comp-ripple-state-layer-color, var(--mdui-sys-color-on-surface)), var(--mdui-sys-state-focus-state-layer-opacity));
   }
 }
 
 .dragged {
-  background-color: ~"rgba(var(--mdui-comp-ripple-state-layer-color, var(--mdui-sys-color-on-surface, @{mdui-sys-color-on-surface})), @{mdui-sys-state-dragged-state-layer-opacity})";
+  background-color: rgba(var(--mdui-comp-ripple-state-layer-color, var(--mdui-sys-color-on-surface)), var(--mdui-sys-state-dragged-state-layer-opacity));
 }
 
 .wave {
   position: absolute;
   z-index: 1;
-  background-color: ~"rgb(var(--mdui-comp-ripple-state-layer-color, var(--mdui-sys-color-on-surface, @{mdui-sys-color-on-surface})))";
+  background-color: rgb(var(--mdui-comp-ripple-state-layer-color, var(--mdui-sys-color-on-surface)));
   border-radius: 50%;
   transform: translate3d(0, 0, 0) scale(0.4);
   opacity: 0;

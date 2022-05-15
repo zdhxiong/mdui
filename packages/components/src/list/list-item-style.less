@@ -1,4 +1,4 @@
-@import "~@mdui/shared/variables.less";
+@import "~@mdui/shared/mixin.less";
 
 :host {
   position: relative;
@@ -53,21 +53,15 @@
 
 .primary {
   display: block;
-  .fontSize(body-large-size);
-  .fontWeight(body-large-weight);
-  .letterSpacing(body-large-tracking);
-  .lineHeight(body-large-line-height);
   .color(on-surface);
+  .typescale(body-large);
 }
 
 .secondary {
   display: none;
-  .fontSize(body-medium-size);
-  .fontWeight(body-medium-weight);
-  .letterSpacing(body-medium-tracking);
-  .lineHeight(body-medium-line-height);
   .color(on-surface-variant);
   .paddingTop(4);
+  .typescale(body-medium);
 }
 
 .has-secondary {
@@ -106,11 +100,8 @@
 .end {
   display: none;
   flex: 0 0 auto;
-  .fontSize(body-small-size);
-  .fontWeight(body-small-weight);
-  .letterSpacing(body-small-tracking);
-  .lineHeight(body-small-line-height);
   .color(on-surface-variant, 70%);
+  .typescale(body-small);
 }
 
 .has-start,

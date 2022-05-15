@@ -1,4 +1,4 @@
-@import "~@mdui/shared/variables.less";
+@import "~@mdui/shared/mixin.less";
 
 :host {
   position: relative;
@@ -15,7 +15,7 @@
 
 .determinate {
   height: 100%;
-  transition: width 280ms @mdui-sys-motion-easing-linear;
+  transition: width 280ms var(--mdui-sys-motion-easing-linear);
 }
 
 .indeterminate {
@@ -25,7 +25,7 @@
     bottom: 0;
     left: 0;
     background-color: inherit;
-    animation: mdui-comp-progress-indeterminate 2s @mdui-sys-motion-easing-linear infinite;
+    animation: mdui-comp-progress-indeterminate 2s var(--mdui-sys-motion-easing-linear) infinite;
     content: " ";
   }
 
@@ -35,7 +35,7 @@
     bottom: 0;
     left: 0;
     background-color: inherit;
-    animation: mdui-comp-progress-indeterminate-short 2s @mdui-sys-motion-easing-linear infinite;
+    animation: mdui-comp-progress-indeterminate-short 2s var(--mdui-sys-motion-easing-linear) infinite;
     content: " ";
   }
 }

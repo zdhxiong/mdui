@@ -1,0 +1,355 @@
+@root-font-size: 16;
+
+/**
+ * px 值转 rem
+ * 输入: .px(font-size: 24)
+ * 输出: font-size: 1.5rem
+ */
+.px(@name, @px) {
+  @{name}: unit((@px / @root-font-size), rem);
+}
+
+/**
+ * 系统变量
+ * 输入: .sys(font-size, typescale-label-large-size)
+ * 输出: font-size: var(--mdui-sys-typescale-label-large-size, 0.875rem)
+ */
+.sys(@name, @value) {
+  @{name}: ~"var(--mdui-sys-@{value})";
+}
+
+/**
+ * 颜色值
+ *
+ * 输入: .color(background-color, on-primary)
+ * 输出: background-color: rgb(var(--mdui-sys-color-on-primary, 255, 255, 255))
+ *
+ * 输入: .color(background-color, on-primary, 30%)
+ * 输出: background-color: rgba(var(--mdui-sys-color-on-primary, 255, 255, 255), 30%)
+ */
+.color(@rgb, @opacity: 1, @name: color) {
+  @cssVariable: "--mdui-sys-color-@{rgb}";
+
+  & when (@opacity =1) {
+    @{name}: ~"rgb(var(@{cssVariable}))";
+  }
+
+  & when not (@opacity =1) {
+    @{name}: ~"rgba(var(@{cssVariable}), @{opacity})";
+  }
+}
+
+.backgroundColor(@rgb, @opacity: 1) {
+  .color(@rgb, @opacity, background-color);
+}
+
+.borderColor(@rgb, @opacity: 1) {
+  .color(@rgb, @opacity, border-color);
+}
+
+.stroke(@rgb, @opacity: 1) {
+  .color(@rgb, @opacity, stroke);
+}
+
+/**
+ * 设置边框
+ *
+ * 输入: .border(border, 1px, solid, primary)
+ * 输出: border: 1px solid rgb(103,80,164)
+ *
+ * 输入: .border(border-top, 1px solid, primary, 30%)
+ * 输出: border-top: 1px solid rgba(103,80,164,30%)
+ */
+.border(@width, @style, @rgb, @opacity: 1, @name: border) {
+  @cssVariable: "--mdui-sys-color-@{rgb}";
+
+  & when (@opacity =1) {
+    & when (isnumber(@width)) {
+      @widthRem: unit((@width / @root-font-size), rem);
+
+      @{name}: ~"@{widthRem} @{style} rgb(var(@{cssVariable}))";
+    }
+
+    & when not (isnumber(@width)) {
+      @{name}: ~"@{width} @{style} rgb(var(@{cssVariable}))";
+    }
+  }
+
+  & when not (@opacity =1) {
+    & when (isnumber(@width)) {
+      @widthRem: unit((@width / @root-font-size), rem);
+
+      @{name}: ~"@{widthRem} @{style} rgba(var(@{cssVariable}), @{opacity})";
+    }
+
+    & when not (isnumber(@width)) {
+      @{name}: ~"@{width} @{style} rgba(var(@{cssVariable}), @{opacity})";
+    }
+  }
+}
+
+.borderTop(@width, @style, @rgb, @opacity: 1) {
+  .border(@width, @style, @rgb, @opacity, border-top);
+}
+
+.borderRight(@width, @style, @rgb, @opacity: 1) {
+  .border(@width, @style, @rgb, @opacity, border-right);
+}
+
+.borderBottom(@width, @style, @rgb, @opacity: 1) {
+  .border(@width, @style, @rgb, @opacity, border-bottom);
+}
+
+.borderLeft(@width, @style, @rgb, @opacity: 1) {
+  .border(@width, @style, @rgb, @opacity, border-left);
+}
+
+.borderWidth(@width) {
+  .px(border-width, @width);
+}
+
+/**
+ * 设置 border-radius
+ *
+ * 输入：.corner(medium)
+ * 输出：border-radius: 0.75rem;
+ */
+.borderRadius(@value, @placement: null) {
+  @cssVariable: "--mdui-sys-shape-corner-@{value}";
+
+  & when (@placement =null) {
+    border-radius: ~"var(@{cssVariable})";
+  }
+
+  & when (@placement =top) {
+    border-radius: ~"var(@{cssVariable}) var(@{cssVariable}) 0 0";
+  }
+
+  & when (@placement =bottom) {
+    border-radius: ~"0 0 var(@{cssVariable}) var(@{cssVariable})";
+  }
+
+  & when (@placement =start) {
+    border-radius: ~"var(@{cssVariable}) 0 0 var(@{cssVariable})";
+  }
+
+  & when (@placement =end) {
+    border-radius: ~"0 var(@{cssVariable}) var(@{cssVariable}) 0";
+  }
+
+  & when (isnumber(@value)) {
+    & when (@placement =null) {
+      .px(border-radius, @value);
+    }
+
+    & when (@placement =top) {
+      .px(border-top-left-radius, @value);
+      .px(border-top-right-radius, @value);
+    }
+
+    & when (@placement =bottom) {
+      .px(border-bottom-right-radius, @value);
+      .px(border-bottom-left-radius, @value);
+    }
+
+    & when (@placement =start) {
+      .px(border-top-left-radius, @value);
+      .px(border-bottom-left-radius, @value);
+    }
+
+    & when (@placement =end) {
+      .px(border-top-right-radius, @value);
+      .px(border-bottom-right-radius, @value);
+    }
+  }
+}
+
+/**
+ * padding 或 margin 值中的 px 转 rem。传 1 - 4 个参数都行
+ *
+ * 输入: .padding(24)
+ * 输出: padding: 1.5rem
+ */
+.padding(@top, @right: null, @bottom: null, @left: null, @name: padding) {
+  & when (@right =null) and (@bottom =null) and (@left =null) {
+    @{name}: unit((@top / @root-font-size), rem);
+  }
+
+  & when (not(@right =null)) and (@bottom =null) and (@left =null) {
+    @{name}: unit((@top / @root-font-size), rem) unit((@right / @root-font-size), rem);
+  }
+
+  & when (not(@right =null)) and (not(@bottom =null)) and (@left =null) {
+    @{name}: unit((@top / @root-font-size), rem) unit((@right / @root-font-size), rem) unit((@bottom / @root-font-size), rem);
+  }
+
+  & when (not(@right =null)) and (not(@bottom =null)) and (not(@left =null)) {
+    @{name}: unit((@top / @root-font-size), rem) unit((@right / @root-font-size), rem) unit((@bottom / @root-font-size), rem) unit((@left / @root-font-size), rem);
+  }
+}
+
+.margin(@top, @right: null, @bottom: null, @left: null) {
+  .padding(@top, @right, @bottom, @left, margin);
+}
+
+.paddingTop(@value) {
+  .px(padding-top, @value);
+}
+
+.paddingRight(@value) {
+  .px(padding-right, @value);
+}
+
+.paddingBottom(@value) {
+  .px(padding-bottom, @value);
+}
+
+.paddingLeft(@value) {
+  .px(padding-left, @value);
+}
+
+.marginTop(@value) {
+  .px(margin-top, @value);
+}
+
+.marginRight(@value) {
+  .px(margin-right, @value);
+}
+
+.marginBottom(@value) {
+  .px(margin-bottom, @value);
+}
+
+.marginLeft(@value) {
+  .px(margin-left, @value);
+}
+
+/**
+ * 设置 box-shadow，同时通过 :before 添加对应的背景色
+ *
+ * 输入: .elevation(2)
+ */
+.elevation(@value) {
+  .sys(box-shadow, ~"elevation-level@{value}");
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    content: " ";
+
+    & when (@value =0) {
+      background-color: transparent;
+    }
+
+    & when (@value =1) {
+      .backgroundColor(primary, 5%);
+    }
+
+    & when (@value =2) {
+      .backgroundColor(primary, 8%);
+    }
+
+    & when (@value =3) {
+      .backgroundColor(primary, 11%);
+    }
+
+    & when (@value =4) {
+      .backgroundColor(primary, 12%);
+    }
+
+    & when (@value =5) {
+      .backgroundColor(primary, 14%);
+    }
+  }
+}
+
+.stateLayerColor(@rgb) {
+  .sys(--mdui-comp-ripple-state-layer-color, ~"color-@{rgb}");
+}
+
+.translate(@x, @y: 0) {
+  transform: translate(unit((@x / @root-font-size), rem), unit((@y / @root-font-size), rem));
+}
+
+.typescale(@name) {
+  .sys(font-size, ~"typescale-@{name}-size");
+  .sys(font-weight, ~"typescale-@{name}-weight");
+  .sys(letter-spacing, ~"typescale-@{name}-tracking");
+  .sys(line-height, ~"typescale-@{name}-line-height");
+}
+
+.fontSize(@value) {
+  & when (isnumber(@value)) {
+    .px(font-size, @value);
+  }
+
+  & when not (isnumber(@value)) {
+    .sys(font-size, ~"typescale-@{value}-size");
+  }
+}
+
+.fontWeight(@value) {
+  .sys(font-weight, ~"typescale-@{value}-weight");
+}
+
+.letterSpacing(@value) {
+  .sys(letter-spacing, ~"typescale-@{value}-tracking");
+}
+
+.height(@value) {
+  .px(height, @value);
+}
+
+.lineHeight(@value) {
+  & when (isnumber(@value)) {
+    .px(line-height, @value);
+  }
+
+  & when not (isnumber(@value)) {
+    .sys(line-height, ~"typescale-@{value}-line-height");
+  }
+}
+
+.width(@value) {
+  .px(width, @value);
+}
+
+.minWidth(@value) {
+  .px(min-width, @value);
+}
+
+.maxWidth(@value) {
+  .px(max-width, @value);
+}
+
+.minHeight(@value) {
+  .px(min-height, @value);
+}
+
+.top(@value) {
+  .px(top, @value);
+}
+
+.right(@value) {
+  .px(right, @value);
+}
+
+.bottom(@value) {
+  .px(bottom, @value);
+}
+
+.left(@value) {
+  .px(left, @value);
+}
+
+.opacity(@value) {
+  .sys(opacity, ~"state-@{value}-state-layer-opacity");
+}
+
+.animationTimingFunction(@value) {
+  .sys(animation-timing-function, ~"motion-easing-@{value}");
+}
+
+.transitionTimingFunction(@value) {
+  .sys(transition-timing-function, ~"motion-easing-@{value}");
+}

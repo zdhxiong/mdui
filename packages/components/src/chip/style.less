@@ -1,4 +1,4 @@
-@import "~@mdui/shared/variables.less";
+@import "~@mdui/shared/mixin.less";
 
 /**
  * mdui-chip 组件。默认为 variant="assist"
@@ -8,16 +8,14 @@
   display: inline-block;
   overflow: hidden;
   cursor: pointer;
-  transition: box-shadow 200ms @mdui-sys-motion-easing-standard;
+  transition: box-shadow 200ms var(--mdui-sys-motion-easing-standard);
   -webkit-tap-highlight-color: transparent;
-  .fontSize(label-large-size);
-  .fontWeight(label-large-weight);
   .height(32);
   .borderRadius(8);
-  .letterSpacing(label-large-tracking);
   .backgroundColor(surface);
   .border(1px, solid, outline);
   .color(on-surface-variant);
+  .typescale(label-large);
   .stateLayerColor(on-surface-variant);
 }
 

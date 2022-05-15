@@ -1,4 +1,4 @@
-@import "~@mdui/shared/variables.less";
+@import "~@mdui/shared/mixin.less";
 
 :host {
   position: relative;
@@ -6,10 +6,8 @@
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   .height(40);
-  .fontSize(label-large-size);
-  .fontWeight(label-large-weight);
-  .letterSpacing(label-large-tracking);
   .borderRadius(2);
+  .typescale(label-large);
 }
 
 :host([disabled]) {
@@ -53,7 +51,7 @@ i {
   /* 图标外圈 */
   &::after {
     border-radius: 50%;
-    transition: all 180ms @mdui-sys-motion-easing-standard;
+    transition: all 180ms var(--mdui-sys-motion-easing-standard);
     content: " ";
     .width(20);
     .height(20);
@@ -66,7 +64,7 @@ i {
     border-radius: 50%;
     transform: scale(0);
     opacity: 0;
-    transition: all 180ms @mdui-sys-motion-easing-standard;
+    transition: all 180ms var(--mdui-sys-motion-easing-standard);
     content: " ";
     .width(15);
     .height(15);

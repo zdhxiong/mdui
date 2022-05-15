@@ -1,4 +1,4 @@
-@import "~@mdui/shared/variables.less";
+@import "~@mdui/shared/mixin.less";
 
 /**
  * mdui-fab 组件。默认为 variant="primary" size="normal"
@@ -10,17 +10,15 @@
   text-align: center;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition-timing-function: @mdui-sys-motion-easing-standard;
+  transition-timing-function: var(--mdui-sys-motion-easing-standard);
   transition-duration: 200ms;
   // 先不启用动画，等首次渲染完后再设置 transitionProperty: box-shadow, width
   transition-property: box-shadow;
-  .fontSize(label-large-size);
-  .fontWeight(label-large-weight);
   .width(56);
   .height(56);
   .borderRadius(16);
   .elevation(3);
-  .letterSpacing(label-large-tracking);
+  .typescale(label-large);
 }
 
 .button {
@@ -136,7 +134,7 @@
 }
 
 .label {
-  transition: opacity 75ms @mdui-sys-motion-easing-accelerate 125ms;
+  transition: opacity 75ms var(--mdui-sys-motion-easing-accelerate) 125ms;
 
   .paddingLeft(4);
   .paddingRight(4);

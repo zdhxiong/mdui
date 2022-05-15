@@ -1,4 +1,4 @@
-@import "~@mdui/shared/variables.less";
+@import "~@mdui/shared/mixin.less";
 
 :host {
   position: relative;
@@ -39,10 +39,7 @@
   flex: 1 1 100%;
   min-width: 0;
   .color(on-surface);
-  .fontSize(label-large-size);
-  .lineHeight(label-large-line-height);
-  .letterSpacing(label-large-tracking);
-  .fontWeight(label-large-weight);
+  .typescale(label-large);
 }
 
 .label-text {
@@ -72,7 +69,6 @@
   }
 
   .dense & {
-
     *,
     ::slotted(*) {
       .fontSize(18);
@@ -86,10 +82,7 @@
 }
 
 .end-text {
-  .lineHeight(label-large-line-height);
-  .fontSize(label-large-size);
-  .letterSpacing(label-large-tracking);
-  .fontWeight(label-large-weight);
+  .typescale(label-large);
 }
 
 .start-icon {

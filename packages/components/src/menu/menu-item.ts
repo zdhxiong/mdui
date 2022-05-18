@@ -14,7 +14,7 @@ import {
 } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
-import { animate } from '@lit-labs/motion';
+import { animate, AnimateController } from '@lit-labs/motion';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -34,7 +34,14 @@ import '@mdui/jq/methods/siblings.js';
 import '@mdui/jq/methods/each.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/static/contains.js';
-import { Easing } from '@mdui/shared/helpers/motion.js';
+import {
+  DURATION_FADE_IN,
+  DURATION_FADE_OUT,
+  EASING_ACCELERATION,
+  EASING_DECELERATION,
+  KEYFRAME_FADE_IN,
+  KEYFRAME_FADE_OUT,
+} from '@mdui/shared/helpers/motion.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import type { Menu } from '../menu.js';
 import { MaterialIconsName } from '../icon.js';
@@ -110,6 +117,23 @@ export class MenuItem extends AnchorMixin(
     'submenu',
     'custom',
   );
+
+  protected readonly animateController = new AnimateController(this, {
+    defaultOptions: {
+      keyframeOptions: {
+        duration: DURATION_FADE_IN,
+        easing: EASING_DECELERATION,
+      },
+      in: KEYFRAME_FADE_IN,
+      out: KEYFRAME_FADE_OUT,
+      onStart: () => {
+        emit(this, this.submenuOpen ? 'submenu-open' : 'submenu-close');
+      },
+      onComplete: () => {
+        emit(this, this.submenuOpen ? 'submenu-opened' : 'submenu-closed');
+      },
+    },
+  });
 
   /**
    * 由父组件 menu 赋值
@@ -467,27 +491,8 @@ export class MenuItem extends AnchorMixin(
             class="submenu"
             ${animate({
               keyframeOptions: {
-                duration: 300,
-              },
-              in: [
-                {
-                  transform: 'scale(0)',
-                  opacity: 0,
-                  easing: Easing.DECELERATION,
-                },
-              ],
-              out: [
-                { opacity: 1, easing: Easing.ACCELERATION },
-                { opacity: 0 },
-              ],
-              onStart: () => {
-                emit(this, this.submenuOpen ? 'submenu-open' : 'submenu-close');
-              },
-              onComplete: () => {
-                emit(
-                  this,
-                  this.submenuOpen ? 'submenu-opened' : 'submenu-closed',
-                );
+                duration: DURATION_FADE_OUT,
+                easing: EASING_ACCELERATION,
               },
             })}
           >

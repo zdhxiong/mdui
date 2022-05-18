@@ -13,7 +13,7 @@ import {
 } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import { animate } from '@lit-labs/motion';
+import { animate, AnimateController } from '@lit-labs/motion';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/off.js';
@@ -21,7 +21,14 @@ import '@mdui/jq/methods/width.js';
 import '@mdui/jq/methods/height.js';
 import '@mdui/jq/static/contains.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
-import { Easing } from '@mdui/shared/helpers/motion.js';
+import {
+  DURATION_FADE_IN,
+  DURATION_FADE_OUT,
+  EASING_ACCELERATION,
+  EASING_DECELERATION,
+  KEYFRAME_FADE_IN,
+  KEYFRAME_FADE_OUT,
+} from '@mdui/shared/helpers/motion.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { watch } from '@mdui/shared/decorators/watch';
 import { JQ } from '@mdui/jq/shared/core';
@@ -59,6 +66,23 @@ export class Dropdown extends LitElement {
 
   @query('.panel')
   protected panel!: HTMLElement;
+
+  protected readonly animateController = new AnimateController(this, {
+    defaultOptions: {
+      keyframeOptions: {
+        duration: DURATION_FADE_IN,
+        easing: EASING_DECELERATION,
+      },
+      in: KEYFRAME_FADE_IN,
+      out: KEYFRAME_FADE_OUT,
+      onStart: () => {
+        emit(this, this.open ? 'open' : 'close');
+      },
+      onComplete: () => {
+        emit(this, this.open ? 'opened' : 'closed');
+      },
+    },
+  });
 
   /**
    * dropdown 是否打开
@@ -438,26 +462,8 @@ export class Dropdown extends LitElement {
           style="${styleMap({ zIndex: this.zIndex.toString() })}"
           ${animate({
             keyframeOptions: {
-              duration: 300,
-            },
-            in: [
-              {
-                transform: 'scaleY(0.28)',
-                opacity: 0,
-                easing: Easing.DECELERATION,
-              },
-              { opacity: 1, offset: 0.2, easing: Easing.DECELERATION },
-            ],
-            out: [
-              { opacity: 1, easing: Easing.ACCELERATION },
-              { opacity: 1, offset: 0.6, easing: Easing.ACCELERATION },
-              { transform: 'scaleY(0.28)', opacity: 0 },
-            ],
-            onStart: () => {
-              emit(this, this.open ? 'open' : 'close');
-            },
-            onComplete: () => {
-              emit(this, this.open ? 'opened' : 'closed');
+              duration: DURATION_FADE_OUT,
+              easing: EASING_ACCELERATION,
             },
           })}
         >

@@ -2,7 +2,7 @@ import { CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
-import { animate } from '@lit-labs/motion';
+import { animate, AnimateController } from '@lit-labs/motion';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { $ } from '@mdui/jq/$.js';
@@ -12,7 +12,12 @@ import '@mdui/jq/methods/width.js';
 import '@mdui/jq/methods/height.js';
 import '@mdui/jq/methods/css.js';
 import { emit } from '@mdui/shared/helpers/event.js';
-import { Easing } from '@mdui/shared/helpers/motion.js';
+import {
+  EASING_ACCELERATION,
+  EASING_DECELERATION,
+  DURATION_FADE_IN,
+  DURATION_FADE_OUT,
+} from '@mdui/shared/helpers/motion.js';
 import { style } from './style.js';
 
 /**
@@ -40,6 +45,23 @@ export class Tooltip extends LitElement {
   protected target!: HTMLElement;
 
   private hoverTimeout!: number;
+
+  protected readonly animateController = new AnimateController(this, {
+    defaultOptions: {
+      keyframeOptions: {
+        duration: DURATION_FADE_IN,
+        easing: EASING_DECELERATION,
+      },
+      in: [{ transform: 'scale(0)' }],
+      out: [{ transform: 'scale(1)' }, { transform: 'scale(0)' }],
+      onStart: () => {
+        emit(this, this.open ? 'open' : 'close');
+      },
+      onComplete: () => {
+        emit(this, this.open ? 'opened' : 'closed');
+      },
+    },
+  });
 
   /**
    * tooltip 的方位。可选值为：
@@ -337,18 +359,8 @@ export class Tooltip extends LitElement {
           style="${styleMap({ zIndex: this.zIndex.toString() })}"
           ${animate({
             keyframeOptions: {
-              duration: 100,
-            },
-            in: [{ transform: 'scale(0)', easing: Easing.DECELERATION }],
-            out: [
-              { transform: 'scale(1)', easing: Easing.ACCELERATION },
-              { transform: 'scale(0)' },
-            ],
-            onStart: () => {
-              emit(this, this.open ? 'open' : 'close');
-            },
-            onComplete: () => {
-              emit(this, this.open ? 'opened' : 'closed');
+              duration: DURATION_FADE_OUT,
+              easing: EASING_ACCELERATION,
             },
           })}
         >

@@ -247,7 +247,7 @@ export class MenuItem extends AnchorMixin(
     $(this).on({
       focus: () => this.onFocus(),
       blur: () => this.onBlur(),
-      pointerdown: (e) => this.onClick(e as MouseEvent),
+      click: (e) => this.onClick(e as MouseEvent),
       keydown: (e) => this.onKeydown(e as KeyboardEvent),
       mouseenter: () => this.onMouseEnter(),
       mouseleave: () => this.onMouseLeave(),

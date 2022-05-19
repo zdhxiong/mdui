@@ -14,3 +14,9 @@ export class ListSubheader extends LitElement {
     return html`<slot></slot>`;
   }
 }
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mdui-list-subheader': ListSubheader;
+  }
+}

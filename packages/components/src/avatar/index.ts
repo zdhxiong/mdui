@@ -70,3 +70,9 @@ export class Avatar extends LitElement {
     return html`<slot></slot>`;
   }
 }
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mdui-avatar': Avatar;
+  }
+}

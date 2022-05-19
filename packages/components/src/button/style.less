@@ -21,10 +21,6 @@
 .button {
   width: 100%;
   .padding(0, 16);
-
-  :host([variant="icon"]) & {
-    padding: 0;
-  }
 }
 
 :host([fullwidth]) {
@@ -55,13 +51,6 @@
 }
 
 :host([variant="text"]) {
-  .stateLayerColor(primary);
-}
-
-:host([variant="icon"]) {
-  min-width: 0;
-  .color(on-secondary-container);
-  .width(40);
   .stateLayerColor(primary);
 }
 
@@ -135,10 +124,6 @@
 .label {
   .paddingRight(8);
   .paddingLeft(8);
-
-  :host([variant="icon"]) & {
-    display: none;
-  }
 }
 
 .icon,

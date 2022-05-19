@@ -1,0 +1,108 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  .shapeCorner(full);
+  .fontSize(24);
+  .width(40);
+  .height(40);
+}
+
+:host([variant="standard"]) {
+  .color(on-surface-variant);
+  .stateLayerColor(on-surface-variant);
+}
+
+:host([variant="filled"]) {
+  .color(primary);
+  .backgroundColor(surface-variant);
+  .stateLayerColor(primary);
+}
+
+:host([variant="tonal"]) {
+  .color(on-surface-variant);
+  .backgroundColor(surface-variant);
+  .stateLayerColor(on-surface-variant);
+}
+
+:host([variant="outlined"]) {
+  .border(1, solid, outline);
+  .color(on-surface-variant);
+  .stateLayerColor(on-surface-variant);
+}
+
+:host([variant="outlined"][pressed]) {
+  .color(on-surface);
+  .stateLayerColor(on-surface);
+}
+
+:host([variant="standard"][selected]) {
+  .color(primary);
+  .stateLayerColor(primary);
+}
+
+:host([variant="filled"][selected]),
+:host([variant="filled"]:not([selectable])) {
+  .color(on-primary);
+  .backgroundColor(primary);
+  .stateLayerColor(on-primary);
+}
+
+:host([variant="tonal"][selected]),
+:host([variant="tonal"]:not([selectable])) {
+  .color(on-secondary-container);
+  .backgroundColor(secondary-container);
+  .stateLayerColor(on-secondary-container);
+}
+
+:host([variant="outlined"][selected]) {
+  border: none;
+  .color(inverse-on-surface);
+  .backgroundColor(inverse-surface);
+  .stateLayerColor(inverse-on-surface);
+}
+
+:host([variant="filled"][disabled]),
+:host([variant="filled"][loading]),
+:host([variant="tonal"][disabled]),
+:host([variant="tonal"][loading]),
+:host([variant="outlined"][disabled]),
+:host([variant="outlined"][loading]) {
+  .backgroundColor(on-surface, 0.12);
+  .borderColor(on-surface, 0.12);
+}
+
+:host([disabled]),
+:host([loading]) {
+  .color(on-surface, 0.38) !important;
+}
+
+:host([loading]) {
+  mdui-ripple,
+  .button {
+    opacity: 0;
+  }
+
+  mdui-circular-progress {
+    position: absolute;
+    top: calc(50% - unit((24 / @root-font-size), rem) / 2);
+    left: calc(50% - unit((24 / @root-font-size), rem) / 2);
+    .width(24);
+    .height(24);
+  }
+}
+
+.button {
+  float: left;
+  width: 100%;
+}
+
+.icon,
+::slotted(*) {
+  font-size: inherit;
+}

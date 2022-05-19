@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>Button</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <script type="module" src="../../packages/mdui/mdui.css"></script>
+  <script type="module" src="../../packages/components/index.js"></script>
+  <script type="module" src="../../packages/icons/settings--outlined.js"></script>
+  <script type="module" src="../../packages/icons/settings.js"></script>
+  <style>
+    body {
+      font-family: Roboto;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <section>
+      <h2>Standard Icon Button</h2>
+      <mdui-icon-button variant="standard" icon="settings--outlined"></mdui-icon-button>
+      <mdui-icon-button variant="standard" icon="settings--outlined" disabled></mdui-icon-button>
+      <mdui-icon-button variant="standard" icon="settings--outlined" selectable></mdui-icon-button>
+      <mdui-icon-button variant="standard" icon="settings--outlined" selectable selectedIcon="settings--filled">
+      </mdui-icon-button>
+    </section>
+
+    <section>
+      <h2>Filled Icon Button</h2>
+      <mdui-icon-button variant="filled" icon="settings--outlined"></mdui-icon-button>
+      <mdui-icon-button variant="filled" icon="settings--outlined" disabled></mdui-icon-button>
+      <mdui-icon-button variant="filled" icon="settings--outlined" selectable></mdui-icon-button>
+      <mdui-icon-button variant="filled" icon="settings--outlined" selectable selectedIcon="settings--filled">
+      </mdui-icon-button>
+    </section>
+
+    <section>
+      <h2>Tonal Icon Button</h2>
+      <mdui-icon-button variant="tonal" icon="settings--outlined"></mdui-icon-button>
+      <mdui-icon-button variant="tonal" icon="settings--outlined" disabled></mdui-icon-button>
+      <mdui-icon-button variant="tonal" icon="settings--outlined" selectable></mdui-icon-button>
+      <mdui-icon-button variant="tonal" icon="settings--outlined" selectable selectedIcon="settings--filled">
+      </mdui-icon-button>
+    </section>
+
+    <section>
+      <h2>Outlined Icon Button</h2>
+      <mdui-icon-button variant="outlined" icon="settings--outlined"></mdui-icon-button>
+      <mdui-icon-button variant="outlined" icon="settings--outlined" disabled></mdui-icon-button>
+      <mdui-icon-button variant="outlined" icon="settings--outlined" selectable></mdui-icon-button>
+      <mdui-icon-button variant="outlined" icon="settings--outlined" selectable selectedIcon="settings--filled">
+      </mdui-icon-button>
+    </section>
+
+    <section>
+      <h2>Loading</h2>
+      <mdui-icon-button variant="standard" icon="settings--outlined" loading></mdui-icon-button>
+      <mdui-icon-button variant="filled" icon="settings--outlined" loading></mdui-icon-button>
+      <mdui-icon-button variant="tonal" icon="settings--outlined" loading></mdui-icon-button>
+      <mdui-icon-button variant="outlined" icon="settings--outlined" loading></mdui-icon-button>
+      <mdui-icon-button variant="standard" icon="settings--outlined" disabled loading></mdui-icon-button>
+      <mdui-icon-button variant="filled" icon="settings--outlined" disabled loading></mdui-icon-button>
+      <mdui-icon-button variant="tonal" icon="settings--outlined" disabled loading></mdui-icon-button>
+      <mdui-icon-button variant="outlined" icon="settings--outlined" disabled loading></mdui-icon-button>
+    </section>
+
+    <section>
+      <h2>href</h2>
+      <mdui-icon-button variant="standard" icon="settings--outlined" href="https://www.mdui.org"></mdui-icon-button>
+      <mdui-icon-button variant="filled" icon="settings--outlined" href="https://www.mdui.org"></mdui-icon-button>
+      <mdui-icon-button variant="tonal" icon="settings--outlined" href="https://www.mdui.org"></mdui-icon-button>
+      <mdui-icon-button variant="outlined" icon="settings--outlined" href="https://www.mdui.org"></mdui-icon-button>
+      <mdui-icon-button variant="standard" icon="settings--outlined" disabled href="https://www.mdui.org">
+      </mdui-icon-button>
+      <mdui-icon-button variant="filled" icon="settings--outlined" disabled href="https://www.mdui.org">
+      </mdui-icon-button>
+      <mdui-icon-button variant="tonal" icon="settings--outlined" disabled href="https://www.mdui.org">
+      </mdui-icon-button>
+      <mdui-icon-button variant="outlined" icon="settings--outlined" disabled href="https://www.mdui.org">
+      </mdui-icon-button>
+    </section>
+
+    <section>
+      <h2>slot icon</h2>
+      <mdui-icon-button variant="standard" selectable>
+        <mdui-icon name="settings--outlined"></mdui-icon>
+      </mdui-icon-button>
+      <mdui-icon-button variant="filled" selectable>
+        <mdui-icon name="settings--outlined"></mdui-icon>
+        <mdui-icon name="settings--filled" slot="selected-icon"></mdui-icon>
+      </mdui-icon-button>
+      <mdui-icon-button variant="tonal" icon="settings--outlined" selectable>
+        <mdui-icon name="settings--filled" slot="selected-icon"></mdui-icon>
+      </mdui-icon-button>
+      <mdui-icon-button variant="outlined" selectedIcon="settings--filled" selectable>
+        <mdui-icon name="settings--outlined"></mdui-icon>
+      </mdui-icon-button>
+      <mdui-icon-button variant="filled" selectable>
+        <mdui-icon-settings--outlined></mdui-icon-settings--outlined>
+        <mdui-icon-settings slot="selected-icon">
+        </mdui-icon-settings>
+      </mdui-icon-button>
+    </section>
+
+    <section>
+      <h2>style</h2>
+      <mdui-icon-button variant="filled" icon="settings--outlined" style="width: 60px; height: 60px; font-size: 32px;">
+      </mdui-icon-button>
+    </section>
+
+    <h1>状态</h1>
+
+    <section>
+      <h2>Standard Icon Button - no toggle</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/diC6xhHbC0NuyOOQF0twProR6VsgPFmG_bwnifDvFxCrwEHtRq-Ei_W4n6eRpB_ZXIgshl6cmDr4xWfRIPycyJFoCkfNachOY_CEfjRZJO4Y=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 166px 16px 90px">
+            <mdui-icon-button variant="standard" icon="settings--outlined"></mdui-icon-button>
+            <mdui-icon-button variant="standard" icon="settings--outlined" disabled></mdui-icon-button>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 166px 16px 90px">
+            <mdui-icon-button variant="standard" icon="settings--outlined"></mdui-icon-button>
+            <mdui-icon-button variant="standard" icon="settings--outlined" disabled></mdui-icon-button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Standard Icon Button - toggle</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/g7HFjH6_083dT0QSnAuVqU4JNqgeVig_0WGRiZE6atf5rIUwnLoKybd-2kBgaRFFuZVdM_rk4Cqmgp3bzpy0m_PuqyoSU5NaJiGfuxeft14=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 120px 16px 64px">
+            <div>
+              <mdui-icon-button variant="standard" icon="settings--outlined" selectable></mdui-icon-button>
+              <mdui-icon-button variant="standard" icon="settings--outlined" selectable disabled></mdui-icon-button>
+            </div>
+            <div style="padding-top: 28px">
+              <mdui-icon-button variant="standard" icon="settings--outlined" selectedIcon="settings" selectable
+                selected>
+              </mdui-icon-button>
+              <mdui-icon-button variant="standard" icon="settings--outlined" selectedIcon="settings" selectable selected
+                disabled>
+              </mdui-icon-button>
+            </div>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 120px 16px 64px">
+            <div>
+              <mdui-icon-button variant="standard" icon="settings--outlined" selectable></mdui-icon-button>
+              <mdui-icon-button variant="standard" icon="settings--outlined" selectable disabled></mdui-icon-button>
+            </div>
+            <div style="padding-top: 28px">
+              <mdui-icon-button variant="standard" icon="settings--outlined" selectedIcon="settings" selectable
+                selected>
+              </mdui-icon-button>
+              <mdui-icon-button variant="standard" icon="settings--outlined" selectedIcon="settings" selectable selected
+                disabled>
+              </mdui-icon-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Filled Icon Button - no toggle</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/JRBBEmYKq3Av4_laZAb9fXxHTsncaLDMUqFJf8u8mcdOeesT4ZTvQyRshElYAZAsM_nJs8g1vbW64tGeo8CNv0tkhx1bn_qJPOsm2bXapcSz=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 150px 16px 106px">
+            <mdui-icon-button variant="filled" icon="settings--outlined"></mdui-icon-button>
+            <mdui-icon-button variant="filled" icon="settings--outlined" disabled></mdui-icon-button>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 150px 16px 106px">
+            <mdui-icon-button variant="filled" icon="settings--outlined"></mdui-icon-button>
+            <mdui-icon-button variant="filled" icon="settings--outlined" disabled></mdui-icon-button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Filled Icon Button - toggle</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/JQO8Hps11hViNdaLJ6YSMZKvMkaNIjrkAkSBNDTX0-ifrGjh8CE1IJPhDlb5V4bx5i7QrA03J1Vce1dAH3fzlCa4kSx1J4ZTSybXuTc5w7Vr8Q=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 120px 16px 64px">
+            <div>
+              <mdui-icon-button variant="filled" icon="settings--outlined" selectable></mdui-icon-button>
+              <mdui-icon-button variant="filled" icon="settings--outlined" selectable disabled></mdui-icon-button>
+            </div>
+            <div style="padding-top: 28px">
+              <mdui-icon-button variant="filled" icon="settings--outlined" selectedIcon="settings" selectable selected>
+              </mdui-icon-button>
+              <mdui-icon-button variant="filled" icon="settings--outlined" selectedIcon="settings" selectable selected
+                disabled>
+              </mdui-icon-button>
+            </div>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 120px 16px 64px">
+            <div>
+              <mdui-icon-button variant="filled" icon="settings--outlined" selectable></mdui-icon-button>
+              <mdui-icon-button variant="filled" icon="settings--outlined" selectable disabled></mdui-icon-button>
+            </div>
+            <div style="padding-top: 28px">
+              <mdui-icon-button variant="filled" icon="settings--outlined" selectedIcon="settings" selectable selected>
+              </mdui-icon-button>
+              <mdui-icon-button variant="filled" icon="settings--outlined" selectedIcon="settings" selectable selected
+                disabled>
+              </mdui-icon-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Tonal Icon Button - no toggle</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/lnt_GKNJ7FKH4XSNN8HJferWAG-Mo5O-S6S8h2K4Xypm9PI3J1-f_QDZmN0Sf8Bx2WC4U3x45YXR0Bov1u0YFGGhmbb1h56VcxIMuAx2EptF=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 150px 16px 106px">
+            <mdui-icon-button variant="tonal" icon="settings--outlined"></mdui-icon-button>
+            <mdui-icon-button variant="tonal" icon="settings--outlined" disabled></mdui-icon-button>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 150px 16px 106px">
+            <mdui-icon-button variant="tonal" icon="settings--outlined"></mdui-icon-button>
+            <mdui-icon-button variant="tonal" icon="settings--outlined" disabled></mdui-icon-button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Tonal Icon Button - toggle</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/TdaON8tZUHbAgmXdqTDB1X3XhcemMIlhxu1EB3XHo1WnvghQvdSb5dQq5yMhSDYM87RJR2wPtGjcePD_ONCEH0I_X9l0Cb7yi5etGcILDZ0=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 120px 16px 64px">
+            <div>
+              <mdui-icon-button variant="tonal" icon="settings--outlined" selectable></mdui-icon-button>
+              <mdui-icon-button variant="tonal" icon="settings--outlined" selectable disabled></mdui-icon-button>
+            </div>
+            <div style="padding-top: 28px">
+              <mdui-icon-button variant="tonal" icon="settings--outlined" selectedIcon="settings" selectable selected>
+              </mdui-icon-button>
+              <mdui-icon-button variant="tonal" icon="settings--outlined" selectedIcon="settings" selectable selected
+                disabled>
+              </mdui-icon-button>
+            </div>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 120px 16px 64px">
+            <div>
+              <mdui-icon-button variant="tonal" icon="settings--outlined" selectable></mdui-icon-button>
+              <mdui-icon-button variant="tonal" icon="settings--outlined" selectable disabled></mdui-icon-button>
+            </div>
+            <div style="padding-top: 28px">
+              <mdui-icon-button variant="tonal" icon="settings--outlined" selectedIcon="settings" selectable selected>
+              </mdui-icon-button>
+              <mdui-icon-button variant="tonal" icon="settings--outlined" selectedIcon="settings" selectable selected
+                disabled>
+              </mdui-icon-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Outlined Icon Button - no toggle</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/Bg7tbUZPeLbWqecLwsAsAun_a8zrIEfPOXIL6N10fkgt9GodtVxF2g3pL046yzvVLasYPp-DsZ_aWkGnbXOL7IXy7pqj-Q78CJp2R6Ff0uI=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 150px 16px 106px">
+            <mdui-icon-button variant="outlined" icon="settings--outlined"></mdui-icon-button>
+            <mdui-icon-button variant="outlined" icon="settings--outlined" disabled></mdui-icon-button>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 150px 16px 106px">
+            <mdui-icon-button variant="outlined" icon="settings--outlined"></mdui-icon-button>
+            <mdui-icon-button variant="outlined" icon="settings--outlined" disabled></mdui-icon-button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Outlined Icon Button - toggle</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/eZzZ79TU8yiRKqFtbSIuOb422SZ66pKcN13Ver1bPYsxnc0oNGhUV4ttmXIxNff3HM4Tb5cMjOKyxMv7a8aijLMQDbJU7REHx3tbFahEKrzS=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 120px 16px 64px">
+            <div>
+              <mdui-icon-button variant="outlined" icon="settings--outlined" selectable></mdui-icon-button>
+              <mdui-icon-button variant="outlined" icon="settings--outlined" selectable disabled></mdui-icon-button>
+            </div>
+            <div style="padding-top: 28px">
+              <mdui-icon-button variant="outlined" icon="settings--outlined" selectedIcon="settings" selectable
+                selected>
+              </mdui-icon-button>
+              <mdui-icon-button variant="outlined" icon="settings--outlined" selectedIcon="settings" selectable selected
+                disabled>
+              </mdui-icon-button>
+            </div>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 120px 16px 64px">
+            <div>
+              <mdui-icon-button variant="outlined" icon="settings--outlined" selectable></mdui-icon-button>
+              <mdui-icon-button variant="outlined" icon="settings--outlined" selectable disabled></mdui-icon-button>
+            </div>
+            <div style="padding-top: 28px">
+              <mdui-icon-button variant="outlined" icon="settings--outlined" selectedIcon="settings" selectable
+                selected>
+              </mdui-icon-button>
+              <mdui-icon-button variant="outlined" icon="settings--outlined" selectedIcon="settings" selectable selected
+                disabled>
+              </mdui-icon-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

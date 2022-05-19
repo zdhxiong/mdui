@@ -34,7 +34,6 @@ export class Button extends ButtonBase {
    * * `tonal`
    * * `outlined`
    * * `text`
-   * * `icon`
    */
   @property({ reflect: true })
   public variant:
@@ -42,8 +41,7 @@ export class Button extends ButtonBase {
     | 'filled' /*预览图*/
     | 'tonal' /*预览图*/
     | 'outlined' /*预览图*/
-    | 'text' /*预览图*/
-    | 'icon' /*预览图*/ = 'filled';
+    | 'text' /*预览图*/ = 'filled';
 
   /**
    * 是否填满父元素宽度

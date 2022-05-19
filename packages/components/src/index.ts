@@ -8,6 +8,7 @@ export * from './circular-progress.js';
 export * from './divider.js';
 export * from './dropdown.js';
 export * from './fab.js';
+export * from './icon-button.js';
 export * from './icon.js';
 export * from './linear-progress.js';
 export * from './list.js';

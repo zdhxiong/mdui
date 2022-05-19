@@ -15,14 +15,13 @@ import '../icon.js';
  * @slot - 文本
  * @slot icon - 图标
  * @slot activeIcon - 激活状态的图标
+ * @slot badge - 徽标
  *
  * @event click - 点击时触发
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
  *
  * @csspart label - 文本
- * @csspart dot - 圆点
- * @csspart badge - 小徽标
  * @csspart icon - 图标
  * @csspart active-icon - 激活状态的图标
  */
@@ -49,8 +48,6 @@ export class NavigationBarItem extends AnchorMixin(
 
   private readonly hasSlotController = new HasSlotController(
     this,
-    '[default]',
-    'icon',
     'activeIcon',
   );
 
@@ -78,12 +75,6 @@ export class NavigationBarItem extends AnchorMixin(
   public activeIcon!: MaterialIconsName;
 
   /**
-   * 角标。若为空字符串，则仅显示小红点；若指定了字符串值，则显示指定字符串
-   */
-  @property({ reflect: true })
-  public badge!: string;
-
-  /**
    * 是否为激活状态
    */
   @property({ type: Boolean, reflect: true })
@@ -96,17 +87,7 @@ export class NavigationBarItem extends AnchorMixin(
   public value!: string;
 
   protected renderBadge(): TemplateResult | typeof nothing {
-    const { badge } = this;
-
-    if (badge === undefined) {
-      return nothing;
-    }
-
-    if (!badge) {
-      return html`<span part="dot" class="dot"></span>`;
-    }
-
-    return html`<span part="badge" class="badge">${badge}</span>`;
+    return html`<slot name="badge"></slot>`;
   }
 
   protected renderActiveIcon(): TemplateResult {

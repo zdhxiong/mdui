@@ -13,6 +13,8 @@ import { MenuItem } from './menu-item.js';
  * @event change - 选中一个菜单项时触发
  *
  * @slot - 子菜单项、分割线等元素
+ *
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-menu')
 export class Menu extends LitElement {

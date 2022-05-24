@@ -16,6 +16,8 @@ import '../icon.js';
  *
  * @csspart image - 图片
  * @csspart icon - 图标
+ *
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-avatar')
 export class Avatar extends LitElement {

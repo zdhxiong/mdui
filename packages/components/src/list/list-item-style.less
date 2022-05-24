@@ -1,14 +1,18 @@
 @import "~@mdui/shared/mixin.less";
 
 :host {
+  --shape-corner: var(--mdui-sys-shape-corner-none);
+  --shape-corner-rounded: var(--mdui-sys-shape-corner-full);
+
   position: relative;
   display: block;
   overflow: hidden;
+  border-radius: var(--shape-corner);
   .stateLayerColor(on-surface);
 }
 
 :host([rounded]) {
-  .shapeCorner(full);
+  border-radius: var(--shape-corner-rounded);
 }
 
 :host([active]) {

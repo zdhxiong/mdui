@@ -1,16 +1,18 @@
 @import "~@mdui/shared/mixin.less";
 
 :host {
+  --shape-corner: var(--mdui-sys-shape-corner-full);
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border-radius: var(--shape-corner);
   .paddingLeft(4);
   .paddingRight(4);
   .color(on-error);
   .backgroundColor(error);
   .height(16);
   .minWidth(16);
-  .shapeCorner(full);
   .typescale(label-small);
 }
 

@@ -22,6 +22,8 @@ import '../icon.js';
  * @csspart button - 内部的 button 或 a 元素
  * @csspart icon - 图标组件
  * @csspart selected-icon 选中状态的图标组件
+ *
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-icon-button')
 export class IconButton extends ButtonBase {

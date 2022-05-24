@@ -1,8 +1,10 @@
 @import "~@mdui/shared/mixin.less";
 
 :host {
+  --shape-corner: var(--mdui-sys-shape-corner-none);
+
   display: block;
-  .shapeCorner(none);
+  border-radius: var(--shape-corner);
 }
 
 ::slotted(mdui-divider) {

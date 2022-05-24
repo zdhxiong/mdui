@@ -19,6 +19,8 @@ import '../icon.js';
  * @csspart start - 左侧的元素
  * @csspart end - 右侧的元素
  * @csspart loading - 加载中动画
+ *
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-button')
 export class Button extends ButtonBase {

@@ -6,6 +6,8 @@ import { style } from './style.js';
 
 /**
  * @csspart indicator - 指示器
+ *
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-linear-progress')
 export class LinearProgress extends LitElement {

@@ -4,12 +4,14 @@
  * mdui-card 组件。默认为 variant="elevated"
  */
 :host {
+  --shape-corner: var(--mdui-sys-shape-corner-medium);
+
   position: relative;
   display: inline-block;
   overflow: hidden;
+  border-radius: var(--shape-corner);
   transition: box-shadow 200ms var(--mdui-sys-motion-easing-standard);
   -webkit-tap-highlight-color: transparent;
-  .shapeCorner(medium);
   .stateLayerColor(on-surface);
 }
 

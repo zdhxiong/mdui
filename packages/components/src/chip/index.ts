@@ -26,6 +26,8 @@ import '@mdui/icons/clear.js';
  * @csspart avatar - 头像
  * @csspart delete - 删除图标
  * @csspart loading - 加载中动画
+ *
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-chip')
 export class Chip extends ButtonBase {

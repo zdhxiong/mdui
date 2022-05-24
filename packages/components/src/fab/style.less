@@ -4,10 +4,15 @@
  * mdui-fab 组件。默认为 variant="primary" size="normal"
  */
 :host {
+  --shape-corner-small: var(--mdui-sys-shape-corner-small);
+  --shape-corner-normal: var(--mdui-sys-shape-corner-large);
+  --shape-corner-large: var(--mdui-sys-shape-corner-extra-large);
+
   position: relative;
   display: inline-block;
   overflow: hidden;
   text-align: center;
+  border-radius: var(--shape-corner-normal);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   transition-timing-function: var(--mdui-sys-motion-easing-standard);
@@ -16,7 +21,6 @@
   transition-property: box-shadow;
   .width(56);
   .height(56);
-  .shapeCorner(large);
   .elevation(3);
   .typescale(label-large);
 }
@@ -86,15 +90,15 @@
 }
 
 :host([size="small"]) {
+  border-radius: var(--shape-corner-small);
   .width(40);
   .height(40);
-  .shapeCorner(small);
 }
 
 :host([size="large"]) {
+  border-radius: var(--shape-corner-large);
   .width(96);
   .height(96);
-  .shapeCorner(extra-large);
 }
 
 :host([loading]) {

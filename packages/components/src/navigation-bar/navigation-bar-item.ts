@@ -24,6 +24,8 @@ import '../icon.js';
  * @csspart label - 文本
  * @csspart icon - 图标
  * @csspart active-icon - 激活状态的图标
+ *
+ * @cssprop --shape-corner-indicator 指示器的圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-navigation-bar-item')
 export class NavigationBarItem extends AnchorMixin(

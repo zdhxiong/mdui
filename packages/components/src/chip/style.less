@@ -4,14 +4,16 @@
  * mdui-chip 组件。默认为 variant="assist"
  */
 :host {
+  --shape-corner: var(--mdui-sys-shape-corner-small);
+
   position: relative;
   display: inline-block;
   overflow: hidden;
+  border-radius: var(--shape-corner);
   cursor: pointer;
   transition: box-shadow 200ms var(--mdui-sys-motion-easing-standard);
   -webkit-tap-highlight-color: transparent;
   .height(32);
-  .shapeCorner(small);
   .backgroundColor(surface);
   .border(1px, solid, outline);
   .color(on-surface-variant);

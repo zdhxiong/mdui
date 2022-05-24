@@ -10,10 +10,12 @@ import { navigationBarStyle } from './navigation-bar-style.js';
 import { NavigationBarItem } from './navigation-bar-item.js';
 
 /**
- * @slot - `mdui-navigation-bar-item` 组件
+ * @slot - `<mdui-navigation-bar-item>` 组件
  *
  * @event click - 点击时触发
  * @event change - 值变化时触发（可取消）
+ *
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-navigation-bar')
 export class NavigationBar extends LitElement {

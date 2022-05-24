@@ -9,6 +9,11 @@ import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { ListItem } from './list-item.js';
 import { listStyle } from './list-style.js';
 
+/**
+ * @slot - `<mdui-list-item>` 元素
+ *
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ */
 @customElement('mdui-list')
 export class List extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, listStyle];

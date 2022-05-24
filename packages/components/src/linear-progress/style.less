@@ -1,13 +1,15 @@
 @import "~@mdui/shared/mixin.less";
 
 :host {
+  --shape-corner: var(--mdui-sys-shape-corner-none);
+
   position: relative;
   display: inline-block;
   width: 100%;
   overflow: hidden;
+  border-radius: var(--shape-corner);
   .backgroundColor(surface-variant);
   .height(4);
-  .shapeCorner(none);
 }
 
 .determinate,

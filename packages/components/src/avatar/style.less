@@ -1,6 +1,8 @@
 @import "~@mdui/shared/mixin.less";
 
 :host {
+  --shape-corner: var(--mdui-sys-shape-corner-full);
+
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -8,12 +10,12 @@
   overflow: hidden;
   white-space: nowrap;
   vertical-align: middle;
+  border-radius: var(--shape-corner);
   user-select: none;
   .width(40);
   .height(40);
   .backgroundColor(on-surface, 38%);
   .color(surface);
-  .shapeCorner(full);
 }
 
 img {

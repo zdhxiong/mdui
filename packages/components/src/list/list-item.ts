@@ -25,6 +25,9 @@ import { listItemStyle } from './list-item-style.js';
  * @csspart body - 中间部分
  * @csspart primary - 主标题
  * @csspart secondary - 副标题
+ *
+ * @cssprop --shape-corner 列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @cssprop --shape-corner-rounded 指定了 `rounded` 时，列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-list-item')
 export class ListItem extends AnchorMixin(

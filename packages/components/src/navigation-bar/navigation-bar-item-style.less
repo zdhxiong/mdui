@@ -1,6 +1,8 @@
 @import "~@mdui/shared/mixin.less";
 
 :host {
+  --shape-corner-indicator: var(--mdui-sys-shape-corner-full);
+
   position: relative;
   z-index: 0;
   flex: 1;
@@ -30,9 +32,9 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
+  border-radius: var(--shape-corner-indicator);
   .height(32);
   .width(32);
-  .shapeCorner(full);
 }
 
 .indicator,

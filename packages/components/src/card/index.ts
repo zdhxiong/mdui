@@ -12,6 +12,8 @@ import { style } from './style.js';
  * @event click - 点击时触发
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
+ *
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-card')
 export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {

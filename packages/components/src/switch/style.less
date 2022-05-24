@@ -48,7 +48,7 @@ input {
 }
 
 /* 指示器容器 */
-.handle {
+.thumb {
   position: relative;
   display: flex;
   align-items: center;
@@ -85,16 +85,8 @@ input {
 }
 
 .track,
-.handle {
+.thumb {
   .stateLayerColor(on-surface);
-}
-
-span {
-  .color(on-surface);
-
-  &.has-label {
-    .paddingLeft(8);
-  }
 }
 
 input {
@@ -102,7 +94,7 @@ input {
   &:checked + .track {
     .backgroundColor(primary-container);
 
-    & + .handle {
+    & + .thumb {
       transform: translateX(unit((8 / @root-font-size), rem));
       .stateLayerColor(on-surface);
 
@@ -113,7 +105,7 @@ input {
   }
 
   &:checked + .track,
-  &:checked + .track + .handle {
+  &:checked + .track + .thumb {
     .stateLayerColor(primary);
   }
 
@@ -121,15 +113,11 @@ input {
   &.invalid + .track {
     .backgroundColor(error-container);
 
-    & + .handle {
+    & + .thumb {
       .stateLayerColor(error);
 
       &::after {
         .backgroundColor(error);
-      }
-
-      & + span {
-        .color(error);
       }
     }
   }
@@ -138,7 +126,7 @@ input {
   &:disabled + .track {
     .backgroundColor(on-surface, 12%);
 
-    & + .handle {
+    & + .thumb {
       &::after {
         .elevation(0);
         .backgroundColor(on-surface, 38%);
@@ -146,10 +134,6 @@ input {
 
       &::before {
         display: inline-block;
-      }
-
-      & + span {
-        .color(on-surface, 38%);
       }
     }
   }

@@ -9,9 +9,11 @@ import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
+import '@mdui/icons/check.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
 import { style } from './style.js';
+import '../icon.js';
 
 /**
  * @event click - 点击时触发
@@ -21,11 +23,13 @@ import { style } from './style.js';
  * @event input - 选中状态变更时触发
  * @event invalid - 表单字段验证不通过时触发
  *
- * @slot - 文本
+ * @slot icon - 未选中状态的图标
+ * @slot checked-icon 选中状态的图标
  *
  * @csspart track - 轨道
- * @csspart handle - 图标
- * @csspart label - 文本
+ * @csspart thumb - 图标容器
+ * @csspart icon - 未选中状态的图标
+ * @csspart checked-icon 选中状态的图标
  */
 @customElement('mdui-switch')
 export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
@@ -53,7 +57,10 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
     value: (control: Switch) => (control.checked ? control.value : undefined),
   });
 
-  private readonly hasSlotController = new HasSlotController(this, '[default]');
+  private readonly hasSlotController = new HasSlotController(
+    this,
+    'checked-icon',
+  );
 
   /**
    * 是否验证未通过
@@ -72,6 +79,20 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
    */
   @property({ type: Boolean, reflect: true })
   public checked = false;
+
+  /**
+   * 未选中状态的图标
+   */
+  @property({ reflect: true })
+  public icon!: string;
+
+  /**
+   * 选中状态的图标
+   *
+   * 默认为 check，可传入空字符串移除默认图标
+   */
+  @property({ reflect: true })
+  public checkedIcon!: string;
 
   /**
    * 提交表单时，是否必须选中该开关
@@ -142,7 +163,16 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   protected override render(): TemplateResult {
-    const { disabled, checked, name, value, required, invalid } = this;
+    const {
+      disabled,
+      checked,
+      name,
+      value,
+      required,
+      invalid,
+      icon,
+      checkedIcon,
+    } = this;
 
     return html`<label>
       <input
@@ -155,18 +185,18 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
         .required=${required}
         @change=${this.onChange}
       />
-      <i part="track" class="track"></i>
-      <i part="handle" class="handle">
+      <div part="track" class="track"></div>
+      <div part="thumb" class="thumb">
         <mdui-ripple></mdui-ripple>
-      </i>
-      <span
-        part="label"
-        class=${classMap({
-          'has-label': this.hasSlotController.test('[default]'),
-        })}
-      >
-        <slot></slot>
-      </span>
+        ${icon
+          ? html`<mdui-icon name=${icon}></mdui-icon>`
+          : html`<slot name="icon"></slot>`}
+        ${checkedIcon
+          ? html`<mdui-icon name=${checkedIcon}></mdui-icon>`
+          : checkedIcon === ''
+          ? ''
+          : html`<slot name="checked-icon"></slot>`}
+      </div>
     </label>`;
   }
 }

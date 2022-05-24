@@ -82,13 +82,13 @@ export class Tooltip extends LitElement {
   /**
    * hover 触发显示的延时，单位为毫秒
    */
-  @property({ type: Number, reflect: true })
+  @property({ type: Number, reflect: true, attribute: 'open-delay' })
   public openDelay = 150;
 
   /**
    * hover 触发隐藏的延时，单位为毫秒
    */
-  @property({ type: Number, reflect: true })
+  @property({ type: Number, reflect: true, attribute: 'close-delay' })
   public closeDelay = 0;
 
   /**
@@ -130,7 +130,7 @@ export class Tooltip extends LitElement {
   /**
    * tooltip 的 zIndex 的值
    */
-  @property({ type: Number, reflect: true })
+  @property({ type: Number, reflect: true, attribute: 'z-index' })
   public zIndex = 1000;
 
   public connectedCallback() {

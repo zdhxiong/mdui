@@ -142,25 +142,25 @@ export class Dropdown extends LitElement {
   /**
    * 通过 hover 触发 dropdown 打开时的延时，单位为毫秒
    */
-  @property({ type: Number, reflect: true })
+  @property({ type: Number, reflect: true, attribute: 'open-delay' })
   public openDelay = 150;
 
   /**
    * 通过 hover 触发 dropdown 关闭时的延时，单位为毫秒
    */
-  @property({ type: Number, reflect: true })
+  @property({ type: Number, reflect: true, attribute: 'close-delay' })
   public closeDelay = 150;
 
   /**
    * 是否在触发 dropdown 时的光标所在的位置打开 dropdown。通常用于在打开鼠标右键菜单时使用
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean, reflect: true, attribute: 'open-on-pointer' })
   public openOnPointer = false;
 
   /**
    * dropdown 下拉内容的 zIndex 的值
    */
-  @property({ type: Number, reflect: true })
+  @property({ type: Number, reflect: true, attribute: 'z-index' })
   public zIndex = 900;
 
   /**

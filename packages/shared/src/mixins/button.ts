@@ -90,7 +90,7 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
      *
      * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
      */
-    @property({ reflect: true })
+    @property({ reflect: true, attribute: 'formaction' })
     public formAction!: string;
 
     /**
@@ -101,7 +101,7 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
      *
      * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
      */
-    @property({ reflect: true })
+    @property({ reflect: true, attribute: 'formenctype' })
     public formEnctype!:
       | 'application/x-www-form-urlencoded'
       | 'multipart/form-data'
@@ -114,7 +114,7 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
      *
      * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
      */
-    @property({ reflect: true })
+    @property({ reflect: true, attribute: 'formmethod' })
     public formMethod!: 'post' | 'get';
 
     /**
@@ -123,7 +123,7 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
      *
      * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
      */
-    @property({ type: Boolean, reflect: true })
+    @property({ type: Boolean, reflect: true, attribute: 'formnovalidate' })
     public formNovalidate = false;
 
     /**
@@ -135,7 +135,7 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
      *
      * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
      */
-    @property({ reflect: true })
+    @property({ reflect: true, attribute: 'formtarget' })
     public formTarget!: '_self' | '_blank' | '_parent' | '_top';
 
     protected renderButton({

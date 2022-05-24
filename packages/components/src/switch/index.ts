@@ -91,7 +91,7 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
    *
    * 默认为 check，可传入空字符串移除默认图标
    */
-  @property({ reflect: true })
+  @property({ reflect: true, attribute: 'checked-icon' })
   public checkedIcon!: string;
 
   /**

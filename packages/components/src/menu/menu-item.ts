@@ -193,19 +193,19 @@ export class MenuItem extends AnchorMixin(
   /**
    * 右侧的 Material Icons 图标名
    */
-  @property({ reflect: true })
+  @property({ reflect: true, attribute: 'end-icon' })
   public endIcon!: MaterialIconsName;
 
   /**
    * 右侧的文本
    */
-  @property({ reflect: true })
+  @property({ reflect: true, attribute: 'end-text' })
   public endText!: string;
 
   /**
    * 是否打开子菜单
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean, reflect: true, attribute: 'submenu-open' })
   public submenuOpen = false;
 
   /**

@@ -25,7 +25,7 @@ export class NavigationBar extends LitElement {
   /**
    * 在页面向上滚动时，是否隐藏组件
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean, reflect: true, attribute: 'hide-on-scroll' })
   public hideOnScroll = false;
 
   /**
@@ -35,7 +35,7 @@ export class NavigationBar extends LitElement {
    * * `labeled`
    * * `unlabeled`
    */
-  @property({ reflect: true })
+  @property({ reflect: true, attribute: 'label-visibility' })
   public labelVisibility:
     | 'auto' /*小于等于3个选项时，始终显示；大于3个选项时，仅显示选中状态的文本*/
     | 'selected' /*仅选中状态显示文本*/

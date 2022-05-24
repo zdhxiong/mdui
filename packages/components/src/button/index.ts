@@ -58,7 +58,7 @@ export class Button extends ButtonBase {
   /**
    * 右侧的 Material Icons 图标名
    */
-  @property({ reflect: true })
+  @property({ reflect: true, attribute: 'end-icon' })
   public endIcon!: MaterialIconsName;
 
   protected renderStart(): TemplateResult {

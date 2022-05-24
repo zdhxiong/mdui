@@ -37,7 +37,7 @@ export class NavigationBarItem extends AnchorMixin(
   /**
    * 仅供父组件 navigation-bar 调用
    */
-  @property({ reflect: true })
+  @property({ reflect: true, attribute: 'label-visibility' })
   protected labelVisibility!: 'selected' | 'labeled' | 'unlabeled';
 
   @query('mdui-ripple', true)
@@ -71,7 +71,7 @@ export class NavigationBarItem extends AnchorMixin(
   /**
    * 激活状态的 Material Icons 图标名
    */
-  @property({ reflect: true })
+  @property({ reflect: true, attribute: 'active-icon' })
   public activeIcon!: MaterialIconsName;
 
   /**

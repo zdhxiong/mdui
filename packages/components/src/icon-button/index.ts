@@ -58,7 +58,7 @@ export class IconButton extends ButtonBase {
   /**
    * 选中状态的 Material Icons 图标名
    */
-  @property({ reflect: true })
+  @property({ reflect: true, attribute: 'selected-icon' })
   public selectedIcon!: MaterialIconsName;
 
   /**

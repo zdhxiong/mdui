@@ -71,7 +71,7 @@ export class Menu extends LitElement {
    * * `focus`
    * * `manual`：使用了该值时，只能使用编程方式打开和关闭子菜单，且不能再指定其他触发方式
    */
-  @property({ reflect: true })
+  @property({ reflect: true, attribute: 'submenu-trigger' })
   public submenuTrigger:
     | 'click' /*鼠标点击触发*/
     | 'hover' /*鼠标悬浮触发*/
@@ -85,13 +85,13 @@ export class Menu extends LitElement {
   /**
    * 通过 hover 触发子菜单打开时的延时，单位为毫秒
    */
-  @property({ type: Number, reflect: true })
+  @property({ type: Number, reflect: true, attribute: 'submenu-open-delay' })
   public submenuOpenDelay = 200;
 
   /**
    * 通过 hover 触发子菜单关闭时的延时，单位为毫秒
    */
-  @property({ type: Number, reflect: true })
+  @property({ type: Number, reflect: true, attribute: 'submenu-close-delay' })
   public submenuCloseDelay = 200;
 
   protected override render(): TemplateResult {

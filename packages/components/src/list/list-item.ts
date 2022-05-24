@@ -68,7 +68,7 @@ export class ListItem extends AnchorMixin(
   /**
    * 主文本行数，超过行数限制后会截断显示。默认为没有行数限制
    */
-  @property({ type: Number, reflect: true })
+  @property({ type: Number, reflect: true, attribute: 'primary-line' })
   public primaryLine!: 1 | 2 | 3;
 
   /**
@@ -80,7 +80,7 @@ export class ListItem extends AnchorMixin(
   /**
    * 副文本行数，超过行数限制后会截断显示。默认为没有行数限制
    */
-  @property({ type: Number, reflect: true })
+  @property({ type: Number, reflect: true, attribute: 'secondary-line' })
   public secondaryLine!: 1 | 2 | 3;
 
   /**

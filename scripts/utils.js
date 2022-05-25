@@ -372,6 +372,7 @@ function buildWebTypes(metadataPath) {
       component.members?.filter((member) => member.privacy === 'public'),
     );
     const events = transform(component.events);
+    const cssProperties = transform(component.cssProperties);
 
     webTypes.contributions.html.elements.push(
       Object.assign(
@@ -381,6 +382,7 @@ function buildWebTypes(metadataPath) {
           attributes,
         },
         properties && events ? { js: { properties, events } } : {},
+        cssProperties ? { css: { properties: cssProperties } } : {},
         isComponentsPackage
           ? {
               priority: 'high',

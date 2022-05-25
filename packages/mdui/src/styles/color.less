@@ -1,0 +1,149 @@
+:root {
+  /**
+   * 颜色值：https://m3.material.io/styles/color/the-color-system/tokens
+   */
+  // 亮色模式下的颜色
+  --mdui-color-primary-light: 103, 80, 164;
+  --mdui-color-primary-container-light: 234, 221, 255;
+  --mdui-color-secondary-light: 98, 91, 113;
+  --mdui-color-secondary-container-light: 232, 222, 248;
+  --mdui-color-tertiary-light: 125, 82, 96;
+  --mdui-color-tertiary-container-light: 255, 216, 228;
+  --mdui-color-surface-light: 255, 251, 254;
+  --mdui-color-surface-variant-light: 231, 224, 236;
+  --mdui-color-background-light: 255, 251, 254;
+  --mdui-color-error-light: 179, 38, 30;
+  --mdui-color-error-container-light: 249, 222, 220;
+  --mdui-color-on-primary-light: 255, 255, 255;
+  --mdui-color-on-primary-container-light: 33, 0, 93;
+  --mdui-color-on-secondary-light: 255, 255, 255;
+  --mdui-color-on-secondary-container-light: 29, 25, 43;
+  --mdui-color-on-tertiary-light: 255, 255, 255;
+  --mdui-color-on-tertiary-container-light: 49, 17, 29;
+  --mdui-color-on-surface-light: 28, 27, 31;
+  --mdui-color-on-surface-variant-light: 73, 69, 79;
+  --mdui-color-on-error-light: 255, 255, 255;
+  --mdui-color-on-error-container-light: 65, 14, 11;
+  --mdui-color-on-background-light: 28, 27, 31;
+  --mdui-color-outline-light: 121, 116, 126;
+  --mdui-color-shadow-light: 0, 0, 0;
+  --mdui-color-inverse-surface-light: 49, 48, 51;
+  --mdui-color-inverse-on-surface-light: 244, 239, 244;
+  --mdui-color-inverse-primary-light: 208, 188, 255;
+
+  // 暗色模式下的颜色
+  --mdui-color-primary-dark: 208, 188, 255;
+  --mdui-color-primary-container-dark: 79, 55, 139;
+  --mdui-color-secondary-dark: 204, 194, 220;
+  --mdui-color-secondary-container-dark: 74, 68, 88;
+  --mdui-color-tertiary-dark: 239, 184, 200;
+  --mdui-color-tertiary-container-dark: 99, 59, 72;
+  --mdui-color-surface-dark: 28, 27, 31;
+  --mdui-color-surface-variant-dark: 73, 69, 79;
+  --mdui-color-background-dark: 28, 27, 31;
+  --mdui-color-error-dark: 242, 184, 181;
+  --mdui-color-error-container-dark: 140, 29, 24;
+  --mdui-color-on-primary-dark: 56, 30, 114;
+  --mdui-color-on-primary-container-dark: 234, 221, 255;
+  --mdui-color-on-secondary-dark: 51, 45, 65;
+  --mdui-color-on-secondary-container-dark: 232, 222, 248;
+  --mdui-color-on-tertiary-dark: 73, 37, 50;
+  --mdui-color-on-tertiary-container-dark: 255, 216, 228;
+  --mdui-color-on-surface-dark: 230, 225, 229;
+  --mdui-color-on-surface-variant-dark: 202, 196, 208;
+  --mdui-color-on-error-dark: 96, 20, 16;
+  --mdui-color-on-error-container-dark: 242, 184, 181;
+  --mdui-color-on-background-dark: 230, 225, 229;
+  --mdui-color-outline-dark: 147, 143, 153;
+  --mdui-color-shadow-dark: 0, 0, 0;
+  --mdui-color-inverse-surface-dark: 230, 225, 229;
+  --mdui-color-inverse-on-surface-dark: 49, 48, 51;
+  --mdui-color-inverse-primary-dark: 103, 80, 164;
+
+  font-size: ~"@{root-font-size}px";
+}
+
+body {
+  .color(on-background);
+  .backgroundColor(background);
+}
+
+// 强制使用亮色模式的颜色
+.theme-light() {
+  --mdui-color-primary: var(--mdui-color-primary-light);
+  --mdui-color-primary-container: var(--mdui-color-primary-container-light);
+  --mdui-color-secondary: var(--mdui-color-secondary-light);
+  --mdui-color-secondary-container: var(--mdui-color-secondary-container-light);
+  --mdui-color-tertiary: var(--mdui-color-tertiary-light);
+  --mdui-color-tertiary-container: var(--mdui-color-tertiary-container-light);
+  --mdui-color-surface: var(--mdui-color-surface-light);
+  --mdui-color-surface-variant: var(--mdui-color-surface-variant-light);
+  --mdui-color-background: var(--mdui-color-background-light);
+  --mdui-color-error: var(--mdui-color-error-light);
+  --mdui-color-error-container: var(--mdui-color-error-container-light);
+  --mdui-color-on-primary: var(--mdui-color-on-primary-light);
+  --mdui-color-on-primary-container: var(--mdui-color-on-primary-container-light);
+  --mdui-color-on-secondary: var(--mdui-color-on-secondary-light);
+  --mdui-color-on-secondary-container: var(--mdui-color-on-secondary-container-light);
+  --mdui-color-on-tertiary: var(--mdui-color-on-tertiary-light);
+  --mdui-color-on-tertiary-container: var(--mdui-color-on-tertiary-container-light);
+  --mdui-color-on-surface: var(--mdui-color-on-surface-light);
+  --mdui-color-on-surface-variant: var(--mdui-color-on-surface-variant-light);
+  --mdui-color-on-error: var(--mdui-color-on-error-light);
+  --mdui-color-on-error-container: var(--mdui-color-on-error-container-light);
+  --mdui-color-on-background: var(--mdui-color-on-background-light);
+  --mdui-color-outline: var(--mdui-color-outline-light);
+  --mdui-color-shadow: var(--mdui-color-shadow-light);
+  --mdui-color-inverse-surface: var(--mdui-color-inverse-surface-light);
+  --mdui-color-inverse-on-surface: var(--mdui-color-inverse-on-surface-light);
+  --mdui-color-inverse-primary: var(--mdui-color-inverse-primary-light);
+}
+
+// 强制使用暗色模式、或设置成自动适配且处于暗色模式的颜色
+.theme-dark() {
+  --mdui-color-primary: var(--mdui-color-primary-dark);
+  --mdui-color-primary-container: var(--mdui-color-primary-container-dark);
+  --mdui-color-secondary: var(--mdui-color-secondary-dark);
+  --mdui-color-secondary-container: var(--mdui-color-secondary-container-dark);
+  --mdui-color-tertiary: var(--mdui-color-tertiary-dark);
+  --mdui-color-tertiary-container: var(--mdui-color-tertiary-container-dark);
+  --mdui-color-surface: var(--mdui-color-surface-dark);
+  --mdui-color-surface-variant: var(--mdui-color-surface-variant-dark);
+  --mdui-color-background: var(--mdui-color-background-dark);
+  --mdui-color-error: var(--mdui-color-error-dark);
+  --mdui-color-error-container: var(--mdui-color-error-container-dark);
+  --mdui-color-on-primary: var(--mdui-color-on-primary-dark);
+  --mdui-color-on-primary-container: var(--mdui-color-on-primary-container-dark);
+  --mdui-color-on-secondary: var(--mdui-color-on-secondary-dark);
+  --mdui-color-on-secondary-container: var(--mdui-color-on-secondary-container-dark);
+  --mdui-color-on-tertiary: var(--mdui-color-on-tertiary-dark);
+  --mdui-color-on-tertiary-container: var(--mdui-color-on-tertiary-container-dark);
+  --mdui-color-on-surface: var(--mdui-color-on-surface-dark);
+  --mdui-color-on-surface-variant: var(--mdui-color-on-surface-variant-dark);
+  --mdui-color-on-error: var(--mdui-color-on-error-dark);
+  --mdui-color-on-error-container: var(--mdui-color-on-error-container-dark);
+  --mdui-color-on-background: var(--mdui-color-on-background-dark);
+  --mdui-color-outline: var(--mdui-color-outline-dark);
+  --mdui-color-shadow: var(--mdui-color-shadow-dark);
+  --mdui-color-inverse-surface: var(--mdui-color-inverse-surface-dark);
+  --mdui-color-inverse-on-surface: var(--mdui-color-inverse-on-surface-dark);
+  --mdui-color-inverse-primary: var(--mdui-color-inverse-primary-dark);
+
+  .color(on-background);
+  .backgroundColor(background);
+}
+
+:root {
+  .theme-light();
+}
+
+/* mdui-theme-dark 和 mdui-theme-auto 只能加在 body 元素上 */
+.mdui-theme-dark {
+  .theme-dark();
+}
+
+@media (prefers-color-scheme: dark) {
+  .mdui-theme-auto {
+    .theme-dark();
+  }
+}

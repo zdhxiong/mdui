@@ -4,9 +4,9 @@
  * mdui-fab 组件。默认为 variant="primary" size="normal"
  */
 :host {
-  --shape-corner-small: var(--mdui-sys-shape-corner-small);
-  --shape-corner-normal: var(--mdui-sys-shape-corner-large);
-  --shape-corner-large: var(--mdui-sys-shape-corner-extra-large);
+  --shape-corner-small: var(--mdui-shape-corner-small);
+  --shape-corner-normal: var(--mdui-shape-corner-large);
+  --shape-corner-large: var(--mdui-shape-corner-extra-large);
 
   position: relative;
   display: inline-block;
@@ -15,7 +15,7 @@
   border-radius: var(--shape-corner-normal);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition-timing-function: var(--mdui-sys-motion-easing-standard);
+  transition-timing-function: var(--mdui-motion-easing-standard);
   transition-duration: 200ms;
   // 先不启用动画，等首次渲染完后再设置 transitionProperty: box-shadow, width
   transition-property: box-shadow;
@@ -138,7 +138,7 @@
 }
 
 .label {
-  transition: opacity 75ms var(--mdui-sys-motion-easing-accelerate) 125ms;
+  transition: opacity 75ms var(--mdui-motion-easing-accelerate) 125ms;
 
   .paddingLeft(4);
   .paddingRight(4);

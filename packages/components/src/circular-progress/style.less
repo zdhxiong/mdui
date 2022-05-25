@@ -13,7 +13,7 @@
   width: 100%;
   height: 100%;
   text-align: left;
-  transition: opacity 250ms 0ms var(--mdui-sys-motion-easing-linear);
+  transition: opacity 250ms 0ms var(--mdui-motion-easing-linear);
 }
 
 .determinate {
@@ -27,7 +27,7 @@
   }
 
   .circle {
-    transition: stroke-dashoffset 500ms 0ms var(--mdui-sys-motion-easing-standard);
+    transition: stroke-dashoffset 500ms 0ms var(--mdui-motion-easing-standard);
     .stroke(primary);
   }
 }
@@ -36,7 +36,7 @@
   font-size: 0;
   letter-spacing: 0;
   white-space: nowrap;
-  animation: mdui-comp-circular-progress-rotate 1568ms var(--mdui-sys-motion-easing-linear) infinite;
+  animation: mdui-comp-circular-progress-rotate 1568ms var(--mdui-motion-easing-linear) infinite;
 
   .layer,
   .circle {
@@ -46,7 +46,7 @@
   }
 
   .layer {
-    animation: mdui-comp-circular-progress-layer-rotate 5332ms var(--mdui-sys-motion-easing-standard) infinite both;
+    animation: mdui-comp-circular-progress-layer-rotate 5332ms var(--mdui-motion-easing-standard) infinite both;
   }
 
   .circle {
@@ -81,12 +81,12 @@
     }
 
     &.left .circle {
-      animation: mdui-comp-circular-progress-left-spin 1333ms var(--mdui-sys-motion-easing-standard) infinite both;
+      animation: mdui-comp-circular-progress-left-spin 1333ms var(--mdui-motion-easing-standard) infinite both;
     }
 
     &.right .circle {
       left: -100%;
-      animation: mdui-comp-circular-progress-right-spin 1333ms var(--mdui-sys-motion-easing-standard) infinite both;
+      animation: mdui-comp-circular-progress-right-spin 1333ms var(--mdui-motion-easing-standard) infinite both;
     }
   }
 }

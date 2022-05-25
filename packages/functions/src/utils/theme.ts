@@ -126,24 +126,23 @@ export const setThemeFromSource = (
     ]);
   };
 
-  const colorAndBackgroundColor = `color: rgb(var(--mdui-sys-color-on-background));
-    background-color: rgb(var(--mdui-sys-color-background));`;
+  const colorAndBackgroundColor = `color: rgb(var(--mdui-color-on-background));
+    background-color: rgb(var(--mdui-color-background));`;
   const className = `mdui-custom-theme-${source}-${themeIndex++}`;
 
   // CSS 文本
   const cssText = `.${className} {
   ${getThemeVariables(
     'light',
-    (token, rgb) => `--mdui-sys-color-${token}-light: ${rgb}`,
+    (token, rgb) => `--mdui-color-${token}-light: ${rgb}`,
   )}
   ${getThemeVariables(
     'dark',
-    (token, rgb) => `--mdui-sys-color-${token}-dark: ${rgb}`,
+    (token, rgb) => `--mdui-color-${token}-dark: ${rgb}`,
   )}
   ${getThemeVariables(
     'light',
-    (token) =>
-      `--mdui-sys-color-${token}: var(--mdui-sys-color-${token}-light)`,
+    (token) => `--mdui-color-${token}: var(--mdui-color-${token}-light)`,
   )}
   ${colorAndBackgroundColor}
   ${getCustomColorVariables('light')}
@@ -158,7 +157,7 @@ ${getCustomColorClassArray()
 .mdui-theme-dark.${className} {
   ${getThemeVariables(
     'dark',
-    (token) => `--mdui-sys-color-${token}: var(--mdui-sys-color-${token}-dark)`,
+    (token) => `--mdui-color-${token}: var(--mdui-color-${token}-dark)`,
   )}
   ${getCustomColorVariables('dark')}
 }
@@ -168,8 +167,7 @@ ${getCustomColorClassArray()
   .mdui-theme-auto.${className} {
     ${getThemeVariables(
       'dark',
-      (token) =>
-        `--mdui-sys-color-${token}: var(--mdui-sys-color-${token}-dark)`,
+      (token) => `--mdui-color-${token}: var(--mdui-color-${token}-dark)`,
     )}
     ${getCustomColorVariables('dark')}
   }

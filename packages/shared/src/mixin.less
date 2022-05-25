@@ -12,23 +12,23 @@
 /**
  * 系统变量
  * 输入: .sys(font-size, typescale-label-large-size)
- * 输出: font-size: var(--mdui-sys-typescale-label-large-size, 0.875rem)
+ * 输出: font-size: var(--mdui-typescale-label-large-size, 0.875rem)
  */
 .sys(@name, @value) {
-  @{name}: ~"var(--mdui-sys-@{value})";
+  @{name}: ~"var(--mdui-@{value})";
 }
 
 /**
  * 颜色值
  *
  * 输入: .color(background-color, on-primary)
- * 输出: background-color: rgb(var(--mdui-sys-color-on-primary, 255, 255, 255))
+ * 输出: background-color: rgb(var(--mdui-color-on-primary, 255, 255, 255))
  *
  * 输入: .color(background-color, on-primary, 30%)
- * 输出: background-color: rgba(var(--mdui-sys-color-on-primary, 255, 255, 255), 30%)
+ * 输出: background-color: rgba(var(--mdui-color-on-primary, 255, 255, 255), 30%)
  */
 .color(@rgb, @opacity: 1, @name: color) {
-  @cssVariable: "--mdui-sys-color-@{rgb}";
+  @cssVariable: "--mdui-color-@{rgb}";
 
   & when (@opacity =1) {
     @{name}: ~"rgb(var(@{cssVariable}))";
@@ -61,7 +61,7 @@
  * 输出: border-top: 1px solid rgba(103,80,164,30%)
  */
 .border(@width, @style, @rgb, @opacity: 1, @name: border) {
-  @cssVariable: "--mdui-sys-color-@{rgb}";
+  @cssVariable: "--mdui-color-@{rgb}";
 
   & when (@opacity =1) {
     & when (isnumber(@width)) {
@@ -115,7 +115,7 @@
  * 输出：border-radius: 0.75rem;
  */
 .shapeCorner(@value, @placement: null) {
-  @cssVariable: "--mdui-sys-shape-corner-@{value}";
+  @cssVariable: "--mdui-shape-corner-@{value}";
 
   & when (@placement =null) {
     border-radius: ~"var(@{cssVariable})";

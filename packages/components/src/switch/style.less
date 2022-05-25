@@ -39,7 +39,7 @@ input {
 /* 轨道 */
 .track {
   position: absolute;
-  transition: background-color 150ms var(--mdui-sys-motion-easing-standard);
+  transition: background-color 150ms var(--mdui-motion-easing-standard);
   .margin(0, 2);
   .width(36);
   .height(14);
@@ -55,7 +55,7 @@ input {
   justify-content: center;
   overflow: hidden;
   transform: translateX(unit((-8 / @root-font-size), rem));
-  transition: all 150ms var(--mdui-sys-motion-easing-standard);
+  transition: all 150ms var(--mdui-motion-easing-standard);
   .width(40);
   .height(40);
   .shapeCorner(full);
@@ -73,7 +73,7 @@ input {
 
   /* 指示器 */
   &::after {
-    transition: all 150ms var(--mdui-sys-motion-easing-standard);
+    transition: all 150ms var(--mdui-motion-easing-standard);
     .backgroundColor(on-surface);
     .elevation(1);
   }

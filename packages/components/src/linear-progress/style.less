@@ -1,7 +1,7 @@
 @import "~@mdui/shared/mixin.less";
 
 :host {
-  --shape-corner: var(--mdui-sys-shape-corner-none);
+  --shape-corner: var(--mdui-shape-corner-none);
 
   position: relative;
   display: inline-block;
@@ -19,7 +19,7 @@
 
 .determinate {
   height: 100%;
-  transition: width 280ms var(--mdui-sys-motion-easing-linear);
+  transition: width 280ms var(--mdui-motion-easing-linear);
 }
 
 .indeterminate {
@@ -29,7 +29,7 @@
     bottom: 0;
     left: 0;
     background-color: inherit;
-    animation: mdui-comp-progress-indeterminate 2s var(--mdui-sys-motion-easing-linear) infinite;
+    animation: mdui-comp-progress-indeterminate 2s var(--mdui-motion-easing-linear) infinite;
     content: " ";
   }
 
@@ -39,7 +39,7 @@
     bottom: 0;
     left: 0;
     background-color: inherit;
-    animation: mdui-comp-progress-indeterminate-short 2s var(--mdui-sys-motion-easing-linear) infinite;
+    animation: mdui-comp-progress-indeterminate-short 2s var(--mdui-motion-easing-linear) infinite;
     content: " ";
   }
 }

@@ -1,11 +1,16 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
   <title>Switch</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
   <script type="module" src="../../packages/mdui/mdui.css"></script>
   <script type="module" src="../../packages/components/index.js"></script>
   <style>
@@ -14,54 +19,61 @@
     }
   </style>
 </head>
+
 <body>
-<main>
-  <section>
-    <h2>Switch</h2>
-    <mdui-switch></mdui-switch>
-    <mdui-switch>Switch</mdui-switch>
-    <mdui-switch disabled></mdui-switch>
-    <mdui-switch disabled>Switch</mdui-switch>
-    <div class="mdui-theme-dark">
+  <main>
+    <section>
+      <h2>Switch</h2>
       <mdui-switch></mdui-switch>
-      <mdui-switch>Switch</mdui-switch>
       <mdui-switch disabled></mdui-switch>
-      <mdui-switch disabled>Switch</mdui-switch>
-    </div>
-  </section>
-
-  <section>
-    <h2>Checked</h2>
-    <mdui-switch checked></mdui-switch>
-    <mdui-switch checked>Switch</mdui-switch>
-    <mdui-switch checked disabled></mdui-switch>
-    <mdui-switch checked disabled>Switch</mdui-switch>
-    <div class="mdui-theme-dark">
-      <mdui-switch checked></mdui-switch>
-      <mdui-switch checked>Switch</mdui-switch>
-      <mdui-switch checked disabled></mdui-switch>
-      <mdui-switch checked disabled>Switch</mdui-switch>
-    </div>
-  </section>
-
-  <section>
-    <h2>Required</h2>
-    <form>
-      <mdui-switch name="switch[]" required></mdui-switch>
-      <mdui-switch name="switch[]" required>Switch</mdui-switch>
-      <mdui-switch name="switch[]" required disabled></mdui-switch>
-      <mdui-switch name="switch[]" required disabled>Switch</mdui-switch>
       <div class="mdui-theme-dark">
-        <mdui-switch name="switch[]" required></mdui-switch>
-        <mdui-switch name="switch[]" required>Switch</mdui-switch>
-        <mdui-switch name="switch[]" required disabled></mdui-switch>
-        <mdui-switch name="switch[]" required disabled>Switch</mdui-switch>
+        <mdui-switch></mdui-switch>
+        <mdui-switch disabled></mdui-switch>
       </div>
-      <br/>
-      <mdui-button type="submit">Submit</mdui-button>
-    </form>
-  </section>
+    </section>
 
-</main>
+    <section>
+      <h2>Checked</h2>
+      <mdui-switch checked></mdui-switch>
+      <mdui-switch checked disabled></mdui-switch>
+      <div class="mdui-theme-dark">
+        <mdui-switch checked></mdui-switch>
+        <mdui-switch checked disabled></mdui-switch>
+      </div>
+    </section>
+
+    <section>
+      <h2>Icon</h2>
+      <mdui-switch icon="remove_moderator"></mdui-switch>
+      <mdui-switch checked-icon="verified_user"></mdui-switch>
+      <mdui-switch icon="remove_moderator" checked-icon="verified_user"></mdui-switch>
+      <mdui-switch>
+        <mdui-icon name="remove_moderator" slot="icon"></mdui-icon>
+      </mdui-switch>
+      <mdui-switch>
+        <mdui-icon name="verified_user" slot="checked-icon"></mdui-icon>
+      </mdui-switch>
+      <mdui-switch>
+        <mdui-icon name="remove_moderator" slot="icon"></mdui-icon>
+        <mdui-icon name="verified_user" slot="checked-icon"></mdui-icon>
+      </mdui-switch>
+    </section>
+
+    <section>
+      <h2>Required</h2>
+      <form>
+        <mdui-switch name="switch[]" required></mdui-switch>
+        <mdui-switch name="switch[]" required disabled></mdui-switch>
+        <div class="mdui-theme-dark">
+          <mdui-switch name="switch[]" required></mdui-switch>
+          <mdui-switch name="switch[]" required disabled></mdui-switch>
+        </div>
+        <br />
+        <mdui-button type="submit">Submit</mdui-button>
+      </form>
+    </section>
+
+  </main>
 </body>
+
 </html>

@@ -1,12 +1,14 @@
 @import "~@mdui/shared/mixin.less";
 
 :host {
+  --shape-corner: var(--mdui-shape-corner-full);
+  --shape-corner-thumb: var(--mdui-shape-corner-full);
+
   position: relative;
   display: inline-block;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   .height(40);
-  .typescale(label-large);
 }
 
 :host([disabled]) {
@@ -17,12 +19,40 @@ label {
   display: inline-flex;
   align-items: center;
   width: 100%;
+  height: 100%;
   white-space: nowrap;
   cursor: inherit;
   user-select: none;
   touch-action: manipulation;
   zoom: 1;
   -webkit-user-drag: none;
+}
+
+/* 轨道 */
+.track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: var(--shape-corner);
+  transition: background-color 100ms var(--mdui-motion-easing-standard), border-width 100ms var(--mdui-motion-easing-standard);
+  .height(32);
+  .width(52);
+  .border(2, solid, outline);
+  .backgroundColor(surface-variant);
+
+  :host([checked]) & {
+    .backgroundColor(primary);
+    .borderWidth(0);
+  }
+
+  :host([disabled]) & {
+    .backgroundColor(surface-variant, 0.12);
+    .borderColor(on-surface, 0.12);
+  }
+
+  :host([disabled][checked]) & {
+    .backgroundColor(on-surface, 0.12);
+  }
 }
 
 /* 隐藏系统 input 标签，用自定义的图标代替 */
@@ -36,109 +66,121 @@ input {
   .margin(0, 0, 0, 10);
 }
 
-/* 轨道 */
-.track {
-  position: absolute;
-  transition: background-color 150ms var(--mdui-motion-easing-standard);
-  .margin(0, 2);
-  .width(36);
-  .height(14);
-  .shapeCorner(full);
-  .backgroundColor(outline);
+mdui-ripple {
+  border-radius: 50%;
+  transition: left 100ms var(--mdui-motion-easing-standard), top 100ms var(--mdui-motion-easing-standard);
+  .width(40);
+  .height(40);
 }
 
-/* 指示器容器 */
 .thumb {
-  position: relative;
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  transform: translateX(unit((-8 / @root-font-size), rem));
-  transition: all 150ms var(--mdui-motion-easing-standard);
-  .width(40);
-  .height(40);
-  .shapeCorner(full);
+  border-radius: var(--shape-corner-thumb);
+  transition: width 100ms var(--mdui-motion-easing-standard), height 100ms var(--mdui-motion-easing-standard), left 100ms var(--mdui-motion-easing-standard), background-color 100ms var(--mdui-motion-easing-standard);
+  .height(16);
+  .width(16);
+  .left(6);
+  .backgroundColor(outline);
   .stateLayerColor(on-surface);
 
-  &::after,
-  &::before {
-    position: absolute;
-    border-radius: 50%;
-    content: " ";
-    .width(20);
-    .height(20);
+  mdui-ripple {
+    .left(-12);
+    .top(-12);
+  }
+
+  &.has-icon {
+    .height(24);
+    .width(24);
+    .left(2);
+
+    mdui-ripple {
+      .left(-8);
+      .top(-8);
+    }
+  }
+
+  :host([hover]) &,
+  :host([focused]) &,
+  :host([pressed]) & {
+    .backgroundColor(on-surface-variant);
+  }
+
+  :host([checked]) & {
+    .height(24);
+    .width(24);
+    .left(24);
+    .backgroundColor(on-primary);
+    .stateLayerColor(primary);
+
+    mdui-ripple {
+      .left(-8);
+      .top(-8);
+    }
+  }
+
+  :host([hover][checked]) &,
+  :host([focused][checked]) &,
+  :host([pressed][checked]) & {
+    .backgroundColor(primary-container);
+  }
+
+  :host([pressed]) & {
+    .height(28);
+    .width(28);
+    .left(0);
+
+    mdui-ripple {
+      .left(-6);
+      .top(-6);
+    }
+  }
+
+  :host([disabled]) & {
+    .backgroundColor(on-surface, 0.38);
+  }
+
+  :host([disabled][checked]) & {
     .backgroundColor(surface);
   }
+}
 
-  /* 指示器 */
-  &::after {
-    transition: all 150ms var(--mdui-motion-easing-standard);
-    .backgroundColor(on-surface);
-    .elevation(1);
-  }
+.icon,
+.checked-icon,
+::slotted([slot="icon"]),
+::slotted([slot="checked-icon"]) {
+  position: absolute;
+  .fontSize(16);
+}
 
-  /* 指示器的背景，目前仅用于禁用状态。因为指示器是半透明的，会显示底部轨道颜色，所以添加纯色背景 */
-  &::before {
-    display: none;
+.icon,
+::slotted([slot="icon"]) {
+  .color(surface-variant);
+
+  :host([disabled]) & {
+    .color(surface-variant, 0.38);
   }
 }
 
-.track,
-.thumb {
-  .stateLayerColor(on-surface);
+.checked-icon,
+::slotted([slot="checked-icon"]) {
+  .color(on-primary-container);
+
+  :host([disabled]) & {
+    .color(on-surface, 0.38);
+  }
 }
 
-input {
-  // 选中状态
-  &:checked + .track {
-    .backgroundColor(primary-container);
-
-    & + .thumb {
-      transform: translateX(unit((8 / @root-font-size), rem));
-      .stateLayerColor(on-surface);
-
-      &::after {
-        .backgroundColor(primary);
-      }
-    }
-  }
-
-  &:checked + .track,
-  &:checked + .track + .thumb {
-    .stateLayerColor(primary);
-  }
-
-  // 验证未通过状态
-  &.invalid + .track {
+input.invalid {
+  & + .track {
+    .borderColor(error);
     .backgroundColor(error-container);
 
-    & + .thumb {
+    .thumb {
+      .backgroundColor(error);
       .stateLayerColor(error);
-
-      &::after {
-        .backgroundColor(error);
-      }
     }
-  }
-
-  // 禁用状态
-  &:disabled + .track {
-    .backgroundColor(on-surface, 12%);
-
-    & + .thumb {
-      &::after {
-        .elevation(0);
-        .backgroundColor(on-surface, 38%);
-      }
-
-      &::before {
-        display: inline-block;
-      }
-    }
-  }
-
-  &:disabled:checked + .track {
-    .backgroundColor(on-surface, 12%);
   }
 }

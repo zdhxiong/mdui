@@ -32,7 +32,7 @@
 <body>
   <main>
     <section>
-      <h2>labelVisibility Auto</h2>
+      <h2>label-visibility Auto</h2>
       <mdui-navigation-bar style="position: relative; margin: 16px 0">
         <mdui-navigation-bar-item icon="place" value="place" active>Label</mdui-navigation-bar-item>
         <mdui-navigation-bar-item icon="commute" value="commute">Label</mdui-navigation-bar-item>
@@ -54,8 +54,8 @@
     </section>
 
     <section>
-      <h2>labelVisibility unlabeled</h2>
-      <mdui-navigation-bar value="commute" labelVisibility="unlabeled" style="position: relative">
+      <h2>label-visibility unlabeled</h2>
+      <mdui-navigation-bar value="commute" label-visibility="unlabeled" style="position: relative">
         <mdui-navigation-bar-item icon="place" value="place">Label</mdui-navigation-bar-item>
         <mdui-navigation-bar-item icon="commute" value="commute">Label</mdui-navigation-bar-item>
         <mdui-navigation-bar-item icon="bookmark_border" value="bookmark">Label</mdui-navigation-bar-item>
@@ -82,11 +82,12 @@
     <section>
       <h2>Active Icon</h2>
       <mdui-navigation-bar style="position: relative">
-        <mdui-navigation-bar-item icon="place--outlined" activeIcon="place--filled">Label</mdui-navigation-bar-item>
-        <mdui-navigation-bar-item icon="commute--outlined" activeIcon="commute--filled">Label</mdui-navigation-bar-item>
-        <mdui-navigation-bar-item icon="bookmark_border--outlined" activeIcon="bookmark_border--filled">Label
+        <mdui-navigation-bar-item icon="place--outlined" active-icon="place--filled">Label</mdui-navigation-bar-item>
+        <mdui-navigation-bar-item icon="commute--outlined" active-icon="commute--filled">Label
         </mdui-navigation-bar-item>
-        <mdui-navigation-bar-item icon="add_circle_outline--outlined" activeIcon="add_circle_outline--filled">Label
+        <mdui-navigation-bar-item icon="bookmark_border--outlined" active-icon="bookmark_border--filled">Label
+        </mdui-navigation-bar-item>
+        <mdui-navigation-bar-item icon="add_circle_outline--outlined" active-icon="add_circle_outline--filled">Label
         </mdui-navigation-bar-item>
       </mdui-navigation-bar>
     </section>
@@ -94,18 +95,18 @@
     <section>
       <h2>Active Icon slot</h2>
       <mdui-navigation-bar style="position: relative">
-        <mdui-navigation-bar-item activeIcon="place--filled">
+        <mdui-navigation-bar-item active-icon="place--filled">
           <mdui-icon-place--outlined slot="icon"></mdui-icon-place--outlined>
           Label
         </mdui-navigation-bar-item>
         <mdui-navigation-bar-item icon="place--outlined">
-          <mdui-icon-place slot="activeIcon"></mdui-icon-place>
+          <mdui-icon-place slot="active-icon"></mdui-icon-place>
           Label
         </mdui-navigation-bar-item>
-        <mdui-navigation-bar-item icon="place--outlined" activeIcon="place--filled">Label</mdui-navigation-bar-item>
+        <mdui-navigation-bar-item icon="place--outlined" active-icon="place--filled">Label</mdui-navigation-bar-item>
         <mdui-navigation-bar-item>
           <mdui-icon-place--outlined slot="icon"></mdui-icon-place--outlined>
-          <mdui-icon-place slot="activeIcon"></mdui-icon-place>
+          <mdui-icon-place slot="active-icon"></mdui-icon-place>
           Label
         </mdui-navigation-bar-item>
         <mdui-navigation-bar-item>
@@ -116,7 +117,7 @@
     </section>
 
     <section>
-      <mdui-navigation-bar hideOnScroll>
+      <mdui-navigation-bar hide-on-scroll>
         <mdui-navigation-bar-item icon="place">Label</mdui-navigation-bar-item>
         <mdui-navigation-bar-item icon="commute">Label</mdui-navigation-bar-item>
         <mdui-navigation-bar-item icon="bookmark_border">Label</mdui-navigation-bar-item>

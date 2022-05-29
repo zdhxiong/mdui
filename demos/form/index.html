@@ -1,17 +1,23 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
   <title>Form</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
   <script type="module" src="../../packages/mdui/mdui.css"></script>
   <script type="module" src="../../packages/components/index.js"></script>
   <style>
     body {
       font-family: Roboto;
     }
+
     form {
       display: flex;
       flex-direction: column;
@@ -19,41 +25,67 @@
     }
   </style>
 </head>
+
 <body>
-<main>
-  <section>
-    <h2>表单提交</h2>
-    <form method="get">
-      <div>
-        <mdui-checkbox name="checkbox[]" value="checkbox-value1">Checkbox1</mdui-checkbox>
-        <mdui-checkbox name="checkbox[]" value="checkbox-value2">Checkbox2</mdui-checkbox>
-      </div>
-      <div>
-        <mdui-radio name="radio" value="radio-value1">Radio1</mdui-radio>
-        <mdui-radio name="radio" value="radio-value2">Radio2</mdui-radio>
-      </div>
-      <mdui-switch name="switch" value="switch-value"></mdui-switch>
+  <main>
+    <section>
+      <h2>表单提交</h2>
+      <form method="get">
+        <div>
+          <mdui-checkbox name="checkbox[]" value="checkbox-value1">Checkbox1</mdui-checkbox>
+          <mdui-checkbox name="checkbox[]" value="checkbox-value2">Checkbox2</mdui-checkbox>
+        </div>
+        <div>
+          <mdui-radio name="radio" value="radio-value1">Radio1</mdui-radio>
+          <mdui-radio name="radio" value="radio-value2">Radio2</mdui-radio>
+        </div>
+        <mdui-switch name="switch" value="switch-value"></mdui-switch>
 
-      <mdui-button type="submit" name="submit" value="submit-value">value: submit</mdui-button>
-    </form>
-  </section>
+        <mdui-segmented-button selects="single" name="segmented-single">
+          <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
+          <mdui-segmented-button-item value="medium">Medium</mdui-segmented-button-item>
+          <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
+        </mdui-segmented-button>
 
-  <section>
-    <h2>Required</h2>
-    <form method="get">
-      <div>
-        <mdui-checkbox name="checkbox[]" value="checkbox-value1" required>Checkbox1</mdui-checkbox>
-        <mdui-checkbox name="checkbox[]" value="checkbox-value2" required>Checkbox2</mdui-checkbox>
-      </div>
-      <div>
-        <mdui-radio name="radio" value="radio-value1" required>Radio1</mdui-radio>
-        <mdui-radio name="radio" value="radio-value2" required>Radio2</mdui-radio>
-      </div>
-      <mdui-switch name="switch" value="switch-value" required></mdui-switch>
+        <mdui-segmented-button selects="multiple" name="segmented-multiple">
+          <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
+          <mdui-segmented-button-item value="medium">Medium</mdui-segmented-button-item>
+          <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
+        </mdui-segmented-button>
 
-      <mdui-button type="submit" name="submit" value="submit-value">value: submit</mdui-button>
-    </form>
-  </section>
-</main>
+        <mdui-button type="submit" name="submit" value="submit-value">value: submit</mdui-button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Required</h2>
+      <form method="get">
+        <div>
+          <mdui-checkbox name="checkbox[]" value="checkbox-value1" required>Checkbox1</mdui-checkbox>
+          <mdui-checkbox name="checkbox[]" value="checkbox-value2" required>Checkbox2</mdui-checkbox>
+        </div>
+        <div>
+          <mdui-radio name="radio" value="radio-value1" required>Radio1</mdui-radio>
+          <mdui-radio name="radio" value="radio-value2" required>Radio2</mdui-radio>
+        </div>
+        <mdui-switch name="switch" value="switch-value" required></mdui-switch>
+
+        <mdui-segmented-button selects="single" name="segmented-single" required>
+          <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
+          <mdui-segmented-button-item value="medium">Medium</mdui-segmented-button-item>
+          <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
+        </mdui-segmented-button>
+
+        <mdui-segmented-button selects="multiple" name="segmented-multiple" required>
+          <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
+          <mdui-segmented-button-item value="medium">Medium</mdui-segmented-button-item>
+          <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
+        </mdui-segmented-button>
+
+        <mdui-button type="submit" name="submit" value="submit-value">value: submit</mdui-button>
+      </form>
+    </section>
+  </main>
 </body>
+
 </html>

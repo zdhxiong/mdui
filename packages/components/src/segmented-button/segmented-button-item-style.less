@@ -1,0 +1,78 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  position: relative;
+  display: inline-flex;
+  flex-grow: 1;
+  flex-shrink: 0;
+  float: left;
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  .border(1, solid, outline);
+}
+
+.button {
+  width: 100%;
+  .padding(0, 12);
+}
+
+:host([selected]) {
+  .color(on-secondary-container);
+  .backgroundColor(secondary-container);
+  .stateLayerColor(on-secondary-container);
+}
+
+:host([loading]) {
+  mdui-ripple,
+  .button {
+    opacity: 0;
+  }
+
+  mdui-circular-progress {
+    position: absolute;
+    top: calc(50% - unit((18 / 14), em) / 2);
+    left: calc(50% - unit((18 / 14), em) / 2);
+    width: unit((18 / 14), em);
+    height: unit((18 / 14), em);
+  }
+}
+
+:host([disabled]),
+:host([loading]) {
+  cursor: default;
+  .color(on-surface, 38%);
+  .borderColor(on-surface, 12%);
+}
+
+:host(:not(.mdui-segmented-button-item-first)) {
+  .marginLeft(-1);
+}
+
+:host(.mdui-segmented-button-item-first) {
+  border-radius: var(--shape-corner) 0 0 var(--shape-corner);
+}
+
+:host(.mdui-segmented-button-item-last) {
+  border-radius: 0 var(--shape-corner) var(--shape-corner) 0;
+}
+
+.icon,
+.check,
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
+  font-size: unit((18 / 14), em);
+}
+
+.check {
+  .marginRight(8);
+}
+
+.has-start .label {
+  .paddingLeft(8);
+}
+
+.has-end .label {
+  .paddingRight(8);
+}

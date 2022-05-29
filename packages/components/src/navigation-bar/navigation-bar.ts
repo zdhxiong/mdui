@@ -13,7 +13,7 @@ import { NavigationBarItem } from './navigation-bar-item.js';
  * @slot - `<mdui-navigation-bar-item>` 组件
  *
  * @event click - 点击时触发
- * @event change - 值变化时触发（可取消）
+ * @event change - 值变化时触发
  *
  * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
@@ -21,7 +21,10 @@ import { NavigationBarItem } from './navigation-bar-item.js';
 export class NavigationBar extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, navigationBarStyle];
 
-  @queryAssignedElements({ flatten: true })
+  @queryAssignedElements({
+    selector: 'mdui-navigation-bar-item',
+    flatten: true,
+  })
   protected itemElements!: NavigationBarItem[] | null;
 
   /**
@@ -101,19 +104,12 @@ export class NavigationBar extends LitElement {
       return;
     }
 
-    const oldValue = this.value;
     this.value = value;
+    emit(this, 'change');
 
-    const applyDefault = emit(this, 'change', {
-      cancelable: true,
+    (this.itemElements ?? []).forEach((itemElement) => {
+      itemElement.active = itemElement.value === value;
     });
-    if (!applyDefault) {
-      this.value = oldValue;
-    } else {
-      (this.itemElements ?? []).forEach((itemElement) => {
-        itemElement.active = itemElement.value === value;
-      });
-    }
   }
 
   protected onSlotChange() {

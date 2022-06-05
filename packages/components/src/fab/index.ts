@@ -99,7 +99,7 @@ export class Fab extends ButtonBase {
     if (!hasUpdated) {
       // 延迟设置动画，避免首次渲染时也执行动画
       await delay();
-      this.style.transitionProperty = 'box-shadow, width';
+      this.style.transitionProperty = 'box-shadow, width, bottom, transform'; // bottom, transform 在 bottom-app-bar 中用到
     }
   }
 

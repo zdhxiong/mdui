@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>Bottom App Bar</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <script type="module" src="../../packages/mdui/mdui.css"></script>
+  <script type="module" src="../../packages/components/index.js"></script>
+  <style>
+    body {
+      font-family: Roboto;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <section>
+      <h2>normal</h2>
+      <mdui-bottom-app-bar style="position: relative">
+        <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
+        <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
+        <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
+        <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+        <mdui-spacer></mdui-spacer>
+        <mdui-fab icon="add"></mdui-fab>
+      </mdui-bottom-app-bar>
+    </section>
+
+    <section>
+      <h2>no fab</h2>
+      <mdui-bottom-app-bar style="position: relative">
+        <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
+        <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
+        <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
+        <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+      </mdui-bottom-app-bar>
+    </section>
+
+    <section>
+      <h2>custom</h2>
+      <mdui-bottom-app-bar style="position: relative">
+        <label>Going?</label>
+        <mdui-spacer></mdui-spacer>
+        <mdui-button>Yes</mdui-button>
+        <mdui-button variant="tonal">No</mdui-button>
+        <mdui-button variant="tonal">Maybe</mdui-button>
+      </mdui-bottom-app-bar>
+    </section>
+
+    <section>
+      <h2>with overflow menu</h2>
+      <mdui-bottom-app-bar style="position: relative">
+        <mdui-dropdown>
+          <mdui-icon-button icon="menu" slot="trigger"></mdui-icon-button>
+          <mdui-menu>
+            <mdui-menu-item>Settings</mdui-menu-item>
+            <mdui-menu-item>Send Feedback</mdui-menu-item>
+            <mdui-menu-item>Help</mdui-menu-item>
+          </mdui-menu>
+        </mdui-dropdown>
+        <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
+        <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
+        <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+        <mdui-spacer></mdui-spacer>
+        <mdui-fab icon="add"></mdui-fab>
+      </mdui-bottom-app-bar>
+    </section>
+
+    <section>
+      <h2>hide-on-scroll & fab-detach</h2>
+      <mdui-bottom-app-bar hide-on-scroll fab-detach>
+        <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
+        <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
+        <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
+        <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+        <mdui-spacer></mdui-spacer>
+        <mdui-fab icon="add"></mdui-fab>
+      </mdui-bottom-app-bar>
+    </section>
+
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+    <p>test</p>
+
+  </main>
+</body>
+
+</html>

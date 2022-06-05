@@ -1,0 +1,82 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  --shape-corner: var(--mdui-shape-corner-none);
+
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  border-radius: var(--shape-corner) var(--shape-corner) 0 0;
+  transition: bottom var(--mdui-motion-easing-standard) 250ms;
+  .padding(0, 16);
+  .height(80);
+  .backgroundColor(surface);
+  .elevation(2);
+}
+
+:host([hide]) {
+  transition: bottom var(--mdui-motion-easing-standard) 200ms;
+  .bottom(-80);
+}
+
+::slotted(:not(:first-child)) {
+  .marginLeft(8);
+}
+
+::slotted(mdui-fab) {
+  .elevation(0);
+}
+
+// 含 fab-detach 属性时，fab 脱离 bottom-app-bar
+:host([fab-detach]) {
+  ::slotted(mdui-fab) {
+    position: fixed;
+    transition: bottom var(--mdui-motion-easing-standard) 250ms;
+    .right(16);
+    .bottom(12);
+  }
+}
+
+:host([fab-detach][hide]) {
+  ::slotted(mdui-fab) {
+    transition: bottom var(--mdui-motion-easing-standard) 200ms;
+    .bottom(16);
+    .elevation(2);
+  }
+}
+
+// 显示 bottom-app-bar 时，子元素依次进入
+:host([hide]) ::slotted(:not(mdui-fab)),
+:host([hide]:not([fab-detach])) ::slotted(mdui-fab) {
+  transform: translateY(unit((140px / @root-font-size), rem));
+  transition: transform var(--mdui-motion-easing-accelerate) 0ms 200ms;
+}
+
+::slotted(:first-child) {
+  transition: transform var(--mdui-motion-easing-decelerate) 130ms 0ms;
+}
+
+::slotted(:nth-child(2)) {
+  transition: transform var(--mdui-motion-easing-decelerate) 130ms 50ms;
+}
+
+::slotted(:nth-child(3)) {
+  transition: transform var(--mdui-motion-easing-decelerate) 130ms 90ms;
+}
+
+::slotted(:nth-child(4)) {
+  transition: transform var(--mdui-motion-easing-decelerate) 130ms 120ms;
+}
+
+::slotted(:nth-child(5)) {
+  transition: transform var(--mdui-motion-easing-decelerate) 130ms 140ms;
+}
+
+::slotted(:nth-child(6)) {
+  transition: transform var(--mdui-motion-easing-decelerate) 130ms 130ms;
+}

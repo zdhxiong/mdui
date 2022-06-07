@@ -20,6 +20,7 @@ export * from './radio.js';
 export * from './ripple.js';
 export * from './segmented-button-item.js';
 export * from './segmented-button.js';
+export * from './spacer.js';
 export * from './switch.js';
 export * from './tooltip.js';
 export * from './menu.js';

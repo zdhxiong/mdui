@@ -1,258 +1,285 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
   <title>Fab</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
-  <script type="module" src="../../packages/mdui/mdui.css"></script>
-  <script type="module" src="../../packages/components/index.js"></script>
-  <script type="module" src="../../packages/icons/edit.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
   <style>
     body {
       font-family: Roboto;
     }
   </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/components/fab.js';
+    import '../../packages/components/icon.js';
+    import '../../packages/components/button.js';
+    import '../../packages/icons/edit.js';
+  </script>
 </head>
+
 <body>
-<main>
-  <section>
-    <h2>Primary</h2>
-    <mdui-fab icon="edit" size="small"></mdui-fab>
-    <mdui-fab icon="edit"></mdui-fab>
-    <mdui-fab icon="edit" size="large" variant="primary"></mdui-fab>
-    <mdui-fab icon="edit" size="small" extended>Extended FAB</mdui-fab>
-    <mdui-fab icon="edit" extended>Extended FAB</mdui-fab>
-    <mdui-fab icon="edit" size="large" extended>Extended FAB</mdui-fab>
-    <mdui-fab icon="edit" lowered></mdui-fab>
-    <mdui-fab icon="edit" extended lowered>Extended FAB</mdui-fab>
-    <mdui-fab icon="edit" disabled></mdui-fab>
-    <mdui-fab icon="edit" extended disabled>Extended FAB</mdui-fab>
-  </section>
+  <main>
+    <section>
+      <h2>Primary</h2>
+      <mdui-fab icon="edit" size="small"></mdui-fab>
+      <mdui-fab icon="edit"></mdui-fab>
+      <mdui-fab icon="edit" size="large" variant="primary"></mdui-fab>
+      <mdui-fab icon="edit" size="small" extended>Extended FAB</mdui-fab>
+      <mdui-fab icon="edit" extended>Extended FAB</mdui-fab>
+      <mdui-fab icon="edit" size="large" extended>Extended FAB</mdui-fab>
+      <mdui-fab icon="edit" lowered></mdui-fab>
+      <mdui-fab icon="edit" extended lowered>Extended FAB</mdui-fab>
+      <mdui-fab icon="edit" disabled></mdui-fab>
+      <mdui-fab icon="edit" extended disabled>Extended FAB</mdui-fab>
+    </section>
 
-  <section>
-    <h2>Surface</h2>
-    <mdui-fab variant="surface" icon="edit" size="small"></mdui-fab>
-    <mdui-fab variant="surface" icon="edit" size="normal"></mdui-fab>
-    <mdui-fab variant="surface" icon="edit" size="large"></mdui-fab>
-    <mdui-fab variant="surface" icon="edit" size="small" extended>Extended FAB</mdui-fab>
-    <mdui-fab variant="surface" icon="edit" size="normal" extended> Extended FAB</mdui-fab>
-    <mdui-fab variant="surface" icon="edit" size="large" extended>Extended FAB</mdui-fab>
-    <mdui-fab variant="surface" icon="edit" size="normal" lowered></mdui-fab>
-    <mdui-fab variant="surface" icon="edit" size="normal" extended lowered> Extended FAB</mdui-fab>
-    <mdui-fab variant="surface" icon="edit" size="normal" disabled></mdui-fab>
-    <mdui-fab variant="surface" icon="edit" size="normal" extended disabled> Extended FAB</mdui-fab>
-  </section>
+    <section>
+      <h2>Surface</h2>
+      <mdui-fab variant="surface" icon="edit" size="small"></mdui-fab>
+      <mdui-fab variant="surface" icon="edit" size="normal"></mdui-fab>
+      <mdui-fab variant="surface" icon="edit" size="large"></mdui-fab>
+      <mdui-fab variant="surface" icon="edit" size="small" extended>Extended FAB</mdui-fab>
+      <mdui-fab variant="surface" icon="edit" size="normal" extended> Extended FAB</mdui-fab>
+      <mdui-fab variant="surface" icon="edit" size="large" extended>Extended FAB</mdui-fab>
+      <mdui-fab variant="surface" icon="edit" size="normal" lowered></mdui-fab>
+      <mdui-fab variant="surface" icon="edit" size="normal" extended lowered> Extended FAB</mdui-fab>
+      <mdui-fab variant="surface" icon="edit" size="normal" disabled></mdui-fab>
+      <mdui-fab variant="surface" icon="edit" size="normal" extended disabled> Extended FAB</mdui-fab>
+    </section>
 
-  <section>
-    <h2>Secondary</h2>
-    <mdui-fab variant="secondary" icon="edit" size="small"></mdui-fab>
-    <mdui-fab variant="secondary" icon="edit"></mdui-fab>
-    <mdui-fab variant="secondary" icon="edit" size="large"></mdui-fab>
-    <mdui-fab variant="secondary" icon="edit" size="small" extended>Extended FAB</mdui-fab>
-    <mdui-fab variant="secondary" icon="edit" extended>Extended FAB</mdui-fab>
-    <mdui-fab variant="secondary" icon="edit" size="large" extended>Extended FAB</mdui-fab>
-    <mdui-fab variant="secondary" icon="edit" lowered></mdui-fab>
-    <mdui-fab variant="secondary" icon="edit" extended lowered>Extended FAB</mdui-fab>
-    <mdui-fab variant="secondary" icon="edit" disabled></mdui-fab>
-    <mdui-fab variant="secondary" icon="edit" extended disabled>Extended FAB</mdui-fab>
-  </section>
+    <section>
+      <h2>Secondary</h2>
+      <mdui-fab variant="secondary" icon="edit" size="small"></mdui-fab>
+      <mdui-fab variant="secondary" icon="edit"></mdui-fab>
+      <mdui-fab variant="secondary" icon="edit" size="large"></mdui-fab>
+      <mdui-fab variant="secondary" icon="edit" size="small" extended>Extended FAB</mdui-fab>
+      <mdui-fab variant="secondary" icon="edit" extended>Extended FAB</mdui-fab>
+      <mdui-fab variant="secondary" icon="edit" size="large" extended>Extended FAB</mdui-fab>
+      <mdui-fab variant="secondary" icon="edit" lowered></mdui-fab>
+      <mdui-fab variant="secondary" icon="edit" extended lowered>Extended FAB</mdui-fab>
+      <mdui-fab variant="secondary" icon="edit" disabled></mdui-fab>
+      <mdui-fab variant="secondary" icon="edit" extended disabled>Extended FAB</mdui-fab>
+    </section>
 
-  <section>
-    <h2>Tertiary</h2>
-    <mdui-fab variant="tertiary" icon="edit" size="small"></mdui-fab>
-    <mdui-fab variant="tertiary" icon="edit"></mdui-fab>
-    <mdui-fab variant="tertiary" icon="edit" size="large"></mdui-fab>
-    <mdui-fab variant="tertiary" icon="edit" size="small" extended>Extended FAB</mdui-fab>
-    <mdui-fab variant="tertiary" icon="edit" extended>Extended FAB</mdui-fab>
-    <mdui-fab variant="tertiary" icon="edit" size="large" extended>Extended FAB</mdui-fab>
-    <mdui-fab variant="tertiary" icon="edit" lowered></mdui-fab>
-    <mdui-fab variant="tertiary" icon="edit" extended lowered>Extended FAB</mdui-fab>
-    <mdui-fab variant="tertiary" icon="edit" disabled></mdui-fab>
-    <mdui-fab variant="tertiary" icon="edit" extended disabled>Extended FAB</mdui-fab>
-  </section>
+    <section>
+      <h2>Tertiary</h2>
+      <mdui-fab variant="tertiary" icon="edit" size="small"></mdui-fab>
+      <mdui-fab variant="tertiary" icon="edit"></mdui-fab>
+      <mdui-fab variant="tertiary" icon="edit" size="large"></mdui-fab>
+      <mdui-fab variant="tertiary" icon="edit" size="small" extended>Extended FAB</mdui-fab>
+      <mdui-fab variant="tertiary" icon="edit" extended>Extended FAB</mdui-fab>
+      <mdui-fab variant="tertiary" icon="edit" size="large" extended>Extended FAB</mdui-fab>
+      <mdui-fab variant="tertiary" icon="edit" lowered></mdui-fab>
+      <mdui-fab variant="tertiary" icon="edit" extended lowered>Extended FAB</mdui-fab>
+      <mdui-fab variant="tertiary" icon="edit" disabled></mdui-fab>
+      <mdui-fab variant="tertiary" icon="edit" extended disabled>Extended FAB</mdui-fab>
+    </section>
 
-  <section>
-    <h2>loading</h2>
-    <mdui-fab icon="edit" loading size="small"></mdui-fab>
-    <mdui-fab icon="edit" loading></mdui-fab>
-    <mdui-fab icon="edit" loading size="large"></mdui-fab>
-    <mdui-fab icon="edit" extended loading size="small">Extended FAB</mdui-fab>
-    <mdui-fab icon="edit" extended loading>Extended FAB</mdui-fab>
-    <mdui-fab icon="edit" extended loading size="large">Extended FAB</mdui-fab>
-  </section>
+    <section>
+      <h2>loading</h2>
+      <mdui-fab icon="edit" loading size="small"></mdui-fab>
+      <mdui-fab icon="edit" loading></mdui-fab>
+      <mdui-fab icon="edit" loading size="large"></mdui-fab>
+      <mdui-fab icon="edit" extended loading size="small">Extended FAB</mdui-fab>
+      <mdui-fab icon="edit" extended loading>Extended FAB</mdui-fab>
+      <mdui-fab icon="edit" extended loading size="large">Extended FAB</mdui-fab>
+    </section>
 
-  <section>
-    <h2>no icon</h2>
-    <mdui-fab size="small" extended>Extended FAB</mdui-fab>
-    <mdui-fab extended>Extended FAB</mdui-fab>
-    <mdui-fab size="large" extended>Extended FAB</mdui-fab>
-  </section>
+    <section>
+      <h2>no icon</h2>
+      <mdui-fab size="small" extended>Extended FAB</mdui-fab>
+      <mdui-fab extended>Extended FAB</mdui-fab>
+      <mdui-fab size="large" extended>Extended FAB</mdui-fab>
+    </section>
 
-  <section>
-    <h2>href</h2>
-    <mdui-fab icon="edit" href="https://www.mdui.org"></mdui-fab>
-    <mdui-fab icon="edit" extended href="https://www.mdui.org">Extended FAB</mdui-fab>
-  </section>
+    <section>
+      <h2>href</h2>
+      <mdui-fab icon="edit" href="https://www.mdui.org"></mdui-fab>
+      <mdui-fab icon="edit" extended href="https://www.mdui.org">Extended FAB</mdui-fab>
+    </section>
 
-  <section>
-    <h2>slot icon</h2>
-    <mdui-fab>
-      <mdui-icon name="edit" slot="icon"></mdui-icon>
-    </mdui-fab>
-    <mdui-fab extended>
-      <mdui-icon name="edit" slot="icon"></mdui-icon>
-      Extended FAB
-    </mdui-fab>
-    <mdui-fab extended>
-      <mdui-icon-edit slot="icon"></mdui-icon-edit>
-      Extended FAB
-    </mdui-fab>
-  </section>
+    <section>
+      <h2>slot icon</h2>
+      <mdui-fab>
+        <mdui-icon name="edit" slot="icon"></mdui-icon>
+      </mdui-fab>
+      <mdui-fab extended>
+        <mdui-icon name="edit" slot="icon"></mdui-icon>
+        Extended FAB
+      </mdui-fab>
+      <mdui-fab extended>
+        <mdui-icon-edit slot="icon"></mdui-icon-edit>
+        Extended FAB
+      </mdui-fab>
+    </section>
 
-  <section>
-    <h2>Animation</h2>
-    <mdui-fab class="animation" icon="edit" size="small">Extended FAB</mdui-fab><br/>
-    <mdui-fab class="animation" icon="edit">Extended FAB</mdui-fab><br/>
-    <mdui-fab class="animation" icon="edit" size="large">Extended FAB</mdui-fab><br/><br/>
-    <mdui-button class="do-animation" variant="elevated">extended 切换</mdui-button>
-    <script>
-      document.querySelector('.do-animation').addEventListener('click', () => {
-        document.querySelectorAll('.animation').forEach(el => {
-          el.extended = !el.extended;
+    <section>
+      <h2>Animation</h2>
+      <mdui-fab class="animation" icon="edit" size="small">Extended FAB</mdui-fab><br />
+      <mdui-fab class="animation" icon="edit">Extended FAB</mdui-fab><br />
+      <mdui-fab class="animation" icon="edit" size="large">Extended FAB</mdui-fab><br /><br />
+      <mdui-button class="do-animation" variant="elevated">extended 切换</mdui-button>
+      <script>
+        document.querySelector('.do-animation').addEventListener('click', () => {
+          document.querySelectorAll('.animation').forEach(el => {
+            el.extended = !el.extended;
+          });
         });
-      });
-    </script>
-  </section>
+      </script>
+    </section>
 
-  <section>
-    <h2>custom style</h2>
-    <style>
-      .custom1 {
-        width: 100px;
-        height: 100px;
-        font-size: 36px;
-        border: 4px solid #bbb;
-        background-color: aquamarine;
-        box-shadow: 0 0 4px 4px red;
-        border-radius: 4px;
-      }
-    </style>
-    <mdui-fab icon="edit" class="custom1"></mdui-fab>
+    <section>
+      <h2>custom style</h2>
+      <style>
+        .custom1 {
+          width: 100px;
+          height: 100px;
+          font-size: 36px;
+          border: 4px solid #bbb;
+          background-color: aquamarine;
+          box-shadow: 0 0 4px 4px red;
+          border-radius: 4px;
+        }
+      </style>
+      <mdui-fab icon="edit" class="custom1"></mdui-fab>
 
-    <style>
-      .custom2 {
-        height: 80px;
-        font-size: 16px;
-        color: red;
-        padding: 0 40px;
-      }
-    </style>
-    <mdui-fab icon="edit" extended class="custom2">Extended FAB</mdui-fab>
-  </section>
+      <style>
+        .custom2 {
+          height: 80px;
+          font-size: 16px;
+          color: red;
+          padding: 0 40px;
+        }
+      </style>
+      <mdui-fab icon="edit" extended class="custom2">Extended FAB</mdui-fab>
+    </section>
 
-  <h1>状态</h1>
+    <h1>状态</h1>
 
-  <section>
-    <h2>FAB</h2>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/mFMUalB7cG8mYfEOfsR1kl1qkkiboe4EpUgwlRh_6pMd3wQTDqFEm_zWrtftc0sF8KJdbRf-rjb0BF3xxf1Mm16MI22DrvNd8td7RdSH2rk_=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 158px 16px 82px">
-          <mdui-fab variant="surface" icon="edit--outlined"></mdui-fab>
-          <mdui-fab variant="secondary" icon="edit--outlined"></mdui-fab>
-          <mdui-fab variant="tertiary" icon="edit--outlined"></mdui-fab>
+    <section>
+      <h2>FAB</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/mFMUalB7cG8mYfEOfsR1kl1qkkiboe4EpUgwlRh_6pMd3wQTDqFEm_zWrtftc0sF8KJdbRf-rjb0BF3xxf1Mm16MI22DrvNd8td7RdSH2rk_=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 158px 16px 82px">
+            <mdui-fab variant="surface" icon="edit--outlined"></mdui-fab>
+            <mdui-fab variant="secondary" icon="edit--outlined"></mdui-fab>
+            <mdui-fab variant="tertiary" icon="edit--outlined"></mdui-fab>
+          </div>
         </div>
       </div>
-    </div>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/MwsRsoJbe14-OG-eOtiutPT1wy1BzIqRT6rRkd6OaAhkgU3P6NoepqZuszi1xCmel6b52vxa8Yqzaw9qOXqGZ1njWsmWwm-FL3p04miJ12Ln=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 158px 16px 82px">
-          <mdui-fab variant="primary" icon="edit--outlined"></mdui-fab>
-        </div>
-        <div class="mdui-theme-dark" style="padding: 158px 16px 82px">
-          <mdui-fab variant="primary" icon="edit--outlined"></mdui-fab>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/MwsRsoJbe14-OG-eOtiutPT1wy1BzIqRT6rRkd6OaAhkgU3P6NoepqZuszi1xCmel6b52vxa8Yqzaw9qOXqGZ1njWsmWwm-FL3p04miJ12Ln=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 158px 16px 82px">
+            <mdui-fab variant="primary" icon="edit--outlined"></mdui-fab>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 158px 16px 82px">
+            <mdui-fab variant="primary" icon="edit--outlined"></mdui-fab>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <h2>Small FAB</h2>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/w2_YBAgxd-dL-eglsJDPJFj3mx7d1ViQTQplT_bF26ikWiyCshh0Pip0doTSrHnZiHZfTTF5L7hIc7MziyIqNPSwEqI7lx9leeK8e0OWi9g=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 162px 16px 94px">
-          <mdui-fab variant="surface" icon="edit--outlined" size="small"></mdui-fab>
-          <mdui-fab variant="secondary" icon="edit--outlined" size="small"></mdui-fab>
-          <mdui-fab variant="tertiary" icon="edit--outlined" size="small"></mdui-fab>
+    <section>
+      <h2>Small FAB</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/w2_YBAgxd-dL-eglsJDPJFj3mx7d1ViQTQplT_bF26ikWiyCshh0Pip0doTSrHnZiHZfTTF5L7hIc7MziyIqNPSwEqI7lx9leeK8e0OWi9g=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 162px 16px 94px">
+            <mdui-fab variant="surface" icon="edit--outlined" size="small"></mdui-fab>
+            <mdui-fab variant="secondary" icon="edit--outlined" size="small"></mdui-fab>
+            <mdui-fab variant="tertiary" icon="edit--outlined" size="small"></mdui-fab>
+          </div>
         </div>
       </div>
-    </div>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/5qMArgSLdNQYqcWq5U2z87wsu2NA77WRZHORz_oGC_a3cOLvvNzqObM5RfgoWha77hiqNlDu-5Kd4_qfCTYNdYzLvZHzlT1PTFWSdZYfMs2m=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 162px 16px 94px">
-          <mdui-fab variant="primary" icon="edit--outlined" size="small"></mdui-fab>
-        </div>
-        <div class="mdui-theme-dark" style="padding: 162px 16px 94px">
-          <mdui-fab variant="primary" icon="edit--outlined" size="small"></mdui-fab>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/5qMArgSLdNQYqcWq5U2z87wsu2NA77WRZHORz_oGC_a3cOLvvNzqObM5RfgoWha77hiqNlDu-5Kd4_qfCTYNdYzLvZHzlT1PTFWSdZYfMs2m=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 162px 16px 94px">
+            <mdui-fab variant="primary" icon="edit--outlined" size="small"></mdui-fab>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 162px 16px 94px">
+            <mdui-fab variant="primary" icon="edit--outlined" size="small"></mdui-fab>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <h2>Large FAB</h2>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/xTKY0Xz2-7TVrio-XJwR2Zf-ENWS0nfP27enSHLkmo5m6kCmmPUoZIR70sWm7SVx6B0OUwtv1rGgZon0mUN7mfyJJW47xnmu4RGa4BzBpLZu5w=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 128px 16px 72px">
-          <mdui-fab variant="surface" icon="edit--outlined" size="large"></mdui-fab>
-          <mdui-fab variant="secondary" icon="edit--outlined" size="large"></mdui-fab>
-          <mdui-fab variant="tertiary" icon="edit--outlined" size="large"></mdui-fab>
+    <section>
+      <h2>Large FAB</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/xTKY0Xz2-7TVrio-XJwR2Zf-ENWS0nfP27enSHLkmo5m6kCmmPUoZIR70sWm7SVx6B0OUwtv1rGgZon0mUN7mfyJJW47xnmu4RGa4BzBpLZu5w=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 128px 16px 72px">
+            <mdui-fab variant="surface" icon="edit--outlined" size="large"></mdui-fab>
+            <mdui-fab variant="secondary" icon="edit--outlined" size="large"></mdui-fab>
+            <mdui-fab variant="tertiary" icon="edit--outlined" size="large"></mdui-fab>
+          </div>
         </div>
       </div>
-    </div>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/Yb7qJotGeCUY8e6s6t4KNr_r_brTn9lRv1nIueMaVjCxQLxYsRDB0WxGTGCuX79nz8O13ZToAEGOdawJB82YLd1SqcfSAgKcd2YYH7R6hXc=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 128px 16px 72px">
-          <mdui-fab variant="primary" icon="edit--outlined" size="large"></mdui-fab>
-        </div>
-        <div class="mdui-theme-dark" style="padding: 128px 16px 72px">
-          <mdui-fab variant="primary" icon="edit--outlined" size="large"></mdui-fab>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/Yb7qJotGeCUY8e6s6t4KNr_r_brTn9lRv1nIueMaVjCxQLxYsRDB0WxGTGCuX79nz8O13ZToAEGOdawJB82YLd1SqcfSAgKcd2YYH7R6hXc=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 128px 16px 72px">
+            <mdui-fab variant="primary" icon="edit--outlined" size="large"></mdui-fab>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 128px 16px 72px">
+            <mdui-fab variant="primary" icon="edit--outlined" size="large"></mdui-fab>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <h2>Extended FAB</h2>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/6yckhEruZ33MTrWG_V7HrD25NO_j2DLqMtuzOmz39V4fri34CcNxqLezjWijrYDx9-Zf6dHWv7b-Il-OfYBXzrKIq37Cz8VpVw0w-uM9eMUv8Q=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 132px 16px 108px">
-          <mdui-fab variant="surface" icon="edit--outlined" extended>Compose</mdui-fab>
-          <mdui-fab variant="secondary" icon="edit--outlined" extended>Compose</mdui-fab>
-          <mdui-fab variant="tertiary" icon="edit--outlined" extended>Compose</mdui-fab>
+    <section>
+      <h2>Extended FAB</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/6yckhEruZ33MTrWG_V7HrD25NO_j2DLqMtuzOmz39V4fri34CcNxqLezjWijrYDx9-Zf6dHWv7b-Il-OfYBXzrKIq37Cz8VpVw0w-uM9eMUv8Q=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 132px 16px 108px">
+            <mdui-fab variant="surface" icon="edit--outlined" extended>Compose</mdui-fab>
+            <mdui-fab variant="secondary" icon="edit--outlined" extended>Compose</mdui-fab>
+            <mdui-fab variant="tertiary" icon="edit--outlined" extended>Compose</mdui-fab>
+          </div>
         </div>
       </div>
-    </div>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/OB6v4vgTv4HOppg0BROi-hREwI2w2yoiqWJCYx5Msk4pygcNAxqb2aABxWoL9zRV_6TaXwIL_8ejJk1SOcF_0j7j0f48ZeCDqc3UJOMrqMPY=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 147px 16px 93px">
-          <mdui-fab variant="primary" icon="edit--outlined" extended>Compose</mdui-fab>
-        </div>
-        <div class="mdui-theme-dark" style="padding: 147px 16px 93px">
-          <mdui-fab variant="primary" icon="edit--outlined" extended>Compose</mdui-fab>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/OB6v4vgTv4HOppg0BROi-hREwI2w2yoiqWJCYx5Msk4pygcNAxqb2aABxWoL9zRV_6TaXwIL_8ejJk1SOcF_0j7j0f48ZeCDqc3UJOMrqMPY=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 147px 16px 93px">
+            <mdui-fab variant="primary" icon="edit--outlined" extended>Compose</mdui-fab>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 147px 16px 93px">
+            <mdui-fab variant="primary" icon="edit--outlined" extended>Compose</mdui-fab>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
+  </main>
 </body>
+
 </html>

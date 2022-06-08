@@ -1,13 +1,16 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
   <title>Card</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
-  <script type="module" src="../../packages/mdui/mdui.css"></script>
-  <script type="module" src="../../packages/components/index.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
   <style>
     body {
       font-family: Roboto;
@@ -25,103 +28,121 @@
       }
     }
   </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/components/card.js';
+  </script>
 </head>
+
 <body>
-<main>
-  <section>
-    <h2>Elevated</h2>
-    <mdui-card></mdui-card>
-    <mdui-card variant="elevated"></mdui-card>
-    <mdui-card variant="elevated" clickable></mdui-card>
-  </section>
+  <main>
+    <section>
+      <h2>Elevated</h2>
+      <mdui-card></mdui-card>
+      <mdui-card variant="elevated"></mdui-card>
+      <mdui-card variant="elevated" clickable></mdui-card>
+    </section>
 
-  <section>
-    <h2>Filled</h2>
-    <mdui-card variant="filled"></mdui-card>
-    <mdui-card variant="filled" clickable></mdui-card>
-  </section>
+    <section>
+      <h2>Filled</h2>
+      <mdui-card variant="filled"></mdui-card>
+      <mdui-card variant="filled" clickable></mdui-card>
+    </section>
 
-  <section>
-    <h2>Outlined</h2>
-    <mdui-card variant="outlined"></mdui-card>
-    <mdui-card variant="outlined" clickable></mdui-card>
-  </section>
+    <section>
+      <h2>Outlined</h2>
+      <mdui-card variant="outlined"></mdui-card>
+      <mdui-card variant="outlined" clickable></mdui-card>
+    </section>
 
-  <section>
-    <h2>href</h2>
-    <mdui-card href="https://www.mdui.org"></mdui-card>
-  </section>
+    <section>
+      <h2>href</h2>
+      <mdui-card href="https://www.mdui.org"></mdui-card>
+    </section>
 
-  <h1>状态</h1>
+    <h1>状态</h1>
 
-  <section>
-    <h2>Elevated card</h2>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/Bl3ddQLlx4dVL9HbyCSmr2WHwcS7fleJykk6brP2CAg99JCFwq1ZilZ_AgLw1yVtoBjOxHAEAFoLy02bR2fd4pZn7uCTTKKIMCc9_0b3ayxptQ=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 50px 16px 56px">
-          <mdui-card variant="elevated" style="height: 190px; width: 360px"></mdui-card>
+    <section>
+      <h2>Elevated card</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/Bl3ddQLlx4dVL9HbyCSmr2WHwcS7fleJykk6brP2CAg99JCFwq1ZilZ_AgLw1yVtoBjOxHAEAFoLy02bR2fd4pZn7uCTTKKIMCc9_0b3ayxptQ=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 50px 16px 56px">
+            <mdui-card variant="elevated" style="height: 190px; width: 360px"></mdui-card>
+          </div>
         </div>
       </div>
-    </div>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/nULQjbb_XpIRQN67PFdDNhBtjea7zxLQv_nrBYvpk5dG2hnS9LlBe9yhyC_EX32gE0TL_IT4xRwkO1tViuvHmx7v4CkGyX-Hn9vAA-BrGhop=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 130px 16px 86px">
-          <mdui-card variant="elevated" style="height: 80px; width: 130px"></mdui-card>
-        </div>
-        <div class="mdui-theme-dark" style="padding: 130px 16px 86px">
-          <mdui-card variant="elevated" style="height: 80px; width: 130px"></mdui-card>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/nULQjbb_XpIRQN67PFdDNhBtjea7zxLQv_nrBYvpk5dG2hnS9LlBe9yhyC_EX32gE0TL_IT4xRwkO1tViuvHmx7v4CkGyX-Hn9vAA-BrGhop=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 130px 16px 86px">
+            <mdui-card variant="elevated" style="height: 80px; width: 130px"></mdui-card>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 130px 16px 86px">
+            <mdui-card variant="elevated" style="height: 80px; width: 130px"></mdui-card>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <h2>Filled card</h2>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/Hsk-b7euBgrZwKiI8g0g_nVNWW_aNxOE9xDEjIhI9wpdlW2SvNa1B8IG_K3JdQjQ3cT_knh2fi6HwzksBHiR7G43UJbPLaE4mmcnuvRPd92S=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 50px 16px 56px">
-          <mdui-card variant="filled" style="height: 190px; width: 360px"></mdui-card>
+    <section>
+      <h2>Filled card</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/Hsk-b7euBgrZwKiI8g0g_nVNWW_aNxOE9xDEjIhI9wpdlW2SvNa1B8IG_K3JdQjQ3cT_knh2fi6HwzksBHiR7G43UJbPLaE4mmcnuvRPd92S=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 50px 16px 56px">
+            <mdui-card variant="filled" style="height: 190px; width: 360px"></mdui-card>
+          </div>
         </div>
       </div>
-    </div>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/4WXGpjJ8eao9XhjTOpLqWxr49UNcooZ3snK0sbv5x9AmQnR_L7O5X2Z0maKdtZn5tYnjfl-p4NXDvLblRpT1hUs3L9kmzBA2rAhrGB74YrQU=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 130px 16px 86px">
-          <mdui-card variant="filled" style="height: 80px; width: 130px"></mdui-card>
-        </div>
-        <div class="mdui-theme-dark" style="padding: 130px 16px 86px">
-          <mdui-card variant="filled" style="height: 80px; width: 130px"></mdui-card>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/4WXGpjJ8eao9XhjTOpLqWxr49UNcooZ3snK0sbv5x9AmQnR_L7O5X2Z0maKdtZn5tYnjfl-p4NXDvLblRpT1hUs3L9kmzBA2rAhrGB74YrQU=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 130px 16px 86px">
+            <mdui-card variant="filled" style="height: 80px; width: 130px"></mdui-card>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 130px 16px 86px">
+            <mdui-card variant="filled" style="height: 80px; width: 130px"></mdui-card>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <h2>Outlined card</h2>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/hmW-QVJuFO2ZPwW26cPCk7PvkvywsW0lSX8RN9Bf54jZU974rvCLjwcZdtk9tyvtSGViaYPBJpV3x9u2eAknKb9TBqRv_-zhrkfJ8d1ug07e=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 50px 16px 56px">
-          <mdui-card variant="outlined" style="height: 190px; width: 360px"></mdui-card>
+    <section>
+      <h2>Outlined card</h2>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/hmW-QVJuFO2ZPwW26cPCk7PvkvywsW0lSX8RN9Bf54jZU974rvCLjwcZdtk9tyvtSGViaYPBJpV3x9u2eAknKb9TBqRv_-zhrkfJ8d1ug07e=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 50px 16px 56px">
+            <mdui-card variant="outlined" style="height: 190px; width: 360px"></mdui-card>
+          </div>
         </div>
       </div>
-    </div>
-    <div style="display: flex">
-      <img src="https://lh3.googleusercontent.com/IB57Yc7gbqzEODv9BKrQZIgosxVJ8N7AcdX9LpB3ox9XgxHvZxA_PSXqzoGIFlbiIdPXYBw5r7fiWxXNAve6rIucl-2rjN-7xV3udVUqTdY=s0" width="1024px"/>
-      <div style="white-space: nowrap">
-        <div style="padding: 130px 16px 86px">
-          <mdui-card variant="outlined" style="height: 80px; width: 130px"></mdui-card>
-        </div>
-        <div class="mdui-theme-dark" style="padding: 130px 16px 86px">
-          <mdui-card variant="outlined" style="height: 80px; width: 130px"></mdui-card>
+      <div style="display: flex">
+        <img
+          src="https://lh3.googleusercontent.com/IB57Yc7gbqzEODv9BKrQZIgosxVJ8N7AcdX9LpB3ox9XgxHvZxA_PSXqzoGIFlbiIdPXYBw5r7fiWxXNAve6rIucl-2rjN-7xV3udVUqTdY=s0"
+          width="1024px" />
+        <div style="white-space: nowrap">
+          <div style="padding: 130px 16px 86px">
+            <mdui-card variant="outlined" style="height: 80px; width: 130px"></mdui-card>
+          </div>
+          <div class="mdui-theme-dark" style="padding: 130px 16px 86px">
+            <mdui-card variant="outlined" style="height: 80px; width: 130px"></mdui-card>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-</main>
+    </section>
+  </main>
 </body>
+
 </html>

@@ -1,81 +1,91 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
   <title>Checkbox</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
-  <script type="module" src="../../packages/mdui/mdui.css"></script>
-  <script type="module" src="../../packages/components/index.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
   <style>
     body {
       font-family: Roboto;
     }
   </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/components/checkbox.js';
+    import '../../packages/components/button.js';
+  </script>
 </head>
+
 <body>
-<main>
-  <section>
-    <h2>Checkbox</h2>
-    <mdui-checkbox></mdui-checkbox>
-    <mdui-checkbox>Checkbox</mdui-checkbox>
-    <mdui-checkbox disabled></mdui-checkbox>
-    <mdui-checkbox disabled>Checkbox</mdui-checkbox>
-    <div class="mdui-theme-dark">
+  <main>
+    <section>
+      <h2>Checkbox</h2>
       <mdui-checkbox></mdui-checkbox>
       <mdui-checkbox>Checkbox</mdui-checkbox>
       <mdui-checkbox disabled></mdui-checkbox>
       <mdui-checkbox disabled>Checkbox</mdui-checkbox>
-    </div>
-  </section>
+      <div class="mdui-theme-dark">
+        <mdui-checkbox></mdui-checkbox>
+        <mdui-checkbox>Checkbox</mdui-checkbox>
+        <mdui-checkbox disabled></mdui-checkbox>
+        <mdui-checkbox disabled>Checkbox</mdui-checkbox>
+      </div>
+    </section>
 
-  <section>
-    <h2>Checked</h2>
-    <mdui-checkbox checked></mdui-checkbox>
-    <mdui-checkbox checked>Checkbox</mdui-checkbox>
-    <mdui-checkbox checked disabled></mdui-checkbox>
-    <mdui-checkbox checked disabled>Checkbox</mdui-checkbox>
-    <div class="mdui-theme-dark">
+    <section>
+      <h2>Checked</h2>
       <mdui-checkbox checked></mdui-checkbox>
       <mdui-checkbox checked>Checkbox</mdui-checkbox>
       <mdui-checkbox checked disabled></mdui-checkbox>
       <mdui-checkbox checked disabled>Checkbox</mdui-checkbox>
-    </div>
-  </section>
+      <div class="mdui-theme-dark">
+        <mdui-checkbox checked></mdui-checkbox>
+        <mdui-checkbox checked>Checkbox</mdui-checkbox>
+        <mdui-checkbox checked disabled></mdui-checkbox>
+        <mdui-checkbox checked disabled>Checkbox</mdui-checkbox>
+      </div>
+    </section>
 
-  <section>
-    <h2>Indeterminate</h2>
-    <mdui-checkbox indeterminate></mdui-checkbox>
-    <mdui-checkbox indeterminate>Checkbox</mdui-checkbox>
-    <mdui-checkbox indeterminate disabled></mdui-checkbox>
-    <mdui-checkbox indeterminate disabled>Checkbox</mdui-checkbox>
-    <div class="mdui-theme-dark">
+    <section>
+      <h2>Indeterminate</h2>
       <mdui-checkbox indeterminate></mdui-checkbox>
       <mdui-checkbox indeterminate>Checkbox</mdui-checkbox>
       <mdui-checkbox indeterminate disabled></mdui-checkbox>
       <mdui-checkbox indeterminate disabled>Checkbox</mdui-checkbox>
-    </div>
-  </section>
-
-  <section>
-    <h2>Required</h2>
-    <form>
-      <mdui-checkbox name="checkbox[]" required></mdui-checkbox>
-      <mdui-checkbox name="checkbox[]" required>Checkbox</mdui-checkbox>
-      <mdui-checkbox name="checkbox[]" required disabled></mdui-checkbox>
-      <mdui-checkbox name="checkbox[]" required disabled indeterminate>Checkbox</mdui-checkbox>
       <div class="mdui-theme-dark">
+        <mdui-checkbox indeterminate></mdui-checkbox>
+        <mdui-checkbox indeterminate>Checkbox</mdui-checkbox>
+        <mdui-checkbox indeterminate disabled></mdui-checkbox>
+        <mdui-checkbox indeterminate disabled>Checkbox</mdui-checkbox>
+      </div>
+    </section>
+
+    <section>
+      <h2>Required</h2>
+      <form>
         <mdui-checkbox name="checkbox[]" required></mdui-checkbox>
         <mdui-checkbox name="checkbox[]" required>Checkbox</mdui-checkbox>
         <mdui-checkbox name="checkbox[]" required disabled></mdui-checkbox>
         <mdui-checkbox name="checkbox[]" required disabled indeterminate>Checkbox</mdui-checkbox>
-      </div>
-      <br/>
-      <mdui-button type="submit">Submit</mdui-button>
-    </form>
-  </section>
+        <div class="mdui-theme-dark">
+          <mdui-checkbox name="checkbox[]" required></mdui-checkbox>
+          <mdui-checkbox name="checkbox[]" required>Checkbox</mdui-checkbox>
+          <mdui-checkbox name="checkbox[]" required disabled></mdui-checkbox>
+          <mdui-checkbox name="checkbox[]" required disabled indeterminate>Checkbox</mdui-checkbox>
+        </div>
+        <br />
+        <mdui-button type="submit">Submit</mdui-button>
+      </form>
+    </section>
 
-</main>
+  </main>
 </body>
+
 </html>

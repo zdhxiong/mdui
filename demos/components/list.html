@@ -11,7 +11,6 @@
   <link
     href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
     rel="stylesheet">
-  <script type="module" src="../../packages/mdui/mdui.css"></script>
   <style>
     body {
       font-family: Roboto;
@@ -28,7 +27,19 @@
     }
   </style>
   <script type="module">
-    import { $ } from '../../packages/mdui/index.js';
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/components/checkbox.js';
+    import '../../packages/components/radio.js';
+    import '../../packages/components/switch.js';
+    import '../../packages/components/avatar.js';
+    import '../../packages/components/icon.js';
+    import '../../packages/components/list.js';
+    import '../../packages/components/list-item.js';
+    import '../../packages/components/list-subheader.js';
+    import '../../packages/components/divider.js';
+    import { $ } from '../../packages/jq/$.js';
+    import '../../packages/jq/methods/on.js';
+    import '../../packages/jq/methods/prop.js';
 
     $(() => {
       $('#change-nonclickable').on('change', function () {

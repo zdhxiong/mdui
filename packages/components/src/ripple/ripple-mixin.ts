@@ -12,7 +12,8 @@ import {
   endEvent,
   cancelEvent,
 } from '@mdui/shared/helpers/touchHandler.js';
-import { Ripple } from './index.js';
+import './index.js';
+import type { Ripple } from './index.js';
 
 /**
  * hover, focused, pressed, dragged 四个属性用于添加到 :host 元素上，供 CSS 选择题添加样式

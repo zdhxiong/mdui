@@ -1,13 +1,16 @@
 <!doctype html>
 <html lang="zh">
+
 <head>
   <title>Circular Progress</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
-  <script type="module" src="../../packages/mdui/mdui.css"></script>
-  <script type="module" src="../../packages/components/index.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
   <style>
     body {
       font-family: Roboto;
@@ -17,20 +20,26 @@
       margin: 16px;
     }
   </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/components/circular-progress.js';
+  </script>
 </head>
+
 <body>
-<main>
-  <section>
-    <h2>Circular Progress</h2>
-    <mdui-circular-progress></mdui-circular-progress>
-    <mdui-circular-progress value="50"></mdui-circular-progress>
-    <mdui-circular-progress value="50" max="80"></mdui-circular-progress>
-    <div class="mdui-theme-dark">
+  <main>
+    <section>
+      <h2>Circular Progress</h2>
       <mdui-circular-progress></mdui-circular-progress>
       <mdui-circular-progress value="50"></mdui-circular-progress>
       <mdui-circular-progress value="50" max="80"></mdui-circular-progress>
-    </div>
-  </section>
-</main>
+      <div class="mdui-theme-dark">
+        <mdui-circular-progress></mdui-circular-progress>
+        <mdui-circular-progress value="50"></mdui-circular-progress>
+        <mdui-circular-progress value="50" max="80"></mdui-circular-progress>
+      </div>
+    </section>
+  </main>
 </body>
+
 </html>

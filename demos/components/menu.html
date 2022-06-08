@@ -11,8 +11,6 @@
   <link
     href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
     rel="stylesheet">
-  <script type="module" src="../../packages/mdui/mdui.css"></script>
-  <script type="module" src="../../packages/icons/add-circle.js"></script>
   <style>
     body {
       font-family: Roboto;
@@ -33,7 +31,18 @@
     }
   </style>
   <script type="module">
-    import { $ } from '../../packages/mdui/index.js';
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/components/checkbox.js';
+    import '../../packages/components/menu.js';
+    import '../../packages/components/menu-item.js';
+    import '../../packages/components/divider.js';
+    import '../../packages/components/icon.js';
+    import '../../packages/components/avatar.js';
+    import '../../packages/icons/add-circle.js';
+    import { $ } from '../../packages/jq/$.js';
+    import '../../packages/jq/methods/on.js';
+    import '../../packages/jq/methods/prop.js';
+    import '../../packages/jq/methods/text.js';
 
     $(() => {
       $('#change-dense').on('change', function () {

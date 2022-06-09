@@ -1,0 +1,137 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  --shape-corner: var(--mdui-shape-corner-none);
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  border-radius: 0 0 var(--shape-corner) var(--shape-corner);
+  transition: all var(--mdui-motion-easing-standard) 250ms;
+  .padding(12, 8);
+  .height(64);
+  .backgroundColor(surface);
+  .elevation(0);
+}
+
+:host([scrolling]) {
+  .elevation(2);
+}
+
+::slotted(mdui-icon-button) {
+  .color(on-surface-variant);
+  .fontSize(24);
+}
+
+::slotted(mdui-icon-button:first-child) {
+  .color(on-surface);
+}
+
+::slotted(mdui-avatar) {
+  .width(30);
+  .height(30);
+  .marginTop(5);
+  .marginBottom(5);
+}
+
+::slotted(*) {
+  flex-shrink: 0;
+}
+
+::slotted(:not(:last-child)) {
+  .marginRight(8);
+}
+
+:host([variant="center-aligned"]) {
+  ::slotted(mdui-top-app-bar-title) {
+    justify-content: center;
+  }
+}
+
+:host([variant="medium"]) {
+  .height(112);
+
+  ::slotted(mdui-top-app-bar-title) {
+    opacity: 0;
+  }
+}
+
+:host([variant="large"]) {
+  .height(152);
+  .paddingBottom(20);
+
+  ::slotted(mdui-top-app-bar-title) {
+    opacity: 0;
+  }
+}
+
+:host([hide]) {
+  transition-duration: 200ms;
+  .top(-64);
+}
+
+:host([hide][variant="medium"]) {
+  .top(-112);
+}
+
+:host([hide][variant="large"]) {
+  .top(-152);
+}
+
+:host([compact][variant="medium"]),
+:host([compact][variant="large"]) {
+  transition-duration: 200ms;
+  .height(64);
+  .paddingBottom(12);
+
+  ::slotted(mdui-top-app-bar-title) {
+    opacity: 1;
+    transition-delay: 100ms;
+  }
+}
+
+.large-title {
+  position: absolute;
+  left: 0;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  transition: font-size var(--mdui-motion-easing-standard) 200ms;
+  .top(64);
+  .padding(0, 16);
+  .typescale(title-large);
+
+  :host([variant="medium"]) & {
+    .height(36);
+    .typescale(headline-small);
+  }
+
+  :host([variant="large"]) & {
+    .height(68);
+    .typescale(headline-medium);
+  }
+}
+
+.large-title-inner {
+  :host([variant="medium"]) &,
+  :host([variant="small"]) &,
+  :host([variant="medium"]) & {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  :host([variant="large"]) & {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}

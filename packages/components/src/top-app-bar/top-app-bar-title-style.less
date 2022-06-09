@@ -1,0 +1,19 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  display: flex;
+  flex: 1 1;
+  align-items: center;
+  min-width: 0;
+  transition: all var(--mdui-motion-easing-linear) 100ms;
+  .height(40);
+  .color(on-surface);
+  .typescale(title-large);
+}
+
+.label {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -4,12 +4,12 @@
 export const EASING_STANDARD = 'cubic-bezier(0.4, 0, 0.2, 1)';
 
 /**
- * 加速动画（元素进入时使用）
+ * 加速动画（元素退出时使用）
  */
 export const EASING_ACCELERATION = 'cubic-bezier(0.4, 0, 1, 1)';
 
 /**
- * 减速动画（元素退出时使用）
+ * 减速动画（元素进入时使用）
  */
 export const EASING_DECELERATION = 'cubic-bezier(0, 0, 0.2, 1)';
 

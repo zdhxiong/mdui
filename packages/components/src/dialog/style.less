@@ -1,0 +1,110 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  --shape-corner: var(--mdui-shape-corner-extra-large);
+
+  position: fixed;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  .padding(48);
+}
+
+:host([fullscreen]) {
+  --shape-corner: var(--mdui-shape-corner-none);
+
+  padding: 0;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  .backgroundColor(on-surface-variant, 0.4);
+}
+
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  border-radius: var(--shape-corner);
+  outline: none;
+  .minWidth(280);
+  .maxWidth(560);
+  .padding(24);
+  .backgroundColor(surface);
+  .elevation(3);
+
+  :host([fullscreen]) & {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    .elevation(0);
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+
+  &.has-icon {
+    align-items: center;
+  }
+}
+
+.icon {
+  display: flex;
+  .color(secondary);
+  .fontSize(24);
+}
+
+.primary {
+  display: flex;
+  .color(on-surface);
+  .typescale(headline-small);
+
+  .icon + & {
+    .paddingTop(16);
+  }
+}
+
+.secondary {
+  display: flex;
+  .color(on-surface-variant);
+  .typescale(body-medium);
+
+  :host([fullscreen]) & {
+    .color(on-surface);
+  }
+}
+
+.body {
+  overflow: auto;
+
+  .header + & {
+    .paddingTop(16);
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  .paddingTop(24);
+
+  ::slotted(:not(:first-child)) {
+    .marginLeft(8);
+  }
+
+  :host([stacked-actions]) & {
+    flex-direction: column;
+    align-items: end;
+
+    ::slotted(:not(:first-child)) {
+      .marginLeft(0);
+      .marginTop(8);
+    }
+  }
+}

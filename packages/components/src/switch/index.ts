@@ -11,8 +11,8 @@ import { emit } from '@mdui/shared/helpers/event.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import {
-  EASING_ACCELERATION,
   EASING_DECELERATION,
+  EASING_STANDARD,
   KEYFRAME_FADE_THROUGTH_IN,
   KEYFRAME_FADE_THROUGTH_OUT,
 } from '@mdui/shared/helpers/motion.js';
@@ -197,7 +197,7 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
     const animateOutOptions: Options = {
       keyframeOptions: {
         duration: 30,
-        easing: EASING_ACCELERATION,
+        easing: EASING_STANDARD,
       },
     };
 

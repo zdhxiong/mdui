@@ -3,19 +3,23 @@ import {
   customElement,
   property,
   queryAssignedElements,
+  state,
 } from 'lit/decorators.js';
 import { animate, AnimateController } from '@lit-labs/motion';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
+import '@mdui/jq/methods/one.js';
 import '@mdui/jq/methods/off.js';
+import { when } from 'lit/directives/when.js';
+import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import {
   DURATION_MEDIUM_IN,
   DURATION_MEDIUM_OUT,
   EASING_LINEAR,
 } from '@mdui/shared/helpers/motion.js';
-import { when } from 'lit/directives/when.js';
 import { topAppBarStyle } from './top-app-bar-style.js';
 import { TopAppBarTitle } from './top-app-bar-title.js';
 
@@ -39,6 +43,9 @@ export class TopAppBar extends LitElement {
   @queryAssignedElements({ selector: 'mdui-top-app-bar-title', flatten: true })
   protected titleElements!: TopAppBarTitle[];
 
+  protected readonly uniqueId = uniqueId();
+  protected readonly scrollEventName = `scroll._top_app_bar_${this.uniqueId}`;
+
   protected readonly animateController = new AnimateController(this, {
     defaultOptions: {
       keyframeOptions: {
@@ -50,6 +57,12 @@ export class TopAppBar extends LitElement {
     },
   });
 
+  @state()
+  protected titleString: string | undefined;
+
+  /**
+   * 滚动条是否不位于顶部
+   */
   @property({ type: Boolean, reflect: true })
   protected scrolling = false;
 
@@ -83,61 +96,128 @@ export class TopAppBar extends LitElement {
    * 是否缩小成 `variant="small"` 的样式，仅在 `variant="medium"` 或 `variant="large"` 时生效
    */
   @property({ type: Boolean, reflect: true })
-  public compact = false;
+  public shrink = false;
 
   /**
    * 是否在滚动到顶部时缩小成 `variant="small"` 的样式，仅在 `variant="medium"` 或 `variant="large"` 时生效
    */
-  @property({ type: Boolean, reflect: true, attribute: 'compact-on-scroll' })
-  public compactOnScroll = false;
+  @property({ type: Boolean, reflect: true, attribute: 'shrink-on-scroll' })
+  public shrinkOnScroll = false;
 
-  override connectedCallback() {
+  /**
+   * 需要监听其滚动事件的元素的 CSS 选择器。默认为监听 window 滚动
+   */
+  @property({ reflect: true, attribute: 'scroll-target' })
+  public scrollTarget!: string;
+
+  /**
+   * 在 hide-on-scroll 激活之前的滚动距离
+   */
+  @property({ type: Number, reflect: true, attribute: 'scroll-threshold' })
+  public scrollThreshold!: number;
+
+  /**
+   * 组件需要监听该元素的滚动状态
+   */
+  protected get scrollTargetListening(): HTMLElement | Window {
+    return this.scrollTarget ? $(this.scrollTarget)[0] : window;
+  }
+
+  /**
+   * 组件在该容器内滚动
+   */
+  protected get scrollTargetContainer(): HTMLElement {
+    return this.scrollTarget ? $(this.scrollTarget)[0] : document.body;
+  }
+
+  override async connectedCallback() {
     super.connectedCallback();
-    $(window).on('scroll._top_app_bar', () => {
-      window.requestAnimationFrame(() => this.onWindowScroll());
+    $(this.scrollTargetListening).on(this.scrollEventName, () => {
+      window.requestAnimationFrame(() => this.onScroll());
     });
     $(this).on('transitionend', () => {
       emit(this, this.hide ? 'hidden' : 'shown');
     });
+
+    await this.updateComplete;
+    this.titleString = this.titleElements.length
+      ? this.titleElements[0].textContent!
+      : undefined;
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
-    $(window).off('scroll._top_app_bar');
+    $(this.scrollTargetListening).off(this.scrollEventName);
   }
 
-  private lastScrollY = 0; // 上次滚动后，垂直方向的距离
-  protected onWindowScroll() {
-    const pageYOffset = window.pageYOffset;
-    this.scrolling = !!pageYOffset;
+  /**
+   * scrollTarget 属性变更时，重新设置时间监听
+   */
+  @watch('scrollTarget')
+  protected onScrollTargetChange(
+    oldScrollTarget: string,
+    newScrollTarget: string,
+  ) {
+    $(oldScrollTarget ?? window).off(this.scrollEventName);
+    $(newScrollTarget).on(this.scrollEventName, () => {
+      window.requestAnimationFrame(() => this.onScroll());
+    });
+    this.onScroll();
+  }
+
+  @watch('variant')
+  protected async onVariantChange() {
+    $(this).one('transitionend', () => {
+      // variant 变更时，重新为 scrollTargetContainer 元素添加 padding-top。避免 top-app-bar 覆盖内容
+      $(this.scrollTargetContainer).css({
+        'padding-top': this.offsetHeight,
+      });
+    });
+  }
+
+  private lastScrollTop = 0; // 上次滚动后，垂直方向的距离。使用 scrollThreshold
+  private lastScrollTopNoThreshold = 0; // 上次滚动后，垂直方向的距离。不使用 scrollThreshold
+  protected onScroll() {
+    const scrollTop =
+      (this.scrollTargetListening as Window).scrollY ||
+      (this.scrollTargetListening as HTMLElement).scrollTop;
+    this.scrolling = !!scrollTop;
+
+    // 在向下滚动时，缩小；向上滚动到顶部时，复原。shrinkOnScroll 不应用 scrollThreshold 属性
+    if (this.shrinkOnScroll) {
+      if (scrollTop > this.lastScrollTop) {
+        this.shrink = true;
+      } else if (!scrollTop) {
+        this.shrink = false;
+      }
+
+      this.lastScrollTopNoThreshold = scrollTop;
+    }
+
+    // hideOnScroll 要应用 scrollThreshold 属性
+    if (
+      Math.abs(scrollTop - this.lastScrollTop) <= (this.scrollThreshold || 0)
+    ) {
+      return;
+    }
 
     if (this.hideOnScroll) {
-      this.hide = pageYOffset > this.lastScrollY;
-      emit(this, this.hide ? 'hide' : 'show');
-    }
-
-    // 在向下滚动时，缩小；向上滚动到顶部时，复原
-    if (this.compactOnScroll) {
-      if (pageYOffset > this.lastScrollY) {
-        this.compact = true;
-      } else if (!pageYOffset) {
-        this.compact = false;
+      if (scrollTop > this.lastScrollTop) {
+        this.hide = true;
+        emit(this, 'hide');
+      } else if (scrollTop < this.lastScrollTop) {
+        this.hide = false;
+        emit(this, 'show');
       }
-    }
 
-    if (this.hideOnScroll || this.compactOnScroll) {
-      this.lastScrollY = pageYOffset;
+      this.lastScrollTop = scrollTop;
     }
   }
 
   protected override render(): TemplateResult {
-    const title = this.titleElements.length
-      ? this.titleElements[0].textContent
-      : null;
-
     return html`<slot></slot>${when(
         ['medium', 'large'].includes(this.variant) &&
-          !this.compact &&
+          !this.shrink &&
           !this.hide,
         () => html`<div
           part="large-title"
@@ -149,7 +229,9 @@ export class TopAppBar extends LitElement {
             },
           })}
         >
-          <div part="large-title-inner" class="large-title-inner">${title}</div>
+          <div part="large-title-inner" class="large-title-inner">
+            ${this.titleString}
+          </div>
         </div>`,
       )}`;
   }

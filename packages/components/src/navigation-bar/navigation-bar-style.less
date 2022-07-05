@@ -11,7 +11,17 @@
   width: 100%;
   overflow: hidden;
   border-radius: var(--shape-corner) var(--shape-corner) 0 0;
+  transition: all var(--mdui-motion-easing-standard) 250ms;
   .height(80);
   .backgroundColor(surface);
   .elevation(2);
+}
+
+:host([scroll-target]) {
+  position: absolute;
+}
+
+:host([hide]) {
+  transition-duration: 200ms;
+  .translateY(80 + 10);
 }

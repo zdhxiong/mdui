@@ -15,6 +15,18 @@
     body {
       font-family: Roboto;
     }
+    .container {
+      position: relative;
+      width: 667px;
+      height: 375px;
+      overflow: auto;
+      box-shadow: 0 0.85px 3px 0 rgba(0, 0, 0, 19%), 0 0.25px 1px 0 rgba(0, 0, 0, 3.9%);
+    }
+    @media (max-width: 700px) {
+      .container {
+        width: 100%;
+      }
+    }
   </style>
   <script type="module">
     import '../../packages/mdui/mdui.css';
@@ -26,6 +38,10 @@
     import '../../packages/components/dropdown.js';
     import '../../packages/components/menu.js';
     import '../../packages/components/menu-item.js';
+    import { $ } from '../../packages/jq/$.js';
+    import '../../packages/jq/methods/append.js';
+
+    $('.fill-placeholder').append(...Array.from({length: 100}, (_, index) => index + 1).map(item => `<p>${item}</p>`));
   </script>
 </head>
 
@@ -84,7 +100,74 @@
     </section>
 
     <section>
+      <h2>in container</h2>
+      <div class="container" style="position: relative; overflow: hidden">
+        <mdui-bottom-app-bar scroll-target="#in-container">
+          <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
+          <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
+          <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
+          <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+          <mdui-spacer></mdui-spacer>
+          <mdui-fab icon="add"></mdui-fab>
+        </mdui-bottom-app-bar>
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="in-container">
+          <div class="fill-placeholder"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>hide-on-scroll</h2>
+      <div class="container" style="position: relative; overflow: hidden">
+        <mdui-bottom-app-bar hide-on-scroll scroll-target="#hide-on-scroll">
+          <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
+          <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
+          <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
+          <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+          <mdui-spacer></mdui-spacer>
+          <mdui-fab icon="add"></mdui-fab>
+        </mdui-bottom-app-bar>
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="hide-on-scroll">
+          <div class="fill-placeholder"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
       <h2>hide-on-scroll & fab-detach</h2>
+      <div class="container" style="position: relative; overflow: hidden">
+        <mdui-bottom-app-bar hide-on-scroll fab-detach scroll-target="#hide-on-scroll-fab-detach">
+          <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
+          <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
+          <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
+          <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+          <mdui-spacer></mdui-spacer>
+          <mdui-fab icon="add"></mdui-fab>
+        </mdui-bottom-app-bar>
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="hide-on-scroll-fab-detach">
+          <div class="fill-placeholder"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>scroll-threshold</h2>
+      <div class="container" style="position: relative; overflow: hidden">
+        <mdui-bottom-app-bar hide-on-scroll fab-detach scroll-threshold="80" scroll-target="#scroll-threshold">
+          <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
+          <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
+          <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
+          <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+          <mdui-spacer></mdui-spacer>
+          <mdui-fab icon="add"></mdui-fab>
+        </mdui-bottom-app-bar>
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="scroll-threshold">
+          <div class="fill-placeholder"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
       <mdui-bottom-app-bar hide-on-scroll fab-detach>
         <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
         <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
@@ -95,86 +178,7 @@
       </mdui-bottom-app-bar>
     </section>
 
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
-    <p>test</p>
+    <div class="fill-placeholder"></div>
 
   </main>
 </body>

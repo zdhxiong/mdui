@@ -236,6 +236,7 @@
     position: absolute;
     inset: 0;
     content: " ";
+    pointer-events: none;
 
     & when (@value =0) {
       background-color: transparent;
@@ -267,8 +268,16 @@
   .sys(--mdui-comp-ripple-state-layer-color, ~"color-@{rgb}");
 }
 
-.translate(@x, @y: 0) {
+.translate(@x, @y) {
   transform: translate(unit((@x / @root-font-size), rem), unit((@y / @root-font-size), rem));
+}
+
+.translateX(@x) {
+  transform: translateX(unit((@x / @root-font-size), rem));
+}
+
+.translateY(@y) {
+  transform: translateY(unit((@y / @root-font-size), rem));
 }
 
 .typescale(@name) {

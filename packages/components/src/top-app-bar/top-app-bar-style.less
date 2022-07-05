@@ -20,6 +20,10 @@
   .elevation(0);
 }
 
+:host([scroll-target]) {
+  position: absolute;
+}
+
 :host([scrolling]) {
   .elevation(2);
 }
@@ -73,19 +77,19 @@
 
 :host([hide]) {
   transition-duration: 200ms;
-  .top(-64);
+  .top(-64 - 10);
 }
 
 :host([hide][variant="medium"]) {
-  .top(-112);
+  .top(-112 - 10);
 }
 
 :host([hide][variant="large"]) {
-  .top(-152);
+  .top(-152 - 10);
 }
 
-:host([compact][variant="medium"]),
-:host([compact][variant="large"]) {
+:host([shrink][variant="medium"]),
+:host([shrink][variant="large"]) {
   transition-duration: 200ms;
   .height(64);
   .paddingBottom(12);

@@ -19,9 +19,13 @@
   .elevation(2);
 }
 
+:host([scroll-target]) {
+  position: absolute;
+}
+
 :host([hide]) {
-  transition: bottom var(--mdui-motion-easing-standard) 200ms;
-  .bottom(-80);
+  transition-duration: 200ms;
+  .bottom(-80 - 10);
 }
 
 ::slotted(:not(:first-child)) {
@@ -42,11 +46,23 @@
   }
 }
 
+:host([fab-detach][scroll-target]) {
+  ::slotted(mdui-fab) {
+    position: absolute;
+  }
+}
+
 :host([fab-detach][hide]) {
   ::slotted(mdui-fab) {
-    transition: bottom var(--mdui-motion-easing-standard) 200ms;
+    transition-duration: 200ms;
     .bottom(16);
     .elevation(2);
+  }
+}
+
+:host([fab-detach][hide][scroll-target]) {
+  ::slotted(mdui-fab) {
+    .bottom(80 + 10 + 16);
   }
 }
 

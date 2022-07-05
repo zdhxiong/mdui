@@ -1,7 +1,8 @@
 /**
  * 键名为字符串的对象
  */
-export type PlainObject<T = unknown> = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type PlainObject<T = any> = {
   [key: string]: T;
 };
 

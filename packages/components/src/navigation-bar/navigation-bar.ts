@@ -4,16 +4,26 @@ import {
   property,
   queryAssignedElements,
 } from 'lit/decorators.js';
+import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/on.js';
+import '@mdui/jq/methods/off.js';
+import '@mdui/jq/methods/css.js';
+import { watch } from '@mdui/shared/decorators/watch.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { navigationBarStyle } from './navigation-bar-style.js';
 import { NavigationBarItem } from './navigation-bar-item.js';
 
 /**
- * @slot - `<mdui-navigation-bar-item>` 组件
- *
  * @event click - 点击时触发
  * @event change - 值变化时触发
+ * @event show - 开始显示时，事件被触发
+ * @event shown - 显示动画完成时，事件被触发
+ * @event hide - 开始隐藏时，事件被触发
+ * @event hidden - 隐藏动画完成时，事件被触发
+ *
+ * @slot - `<mdui-navigation-bar-item>` 组件
  *
  * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
@@ -26,6 +36,15 @@ export class NavigationBar extends LitElement {
     flatten: true,
   })
   protected itemElements!: NavigationBarItem[] | null;
+
+  protected readonly uniqueId = uniqueId();
+  protected readonly scrollEventName = `scroll._navigation_bar_${this.uniqueId}`;
+
+  /**
+   * 是否隐藏
+   */
+  @property({ type: Boolean, reflect: true })
+  public hide = false;
 
   /**
    * 在页面向上滚动时，是否隐藏组件
@@ -72,6 +91,94 @@ export class NavigationBar extends LitElement {
       }
     });
     this.requestUpdate('value', oldValue);
+  }
+
+  /**
+   * 需要监听其滚动事件的元素的 CSS 选择器。默认为监听 window 滚动
+   */
+  @property({ reflect: true, attribute: 'scroll-target' })
+  public scrollTarget!: string;
+
+  /**
+   * 在 hide-on-scroll 激活之前的滚动距离
+   */
+  @property({ type: Number, reflect: true, attribute: 'scroll-threshold' })
+  public scrollThreshold!: number;
+
+  /**
+   * 组件需要监听该元素的滚动状态
+   */
+  protected get scrollTargetListening(): HTMLElement | Window {
+    return this.scrollTarget ? $(this.scrollTarget)[0] : window;
+  }
+
+  /**
+   * 组件在该容器内滚动
+   */
+  protected get scrollTargetContainer(): HTMLElement {
+    return this.scrollTarget ? $(this.scrollTarget)[0] : document.body;
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    $(this.scrollTargetListening).on(this.scrollEventName, () => {
+      window.requestAnimationFrame(() => this.onScroll());
+    });
+    $(this).on('transitionend', () => {
+      emit(this, this.hide ? 'hidden' : 'shown');
+    });
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    $(this.scrollTargetListening).off(this.scrollEventName);
+  }
+
+  @watch('scrollTarget')
+  protected onScrollTargetChange(
+    oldScrollTarget: string,
+    newScrollTarget: string,
+  ) {
+    $(oldScrollTarget ?? window).off(this.scrollEventName);
+    $(newScrollTarget).on(this.scrollEventName, () => {
+      window.requestAnimationFrame(() => this.onScroll());
+    });
+    this.onScroll();
+  }
+
+  @watch('hideOnScroll')
+  protected onHideOnScrollChange() {
+    // hideOnScroll 为 false 时，为 scrollTargetContainer 元素添加 padding-bottom。避免 navigation-bar 覆盖内容
+    $(this.scrollTargetContainer).css({
+      'padding-bottom': this.hideOnScroll ? '' : this.offsetHeight,
+    });
+  }
+
+  private lastScrollTop = 0; // 上次滚动后，垂直方向的距离
+  protected onScroll() {
+    if (!this.hideOnScroll) {
+      return;
+    }
+
+    const scrollTop =
+      (this.scrollTargetListening as Window).scrollY ||
+      (this.scrollTargetListening as HTMLElement).scrollTop;
+
+    if (
+      Math.abs(scrollTop - this.lastScrollTop) <= (this.scrollThreshold || 0)
+    ) {
+      return;
+    }
+
+    if (scrollTop > this.lastScrollTop) {
+      this.hide = true;
+      emit(this, 'hide');
+    } else if (scrollTop < this.lastScrollTop) {
+      this.hide = false;
+      emit(this, 'show');
+    }
+
+    this.lastScrollTop = scrollTop;
   }
 
   public constructor() {

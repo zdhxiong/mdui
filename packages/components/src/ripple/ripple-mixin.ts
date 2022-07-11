@@ -16,9 +16,9 @@ import './index.js';
 import type { Ripple } from './index.js';
 
 /**
- * hover, focused, pressed, dragged 四个属性用于添加到 :host 元素上，供 CSS 选择题添加样式
+ * hover, pressed, dragged 三个属性用于添加到 :host 元素上，供 CSS 选择题添加样式
  *
- * TODO: focused, dragged 功能
+ * TODO: dragged 功能
  */
 export const RippleMixin = dedupeMixin(
   <T extends Constructor<LitElement>>(
@@ -41,9 +41,6 @@ export const RippleMixin = dedupeMixin(
 
       @property({ type: Boolean, reflect: true })
       protected hover = false;
-
-      @property({ type: Boolean, reflect: true })
-      protected focused = false;
 
       @property({ type: Boolean, reflect: true })
       protected pressed = false;

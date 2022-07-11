@@ -41,11 +41,11 @@
   .elevation(1);
 }
 
-:host(:focus-visible) {
+:host([focus-visible]) {
   .elevation(3);
 }
 
-:host([lowered]:focus-visible) {
+:host([lowered][focus-visible]) {
   .elevation(1);
 }
 

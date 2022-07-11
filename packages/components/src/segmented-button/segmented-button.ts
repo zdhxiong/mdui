@@ -117,7 +117,7 @@ export class SegmentedButton extends LitElement {
     return html`<slot @slotchange=${this.onSlotChange}></slot>
       ${when(
         this.selects,
-        () => html`<select .required=${this.required}>
+        () => html`<select .required=${this.required} tabindex="-1">
           <option value=""></option>
           ${when(
             this.value,
@@ -201,12 +201,13 @@ export class SegmentedButton extends LitElement {
   }
 
   /**
-   * 设置验证未通过时的提示文字
+   * 设置自定义的错误提示文本。只要文本不为空，则表示字段验证未通过
    *
-   * @param message 验证未通过时的提示文字
+   * @param message 自定义的提示文本
    */
   public setCustomValidity(message: string): void {
     this.inputElement.setCustomValidity(message);
+    this.invalid = !this.inputElement.checkValidity();
   }
 
   protected onSlotChange() {

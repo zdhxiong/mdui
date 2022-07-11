@@ -45,16 +45,17 @@ export class NavigationBarItem extends AnchorMixin(
   @query('mdui-ripple', true)
   protected rippleElement!: Ripple;
 
-  @query('.item')
-  protected focusProxiedElement!: HTMLElement;
-
   private readonly hasSlotController = new HasSlotController(
     this,
     'activeIcon',
   );
 
-  protected get focusableDisabled(): boolean {
+  protected get focusDisabled(): boolean {
     return this.disabled;
+  }
+
+  protected get focusElement(): HTMLElement {
+    return this;
   }
 
   protected get rippleDisabled(): boolean {

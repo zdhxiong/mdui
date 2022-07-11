@@ -1,5 +1,5 @@
 import { CSSResultGroup, html, nothing, TemplateResult } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import type { MaterialIconsName } from '../icon.js';
 import { ButtonBase } from '../button/button-base.js';
@@ -27,9 +27,6 @@ export class SegmentedButtonItem extends ButtonBase {
     ButtonBase.styles,
     segmentedButtonItemStyle,
   ];
-
-  @query('.button')
-  protected focusProxiedElement!: HTMLElement;
 
   protected readonly hasSlotController = new HasSlotController(
     this,

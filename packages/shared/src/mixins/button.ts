@@ -142,15 +142,14 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
       id,
       className,
       part,
-      tabindex,
       content = html`<slot></slot>`,
     }: RenderButtonOptions): TemplateResult {
       const { disabled } = this;
       return html`<button
+        tabindex="-1"
         id=${ifDefined(id)}
         class=${ifDefined(className)}
         part=${ifDefined(part)}
-        tabindex=${ifDefined(tabindex)}
         ?disabled=${disabled}
       >
         ${content}

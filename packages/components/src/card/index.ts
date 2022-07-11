@@ -23,16 +23,17 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
     return !this.href && !this.clickable;
   }
 
-  protected get focusableDisabled(): boolean {
+  protected get focusDisabled(): boolean {
     return this.disabled;
+  }
+
+  protected get focusElement(): HTMLElement {
+    return this;
   }
 
   protected get rippleDisabled(): boolean {
     return this.disabled;
   }
-
-  @query('.link')
-  protected focusProxiedElement!: HTMLElement;
 
   @query('mdui-ripple')
   protected rippleElement!: Ripple;

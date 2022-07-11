@@ -1,0 +1,329 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  display: inline-block;
+  width: 100%;
+}
+
+.text-field {
+  position: relative;
+  display: flex;
+  transition: box-shadow 100ms var(--mdui-motion-easing-standard);
+  .padding(0, 16);
+
+  &.has-prefix-icon {
+    .paddingLeft(12);
+  }
+
+  &.has-suffix-icon {
+    .paddingRight(12);
+  }
+
+  :host([variant="filled"]) & {
+    box-shadow: inset 0 unit((-1 / @root-font-size), rem) 0 0 rgb(var(--mdui-color-on-surface-variant));
+    .backgroundColor(surface-variant);
+    .shapeCorner(extra-small, top);
+  }
+
+  :host([variant="filled"][invalid]) & {
+    box-shadow: inset 0 unit((-1 / @root-font-size), rem) 0 0 rgb(var(--mdui-color-error));
+  }
+
+  :host([variant="filled"]:hover) & {
+    box-shadow: inset 0 unit((-1 / @root-font-size), rem) 0 0 rgb(var(--mdui-color-on-surface));
+  }
+
+  :host([variant="filled"][invalid]:hover) & {
+    box-shadow: inset 0 unit((-1 / @root-font-size), rem) 0 0 rgb(var(--mdui-color-on-error-container));
+  }
+
+  :host([variant="filled"][focused]) & {
+    box-shadow: inset 0 unit((-2 / @root-font-size), rem) 0 0 rgb(var(--mdui-color-primary));
+  }
+
+  :host([variant="filled"][focused][invalid]) & {
+    box-shadow: inset 0 unit((-2 / @root-font-size), rem) 0 0 rgb(var(--mdui-color-error));
+  }
+
+  :host([variant="filled"][disabled]) & {
+    box-shadow: inset 0 unit((-1 / @root-font-size), rem) 0 0 rgba(var(--mdui-color-on-surface), 38%);
+    .backgroundColor(on-surface, 4%);
+  }
+
+  :host([variant="outlined"]) & {
+    box-shadow: inset 0 0 0 unit((1 / @root-font-size), rem) rgb(var(--mdui-color-outline));
+    .shapeCorner(extra-small);
+  }
+
+  :host([variant="outlined"][invalid]) & {
+    box-shadow: inset 0 0 0 unit((1 / @root-font-size), rem) rgb(var(--mdui-color-error));
+  }
+
+  :host([variant="outlined"]:hover) & {
+    box-shadow: inset 0 0 0 unit((1 / @root-font-size), rem) rgb(var(--mdui-color-on-surface));
+  }
+
+  :host([variant="outlined"][invalid]:hover) & {
+    box-shadow: inset 0 0 0 unit((1 / @root-font-size), rem) rgb(var(--mdui-color-on-error-container));
+  }
+
+  :host([variant="outlined"][focused]) & {
+    box-shadow: inset 0 0 0 unit((2 / @root-font-size), rem) rgb(var(--mdui-color-primary));
+  }
+
+  :host([variant="outlined"][focused][invalid]) & {
+    box-shadow: inset 0 0 0 unit((2 / @root-font-size), rem) rgb(var(--mdui-color-error));
+  }
+
+  :host([variant="outlined"][disabled]) & {
+    box-shadow: inset 0 0 0 unit((2 / @root-font-size), rem) rgba(var(--mdui-color-on-surface), 12%);
+  }
+}
+
+.prefix-icon,
+.suffix-icon,
+.prefix,
+.suffix {
+  display: flex;
+  align-items: center;
+  user-select: none;
+  .color(on-surface-variant);
+
+  :host([disabled]) & {
+    .color(on-surface, 38%);
+  }
+}
+
+.suffix-icon,
+.suffix {
+  :host([invalid]) & {
+    .color(error);
+  }
+
+  :host([invalid]:hover) & {
+    .color(on-error-container);
+  }
+
+  :host([focused][invalid]) & {
+    .color(error);
+  }
+}
+
+.prefix-icon,
+.suffix-icon {
+  .fontSize(24);
+
+  mdui-icon-button,
+  ::slotted(mdui-icon-button) {
+    .marginLeft(-8);
+    .marginRight(-8);
+  }
+}
+
+.prefix-icon {
+  .has-prefix-icon & {
+    .marginRight(16);
+  }
+}
+
+.suffix-icon {
+  .has-suffix-icon & {
+    .marginLeft(16);
+  }
+}
+
+.prefix,
+.suffix {
+  display: none;
+  .typescale(body-large);
+
+  :host([variant="filled"][label]) & {
+    .paddingTop(16);
+  }
+
+  :host([focused]) &,
+  .has-value & {
+    display: flex;
+  }
+}
+
+.prefix {
+  .paddingRight(2);
+}
+
+.suffix {
+  .paddingLeft(2);
+}
+
+.input-container {
+  width: 100%;
+}
+
+.label {
+  position: absolute;
+  pointer-events: none;
+  max-width: calc(100% - 1rem);
+  // stylelint-disable-next-line
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  .top(16);
+  .color(on-surface-variant);
+  .typescale(body-large);
+
+  :host([invalid]) & {
+    .color(error);
+  }
+
+  :host([variant="outlined"]) & {
+    .padding(0, 4);
+    .margin(0, -4);
+  }
+
+  :host([variant="outlined"]:hover) & {
+    .color(on-surface);
+  }
+
+  :host([variant="filled"][invalid]:hover) &,
+  :host([variant="outlined"][invalid]:hover) & {
+    .color(on-error-container);
+  }
+
+  :host([variant="filled"][focused]) &,
+  :host([variant="outlined"][focused]) & {
+    .color(primary);
+  }
+
+  :host([variant="filled"][focused]) &,
+  :host([variant="filled"]) .has-value &,
+  :host([variant="filled"][type="date"]) &,
+  :host([variant="filled"][type="datetime-local"]) &,
+  :host([variant="filled"][type="month"]) &,
+  :host([variant="filled"][type="time"]) &,
+  :host([variant="filled"][type="week"]) & {
+    .typescale(body-small);
+    .top(4);
+  }
+
+  :host([variant="outlined"][focused]) &,
+  :host([variant="outlined"]) .has-value &,
+  :host([variant="outlined"][type="date"]) &,
+  :host([variant="outlined"][type="datetime-local"]) &,
+  :host([variant="outlined"][type="month"]) &,
+  :host([variant="outlined"][type="time"]) &,
+  :host([variant="outlined"][type="week"]) & {
+    .typescale(body-small);
+    .top(-8);
+    .left(12);
+    .backgroundColor(background);
+  }
+
+  :host([variant="filled"][focused][invalid]) &,
+  :host([variant="outlined"][focused][invalid]) & {
+    .color(error);
+  }
+
+  :host([variant="filled"][disabled]) &,
+  :host([variant="outlined"][disabled]) & {
+    .color(on-surface, 38%);
+  }
+}
+
+.input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: none;
+  appearance: none;
+  resize: none;
+  font-family: inherit;
+  .padding(16, 0);
+  .typescale(body-large);
+  .color(on-surface);
+  .caretColor(primary);
+
+  &::placeholder {
+    .color(on-surface-variant);
+  }
+
+  :host([invalid]) & {
+    .caretColor(error);
+  }
+
+  :host([disabled]) & {
+    .color(on-surface, 38%);
+  }
+
+  :host([end-aligned]) & {
+    text-align: right;
+  }
+}
+
+:host([variant="filled"]) .label + .input {
+  .padding(24, 0, 8, 0);
+}
+
+.supporting {
+  display: flex;
+  justify-content: space-between;
+  .padding(4, 16);
+  .color(on-surface-variant);
+
+  :host([invalid]) & {
+    .color(error);
+  }
+}
+
+.helper {
+  opacity: 1;
+  transition: opacity 150ms var(--mdui-motion-easing-standard);
+  .typescale(body-small);
+
+  :host([disabled]) & {
+    .color(on-surface, 38%);
+  }
+
+  :host([helper-on-focus]) & {
+    opacity: 0;
+  }
+
+  :host([helper-on-focus][focused]) & {
+    opacity: 1;
+  }
+}
+
+.error {
+  .typescale(body-small);
+}
+
+.counter {
+  flex-wrap: nowrap;
+  .paddingLeft(16);
+  .typescale(body-small);
+}
+
+// edge 中会默认添加密码切换按钮，隐藏掉
+::-ms-reveal {
+  display: none;
+}
+
+// 火狐中的日期时间选择器会默认添加 clear 按钮，隐藏掉
+.is-firefox .input[type="date"],
+.is-firefox .input[type="datetime-local"],
+.is-firefox .input[type="time"] {
+  clip-path: inset(0 2em 0 0);
+}
+
+// 移除 input[type="number"] 时，右侧的上下箭头
+.input[type="number"]::-webkit-outer-spin-button,
+.input[type="number"]::-webkit-inner-spin-button {
+  // stylelint-disable-next-line
+  -webkit-appearance: none;
+  display: none;
+}
+
+.input[type="number"] {
+  // stylelint-disable-next-line
+  -moz-appearance: textfield;
+}

@@ -1,5 +1,5 @@
 import { html, TemplateResult, CSSResultGroup } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import type { MaterialIconsName } from '../icon.js';
 import { ButtonBase } from './button-base.js';
 import { style } from './style.js';
@@ -25,9 +25,6 @@ import '../icon.js';
 @customElement('mdui-button')
 export class Button extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
-
-  @query('.button')
-  protected focusProxiedElement!: HTMLElement;
 
   /**
    * 按钮形状。可选值为：

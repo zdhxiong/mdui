@@ -1,5 +1,5 @@
 import { CSSResultGroup, html, TemplateResult } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { ButtonBase } from '../button/button-base.js';
@@ -32,9 +32,6 @@ import '@mdui/icons/clear.js';
 @customElement('mdui-chip')
 export class Chip extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
-
-  @query('.button')
-  protected focusProxiedElement!: HTMLElement;
 
   /**
    * 纸片形状。可选值为：

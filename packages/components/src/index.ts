@@ -26,6 +26,7 @@ export * from './segmented-button-item.js';
 export * from './segmented-button.js';
 export * from './spacer.js';
 export * from './switch.js';
+export * from './text-field.js';
 export * from './tooltip.js';
 export * from './top-app-bar-title.js';
 export * from './top-app-bar.js';

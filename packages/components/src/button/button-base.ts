@@ -5,7 +5,6 @@ import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { ButtonMixin } from '@mdui/shared/mixins/button.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
-import { watch } from '@mdui/shared/decorators/watch.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { Ripple } from '../ripple/index.js';
@@ -32,15 +31,12 @@ export class ButtonBase extends ButtonMixin(
     return this.disabled || this.loading;
   }
 
-  protected get focusableDisabled(): boolean {
+  protected get focusDisabled(): boolean {
     return this.disabled || this.loading;
   }
 
-  @watch('disabled')
-  @watch('loading')
-  protected _() {
-    // @ts-ignore
-    this.onDisabledUpdate();
+  protected get focusElement(): HTMLElement {
+    return this;
   }
 
   connectedCallback() {

@@ -21,11 +21,8 @@
 /**
  * 颜色值
  *
- * 输入: .color(background-color, on-primary)
+ * 输入: .color(on-primary, 30%, background-color)
  * 输出: background-color: rgb(var(--mdui-color-on-primary, 255, 255, 255))
- *
- * 输入: .color(background-color, on-primary, 30%)
- * 输出: background-color: rgba(var(--mdui-color-on-primary, 255, 255, 255), 30%)
  */
 .color(@rgb, @opacity: 1, @name: color) {
   @cssVariable: "--mdui-color-@{rgb}";
@@ -51,13 +48,17 @@
   .color(@rgb, @opacity, stroke);
 }
 
+.caretColor(@rgb, @opacity: 1) {
+  .color(@rgb, @opacity, caret-color);
+}
+
 /**
  * 设置边框
  *
- * 输入: .border(border, 1px, solid, primary)
+ * 输入: .border(1px, solid, primary, border)
  * 输出: border: 1px solid rgb(103,80,164)
  *
- * 输入: .border(border-top, 1px solid, primary, 30%)
+ * 输入: .border(1px, solid, primary, 30%, border-top)
  * 输出: border-top: 1px solid rgba(103,80,164,30%)
  */
 .border(@width, @style, @rgb, @opacity: 1, @name: border) {
@@ -281,13 +282,6 @@
   transform: translateY(unit((@y / @root-font-size), rem));
 }
 
-.typescale(@name) {
-  .sys(font-size, ~"typescale-@{name}-size");
-  .sys(font-weight, ~"typescale-@{name}-weight");
-  .sys(letter-spacing, ~"typescale-@{name}-tracking");
-  .sys(line-height, ~"typescale-@{name}-line-height");
-}
-
 .fontSize(@value) {
   & when (isnumber(@value)) {
     .px(font-size, @value);
@@ -318,6 +312,13 @@
   & when not (isnumber(@value)) {
     .sys(line-height, ~"typescale-@{value}-line-height");
   }
+}
+
+.typescale(@name) {
+  .fontSize(@name);
+  .fontWeight(@name);
+  .letterSpacing(@name);
+  .lineHeight(@name);
 }
 
 .width(@value) {

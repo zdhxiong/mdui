@@ -41,16 +41,16 @@ export class ListItem extends AnchorMixin(
   @query('.item')
   protected item!: HTMLElement;
 
-  protected get focusProxiedElement(): HTMLElement {
-    return this.item;
-  }
-
-  protected get focusableDisabled(): boolean {
+  protected get focusDisabled(): boolean {
     return this.href ? this.disabled : this.disabled || this.nonclickable;
   }
 
+  protected get focusElement(): HTMLElement {
+    return this;
+  }
+
   protected get rippleDisabled(): boolean {
-    return this.focusableDisabled;
+    return this.focusDisabled;
   }
 
   private readonly hasSlotController = new HasSlotController(

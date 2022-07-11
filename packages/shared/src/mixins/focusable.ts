@@ -8,6 +8,19 @@ import '@mdui/jq/methods/each.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/off.js';
 
+let isClick = true;
+$(document).on({
+  'pointerdown._focusable': () => {
+    isClick = true;
+  },
+  'keydown._focusable': () => {
+    isClick = false;
+  },
+});
+
+/**
+ * 参考：https://github.com/adobe/spectrum-web-components/blob/main/packages/shared/src/focusable.ts
+ */
 export const FocusableMixin = <T extends Constructor<LitElement>>(
   superclass: T,
 ): T & Constructor<LitElement> => {
@@ -16,21 +29,34 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
      * 是否在页面加载时自动获得焦点
      */
     @property({ type: Boolean })
-    public autofocus = false;
+    public override autofocus = false;
+
+    /**
+     * 是否获得了焦点，不管是鼠标点击，还是键盘切换获得的焦点，都会添加该属性
+     * 添加到 :host 元素上，供 CSS 选择器添加样式
+     */
+    @property({ type: Boolean, reflect: true })
+    protected focused = false;
+
+    /**
+     * 是否通过键盘切换获得了焦点
+     * 添加到 :host 元素上，供 CSS 选择器添加样式
+     */
+    @property({ type: Boolean, reflect: true, attribute: 'focus-visible' })
+    protected focusVisible = false;
 
     /**
      * 父类要实现该属性，表示是否禁用 focus 状态
      */
-    protected get focusableDisabled(): boolean {
-      throw new Error('Must implement focusableDisabled getter!');
+    protected get focusDisabled(): boolean {
+      throw new Error('Must implement focusDisabled getter!');
     }
 
     /**
-     * 被代理的元素
-     * focusProxiedElement 的元素获得焦点时，焦点会代理到 this 上
+     * 最终获得焦点的元素
      */
-    protected get focusProxiedElement(): HTMLElement | null {
-      throw new Error('Must implement focusProxiedElement getter!');
+    protected get focusElement(): HTMLElement {
+      throw new Error('Must implement focusElement getter!');
     }
 
     private manipulatingTabindex = false;
@@ -39,27 +65,93 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     /**
      * 通过 Tab 键在元素之间切换焦点时，tabIndex 属性指定了元素获取焦点的顺序
      */
-    @property({ type: Number, attribute: 'tabindex' })
-    public get tabIndex(): number {
-      return Number($(this).attr('tabindex')) || -1;
+    @property({ type: Number })
+    public override get tabIndex(): number {
+      const $this = $(this);
+
+      if (this.focusElement === this) {
+        return Number($this.attr('tabindex')) || -1;
+      }
+
+      const tabIndexAttribute = Number($this.attr('tabindex')) || 0;
+
+      if (this.focusDisabled || tabIndexAttribute < 0) {
+        return -1;
+      }
+
+      if (!this.focusElement) {
+        return tabIndexAttribute;
+      }
+
+      return this.focusElement.tabIndex;
     }
-    public set tabIndex(tabIndex: number) {
+    public override set tabIndex(tabIndex: number) {
       if (this.manipulatingTabindex) {
         this.manipulatingTabindex = false;
         return;
       }
 
-      if (tabIndex !== this.tabIndex) {
-        this._tabIndex = tabIndex;
-        $(this).attr('tabindex', this.focusableDisabled ? -1 : tabIndex);
+      const $this = $(this);
+
+      if (this.focusElement === this) {
+        if (tabIndex !== this.tabIndex) {
+          this._tabIndex = tabIndex;
+          $this.attr('tabindex', this.focusDisabled ? -1 : tabIndex);
+        }
+        return;
+      }
+
+      if (tabIndex === -1) {
+        $this.on('pointerdown._focusable', () => {
+          if (this.tabIndex === -1) {
+            this.tabIndex = 0;
+            this.focus({ preventScroll: true });
+          }
+        });
+      } else {
+        this.manipulatingTabindex = true;
+        $this.off('pointerdown._focusable');
+      }
+
+      if (tabIndex === -1 || this.focusDisabled) {
+        this.setAttribute('tabindex', '-1');
+        if (tabIndex !== -1) {
+          this.manageFocusElementTabindex(tabIndex);
+        }
+        return;
+      }
+
+      if (this.hasAttribute('tabindex')) {
+        this.removeAttribute('tabindex');
+      } else {
+        this.manipulatingTabindex = false;
+      }
+      this.manageFocusElementTabindex(tabIndex);
+    }
+
+    private async manageFocusElementTabindex(tabIndex: number): Promise<void> {
+      if (!this.focusElement) {
+        await this.updateComplete;
+      }
+
+      if (tabIndex === null) {
+        this.focusElement.removeAttribute('tabindex');
+      } else {
+        this.focusElement.tabIndex = tabIndex;
       }
     }
 
     /**
      * 将焦点设置在当前元素上
      */
-    public focus(options?: FocusOptions): void {
-      if (!this.focusableDisabled) {
+    public override focus(options?: FocusOptions): void {
+      if (this.focusDisabled || !this.focusElement) {
+        return;
+      }
+
+      if (this.focusElement !== this) {
+        this.focusElement.focus(options);
+      } else {
         HTMLElement.prototype.focus.apply(this, [options]);
       }
     }
@@ -67,70 +159,86 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     /**
      * 从当前元素中移除焦点
      */
-    public blur(): void {
-      HTMLElement.prototype.blur.apply(this);
+    public override blur(): void {
+      if (this.focusElement !== this) {
+        this.focusElement.blur();
+      } else {
+        HTMLElement.prototype.blur.apply(this);
+      }
     }
 
     /**
      * 模拟鼠标点击元素
      */
-    public click(): void {
-      if (!this.focusableDisabled) {
+    public override click(): void {
+      if (this.focusDisabled) {
+        return;
+      }
+
+      if (this.focusElement !== this) {
+        this.focusElement.click();
+      } else {
         HTMLElement.prototype.click.apply(this);
       }
     }
 
-    protected firstUpdated(changes: PropertyValues): void {
+    protected manageAutoFocus(): void {
+      if (this.autofocus) {
+        this.dispatchEvent(
+          new KeyboardEvent('keydown', {
+            code: 'Tab',
+          }),
+        );
+        this.focusElement.focus();
+      }
+    }
+
+    protected override firstUpdated(changes: PropertyValues): void {
       super.firstUpdated(changes);
 
-      if (!this.hasAttribute('tabindex')) {
-        this.tabIndex = 0;
-      }
-
-      if (this.autofocus) {
-        this.focus();
-      }
-
-      this.addEventListener('keydown', (event) => {
-        if (document.activeElement === this && event.code === 'Space') {
-          event.preventDefault();
-          this.focusProxiedElement?.click();
-        }
+      $(this.focusElement).on({
+        focus: () => {
+          this.focused = true;
+          this.focusVisible = !isClick;
+        },
+        blur: () => {
+          this.focused = false;
+          this.focusVisible = false;
+        },
       });
     }
 
-    /**
-     * 需要在父类中监听指定属性，并调用该方法
-     * 如 @watch('disabled') @watch('loading')
-     */
-    protected async onDisabledUpdate() {
-      this.manipulatingTabindex = true;
-      $(this)
-        .attr('tabindex', this.focusableDisabled ? -1 : this._tabIndex)
-        .css('pointer-events', this.focusableDisabled ? 'none' : '');
+    protected override update(changedProperties: PropertyValues): void {
+      if (this.focusDisabled) {
+        this.manipulatingTabindex = true;
+        this.setAttribute('tabindex', '-1');
+      } else {
+        this.manipulatingTabindex = true;
+        if (this.focusElement === this) {
+          $(this).attr('tabindex', this._tabIndex);
+        } else {
+          this.removeAttribute('tabindex');
+        }
+      }
 
-      await this.updateComplete;
+      super.update(changedProperties);
+    }
 
-      if (this.focusableDisabled) {
+    protected override updated(changedProperties: PropertyValues): void {
+      super.updated(changedProperties);
+
+      if (this.focused && this.focusDisabled) {
         this.blur();
       }
     }
 
-    private proxyFocus(): void {
-      this.focus();
-    }
-
-    protected updated(changed: PropertyValues): void {
-      super.updated(changed);
-
-      if (!this.focusProxiedElement) {
-        return;
-      }
-
-      $(this.focusProxiedElement)
-        .off('focus')
-        .on('focus', this.proxyFocus)
-        .each((_, element) => (element.tabIndex = -1));
+    public override connectedCallback(): void {
+      super.connectedCallback();
+      this.updateComplete.then(() => {
+        requestAnimationFrame(() => {
+          this.manageAutoFocus();
+        });
+      });
     }
   }
 

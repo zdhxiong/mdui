@@ -1,5 +1,5 @@
 import { CSSResultGroup, html, PropertyValues, TemplateResult } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
@@ -28,9 +28,6 @@ import '../icon.js';
 @customElement('mdui-icon-button')
 export class IconButton extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
-
-  @query('.button')
-  protected focusProxiedElement!: HTMLElement;
 
   private readonly hasSlotController = new HasSlotController(
     this,

@@ -103,7 +103,7 @@ mdui-ripple {
   }
 
   :host([hover]) &,
-  :host([focused]) &,
+  :host([focus-visible]) &,
   :host([pressed]) & {
     .backgroundColor(on-surface-variant);
   }
@@ -122,7 +122,7 @@ mdui-ripple {
   }
 
   :host([hover][checked]) &,
-  :host([focused][checked]) &,
+  :host([focus-visible][checked]) &,
   :host([pressed][checked]) & {
     .backgroundColor(primary-container);
   }

@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>Text Field</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: Roboto;
+    }
+    mdui-text-field {
+      width: 280px;
+    }
+    @media (max-width: 600px) {
+      mdui-text-field {
+        width: 100%;
+      }
+      mdui-text-field + mdui-text-field {
+      }
+    }
+  </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/components/text-field.js';
+    import '../../packages/components/icon-button.js';
+  </script>
+</head>
+
+<body>
+  <main>
+    <section>
+      <h2>normal</h2>
+      <mdui-text-field></mdui-text-field>
+      <mdui-text-field variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>type</h2>
+      <mdui-text-field label="email" type="email"></mdui-text-field>
+      <mdui-text-field label="email" type="email" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="number" type="number"></mdui-text-field>
+      <mdui-text-field label="number" type="number" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="password" type="password"></mdui-text-field>
+      <mdui-text-field label="password" type="password" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="search" type="search"></mdui-text-field>
+      <mdui-text-field label="search" type="search" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="tel" type="tel"></mdui-text-field>
+      <mdui-text-field label="tel" type="tel" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="text" type="text"></mdui-text-field>
+      <mdui-text-field label="text" type="text" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="url" type="url"></mdui-text-field>
+      <mdui-text-field label="url" type="url" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="date" type="date"></mdui-text-field>
+      <mdui-text-field label="date" type="date" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="datetime-local" type="datetime-local"></mdui-text-field>
+      <mdui-text-field label="datetime-local" type="datetime-local" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="month" type="month"></mdui-text-field>
+      <mdui-text-field label="month" type="month" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="time" type="time"></mdui-text-field>
+      <mdui-text-field label="time" type="time" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="week" type="week"></mdui-text-field>
+      <mdui-text-field label="week" type="week" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>long label</h2>
+      <mdui-text-field label="Long Long Long Long Long Long Long Long Long Long Long"></mdui-text-field>
+      <mdui-text-field label="Long Long Long Long Long Long Long Long Long Long Long" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>placeholder</h2>
+      <mdui-text-field label="Text Field" placeholder="Place input"></mdui-text-field>
+      <mdui-text-field label="Text Field" placeholder="Place input" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>helper</h2>
+      <mdui-text-field label="Text Field" helper="Example: Wa ha ha"></mdui-text-field>
+      <mdui-text-field label="Text Field" helper="Example: Wa ha ha" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>helper-on-focus</h2>
+      <mdui-text-field label="Text Field" helper="Example: Wa ha ha" helper-on-focus></mdui-text-field>
+      <mdui-text-field label="Text Field" helper="Example: Wa ha ha" helper-on-focus variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>clearable</h2>
+      <mdui-text-field label="Text Field" clearable></mdui-text-field>
+      <mdui-text-field label="Text Field" clearable variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>endAligned</h2>
+      <mdui-text-field label="end aligned" suffix="/100" end-aligned></mdui-text-field>
+      <mdui-text-field label="end aligned" suffix="/100" end-aligned variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>prefix attr & suffix attr</h2>
+      <mdui-text-field label="prefix" prefix="$"></mdui-text-field>
+      <mdui-text-field label="prefix" prefix="$" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="suffix" suffix="/100" end-aligned></mdui-text-field>
+      <mdui-text-field label="suffix" suffix="/100" end-aligned variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="prefix & suffix" prefix="📧" suffix="@gmail.com"></mdui-text-field>
+      <mdui-text-field label="prefix & suffix" prefix="📧" suffix="@gmail.com" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>prefixIcon attr & suffixIcon attr</h2>
+      <mdui-text-field label="prefixIcon" prefix-icon="search"></mdui-text-field>
+      <mdui-text-field label="prefixIcon" prefix-icon="search" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="prefixIcon" suffix-icon="mic"></mdui-text-field>
+      <mdui-text-field label="prefixIcon" suffix-icon="mic" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="prefixIcon" prefix-icon="search" suffix-icon="mic"></mdui-text-field>
+      <mdui-text-field label="prefixIcon" prefix-icon="search" suffix-icon="mic" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>prefix attr & prefixIcon attr | suffix attr & suffixIcon attr</h2>
+      <mdui-text-field label="prefix & prefixIcon" prefix="$" prefix-icon="search"></mdui-text-field>
+      <mdui-text-field label="prefix & prefixIcon" prefix="$" prefix-icon="search" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="suffix & suffixIcon" suffix="/100" suffix-icon="mic"></mdui-text-field>
+      <mdui-text-field label="suffix & suffixIcon" suffix="/100" suffix-icon="mic" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="prefix & prefixIcon | suffix & suffixIcon(long prefix & prefixIcon | suffix & suffixIcon)" prefix="$" prefix-icon="search" suffix="/100" suffix-icon="mic"></mdui-text-field>
+      <mdui-text-field label="prefix & prefixIcon | suffix & suffixIcon(long prefix & prefixIcon | suffix & suffixIcon)" prefix="$" prefix-icon="search" suffix="/100" suffix-icon="mic" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>prefix slot * suffix slot</h2>
+      <mdui-text-field label="prefix slot">
+        <span slot="prefix">$</span>
+      </mdui-text-field>
+      <mdui-text-field label="prefix slot" variant="outlined">
+        <span slot="prefix">$</span>
+      </mdui-text-field>
+      <br/>
+      <mdui-text-field label="suffix slot">
+        <span slot="suffix">/100</span>
+      </mdui-text-field>
+      <mdui-text-field label="suffix slot" variant="outlined">
+        <span slot="suffix">/100</span>
+      </mdui-text-field>
+    </section>
+
+    <section>
+      <h2>prefix-icon slot & suffix-icon</h2>
+      <mdui-text-field label="icon slot">
+        <mdui-icon slot="prefix-icon" name="search"></mdui-icon>
+        <mdui-icon slot="suffix-icon" name="mic"></mdui-icon>
+      </mdui-text-field>
+      <mdui-text-field label="icon slot" variant="outlined">
+        <mdui-icon slot="prefix-icon" name="search"></mdui-icon>
+        <mdui-icon slot="suffix-icon" name="mic"></mdui-icon>
+      </mdui-text-field>
+      <br/>
+      <mdui-text-field label="icon-button slot">
+        <mdui-icon-button slot="prefix-icon" icon="search"></mdui-icon-button>
+        <mdui-icon-button slot="suffix-icon" icon="delete"></mdui-icon-button>
+      </mdui-text-field>
+      <mdui-text-field label="icon-button slot" variant="outlined">
+        <mdui-icon-button slot="prefix-icon" icon="search"></mdui-icon-button>
+        <mdui-icon-button slot="suffix-icon" icon="delete"></mdui-icon-button>
+      </mdui-text-field>
+    </section>
+
+    <section>
+      <h2>readonly</h2>
+      <mdui-text-field label="readonly" helper="Example: Wo haha" prefix="$" suffix="/100" readonly></mdui-text-field>
+      <mdui-text-field label="readonly" helper="Example: Wo haha" prefix="$" suffix="/100" readonly variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>disabled</h2>
+      <mdui-text-field label="disabled" helper="Example: Wo haha" prefix="$" suffix="/100" disabled></mdui-text-field>
+      <mdui-text-field label="disabled" helper="Example: Wo haha" prefix="$" suffix="/100" disabled variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="disabled" prefix-icon="search" suffix-icon="mic" disabled></mdui-text-field>
+      <mdui-text-field label="disabled" prefix-icon="search" suffix-icon="mic" disabled variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="disabled" prefix-icon="search" suffix-icon="mic" value="has value" disabled></mdui-text-field>
+      <mdui-text-field label="disabled" prefix-icon="search" suffix-icon="mic" value="has value" disabled variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>rows</h2>
+      <mdui-text-field label="rows" helper="Example: Wo haha" prefix="$" suffix="/100" rows="3"></mdui-text-field>
+      <mdui-text-field label="rows" helper="Example: Wo haha" prefix="$" suffix="/100" rows="3" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>autosize</h2>
+      <mdui-text-field label="autosize" helper="Example: Wo haha" prefix="$" suffix="/100" autosize></mdui-text-field>
+      <mdui-text-field label="autosize" helper="Example: Wo haha" prefix="$" suffix="/100" autosize variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>autosize & min-rows & max-rows</h2>
+      <mdui-text-field label="autosize min-rows:2" autosize min-rows="2"></mdui-text-field>
+      <mdui-text-field label="autosize min-rows:2" autosize min-rows="2" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="autosize max-rows:5" autosize max-rows="5"></mdui-text-field>
+      <mdui-text-field label="autosize max-rows:5" autosize max-rows="5" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="autosize min-rows:2 max-rows:5" autosize min-rows="2" max-rows="5"></mdui-text-field>
+      <mdui-text-field label="autosize min-rows:2 max-rows:5" autosize min-rows="2" max-rows="5" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>counter</h2>
+      <mdui-text-field label="counter" maxlength="100" autosize counter></mdui-text-field>
+      <mdui-text-field label="counter" maxlength="100" autosize counter variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>togglePassword</h2>
+      <mdui-text-field type="password" label="togglePassword" toggle-password></mdui-text-field>
+      <mdui-text-field type="password" label="togglePassword" toggle-password variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>default value</h2>
+      <mdui-text-field label="default value" value="has default value"></mdui-text-field>
+      <mdui-text-field label="default value" value="has default value" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="autosize" autosize value="long long long long long long long long long long long long long long long long long long long long long long long long long long long long"></mdui-text-field>
+      <mdui-text-field label="autosize" autosize value="long long long long long long long long long long long long long long long long long long long long long long long long long long long long" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>required</h2>
+      <mdui-text-field label="required" required prefix-icon="search" helper="required"></mdui-text-field>
+      <mdui-text-field label="required" required prefix-icon="search" helper="required" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>error</h2>
+      <mdui-text-field label="required" required prefix-icon="search" helper="required" error="custom error text"></mdui-text-field>
+      <mdui-text-field label="required" required prefix-icon="search" helper="required" error="custom error text" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>validation</h2>
+      <mdui-text-field label="minlength:2, maxlength:10" minlength="2" maxlength="10" prefix-icon="search" suffix-icon="delete" helper="helper text" counter></mdui-text-field>
+      <mdui-text-field label="minlength:2, maxlength:10" minlength="2" maxlength="10" prefix-icon="search" suffix-icon="delete" helper="helper text" counter variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="min,max,step" type="number" min="2" max="10" step="2"></mdui-text-field>
+      <mdui-text-field label="min,max,step" type="number" min="2" max="10" step="2" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
+      <h2>pattern 至少包含6位，且包含大小写字母</h2>
+      <mdui-text-field label="pattern input" pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z]).*$"></mdui-text-field>
+      <mdui-text-field label="pattern input" pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z]).*$" variant="outlined"></mdui-text-field>
+      <br/>
+      <mdui-text-field label="pattern textarea" rows="4" pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z]).*$"></mdui-text-field>
+      <mdui-text-field label="pattern textarea" rows="4" pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z]).*$" variant="outlined"></mdui-text-field>
+    </section>
+
+  </main>
+</body>
+</html>

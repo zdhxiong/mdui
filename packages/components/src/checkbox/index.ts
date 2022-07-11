@@ -32,15 +32,15 @@ export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
   @query('mdui-ripple', true)
   protected rippleElement!: Ripple;
 
-  @query('input', true)
+  @query('input')
   protected inputElement!: HTMLInputElement;
 
-  protected get focusProxiedElement(): HTMLElement {
-    return this.inputElement;
+  protected get focusDisabled(): boolean {
+    return this.disabled;
   }
 
-  protected get focusableDisabled(): boolean {
-    return this.disabled;
+  protected get focusElement(): HTMLElement {
+    return this.inputElement;
   }
 
   protected get rippleDisabled(): boolean {
@@ -138,12 +138,13 @@ export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   /**
-   * 设置验证未通过时的提示文字
+   * 设置自定义的错误提示文本。只要文本不为空，则表示字段验证未通过
    *
-   * @param message 验证未通过时的提示文字
+   * @param message 自定义的提示文本
    */
   public setCustomValidity(message: string): void {
     this.inputElement.setCustomValidity(message);
+    this.invalid = !this.inputElement.checkValidity();
   }
 
   protected override render(): TemplateResult {

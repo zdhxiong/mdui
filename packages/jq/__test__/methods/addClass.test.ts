@@ -39,6 +39,7 @@ const test = ($: JQStatic, type: string): void => {
       let _currentClassName;
       $foo.addClass('mdui1 mdui2');
       $foo.addClass(function (i, currentClassName) {
+        // eslint-disable-next-line
         _this = this;
         _i = i;
         _currentClassName = currentClassName;

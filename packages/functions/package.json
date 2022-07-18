@@ -28,7 +28,7 @@
     "@mdui/icons": "^1.0.0",
     "@mdui/components": "^1.0.0",
     "@material/material-color-utilities": "^0.1.2",
-    "lit": "^2.2.3",
+    "lit": "^2.2.7",
     "tslib": "^2.4.0"
   }
 }

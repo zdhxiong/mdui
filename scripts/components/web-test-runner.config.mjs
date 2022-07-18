@@ -1,8 +1,10 @@
-const { playwrightLauncher } = require('@web/test-runner-playwright');
-const { fromRollup } = require('@web/dev-server-rollup');
-const commonjs = require('@rollup/plugin-commonjs');
+import { playwrightLauncher } from '@web/test-runner-playwright';
+import { fromRollup } from '@web/dev-server-rollup';
+import commonjs from '@rollup/plugin-commonjs';
 
-module.exports = {
+// bug: https://github.com/modernweb-dev/web/issues/1700
+
+export default {
   files: 'packages/components/__test__/**/*.test.js',
   // 打开下面两项，在浏览器中手动测试
   // manual: true,

@@ -67,11 +67,11 @@
   },
   "homepage": "https://www.mdui.org",
   "dependencies": {
-    "@open-wc/dedupe-mixin": "^1.3.0",
+    "@open-wc/dedupe-mixin": "^1.3.1",
     "@mdui/jq": "^3.0.0",
     "@mdui/shared": "^1.0.0",
     "@mdui/icons": "^1.0.0",
-    "lit": "^2.2.3",
+    "lit": "^2.2.7",
     "@lit-labs/motion": "^1.0.2",
     "@lit-labs/observers": "^1.0.1",
     "tslib": "^2.4.0"

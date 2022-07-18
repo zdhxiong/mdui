@@ -3,8 +3,8 @@
  */
 import { jq as $, JQ } from './utils.js';
 
-const getElementById = document.getElementById('test');
-const querySelector = document.querySelector('.test');
+const getElementById = document.getElementById('test')!;
+const querySelector = document.querySelector('.test')!;
 const querySelectorAll = document.querySelectorAll('.test');
 const getElementsByClassName = document.getElementsByClassName('test');
 const getElementsByTagName = document.getElementsByTagName('div');

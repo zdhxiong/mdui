@@ -41,6 +41,7 @@ const test = ($: JQStatic, type: string): void => {
       let _i;
       let _currentClassName;
       $foo.toggleClass(function (i, currentClassName) {
+        // eslint-disable-next-line
         _this = this;
         _i = i;
         _currentClassName = currentClassName;

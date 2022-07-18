@@ -24,6 +24,7 @@ const test = ($: JQStatic, type: string): void => {
       const $empty = $();
       assert.lengthOf($empty, 0);
 
+      // @ts-ignore
       const $null = $(null);
       assert.lengthOf($null, 0);
     });
@@ -41,7 +42,7 @@ const test = ($: JQStatic, type: string): void => {
     });
 
     it('$(element)', () => {
-      const $element = $(document.getElementById('testid'));
+      const $element = $(document.getElementById('testid')!);
       assert.lengthOf($element, 1);
       assert.deepEqual($element[0], document.getElementById('testid'));
     });
@@ -122,6 +123,7 @@ const test = ($: JQStatic, type: string): void => {
       });
 
       assert.lengthOf($fc, 1);
+      // @ts-ignore
       assert.deepEqual($fc[0], document);
     });
 
@@ -157,7 +159,7 @@ const test = ($: JQStatic, type: string): void => {
       ];
 
       const $jq = $(arr);
-      assert.sameOrderedMembers(Array.from($jq), arr);
+      assert.sameOrderedMembers(Array.from($jq) as typeof arr, arr);
     });
   });
 };

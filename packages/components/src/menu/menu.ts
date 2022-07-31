@@ -6,11 +6,12 @@ import {
 } from 'lit/decorators.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { watch } from '@mdui/shared/decorators/watch';
+import { emit } from '@mdui/shared/src/helpers/event';
 import { menuStyle } from './menu-style.js';
 import { MenuItem } from './menu-item.js';
 
 /**
- * @event change - 选中一个菜单项时触发
+ * @event change - 菜单项的选中状态变化时触发
  *
  * @slot - 子菜单项、分割线等元素
  *
@@ -35,30 +36,10 @@ export class Menu extends LitElement {
     | 'multiple' /*菜单项为多选*/;
 
   /**
-   * 当前选中的 `<mdui-menu-item>` 的值。若为多选，则多个值会用 `,` 分隔
+   * 当前选中的 `<mdui-menu-item>` 的值。若为单选，则值为字符串；若为多选，则值为字符串数组
    */
-  @property({ reflect: true })
-  public get value(): string {
-    if (!this.selects || !this.itemElements) {
-      return '';
-    }
-
-    return this.itemElements
-      .filter((itemElement) => itemElement.selected)
-      .map((itemElement) => itemElement.value)
-      .join(',');
-  }
-  public set value(value: string) {
-    if (!this.selects) {
-      return;
-    }
-
-    const valueArr = this.selects === 'multiple' ? value.split(',') : [value];
-
-    this.itemElements?.forEach((itemElement) => {
-      itemElement.selected = valueArr.includes(itemElement.value);
-    });
-  }
+  @property()
+  public value: string | string[] = '';
 
   /**
    * 菜单项是否使用更紧凑的布局
@@ -95,6 +76,38 @@ export class Menu extends LitElement {
    */
   @property({ type: Number, reflect: true, attribute: 'submenu-close-delay' })
   public submenuCloseDelay = 200;
+
+  /**
+   * 根据元素状态设置 value 值
+   * 当前该方法在 menu-item 元素中调用
+   */
+  protected syncValueFromItems() {
+    const values = this.itemElements!.filter((item) => item.selected).map(
+      (item) => item.value,
+    );
+
+    if (this.selects === 'single') {
+      this.value = values.length > 0 ? values[0] : '';
+    }
+    if (this.selects === 'multiple') {
+      this.value = values;
+    }
+  }
+
+  @watch('value', true)
+  protected onValueChange() {
+    if (!this.selects) {
+      return;
+    }
+
+    const values = this.selects === 'multiple' ? this.value : [this.value];
+
+    this.itemElements?.forEach((item) => {
+      item.selected = values.includes(item.value);
+    });
+
+    emit(this, 'change');
+  }
 
   protected override render(): TemplateResult {
     return html`<slot @slotchange=${this.onSlotChange}></slot>`;

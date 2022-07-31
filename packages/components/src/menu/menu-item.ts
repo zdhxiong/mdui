@@ -31,6 +31,7 @@ import '@mdui/jq/methods/height.js';
 import '@mdui/jq/methods/innerWidth.js';
 import '@mdui/jq/methods/innerHeight.js';
 import '@mdui/jq/methods/siblings.js';
+import '@mdui/jq/methods/parents.js';
 import '@mdui/jq/methods/each.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/static/contains.js';
@@ -54,7 +55,6 @@ import { menuItemStyle } from './menu-item-style.js';
  * @event submenu-opened - 子菜单打开动画完成时，事件被触发
  * @event submenu-close - 子菜单开始关闭时，事件被触发
  * @event submenu-closed - 子菜单关闭动画完成时，事件被触发
- * @event change - 当前菜单项的选中状态变更时触发
  *
  * @slot - 菜单项的文本
  * @slot start - 菜单项左侧元素
@@ -108,6 +108,11 @@ export class MenuItem extends AnchorMixin(
   protected get hasSubmenuSlot(): boolean {
     return this.hasSlotController.test('submenu');
   }
+
+  // selected 属性变化时，是否需要修改父元素的 value 值
+  // 在 `selects="single"` 时，选中一个 item 时，会取消选中其他 item，从而多次修改 value 值，导致触发多次 change 事件；
+  // 为了确保一次选中只修改一次 value 值，在修改 value 值前，判断该属性为 true 才执行
+  private changeParentValueOnSelectedChange = true;
 
   protected readonly hasSlotController = new HasSlotController(
     this,
@@ -210,11 +215,29 @@ export class MenuItem extends AnchorMixin(
   public submenuOpen = false;
 
   /**
-   * selected 属性变化时，触发事件
+   * selected 属性变化时
    */
   @watch('selected')
-  protected onSelectedChange() {
-    emit(this, 'change');
+  protected async onSelectedChange() {
+    // 如果是单选，选中当前 item 时，取消选中其他 item
+    if (this.selects === 'single' && this.selected) {
+      $(this)
+        .siblings('mdui-menu-item')
+        .each(async (_, itemElement: MenuItem) => {
+          itemElement.selected = false;
+
+          // 由一个 item 的选中，导致其他 item 被取消选中时，暂时禁止其他 item 修改父元素的 value 值
+          itemElement.changeParentValueOnSelectedChange = false;
+          await this.updateComplete;
+          itemElement.changeParentValueOnSelectedChange = true;
+        });
+    }
+
+    if (this.changeParentValueOnSelectedChange && this.selects) {
+      const menuElement = $(this).parents('mdui-menu')[0] as unknown as Menu;
+      // @ts-ignore
+      menuElement.syncValueFromItems();
+    }
   }
 
   /**
@@ -289,15 +312,6 @@ export class MenuItem extends AnchorMixin(
     // 切换 selected 状态
     if (this.selects) {
       this.selected = !this.selected;
-
-      // 如果是单选，选中当前 item 时，取消选中其他 item
-      if (this.selects === 'single' && this.selected) {
-        $(this)
-          .siblings('mdui-menu-item')
-          .each((_, itemElement) => {
-            itemElement.selected = false;
-          });
-      }
     }
 
     // 切换子菜单打开状态

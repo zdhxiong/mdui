@@ -50,6 +50,18 @@
 <body>
   <main>
     <section>
+      <h2>default open</h2>
+      <mdui-dropdown open>
+        <mdui-button slot="trigger">Click</mdui-button>
+        <mdui-menu>
+          <mdui-menu-item>Item 1</mdui-menu-item>
+          <mdui-menu-item disabled>Item 2</mdui-menu-item>
+          <mdui-menu-item>Item 3</mdui-menu-item>
+        </mdui-menu>
+      </mdui-dropdown>
+    </section>
+
+    <section>
       <h2>Trigger</h2>
       <mdui-dropdown trigger="click">
         <mdui-button slot="trigger">Click</mdui-button>
@@ -292,6 +304,18 @@
         <mdui-menu>
           <mdui-menu-item>Item 1</mdui-menu-item>
           <mdui-menu-item>Item 2</mdui-menu-item>
+          <mdui-menu-item>Item 3</mdui-menu-item>
+        </mdui-menu>
+      </mdui-dropdown>
+    </section>
+
+    <section>
+      <h2>stay-open-on-click</h2>
+      <mdui-dropdown stay-open-on-click>
+        <mdui-button slot="trigger">stayOpenOnClick</mdui-button>
+        <mdui-menu>
+          <mdui-menu-item>Item 1</mdui-menu-item>
+          <mdui-menu-item disabled>Item 2</mdui-menu-item>
           <mdui-menu-item>Item 3</mdui-menu-item>
         </mdui-menu>
       </mdui-dropdown>

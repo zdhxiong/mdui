@@ -11,15 +11,16 @@ import {
   query,
   queryAssignedElements,
 } from 'lit/decorators.js';
-import { when } from 'lit/directives/when.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import { animate, AnimateController } from '@lit-labs/motion';
 import { $ } from '@mdui/jq/$.js';
+import { JQ } from '@mdui/jq/shared/core.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/off.js';
+import '@mdui/jq/methods/is.js';
 import '@mdui/jq/methods/width.js';
 import '@mdui/jq/methods/height.js';
 import '@mdui/jq/static/contains.js';
+import { watch } from '@mdui/shared/decorators/watch.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import {
   DURATION_FADE_IN,
@@ -30,8 +31,7 @@ import {
   KEYFRAME_FADE_OUT,
 } from '@mdui/shared/helpers/motion.js';
 import { emit } from '@mdui/shared/helpers/event.js';
-import { watch } from '@mdui/shared/decorators/watch';
-import { JQ } from '@mdui/jq/shared/core';
+import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { style } from './style.js';
 
 /**
@@ -66,23 +66,6 @@ export class Dropdown extends LitElement {
 
   @query('.panel')
   protected panel!: HTMLElement;
-
-  protected readonly animateController = new AnimateController(this, {
-    defaultOptions: {
-      keyframeOptions: {
-        duration: DURATION_FADE_IN,
-        easing: EASING_DECELERATION,
-      },
-      in: KEYFRAME_FADE_IN,
-      out: KEYFRAME_FADE_OUT,
-      onStart: () => {
-        emit(this, this.open ? 'open' : 'close');
-      },
-      onComplete: () => {
-        emit(this, this.open ? 'opened' : 'closed');
-      },
-    },
-  });
 
   /**
    * dropdown 是否打开
@@ -138,6 +121,12 @@ export class Dropdown extends LitElement {
     | 'bottom-end' /*位于下方，且右对齐*/
     | 'top-start' /*位于上方，且左对齐*/
     | 'top-end' /*位于上方，且右对齐*/ = 'auto';
+
+  /**
+   * 在点击 `<mdui-menu-item>` 元素后，是否仍保持 dropdown 为打开状态
+   */
+  @property({ attribute: 'stay-open-on-click', type: Boolean, reflect: true })
+  public stayOpenOnClick = false;
 
   /**
    * 通过 hover 触发 dropdown 打开时的延时，单位为毫秒
@@ -200,14 +189,16 @@ export class Dropdown extends LitElement {
     super.connectedCallback();
     $(document).on('pointerdown._dropdown', (e) => this.onOuterClick(e));
     $(window).on('scroll._dropdown', () => {
-      window.requestAnimationFrame(() => this.onOpenChange());
+      window.requestAnimationFrame(() => this.onPositionChange());
     });
+    $(this).on('mouseleave._dropdown', () => this.onMouseLeave());
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     $(document).off('pointerdown._dropdown');
     $(window).off('scroll._dropdown');
+    $(this).off('mouseleave._dropdown');
   }
 
   protected override firstUpdated(_changedProperties: PropertyValues) {
@@ -220,8 +211,15 @@ export class Dropdown extends LitElement {
       contextmenu: (e) => this.onContextMenu(e as MouseEvent),
       keydown: (e) => this.onKeydown(e as KeyboardEvent),
       mouseenter: () => this.onMouseEnter(),
-      mouseleave: () => this.onMouseLeave(),
     });
+
+    $(this.panel).on('click', (event: MouseEvent) => {
+      if (!this.stayOpenOnClick && $(event.target!).is('mdui-menu-item')) {
+        this.open = false;
+      }
+    });
+
+    this.panel.hidden = !this.open;
   }
 
   protected hasTrigger(
@@ -318,7 +316,8 @@ export class Dropdown extends LitElement {
     }, this.closeDelay || 50);
   }
 
-  protected getPanelStyle(): Record<string, string> {
+  protected updatePositioner(): void {
+    const $panel = $(this.panel);
     const triggerRect = this.triggerSlots[0].getBoundingClientRect();
     const panelRect = {
       width: Math.max(
@@ -372,11 +371,12 @@ export class Dropdown extends LitElement {
         transformOriginY = 'top';
       }
 
-      return {
+      $panel.css({
         left: `${left}px`,
         top: `${top}px`,
         transformOrigin: `${transformOriginX} ${transformOriginY}`,
-      };
+      });
+      return;
     }
 
     // 未指定 openOnPointer，则根据 placement 参数设置打开方位
@@ -418,7 +418,7 @@ export class Dropdown extends LitElement {
       transformOriginY = y === 'top' ? 'bottom' : 'top';
     }
 
-    return {
+    $panel.css({
       top: `${
         transformOriginY === 'top'
           ? triggerRect.top + triggerRect.height
@@ -430,46 +430,76 @@ export class Dropdown extends LitElement {
           : triggerRect.left + triggerRect.width - panelRect.width
       }px`,
       transformOrigin: `${transformOriginX} ${transformOriginY}`,
-    };
+    });
   }
 
-  @watch('open')
-  @watch('disabled')
-  @watch('placement')
-  @watch('openOnPointer')
-  protected async onOpenChange() {
+  // 这些属性变更时，需要更新样式
+  @watch('disabled', true)
+  @watch('placement', true)
+  @watch('openOnPointer', true)
+  protected async onPositionChange() {
     if (this.disabled || !this.open) {
       return;
     }
 
-    await this.updateComplete;
-
     // 打开动画开始前，设置 panel 的样式
-    const style = this.getPanelStyle();
+    this.updatePositioner();
+  }
 
-    $(this.panel).css(style);
+  @watch('open', true)
+  protected async onOpenChange() {
+    if (this.disabled) {
+      this.open = false;
+      return;
+    }
+
+    if (this.open) {
+      const requestOpen = emit(this, 'open', {
+        cancelable: true,
+        bubbles: false,
+      });
+      if (requestOpen.defaultPrevented) {
+        return;
+      }
+
+      await stopAnimations(this.panel);
+      this.panel.hidden = false;
+      this.updatePositioner();
+      await animateTo(this.panel, KEYFRAME_FADE_IN, {
+        duration: DURATION_FADE_IN,
+        easing: EASING_DECELERATION,
+      });
+      emit(this, 'opened');
+    } else {
+      const requestClose = emit(this, 'close', {
+        cancelable: true,
+        bubbles: false,
+      });
+      if (requestClose.defaultPrevented) {
+        return;
+      }
+
+      await stopAnimations(this.panel);
+      await animateTo(this.panel, KEYFRAME_FADE_OUT, {
+        duration: DURATION_FADE_OUT,
+        easing: EASING_ACCELERATION,
+      });
+      this.panel.hidden = true;
+      emit(this, 'closed');
+    }
   }
 
   protected override render(): TemplateResult {
     return html`<div part="trigger" class="trigger">
         <slot name="trigger"></slot>
       </div>
-      ${when(
-        this.open && !this.disabled,
-        () => html`<div
-          part="panel"
-          class="panel"
-          style="${styleMap({ zIndex: this.zIndex.toString() })}"
-          ${animate({
-            keyframeOptions: {
-              duration: DURATION_FADE_OUT,
-              easing: EASING_ACCELERATION,
-            },
-          })}
-        >
-          <slot></slot>
-        </div>`,
-      )} `;
+      <div
+        part="panel"
+        class="panel"
+        style="${styleMap({ zIndex: this.zIndex.toString() })}"
+      >
+        <slot></slot>
+      </div>`;
   }
 }
 

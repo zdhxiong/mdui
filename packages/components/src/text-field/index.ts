@@ -1,10 +1,4 @@
-import {
-  LitElement,
-  html,
-  TemplateResult,
-  CSSResultGroup,
-  PropertyValues,
-} from 'lit';
+import { LitElement, html, TemplateResult, CSSResultGroup } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { ifDefined } from 'lit/directives/if-defined.js';

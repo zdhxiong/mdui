@@ -24,6 +24,7 @@ export * from './radio.js';
 export * from './ripple.js';
 export * from './segmented-button-item.js';
 export * from './segmented-button.js';
+export * from './select.js';
 export * from './spacer.js';
 export * from './switch.js';
 export * from './text-field.js';

@@ -1,12 +1,5 @@
-import {
-  PlainObject,
-  isString,
-  isUndefined,
-  eachObject,
-  eachArray,
-} from '../shared/helper.js';
-import { $ } from '../$.js';
-import {
+import type { PlainObject } from '../shared/helper.js';
+import type {
   Method,
   CallbackName,
   ErrorCallback,
@@ -17,6 +10,15 @@ import {
   TextStatus,
   Options,
   EventParams,
+} from '../shared/ajax.js';
+import {
+  isString,
+  isUndefined,
+  eachObject,
+  eachArray,
+} from '../shared/helper.js';
+import { $ } from '../$.js';
+import {
   globalOptions,
   ajaxStart,
   ajaxSuccess,

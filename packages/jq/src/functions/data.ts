@@ -1,4 +1,5 @@
-import { PlainObject, isUndefined, isObjectLike } from '../shared/helper.js';
+import type { PlainObject } from '../shared/helper.js';
+import { isUndefined, isObjectLike } from '../shared/helper.js';
 import { get, set, getAll, setAll } from '../shared/data.js';
 
 /**

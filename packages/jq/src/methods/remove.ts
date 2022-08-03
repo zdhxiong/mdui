@@ -1,6 +1,6 @@
-import { Selector } from '../shared/helper.js';
+import type { Selector } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
 import { removeChild } from '../shared/dom.js';
 import './each.js';
 import './is.js';

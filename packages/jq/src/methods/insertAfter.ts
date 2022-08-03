@@ -1,4 +1,4 @@
-import { HTMLString, Selector, TypeOrArray } from '../shared/helper.js';
+import type { HTMLString, Selector, TypeOrArray } from '../shared/helper.js';
 import './insertBefore.js';
 
 declare module '../shared/core.js' {

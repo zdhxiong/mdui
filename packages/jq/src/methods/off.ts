@@ -1,13 +1,14 @@
+import type { PlainObject } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
+import type { EventCallback } from '../shared/event.js';
 import {
-  PlainObject,
   isFunction,
   isObjectLike,
   returnFalse,
   eachObject,
 } from '../shared/helper.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
-import { EventCallback, remove } from '../shared/event.js';
+import { remove } from '../shared/event.js';
 import './each.js';
 
 declare module '../shared/core.js' {

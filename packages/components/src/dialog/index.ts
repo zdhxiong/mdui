@@ -1,4 +1,5 @@
-import { CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
+import { html, LitElement } from 'lit';
 import {
   customElement,
   property,
@@ -23,8 +24,8 @@ import {
   EASING_LINEAR,
 } from '@mdui/shared/helpers/motion.js';
 import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
-import { MaterialIconsName } from '../icon.js';
-import { TopAppBar } from '../top-app-bar/top-app-bar.js';
+import type { MaterialIconsName } from '../icon.js';
+import type { TopAppBar } from '../top-app-bar/top-app-bar.js';
 import { style } from './style.js';
 import '../icon.js';
 

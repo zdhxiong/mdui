@@ -1,12 +1,7 @@
-import {
-  HTMLString,
-  TypeOrArray,
-  isFunction,
-  isString,
-  eachArray,
-} from '../shared/helper.js';
+import type { HTMLString, TypeOrArray } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
+import { isFunction, isString, eachArray } from '../shared/helper.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
 import { createElement, appendChild, removeChild } from '../shared/dom.js';
 import './after.js';
 import './before.js';

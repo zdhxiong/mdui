@@ -1,11 +1,7 @@
-import {
-  HTMLString,
-  Selector,
-  TypeOrArray,
-  eachArray,
-} from '../shared/helper.js';
+import type { HTMLString, Selector, TypeOrArray } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
+import { eachArray } from '../shared/helper.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
 import './each.js';
 import './get.js';
 

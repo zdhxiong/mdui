@@ -1,4 +1,5 @@
-import { html, LitElement, TemplateResult, CSSResultGroup } from 'lit';
+import type { TemplateResult, CSSResultGroup } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
@@ -8,8 +9,8 @@ import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
+import type { Ripple } from '../ripple/index.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
-import { Ripple } from '../ripple/index.js';
 import { style } from './style.js';
 
 /**

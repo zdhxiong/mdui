@@ -1,4 +1,4 @@
-import { PlainObject } from '../shared/helper.js';
+import type { PlainObject } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { map } from '../functions/map.js';
 

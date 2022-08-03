@@ -1,6 +1,6 @@
-import { Selector, TypeOrArray } from '../shared/helper.js';
+import type { Selector, TypeOrArray } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
 import './clone.js';
 import './get.js';
 import './map.js';

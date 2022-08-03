@@ -1,4 +1,5 @@
-import { CSSResultGroup, html, PropertyValues, TemplateResult } from 'lit';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { emit } from '@mdui/shared/helpers/event.js';
@@ -6,7 +7,7 @@ import { watch } from '@mdui/shared/decorators/watch.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
 import { ButtonBase } from '../button/button-base.js';
-import { MaterialIconsName } from '../icon.js';
+import type { MaterialIconsName } from '../icon.js';
 import { style } from './style.js';
 import '../icon.js';
 

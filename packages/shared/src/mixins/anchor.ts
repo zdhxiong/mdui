@@ -1,5 +1,6 @@
-import { Constructor } from '@open-wc/dedupe-mixin';
-import { html, LitElement, TemplateResult } from 'lit';
+import type { Constructor } from '@open-wc/dedupe-mixin';
+import type { TemplateResult } from 'lit';
+import { html, LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 

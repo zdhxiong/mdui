@@ -1,4 +1,4 @@
-import { TypeOrArray } from '../shared/helper.js';
+import type { TypeOrArray } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { removeData } from '../functions/removeData.js';
 

@@ -1,5 +1,5 @@
+import type { JQ } from '../shared/core.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
 import './css.js';
 import './map.js';
 

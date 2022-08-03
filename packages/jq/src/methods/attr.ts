@@ -1,5 +1,6 @@
+import type { PlainObject } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
 import {
-  PlainObject,
   isElement,
   isFunction,
   isNumber,
@@ -9,7 +10,6 @@ import {
   eachArray,
   eachObject,
 } from '../shared/helper.js';
-import { JQ } from '../shared/core.js';
 import { $ } from '../$.js';
 import { getStyle, cssNumber } from '../shared/css.js';
 import { getAttribute, setAttribute } from '../shared/attributes.js';

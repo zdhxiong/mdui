@@ -1,4 +1,4 @@
-import { HTMLString } from '../shared/helper.js';
+import type { HTMLString } from '../shared/helper.js';
 import './val.js';
 
 declare module '../shared/core.js' {

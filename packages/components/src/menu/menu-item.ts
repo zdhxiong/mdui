@@ -1,10 +1,5 @@
-import {
-  CSSResultGroup,
-  html,
-  LitElement,
-  PropertyValues,
-  TemplateResult,
-} from 'lit';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
+import { html, LitElement } from 'lit';
 import {
   customElement,
   property,
@@ -45,9 +40,9 @@ import {
 } from '@mdui/shared/helpers/motion.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import type { Menu } from '../menu.js';
-import { MaterialIconsName } from '../icon.js';
+import type { MaterialIconsName } from '../icon.js';
+import type { Ripple } from '../ripple/index.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
-import { Ripple } from '../ripple/index.js';
 import { menuItemStyle } from './menu-item-style.js';
 
 /**

@@ -1,7 +1,7 @@
-import { PlainObject } from '../shared/helper.js';
+import type { PlainObject } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
+import type { EventCallback } from '../shared/event.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
-import { EventCallback } from '../shared/event.js';
 import './on.js';
 
 declare module '../shared/core.js' {

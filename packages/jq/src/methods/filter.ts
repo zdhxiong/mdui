@@ -1,11 +1,7 @@
-import {
-  Selector,
-  TypeOrArray,
-  isFunction,
-  isString,
-} from '../shared/helper.js';
+import type { Selector, TypeOrArray } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
+import { isFunction, isString } from '../shared/helper.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
 import './is.js';
 import './map.js';
 

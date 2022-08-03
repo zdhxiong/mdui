@@ -1,6 +1,6 @@
+import type { JQ } from '../shared/core.js';
 import { eachArray } from '../shared/helper.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
 import { removeAttribute } from '../shared/attributes.js';
 import './each.js';
 

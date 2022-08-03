@@ -1,4 +1,5 @@
-import { Selector, isElement, eachArray } from '../shared/helper.js';
+import type { Selector } from '../shared/helper.js';
+import { isElement, eachArray } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { unique } from '../functions/unique.js';
 import { JQ } from '../shared/core.js';

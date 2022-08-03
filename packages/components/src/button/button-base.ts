@@ -1,4 +1,5 @@
-import { LitElement, CSSResultGroup, TemplateResult, html } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
+import { LitElement, html } from 'lit';
 import { query, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
@@ -6,8 +7,8 @@ import { ButtonMixin } from '@mdui/shared/mixins/button.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
+import type { Ripple } from '../ripple/index.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
-import { Ripple } from '../ripple/index.js';
 import { buttonBaseStyle } from './button-base-style.js';
 import '../circular-progress.js';
 

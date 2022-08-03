@@ -1,4 +1,5 @@
-import { html, TemplateResult, CSSResultGroup } from 'lit';
+import type { TemplateResult, CSSResultGroup } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import type { MaterialIconsName } from '../icon.js';
 import { ButtonBase } from './button-base.js';

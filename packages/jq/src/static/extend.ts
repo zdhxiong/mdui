@@ -1,4 +1,5 @@
-import { PlainObject, eachObject } from '../shared/helper.js';
+import type { PlainObject } from '../shared/helper.js';
+import { eachObject } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { extend } from '../functions/extend.js';
 

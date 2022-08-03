@@ -1,6 +1,7 @@
-import { Selector, isString } from '../shared/helper.js';
+import type { Selector } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
+import { isString } from '../shared/helper.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
 import './children.js';
 import './eq.js';
 import './get.js';

@@ -1,4 +1,5 @@
-import { html, TemplateResult } from 'lit';
+import type { TemplateResult } from 'lit';
+import { html } from 'lit';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 
 export const svgTag = (svgPaths: string): TemplateResult => html`<svg

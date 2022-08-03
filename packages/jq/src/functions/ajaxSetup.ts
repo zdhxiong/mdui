@@ -1,4 +1,5 @@
-import { Options, globalOptions } from '../shared/ajax.js';
+import type { Options } from '../shared/ajax.js';
+import { globalOptions } from '../shared/ajax.js';
 import { extend } from './extend.js';
 
 /**

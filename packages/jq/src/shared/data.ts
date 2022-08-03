@@ -1,5 +1,5 @@
+import type { PlainObject } from './helper.js';
 import {
-  PlainObject,
   eachObject,
   toCamelCase,
   eachArray,

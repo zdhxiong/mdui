@@ -1,6 +1,7 @@
-import { Selector, eachArray } from '../shared/helper.js';
+import type { Selector } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
+import { eachArray } from '../shared/helper.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
 import './get.js';
 import { dir } from './utils/dir.js';
 

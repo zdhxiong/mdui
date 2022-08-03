@@ -1,9 +1,11 @@
-import { html, LitElement, CSSResultGroup, TemplateResult } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { Options } from '@lit-labs/motion';
+import { html, LitElement } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { animate, AnimateController, Options } from '@lit-labs/motion';
+import { animate, AnimateController } from '@lit-labs/motion';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -16,11 +18,11 @@ import {
   KEYFRAME_FADE_THROUGTH_IN,
   KEYFRAME_FADE_THROUGTH_OUT,
 } from '@mdui/shared/helpers/motion.js';
-import '@mdui/icons/check.js';
+import type { Ripple } from '../ripple/index.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
-import { Ripple } from '../ripple/index.js';
 import { style } from './style.js';
 import '../icon.js';
+import '@mdui/icons/check.js';
 
 /**
  * @event click - 点击时触发

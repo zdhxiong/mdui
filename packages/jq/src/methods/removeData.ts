@@ -1,7 +1,7 @@
-import { TypeOrArray } from '../shared/helper.js';
+import type { TypeOrArray } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
 import { $ } from '../$.js';
 import { removeData } from '../functions/removeData.js';
-import { JQ } from '../shared/core.js';
 import './each.js';
 
 declare module '../shared/core.js' {

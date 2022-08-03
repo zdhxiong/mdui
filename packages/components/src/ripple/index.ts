@@ -1,8 +1,9 @@
-import { LitElement, html, TemplateResult, CSSResultGroup } from 'lit';
+import type { TemplateResult, CSSResultGroup } from 'lit';
+import type { JQ } from '@mdui/jq/shared/core.js';
+import { LitElement, html } from 'lit';
 import { customElement, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { $ } from '@mdui/jq/$.js';
-import { JQ } from '@mdui/jq/shared/core.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/innerWidth.js';
 import '@mdui/jq/methods/innerHeight.js';

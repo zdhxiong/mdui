@@ -1,4 +1,5 @@
-import { CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
+import { html, LitElement } from 'lit';
 import {
   customElement,
   property,
@@ -6,7 +7,7 @@ import {
 } from 'lit/decorators.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
-import { ListItem } from './list-item.js';
+import type { ListItem } from './list-item.js';
 import { listStyle } from './list-style.js';
 
 /**

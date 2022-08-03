@@ -1,6 +1,6 @@
-import { Selector } from '../shared/helper.js';
+import type { Selector } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
 import './add.js';
 import './nextAll.js';
 import './prevAll.js';

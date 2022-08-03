@@ -1,4 +1,5 @@
-import { CSSResultGroup, html, nothing, TemplateResult } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import type { MaterialIconsName } from '../icon.js';

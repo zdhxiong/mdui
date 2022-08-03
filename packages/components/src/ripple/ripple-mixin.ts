@@ -1,5 +1,7 @@
-import { Constructor, dedupeMixin } from '@open-wc/dedupe-mixin';
-import { LitElement, PropertyValues } from 'lit';
+import type { Constructor } from '@open-wc/dedupe-mixin';
+import type { PropertyValues } from 'lit';
+import { dedupeMixin } from '@open-wc/dedupe-mixin';
+import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
@@ -12,8 +14,8 @@ import {
   endEvent,
   cancelEvent,
 } from '@mdui/shared/helpers/touchHandler.js';
-import './index.js';
 import type { Ripple } from './index.js';
+import './index.js';
 
 /**
  * hover, pressed, dragged 三个属性用于添加到 :host 元素上，供 CSS 选择题添加样式

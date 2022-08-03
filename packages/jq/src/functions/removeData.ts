@@ -1,4 +1,5 @@
-import { TypeOrArray, isUndefined, isString } from '../shared/helper.js';
+import type { TypeOrArray } from '../shared/helper.js';
+import { isUndefined, isString } from '../shared/helper.js';
 import { removeAll, removeMultiple } from '../shared/data.js';
 
 /**

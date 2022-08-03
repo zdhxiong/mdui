@@ -1,6 +1,7 @@
-import { PlainObject, eachObject } from '../shared/helper.js';
+import type { PlainObject } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
+import { eachObject } from '../shared/helper.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
 
 declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

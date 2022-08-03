@@ -1,4 +1,5 @@
-import { html, TemplateResult, CSSResultGroup } from 'lit';
+import type { TemplateResult, CSSResultGroup } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';

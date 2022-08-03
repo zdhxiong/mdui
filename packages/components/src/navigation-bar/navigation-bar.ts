@@ -1,4 +1,5 @@
-import { html, LitElement, CSSResultGroup, TemplateResult } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
+import { html, LitElement } from 'lit';
 import {
   customElement,
   property,
@@ -13,7 +14,7 @@ import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { navigationBarStyle } from './navigation-bar-style.js';
-import { NavigationBarItem } from './navigation-bar-item.js';
+import type { NavigationBarItem } from './navigation-bar-item.js';
 
 /**
  * @event click - 点击时触发

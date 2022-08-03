@@ -1,7 +1,8 @@
-import { isFunction, PlainObject } from '../shared/helper.js';
+import type { PlainObject } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
+import { isFunction } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { extend } from '../functions/extend.js';
-import { JQ } from '../shared/core.js';
 import './css.js';
 import './each.js';
 import './position.js';

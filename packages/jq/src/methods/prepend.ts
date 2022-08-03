@@ -1,4 +1,4 @@
-import { HTMLString, TypeOrArray } from '../shared/helper.js';
+import type { HTMLString, TypeOrArray } from '../shared/helper.js';
 import './append.js';
 
 declare module '../shared/core.js' {

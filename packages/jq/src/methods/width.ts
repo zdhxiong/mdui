@@ -1,3 +1,4 @@
+import type { JQ } from '../shared/core.js';
 import {
   isBoolean,
   isString,
@@ -8,7 +9,6 @@ import {
   eachArray,
 } from '../shared/helper.js';
 import { $ } from '../$.js';
-import { JQ } from '../shared/core.js';
 import {
   isBorderBox,
   getExtraWidth,

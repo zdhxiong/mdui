@@ -1,5 +1,6 @@
 import { extend } from '../functions/extend.js';
-import { PlainObject, eachObject, isUndefined } from './helper.js';
+import type { PlainObject } from './helper.js';
+import { eachObject, isUndefined } from './helper.js';
 
 // 请求方法名
 export type Method =

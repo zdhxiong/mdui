@@ -1,4 +1,5 @@
-import { CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
+import { html, LitElement } from 'lit';
 import {
   customElement,
   property,
@@ -10,8 +11,8 @@ import { when } from 'lit/directives/when.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import type { SegmentedButtonItem } from './segmented-button-item.js';
 import { segmentedButtonStyle } from './segmented-button-style.js';
-import { SegmentedButtonItem } from './segmented-button-item.js';
 
 /**
  * @event click - 点击时触发

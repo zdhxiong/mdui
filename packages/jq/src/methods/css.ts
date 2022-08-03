@@ -1,4 +1,4 @@
-import { PlainObject } from '../shared/helper.js';
+import type { PlainObject } from '../shared/helper.js';
 import './attr.js';
 
 declare module '../shared/core.js' {

@@ -1,4 +1,4 @@
-import { Selector } from '../shared/helper.js';
+import type { Selector } from '../shared/helper.js';
 import './parent.js';
 
 declare module '../shared/core.js' {

@@ -1,4 +1,5 @@
-import { CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
+import { html, LitElement } from 'lit';
 import {
   customElement,
   property,
@@ -20,8 +21,8 @@ import {
   DURATION_MEDIUM_OUT,
   EASING_LINEAR,
 } from '@mdui/shared/helpers/motion.js';
+import type { TopAppBarTitle } from './top-app-bar-title.js';
 import { topAppBarStyle } from './top-app-bar-style.js';
-import { TopAppBarTitle } from './top-app-bar-title.js';
 
 /**
  * @event show - 开始显示时，事件被触发

@@ -1,7 +1,8 @@
-import { Selector, isString } from '../shared/helper.js';
+import type { Selector } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
+import { isString } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { contains } from '../functions/contains.js';
-import { JQ } from '../shared/core.js';
 import './find.js';
 import './map.js';
 

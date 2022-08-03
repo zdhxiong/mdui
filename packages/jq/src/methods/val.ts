@@ -1,3 +1,4 @@
+import type { JQ } from '../shared/core.js';
 import {
   isElement,
   isFunction,
@@ -7,7 +8,6 @@ import {
 } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { map } from '../functions/map.js';
-import { JQ } from '../shared/core.js';
 import './each.js';
 import './is.js';
 import './find.js';

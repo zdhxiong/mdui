@@ -6,14 +6,6 @@ import { property } from 'lit/decorators.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/off.js';
-import {
-  register,
-  isAllow,
-  startEvent,
-  unlockEvent,
-  endEvent,
-  cancelEvent,
-} from '@mdui/shared/helpers/touchHandler.js';
 import type { Ripple } from './index.js';
 import './index.js';
 
@@ -21,6 +13,14 @@ import './index.js';
  * hover, pressed, dragged 三个属性用于添加到 :host 元素上，供 CSS 选择题添加样式
  *
  * TODO: dragged 功能
+ *
+ * NOTE:
+ * 不支持触控的屏幕上事件顺序为：pointerdown -> (8ms) -> mousedown -> pointerup -> (1ms) -> mouseup -> (1ms) -> click
+ *
+ * 支持触控的屏幕上事件顺序为：pointerdown -> (8ms) -> touchstart -> pointerup -> (1ms) -> touchend -> (5ms) -> mousedown -> mouseup -> click
+ * pointermove 比较灵敏，有可能触发了 pointermove 但没有触发 touchmove
+ *
+ * 支持触摸笔的屏幕上事件顺序为：todo
  */
 export const RippleMixin = dedupeMixin(
   <T extends Constructor<LitElement>>(
@@ -50,48 +50,42 @@ export const RippleMixin = dedupeMixin(
       @property({ type: Boolean, reflect: true })
       protected dragged = false;
 
-      protected canRun(event: Event): boolean {
+      protected startHover(event: PointerEvent): void {
+        if (event.pointerType !== 'mouse' || this.rippleDisabled) {
+          return;
+        }
+
+        this.hover = true;
+        this.rippleElement.startHover();
+      }
+
+      protected endHover(event: PointerEvent): void {
+        if (event.pointerType !== 'mouse' || this.rippleDisabled) {
+          return;
+        }
+
+        this.hover = false;
+        this.rippleElement.endHover();
+      }
+
+      protected startFocus(): void {
         if (this.rippleDisabled) {
-          return false;
+          return;
         }
 
-        if (isAllow(event)) {
-          register(event);
-
-          return true;
-        }
-
-        return false;
+        this.rippleElement.startFocus();
       }
 
-      protected startHover(event: Event): void {
-        if (this.canRun(event)) {
-          this.hover = true;
-          this.rippleElement.startHover();
+      protected endFocus(): void {
+        if (this.rippleDisabled) {
+          return;
         }
+
+        this.rippleElement.endFocus();
       }
 
-      protected endHover(event: Event): void {
-        if (this.canRun(event)) {
-          this.hover = false;
-          this.rippleElement.endHover();
-        }
-      }
-
-      protected startFocus(event: Event): void {
-        if (this.canRun(event)) {
-          this.rippleElement.startFocus();
-        }
-      }
-
-      protected endFocus(event: Event): void {
-        if (this.canRun(event)) {
-          this.rippleElement.endFocus();
-        }
-      }
-
-      protected startPress(event: Event): void {
-        if (!this.canRun(event)) {
+      protected startPress(event: PointerEvent): void {
+        if (this.rippleDisabled) {
           return;
         }
 
@@ -100,7 +94,7 @@ export const RippleMixin = dedupeMixin(
         const $target = $(this);
 
         // 手指触摸触发涟漪
-        if (event.type === 'touchstart') {
+        if (['touch', 'pen'].includes(event.pointerType)) {
           let hidden = false;
 
           // 手指触摸后，延迟一段时间触发涟漪，避免手指滑动时也触发涟漪
@@ -119,10 +113,10 @@ export const RippleMixin = dedupeMixin(
 
             if (!hidden) {
               hidden = true;
-              this.endPress(event);
+              this.endPress();
             }
 
-            $target.off('touchend touchcancel', hideRipple);
+            $target.off('pointerup pointercancel', hideRipple);
           };
 
           // 手指移动后，移除涟漪动画
@@ -135,49 +129,56 @@ export const RippleMixin = dedupeMixin(
             $target.off('touchmove', touchMove);
           };
 
+          // pointermove 事件过于灵敏，可能在未触发 touchmove 的情况下，触发了 pointermove 事件，导致正常的点击操作没有显示涟漪
+          // 因此这里监听 touchmove 事件
           $target
             .on('touchmove', touchMove)
-            .on('touchend touchcancel', hideRipple);
+            .on('pointerup pointercancel', hideRipple);
         }
 
-        // 鼠标点击触发涟漪，点击后立即触发涟漪（鼠标右键不触发涟漪）
-        if (event.type === 'mousedown' && (event as MouseEvent).button !== 2) {
+        // 鼠标点击触发涟漪，点击后立即触发涟漪（仅鼠标左键能触发涟漪）
+        if (event.pointerType === 'mouse' && event.button === 0) {
           const hideRipple = () => {
-            this.endPress(event);
-            $target.off(`${endEvent} ${cancelEvent}`, hideRipple);
+            this.endPress();
+            $target.off('pointerup pointercancel pointerleave', hideRipple);
           };
 
           this.rippleElement.startPress(event);
-          $target.on(`${endEvent} ${cancelEvent}`, hideRipple);
+          $target.on('pointerup pointercancel pointerleave', hideRipple);
         }
       }
 
-      protected endPress(event: Event): void {
-        if (this.canRun(event)) {
-          this.pressed = false;
-          this.rippleElement.endPress();
+      protected endPress(): void {
+        if (this.rippleDisabled) {
+          return;
         }
+
+        this.pressed = false;
+        this.rippleElement.endPress();
       }
 
-      protected startDrag(event: Event): void {
-        if (this.canRun(event)) {
-          this.rippleElement.startDrag();
+      protected startDrag(): void {
+        if (this.rippleDisabled) {
+          return;
         }
+
+        this.rippleElement.startDrag();
       }
 
-      protected endDrag(event: Event): void {
-        if (this.canRun(event)) {
-          this.rippleElement.endDrag();
+      protected endDrag(): void {
+        if (this.rippleDisabled) {
+          return;
         }
+
+        this.rippleElement.endDrag();
       }
 
       protected async firstUpdated(changes: PropertyValues) {
         super.firstUpdated(changes);
         $(this).on({
-          [startEvent]: this.startPress,
-          mouseenter: this.startHover,
-          mouseleave: this.endHover,
-          [unlockEvent]: register,
+          pointerdown: this.startPress,
+          pointerenter: this.startHover,
+          pointerleave: this.endHover,
           focus: this.startFocus,
           blur: this.endFocus,
         });

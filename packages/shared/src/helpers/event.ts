@@ -1,11 +1,13 @@
 /**
  * 触发自定义事件
+ * @param element
+ * @param type
+ * @param options 通常只用到 cancelable 和 detail；bubbles、composed 统一不用
  */
-// eslint-disable-next-line
-export const emit = <T = any>(
+export const emit = (
   element: HTMLElement,
   type: string,
-  options?: CustomEventInit<T>,
+  options?: CustomEventInit,
 ) => {
   const event = new CustomEvent(type, {
     bubbles: true,

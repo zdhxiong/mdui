@@ -24,6 +24,10 @@ import {
   EASING_LINEAR,
 } from '@mdui/shared/helpers/motion.js';
 import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
+import {
+  KEYFRAME_FADE_IN,
+  KEYFRAME_FADE_OUT,
+} from '@mdui/shared/helpers/motion.js';
 import type { MaterialIconsName } from '../icon.js';
 import type { TopAppBar } from '../top-app-bar/top-app-bar.js';
 import { style } from './style.js';
@@ -175,7 +179,6 @@ export class Dialog extends LitElement {
     if (this.open) {
       const requestOpen = emit(this, 'open', {
         cancelable: true,
-        bubbles: false,
       });
       if (requestOpen.defaultPrevented) {
         return;
@@ -215,21 +218,15 @@ export class Dialog extends LitElement {
           duration: 150,
           easing: EASING_LINEAR,
         }),
-        animateTo(
-          this.panel,
-          [
-            { opacity: 0, transform: 'scale(0.8)' },
-            { opacity: 1, offset: 0.3 },
-            { transform: 'scale(1)' },
-          ],
-          { duration: 150, easing: EASING_DECELERATION },
-        ),
+        animateTo(this.panel, KEYFRAME_FADE_IN, {
+          duration: 150,
+          easing: EASING_DECELERATION,
+        }),
       ]);
       emit(this, 'opened');
     } else if (this.hasUpdated) {
       const requestClose = emit(this, 'close', {
         cancelable: true,
-        bubbles: false,
       });
       if (requestClose.defaultPrevented) {
         return;
@@ -241,11 +238,11 @@ export class Dialog extends LitElement {
         stopAnimations(this.panel),
       ]);
       await Promise.all([
-        animateTo(this.overlay, [{ opacity: 1 }, { opacity: 0 }], {
+        animateTo(this.overlay, KEYFRAME_FADE_OUT, {
           duration: 75,
           easing: EASING_LINEAR,
         }),
-        animateTo(this.panel, [{ opacity: 1 }, { opacity: 0 }], {
+        animateTo(this.panel, KEYFRAME_FADE_OUT, {
           duration: 75,
           easing: EASING_LINEAR,
         }),

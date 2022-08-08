@@ -80,6 +80,7 @@ export const DURATION_FADE_OUT = 75;
  */
 export const KEYFRAME_SHARED_X_AXIS_IN_LEFT = [
   { opacity: 0, transform: 'translateX(30px)' },
+  { opacity: 1, transform: 'translateX(0)' },
 ];
 
 /**
@@ -87,6 +88,7 @@ export const KEYFRAME_SHARED_X_AXIS_IN_LEFT = [
  */
 export const KEYFRAME_SHARED_X_AXIS_IN_RIGHT = [
   { opacity: 0, transform: 'translateX(-30px)' },
+  { opacity: 1, transform: 'translateX(0)' },
 ];
 
 /**
@@ -94,6 +96,7 @@ export const KEYFRAME_SHARED_X_AXIS_IN_RIGHT = [
  */
 export const KEYFRAME_SHARED_Y_AXIS_IN_TOP = [
   { opacity: 0, transform: 'translateY(30px)' },
+  { opacity: 1, transform: 'translateY(0)' },
 ];
 
 /**
@@ -101,6 +104,7 @@ export const KEYFRAME_SHARED_Y_AXIS_IN_TOP = [
  */
 export const KEYFRAME_SHARED_Y_AXIS_IN_BOTTOM = [
   { opacity: 0, transform: 'translateY(-30px)' },
+  { opacity: 1, transform: 'translateY(0)' },
 ];
 
 /**
@@ -108,6 +112,7 @@ export const KEYFRAME_SHARED_Y_AXIS_IN_BOTTOM = [
  */
 export const KEYFRAME_SHARED_Z_AXIS_IN_ZOOM_IN = [
   { opacity: 0, transform: 'scale(0.8)' },
+  { opacity: 1, transform: 'scale(1)' },
 ];
 
 /**
@@ -115,6 +120,7 @@ export const KEYFRAME_SHARED_Z_AXIS_IN_ZOOM_IN = [
  */
 export const KEYFRAME_SHARED_Z_AXIS_IN_ZOOM_OUT = [
   { opacity: 0, transform: 'scale(1.1)' },
+  { opacity: 1, transform: 'scale(1)' },
 ];
 
 /**
@@ -172,6 +178,7 @@ export const KEYFRAME_SHARED_Z_AXIS_OUT_ZOOM_OUT = [
  */
 export const KEYFRAME_FADE_THROUGTH_IN = [
   { transform: 'scale(0.92)', opacity: 0 },
+  { transform: 'scale(1)', opacity: 1 },
 ];
 
 /**
@@ -185,6 +192,7 @@ export const KEYFRAME_FADE_THROUGTH_OUT = [{ opacity: 1 }, { opacity: 0 }];
 export const KEYFRAME_FADE_IN = [
   { transform: 'scale(0.8)', opacity: 0 },
   { opacity: 1, offset: 0.3 },
+  { transform: 'scale(1)' },
 ];
 
 /**

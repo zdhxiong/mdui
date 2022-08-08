@@ -2,8 +2,6 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import { when } from 'lit/directives/when.js';
-import { animate, AnimateController } from '@lit-labs/motion';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { $ } from '@mdui/jq/$.js';
@@ -19,12 +17,13 @@ import {
   DURATION_FADE_IN,
   DURATION_FADE_OUT,
 } from '@mdui/shared/helpers/motion.js';
+import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { style } from './style.js';
 
 /**
- * @event open - tooltip 开始显示时，事件被触发
+ * @event open - tooltip 开始显示时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 tooltip 打开
  * @event opened - tooltip 显示动画完成时，事件被触发
- * @event close - tooltip 开始隐藏时，事件被触发
+ * @event close - tooltip 开始隐藏时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 tooltip 关闭
  * @event closed - tooltip 隐藏动画完成时，事件被触发
  *
  * @slot - tooltip 触发的目标元素，仅 default slot 中的第一个元素会作为目标元素
@@ -46,23 +45,6 @@ export class Tooltip extends LitElement {
   protected target!: HTMLElement;
 
   private hoverTimeout!: number;
-
-  protected readonly animateController = new AnimateController(this, {
-    defaultOptions: {
-      keyframeOptions: {
-        duration: DURATION_FADE_IN,
-        easing: EASING_DECELERATION,
-      },
-      in: [{ transform: 'scale(0)' }],
-      out: [{ transform: 'scale(1)' }, { transform: 'scale(0)' }],
-      onStart: () => {
-        emit(this, this.open ? 'open' : 'close');
-      },
-      onComplete: () => {
-        emit(this, this.open ? 'opened' : 'closed');
-      },
-    },
-  });
 
   /**
    * tooltip 的方位。可选值为：
@@ -157,6 +139,8 @@ export class Tooltip extends LitElement {
       mouseenter: () => this.onMouseEnter(),
       mouseleave: () => this.onMouseLeave(),
     });
+
+    this.tooltip.hidden = !this.open || this.disabled;
   }
 
   /**
@@ -238,7 +222,9 @@ export class Tooltip extends LitElement {
     }, this.closeDelay || 50);
   }
 
-  protected getStyle(): Record<'tooltip' | 'arrow', Record<string, string>> {
+  protected updatePositioner(): void {
+    const $tooltip = $(this.tooltip);
+    const $arrow = $(this.arrow);
     const targetRect = this.target.getBoundingClientRect(); // 触发目标的位置和宽高
     const tooltipRect = {
       width: this.tooltip.offsetWidth,
@@ -275,102 +261,132 @@ export class Tooltip extends LitElement {
     // 获取位置
     switch (placement) {
       case 'bottom':
-        return {
-          tooltip: {
-            transformOrigin: 'top center',
-            top: `${targetRect.top + targetRect.height + targetMargin}px`,
-            left: `${
-              targetRect.left + targetRect.width / 2 - tooltipRect.width / 2
-            }px`,
-          },
-          arrow: {
-            top: '6px',
-            left: `${tooltipRect.width / 2 - arrowRect.width / 2}px`,
-          },
-        };
+        $tooltip.css({
+          transformOrigin: 'top center',
+          top: `${targetRect.top + targetRect.height + targetMargin}px`,
+          left: `${
+            targetRect.left + targetRect.width / 2 - tooltipRect.width / 2
+          }px`,
+        });
+        $arrow.css({
+          top: '6px',
+          left: `${tooltipRect.width / 2 - arrowRect.width / 2}px`,
+        });
+        break;
       case 'top':
-        return {
-          tooltip: {
-            transformOrigin: 'bottom center',
-            top: `${targetRect.top - tooltipRect.height - targetMargin}px`,
-            left: `${
-              targetRect.left + targetRect.width / 2 - tooltipRect.width / 2
-            }px`,
-          },
-          arrow: {
-            bottom: '6px',
-            left: `${tooltipRect.width / 2 - arrowRect.width / 2}px`,
-          },
-        };
+        $tooltip.css({
+          transformOrigin: 'bottom center',
+          top: `${targetRect.top - tooltipRect.height - targetMargin}px`,
+          left: `${
+            targetRect.left + targetRect.width / 2 - tooltipRect.width / 2
+          }px`,
+        });
+        $arrow.css({
+          bottom: '6px',
+          left: `${tooltipRect.width / 2 - arrowRect.width / 2}px`,
+        });
+        break;
       case 'left':
-        return {
-          tooltip: {
-            transformOrigin: 'center right',
-            top: `${
-              targetRect.top + targetRect.height / 2 - tooltipRect.height / 2
-            }px`,
-            left: `${targetRect.left - tooltipRect.width - targetMargin}px`,
-          },
-          arrow: {
-            right: '6px',
-            top: `${tooltipRect.height / 2 - arrowRect.height / 2}px`,
-          },
-        };
+        $tooltip.css({
+          transformOrigin: 'center right',
+          top: `${
+            targetRect.top + targetRect.height / 2 - tooltipRect.height / 2
+          }px`,
+          left: `${targetRect.left - tooltipRect.width - targetMargin}px`,
+        });
+        $arrow.css({
+          right: '6px',
+          top: `${tooltipRect.height / 2 - arrowRect.height / 2}px`,
+        });
+        break;
       default:
-        return {
-          tooltip: {
-            transformOrigin: 'center left',
-            top: `${
-              targetRect.top + targetRect.height / 2 - tooltipRect.height / 2
-            }px`,
-            left: `${targetRect.left + targetRect.width + targetMargin}px`,
-          },
-          arrow: {
-            left: '6px',
-            top: `${tooltipRect.height / 2 - arrowRect.height / 2}px`,
-          },
-        };
+        $tooltip.css({
+          transformOrigin: 'center left',
+          top: `${
+            targetRect.top + targetRect.height / 2 - tooltipRect.height / 2
+          }px`,
+          left: `${targetRect.left + targetRect.width + targetMargin}px`,
+        });
+        $arrow.css({
+          left: '6px',
+          top: `${tooltipRect.height / 2 - arrowRect.height / 2}px`,
+        });
+        break;
     }
   }
 
-  @watch('open')
-  @watch('disabled')
-  @watch('placement')
-  @watch('content')
-  private async onOpenChange() {
+  @watch('disabled', true)
+  @watch('placement', true)
+  @watch('content', true)
+  private async onPositionChange() {
     if (this.disabled || !this.open) {
       return;
     }
 
-    await this.updateComplete;
-
     // 打开动画开始前，设置 tooltip 的样式
-    const style = this.getStyle();
+    this.updatePositioner();
+  }
 
-    $(this.tooltip).css(style.tooltip);
-    $(this.arrow).css(style.arrow);
+  @watch('open', true)
+  protected async onOpenChange() {
+    if (this.disabled) {
+      this.open = false;
+      return;
+    }
+
+    if (this.open) {
+      const requestOpen = emit(this, 'open', {
+        cancelable: true,
+      });
+      if (requestOpen.defaultPrevented) {
+        return;
+      }
+
+      await stopAnimations(this.tooltip);
+      this.tooltip.hidden = false;
+      this.updatePositioner();
+      await animateTo(
+        this.tooltip,
+        [{ transform: 'scale(0)' }, { transform: 'scale(1)' }],
+        {
+          duration: DURATION_FADE_IN,
+          easing: EASING_DECELERATION,
+        },
+      );
+      emit(this, 'opened');
+    } else {
+      const requestClose = emit(this, 'close', {
+        cancelable: true,
+      });
+      if (requestClose.defaultPrevented) {
+        return;
+      }
+
+      await stopAnimations(this.tooltip);
+      await animateTo(
+        this.tooltip,
+        [{ transform: 'scale(1)' }, { transform: 'scale(0)' }],
+        {
+          duration: DURATION_FADE_OUT,
+          easing: EASING_ACCELERATION,
+        },
+      );
+      this.tooltip.hidden = true;
+      emit(this, 'closed');
+    }
   }
 
   protected override render(): TemplateResult {
     return html`<slot></slot>
-      ${when(
-        this.open && !this.disabled,
-        () => html`<div
-          class="tooltip"
-          style="${styleMap({ zIndex: this.zIndex.toString() })}"
-          ${animate({
-            keyframeOptions: {
-              duration: DURATION_FADE_OUT,
-              easing: EASING_ACCELERATION,
-            },
-          })}
-        >
-          <div class="arrow" part="arrow"></div>
-          <div class="content" part="content">
-            <slot name="content">${this.content}</slot>
-          </div>
-        </div>`,
-      )} `;
+      <div
+        class="tooltip"
+        style="${styleMap({ zIndex: this.zIndex.toString() })}"
+      >
+        <div class="arrow" part="arrow"></div>
+        <div class="content" part="content">
+          <slot name="content">${this.content}</slot>
+        </div>
+      </div>`;
   }
 }
 

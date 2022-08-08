@@ -30,9 +30,9 @@ import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { style } from './style.js';
 
 /**
- * @event open - dropdown 开始打开时，事件被触发
+ * @event open - dropdown 开始打开时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 dropdown 打开
  * @event opened - dropdown 打开动画完成时，事件被触发
- * @event close - dropdown 开始关闭时，事件被触发
+ * @event close - dropdown 开始关闭时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 dropdown 关闭
  * @event closed - dropdown 关闭动画完成时，事件被触发
  *
  * @slot - dropdown 的内容
@@ -214,7 +214,7 @@ export class Dropdown extends LitElement {
       }
     });
 
-    this.panel.hidden = !this.open;
+    this.panel.hidden = !this.open || this.disabled;
   }
 
   protected hasTrigger(
@@ -240,18 +240,21 @@ export class Dropdown extends LitElement {
     this.open = false;
   }
 
+  // 右键菜单点击位置相对于 trigger 的位置
+  private pointerOffsetX!: number;
+  private pointerOffsetY!: number;
+
   protected onClick(e: MouseEvent) {
     // e.button 为 0 时，为鼠标左键点击。忽略鼠标中间和右键
     if (e.button || !this.hasTrigger('click')) {
       return;
     }
 
+    this.pointerOffsetX = e.offsetX;
+    this.pointerOffsetY = e.offsetY;
+
     this.open = !this.open;
   }
-
-  // 右键菜单点击位置相对于 trigger 的位置
-  private contextmenuOffsetX!: number;
-  private contextmenuOffsetY!: number;
 
   protected onContextMenu(e: MouseEvent) {
     if (!this.hasTrigger('contextmenu')) {
@@ -259,8 +262,8 @@ export class Dropdown extends LitElement {
     }
 
     e.preventDefault();
-    this.contextmenuOffsetX = e.offsetX;
-    this.contextmenuOffsetY = e.offsetY;
+    this.pointerOffsetX = e.offsetX;
+    this.pointerOffsetY = e.offsetY;
     this.open = true;
   }
 
@@ -334,11 +337,11 @@ export class Dropdown extends LitElement {
       let transformOriginX: 'left' | 'right';
       let transformOriginY: 'top' | 'bottom';
       if (
-        this.$window.width() - triggerRect.left - this.contextmenuOffsetX >
+        this.$window.width() - triggerRect.left - this.pointerOffsetX >
         panelRect.width + screenMargin
       ) {
         // 右侧放得下
-        left = triggerRect.left + this.contextmenuOffsetX;
+        left = triggerRect.left + this.pointerOffsetX;
         transformOriginX = 'left';
       } else {
         // 右侧放不下时，放左侧
@@ -347,18 +350,18 @@ export class Dropdown extends LitElement {
       }
 
       if (
-        this.$window.height() - triggerRect.top - this.contextmenuOffsetY >
+        this.$window.height() - triggerRect.top - this.pointerOffsetY >
         panelRect.height + screenMargin
       ) {
         // 下方放得下
-        top = triggerRect.top + this.contextmenuOffsetY;
+        top = triggerRect.top + this.pointerOffsetY;
         transformOriginY = 'top';
       } else if (
-        triggerRect.top + this.contextmenuOffsetY >
+        triggerRect.top + this.pointerOffsetY >
         panelRect.height + screenMargin
       ) {
         // 上方放得下
-        top = triggerRect.top + this.contextmenuOffsetY - panelRect.height;
+        top = triggerRect.top + this.pointerOffsetY - panelRect.height;
         transformOriginY = 'bottom';
       } else {
         // 上方、下方都放不下，放在屏幕顶部
@@ -451,7 +454,6 @@ export class Dropdown extends LitElement {
     if (this.open) {
       const requestOpen = emit(this, 'open', {
         cancelable: true,
-        bubbles: false,
       });
       if (requestOpen.defaultPrevented) {
         return;
@@ -468,7 +470,6 @@ export class Dropdown extends LitElement {
     } else {
       const requestClose = emit(this, 'close', {
         cancelable: true,
-        bubbles: false,
       });
       if (requestClose.defaultPrevented) {
         return;

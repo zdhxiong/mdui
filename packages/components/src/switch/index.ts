@@ -74,7 +74,7 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
         easing: EASING_DECELERATION,
         fill: 'both',
       },
-      in: KEYFRAME_FADE_THROUGTH_IN,
+      in: KEYFRAME_FADE_THROUGTH_IN.slice(0, -1),
       out: KEYFRAME_FADE_THROUGTH_OUT,
     },
   });

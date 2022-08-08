@@ -8,8 +8,6 @@ import {
   state,
 } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { when } from 'lit/directives/when.js';
-import { animate, AnimateController } from '@lit-labs/motion';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -39,6 +37,7 @@ import {
   KEYFRAME_FADE_OUT,
 } from '@mdui/shared/helpers/motion.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import type { Menu } from '../menu.js';
 import type { MaterialIconsName } from '../icon.js';
 import type { Ripple } from '../ripple/index.js';
@@ -46,9 +45,9 @@ import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { menuItemStyle } from './menu-item-style.js';
 
 /**
- * @event submenu-open - 子菜单开始打开时，事件被触发
+ * @event submenu-open - 子菜单开始打开时，事件被触发。可以通过调用 `event.preventDefault()` 阻止子菜单打开
  * @event submenu-opened - 子菜单打开动画完成时，事件被触发
- * @event submenu-close - 子菜单开始关闭时，事件被触发
+ * @event submenu-close - 子菜单开始关闭时，事件被触发。可以通过调用 `event.preventDefault()` 阻止子菜单关闭
  * @event submenu-closed - 子菜单关闭动画完成时，事件被触发
  *
  * @slot - 菜单项的文本
@@ -118,23 +117,6 @@ export class MenuItem extends AnchorMixin(
     'submenu',
     'custom',
   );
-
-  protected readonly animateController = new AnimateController(this, {
-    defaultOptions: {
-      keyframeOptions: {
-        duration: DURATION_FADE_IN,
-        easing: EASING_DECELERATION,
-      },
-      in: KEYFRAME_FADE_IN,
-      out: KEYFRAME_FADE_OUT,
-      onStart: () => {
-        emit(this, this.submenuOpen ? 'submenu-open' : 'submenu-close');
-      },
-      onComplete: () => {
-        emit(this, this.submenuOpen ? 'submenu-opened' : 'submenu-closed');
-      },
-    },
-  });
 
   /**
    * 由父组件 menu 赋值
@@ -271,6 +253,9 @@ export class MenuItem extends AnchorMixin(
       mouseenter: () => this.onMouseEnter(),
       mouseleave: () => this.onMouseLeave(),
     });
+
+    this.submenuContainer.hidden =
+      !this.submenuOpen || this.disabled || !this.hasSubmenuSlot;
   }
 
   protected hasTrigger(trigger: string): boolean {
@@ -375,7 +360,7 @@ export class MenuItem extends AnchorMixin(
     }, this.submenuCloseDelay || 50);
   }
 
-  protected getSubmenuStyle(): Record<string, string | number> {
+  protected updateSubmenuPositioner(): void {
     const itemRect = this.getBoundingClientRect();
     const submenuWidth = this.$submenuSlot.innerWidth();
     const submenuHeight = this.$submenuSlot.innerHeight();
@@ -401,28 +386,54 @@ export class MenuItem extends AnchorMixin(
       placementY = 'left';
     }
 
-    return {
+    $(this.submenuContainer).css({
       top: placementX === 'bottom' ? 0 : itemRect.height - submenuHeight,
       left: placementY === 'right' ? itemRect.width : -submenuWidth,
       transformOrigin: `${placementY === 'right' ? 0 : '100%'} ${
         placementX === 'bottom' ? 0 : '100%'
       }`,
-    };
+    });
   }
 
-  @watch('submenuOpen')
-  @watch('disabled')
+  @watch('submenuOpen', true)
   protected async onOpenChange() {
-    if (this.disabled || !this.submenuOpen) {
+    if (this.disabled) {
+      this.submenuOpen = false;
       return;
     }
 
-    await this.updateComplete;
+    if (this.submenuOpen) {
+      const requestOpen = emit(this, 'submenu-open', {
+        cancelable: true,
+      });
+      if (requestOpen.defaultPrevented) {
+        return;
+      }
 
-    // 打开子菜单动画开始前，设置子菜单的样式
-    const submenuStyle = this.getSubmenuStyle();
+      await stopAnimations(this.submenuContainer);
+      this.submenuContainer.hidden = false;
+      this.updateSubmenuPositioner();
+      await animateTo(this.submenuContainer, KEYFRAME_FADE_IN, {
+        duration: DURATION_FADE_IN,
+        easing: EASING_DECELERATION,
+      });
+      emit(this, 'submenu-opened');
+    } else {
+      const requestClose = emit(this, 'submenu-close', {
+        cancelable: true,
+      });
+      if (requestClose.defaultPrevented) {
+        return;
+      }
 
-    $(this.submenuContainer).css(submenuStyle);
+      await stopAnimations(this.submenuContainer);
+      await animateTo(this.submenuContainer, KEYFRAME_FADE_OUT, {
+        duration: DURATION_FADE_OUT,
+        easing: EASING_ACCELERATION,
+      });
+      this.submenuContainer.hidden = true;
+      emit(this, 'submenu-closed');
+    }
   }
 
   protected renderInner(
@@ -485,7 +496,8 @@ export class MenuItem extends AnchorMixin(
     const className =
       'item' + (hasCustomSlot ? '' : ' preset') + (this.dense ? ' dense' : '');
 
-    return html`<mdui-ripple></mdui-ripple>${href && !disabled
+    return html`<mdui-ripple></mdui-ripple>
+      ${href && !disabled
         ? // @ts-ignore
           this.renderAnchor({
             className,
@@ -493,22 +505,10 @@ export class MenuItem extends AnchorMixin(
           })
         : html`<div class=${className}>
             ${this.renderInner(hasCustomSlot, hasSubmenuSlot)}
-          </div>`}${when(
-        this.submenuOpen && !this.disabled && hasSubmenuSlot,
-        () =>
-          html`<div
-            part="submenu"
-            class="submenu"
-            ${animate({
-              keyframeOptions: {
-                duration: DURATION_FADE_OUT,
-                easing: EASING_ACCELERATION,
-              },
-            })}
-          >
-            <slot name="submenu"></slot>
-          </div>`,
-      )}`;
+          </div>`}
+      <div part="submenu" class="submenu">
+        <slot name="submenu"></slot>
+      </div>`;
   }
 }
 

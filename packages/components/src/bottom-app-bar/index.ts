@@ -12,9 +12,9 @@ import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { style } from './style.js';
 
 /**
- * @event show - 开始显示时，事件被触发
+ * @event show - 开始显示时，事件被触发。可以通过调用 `event.preventDefault()` 阻止显示
  * @event shown - 显示动画完成时，事件被触发
- * @event hide - 开始隐藏时，事件被触发
+ * @event hide - 开始隐藏时，事件被触发。可以通过调用 `event.preventDefault()` 阻止隐藏
  * @event hidden - 隐藏动画完成时，事件被触发
  *
  * @slot - 底部应用栏内部的元素
@@ -77,8 +77,10 @@ export class BottomAppBar extends LitElement {
     $(this.scrollTargetListening).on(this.scrollEventName, () => {
       window.requestAnimationFrame(() => this.onScroll());
     });
-    $(this).on('transitionend', () => {
-      emit(this, this.hide ? 'hidden' : 'shown');
+    $(this).on('transitionend', (e: TransitionEvent) => {
+      if (e.target === this) {
+        emit(this, this.hide ? 'hidden' : 'shown');
+      }
     });
   }
 
@@ -123,12 +125,16 @@ export class BottomAppBar extends LitElement {
       return;
     }
 
-    if (scrollTop > this.lastScrollTop) {
-      this.hide = true;
-      emit(this, 'hide');
-    } else if (scrollTop < this.lastScrollTop) {
-      this.hide = false;
-      emit(this, 'show');
+    if (scrollTop > this.lastScrollTop && !this.hide) {
+      const requestHide = emit(this, 'hide');
+      if (!requestHide.defaultPrevented) {
+        this.hide = true;
+      }
+    } else if (scrollTop < this.lastScrollTop && this.hide) {
+      const requestShow = emit(this, 'show');
+      if (!requestShow.defaultPrevented) {
+        this.hide = false;
+      }
     }
 
     this.lastScrollTop = scrollTop;

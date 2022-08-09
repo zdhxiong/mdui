@@ -123,7 +123,7 @@ export class IconButton extends ButtonBase {
 
   protected override render(): TemplateResult {
     return html`<mdui-ripple></mdui-ripple>${this.href
-        ? this.disabled
+        ? this.disabled || this.loading
           ? html`<span part="button" class="button">${this.renderIcon()}</span>`
           : // @ts-ignore
             this.renderAnchor({

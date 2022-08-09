@@ -98,7 +98,7 @@ export class Button extends ButtonBase {
 
   protected override render(): TemplateResult {
     return html`<mdui-ripple></mdui-ripple>${this.href
-        ? this.disabled
+        ? this.disabled || this.loading
           ? html`<span part="button" class="button">
               ${this.renderInner()}
             </span>`

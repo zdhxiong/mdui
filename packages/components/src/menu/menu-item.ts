@@ -75,12 +75,15 @@ export class MenuItem extends AnchorMixin(
   }
 
   protected get focusElement(): HTMLElement {
-    return this;
+    return this.href ? this.item : this;
   }
 
   protected get rippleDisabled(): boolean {
     return this.disabled;
   }
+
+  @query('.item')
+  protected item!: HTMLElement;
 
   @query('mdui-ripple')
   protected rippleElement!: Ripple;

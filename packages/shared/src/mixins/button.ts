@@ -14,6 +14,7 @@ type RenderButtonOptions = {
 
 export interface ButtonMixinInterface {
   disabled: boolean;
+  loading: boolean;
   autofocus: boolean;
   name?: string;
   value?: string;
@@ -38,6 +39,12 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
      */
     @property({ type: Boolean, reflect: true })
     public disabled = false;
+
+    /**
+     * 是否为加载中状态
+     */
+    @property({ type: Boolean, reflect: true })
+    public loading = false;
 
     /**
      * 是否在页面加载时自动获得焦点
@@ -145,13 +152,11 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
       part,
       content = html`<slot></slot>`,
     }: RenderButtonOptions): TemplateResult {
-      const { disabled } = this;
       return html`<button
-        tabindex="-1"
         id=${ifDefined(id)}
-        class=${ifDefined(className)}
+        class="_button ${className ? className : ''}"
         part=${ifDefined(part)}
-        ?disabled=${disabled}
+        ?disabled=${this.disabled || this.loading}
       >
         ${content}
       </button>`;

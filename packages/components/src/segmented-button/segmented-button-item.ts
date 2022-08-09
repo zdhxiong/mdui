@@ -122,7 +122,7 @@ export class SegmentedButtonItem extends ButtonBase {
     } ${this.endIcon || hasEndSlot ? 'has-end' : ''}`;
 
     return html`<mdui-ripple></mdui-ripple>${this.href
-        ? this.disabled
+        ? this.disabled || this.loading
           ? html`<span part="button" class=${className}>
               ${this.renderInner()}
             </span>`

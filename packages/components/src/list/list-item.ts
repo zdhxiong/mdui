@@ -47,7 +47,7 @@ export class ListItem extends AnchorMixin(
   }
 
   protected get focusElement(): HTMLElement {
-    return this;
+    return this.href ? this.item : this;
   }
 
   protected get rippleDisabled(): boolean {

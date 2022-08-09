@@ -65,17 +65,14 @@ export const AnchorMixin = <T extends Constructor<LitElement>>(
       part,
       content = html`<slot></slot>`,
     }: RenderAnchorOptions): TemplateResult {
-      const { href, download, target, rel } = this;
-
       return html`<a
-        tabindex="-1"
         id=${ifDefined(id)}
-        class=${ifDefined(className)}
+        class="_a ${className ? className : ''}"
         part=${ifDefined(part)}
-        href=${ifDefined(href)}
-        download=${ifDefined(download)}
-        target=${ifDefined(target)}
-        rel=${ifDefined(rel)}
+        href=${ifDefined(this.href)}
+        download=${ifDefined(this.download)}
+        target=${ifDefined(this.target)}
+        rel=${ifDefined(this.rel)}
       >
         ${content}
       </a>`;

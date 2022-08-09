@@ -57,7 +57,7 @@ export class NavigationBarItem extends AnchorMixin(
   }
 
   protected get focusElement(): HTMLElement {
-    return this;
+    return this.href ? this.renderRoot.querySelector('._a')! : this;
   }
 
   protected get rippleDisabled(): boolean {

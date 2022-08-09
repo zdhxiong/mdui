@@ -22,12 +22,6 @@ export class ButtonBase extends ButtonMixin(
 
   protected readonly formController: FormController = new FormController(this);
 
-  /**
-   * 是否为加载中状态
-   */
-  @property({ type: Boolean, reflect: true })
-  public loading = false;
-
   protected get rippleDisabled(): boolean {
     return this.disabled || this.loading;
   }
@@ -37,7 +31,9 @@ export class ButtonBase extends ButtonMixin(
   }
 
   protected get focusElement(): HTMLElement {
-    return this;
+    return this.href
+      ? this.renderRoot.querySelector('._a')!
+      : this.renderRoot.querySelector('._button')!;
   }
 
   override connectedCallback() {

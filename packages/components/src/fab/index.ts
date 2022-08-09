@@ -129,7 +129,7 @@ export class Fab extends ButtonBase {
     const className = `button ${this.icon || hasIconSlot ? 'has-icon' : ''}`;
 
     return html`<mdui-ripple></mdui-ripple>${this.href
-        ? this.disabled
+        ? this.disabled || this.loading
           ? html`<span part="button" class=${className}>
               ${this.renderInner()}
             </span>`

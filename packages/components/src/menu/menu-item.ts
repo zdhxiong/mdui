@@ -436,19 +436,13 @@ export class MenuItem extends AnchorMixin(
     }
   }
 
-  protected renderInner(
-    hasCustomSlot: boolean,
-    hasSubmenuSlot: boolean,
-  ): TemplateResult {
-    if (hasCustomSlot) {
-      return html`<slot name="custom"></slot>`;
-    }
-
+  protected renderInner(hasSubmenuSlot: boolean): TemplateResult {
     const hasStartSlot = this.hasSlotController.test('start');
     const hasEndSlot = this.hasSlotController.test('end');
     const hasEndTextSlot = this.hasSlotController.test('end-text');
 
-    return html`<div
+    return html`<slot name="custom">
+      <div
         part="start"
         class="start-icon ${classMap({
           'has-start':
@@ -486,25 +480,25 @@ export class MenuItem extends AnchorMixin(
           : html`<slot name="end">
               <mdui-icon name=${this.endIcon}></mdui-icon>
             </slot>`}
-      </div>`;
+      </div>
+    </slot>`;
   }
 
   protected override render(): TemplateResult {
-    const { disabled, href } = this;
     const hasCustomSlot = this.hasSlotController.test('custom');
     const hasSubmenuSlot = this.hasSubmenuSlot;
     const className =
       'item' + (hasCustomSlot ? '' : ' preset') + (this.dense ? ' dense' : '');
 
     return html`<mdui-ripple></mdui-ripple>
-      ${href && !disabled
+      ${this.href && !this.disabled
         ? // @ts-ignore
           this.renderAnchor({
             className,
-            content: this.renderInner(hasCustomSlot, this.hasSubmenuSlot),
+            content: this.renderInner(this.hasSubmenuSlot),
           })
         : html`<div class=${className}>
-            ${this.renderInner(hasCustomSlot, hasSubmenuSlot)}
+            ${this.renderInner(hasSubmenuSlot)}
           </div>`}
       <div part="submenu" class="submenu">
         <slot name="submenu"></slot>

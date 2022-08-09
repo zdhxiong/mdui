@@ -1,6 +1,7 @@
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { when } from 'lit/directives/when.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import type { MaterialIconsName } from '../icon.js';
 import { ButtonBase } from '../button/button-base.js';
@@ -69,13 +70,16 @@ export class SegmentedButtonItem extends ButtonBase {
       return nothing;
     }
 
-    return this.icon
-      ? html`<mdui-icon
+    return html`<slot name="start">
+      ${when(
+        this.icon,
+        () => html`<mdui-icon
           part="start"
           class="icon"
           name=${this.icon}
-        ></mdui-icon>`
-      : html`<slot part="start" name="start"></slot>`;
+        ></mdui-icon>`,
+      )}
+    </slot>`;
   }
 
   protected renderLabel(): TemplateResult | typeof nothing {
@@ -89,13 +93,16 @@ export class SegmentedButtonItem extends ButtonBase {
   }
 
   protected renderEnd(): TemplateResult {
-    return this.endIcon
-      ? html`<mdui-icon
+    return html`<slot name="end">
+      ${when(
+        this.endIcon,
+        () => html`<mdui-icon
           part="end"
           class="icon"
           name=${this.endIcon}
-        ></mdui-icon>`
-      : html`<slot part="end" name="end"></slot>`;
+        ></mdui-icon>`,
+      )}
+    </slot>`;
   }
 
   protected renderInner(): (TemplateResult | typeof nothing)[] {
@@ -108,15 +115,14 @@ export class SegmentedButtonItem extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    const { disabled, href } = this;
     const hasStartSlot = this.hasSlotController.test('start');
     const hasEndSlot = this.hasSlotController.test('end');
     const className = `button ${
       (this.icon || hasStartSlot) && !this.selected ? 'has-start' : ''
     } ${this.endIcon || hasEndSlot ? 'has-end' : ''}`;
 
-    return html`<mdui-ripple></mdui-ripple>${href
-        ? disabled
+    return html`<mdui-ripple></mdui-ripple>${this.href
+        ? this.disabled
           ? html`<span part="button" class=${className}>
               ${this.renderInner()}
             </span>`

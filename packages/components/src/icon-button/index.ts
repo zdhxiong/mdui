@@ -6,6 +6,7 @@ import { emit } from '@mdui/shared/helpers/event.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
+import { when } from 'lit/directives/when.js';
 import { ButtonBase } from '../button/button-base.js';
 import type { MaterialIconsName } from '../icon.js';
 import { style } from './style.js';
@@ -32,6 +33,7 @@ export class IconButton extends ButtonBase {
 
   private readonly hasSlotController = new HasSlotController(
     this,
+    '[default]',
     'selected-icon',
   );
 
@@ -91,28 +93,37 @@ export class IconButton extends ButtonBase {
   }
 
   protected renderIcon(): TemplateResult {
-    const icon = this.icon
-      ? html`<mdui-icon part="icon" class="icon" name=${this.icon}></mdui-icon>`
-      : html`<slot part="icon"></slot>`;
+    const icon = () => {
+      return this.hasSlotController.test('[default]')
+        ? html`<slot></slot>`
+        : html`${when(
+            this.icon,
+            () =>
+              html`<mdui-icon
+                part="icon"
+                class="icon"
+                name=${this.icon}
+              ></mdui-icon>`,
+          )}`;
+    };
 
-    const selectedIcon = this.selectedIcon
-      ? html`<mdui-icon
-          part="selected-icon"
-          class="icon"
-          name=${this.selectedIcon}
-        ></mdui-icon>`
-      : this.hasSlotController.test('selected-icon')
-      ? html`<slot part="selected-icon" name="selected-icon"></slot>`
-      : icon;
+    const selectedIcon =
+      this.hasSlotController.test('selected-icon') || this.selectedIcon
+        ? html`<slot name="selected-icon">
+            <mdui-icon
+              part="selected-icon"
+              class="icon"
+              name=${this.selectedIcon}
+            ></mdui-icon>
+          </slot>`
+        : icon();
 
-    return this.selected ? selectedIcon : icon;
+    return this.selected ? selectedIcon : icon();
   }
 
   protected override render(): TemplateResult {
-    const { disabled, href } = this;
-
-    return html`<mdui-ripple></mdui-ripple>${href
-        ? disabled
+    return html`<mdui-ripple></mdui-ripple>${this.href
+        ? this.disabled
           ? html`<span part="button" class="button">${this.renderIcon()}</span>`
           : // @ts-ignore
             this.renderAnchor({
@@ -125,7 +136,8 @@ export class IconButton extends ButtonBase {
             className: 'button',
             part: 'button',
             content: this.renderIcon(),
-          })}${this.renderLoading()}`;
+          })}
+      ${this.renderLoading()}`;
   }
 }
 

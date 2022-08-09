@@ -140,17 +140,15 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   protected override render(): TemplateResult {
-    const { disabled, checked, required, name, value, invalid } = this;
-
     return html`<label>
       <input
-        class=${classMap({ invalid })}
+        class=${classMap({ invalid: this.invalid })}
         type="radio"
-        name=${ifDefined(name)}
-        value=${ifDefined(value)}
-        .disabled=${disabled}
-        .checked=${live(checked)}
-        .required=${required}
+        name=${ifDefined(this.name)}
+        value=${ifDefined(this.value)}
+        .disabled=${this.disabled}
+        .checked=${live(this.checked)}
+        .required=${this.required}
         @change=${this.onChange}
       />
       <i part="control">

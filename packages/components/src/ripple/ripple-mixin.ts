@@ -1,6 +1,5 @@
 import type { Constructor } from '@open-wc/dedupe-mixin';
 import type { PropertyValues } from 'lit';
-import { dedupeMixin } from '@open-wc/dedupe-mixin';
 import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 import { $ } from '@mdui/jq/$.js';
@@ -22,169 +21,167 @@ import './index.js';
  *
  * 支持触摸笔的屏幕上事件顺序为：todo
  */
-export const RippleMixin = dedupeMixin(
-  <T extends Constructor<LitElement>>(
-    superclass: T,
-  ): T & Constructor<LitElement> => {
-    class Mixin extends superclass {
-      /**
-       * 父类要添加该属性，指向 <mdui-ripple> 元素
-       */
-      protected get rippleElement(): Ripple {
-        throw new Error('Must implement ripple getter!');
+export const RippleMixin = <T extends Constructor<LitElement>>(
+  superclass: T,
+): Constructor<LitElement> & T => {
+  class Mixin extends superclass {
+    /**
+     * 父类要添加该属性，指向 <mdui-ripple> 元素
+     */
+    protected get rippleElement(): Ripple {
+      throw new Error('Must implement ripple getter!');
+    }
+
+    /**
+     * 父类要实现该属性，表示是否禁用 ripple
+     */
+    protected get rippleDisabled(): boolean {
+      throw new Error('Must implement rippleDisabled getter!');
+    }
+
+    @property({ type: Boolean, reflect: true })
+    protected hover = false;
+
+    @property({ type: Boolean, reflect: true })
+    protected pressed = false;
+
+    @property({ type: Boolean, reflect: true })
+    protected dragged = false;
+
+    protected startHover(event: PointerEvent): void {
+      if (event.pointerType !== 'mouse' || this.rippleDisabled) {
+        return;
       }
 
-      /**
-       * 父类要实现该属性，表示是否禁用 ripple
-       */
-      protected get rippleDisabled(): boolean {
-        throw new Error('Must implement rippleDisabled getter!');
+      this.hover = true;
+      this.rippleElement.startHover();
+    }
+
+    protected endHover(event: PointerEvent): void {
+      if (event.pointerType !== 'mouse' || this.rippleDisabled) {
+        return;
       }
 
-      @property({ type: Boolean, reflect: true })
-      protected hover = false;
+      this.hover = false;
+      this.rippleElement.endHover();
+    }
 
-      @property({ type: Boolean, reflect: true })
-      protected pressed = false;
-
-      @property({ type: Boolean, reflect: true })
-      protected dragged = false;
-
-      protected startHover(event: PointerEvent): void {
-        if (event.pointerType !== 'mouse' || this.rippleDisabled) {
-          return;
-        }
-
-        this.hover = true;
-        this.rippleElement.startHover();
+    protected startFocus(): void {
+      if (this.rippleDisabled) {
+        return;
       }
 
-      protected endHover(event: PointerEvent): void {
-        if (event.pointerType !== 'mouse' || this.rippleDisabled) {
-          return;
-        }
+      this.rippleElement.startFocus();
+    }
 
-        this.hover = false;
-        this.rippleElement.endHover();
+    protected endFocus(): void {
+      if (this.rippleDisabled) {
+        return;
       }
 
-      protected startFocus(): void {
-        if (this.rippleDisabled) {
-          return;
-        }
+      this.rippleElement.endFocus();
+    }
 
-        this.rippleElement.startFocus();
+    protected startPress(event: PointerEvent): void {
+      if (this.rippleDisabled) {
+        return;
       }
 
-      protected endFocus(): void {
-        if (this.rippleDisabled) {
-          return;
-        }
+      this.pressed = true;
 
-        this.rippleElement.endFocus();
-      }
+      const $target = $(this);
 
-      protected startPress(event: PointerEvent): void {
-        if (this.rippleDisabled) {
-          return;
-        }
+      // 手指触摸触发涟漪
+      if (['touch', 'pen'].includes(event.pointerType)) {
+        let hidden = false;
 
-        this.pressed = true;
+        // 手指触摸后，延迟一段时间触发涟漪，避免手指滑动时也触发涟漪
+        let timer = setTimeout(() => {
+          timer = 0;
+          this.rippleElement.startPress(event);
+        }, 70) as unknown as number;
 
-        const $target = $(this);
-
-        // 手指触摸触发涟漪
-        if (['touch', 'pen'].includes(event.pointerType)) {
-          let hidden = false;
-
-          // 手指触摸后，延迟一段时间触发涟漪，避免手指滑动时也触发涟漪
-          let timer = setTimeout(() => {
+        const hideRipple = () => {
+          // 如果手指没有移动，且涟漪动画还没有开始，则开始涟漪动画
+          if (timer) {
+            clearTimeout(timer);
             timer = 0;
             this.rippleElement.startPress(event);
-          }, 70) as unknown as number;
+          }
 
-          const hideRipple = () => {
-            // 如果手指没有移动，且涟漪动画还没有开始，则开始涟漪动画
-            if (timer) {
-              clearTimeout(timer);
-              timer = 0;
-              this.rippleElement.startPress(event);
-            }
-
-            if (!hidden) {
-              hidden = true;
-              this.endPress();
-            }
-
-            $target.off('pointerup pointercancel', hideRipple);
-          };
-
-          // 手指移动后，移除涟漪动画
-          const touchMove = (): void => {
-            if (timer) {
-              clearTimeout(timer);
-              timer = 0;
-            }
-
-            $target.off('touchmove', touchMove);
-          };
-
-          // pointermove 事件过于灵敏，可能在未触发 touchmove 的情况下，触发了 pointermove 事件，导致正常的点击操作没有显示涟漪
-          // 因此这里监听 touchmove 事件
-          $target
-            .on('touchmove', touchMove)
-            .on('pointerup pointercancel', hideRipple);
-        }
-
-        // 鼠标点击触发涟漪，点击后立即触发涟漪（仅鼠标左键能触发涟漪）
-        if (event.pointerType === 'mouse' && event.button === 0) {
-          const hideRipple = () => {
+          if (!hidden) {
+            hidden = true;
             this.endPress();
-            $target.off('pointerup pointercancel pointerleave', hideRipple);
-          };
+          }
 
-          this.rippleElement.startPress(event);
-          $target.on('pointerup pointercancel pointerleave', hideRipple);
-        }
+          $target.off('pointerup pointercancel', hideRipple);
+        };
+
+        // 手指移动后，移除涟漪动画
+        const touchMove = (): void => {
+          if (timer) {
+            clearTimeout(timer);
+            timer = 0;
+          }
+
+          $target.off('touchmove', touchMove);
+        };
+
+        // pointermove 事件过于灵敏，可能在未触发 touchmove 的情况下，触发了 pointermove 事件，导致正常的点击操作没有显示涟漪
+        // 因此这里监听 touchmove 事件
+        $target
+          .on('touchmove', touchMove)
+          .on('pointerup pointercancel', hideRipple);
       }
 
-      protected endPress(): void {
-        if (this.rippleDisabled) {
-          return;
-        }
+      // 鼠标点击触发涟漪，点击后立即触发涟漪（仅鼠标左键能触发涟漪）
+      if (event.pointerType === 'mouse' && event.button === 0) {
+        const hideRipple = () => {
+          this.endPress();
+          $target.off('pointerup pointercancel pointerleave', hideRipple);
+        };
 
-        this.pressed = false;
-        this.rippleElement.endPress();
-      }
-
-      protected startDrag(): void {
-        if (this.rippleDisabled) {
-          return;
-        }
-
-        this.rippleElement.startDrag();
-      }
-
-      protected endDrag(): void {
-        if (this.rippleDisabled) {
-          return;
-        }
-
-        this.rippleElement.endDrag();
-      }
-
-      protected async firstUpdated(changes: PropertyValues) {
-        super.firstUpdated(changes);
-        $(this).on({
-          pointerdown: this.startPress,
-          pointerenter: this.startHover,
-          pointerleave: this.endHover,
-          focus: this.startFocus,
-          blur: this.endFocus,
-        });
+        this.rippleElement.startPress(event);
+        $target.on('pointerup pointercancel pointerleave', hideRipple);
       }
     }
 
-    return Mixin;
-  },
-);
+    protected endPress(): void {
+      if (this.rippleDisabled) {
+        return;
+      }
+
+      this.pressed = false;
+      this.rippleElement.endPress();
+    }
+
+    protected startDrag(): void {
+      if (this.rippleDisabled) {
+        return;
+      }
+
+      this.rippleElement.startDrag();
+    }
+
+    protected endDrag(): void {
+      if (this.rippleDisabled) {
+        return;
+      }
+
+      this.rippleElement.endDrag();
+    }
+
+    protected async firstUpdated(changes: PropertyValues) {
+      super.firstUpdated(changes);
+      $(this).on({
+        pointerdown: this.startPress,
+        pointerenter: this.startHover,
+        pointerleave: this.endHover,
+        focus: this.startFocus,
+        blur: this.endFocus,
+      });
+    }
+  }
+
+  return Mixin;
+};

@@ -6,8 +6,8 @@ import {
   queryAssignedElements,
 } from 'lit/decorators.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
-import { watch } from '@mdui/shared/decorators/watch';
-import { emit } from '@mdui/shared/src/helpers/event';
+import { watch } from '@mdui/shared/decorators/watch.js';
+import { emit } from '@mdui/shared/helpers/event.js';
 import type { MenuItem } from './menu-item.js';
 import { menuStyle } from './menu-style.js';
 

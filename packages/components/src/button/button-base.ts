@@ -40,7 +40,7 @@ export class ButtonBase extends ButtonMixin(
     return this;
   }
 
-  connectedCallback() {
+  override connectedCallback() {
     super.connectedCallback();
     this.addEventListener('click', () => {
       if (this.type === 'submit') {

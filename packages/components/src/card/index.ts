@@ -1,7 +1,6 @@
 import type { TemplateResult, CSSResultGroup } from 'lit';
 import { LitElement, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { when } from 'lit/directives/when.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -58,9 +57,7 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
   public clickable = false;
 
   protected override render(): TemplateResult {
-    const { href, clickable } = this;
-
-    if (href) {
+    if (this.href) {
       // @ts-ignore
       return html`<mdui-ripple></mdui-ripple>${this.renderAnchor({
           className: 'link',
@@ -68,8 +65,7 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
         })}`;
     }
 
-    return html`${when(clickable, () => html`<mdui-ripple></mdui-ripple>`)}<slot
-      ></slot>`;
+    return html`<mdui-ripple></mdui-ripple><slot></slot>`;
   }
 }
 

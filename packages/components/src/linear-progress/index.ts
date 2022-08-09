@@ -27,15 +27,16 @@ export class LinearProgress extends LitElement {
   public value!: number;
 
   protected override render(): TemplateResult {
-    const { max, value } = this;
-    const isDeterminate = value !== undefined;
+    const isDeterminate = this.value !== undefined;
 
     if (isDeterminate) {
       return html`<div
         part="indicator"
         class="determinate"
         style="${styleMap({
-          width: `${(value / Math.max(max ?? value, value)) * 100}%`,
+          width: `${
+            (this.value / Math.max(this.max ?? this.value, this.value)) * 100
+          }%`,
         })}"
       ></div>`;
     }

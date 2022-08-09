@@ -22,12 +22,10 @@ import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import {
   EASING_DECELERATION,
   EASING_LINEAR,
-} from '@mdui/shared/helpers/motion.js';
-import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
-import {
   KEYFRAME_FADE_IN,
   KEYFRAME_FADE_OUT,
 } from '@mdui/shared/helpers/motion.js';
+import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
 import type { MaterialIconsName } from '../icon.js';
 import type { TopAppBar } from '../top-app-bar/top-app-bar.js';
 import { style } from './style.js';

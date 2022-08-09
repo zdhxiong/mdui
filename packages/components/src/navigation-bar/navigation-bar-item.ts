@@ -6,6 +6,7 @@ import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
+import { when } from 'lit/directives/when.js';
 import type { Ripple } from '../ripple/index.js';
 import type { MaterialIconsName } from '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
@@ -95,19 +96,30 @@ export class NavigationBarItem extends AnchorMixin(
   }
 
   protected renderActiveIcon(): TemplateResult {
-    return this.activeIcon
-      ? html`<mdui-icon
+    return html`<slot name="activeIcon">
+      ${when(
+        this.activeIcon,
+        () => html`<mdui-icon
           part="active-icon"
           class="active-icon"
           name=${this.activeIcon}
-        ></mdui-icon>`
-      : html`<slot part="active-icon" name="activeIcon"></slot>`;
+        ></mdui-icon>`,
+      )}
+    </slot>`;
   }
 
   protected renderIcon(): TemplateResult {
-    return this.icon
-      ? html`<mdui-icon part="icon" class="icon" name=${this.icon}></mdui-icon>`
-      : html`<slot part="icon" name="icon"></slot>`;
+    return html`<slot name="icon">
+      ${when(
+        this.icon,
+        () =>
+          html`<mdui-icon
+            part="icon"
+            class="icon"
+            name=${this.icon}
+          ></mdui-icon>`,
+      )}
+    </slot>`;
   }
 
   protected renderLabel(): TemplateResult {
@@ -127,10 +139,8 @@ export class NavigationBarItem extends AnchorMixin(
   }
 
   protected override render(): TemplateResult {
-    const { href } = this;
-
     return html`<mdui-ripple></mdui-ripple>
-      ${href
+      ${this.href
         ? // @ts-ignore
           this.renderAnchor({
             className: 'item',

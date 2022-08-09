@@ -24,7 +24,7 @@ $(document).on({
  */
 export const FocusableMixin = <T extends Constructor<LitElement>>(
   superclass: T,
-): T & Constructor<LitElement> => {
+): Constructor<LitElement> & T => {
   class FocusableMixinClass extends superclass {
     /**
      * 是否在页面加载时自动获得焦点

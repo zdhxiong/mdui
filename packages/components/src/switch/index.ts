@@ -1,10 +1,11 @@
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Options } from '@lit-labs/motion';
-import { html, LitElement } from 'lit';
+import { html, LitElement, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { when } from 'lit/directives/when.js';
 import { animate, AnimateController } from '@lit-labs/motion';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -187,16 +188,6 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   protected override render(): TemplateResult {
-    const {
-      disabled,
-      checked,
-      name,
-      value,
-      required,
-      invalid,
-      icon,
-      checkedIcon,
-    } = this;
     const animateOutOptions: Options = {
       keyframeOptions: {
         duration: 30,
@@ -206,56 +197,48 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
 
     return html`<label>
       <input
-        class=${classMap({ invalid })}
+        class=${classMap({ invalid: this.invalid })}
         type="checkbox"
-        name=${ifDefined(name)}
-        value=${ifDefined(value)}
-        .disabled=${disabled}
-        .checked=${live(checked)}
-        .required=${required}
+        name=${ifDefined(this.name)}
+        value=${ifDefined(this.value)}
+        .disabled=${this.disabled}
+        .checked=${live(this.checked)}
+        .required=${this.required}
         @change=${this.onChange}
       />
       <div part="track" class="track">
         <div
           part="thumb"
           class="thumb ${classMap({
-            'has-icon': icon || this.hasSlotController.test('icon'),
+            'has-icon': this.icon || this.hasSlotController.test('icon'),
           })}"
         >
           <mdui-ripple></mdui-ripple>
-          ${checked
-            ? html`${checkedIcon
-                ? html`<mdui-icon
-                    part="checked-icon"
-                    class="checked-icon"
-                    name=${checkedIcon}
-                    ${animate(animateOutOptions)}
-                  ></mdui-icon>`
-                : this.hasSlotController.test('checked-icon')
-                ? html`<slot
-                    part="checked-icon"
-                    name="checked-icon"
-                    ${animate(animateOutOptions)}
-                  ></slot>`
-                : checkedIcon === ''
-                ? ''
-                : html`<mdui-icon-check
-                    part="checked-icon"
-                    class="checked-icon"
-                    ${animate(animateOutOptions)}
-                  ></mdui-icon-check>`}`
-            : html`${icon
-                ? html`<mdui-icon
+          ${this.checked
+            ? html`<slot name="checked-icon" ${animate(animateOutOptions)}>
+                ${this.checkedIcon
+                  ? html`<mdui-icon
+                      part="checked-icon"
+                      class="checked-icon"
+                      name=${this.checkedIcon}
+                    ></mdui-icon>`
+                  : this.checkedIcon === ''
+                  ? nothing
+                  : html`<mdui-icon-check
+                      part="checked-icon"
+                      class="checked-icon"
+                    ></mdui-icon-check>`}
+              </slot>`
+            : html`<slot name="icon" ${animate(animateOutOptions)}>
+                ${when(
+                  this.icon,
+                  () => html`<mdui-icon
                     part="icon"
                     class="icon"
-                    name=${icon}
-                    ${animate(animateOutOptions)}
-                  ></mdui-icon>`
-                : html`<slot
-                    part="icon"
-                    name="icon"
-                    ${animate(animateOutOptions)}
-                  ></slot>`}`}
+                    name=${this.icon}
+                  ></mdui-icon>`,
+                )}
+              </slot>`}
         </div>
       </div>
     </label>`;

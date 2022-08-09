@@ -149,19 +149,16 @@ export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   protected override render(): TemplateResult {
-    const { disabled, checked, name, value, indeterminate, required, invalid } =
-      this;
-
     return html`<label>
       <input
-        class=${classMap({ invalid })}
+        class=${classMap({ invalid: this.invalid })}
         type="checkbox"
-        name=${ifDefined(name)}
-        value=${ifDefined(value)}
-        .indeterminate=${live(indeterminate)}
-        .disabled=${disabled}
-        .checked=${live(checked)}
-        .required=${required}
+        name=${ifDefined(this.name)}
+        value=${ifDefined(this.value)}
+        .indeterminate=${live(this.indeterminate)}
+        .disabled=${this.disabled}
+        .checked=${live(this.checked)}
+        .required=${this.required}
         @change=${this.onChange}
       />
       <i part="control">

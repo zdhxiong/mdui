@@ -21,7 +21,7 @@ export interface AnchorMixinInterface {
 
 export const AnchorMixin = <T extends Constructor<LitElement>>(
   superclass: T,
-): T & Constructor<AnchorMixinInterface> => {
+): Constructor<AnchorMixinInterface> & T => {
   class AnchorMixinClass extends superclass {
     /**
      * 链接指向的页面的 URL。

@@ -4,6 +4,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { delay } from '@mdui/shared/helpers/delay.js';
+import { when } from 'lit/directives/when.js';
 import { ButtonBase } from '../button/button-base.js';
 import type { MaterialIconsName } from '../icon.js';
 import { style } from './style.js';
@@ -106,9 +107,17 @@ export class Fab extends ButtonBase {
   }
 
   protected renderIcon(): TemplateResult {
-    return this.icon
-      ? html`<mdui-icon part="icon" class="icon" name=${this.icon}></mdui-icon>`
-      : html`<slot part="icon" name="icon"></slot>`;
+    return html`<slot name="icon">
+      ${when(
+        this.icon,
+        () =>
+          html`<mdui-icon
+            part="icon"
+            class="icon"
+            name=${this.icon}
+          ></mdui-icon>`,
+      )}
+    </slot>`;
   }
 
   protected renderInner(): TemplateResult[] {
@@ -116,12 +125,11 @@ export class Fab extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    const { disabled, href } = this;
     const hasIconSlot = this.hasSlotController.test('icon');
     const className = `button ${this.icon || hasIconSlot ? 'has-icon' : ''}`;
 
-    return html`<mdui-ripple></mdui-ripple>${href
-        ? disabled
+    return html`<mdui-ripple></mdui-ripple>${this.href
+        ? this.disabled
           ? html`<span part="button" class=${className}>
               ${this.renderInner()}
             </span>`

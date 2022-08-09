@@ -21,14 +21,14 @@ export class CircularProgress extends LitElement {
   public value!: number;
 
   protected renderDeterminate(): TemplateResult {
-    const { max, value } = this;
     const strokeWidth = 4; // 圆环宽度
     const circleRadius = 18; // 圆环宽度中心点的半径
     const π = 3.1415926;
     const center = circleRadius + strokeWidth / 2;
     const circumference = 2 * π * circleRadius;
     const determinateStrokeDashOffset =
-      (1 - value / Math.max(max ?? value, value)) * circumference;
+      (1 - this.value / Math.max(this.max ?? this.value, this.value)) *
+      circumference;
 
     return html`<svg viewBox="0 0 ${center * 2} ${center * 2}">
       <circle

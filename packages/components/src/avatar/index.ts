@@ -1,8 +1,9 @@
 import type { CSSResultGroup, TemplateResult } from 'lit';
-import { html, LitElement } from 'lit';
+import { html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import type { MaterialIconsName } from '../icon.js';
 import { style } from './style.js';
@@ -23,6 +24,11 @@ import '../icon.js';
 @customElement('mdui-avatar')
 export class Avatar extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];
+
+  protected readonly hasSlotController = new HasSlotController(
+    this,
+    '[default]',
+  );
 
   /**
    * 头像的图片地址
@@ -55,22 +61,18 @@ export class Avatar extends LitElement {
   public label!: string;
 
   protected override render(): TemplateResult {
-    const { label, src, icon, fit } = this;
-
-    if (src) {
-      return html`<img
-        part="image"
-        alt=${ifDefined(label)}
-        src=${src}
-        style=${styleMap({ objectFit: fit })}
-      />`;
-    }
-
-    if (icon) {
-      return html`<mdui-icon part="icon" name=${icon}></mdui-icon>`;
-    }
-
-    return html`<slot></slot>`;
+    return this.hasSlotController.test('[default]')
+      ? html`<slot></slot>`
+      : this.src
+      ? html`<img
+          part="image"
+          alt=${ifDefined(this.label)}
+          src=${this.src}
+          style=${styleMap({ objectFit: this.fit })}
+        />`
+      : this.icon
+      ? html`<mdui-icon part="icon" name=${this.icon}></mdui-icon>`
+      : html``;
   }
 }
 

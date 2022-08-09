@@ -1,5 +1,5 @@
 import type { CSSResultGroup, TemplateResult } from 'lit';
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { styleMap } from 'lit/directives/style-map.js';
@@ -85,30 +85,23 @@ export class Chip extends ButtonBase {
   public avatar!: string;
 
   protected renderLeadingIcon(): TemplateResult {
-    if (this.selected && ['assist', 'filter'].includes(this.variant)) {
-      return html`<mdui-icon-check
-        part="check"
-        class="icon"
-      ></mdui-icon-check>`;
-    }
-
-    if (this.icon) {
-      return html`<mdui-icon
-        part="icon"
-        class="icon"
-        name=${this.icon}
-      ></mdui-icon>`;
-    }
-
-    if (this.avatar) {
-      return html`<span
-        part="avatar"
-        class="avatar"
-        style=${styleMap({ backgroundImage: `url(${this.avatar})` })}
-      ></span>`;
-    }
-
-    return html`<slot part="icon" name="icon"></slot>`;
+    return html`<slot name="icon">
+      ${this.selected && ['assist', 'filter'].includes(this.variant)
+        ? html`<mdui-icon-check part="check" class="icon"></mdui-icon-check>`
+        : this.icon
+        ? html`<mdui-icon
+            part="icon"
+            class="icon"
+            name=${this.icon}
+          ></mdui-icon>`
+        : this.avatar
+        ? html`<span
+            part="avatar"
+            class="avatar"
+            style=${styleMap({ backgroundImage: `url(${this.avatar})` })}
+          ></span>`
+        : nothing}
+    </slot>`;
   }
 
   protected renderLabel(): TemplateResult {
@@ -133,10 +126,8 @@ export class Chip extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    const { disabled, href } = this;
-
-    return html`<mdui-ripple></mdui-ripple>${href
-        ? disabled
+    return html`<mdui-ripple></mdui-ripple>${this.href
+        ? this.disabled
           ? html`<span part="button" class="button">
               ${this.renderInner()}
             </span>`
@@ -151,7 +142,8 @@ export class Chip extends ButtonBase {
             className: 'button',
             part: 'button',
             content: this.renderInner(),
-          })}${this.renderLoading()}`;
+          })}
+      ${this.renderLoading()}`;
   }
 }
 

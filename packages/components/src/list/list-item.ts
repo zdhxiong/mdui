@@ -111,17 +111,14 @@ export class ListItem extends AnchorMixin(
   @property({ type: Boolean, reflect: true })
   public rounded = false;
 
-  protected renderInner(isCustom: boolean): TemplateResult {
-    if (isCustom) {
-      return html`<slot name="custom"></slot>`;
-    }
-
-    const { primary, secondary } = this;
+  protected renderInner(): TemplateResult {
+    const hasDefaultSlot = this.hasSlotController.test('[default]');
     const hasSecondarySlot = this.hasSlotController.test('secondary');
     const hasStartSlot = this.hasSlotController.test('start');
     const hasEndSlot = this.hasSlotController.test('end');
 
-    return html`<div
+    return html`<slot name="custom">
+      <div
         part="start"
         class="start ${classMap({ 'has-start': hasStartSlot })}"
       >
@@ -129,36 +126,34 @@ export class ListItem extends AnchorMixin(
       </div>
       <div part="body" class="body">
         <div part="primary" class="primary">
-          ${primary ? primary : html`<slot></slot>`}
+          ${hasDefaultSlot ? html`<slot></slot>` : this.primary}
         </div>
         <div
           part="secondary"
           class="secondary ${classMap({
-            'has-secondary': secondary || hasSecondarySlot,
+            'has-secondary': this.secondary || hasSecondarySlot,
           })}"
         >
-          ${secondary ? secondary : html`<slot name="secondary"></slot>`}
+          <slot name="secondary">${this.secondary}</slot>
         </div>
       </div>
       <div part="end" class="end ${classMap({ 'has-end': hasEndSlot })}">
         <slot name="end"></slot>
-      </div>`;
+      </div>
+    </slot>`;
   }
 
   protected override render(): TemplateResult {
-    const { disabled, href } = this;
     const hasCustomSlot = this.hasSlotController.test('custom');
     const className = hasCustomSlot ? 'item' : 'item preset';
 
-    return html`<mdui-ripple></mdui-ripple>${href && !disabled
+    return html`<mdui-ripple></mdui-ripple>${this.href && !this.disabled
         ? // @ts-ignore
           this.renderAnchor({
             className,
-            content: this.renderInner(hasCustomSlot),
+            content: this.renderInner(),
           })
-        : html`<div class="${className}">
-            ${this.renderInner(hasCustomSlot)}
-          </div>`}`;
+        : html`<div class="${className}">${this.renderInner()}</div>`}`;
   }
 }
 

@@ -60,8 +60,9 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       throw new Error('Must implement focusElement getter!');
     }
 
-    private manipulatingTabindex = false;
+    private _manipulatingTabindex = false;
     private _tabIndex = 0;
+    private _lastFocusDisabled?: boolean;
 
     /**
      * 通过 Tab 键在元素之间切换焦点时，tabIndex 属性指定了元素获取焦点的顺序
@@ -71,10 +72,10 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       const $this = $(this);
 
       if (this.focusElement === this) {
-        return Number($this.attr('tabindex')) || -1;
+        return Number($this.attr('tabindex') || -1);
       }
 
-      const tabIndexAttribute = Number($this.attr('tabindex')) || 0;
+      const tabIndexAttribute = Number($this.attr('tabindex') || 0);
 
       if (this.focusDisabled || tabIndexAttribute < 0) {
         return -1;
@@ -87,8 +88,8 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       return this.focusElement.tabIndex;
     }
     public override set tabIndex(tabIndex: number) {
-      if (this.manipulatingTabindex) {
-        this.manipulatingTabindex = false;
+      if (this._manipulatingTabindex) {
+        this._manipulatingTabindex = false;
         return;
       }
 
@@ -97,7 +98,11 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       if (this.focusElement === this) {
         if (tabIndex !== this.tabIndex) {
           this._tabIndex = tabIndex;
-          $this.attr('tabindex', this.focusDisabled ? -1 : tabIndex);
+          if (this.focusDisabled) {
+            this.removeAttribute('tabindex');
+          } else {
+            $this.attr('tabindex', tabIndex);
+          }
         }
         return;
       }
@@ -110,7 +115,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
           }
         });
       } else {
-        this.manipulatingTabindex = true;
+        this._manipulatingTabindex = true;
         $this.off('pointerdown._focusable');
       }
 
@@ -125,7 +130,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       if (this.hasAttribute('tabindex')) {
         this.removeAttribute('tabindex');
       } else {
-        this.manipulatingTabindex = false;
+        this._manipulatingTabindex = false;
       }
       this.manageFocusElementTabindex(tabIndex);
     }
@@ -198,11 +203,11 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       super.firstUpdated(changes);
 
       $(this.focusElement).on({
-        focus: () => {
+        'focus._focusable': () => {
           this.focused = true;
           this.focusVisible = !isClick;
         },
-        blur: () => {
+        'blur._focusable': () => {
           this.focused = false;
           this.focusVisible = false;
         },
@@ -210,15 +215,21 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     }
 
     protected override update(changedProperties: PropertyValues): void {
-      if (this.focusDisabled) {
-        this.manipulatingTabindex = true;
-        this.setAttribute('tabindex', '-1');
-      } else {
-        this.manipulatingTabindex = true;
-        if (this.focusElement === this) {
-          $(this).attr('tabindex', this._tabIndex);
-        } else {
+      if (
+        this._lastFocusDisabled === undefined ||
+        this._lastFocusDisabled !== this.focusDisabled
+      ) {
+        this._lastFocusDisabled = this.focusDisabled;
+
+        if (this.focusDisabled) {
           this.removeAttribute('tabindex');
+        } else {
+          if (this.focusElement === this) {
+            this._manipulatingTabindex = true;
+            $(this).attr('tabindex', this._tabIndex);
+          } else {
+            this.removeAttribute('tabindex');
+          }
         }
       }
 

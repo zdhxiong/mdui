@@ -97,7 +97,9 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
 
       if (this.focusElement === this) {
         if (tabIndex !== this.tabIndex) {
-          this._tabIndex = tabIndex;
+          if (tabIndex !== null) {
+            this._tabIndex = tabIndex;
+          }
           if (this.focusDisabled) {
             this.removeAttribute('tabindex');
           } else {

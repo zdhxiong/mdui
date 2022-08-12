@@ -2,39 +2,21 @@
 
 :host {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: flex-start;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  .height(40);
+  user-select: none;
+  touch-action: manipulation;
+  zoom: 1;
+  -webkit-user-drag: none;
+  .borderRadius(2);
   .typescale(label-large);
 }
 
 :host([disabled]) {
   cursor: default;
   pointer-events: none;
-}
-
-label {
-  display: inline-flex;
-  align-items: center;
-  width: 100%;
-  white-space: nowrap;
-  cursor: inherit;
-  user-select: none;
-  touch-action: manipulation;
-  zoom: 1;
-  -webkit-user-drag: none;
-}
-
-// 隐藏系统 input 标签，用自定义的图标代替
-input {
-  position: absolute;
-  padding: 0;
-  opacity: 0;
-  pointer-events: none;
-  .width(20);
-  .height(20);
-  .margin(0, 0, 0, 10);
 }
 
 i {
@@ -45,6 +27,7 @@ i {
   overflow: hidden;
   border-radius: 50%;
   .width(40);
+  .minWidth(40);
   .height(40);
   .stateLayerColor(on-surface);
 
@@ -73,12 +56,15 @@ i {
 }
 
 span {
+  width: 100%;
+  .paddingTop(10);
+  .paddingBottom(10);
   .color(on-surface);
 }
 
-input {
-  /* 选中状态的图标 */
-  &:checked + i {
+/* 选中状态的图标 */
+:host([checked]) {
+  i {
     .stateLayerColor(primary);
 
     &::after {
@@ -90,22 +76,24 @@ input {
       opacity: 1;
     }
   }
+}
 
-  /* 验证不通过状态 */
-  &.invalid + i {
-    .stateLayerColor(error);
+/* 验证不通过状态 */
+i.invalid {
+  .stateLayerColor(error);
 
-    &::after {
-      .borderColor(error);
-    }
-
-    & + span {
-      .color(error);
-    }
+  &::after {
+    .borderColor(error);
   }
 
-  /* 禁用状态的图标 */
-  &:disabled + i {
+  & + span {
+    .color(error);
+  }
+}
+
+/* 禁用状态的图标 */
+:host([disabled]) {
+  i {
     &::after {
       .borderColor(on-surface, 38%);
     }
@@ -114,9 +102,11 @@ input {
       .color(on-surface, 38%);
     }
   }
+}
 
-  /* 禁用且选中状态的图标 */
-  &:disabled:checked + i {
+/* 禁用且选中状态的图标 */
+:host([disabled][checked]) {
+  i {
     &::before {
       .backgroundColor(on-surface, 38%);
     }

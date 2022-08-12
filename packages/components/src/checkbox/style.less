@@ -5,7 +5,6 @@
   display: inline-block;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  .height(40);
   .borderRadius(2);
   .typescale(label-large);
 }
@@ -17,9 +16,8 @@
 
 label {
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
-  white-space: nowrap;
   cursor: inherit;
   user-select: none;
   touch-action: manipulation;
@@ -46,6 +44,7 @@ i {
   overflow: hidden;
   border-radius: 50%;
   .width(40);
+  .minWidth(40);
   .height(40);
   .stateLayerColor(on-surface);
 
@@ -77,6 +76,9 @@ i {
 }
 
 span {
+  width: 100%;
+  .paddingTop(10);
+  .paddingBottom(10);
   .color(on-surface);
 }
 

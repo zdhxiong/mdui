@@ -1,6 +1,6 @@
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import { LitElement, html } from 'lit';
-import { query, property } from 'lit/decorators.js';
+import { query } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { ButtonMixin } from '@mdui/shared/mixins/button.js';

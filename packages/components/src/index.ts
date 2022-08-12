@@ -21,6 +21,7 @@ export * from './menu.js';
 export * from './navigation-bar-item.js';
 export * from './navigation-bar.js';
 export * from './radio.js';
+export * from './radio-group.js';
 export * from './ripple.js';
 export * from './segmented-button-item.js';
 export * from './segmented-button.js';

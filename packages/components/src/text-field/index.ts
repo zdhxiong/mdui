@@ -405,7 +405,7 @@ export class TextField extends FocusableMixin(LitElement) {
   /**
    * 选中文本框中的文本
    */
-  public select() {
+  public select(): void {
     this.inputElement.select();
   }
 

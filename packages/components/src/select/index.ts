@@ -167,7 +167,6 @@ export class Select extends FocusableMixin(LitElement) {
   @property({ type: Boolean, reflect: true })
   public invalid = false;
 
-  @property()
   protected override render(): TemplateResult {
     return html`<mdui-dropdown>
       <mdui-text-field

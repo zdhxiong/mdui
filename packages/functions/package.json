@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "mdui 函数库",
   "files": [
+    "utils",
+    "*.{js,js.map,d.ts,d.ts.map}",
     "LICENSE",
     "package.json",
     "README.md"
@@ -27,8 +29,8 @@
     "@mdui/shared": "^1.0.0",
     "@mdui/icons": "^1.0.0",
     "@mdui/components": "^1.0.0",
-    "@material/material-color-utilities": "^0.1.2",
-    "lit": "^2.2.7",
+    "@material/material-color-utilities": "^0.2.0",
+    "lit": "^2.3.0",
     "tslib": "^2.4.0"
   }
 }

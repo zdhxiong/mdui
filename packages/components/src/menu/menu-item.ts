@@ -1,13 +1,9 @@
 import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
-import {
-  customElement,
-  property,
-  query,
-  queryAssignedElements,
-  state,
-} from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { when } from 'lit/directives/when.js';
+import cc from 'classcat';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -16,16 +12,12 @@ import { watch } from '@mdui/shared/decorators/watch.js';
 import '@mdui/icons/arrow-right.js';
 import '@mdui/icons/check.js';
 import { $ } from '@mdui/jq/$.js';
-import { JQ } from '@mdui/jq/shared/core.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/off.js';
 import '@mdui/jq/methods/width.js';
 import '@mdui/jq/methods/height.js';
 import '@mdui/jq/methods/innerWidth.js';
 import '@mdui/jq/methods/innerHeight.js';
-import '@mdui/jq/methods/siblings.js';
-import '@mdui/jq/methods/parents.js';
-import '@mdui/jq/methods/each.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/static/contains.js';
 import {
@@ -38,11 +30,12 @@ import {
 } from '@mdui/shared/helpers/motion.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
-import type { Menu } from '../menu.js';
+import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import type { MaterialIconsName } from '../icon.js';
 import type { Ripple } from '../ripple/index.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { menuItemStyle } from './menu-item-style.js';
+import '../menu.js';
 
 /**
  * @event submenu-open - 子菜单开始打开时，事件被触发。可以通过调用 `event.preventDefault()` 阻止子菜单打开
@@ -54,7 +47,7 @@ import { menuItemStyle } from './menu-item-style.js';
  * @slot start - 菜单项左侧元素
  * @slot end - 菜单项右侧元素
  * @slot end-text - 菜单右侧的文本
- * @slot submenu - 子菜单
+ * @slot submenu-item - 子菜单
  * @slot custom - 任意自定义内容
  *
  * @csspart start - 左侧的元素
@@ -62,7 +55,7 @@ import { menuItemStyle } from './menu-item-style.js';
  * @csspart label-text 文本内容
  * @csspart end - 右侧的元素
  * @csspart end-text - 右侧的文本
- * @csspart submenu - 子菜单的容器
+ * @csspart submenu - 子菜单元素
  */
 @customElement('mdui-menu-item')
 export class MenuItem extends AnchorMixin(
@@ -70,8 +63,42 @@ export class MenuItem extends AnchorMixin(
 ) {
   static override styles: CSSResultGroup = [componentStyle, menuItemStyle];
 
+  @query('mdui-ripple')
+  protected rippleElement!: Ripple;
+
+  @query('.item')
+  protected item!: HTMLElement;
+
+  @query('.submenu')
+  protected submenu!: HTMLElement;
+
+  // 由 mdui-menu 控制该参数
+  @state() protected dense!: boolean;
+
+  // 由 mdui-menu 控制该参数
+  @state() protected selects!: undefined | 'single' | 'multiple';
+
+  // 由 mdui-menu 控制该参数
+  @state() protected submenuTrigger!: string;
+
+  // 由 mdui-menu 控制该参数
+  @state() protected submenuOpenDelay!: number;
+
+  // 由 mdui-menu 控制该参数
+  @state() protected submenuCloseDelay!: number;
+
+  // 是否已选中该菜单项，由 mdui-menu 控制该参数
+  @property({ type: Boolean, reflect: true }) protected selected = false;
+
+  // 是否可聚焦。由 mdui-menu 控制该参数
+  @state() protected focusable = false;
+
+  protected get hasSubmenu(): boolean {
+    return this.hasSlotController.test('submenu-item');
+  }
+
   protected get focusDisabled(): boolean {
-    return this.disabled;
+    return this.disabled || !this.focusable;
   }
 
   protected get focusElement(): HTMLElement {
@@ -82,34 +109,8 @@ export class MenuItem extends AnchorMixin(
     return this.disabled;
   }
 
-  @query('.item')
-  protected item!: HTMLElement;
-
-  @query('mdui-ripple')
-  protected rippleElement!: Ripple;
-
-  @query('.submenu')
-  protected submenuContainer!: HTMLElement;
-
-  @queryAssignedElements({ slot: 'submenu', flatten: true })
-  protected submenuSlots!: Menu[] | null;
-
-  protected get $submenuSlot(): JQ<Menu> {
-    return $(this.submenuSlots![0]);
-  }
-
-  protected get $window(): JQ<Window> {
-    return $(window);
-  }
-
-  protected get hasSubmenuSlot(): boolean {
-    return this.hasSlotController.test('submenu');
-  }
-
-  // selected 属性变化时，是否需要修改父元素的 value 值
-  // 在 `selects="single"` 时，选中一个 item 时，会取消选中其他 item，从而多次修改 value 值，导致触发多次 change 事件；
-  // 为了确保一次选中只修改一次 value 值，在修改 value 值前，判断该属性为 true 才执行
-  private changeParentValueOnSelectedChange = true;
+  // 每一个 menu-item 元素都添加一个唯一的 key
+  protected readonly key = uniqueId();
 
   protected readonly hasSlotController = new HasSlotController(
     this,
@@ -117,51 +118,15 @@ export class MenuItem extends AnchorMixin(
     'start',
     'end',
     'end-text',
-    'submenu',
+    'submenu-item',
     'custom',
   );
-
-  /**
-   * 由父组件 menu 赋值
-   */
-  @state()
-  protected dense!: boolean;
-
-  /**
-   * 由父组件 menu 赋值
-   */
-  @state()
-  protected selects!: undefined | 'single' | 'multiple';
-
-  /**
-   * 由父组件 menu 赋值
-   */
-  @state()
-  protected submenuTrigger!: string;
-
-  /**
-   * 由父组件 menu 赋值
-   */
-  @state()
-  protected submenuOpenDelay!: number;
-
-  /**
-   * 由父组件 menu 赋值
-   */
-  @state()
-  protected submenuCloseDelay!: number;
-
-  /**
-   * 是否选中该菜单项
-   */
-  @property({ type: Boolean, reflect: true })
-  public selected = false;
 
   /**
    * 该菜单项的值
    */
   @property({ reflect: true })
-  public value!: string;
+  public value = '';
 
   /**
    * 是否禁用该菜单项
@@ -194,30 +159,14 @@ export class MenuItem extends AnchorMixin(
   @property({ type: Boolean, reflect: true, attribute: 'submenu-open' })
   public submenuOpen = false;
 
-  /**
-   * selected 属性变化时
-   */
-  @watch('selected')
-  protected async onSelectedChange() {
-    // 如果是单选，选中当前 item 时，取消选中其他 item
-    if (this.selects === 'single' && this.selected) {
-      $(this)
-        .siblings('mdui-menu-item')
-        .each(async (_, itemElement: MenuItem) => {
-          itemElement.selected = false;
+  override connectedCallback(): void {
+    super.connectedCallback();
+    $(document).on('pointerdown._menu-item', (e) => this.onOuterClick(e));
+  }
 
-          // 由一个 item 的选中，导致其他 item 被取消选中时，暂时禁止其他 item 修改父元素的 value 值
-          itemElement.changeParentValueOnSelectedChange = false;
-          await this.updateComplete;
-          itemElement.changeParentValueOnSelectedChange = true;
-        });
-    }
-
-    if (this.changeParentValueOnSelectedChange && this.selects) {
-      const menuElement = $(this).parents('mdui-menu')[0] as unknown as Menu;
-      // @ts-ignore
-      menuElement.syncValueFromItems();
-    }
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    $(document).off('pointerdown._menu-item');
   }
 
   /**
@@ -235,16 +184,6 @@ export class MenuItem extends AnchorMixin(
     this.submenuOpen = false;
   }
 
-  override connectedCallback(): void {
-    super.connectedCallback();
-    $(document).on('pointerdown._menu-item', (e) => this.onOuterClick(e));
-  }
-
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    $(document).off('pointerdown._menu-item');
-  }
-
   protected override firstUpdated(_changedProperties: PropertyValues) {
     super.firstUpdated(_changedProperties);
 
@@ -257,8 +196,10 @@ export class MenuItem extends AnchorMixin(
       mouseleave: () => this.onMouseLeave(),
     });
 
-    this.submenuContainer.hidden =
-      !this.submenuOpen || this.disabled || !this.hasSubmenuSlot;
+    if (this.submenu) {
+      this.submenu.hidden =
+        !this.submenuOpen || this.disabled || !this.hasSubmenu;
+    }
   }
 
   protected hasTrigger(trigger: string): boolean {
@@ -267,7 +208,7 @@ export class MenuItem extends AnchorMixin(
   }
 
   protected onFocus() {
-    if (this.submenuOpen || !this.hasTrigger('focus') || !this.hasSubmenuSlot) {
+    if (this.submenuOpen || !this.hasTrigger('focus') || !this.hasSubmenu) {
       return;
     }
 
@@ -275,11 +216,7 @@ export class MenuItem extends AnchorMixin(
   }
 
   protected onBlur() {
-    if (
-      !this.submenuOpen ||
-      !this.hasTrigger('focus') ||
-      !this.hasSubmenuSlot
-    ) {
+    if (!this.submenuOpen || !this.hasTrigger('focus') || !this.hasSubmenu) {
       return;
     }
 
@@ -292,17 +229,8 @@ export class MenuItem extends AnchorMixin(
       return;
     }
 
-    // 切换 selected 状态
-    if (this.selects) {
-      this.selected = !this.selected;
-    }
-
     // 切换子菜单打开状态
-    if (
-      !this.hasTrigger('click') ||
-      e.target !== this ||
-      !this.hasSubmenuSlot
-    ) {
+    if (!this.hasTrigger('click') || e.target !== this || !this.hasSubmenu) {
       return;
     }
 
@@ -310,25 +238,17 @@ export class MenuItem extends AnchorMixin(
   }
 
   protected onKeydown(e: KeyboardEvent) {
-    // 按空格键切换选中状态
-    if (this.selects && e.key === ' ') {
-      this.selected = !this.selected;
-      e.preventDefault();
-    }
-
     // 切换子菜单打开状态
-    if (!this.hasSubmenuSlot) {
-      return;
-    }
+    if (this.hasSubmenu) {
+      if (!this.submenuOpen && e.key === 'Enter') {
+        e.stopPropagation();
+        this.submenuOpen = true;
+      }
 
-    if (!this.submenuOpen && e.key === 'Enter') {
-      e.stopPropagation();
-      this.submenuOpen = true;
-    }
-
-    if (this.submenuOpen && e.key === 'Escape') {
-      e.stopPropagation();
-      this.submenuOpen = false;
+      if (this.submenuOpen && e.key === 'Escape') {
+        e.stopPropagation();
+        this.submenuOpen = false;
+      }
     }
   }
 
@@ -337,7 +257,7 @@ export class MenuItem extends AnchorMixin(
 
   protected onMouseEnter() {
     // 不做 submenuOpen 的判断，因为可以延时打开和关闭
-    if (!this.hasTrigger('hover') || !this.hasSubmenuSlot) {
+    if (!this.hasTrigger('hover') || !this.hasSubmenu) {
       return;
     }
 
@@ -353,7 +273,7 @@ export class MenuItem extends AnchorMixin(
 
   protected onMouseLeave() {
     // 不做 submenuOpen 的判断，因为可以延时打开和关闭
-    if (!this.hasTrigger('hover') || !this.hasSubmenuSlot) {
+    if (!this.hasTrigger('hover') || !this.hasSubmenu) {
       return;
     }
 
@@ -364,16 +284,18 @@ export class MenuItem extends AnchorMixin(
   }
 
   protected updateSubmenuPositioner(): void {
+    const $window = $(window);
+    const $submenu = $(this.submenu);
     const itemRect = this.getBoundingClientRect();
-    const submenuWidth = this.$submenuSlot.innerWidth();
-    const submenuHeight = this.$submenuSlot.innerHeight();
+    const submenuWidth = $submenu.innerWidth();
+    const submenuHeight = $submenu.innerHeight();
     const screenMargin = 8; // 子菜单与屏幕界至少保留 8px 间距
 
     let placementX: 'top' | 'bottom' = 'bottom';
     let placementY: 'left' | 'right' = 'right';
 
     // 判断子菜单上下位置
-    if (this.$window.height() - itemRect.top > submenuHeight + screenMargin) {
+    if ($window.height() - itemRect.top > submenuHeight + screenMargin) {
       placementX = 'bottom';
     } else if (itemRect.top + itemRect.height > submenuHeight + screenMargin) {
       placementX = 'top';
@@ -381,7 +303,7 @@ export class MenuItem extends AnchorMixin(
 
     // 判断子菜单左右位置
     if (
-      this.$window.width() - itemRect.left - itemRect.width >
+      $window.width() - itemRect.left - itemRect.width >
       submenuWidth + screenMargin
     ) {
       placementY = 'right';
@@ -389,12 +311,13 @@ export class MenuItem extends AnchorMixin(
       placementY = 'left';
     }
 
-    $(this.submenuContainer).css({
+    $(this.submenu).css({
       top: placementX === 'bottom' ? 0 : itemRect.height - submenuHeight,
       left: placementY === 'right' ? itemRect.width : -submenuWidth,
-      transformOrigin: `${placementY === 'right' ? 0 : '100%'} ${
-        placementX === 'bottom' ? 0 : '100%'
-      }`,
+      transformOrigin: [
+        placementY === 'right' ? 0 : '100%',
+        placementX === 'bottom' ? 0 : '100%',
+      ].join(' '),
     });
   }
 
@@ -413,10 +336,10 @@ export class MenuItem extends AnchorMixin(
         return;
       }
 
-      await stopAnimations(this.submenuContainer);
-      this.submenuContainer.hidden = false;
+      await stopAnimations(this.submenu);
+      this.submenu.hidden = false;
       this.updateSubmenuPositioner();
-      await animateTo(this.submenuContainer, KEYFRAME_FADE_IN, {
+      await animateTo(this.submenu, KEYFRAME_FADE_IN, {
         duration: DURATION_FADE_IN,
         easing: EASING_DECELERATION,
       });
@@ -429,17 +352,17 @@ export class MenuItem extends AnchorMixin(
         return;
       }
 
-      await stopAnimations(this.submenuContainer);
-      await animateTo(this.submenuContainer, KEYFRAME_FADE_OUT, {
+      await stopAnimations(this.submenu);
+      await animateTo(this.submenu, KEYFRAME_FADE_OUT, {
         duration: DURATION_FADE_OUT,
         easing: EASING_ACCELERATION,
       });
-      this.submenuContainer.hidden = true;
+      this.submenu.hidden = true;
       emit(this, 'submenu-closed');
     }
   }
 
-  protected renderInner(hasSubmenuSlot: boolean): TemplateResult {
+  protected renderInner(hasSubmenu: boolean): TemplateResult {
     const hasStartSlot = this.hasSlotController.test('start');
     const hasEndSlot = this.hasSlotController.test('end');
     const hasEndTextSlot = this.hasSlotController.test('end-text');
@@ -475,10 +398,10 @@ export class MenuItem extends AnchorMixin(
       <div
         part="end"
         class="end-icon ${classMap({
-          'has-end': hasEndSlot || this.endIcon || hasSubmenuSlot,
+          'has-end': hasEndSlot || this.endIcon || hasSubmenu,
         })}"
       >
-        ${hasSubmenuSlot && !hasEndSlot && !this.endIcon
+        ${hasSubmenu && !hasEndSlot && !this.endIcon
           ? html`<mdui-icon-arrow-right></mdui-icon-arrow-right>`
           : html`<slot name="end">
               <mdui-icon name=${this.endIcon}></mdui-icon>
@@ -489,23 +412,27 @@ export class MenuItem extends AnchorMixin(
 
   protected override render(): TemplateResult {
     const hasCustomSlot = this.hasSlotController.test('custom');
-    const hasSubmenuSlot = this.hasSubmenuSlot;
-    const className =
-      'item' + (hasCustomSlot ? '' : ' preset') + (this.dense ? ' dense' : '');
+    const hasSubmenu = this.hasSubmenu;
+    const className = cc({
+      item: true,
+      preset: !hasCustomSlot,
+      dense: this.dense,
+    });
 
-    return html`<mdui-ripple></mdui-ripple>
-      ${this.href && !this.disabled
+    return html`<mdui-ripple></mdui-ripple>${this.href && !this.disabled
         ? // @ts-ignore
           this.renderAnchor({
             className,
-            content: this.renderInner(this.hasSubmenuSlot),
+            content: this.renderInner(this.hasSubmenu),
           })
-        : html`<div class=${className}>
-            ${this.renderInner(hasSubmenuSlot)}
-          </div>`}
-      <div part="submenu" class="submenu">
-        <slot name="submenu"></slot>
-      </div>`;
+        : html`<div class=${className}>${this.renderInner(hasSubmenu)}</div>`}
+      ${when(
+        hasSubmenu,
+        () =>
+          html`<mdui-menu part="submenu" class="submenu">
+            <slot name="submenu-item"></slot>
+          </mdui-menu>`,
+      )}`;
   }
 }
 

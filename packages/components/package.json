@@ -68,6 +68,7 @@
     "@mdui/jq": "^3.0.0",
     "@mdui/shared": "^1.0.0",
     "@mdui/icons": "^1.0.0",
+    "classcat": "^5.0.4",
     "lit": "^2.3.0",
     "@lit-labs/motion": "^1.0.3",
     "@lit-labs/observers": "^1.0.2",

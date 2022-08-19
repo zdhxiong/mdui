@@ -10,7 +10,10 @@
   }
 }
 
-:host(:focus) {
+:host(:focus),
+:host(:focus-visible),
+:host *:focus,
+:host *:focus-visible {
   outline: none;
 }
 

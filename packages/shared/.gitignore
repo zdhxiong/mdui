@@ -1,2 +1,3 @@
 src/lit-styles/*style.ts
 /mixin.less
+/lit-styles/component-style.less

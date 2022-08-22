@@ -8,7 +8,6 @@ import {
 } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { $ } from '@mdui/jq/$.js';
-import { JQ } from '@mdui/jq/shared/core.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/off.js';
 import '@mdui/jq/methods/is.js';
@@ -54,10 +53,6 @@ export class Dropdown extends LitElement {
 
   @queryAssignedElements({ flatten: true })
   protected panelSlots!: HTMLElement[];
-
-  protected get $window(): JQ<Window> {
-    return $(window);
-  }
 
   @query('.panel')
   protected panel!: HTMLElement;
@@ -316,6 +311,7 @@ export class Dropdown extends LitElement {
 
   protected updatePositioner(): void {
     const $panel = $(this.panel);
+    const $window = $(window);
     const triggerRect = this.triggerSlots[0].getBoundingClientRect();
     const panelRect = {
       width: Math.max(
@@ -337,7 +333,7 @@ export class Dropdown extends LitElement {
       let transformOriginX: 'left' | 'right';
       let transformOriginY: 'top' | 'bottom';
       if (
-        this.$window.width() - triggerRect.left - this.pointerOffsetX >
+        $window.width() - triggerRect.left - this.pointerOffsetX >
         panelRect.width + screenMargin
       ) {
         // 右侧放得下
@@ -345,12 +341,12 @@ export class Dropdown extends LitElement {
         transformOriginX = 'left';
       } else {
         // 右侧放不下时，放左侧
-        left = this.$window.width() - panelRect.width - screenMargin;
+        left = $window.width() - panelRect.width - screenMargin;
         transformOriginX = 'right';
       }
 
       if (
-        this.$window.height() - triggerRect.top - this.pointerOffsetY >
+        $window.height() - triggerRect.top - this.pointerOffsetY >
         panelRect.height + screenMargin
       ) {
         // 下方放得下
@@ -370,9 +366,9 @@ export class Dropdown extends LitElement {
       }
 
       $panel.css({
-        left: `${left}px`,
-        top: `${top}px`,
-        transformOrigin: `${transformOriginX} ${transformOriginY}`,
+        left,
+        top,
+        transformOrigin: [transformOriginX, transformOriginY].join(' '),
       });
       return;
     }
@@ -384,7 +380,7 @@ export class Dropdown extends LitElement {
     // 自动判断 dropdown 的方位
     if (this.placement === 'auto') {
       if (
-        this.$window.height() - triggerRect.top - triggerRect.height >
+        $window.height() - triggerRect.top - triggerRect.height >
         panelRect.height + screenMargin
       ) {
         // 下方放得下
@@ -394,10 +390,7 @@ export class Dropdown extends LitElement {
         transformOriginY = 'bottom';
       }
 
-      if (
-        this.$window.width() - triggerRect.left >
-        panelRect.width + screenMargin
-      ) {
+      if ($window.width() - triggerRect.left > panelRect.width + screenMargin) {
         // 右侧放得下，沿着 trigger 左侧放
         transformOriginX = 'left';
       } else if (
@@ -417,17 +410,15 @@ export class Dropdown extends LitElement {
     }
 
     $panel.css({
-      top: `${
+      top:
         transformOriginY === 'top'
           ? triggerRect.top + triggerRect.height
-          : triggerRect.top - panelRect.height
-      }px`,
-      left: `${
+          : triggerRect.top - panelRect.height,
+      left:
         transformOriginX === 'left'
           ? triggerRect.left
-          : triggerRect.left + triggerRect.width - panelRect.width
-      }px`,
-      transformOrigin: `${transformOriginX} ${transformOriginY}`,
+          : triggerRect.left + triggerRect.width - panelRect.width,
+      transformOrigin: [transformOriginX, transformOriginY].join(' '),
     });
   }
 

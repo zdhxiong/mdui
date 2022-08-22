@@ -2,6 +2,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, query, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import cc from 'classcat';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -145,7 +146,10 @@ export class ListItem extends AnchorMixin(
 
   protected override render(): TemplateResult {
     const hasCustomSlot = this.hasSlotController.test('custom');
-    const className = hasCustomSlot ? 'item' : 'item preset';
+    const className = cc({
+      item: true,
+      preset: !hasCustomSlot,
+    });
 
     return html`<mdui-ripple></mdui-ripple>${this.href && !this.disabled
         ? // @ts-ignore

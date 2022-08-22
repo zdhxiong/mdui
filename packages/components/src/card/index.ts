@@ -57,15 +57,13 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
   public clickable = false;
 
   protected override render(): TemplateResult {
-    if (this.href) {
-      // @ts-ignore
-      return html`<mdui-ripple></mdui-ripple>${this.renderAnchor({
-          className: 'link',
-          content: html`<slot></slot>`,
-        })}`;
-    }
-
-    return html`<mdui-ripple></mdui-ripple><slot></slot>`;
+    return html`<mdui-ripple></mdui-ripple>${this.href
+        ? // @ts-ignore
+          this.renderAnchor({
+            className: 'link',
+            content: html`<slot></slot>`,
+          })
+        : html`<slot></slot>`}`;
   }
 }
 

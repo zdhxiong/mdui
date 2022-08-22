@@ -1,6 +1,7 @@
 import type { TemplateResult, CSSResultGroup } from 'lit';
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import cc from 'classcat';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { delay } from '@mdui/shared/helpers/delay.js';
@@ -126,7 +127,10 @@ export class Fab extends ButtonBase {
 
   protected override render(): TemplateResult {
     const hasIconSlot = this.hasSlotController.test('icon');
-    const className = `button ${this.icon || hasIconSlot ? 'has-icon' : ''}`;
+    const className = cc({
+      button: true,
+      'has-icon': this.icon || hasIconSlot,
+    });
 
     return html`<mdui-ripple></mdui-ripple>${this.href
         ? this.disabled || this.loading

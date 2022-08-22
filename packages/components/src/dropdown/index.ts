@@ -13,7 +13,6 @@ import '@mdui/jq/methods/off.js';
 import '@mdui/jq/methods/is.js';
 import '@mdui/jq/methods/width.js';
 import '@mdui/jq/methods/height.js';
-import '@mdui/jq/static/contains.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import {
@@ -25,6 +24,7 @@ import {
   KEYFRAME_FADE_OUT,
 } from '@mdui/shared/helpers/motion.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import { delay } from '@mdui/shared/helpers/delay.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { style } from './style.js';
 
@@ -53,6 +53,10 @@ export class Dropdown extends LitElement {
 
   @queryAssignedElements({ flatten: true })
   protected panelSlots!: HTMLElement[];
+
+  protected get panelSlot(): HTMLElement {
+    return this.panelSlots[0];
+  }
 
   @query('.panel')
   protected panel!: HTMLElement;
@@ -145,23 +149,15 @@ export class Dropdown extends LitElement {
   /**
    * 在 document 上点击时，根据条件判断是否要关闭 dropdown
    */
-  protected onOuterClick(e: Event) {
+  protected onDocumentClick(e: MouseEvent) {
     if (!this.open) {
       return;
     }
 
     const target = e.target as HTMLElement;
 
-    // 点击 trigger 或 panel 外部区域，直接关闭
-    if (
-      this.triggerSlot !== target &&
-      !$.contains(this.triggerSlot, target) &&
-      this.panelSlots
-        .map((panelSlot) => {
-          return panelSlot !== target && !$.contains(panelSlot, target);
-        })
-        .every((i) => i)
-    ) {
+    // 点击 dropdown 外部区域，直接关闭
+    if (!this.contains(target)) {
       this.open = false;
     }
 
@@ -169,44 +165,74 @@ export class Dropdown extends LitElement {
     if (
       this.hasTrigger('contextmenu') &&
       !this.hasTrigger('click') &&
-      (this.triggerSlot === target || $.contains(this.triggerSlot, target))
+      (this.triggerSlot === target || this.triggerSlot.contains(target))
     ) {
+      this.open = false;
+    }
+  }
+
+  /**
+   * 在 document 上按下按键时，根据条件判断是否要关闭 dropdown
+   */
+  protected onDocumentKeydown(event: KeyboardEvent) {
+    if (!this.open) {
+      return;
+    }
+
+    // 按下 ESC 键时，关闭 dropdown
+    if (event.key === 'Escape') {
+      this.open = false;
+      return;
+    }
+
+    // 按下 Tab 键时，关闭 dropdown
+    if (event.key === 'Tab') {
+      // 如果不支持 focus 触发，则焦点回到 trigger 上（这个会在 onOpenChange 中执行 ）这里只需阻止默认的 Tab 行为
+      if (
+        !this.hasTrigger('focus') &&
+        typeof this.triggerSlot?.focus === 'function'
+      ) {
+        event.preventDefault();
+      }
+
       this.open = false;
     }
   }
 
   override connectedCallback(): void {
     super.connectedCallback();
-    $(document).on('pointerdown._dropdown', (e) => this.onOuterClick(e));
+    $(document).on('pointerdown._dropdown', (e) =>
+      this.onDocumentClick(e as MouseEvent),
+    );
+    $(document).on('keydown._dropdown', (e) =>
+      this.onDocumentKeydown(e as KeyboardEvent),
+    );
     $(window).on('scroll._dropdown', () => {
       window.requestAnimationFrame(() => this.onPositionChange());
     });
-    $(this).on('mouseleave._dropdown', () => this.onMouseLeave());
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
     $(document).off('pointerdown._dropdown');
+    $(document).off('keydown._dropdown');
     $(window).off('scroll._dropdown');
-    $(this).off('mouseleave._dropdown');
   }
 
   protected override firstUpdated(_changedProperties: PropertyValues) {
     super.firstUpdated(_changedProperties);
 
+    $(this).on('mouseleave._dropdown', () => this.onMouseLeave());
+
     $(this.triggerSlots[0]).on({
       focus: () => this.onFocus(),
-      blur: () => this.onBlur(),
       click: (e) => this.onClick(e as MouseEvent),
       contextmenu: (e) => this.onContextMenu(e as MouseEvent),
-      keydown: (e) => this.onKeydown(e as KeyboardEvent),
       mouseenter: () => this.onMouseEnter(),
     });
 
-    $(this.panel).on('click', (event: MouseEvent) => {
-      if (!this.stayOpenOnClick && $(event.target!).is('mdui-menu-item')) {
-        this.open = false;
-      }
+    $(this.panel).on({
+      click: (e) => this.onPanelClick(e as MouseEvent),
     });
 
     this.panel.hidden = !this.open || this.disabled;
@@ -227,14 +253,6 @@ export class Dropdown extends LitElement {
     this.open = true;
   }
 
-  protected onBlur() {
-    if (!this.open || !this.hasTrigger('focus')) {
-      return;
-    }
-
-    this.open = false;
-  }
-
   // 右键菜单点击位置相对于 trigger 的位置
   private pointerOffsetX!: number;
   private pointerOffsetY!: number;
@@ -251,6 +269,12 @@ export class Dropdown extends LitElement {
     this.open = !this.open;
   }
 
+  protected onPanelClick(event: MouseEvent) {
+    if (!this.stayOpenOnClick && $(event.target!).is('mdui-menu-item')) {
+      this.open = false;
+    }
+  }
+
   protected onContextMenu(e: MouseEvent) {
     if (!this.hasTrigger('contextmenu')) {
       return;
@@ -260,22 +284,6 @@ export class Dropdown extends LitElement {
     this.pointerOffsetX = e.offsetX;
     this.pointerOffsetY = e.offsetY;
     this.open = true;
-  }
-
-  protected onKeydown(e: KeyboardEvent) {
-    // 按 Enter 键打开
-    if (!this.open && e.key === 'Enter') {
-      e.stopPropagation();
-      this.open = true;
-      return;
-    }
-
-    // 按 ECS 键关闭
-    if (this.open && e.key === 'Escape') {
-      e.stopPropagation();
-      this.open = false;
-      return;
-    }
   }
 
   private openTimeout!: number;
@@ -457,6 +465,12 @@ export class Dropdown extends LitElement {
         duration: DURATION_FADE_IN,
         easing: EASING_DECELERATION,
       });
+
+      // dropdown 打开后，尝试把焦点放到 panel 中
+      if (typeof this.panelSlot?.focus === 'function') {
+        this.panelSlot.focus();
+      }
+
       emit(this, 'opened');
     } else {
       const requestClose = emit(this, 'close', {
@@ -472,6 +486,16 @@ export class Dropdown extends LitElement {
         easing: EASING_ACCELERATION,
       });
       this.panel.hidden = true;
+
+      // dropdown 关闭时，如果不支持 focus 触发，且焦点在 dropdown 内，则焦点回到 trigger 上
+      if (
+        !this.hasTrigger('focus') &&
+        typeof this.triggerSlot?.focus === 'function' &&
+        this.contains(document.activeElement)
+      ) {
+        this.triggerSlot.focus();
+      }
+
       emit(this, 'closed');
     }
   }

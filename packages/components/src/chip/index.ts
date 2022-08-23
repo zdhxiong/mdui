@@ -1,12 +1,16 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-import { styleMap } from 'lit/directives/style-map.js';
+import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/on.js';
+import { emit } from '@mdui/shared/helpers/event.js';
+import { watch } from '@mdui/shared/decorators/watch.js';
 import { ButtonBase } from '../button/button-base.js';
 import type { MaterialIconsName } from '../icon.js';
 import { style } from './style.js';
 import '../icon.js';
+import '../avatar.js';
 import '@mdui/icons/check.js';
 import '@mdui/icons/clear.js';
 
@@ -84,6 +88,56 @@ export class Chip extends ButtonBase {
   @property({ reflect: true })
   public avatar!: string;
 
+  protected override firstUpdated(_changedProperties: PropertyValues) {
+    super.firstUpdated(_changedProperties);
+
+    $(this).on({
+      'click._chip': () => this.onClick(),
+      'keydown._chip': (event) => this.onKeyDown(event as KeyboardEvent),
+    });
+  }
+
+  private onClick() {
+    if (this.disabled || this.loading) {
+      return;
+    }
+
+    // 点击时，切换选中状态
+    if (this.selectable) {
+      this.selected = !this.selected;
+    }
+  }
+
+  private onKeyDown(event: KeyboardEvent) {
+    if (this.disabled || this.loading) {
+      return;
+    }
+
+    // 按下空格键时，切换选中状态
+    if (this.selectable && event.key === ' ') {
+      event.preventDefault();
+      this.selected = !this.selected;
+    }
+
+    // 按下 Delete 或 BackSpace 键时，触发 delete 事件
+    if (this.deletable && ['Delete', 'Backspace'].includes(event.key)) {
+      emit(this, 'delete');
+    }
+  }
+
+  /**
+   * 点击删除按钮
+   */
+  private onDelete(event: MouseEvent) {
+    event.stopPropagation();
+    emit(this, 'delete');
+  }
+
+  @watch('selected', true)
+  private onSelectedChange() {
+    emit(this, 'change');
+  }
+
   protected renderLeadingIcon(): TemplateResult {
     return html`<slot name="icon">
       ${this.selected && ['assist', 'filter'].includes(this.variant)
@@ -95,11 +149,12 @@ export class Chip extends ButtonBase {
             name=${this.icon}
           ></mdui-icon>`
         : this.avatar
-        ? html`<span
+        ? html`<mdui-avatar
             part="avatar"
             class="avatar"
-            style=${styleMap({ backgroundImage: `url(${this.avatar})` })}
-          ></span>`
+            fit="cover"
+            src=${this.avatar}
+          ></mdui-avatar>`
         : nothing}
     </slot>`;
   }
@@ -111,7 +166,7 @@ export class Chip extends ButtonBase {
   protected renderTrailingIcon(): TemplateResult {
     return when(
       this.deletable,
-      () => html`<span part="delete" class="delete">
+      () => html`<span part="delete" class="delete" @click=${this.onDelete}>
         <mdui-icon-clear></mdui-icon-clear>
       </span>`,
     );

@@ -1,24 +1,16 @@
 import type { CSSResultGroup, TemplateResult } from 'lit';
-import type { Options } from '@lit-labs/motion';
 import { html, LitElement, nothing } from 'lit';
 import { customElement, property, state, query } from 'lit/decorators.js';
 import { live } from 'lit/directives/live.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
-import { animate, AnimateController } from '@lit-labs/motion';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
-import {
-  EASING_DECELERATION,
-  EASING_STANDARD,
-  KEYFRAME_FADE_THROUGTH_IN,
-  KEYFRAME_FADE_THROUGTH_OUT,
-} from '@mdui/shared/helpers/motion.js';
 import type { Ripple } from '../ripple/index.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { style } from './style.js';
@@ -65,19 +57,6 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
 
   protected readonly formController: FormController = new FormController(this, {
     value: (control: Switch) => (control.checked ? control.value : undefined),
-  });
-
-  protected readonly animateController = new AnimateController(this, {
-    defaultOptions: {
-      keyframeOptions: {
-        delay: 30,
-        duration: 70,
-        easing: EASING_DECELERATION,
-        fill: 'both',
-      },
-      in: KEYFRAME_FADE_THROUGTH_IN.slice(0, -1),
-      out: KEYFRAME_FADE_THROUGTH_OUT,
-    },
   });
 
   protected readonly hasSlotController = new HasSlotController(
@@ -188,13 +167,6 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   protected override render(): TemplateResult {
-    const animateOutOptions: Options = {
-      keyframeOptions: {
-        duration: 30,
-        easing: EASING_STANDARD,
-      },
-    };
-
     return html`<label>
       <input
         class=${classMap({ invalid: this.invalid })}
@@ -214,31 +186,30 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
           })}"
         >
           <mdui-ripple></mdui-ripple>
-          ${this.checked
-            ? html`<slot name="checked-icon" ${animate(animateOutOptions)}>
-                ${this.checkedIcon
-                  ? html`<mdui-icon
-                      part="checked-icon"
-                      class="checked-icon"
-                      name=${this.checkedIcon}
-                    ></mdui-icon>`
-                  : this.checkedIcon === ''
-                  ? nothing
-                  : html`<mdui-icon-check
-                      part="checked-icon"
-                      class="checked-icon"
-                    ></mdui-icon-check>`}
-              </slot>`
-            : html`<slot name="icon" ${animate(animateOutOptions)}>
-                ${when(
-                  this.icon,
-                  () => html`<mdui-icon
-                    part="icon"
-                    class="icon"
-                    name=${this.icon}
-                  ></mdui-icon>`,
-                )}
-              </slot>`}
+          <slot name="checked-icon">
+            ${this.checkedIcon
+              ? html`<mdui-icon
+                  part="checked-icon"
+                  class="checked-icon"
+                  name=${this.checkedIcon}
+                ></mdui-icon>`
+              : this.checkedIcon === ''
+              ? nothing
+              : html`<mdui-icon-check
+                  part="checked-icon"
+                  class="checked-icon"
+                ></mdui-icon-check>`}
+          </slot>
+          <slot name="icon">
+            ${when(
+              this.icon,
+              () => html`<mdui-icon
+                part="icon"
+                class="icon"
+                name=${this.icon}
+              ></mdui-icon>`,
+            )}
+          </slot>
         </div>
       </div>
     </label>`;

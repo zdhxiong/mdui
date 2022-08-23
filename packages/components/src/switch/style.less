@@ -80,7 +80,9 @@ mdui-ripple {
   align-items: center;
   justify-content: center;
   border-radius: var(--shape-corner-thumb);
-  transition: width 100ms var(--mdui-motion-easing-standard), height 100ms var(--mdui-motion-easing-standard), left 100ms var(--mdui-motion-easing-standard), background-color 100ms var(--mdui-motion-easing-standard);
+  transition-property: width, height, left, background-color;
+  transition-duration: 100ms;
+  transition-timing-function: var(--mdui-motion-easing-standard);
   .height(16);
   .width(16);
   .left(6);
@@ -122,12 +124,6 @@ mdui-ripple {
     }
   }
 
-  :host([hover][checked]) &,
-  :host([focus-visible][checked]) &,
-  :host([pressed][checked]) & {
-    .backgroundColor(primary-container);
-  }
-
   :host([pressed]) & {
     .height(28);
     .width(28);
@@ -137,6 +133,16 @@ mdui-ripple {
       .left(-6);
       .top(-6);
     }
+  }
+
+  :host([pressed][checked]) & {
+    .left(22);
+  }
+
+  :host([hover][checked]) &,
+  :host([focus-visible][checked]) &,
+  :host([pressed][checked]) & {
+    .backgroundColor(primary-container);
   }
 
   :host([disabled]) & {
@@ -153,12 +159,26 @@ mdui-ripple {
 ::slotted([slot="icon"]),
 ::slotted([slot="checked-icon"]) {
   position: absolute;
+  transition-property: opacity, transform;
   .fontSize(16);
 }
 
 .icon,
 ::slotted([slot="icon"]) {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: 30ms;
+  transition-duration: 70ms;
+  transition-timing-function: var(--mdui-motion-easing-decelerate);
   .color(surface-variant);
+
+  :host([checked]) & {
+    opacity: 0;
+    transform: scale(0.92);
+    transition-delay: 0ms;
+    transition-duration: 30ms;
+    transition-timing-function: var(--mdui-motion-easing-standard);
+  }
 
   :host([disabled]) & {
     .color(surface-variant, 0.38);
@@ -167,7 +187,20 @@ mdui-ripple {
 
 .checked-icon,
 ::slotted([slot="checked-icon"]) {
+  opacity: 0;
+  transform: scale(0.92);
+  transition-delay: 0ms;
+  transition-duration: 30ms;
+  transition-timing-function: var(--mdui-motion-easing-standard);
   .color(on-primary-container);
+
+  :host([checked]) & {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 30ms;
+    transition-duration: 70ms;
+    transition-timing-function: var(--mdui-motion-easing-decelerate);
+  }
 
   :host([disabled]) & {
     .color(on-surface, 0.38);

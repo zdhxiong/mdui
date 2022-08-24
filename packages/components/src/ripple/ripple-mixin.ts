@@ -83,7 +83,8 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
     }
 
     protected startPress(event: PointerEvent): void {
-      if (this.rippleDisabled) {
+      // 为鼠标时操作，仅响应鼠标左键点击
+      if (this.rippleDisabled || event.button) {
         return;
       }
 

@@ -38,7 +38,13 @@ i {
     content: " ";
     .width(20);
     .height(20);
-    .border(2, solid, on-surface);
+    .border(2, solid, on-surface-variant);
+
+    :host([hover]) &,
+    :host([focused]) &,
+    :host([pressed]) & {
+      .borderColor(on-surface);
+    }
   }
 
   // 图标内部圆圈

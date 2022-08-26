@@ -13,6 +13,7 @@ import '@mdui/jq/methods/parents.js';
 import '@mdui/jq/methods/children.js';
 import '@mdui/jq/methods/is.js';
 import '@mdui/jq/methods/on.js';
+import { isString } from '@mdui/jq/shared/helper.js';
 import type { MenuItem as MenuItemOriginal } from './menu-item.js';
 import { menuStyle } from './menu-style.js';
 
@@ -57,9 +58,19 @@ export class Menu extends LitElement {
       .get() as unknown as MenuItem[];
   }
 
+  // 当前菜单是否为单选
+  protected get isSingle() {
+    return this.selects === 'single';
+  }
+
+  // 当前菜单是否为多选
+  protected get isMultiple() {
+    return this.selects === 'multiple';
+  }
+
   // 当前菜单是否可选择
   protected get isSelectable() {
-    return this.selects === 'single' || this.selects === 'multiple';
+    return this.isSingle || this.isMultiple;
   }
 
   // 当前菜单是否为子菜单
@@ -67,7 +78,7 @@ export class Menu extends LitElement {
     return !$(this).parent().length;
   }
 
-  // 最后一次获得焦点的 menu-item 数组，为嵌套菜单时，把不同层级的 menu-item 放到对应的数组位置
+  // 最后一次获得焦点的 menu-item 元素。为嵌套菜单时，把不同层级的 menu-item 放到对应索引位的位置
   protected lastActiveItems: MenuItem[] = [];
 
   // 最深层级的子菜单中，最后交互过的 menu-item
@@ -100,16 +111,14 @@ export class Menu extends LitElement {
 
   /**
    * 当前选中的 `<mdui-menu-item>` 的值
-   * 在 `selects="multiple"` 时，会将多个值使用“,”分隔（分隔符可通过 `value-separator` 属性修改）
+   *
+   * Note:
+   * 该属性的 HTML 属性始终为字符串，且仅在 `selects="single"` 时可以通过 HTML 属性设置初始值；
+   * 该属性的 JavaScript 属性值在 `selects="single"` 时为字符串、在 `selects="multiple"` 时为字符串数组。
+   * 所以，在 `selects="multiple"` 时，如果要修改该值，只能通过修改 JavaScript 属性值实现。
    */
   @property()
-  public value!: string;
-
-  /**
-   * 在 `selects="multiple"` 时，多个值之间使用该分隔符进行分隔
-   */
-  @property({ attribute: 'value-separator' })
-  public valueSeparator = ',';
+  public value: string | string[] = '';
 
   /**
    * 菜单项是否使用更紧凑的布局
@@ -126,14 +135,14 @@ export class Menu extends LitElement {
    */
   @property({ reflect: true, attribute: 'submenu-trigger' })
   public submenuTrigger:
-    | 'click' /*鼠标点击触发*/
-    | 'hover' /*鼠标悬浮触发*/
+    | 'click' /*点击时触发*/
+    | 'hover' /*鼠标悬浮时触发*/
     | 'focus' /*聚焦时触发*/
     | 'manual' /*通过编程方式触发*/
-    | 'click hover'
-    | 'click focus'
-    | 'hover focus'
-    | 'click hover focus' = 'click hover';
+    | 'click hover' /*点击、或鼠标悬浮时触发*/
+    | 'click focus' /*点击、或聚焦时触发*/
+    | 'hover focus' /*鼠标悬浮、或聚焦时触发*/
+    | 'click hover focus' /*点击、或鼠标悬浮、或聚焦时触发*/ = 'click hover';
 
   /**
    * 通过 hover 触发子菜单打开时的延时，单位为毫秒
@@ -159,7 +168,7 @@ export class Menu extends LitElement {
         const submenuItemsEnabled = $parentItem
           .children('mdui-menu-item:not([disabled])')
           .get() as MenuItem[];
-        const submenuLevel = $parentItem.parents('mdui-menu-item').length + 1; // 打开的是几级子菜单
+        const submenuLevel = $parentItem.parents('mdui-menu-item').length + 1; // 打开的是第几级子菜单
         if (submenuItemsEnabled.length) {
           this.lastActiveItems[submenuLevel] = submenuItemsEnabled[0];
           this.updateFocusable();
@@ -169,7 +178,7 @@ export class Menu extends LitElement {
       // 子菜单关闭时，把焦点还原到父菜单上
       'submenu-close': (e) => {
         const $parentItem = $(e.target as MenuItem);
-        const submenuLevel = $parentItem.parents('mdui-menu-item').length + 1; // 打开的是几级子菜单
+        const submenuLevel = $parentItem.parents('mdui-menu-item').length + 1; // 打开的是第几级子菜单
         if (this.lastActiveItems.length - 1 === submenuLevel) {
           this.lastActiveItems.pop();
           this.updateFocusable();
@@ -181,7 +190,7 @@ export class Menu extends LitElement {
     });
   }
 
-  // 获取和指定菜单项同级的菜单项
+  // 获取和指定菜单项同级的所有菜单项
   private getSiblingsItems(item: MenuItem, onlyEnabled = false): MenuItem[] {
     return $(item)
       .parent()
@@ -206,18 +215,26 @@ export class Menu extends LitElement {
 
   @watch('selects')
   private onSelectsChange() {
-    if (!this.selects) {
+    if (!this.isSelectable && this.selectedKeys.length) {
       this.selectedKeys = [];
+      this.onSelectedKeysChange();
+      this.onValueChange();
+    }
+
+    if (this.isSingle && this.selectedKeys.length > 1) {
+      this.selectedKeys = this.selectedKeys.slice(0, 1);
+      this.onSelectedKeysChange();
+      this.onValueChange();
     }
   }
 
   @watch('selectedKeys')
   private onSelectedKeysChange() {
     // 根据 selectedKeys 读取出对应 menu-item 的 value
-    this.value = this.items
+    const values = this.itemsEnabled
       .filter((item) => this.selectedKeys.includes(item.key))
-      .map((item) => item.value)
-      .join(this.valueSeparator);
+      .map((item) => item.value);
+    this.value = this.isMultiple ? values : values[0];
 
     emit(this, 'change');
   }
@@ -226,18 +243,28 @@ export class Menu extends LitElement {
   private onValueChange() {
     // 根据 value 找出对应的 menu-item，并把这些 menu-item 的 key 赋值给 selectedKeys
     if (!this.isSelectable) {
+      this.updateSelected();
       return;
     }
 
-    const values = this.value.split(this.valueSeparator).filter((i) => i);
+    const values = (
+      this.isSingle
+        ? [this.value as string]
+        : // 多选时，传入的值可能是字符串（通过 attribute 属性设置）；或字符串数组（通过 property 属性设置）
+        isString(this.value)
+        ? [this.value]
+        : this.value
+    ).filter((i) => i);
 
     if (!values.length) {
       this.selectedKeys = [];
-    } else if (this.selects === 'single') {
-      const firstItem = this.items.find((item) => item.value === values[0]);
+    } else if (this.isSingle) {
+      const firstItem = this.itemsEnabled.find(
+        (item) => item.value === values[0],
+      );
       this.selectedKeys = firstItem ? [firstItem.key] : [];
-    } else if (this.selects === 'multiple') {
-      this.selectedKeys = this.items
+    } else if (this.isMultiple) {
+      this.selectedKeys = this.itemsEnabled
         .filter((item) => values.includes(item.value))
         .map((item) => item.key);
     }
@@ -263,7 +290,7 @@ export class Menu extends LitElement {
     }
 
     // 如果是单选，焦点放在当前选中的元素上
-    if (this.selects === 'single') {
+    if (this.isSingle) {
       this.items.forEach(
         (item) => (item.focusable = this.selectedKeys.includes(item.key)),
       );
@@ -271,7 +298,7 @@ export class Menu extends LitElement {
     }
 
     // 是多选，且原焦点不在 selectedKeys 上，焦点放在第一个选中的 menu-item 上
-    if (this.selects === 'multiple') {
+    if (this.isMultiple) {
       const focusableItem = this.items.find((item) => item.focusable);
       if (
         !focusableItem?.key ||
@@ -293,7 +320,7 @@ export class Menu extends LitElement {
 
   // 切换一个菜单项的选中状态
   private selectOne(item: MenuItem) {
-    if (this.selects === 'multiple') {
+    if (this.isMultiple) {
       // 直接修改 this.selectedKeys 无法被 watch 监听到，需要先克隆一份 this.selectedKeys
       const selectedKeys = [...this.selectedKeys];
       if (selectedKeys.includes(item.key)) {
@@ -304,7 +331,7 @@ export class Menu extends LitElement {
       this.selectedKeys = selectedKeys;
     }
 
-    if (this.selects === 'single') {
+    if (this.isSingle) {
       if (this.selectedKeys.includes(item.key)) {
         this.selectedKeys = [];
       } else {
@@ -323,7 +350,7 @@ export class Menu extends LitElement {
   // 聚焦一个 menu-item
   protected async focusOne(item: MenuItem, options?: FocusOptions) {
     await delay(); // 等待 focusableMixin 更新完成
-    item.focus();
+    item.focus(options);
   }
 
   protected onClick(event: MouseEvent) {

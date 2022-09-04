@@ -72,17 +72,17 @@
   display: block;
 }
 
-:host([primaryline="1"]) .primary,
-:host([secondaryline="1"]) .secondary {
+:host([primary-line="1"]) .primary,
+:host([secondary-line="1"]) .secondary {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-:host([primaryline="2"]) .primary,
-:host([secondaryline="2"]) .secondary,
-:host([primaryline="3"]) .primary,
-:host([secondaryline="3"]) .secondary {
+:host([primary-line="2"]) .primary,
+:host([secondary-line="2"]) .secondary,
+:host([primary-line="3"]) .primary,
+:host([secondary-line="3"]) .secondary {
   // stylelint-disable-next-line
   display: -webkit-box;
   overflow: hidden;
@@ -90,13 +90,13 @@
   -webkit-box-orient: vertical;
 }
 
-:host([primaryline="2"]) .primary,
-:host([secondaryline="2"]) .secondary {
+:host([primary-line="2"]) .primary,
+:host([secondary-line="2"]) .secondary {
   -webkit-line-clamp: 2;
 }
 
-:host([primaryline="3"]) .primary,
-:host([secondaryline="3"]) .secondary {
+:host([primary-line="3"]) .primary,
+:host([secondary-line="3"]) .secondary {
   -webkit-line-clamp: 3;
 }
 

@@ -49,42 +49,32 @@
 
     <section>
       <h2>selects="single"</h2>
-      <mdui-segmented-button selects="single" class="single">
+      <mdui-segmented-button selects="single" class="single" value="medium">
         <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
-        <mdui-segmented-button-item selected value="medium">Medium</mdui-segmented-button-item>
+        <mdui-segmented-button-item value="medium">Medium</mdui-segmented-button-item>
         <mdui-segmented-button-item disabled value="disabled">Disabled</mdui-segmented-button-item>
         <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
       </mdui-segmented-button>
       <script>
         document.querySelector('.single').addEventListener('change', e => {
-          console.log(e.target.value);
+          console.log('change event: ', e.target.value);
         });
       </script>
     </section>
 
     <section>
       <h2>selects="multiple"</h2>
-      <mdui-segmented-button selects="multiple" class="multiple">
-        <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
-        <mdui-segmented-button-item selected value="medium">Medium</mdui-segmented-button-item>
-        <mdui-segmented-button-item disabled value="disabled">Disabled</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
-      </mdui-segmented-button>
-      <script>
-        document.querySelector('.multiple').addEventListener('change', e => {
-          console.log(e.target.value);
-        });
-      </script>
-    </section>
-
-    <section>
-      <h2>value</h2>
-      <mdui-segmented-button selects="single" value="medium">
+      <mdui-segmented-button selects="multiple" class="multiple" value="medium">
         <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
         <mdui-segmented-button-item value="medium">Medium</mdui-segmented-button-item>
         <mdui-segmented-button-item disabled value="disabled">Disabled</mdui-segmented-button-item>
         <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
       </mdui-segmented-button>
+      <script>
+        document.querySelector('.multiple').addEventListener('change', e => {
+          console.log('change event: ', e.target.value);
+        });
+      </script>
     </section>
 
     <section>

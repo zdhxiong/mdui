@@ -16,8 +16,8 @@ export interface ButtonMixinInterface {
   disabled: boolean;
   loading: boolean;
   autofocus: boolean;
-  name?: string;
-  value?: string;
+  name: string;
+  value: string;
   type: 'submit' | 'reset' | 'button';
   form?: string;
   formAction?: string;
@@ -58,7 +58,7 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
      * **Note**：仅在未指定 `href` 属性时可用
      */
     @property({ reflect: true })
-    public name!: string;
+    public name = '';
 
     /**
      * 按钮的初始值，将与表单数据一起提交
@@ -66,7 +66,7 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
      * **Note**：仅在未指定 `href` 属性时可用
      */
     @property({ reflect: true })
-    public value!: string;
+    public value = '';
 
     /**
      * 按钮的类型。默认值为 `button`。可选值为：

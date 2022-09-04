@@ -3,6 +3,7 @@ import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
+import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import type { MaterialIconsName } from '../icon.js';
 import { ButtonBase } from '../button/button-base.js';
 import { segmentedButtonItemStyle } from './segmented-button-item-style.js';
@@ -37,11 +38,13 @@ export class SegmentedButtonItem extends ButtonBase {
     'end',
   );
 
+  // 每一个 segmented-button-item 元素都添加一个唯一的 key
+  protected readonly key = uniqueId();
+
   /**
-   * 是否选中该分段按钮项
+   * 是否选中该分段按钮项，由 mdui-segmented-button 组件控制该参数
    */
-  @property({ type: Boolean, reflect: true })
-  public selected = false;
+  @property({ type: Boolean, reflect: true }) protected selected = false;
 
   /**
    * 左侧的 Material Icons 图标名

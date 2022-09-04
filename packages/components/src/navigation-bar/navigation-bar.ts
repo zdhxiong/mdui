@@ -1,20 +1,24 @@
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
-import {
-  customElement,
-  property,
-  queryAssignedElements,
-} from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/find.js';
+import '@mdui/jq/methods/get.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/off.js';
 import '@mdui/jq/methods/css.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { navigationBarStyle } from './navigation-bar-style.js';
-import type { NavigationBarItem } from './navigation-bar-item.js';
+import type { NavigationBarItem as NavigationBarItemOriginal } from './navigation-bar-item.js';
+
+type NavigationBarItem = NavigationBarItemOriginal & {
+  labelVisibility: 'selected' | 'labeled' | 'unlabeled';
+  active: boolean;
+  readonly key: number;
+};
 
 /**
  * @event click - 点击时触发
@@ -32,14 +36,18 @@ import type { NavigationBarItem } from './navigation-bar-item.js';
 export class NavigationBar extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, navigationBarStyle];
 
-  @queryAssignedElements({
-    selector: 'mdui-navigation-bar-item',
-    flatten: true,
-  })
-  protected itemElements!: NavigationBarItem[] | null;
+  // 所有的子项元素
+  protected get items() {
+    return $(this)
+      .find('mdui-navigation-bar-item')
+      .get() as unknown as NavigationBarItem[];
+  }
 
   protected readonly uniqueId = uniqueId();
   protected readonly scrollEventName = `scroll._navigation_bar_${this.uniqueId}`;
+
+  // 因为 navigation-bar-item 的 value 可能会重复，所以在每个 navigation-bar-item 元素上都添加了一个唯一的 key，通过 activeKey 来记录激活状态的 key
+  @state() private activeKey = 0;
 
   /**
    * 是否隐藏
@@ -67,32 +75,11 @@ export class NavigationBar extends LitElement {
     | 'labeled' /*始终显示文本*/
     | 'unlabeled' /*始终不显示文本*/ = 'auto';
 
-  private _value = '';
-
   /**
-   * 当前选中的选项的 value 值
+   * 当前选中的 `<mdui-navigation-bar-item>` 的值
    */
-  @property({ reflect: true })
-  public get value(): string {
-    return this._value;
-  }
-  public set value(value: string) {
-    const oldValue = this.value;
-    if (value === oldValue) {
-      return;
-    }
-
-    this._value = value;
-    this.updateComplete.then(() => {
-      const itemElement = this.itemElements?.find(
-        (itemElement) => itemElement.value === value,
-      );
-      if (itemElement) {
-        this.selectItem(itemElement);
-      }
-    });
-    this.requestUpdate('value', oldValue);
-  }
+  @property()
+  public value = '';
 
   /**
    * 需要监听其滚动事件的元素的 CSS 选择器。默认为监听 window 滚动
@@ -105,6 +92,27 @@ export class NavigationBar extends LitElement {
    */
   @property({ type: Number, reflect: true, attribute: 'scroll-threshold' })
   public scrollThreshold!: number;
+
+  @watch('activeKey')
+  private onActiveKeyChange() {
+    // 根据 activeKey 读取对应 navigation-bar-item 的值
+    this.value =
+      this.items.find((item) => item.key === this.activeKey)?.value ?? '';
+
+    emit(this, 'change');
+  }
+
+  @watch('value')
+  private onValueChange() {
+    if (!this.value) {
+      this.activeKey = 0;
+    } else {
+      const item = this.items.find((item) => item.value === this.value);
+      this.activeKey = item ? item.key : 0;
+    }
+
+    this.updateActive();
+  }
 
   /**
    * 组件需要监听该元素的滚动状态
@@ -188,80 +196,44 @@ export class NavigationBar extends LitElement {
     this.lastScrollTop = scrollTop;
   }
 
-  public constructor() {
-    super();
-
-    this.addEventListener('click', this.onClick);
-  }
-
   protected override render(): TemplateResult {
-    return html`<slot @slotchange=${this.onSlotChange}></slot>`;
+    return html`<slot
+      @slotchange=${this.onSlotChange}
+      @click=${this.onClick}
+    ></slot>`;
   }
 
-  private onClick(event: Event): void {
-    const item = event
-      .composedPath()
-      .find(
-        (el) => (el as NavigationBarItem).parentElement === this,
-      ) as NavigationBarItem;
-
-    if (!item) {
+  private onClick(event: MouseEvent): void {
+    // event.button 为 0 时，为鼠标左键点击。忽略鼠标中间和右键
+    if (event.button) {
       return;
     }
 
-    this.selectItem(item);
+    const target = event.target as HTMLElement;
+    const item = target.closest(
+      'mdui-navigation-bar-item',
+    ) as NavigationBarItem;
+
+    this.activeKey = item.key;
+    this.updateActive();
   }
 
-  private selectItem(item: NavigationBarItem): void {
-    const value = item.value;
-    if (!value || this.value === value) {
-      return;
-    }
-
-    this.value = value;
-    emit(this, 'change');
-
-    (this.itemElements ?? []).forEach((itemElement) => {
-      itemElement.active = itemElement.value === value;
-    });
+  private updateActive() {
+    this.items.forEach((item) => (item.active = this.activeKey === item.key));
   }
 
   protected onSlotChange() {
-    const itemElements = this.itemElements ?? [];
+    const items = this.items;
     // 为 navigation-bar-item 设置 labelVisibility 属性
     const labelVisibility =
       this.labelVisibility === 'auto'
-        ? itemElements.length <= 3
+        ? items.length <= 3
           ? 'labeled'
           : 'selected'
         : this.labelVisibility;
 
-    itemElements.forEach((itemElement) => {
-      // @ts-ignore
-      itemElement.labelVisibility = labelVisibility;
-    });
-
-    // 为 navigation-bar-item 的 value 填充默认值
-    itemElements.forEach((itemElement, index) => {
-      if (!itemElement.value) {
-        itemElement.value = index.toString();
-      }
-    });
-
-    // 未设置 navigation-bar 的 value 属性时，根据 navigation-bar-item 的 active 来设置
-    if (!this.value) {
-      this.value =
-        itemElements.find((itemElement) => itemElement.active)?.value ?? '';
-    }
-
-    // 未设置 navigation-bar 的 value，也未设置 navigation-bar-item 的 active，则默认选中第一个
-    if (!this.value) {
-      this.value = itemElements[0].value;
-    }
-
-    // 重新选中默认值
-    itemElements.forEach((itemElement) => {
-      itemElement.active = itemElement.value === this.value;
+    items.forEach((item) => {
+      item.labelVisibility = labelVisibility;
     });
   }
 }

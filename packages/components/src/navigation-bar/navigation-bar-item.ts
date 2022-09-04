@@ -7,6 +7,7 @@ import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { when } from 'lit/directives/when.js';
+import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import type { Ripple } from '../ripple/index.js';
 import type { MaterialIconsName } from '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
@@ -39,7 +40,7 @@ export class NavigationBarItem extends AnchorMixin(
   ];
 
   /**
-   * 仅供父组件 navigation-bar 调用
+   * 文本的可视状态，由 `navigation-bar` 调用
    */
   @property({ reflect: true, attribute: 'label-visibility' })
   protected labelVisibility!: 'selected' | 'labeled' | 'unlabeled';
@@ -51,6 +52,9 @@ export class NavigationBarItem extends AnchorMixin(
     this,
     'activeIcon',
   );
+
+  // 每一个 `navigation-bar-item` 元素都添加一个唯一的 key
+  protected readonly key = uniqueId();
 
   protected get focusDisabled(): boolean {
     return this.disabled;
@@ -64,8 +68,13 @@ export class NavigationBarItem extends AnchorMixin(
     return this.disabled;
   }
 
-  @state()
-  protected disabled = false;
+  // 是否禁用该元素，该组件没有禁用状态
+  @state() protected disabled = false;
+
+  /**
+   * 是否为激活状态，由 navigation-bar 组件控制该参数
+   */
+  @property({ type: Boolean, reflect: true }) protected active = false;
 
   /**
    * 未激活状态的 Material Icons 图标名
@@ -80,16 +89,10 @@ export class NavigationBarItem extends AnchorMixin(
   public activeIcon!: MaterialIconsName;
 
   /**
-   * 是否为激活状态
-   */
-  @property({ type: Boolean, reflect: true })
-  public active = false;
-
-  /**
-   * 在 `mdui-navigation-bar` 组件上获取当前选中的选项的值。若未指定，则默认为当前选项的索引位置
+   * 在导航项的值
    */
   @property({ reflect: true })
-  public value!: string;
+  public value = '';
 
   protected renderBadge(): TemplateResult | typeof nothing {
     return html`<slot name="badge"></slot>`;

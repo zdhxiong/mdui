@@ -86,7 +86,7 @@ export class Dialog extends LitElement {
     'action',
     '[default]',
   );
-  private modal!: Modal;
+  private modalHelper!: Modal;
 
   // 用于在打开对话框前，记录当前聚焦的元素；在关闭对话框后，把焦点还原到该元素上
   private originalTrigger!: HTMLElement;
@@ -157,7 +157,7 @@ export class Dialog extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    this.modal = new Modal(this);
+    this.modalHelper = new Modal(this);
 
     $(this).on('keydown', (event: KeyboardEvent) => {
       if (this.open && this.closeOnEsc && event.key === 'Escape') {
@@ -191,7 +191,7 @@ export class Dialog extends LitElement {
 
       this.style.display = 'flex';
       this.originalTrigger = document.activeElement as HTMLElement;
-      this.modal.activate();
+      this.modalHelper.activate();
       lockScreen(this);
 
       await Promise.all([
@@ -230,7 +230,7 @@ export class Dialog extends LitElement {
         return;
       }
 
-      this.modal.deactivate();
+      this.modalHelper.deactivate();
       await Promise.all([
         stopAnimations(this.overlay),
         stopAnimations(this.panel),
@@ -259,6 +259,7 @@ export class Dialog extends LitElement {
   }
 
   protected onOverlayClick() {
+    emit(this, 'overlay-click');
     if (!this.closeOnOverlayClick) {
       return;
     }

@@ -1,0 +1,62 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  --shape-corner: var(--mdui-shape-corner-large);
+
+  display: none;
+}
+
+:host([modal]),
+:host([handset]) {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+}
+
+:host([contained]) {
+  position: absolute;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  .backgroundColor(on-surface-variant, 0.4);
+
+  :host([contained]) & {
+    position: absolute;
+  }
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 0 var(--shape-corner) var(--shape-corner) 0;
+  overflow: auto;
+  z-index: 900;
+  .width(360);
+  .backgroundColor(surface);
+  .elevation(0);
+
+  :host([contained]) & {
+    position: absolute;
+  }
+
+  :host([modal]) &,
+  :host([handset]) & {
+    z-index: initial;
+    .elevation(1);
+  }
+
+  :host([placement="right"]) & {
+    left: initial;
+    right: 0;
+    border-radius: var(--shape-corner) 0 0 var(--shape-corner);
+  }
+}
+
+::slotted(mdui-list[rounded]) {
+  .marginLeft(12);
+  .marginRight(12);
+}

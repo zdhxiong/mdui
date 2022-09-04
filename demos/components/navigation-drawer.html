@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>Navigation drawer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: Roboto;
+    }
+    .container {
+      position: relative;
+      width: 800px;
+      height: 375px;
+      box-sizing: border-box;
+      overflow: auto;
+      box-shadow: 0 0.85px 3px 0 rgba(0, 0, 0, 19%), 0 0.25px 1px 0 rgba(0, 0, 0, 3.9%);
+    }
+    .container-handset {
+      width: 500px;
+    }
+  </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/components/button.js';
+    import '../../packages/components/navigation-drawer.js';
+    import '../../packages/components/list.js';
+    import '../../packages/components/list-item.js';
+    import '../../packages/components/list-subheader.js';
+    import '../../packages/components/divider.js';
+    import '../../packages/components/icon.js';
+    import { $ } from '../../packages/jq/$.js';
+    import '../../packages/jq/methods/on.js';
+    import '../../packages/jq/methods/append.js';
+    import '../../packages/jq/methods/prev.js';
+    import '../../packages/jq/methods/is.js';
+    import '../../packages/jq/methods/parent.js';
+
+    $('.open').on('click', function() {
+      if ($(this).prev().is('mdui-navigation-drawer')) {
+        $(this).prev()[0].open = true;
+      } else {
+        $(this).parent().prev()[0].open = true;
+      }
+    });
+
+    $('.close').on('click', function () {
+      $(this).parent()[0].open = false;
+    });
+
+    $('.fill-placeholder').append(...Array.from({length: 100}, (_, index) => index + 1).map(item => `<p>${item}</p>`));
+  </script>
+</head>
+<body>
+<main>
+  <section>
+    <h2>normal</h2>
+    <mdui-navigation-drawer close-on-esc close-on-overlay-click>
+      <mdui-list rounded>
+        <mdui-list-subheader>Mail</mdui-list-subheader>
+        <mdui-list-item active>
+          <mdui-icon slot="start" name="inbox"></mdui-icon>
+          Inbox
+          <span slot="end">24</span>
+        </mdui-list-item>
+        <mdui-list-item>
+          <mdui-icon slot="start" name="send"></mdui-icon>
+          Outbox
+          <span slot="end">100+</span>
+        </mdui-list-item>
+        <mdui-list-item><mdui-icon slot="start" name="favorite_border"></mdui-icon>Favorites</mdui-list-item>
+        <mdui-list-item><mdui-icon slot="start" name="delete_outline"></mdui-icon>Trash</mdui-list-item>
+        <mdui-divider></mdui-divider>
+        <mdui-list-subheader>Labels</mdui-list-subheader>
+        <mdui-list-item><mdui-icon slot="start" name="fiber_manual_record"></mdui-icon>Label</mdui-list-item>
+        <mdui-list-item><mdui-icon slot="start" name="fiber_manual_record"></mdui-icon>Label</mdui-list-item>
+        <mdui-list-item><mdui-icon slot="start" name="fiber_manual_record"></mdui-icon>Label</mdui-list-item>
+        <mdui-list-item><mdui-icon slot="start" name="fiber_manual_record"></mdui-icon>Label</mdui-list-item>
+      </mdui-list>
+    </mdui-navigation-drawer>
+    <mdui-button class="open">open</mdui-button>
+  </section>
+
+  <section>
+    <h2>contained</h2>
+    <div class="container" style="position: relative; overflow: hidden">
+      <mdui-navigation-drawer contained>
+        <mdui-button class="close">close</mdui-button>
+      </mdui-navigation-drawer>
+      <div style="max-height: 100%; overflow: auto; box-sizing: border-box">
+        <mdui-button class="open">open</mdui-button>
+        <div class="fill-placeholder"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>contained & handset</h2>
+    <div class="container container-handset" style="position: relative; overflow: hidden">
+      <mdui-navigation-drawer contained>
+        <mdui-button class="close">close</mdui-button>
+      </mdui-navigation-drawer>
+      <div style="max-height: 100%; overflow: auto; box-sizing: border-box">
+        <mdui-button class="open">open</mdui-button>
+        <div class="fill-placeholder"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>contained & modal</h2>
+    <div class="container" style="position: relative; overflow: hidden">
+      <mdui-navigation-drawer contained modal>
+        <mdui-button class="close">close</mdui-button>
+      </mdui-navigation-drawer>
+      <div style="max-height: 100%; overflow: auto; box-sizing: border-box">
+        <mdui-button class="open">open</mdui-button>
+        <div class="fill-placeholder"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>contained & modal & closeOnEsc & closeOnOverlayClick</h2>
+    <div class="container" style="position: relative; overflow: hidden">
+      <mdui-navigation-drawer contained modal close-on-esc close-on-overlay-click>
+        <mdui-button class="close">close</mdui-button>
+      </mdui-navigation-drawer>
+      <div style="max-height: 100%; overflow: auto; box-sizing: border-box">
+        <mdui-button class="open">open</mdui-button>
+        <div class="fill-placeholder"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>contained & placement="right"</h2>
+    <div class="container" style="position: relative; overflow: hidden">
+      <mdui-navigation-drawer contained placement="right">
+        <mdui-button class="close">close</mdui-button>
+      </mdui-navigation-drawer>
+      <div style="max-height: 100%; overflow: auto; box-sizing: border-box">
+        <mdui-button class="open">open</mdui-button>
+        <div class="fill-placeholder"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>contained & modal & placement="right"</h2>
+    <div class="container" style="position: relative; overflow: hidden">
+      <mdui-navigation-drawer contained modal placement="right">
+        <mdui-button class="close">close</mdui-button>
+      </mdui-navigation-drawer>
+      <div style="max-height: 100%; overflow: auto; box-sizing: border-box">
+        <mdui-button class="open">open</mdui-button>
+        <div class="fill-placeholder"></div>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

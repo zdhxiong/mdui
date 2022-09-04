@@ -20,6 +20,7 @@ export * from './menu-item.js';
 export * from './menu.js';
 export * from './navigation-bar-item.js';
 export * from './navigation-bar.js';
+export * from './navigation-drawer.js';
 export * from './radio.js';
 export * from './radio-group.js';
 export * from './ripple.js';

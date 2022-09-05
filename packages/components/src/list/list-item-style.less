@@ -2,7 +2,7 @@
 
 :host {
   --shape-corner: var(--mdui-shape-corner-none);
-  --shape-corner-rounded: var(--mdui-shape-corner-full);
+  --shape-corner-rounded: var(--mdui-shape-corner-extra-large);
 
   position: relative;
   display: block;
@@ -16,7 +16,8 @@
 }
 
 :host([active]) {
-  .backgroundColor(surface-variant);
+  .backgroundColor(secondary-container);
+  .stateLayerColor(on-secondary-container);
 }
 
 :host([disabled]) {
@@ -44,7 +45,7 @@
   align-items: center;
   text-decoration: none;
   .padding(8, 16);
-  .minHeight(48);
+  .minHeight(56);
 }
 
 .body {
@@ -57,15 +58,36 @@
 
 .primary {
   display: block;
-  .color(on-surface);
-  .typescale(body-large);
+  .color(on-surface-variant);
+  .typescale(label-large);
+
+  :host([hover]) &,
+  :host([focused]) &,
+  :host([pressed]) & {
+    .color(on-surface);
+  }
+
+  :host([active]) & {
+    .color(on-secondary-container);
+  }
 }
 
+/* 规范中没有描述，这里使用和 primary 一样的样式，但字体更细，更浅 */
 .secondary {
   display: none;
-  .color(on-surface-variant);
+  .color(on-surface-variant, 0.87);
   .paddingTop(4);
   .typescale(body-medium);
+
+  :host([hover]) &,
+  :host([focused]) &,
+  :host([pressed]) & {
+    .color(on-surface);
+  }
+
+  :host([active]) & {
+    .color(on-secondary-container, 0.87);
+  }
 }
 
 .has-secondary {
@@ -104,8 +126,18 @@
 .end {
   display: none;
   flex: 0 0 auto;
-  .color(on-surface-variant, 70%);
-  .typescale(body-small);
+  .color(on-surface-variant);
+  .typescale(label-large);
+
+  :host([hover]) &,
+  :host([focused]) &,
+  :host([pressed]) & {
+    .color(on-surface);
+  }
+
+  :host([active]) & {
+    .color(on-secondary-container);
+  }
 }
 
 .has-start,

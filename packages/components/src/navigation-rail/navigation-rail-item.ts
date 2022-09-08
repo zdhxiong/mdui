@@ -1,17 +1,18 @@
 import type { CSSResultGroup, TemplateResult } from 'lit';
-import { html, LitElement } from 'lit';
+import { html, LitElement, nothing } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
-import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
+import { when } from 'lit/directives/when.js';
+import cc from 'classcat';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
+import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
-import { when } from 'lit/directives/when.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
+import { classMap } from 'lit/directives/class-map.js';
 import type { Ripple } from '../ripple/index.js';
 import type { MaterialIconsName } from '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
-import { navigationBarItemStyle } from './navigation-bar-item-style.js';
+import { navigationRailItemStyle } from './navigation-rail-item-style.js';
 import '../icon.js';
 
 /**
@@ -30,30 +31,25 @@ import '../icon.js';
  *
  * @cssprop --shape-corner-indicator 指示器的圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
-@customElement('mdui-navigation-bar-item')
-export class NavigationBarItem extends AnchorMixin(
+@customElement('mdui-navigation-rail-item')
+export class NavigationRailItem extends AnchorMixin(
   RippleMixin(FocusableMixin(LitElement)),
 ) {
   static override styles: CSSResultGroup = [
     componentStyle,
-    navigationBarItemStyle,
+    navigationRailItemStyle,
   ];
-
-  /**
-   * 文本的可视状态，由 `navigation-bar` 调用
-   */
-  @property({ reflect: true, attribute: 'label-visibility' })
-  protected labelVisibility!: 'selected' | 'labeled' | 'unlabeled';
 
   @query('mdui-ripple', true)
   protected rippleElement!: Ripple;
 
   private readonly hasSlotController = new HasSlotController(
     this,
+    '[default]',
     'activeIcon',
   );
 
-  // 每一个 `navigation-bar-item` 元素都添加一个唯一的 key
+  // 每一个 `navigation-rail-item` 元素都添加一个唯一的 key
   protected readonly key = uniqueId();
 
   protected get focusDisabled(): boolean {
@@ -72,7 +68,7 @@ export class NavigationBarItem extends AnchorMixin(
   @state() protected disabled = false;
 
   /**
-   * 是否为激活状态，由 `navigation-bar` 组件控制该参数
+   * 是否为激活状态，有 `navigation-rail` 组件控制该参数
    */
   @property({ type: Boolean, reflect: true })
   protected active = false;
@@ -90,7 +86,7 @@ export class NavigationBarItem extends AnchorMixin(
   public activeIcon!: MaterialIconsName;
 
   /**
-   * 在导航项的值
+   * 导航项的值
    */
   @property({ reflect: true })
   public value = '';
@@ -125,11 +121,17 @@ export class NavigationBarItem extends AnchorMixin(
     </slot>`;
   }
 
-  protected renderLabel(): TemplateResult {
+  protected renderLabel(
+    hasDefaultSlot: boolean,
+  ): TemplateResult | typeof nothing {
+    if (!hasDefaultSlot) {
+      return nothing;
+    }
+
     return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
-  protected renderInner(): TemplateResult {
+  protected renderInner(hasDefaultSlot: boolean): TemplateResult {
     return html`<span
         class="indicator ${classMap({
           'has-active-icon':
@@ -138,23 +140,30 @@ export class NavigationBarItem extends AnchorMixin(
       >
         ${this.renderBadge()}${this.renderActiveIcon()}${this.renderIcon()}
       </span>
-      ${this.renderLabel()}`;
+      ${this.renderLabel(hasDefaultSlot)}`;
   }
 
   protected override render(): TemplateResult {
-    return html`<mdui-ripple></mdui-ripple>
-      ${this.href
+    const hasDefaultSlot = this.hasSlotController.test('[default]');
+    const className = cc({
+      item: true,
+      'has-label': hasDefaultSlot,
+    });
+
+    return html`${this.href
         ? // @ts-ignore
           this.renderAnchor({
-            className: 'item',
-            content: this.renderInner(),
+            className,
+            content: this.renderInner(hasDefaultSlot),
           })
-        : html`<span class="item">${this.renderInner()}</span>`} `;
+        : html`<span class=${className}>
+            ${this.renderInner(hasDefaultSlot)}
+          </span>`}<mdui-ripple></mdui-ripple>`;
   }
 }
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mdui-navigation-bar-item': NavigationBarItem;
+    'mdui-navigation-rail-item': NavigationRailItem;
   }
 }

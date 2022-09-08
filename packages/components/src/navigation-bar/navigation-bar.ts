@@ -204,7 +204,7 @@ export class NavigationBar extends LitElement {
   }
 
   private onClick(event: MouseEvent): void {
-    // event.button 为 0 时，为鼠标左键点击。忽略鼠标中间和右键
+    // event.button 为 0 时，为鼠标左键点击。忽略鼠标中键和右键
     if (event.button) {
       return;
     }

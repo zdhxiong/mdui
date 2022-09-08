@@ -1,0 +1,99 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  --shape-corner: var(--mdui-shape-corner-none);
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0 var(--shape-corner) var(--shape-corner) 0;
+  .width(80);
+  .backgroundColor(surface);
+  .elevation(0);
+  .padding(6, 12);
+}
+
+:host([contained]) {
+  position: absolute;
+}
+
+:host([divider]) {
+  .borderRight(1, solid, surface-variant);
+  .width(81); // 加了一像素边框后，需保持除分割线外的宽度不变
+}
+
+:host([placement="right"]) {
+  left: initial;
+  right: 0;
+  border-radius: var(--shape-corner) 0 0 var(--shape-corner);
+}
+
+:host([placement="right"][divider]) {
+  border-right: none;
+  .borderLeft(1, solid, surface-variant);
+}
+
+.top,
+.items,
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.top {
+  .marginBottom(28);
+}
+
+.bottom {
+  .marginTop(28);
+}
+
+::slotted(mdui-navigation-rail-item),
+::slotted([slot="top"]),
+::slotted([slot="bottom"]) {
+  .marginTop(6);
+  .marginBottom(6);
+}
+
+:host([alignment="top"]) {
+  .top-spacer {
+    flex-grow: 0;
+  }
+
+  .bottom-spacer {
+    flex-grow: 1;
+  }
+}
+
+:host([alignment="bottom"]) {
+  .top-spacer {
+    flex-grow: 1;
+  }
+
+  .bottom-spacer {
+    flex-grow: 0;
+  }
+}
+
+:host([alignment="center"]) {
+  justify-content: center;
+
+  .top,
+  .bottom {
+    position: absolute;
+  }
+
+  .top {
+    top: 0;
+  }
+
+  .bottom {
+    bottom: 0;
+  }
+}

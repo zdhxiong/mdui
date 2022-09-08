@@ -21,6 +21,8 @@ export * from './menu.js';
 export * from './navigation-bar-item.js';
 export * from './navigation-bar.js';
 export * from './navigation-drawer.js';
+export * from './navigation-rail.js';
+export * from './navigation-rail-item.js';
 export * from './radio.js';
 export * from './radio-group.js';
 export * from './ripple.js';

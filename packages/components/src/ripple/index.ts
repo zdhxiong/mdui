@@ -1,7 +1,7 @@
 import type { TemplateResult, CSSResultGroup } from 'lit';
 import type { JQ } from '@mdui/jq/shared/core.js';
 import { LitElement, html } from 'lit';
-import { customElement, query, state } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
@@ -40,7 +40,17 @@ export class Ripple extends LitElement {
   @state()
   protected dragged = false;
 
+  /**
+   * 是否在点击时不产生涟漪动画
+   */
+  @property({ type: Boolean, attribute: 'no-ripple' })
+  public noRipple = false;
+
   public startPress(event?: Event): void {
+    if (this.noRipple) {
+      return;
+    }
+
     const $surface = $(this.surface);
     const surfaceHeight = $surface.innerHeight();
     const surfaceWidth = $surface.innerWidth();

@@ -26,6 +26,17 @@
   .paddingBottom(12);
 }
 
+mdui-ripple {
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: margin-top 225ms var(--mdui-motion-easing-standard);
+  .width(64);
+  .height(32);
+  .marginTop(12);
+  .shapeCorner(full);
+}
+
 .indicator {
   position: relative;
   display: flex;
@@ -73,6 +84,10 @@
 
 :host([label-visibility="unlabeled"]),
 :host([label-visibility="selected"]:not([active])) {
+  mdui-ripple {
+    .marginTop(24);
+  }
+
   .item {
     .paddingTop(24);
     .paddingBottom(0);

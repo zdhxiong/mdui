@@ -142,7 +142,7 @@ export class NavigationBarItem extends AnchorMixin(
   }
 
   protected override render(): TemplateResult {
-    return html`<mdui-ripple></mdui-ripple>
+    return html`<mdui-ripple .noRipple=${!this.active}></mdui-ripple>
       ${this.href
         ? // @ts-ignore
           this.renderAnchor({

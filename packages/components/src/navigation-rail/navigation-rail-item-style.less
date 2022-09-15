@@ -54,19 +54,19 @@ mdui-ripple {
 
 ::slotted([slot="badge"]) {
   position: absolute;
-  .translate(12, -12);
+  .translate(12, -8);
 }
 
 .icon,
 .active-icon,
 ::slotted([slot="icon"]),
-::slotted([slot="activeIcon"]) {
+::slotted([slot="active-icon"]) {
   .color(on-surface-variant);
   .fontSize(24);
 }
 
 .active-icon,
-::slotted([slot="activeIcon"]) {
+::slotted([slot="active-icon"]) {
   display: none;
 }
 
@@ -96,13 +96,13 @@ mdui-ripple {
   .icon,
   .active-icon,
   ::slotted([slot="icon"]),
-  ::slotted([slot="activeIcon"]) {
+  ::slotted([slot="active-icon"]) {
     .color(on-secondary-container);
   }
 
   .has-active-icon {
     .active-icon,
-    ::slotted([slot="activeIcon"]) {
+    ::slotted([slot="active-icon"]) {
       display: inline-block;
     }
 

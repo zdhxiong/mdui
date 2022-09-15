@@ -17,7 +17,7 @@ import '../icon.js';
 /**
  * @slot - 文本
  * @slot icon - 图标
- * @slot activeIcon - 激活状态的图标
+ * @slot active-icon - 激活状态的图标
  * @slot badge - 徽标
  *
  * @event click - 点击时触发
@@ -50,7 +50,7 @@ export class NavigationBarItem extends AnchorMixin(
 
   private readonly hasSlotController = new HasSlotController(
     this,
-    'activeIcon',
+    'active-icon',
   );
 
   // 每一个 `navigation-bar-item` 元素都添加一个唯一的 key
@@ -100,7 +100,7 @@ export class NavigationBarItem extends AnchorMixin(
   }
 
   protected renderActiveIcon(): TemplateResult {
-    return html`<slot name="activeIcon">
+    return html`<slot name="active-icon">
       ${when(
         this.activeIcon,
         () => html`<mdui-icon
@@ -133,7 +133,7 @@ export class NavigationBarItem extends AnchorMixin(
     return html`<span
         class="indicator ${classMap({
           'has-active-icon':
-            this.activeIcon || this.hasSlotController.test('activeIcon'),
+            this.activeIcon || this.hasSlotController.test('active-icon'),
         })}"
       >
         ${this.renderBadge()}${this.renderActiveIcon()}${this.renderIcon()}

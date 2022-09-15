@@ -32,6 +32,12 @@
     import '../../packages/components/navigation-rail-item.js';
     import '../../packages/components/segmented-button.js';
     import '../../packages/components/segmented-button-item.js';
+    import '../../packages/components/badge.js';
+    import '../../packages/icons/folder-open--outlined.js';
+    import '../../packages/icons/library-music--outlined.js';
+    import '../../packages/icons/library-music.js';
+    import '../../packages/icons/watch-later.js';
+    import '../../packages/icons/image--outlined.js';
     import { $ } from '../../packages/jq/$.js';
     import '../../packages/jq/methods/append.js';
     import '../../packages/jq/methods/on.js';
@@ -234,6 +240,72 @@
           <mdui-navigation-rail-item icon="watch_later--outlined" value="recent">Recent</mdui-navigation-rail-item>
           <mdui-navigation-rail-item icon="image--outlined" value="images">Images</mdui-navigation-rail-item>
           <mdui-navigation-rail-item icon="library_music--outlined" value="library">Library</mdui-navigation-rail-item>
+        </mdui-navigation-rail>
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box">
+          <div class="fill-placeholder"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>badge</h2>
+      <div class="container" style="position: relative; overflow: hidden;">
+        <mdui-navigation-rail contained value="recent">
+          <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+          <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
+          <mdui-navigation-rail-item icon="folder_open--outlined" value="files">All Files
+            <mdui-badge dot slot="badge"></mdui-badge>
+          </mdui-navigation-rail-item>
+          <mdui-navigation-rail-item icon="watch_later--outlined" value="recent">Recent
+            <mdui-badge slot="badge">1</mdui-badge>
+          </mdui-navigation-rail-item>
+          <mdui-navigation-rail-item icon="image--outlined" value="images">Images
+            <mdui-badge slot="badge">99+</mdui-badge>
+          </mdui-navigation-rail-item>
+          <mdui-navigation-rail-item icon="library_music--outlined" value="library">Library</mdui-navigation-rail-item>
+        </mdui-navigation-rail>
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box">
+          <div class="fill-placeholder"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Active Icon</h2>
+      <div class="container" style="position: relative; overflow: hidden;">
+        <mdui-navigation-rail contained value="recent">
+          <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+          <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
+          <mdui-navigation-rail-item icon="folder_open--outlined" active-icon="folder_open--filled" value="files">All Files</mdui-navigation-rail-item>
+          <mdui-navigation-rail-item icon="watch_later--outlined" active-icon="watch_later--filled" value="recent">Recent</mdui-navigation-rail-item>
+          <mdui-navigation-rail-item icon="image--outlined" active-icon="image--filled" value="images">Images</mdui-navigation-rail-item>
+          <mdui-navigation-rail-item icon="library_music--outlined" active-icon="library_music--filled" value="library">Library</mdui-navigation-rail-item>
+        </mdui-navigation-rail>
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box">
+          <div class="fill-placeholder"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Active Icon slot</h2>
+      <div class="container" style="position: relative; overflow: hidden;">
+        <mdui-navigation-rail contained value="recent">
+          <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+          <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
+          <mdui-navigation-rail-item active-icon="folder--filled" value="files">All Files
+            <mdui-icon-folder-open--outlined slot="icon"></mdui-icon-folder-open--outlined>
+          </mdui-navigation-rail-item>
+          <mdui-navigation-rail-item icon="watch_later--outlined" value="recent">Recent
+            <mdui-icon-watch-later slot="active-icon"></mdui-icon-watch-later>
+          </mdui-navigation-rail-item>
+          <mdui-navigation-rail-item value="images">Images
+            <mdui-icon-image--outlined slot="icon"></mdui-icon-image--outlined>
+          </mdui-navigation-rail-item>
+          <mdui-navigation-rail-item value="library">Library
+            <mdui-icon-library-music--outlined slot="icon"></mdui-icon-library-music--outlined>
+            <mdui-icon-library-music slot="active-icon"></mdui-icon-library-music>
+          </mdui-navigation-rail-item>
         </mdui-navigation-rail>
         <div style="max-height: 100%; overflow: auto; box-sizing: border-box">
           <div class="fill-placeholder"></div>

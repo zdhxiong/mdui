@@ -1,0 +1,194 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  position: relative;
+  display: block;
+  width: 100%;
+  -webkit-tap-highlight-color: transparent;
+  .height(40);
+  .padding(0, 20);
+}
+
+label {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+input[type="range"] {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  height: 100%;
+  cursor: pointer;
+  opacity: 0;
+  appearance: none;
+  .margin(0, -20);
+  .padding(0, 12);
+
+  :host([disabled]) & {
+    cursor: not-allowed;
+  }
+}
+
+.track-inactive,
+.track-active {
+  position: absolute;
+  top: 50%;
+  .height(4);
+  .marginTop(-2);
+}
+
+.track-inactive {
+  .left(-2); // 为了使标记点位于轨道内，所以往左右侧各移动 2px
+  .right(-2);
+  .shapeCorner(full);
+  .backgroundColor(surface-variant);
+
+  :host([invalid]) & {
+    .backgroundColor(error, 0.12);
+  }
+
+  :host([disabled]) & {
+    .backgroundColor(on-surface, 0.12);
+  }
+}
+
+.track-active {
+  .backgroundColor(primary);
+
+  :host([invalid]) & {
+    .backgroundColor(error);
+  }
+
+  :host([disabled]) & {
+    .backgroundColor(on-surface, 0.38);
+  }
+}
+
+.handle {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%);
+  cursor: pointer;
+  z-index: 2;
+  .width(40);
+  .height(40);
+  .marginTop(-20);
+  .stateLayerColor(primary);
+
+  :host([invalid]) & {
+    .stateLayerColor(error);
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    display: block;
+    content: " ";
+    .left(10);
+    .top(10);
+    .width(20);
+    .height(20);
+    .shapeCorner(full);
+  }
+
+  &::after {
+    .backgroundColor(primary);
+    .elevation(1);
+
+    :host([invalid]) & {
+      .backgroundColor(error);
+    }
+
+    :host([disabled]) & {
+      .backgroundColor(on-surface, 0.38);
+      .elevation(0);
+    }
+  }
+
+  // 使用背景色作为底色，防止半透明的颜色显示出背后的元素
+  &::before {
+    .backgroundColor(background);
+  }
+
+  mdui-ripple {
+    .shapeCorner(full);
+  }
+}
+
+.label {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  transform-origin: center bottom;
+  transition: transform 75ms var(--mdui-motion-easing-accelerate);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  .bottom(40);
+  .minWidth(28);
+  .height(28);
+  .padding(6, 8);
+  .shapeCorner(full);
+  .color(on-primary);
+  .typescale(label-medium);
+  .backgroundColor(primary);
+
+  :host([invalid]) & {
+    .color(on-error);
+    .backgroundColor(error);
+  }
+
+  &::after {
+    content: " ";
+    position: absolute;
+    z-index: -1;
+    transform: rotate(45deg);
+    .width(14);
+    .height(14);
+    .bottom(-2);
+    .backgroundColor(primary);
+
+    :host([invalid]) & {
+      .backgroundColor(error);
+    }
+  }
+}
+
+.label-visible {
+  transform: translateX(-50%) scale(1);
+  transition: transform 150ms var(--mdui-motion-easing-decelerate);
+}
+
+.tickmark {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%);
+  .width(2);
+  .height(2);
+  .marginTop(-1);
+  .shapeCorner(full);
+  .backgroundColor(on-surface-variant, 0.38);
+
+  :host([invalid]) & {
+    .backgroundColor(error, 0.38);
+  }
+
+  &.active {
+    .backgroundColor(on-primary, 0.38);
+
+    :host([invalid]) & {
+      .backgroundColor(on-error, 0.38);
+    }
+  }
+
+  :host([disabled]) & {
+    .backgroundColor(on-surface, 0.38);
+  }
+}

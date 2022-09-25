@@ -1,15 +1,16 @@
 import type { Constructor } from '@open-wc/dedupe-mixin';
 import type { PropertyValues } from 'lit';
 import { LitElement } from 'lit';
-import { property } from 'lit/decorators.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/off.js';
+import '@mdui/jq/methods/index.js';
+import { isArrayLike } from '@mdui/jq/shared/helper.js';
 import type { Ripple } from './index.js';
 import './index.js';
 
 /**
- * hover, pressed, dragged 三个属性用于添加到 :host 元素上，供 CSS 选择题添加样式
+ * hover, pressed, dragged 三个属性用于添加到 rippleTarget 属性指定的元素上，供 CSS 选择题添加样式
  *
  * TODO: dragged 功能
  *
@@ -26,71 +27,149 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
 ): Constructor<LitElement> & T => {
   class Mixin extends superclass {
     /**
-     * 父类要添加该属性，指向 <mdui-ripple> 元素
+     * 子类要添加该属性，指向 <mdui-ripple> 元素
+     * 如果一个组件中包含多个 <mdui-ripple> 元素，则这里可以是一个数组或 NodeList
      */
-    protected get rippleElement(): Ripple {
-      throw new Error('Must implement ripple getter!');
+    protected get rippleElement(): Ripple | Ripple[] | NodeListOf<Ripple> {
+      throw new Error('Must implement rippleElement getter!');
     }
 
     /**
-     * 父类要实现该属性，表示是否禁用 ripple
+     * 子类要实现该属性，表示是否禁用 ripple
+     * 如果一个组件中包含多个 <mdui-ripple> 元素，则这里可以是一个数组；也可以是单个值，同时控制多个 <mdui-ripple> 元素
      */
-    protected get rippleDisabled(): boolean {
+    protected get rippleDisabled(): boolean | boolean[] {
       throw new Error('Must implement rippleDisabled getter!');
     }
 
-    @property({ type: Boolean, reflect: true })
-    protected hover = false;
+    /**
+     * 当前 <mdui-ripple> 元素相对于哪个元素存在，即 hover、pressed、dragged 属性要添加到哪个元素上，默认为 :host
+     * 如果需要修改该属性，则子类可以实现该属性
+     * 如果一个组件中包含多个 <mdui-ripple> 元素，则这里可以是一个数组；也可以是单个值，同时控制多个 <mdui-ripple> 元素
+     */
+    protected get rippleTarget():
+      | HTMLElement
+      | HTMLElement[]
+      | NodeListOf<HTMLElement> {
+      return this;
+    }
 
-    @property({ type: Boolean, reflect: true })
-    protected pressed = false;
+    /**
+     * 当前激活的是第几个 <mdui-ripple>。仅一个组件中有多个 <mdui-ripple> 时可以使用该属性
+     * 若值为 undefined，则组件中所有 <mdui-ripple> 都激活
+     */
+    private rippleIndex?: number = undefined;
 
-    @property({ type: Boolean, reflect: true })
-    protected dragged = false;
+    /**
+     * 获取当前激活的是第几个 <mdui-ripple>。仅一个组件中有多个 <mdui-ripple> 时可以使用该属性
+     * 若值为 undefined，则组件中所有 <mdui-ripple> 都激活
+     * 可在子类中手动指定该方法，指定需要激活的 ripple
+     */
+    protected getRippleIndex: () => number | undefined = () => this.rippleIndex;
 
+    /**
+     * 当前激活的 <mdui-ripple> 元素是否被禁用
+     */
+    private isRippleDisabled(): boolean {
+      const disabled = this.rippleDisabled;
+
+      if (!Array.isArray(disabled)) {
+        return disabled;
+      }
+
+      const rippleIndex = this.getRippleIndex();
+      if (rippleIndex !== undefined) {
+        return disabled[rippleIndex];
+      }
+
+      return disabled.length ? disabled[0] : false;
+    }
+
+    /**
+     * 获取当前激活的 <mdui-ripple> 元素实例
+     */
+    private getRippleElement(): Ripple {
+      const ripple = this.rippleElement;
+
+      if (!isArrayLike(ripple)) {
+        return ripple;
+      }
+
+      const rippleIndex = this.getRippleIndex();
+      if (rippleIndex !== undefined) {
+        return ripple[rippleIndex];
+      }
+
+      return ripple[0];
+    }
+
+    /**
+     * 获取当前激活的 <mdui-ripple> 元素相对于哪个元素存在
+     */
+    private getRippleTarget(): HTMLElement {
+      const target = this.rippleTarget;
+
+      if (!isArrayLike(target)) {
+        return target;
+      }
+
+      const rippleIndex = this.getRippleIndex();
+      if (rippleIndex !== undefined) {
+        return target[rippleIndex];
+      }
+
+      return target[0];
+    }
+
+    /**
+     * 若存在多个 <mdui-ripple>，但 rippleTarget 为同一个，则 hover 状态无法在多个 <mdui-ripple> 之间切换
+     * 所以把 startHover 和 endHover 设置为 protected，供子类调用
+     * 子类中，在 getRippleIndex() 的返回值变更前调用 endHover(event)，变更后调用 startHover(event)
+     */
     protected startHover(event: PointerEvent): void {
-      if (event.pointerType !== 'mouse' || this.rippleDisabled) {
+      if (event.pointerType !== 'mouse' || this.isRippleDisabled()) {
         return;
       }
 
-      this.hover = true;
-      this.rippleElement.startHover();
+      this.getRippleTarget().setAttribute('hover', '');
+      this.getRippleElement().startHover();
     }
 
     protected endHover(event: PointerEvent): void {
-      if (event.pointerType !== 'mouse' || this.rippleDisabled) {
+      if (event.pointerType !== 'mouse' || this.isRippleDisabled()) {
         return;
       }
 
-      this.hover = false;
-      this.rippleElement.endHover();
+      this.getRippleTarget().removeAttribute('hover');
+      this.getRippleElement().endHover();
     }
 
-    protected startFocus(): void {
-      if (this.rippleDisabled) {
+    private startFocus(): void {
+      if (this.isRippleDisabled()) {
         return;
       }
 
-      this.rippleElement.startFocus();
+      this.getRippleElement().startFocus();
     }
 
-    protected endFocus(): void {
-      if (this.rippleDisabled) {
+    private endFocus(): void {
+      if (this.isRippleDisabled()) {
         return;
       }
 
-      this.rippleElement.endFocus();
+      this.getRippleElement().endFocus();
     }
 
-    protected startPress(event: PointerEvent): void {
+    private startPress(event: PointerEvent): void {
       // 为鼠标时操作，仅响应鼠标左键点击
-      if (this.rippleDisabled || event.button) {
+      if (this.isRippleDisabled() || event.button) {
         return;
       }
 
-      this.pressed = true;
+      const target = this.getRippleTarget();
+      target.setAttribute('pressed', '');
 
-      const $target = $(this);
+      const $target = $(target);
 
       // 手指触摸触发涟漪
       if (['touch', 'pen'].includes(event.pointerType)) {
@@ -99,7 +178,7 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
         // 手指触摸后，延迟一段时间触发涟漪，避免手指滑动时也触发涟漪
         let timer = setTimeout(() => {
           timer = 0;
-          this.rippleElement.startPress(event);
+          this.getRippleElement().startPress(event);
         }, 70) as unknown as number;
 
         const hideRipple = () => {
@@ -107,7 +186,7 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
           if (timer) {
             clearTimeout(timer);
             timer = 0;
-            this.rippleElement.startPress(event);
+            this.getRippleElement().startPress(event);
           }
 
           if (!hidden) {
@@ -115,7 +194,7 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
             this.endPress();
           }
 
-          $target.off('pointerup pointercancel', hideRipple);
+          $target.off('pointerup._ripple pointercancel._ripple', hideRipple);
         };
 
         // 手指移动后，移除涟漪动画
@@ -125,61 +204,92 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
             timer = 0;
           }
 
-          $target.off('touchmove', touchMove);
+          $target.off('touchmove._ripple', touchMove);
         };
 
         // pointermove 事件过于灵敏，可能在未触发 touchmove 的情况下，触发了 pointermove 事件，导致正常的点击操作没有显示涟漪
         // 因此这里监听 touchmove 事件
         $target
-          .on('touchmove', touchMove)
-          .on('pointerup pointercancel', hideRipple);
+          .on('touchmove._ripple', touchMove)
+          .on('pointerup._ripple pointercancel._ripple', hideRipple);
       }
 
       // 鼠标点击触发涟漪，点击后立即触发涟漪（仅鼠标左键能触发涟漪）
       if (event.pointerType === 'mouse' && event.button === 0) {
         const hideRipple = () => {
           this.endPress();
-          $target.off('pointerup pointercancel pointerleave', hideRipple);
+          $target.off(
+            'pointerup._ripple pointercancel._ripple pointerleave._ripple',
+            hideRipple,
+          );
         };
 
-        this.rippleElement.startPress(event);
-        $target.on('pointerup pointercancel pointerleave', hideRipple);
+        this.getRippleElement().startPress(event);
+        $target.on(
+          'pointerup._ripple pointercancel._ripple pointerleave._ripple',
+          hideRipple,
+        );
       }
     }
 
-    protected endPress(): void {
-      if (this.rippleDisabled) {
+    private endPress(): void {
+      if (this.isRippleDisabled()) {
         return;
       }
 
-      this.pressed = false;
-      this.rippleElement.endPress();
+      this.getRippleTarget().removeAttribute('pressed');
+      this.getRippleElement().endPress();
     }
 
-    protected startDrag(): void {
-      if (this.rippleDisabled) {
+    private startDrag(): void {
+      if (this.isRippleDisabled()) {
         return;
       }
 
-      this.rippleElement.startDrag();
+      this.getRippleElement().startDrag();
     }
 
-    protected endDrag(): void {
-      if (this.rippleDisabled) {
+    private endDrag(): void {
+      if (this.isRippleDisabled()) {
         return;
       }
 
-      this.rippleElement.endDrag();
+      this.getRippleElement().endDrag();
     }
 
     protected async firstUpdated(changes: PropertyValues) {
       super.firstUpdated(changes);
-      $(this).on({
-        pointerdown: this.startPress,
-        pointerenter: this.startHover,
-        pointerleave: this.endHover,
-        focus: this.startFocus,
-        blur: this.endFocus,
+
+      const $target = $(this.rippleTarget);
+
+      // 监听到事件时，是在第几个 <mdui-ripple> 上触发的事件，记录到 this.rippleIndex 中
+      const setRippleIndex = (event: Event) => {
+        if (isArrayLike(this.rippleTarget)) {
+          this.rippleIndex = $target.index(event.target as HTMLElement);
+        }
+      };
+
+      $target.on({
+        'pointerdown._ripple': (event: PointerEvent) => {
+          setRippleIndex(event);
+          this.startPress(event);
+        },
+        'pointerenter._ripple': (event: PointerEvent) => {
+          setRippleIndex(event);
+          this.startHover(event);
+        },
+        'pointerleave._ripple': (event: PointerEvent) => {
+          setRippleIndex(event);
+          this.endHover(event);
+        },
+        'focus._ripple': (event: FocusEvent) => {
+          setRippleIndex(event);
+          this.startFocus();
+        },
+        'blur._ripple': (event: FocusEvent) => {
+          setRippleIndex(event);
+          this.endFocus();
+        },
       });
     }
   }

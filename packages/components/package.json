@@ -65,9 +65,9 @@
   "homepage": "https://www.mdui.org",
   "dependencies": {
     "@open-wc/dedupe-mixin": "^1.3.1",
-    "@mdui/jq": "^3.0.0",
-    "@mdui/shared": "^1.0.0",
-    "@mdui/icons": "^1.0.0",
+    "@mdui/jq": "workspace:*",
+    "@mdui/shared": "workspace:*",
+    "@mdui/icons": "workspace:*",
     "classcat": "^5.0.4",
     "lit": "^2.3.0",
     "@lit-labs/motion": "^1.0.3",

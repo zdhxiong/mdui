@@ -35,10 +35,10 @@
   "homepage": "https://www.mdui.org",
   "dependencies": {
     "tslib": "^2.4.0",
-    "@mdui/components": "^1.0.0",
-    "@mdui/functions": "^1.0.0",
-    "@mdui/shared": "^1.0.0",
-    "@mdui/jq": "^3.0.0",
-    "@mdui/icons": "^1.0.0"
+    "@mdui/components": "workspace:*",
+    "@mdui/functions": "workspace:*",
+    "@mdui/shared": "workspace:*",
+    "@mdui/jq": "workspace:*",
+    "@mdui/icons": "workspace:*"
   }
 }

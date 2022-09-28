@@ -25,10 +25,10 @@
   },
   "homepage": "https://github.com/zdhxiong/mdui",
   "dependencies": {
-    "@mdui/jq": "^3.0.0",
-    "@mdui/shared": "^1.0.0",
-    "@mdui/icons": "^1.0.0",
-    "@mdui/components": "^1.0.0",
+    "@mdui/jq": "workspace:*",
+    "@mdui/shared": "workspace:*",
+    "@mdui/icons": "workspace:*",
+    "@mdui/components": "workspace:*",
     "@material/material-color-utilities": "^0.2.0",
     "lit": "^2.3.0",
     "tslib": "^2.4.0"

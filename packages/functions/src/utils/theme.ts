@@ -6,7 +6,7 @@ import {
   argbFromHex,
   hexFromArgb,
   Scheme,
-} from '@material/material-color-utilities';
+} from '@importantimport/material-color-utilities';
 import { toKebabCase } from '@mdui/jq/shared/helper.js';
 
 export interface CustomColor {

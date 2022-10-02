@@ -5,7 +5,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
-import { emit } from '@mdui/shared/helpers/event';
+import { emit } from '@mdui/shared/helpers/event.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';

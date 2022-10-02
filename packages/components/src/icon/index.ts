@@ -5,7 +5,7 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { until } from 'lit/directives/until.js';
 import { ajax } from '@mdui/jq/functions/ajax.js';
-import { HasSlotController } from '@mdui/shared/controllers/has-slot';
+import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 

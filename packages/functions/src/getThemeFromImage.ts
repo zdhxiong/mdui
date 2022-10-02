@@ -1,7 +1,7 @@
 import {
   sourceColorFromImage,
   hexFromArgb,
-} from '@material/material-color-utilities';
+} from '@importantimport/material-color-utilities';
 
 /**
  * 根据指定的图片，获取主题的色值

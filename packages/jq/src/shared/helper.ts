@@ -51,19 +51,19 @@ export const isNull = (target: unknown): target is null => {
 };
 
 export const isWindow = (target: unknown): target is Window => {
-  return target instanceof Window;
+  return typeof Window !== 'undefined' && target instanceof Window;
 };
 
 export const isDocument = (target: unknown): target is Document => {
-  return target instanceof Document;
+  return typeof Document !== 'undefined' && target instanceof Document;
 };
 
 export const isElement = (target: unknown): target is Element => {
-  return target instanceof Element;
+  return typeof Element !== 'undefined' && target instanceof Element;
 };
 
 export const isNode = (target: unknown): target is Node => {
-  return target instanceof Node;
+  return typeof Node !== 'undefined' && target instanceof Node;
 };
 
 export const isArrayLike = (target: unknown): target is ArrayLike<unknown> => {

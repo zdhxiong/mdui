@@ -24,7 +24,6 @@ import {
   KEYFRAME_FADE_OUT,
 } from '@mdui/shared/helpers/motion.js';
 import { emit } from '@mdui/shared/helpers/event.js';
-import { delay } from '@mdui/shared/helpers/delay.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { style } from './style.js';
 

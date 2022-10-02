@@ -1,4 +1,4 @@
-import { argbFromHex } from '@material/material-color-utilities';
+import { argbFromHex } from '@importantimport/material-color-utilities';
 import type { CustomColor } from './utils/theme.js';
 import { setThemeFromSource } from './utils/theme.js';
 

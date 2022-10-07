@@ -1,14 +1,14 @@
-import type { HTMLString, TypeOrArray } from '../shared/helper.js';
-import type { JQ } from '../shared/core.js';
-import { isFunction, isString, eachArray } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { createElement, appendChild, removeChild } from '../shared/dom.js';
+import { isFunction, isString, eachArray } from '../shared/helper.js';
 import './after.js';
 import './before.js';
 import './clone.js';
 import './each.js';
 import './map.js';
 import './remove.js';
+import type { JQ } from '../shared/core.js';
+import type { HTMLString, TypeOrArray } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

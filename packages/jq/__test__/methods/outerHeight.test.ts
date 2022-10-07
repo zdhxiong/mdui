@@ -1,5 +1,5 @@
-import { jQuery, jq, JQStatic } from '../utils.js';
 import '../../methods/outerHeight.js';
+import { jQuery, jq, JQStatic } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .outerHeight`, () => {

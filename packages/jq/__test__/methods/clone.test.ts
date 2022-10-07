@@ -1,7 +1,7 @@
-import { jQuery, jq, assert, JQStatic } from '../utils.js';
-import '../../methods/clone.js';
 import '../../methods/appendTo.js';
 import '../../methods/children.js';
+import '../../methods/clone.js';
+import { jQuery, jq, assert, JQStatic } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .clone`, () => {

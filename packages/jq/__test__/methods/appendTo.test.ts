@@ -1,3 +1,4 @@
+import '../../methods/appendTo.js';
 import {
   jQuery,
   jq,
@@ -7,7 +8,6 @@ import {
   toInnerHtmlArray,
   toTagNameArray,
 } from '../utils.js';
-import '../../methods/appendTo.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .appendTo`, () => {

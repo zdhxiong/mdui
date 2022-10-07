@@ -1,21 +1,21 @@
-import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
-import { watch } from '@mdui/shared/decorators/watch.js';
-import { emit } from '@mdui/shared/helpers/event.js';
-import { delay } from '@mdui/shared/helpers/delay.js';
 import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/children.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
-import '@mdui/jq/methods/parent.js';
-import '@mdui/jq/methods/parents.js';
-import '@mdui/jq/methods/children.js';
 import '@mdui/jq/methods/is.js';
 import '@mdui/jq/methods/on.js';
+import '@mdui/jq/methods/parent.js';
+import '@mdui/jq/methods/parents.js';
 import { isString } from '@mdui/jq/shared/helper.js';
-import type { MenuItem as MenuItemOriginal } from './menu-item.js';
+import { watch } from '@mdui/shared/decorators/watch.js';
+import { delay } from '@mdui/shared/helpers/delay.js';
+import { emit } from '@mdui/shared/helpers/event.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { menuStyle } from './menu-style.js';
+import type { MenuItem as MenuItemOriginal } from './menu-item.js';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 
 type MenuItem = MenuItemOriginal & {
   dense: boolean;

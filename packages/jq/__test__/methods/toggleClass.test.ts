@@ -1,8 +1,8 @@
-import { jQuery, jq, assert, JQStatic } from '../utils.js';
-import '../../methods/toggleClass.js';
-import '../../methods/attr.js';
 import '../../methods/addClass.js';
+import '../../methods/attr.js';
 import '../../methods/hasClass.js';
+import '../../methods/toggleClass.js';
+import { jQuery, jq, assert, JQStatic } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .toggleClass`, () => {

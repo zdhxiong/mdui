@@ -1,5 +1,5 @@
-import type { Selector } from '../shared/helper.js';
 import './next.js';
+import type { Selector } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

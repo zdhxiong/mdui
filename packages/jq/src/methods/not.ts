@@ -1,9 +1,9 @@
-import type { Selector, TypeOrArray } from '../shared/helper.js';
-import type { JQ } from '../shared/core.js';
 import { $ } from '../$.js';
 import './filter.js';
 import './map.js';
 import './index.js';
+import type { JQ } from '../shared/core.js';
+import type { Selector, TypeOrArray } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

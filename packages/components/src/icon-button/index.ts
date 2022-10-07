@@ -1,16 +1,16 @@
-import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
-import { emit } from '@mdui/shared/helpers/event.js';
-import { watch } from '@mdui/shared/decorators/watch.js';
+import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
-import { when } from 'lit/directives/when.js';
+import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
+import { watch } from '@mdui/shared/decorators/watch.js';
+import { emit } from '@mdui/shared/helpers/event.js';
 import { ButtonBase } from '../button/button-base.js';
-import type { MaterialIconsName } from '../icon.js';
-import { style } from './style.js';
 import '../icon.js';
+import { style } from './style.js';
+import type { MaterialIconsName } from '../icon.js';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 
 /**
  * @event click - 点击时触发

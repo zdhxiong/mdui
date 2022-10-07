@@ -1,10 +1,10 @@
-import type { Selector } from '../shared/helper.js';
-import { isElement, eachArray } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { unique } from '../functions/unique.js';
 import { JQ } from '../shared/core.js';
+import { isElement, eachArray } from '../shared/helper.js';
 import './each.js';
 import './is.js';
+import type { Selector } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

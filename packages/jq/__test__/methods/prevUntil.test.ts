@@ -1,6 +1,6 @@
-import { jQuery, jq, assert, JQStatic, toIdArray } from '../utils.js';
-import '../../methods/prevUntil.js';
 import '../../methods/get.js';
+import '../../methods/prevUntil.js';
+import { jQuery, jq, assert, JQStatic, toIdArray } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .prevUntil`, () => {

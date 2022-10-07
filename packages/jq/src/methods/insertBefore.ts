@@ -1,9 +1,9 @@
-import type { HTMLString, Selector, TypeOrArray } from '../shared/helper.js';
-import type { JQ } from '../shared/core.js';
-import { eachArray } from '../shared/helper.js';
 import { $ } from '../$.js';
+import { eachArray } from '../shared/helper.js';
 import './each.js';
 import './get.js';
+import type { JQ } from '../shared/core.js';
+import type { HTMLString, Selector, TypeOrArray } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,8 +1,8 @@
-import type { ReactiveController, ReactiveControllerHost } from 'lit';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
-import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/off.js';
+import '@mdui/jq/methods/on.js';
+import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
 /* eslint-disable */
 export interface FormControllerOptions {

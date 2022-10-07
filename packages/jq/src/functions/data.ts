@@ -1,6 +1,6 @@
-import type { PlainObject } from '../shared/helper.js';
-import { isUndefined, isObjectLike } from '../shared/helper.js';
 import { get, set, getAll, setAll } from '../shared/data.js';
+import { isUndefined, isObjectLike } from '../shared/helper.js';
+import type { PlainObject } from '../shared/helper.js';
 
 /**
  * `value` 为 `undefined` 时，相当于 `data(element, key)`，即获取指定元素上存储的数据

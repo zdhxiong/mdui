@@ -1,6 +1,6 @@
-import type { Options } from '../shared/ajax.js';
 import { globalOptions } from '../shared/ajax.js';
 import { extend } from './extend.js';
+import type { Options } from '../shared/ajax.js';
 
 /**
  * 为 Ajax 请求设置全局配置参数

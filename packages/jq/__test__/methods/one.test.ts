@@ -1,6 +1,6 @@
-import { jQuery, jq, assert, JQStatic } from '../utils.js';
 import '../../methods/one.js';
 import '../../methods/trigger.js';
+import { jQuery, jq, assert, JQStatic } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .one`, () => {

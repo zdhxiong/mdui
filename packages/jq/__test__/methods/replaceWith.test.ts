@@ -1,3 +1,6 @@
+import '../../methods/children.js';
+import '../../methods/replaceWith.js';
+import '../../methods/text.js';
 import {
   jQuery,
   jq,
@@ -6,9 +9,6 @@ import {
   removeSpace,
   toTextContentArray,
 } from '../utils.js';
-import '../../methods/replaceWith.js';
-import '../../methods/children.js';
-import '../../methods/text.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .replaceWith`, () => {

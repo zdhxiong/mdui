@@ -1,16 +1,16 @@
-import type { PlainObject } from '../shared/helper.js';
-import type { JQ } from '../shared/core.js';
-import type { EventCallback } from '../shared/event.js';
+import { $ } from '../$.js';
+import { add } from '../shared/event.js';
 import {
   isString,
   isObjectLike,
   returnFalse,
   eachObject,
 } from '../shared/helper.js';
-import { $ } from '../$.js';
-import { add } from '../shared/event.js';
 import './each.js';
 import './off.js';
+import type { JQ } from '../shared/core.js';
+import type { EventCallback } from '../shared/event.js';
+import type { PlainObject } from '../shared/helper.js';
 
 // 该方法也用于监听 ajaxStart, ajaxSuccess, ajaxError, ajaxComplete 事件
 // 其中 ajaxStart, ajaxError, ajaxComplete 事件的回调函数第二个参数为 { xhr, options }

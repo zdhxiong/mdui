@@ -1,15 +1,15 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { property, query, state } from 'lit/decorators.js';
-import { when } from 'lit/directives/when.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { when } from 'lit/directives/when.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { sliderBaseStyle } from './slider-base-style.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
   static override styles: CSSResultGroup = [componentStyle, sliderBaseStyle];

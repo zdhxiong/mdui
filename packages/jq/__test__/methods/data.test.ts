@@ -1,8 +1,8 @@
-import { jQuery, jq, assert, JQStatic } from '../utils.js';
-import '../../static/extend.js';
 import '../../methods/data.js';
-import '../../methods/removeData.js';
 import '../../methods/is.js';
+import '../../methods/removeData.js';
+import '../../static/extend.js';
+import { jQuery, jq, assert, JQStatic } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .data, .removeData`, () => {

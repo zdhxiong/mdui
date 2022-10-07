@@ -1,7 +1,7 @@
-import type { PlainObject } from '../shared/helper.js';
-import { eachObject } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { extend } from '../functions/extend.js';
+import { eachObject } from '../shared/helper.js';
+import type { PlainObject } from '../shared/helper.js';
 
 /**
  * 比 ../functions/extend 函数多了一个 extend<T>(target: T): this & T 的用法

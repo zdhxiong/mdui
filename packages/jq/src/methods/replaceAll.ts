@@ -1,10 +1,10 @@
-import type { Selector, TypeOrArray } from '../shared/helper.js';
-import type { JQ } from '../shared/core.js';
 import { $ } from '../$.js';
 import './clone.js';
 import './get.js';
 import './map.js';
 import './replaceWith.js';
+import type { JQ } from '../shared/core.js';
+import type { Selector, TypeOrArray } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,7 +1,7 @@
-import { isElement } from '../../shared/helper.js';
 import { $ } from '../../$.js';
 import { unique } from '../../functions/unique.js';
 import { JQ } from '../../shared/core.js';
+import { isElement } from '../../shared/helper.js';
 import '../each.js';
 import '../is.js';
 

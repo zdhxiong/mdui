@@ -1,10 +1,10 @@
 import Pretender from 'pretender';
-import { EventParams } from '../../shared/ajax.js';
-import { assert, jq, JQStatic, jQuery } from '../utils.js';
-import '../../methods/on.js';
 import '../../methods/off.js';
+import '../../methods/on.js';
 import '../../static/ajax.js';
 import '../../static/ajaxSetup.js';
+import { assert, jq, JQStatic, jQuery } from '../utils.js';
+import type { EventParams } from '../../shared/ajax.js';
 
 // mock 服务，模拟 REST API
 const mockAPI = () => {

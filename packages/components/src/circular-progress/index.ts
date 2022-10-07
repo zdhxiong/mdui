@@ -1,9 +1,9 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 @customElement('mdui-circular-progress')
 export class CircularProgress extends LitElement {

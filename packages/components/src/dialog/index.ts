@@ -1,4 +1,3 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import {
   customElement,
@@ -6,19 +5,18 @@ import {
   query,
   queryAssignedElements,
 } from 'lit/decorators.js';
-import { when } from 'lit/directives/when.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/on.js';
-import '@mdui/jq/methods/off.js';
 import '@mdui/jq/methods/addClass.js';
+import '@mdui/jq/methods/off.js';
+import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/removeClass.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
+import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { Modal } from '@mdui/shared/helpers/modal.js';
-import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import {
   EASING_DECELERATION,
   EASING_LINEAR,
@@ -26,10 +24,12 @@ import {
   KEYFRAME_FADE_OUT,
 } from '@mdui/shared/helpers/motion.js';
 import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import '../icon.js';
+import { style } from './style.js';
 import type { MaterialIconsName } from '../icon.js';
 import type { TopAppBar } from '../top-app-bar/top-app-bar.js';
-import { style } from './style.js';
-import '../icon.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
  * @event open - 在对话框打开之前触发。可以通过调用 `event.preventDefault()` 阻止对话框打开

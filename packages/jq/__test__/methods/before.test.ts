@@ -1,3 +1,6 @@
+import '../../methods/add.js';
+import '../../methods/before.js';
+import '../../methods/children.js';
 import {
   jQuery,
   jq,
@@ -8,9 +11,6 @@ import {
   toTextContentArray,
   toTagNameArray,
 } from '../utils.js';
-import '../../methods/before.js';
-import '../../methods/children.js';
-import '../../methods/add.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .before`, () => {

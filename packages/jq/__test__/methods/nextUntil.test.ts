@@ -1,7 +1,7 @@
-import { jQuery, jq, assert, JQStatic, toIdArray } from '../utils.js';
-import '../../methods/nextUntil.js';
-import '../../methods/nextAll.js';
 import '../../methods/get.js';
+import '../../methods/nextAll.js';
+import '../../methods/nextUntil.js';
+import { jQuery, jq, assert, JQStatic, toIdArray } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .nextUntil`, () => {

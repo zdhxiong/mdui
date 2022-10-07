@@ -1,15 +1,15 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
-import type { TextField } from '../text-field.js';
-import { style } from './style.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '../chip.js';
 import '../dropdown.js';
 import '../menu.js';
 import '../text-field.js';
+import { style } from './style.js';
+import type { TextField } from '../text-field.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
  * @event click

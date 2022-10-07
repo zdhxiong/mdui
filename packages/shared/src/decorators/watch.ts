@@ -10,8 +10,7 @@
  * }
  */
 
-import type { PropertyValues } from 'lit';
-import { LitElement } from 'lit';
+import type { PropertyValues, LitElement } from 'lit';
 
 /**
  * @param propName 监听的属性名

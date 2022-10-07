@@ -1,4 +1,3 @@
-import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import {
   customElement,
@@ -8,13 +7,14 @@ import {
 } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/on.js';
-import '@mdui/jq/methods/off.js';
-import '@mdui/jq/methods/is.js';
-import '@mdui/jq/methods/width.js';
 import '@mdui/jq/methods/height.js';
+import '@mdui/jq/methods/is.js';
+import '@mdui/jq/methods/off.js';
+import '@mdui/jq/methods/on.js';
+import '@mdui/jq/methods/width.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
+import { emit } from '@mdui/shared/helpers/event.js';
 import {
   DURATION_FADE_IN,
   DURATION_FADE_OUT,
@@ -23,9 +23,9 @@ import {
   KEYFRAME_FADE_IN,
   KEYFRAME_FADE_OUT,
 } from '@mdui/shared/helpers/motion.js';
-import { emit } from '@mdui/shared/helpers/event.js';
-import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 
 /**
  * @event open - dropdown 开始打开时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 dropdown 打开

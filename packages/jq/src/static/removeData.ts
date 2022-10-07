@@ -1,6 +1,6 @@
-import type { TypeOrArray } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { removeData } from '../functions/removeData.js';
+import type { TypeOrArray } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   interface JQStatic {

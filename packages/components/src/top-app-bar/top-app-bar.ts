@@ -1,4 +1,3 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import {
   customElement,
@@ -6,23 +5,24 @@ import {
   queryAssignedElements,
   state,
 } from 'lit/decorators.js';
+import { when } from 'lit/directives/when.js';
 import { animate, AnimateController } from '@lit-labs/motion';
 import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/off.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/one.js';
-import '@mdui/jq/methods/off.js';
-import { when } from 'lit/directives/when.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
-import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import {
   DURATION_MEDIUM_IN,
   DURATION_MEDIUM_OUT,
   EASING_LINEAR,
 } from '@mdui/shared/helpers/motion.js';
-import type { TopAppBarTitle } from './top-app-bar-title.js';
+import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { topAppBarStyle } from './top-app-bar-style.js';
+import type { TopAppBarTitle } from './top-app-bar-title.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
  * @event show - 开始显示时，事件被触发。可以通过调用 `event.preventDefault()` 阻止显示

@@ -1,4 +1,9 @@
-import type { JQ } from '../shared/core.js';
+import { $ } from '../$.js';
+import {
+  isBorderBox,
+  getExtraWidth,
+  getComputedStyleValue,
+} from '../shared/css.js';
 import {
   isBoolean,
   isString,
@@ -8,14 +13,9 @@ import {
   toElement,
   eachArray,
 } from '../shared/helper.js';
-import { $ } from '../$.js';
-import {
-  isBorderBox,
-  getExtraWidth,
-  getComputedStyleValue,
-} from '../shared/css.js';
 import './css.js';
 import './each.js';
+import type { JQ } from '../shared/core.js';
 
 type Value = string | number | null | undefined;
 

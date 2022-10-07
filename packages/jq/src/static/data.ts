@@ -1,6 +1,6 @@
-import type { PlainObject } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { data } from '../functions/data.js';
+import type { PlainObject } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   interface JQStatic {

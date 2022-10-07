@@ -1,4 +1,3 @@
-import type { PlainObject } from './helper.js';
 import {
   eachObject,
   toCamelCase,
@@ -6,6 +5,7 @@ import {
   isUndefined,
   isString,
 } from './helper.js';
+import type { PlainObject } from './helper.js';
 
 type ElementTarget = Element | Document | Window;
 

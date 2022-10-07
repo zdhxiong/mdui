@@ -1,6 +1,6 @@
 import { argbFromHex } from '@importantimport/material-color-utilities';
-import type { CustomColor } from './utils/theme.js';
 import { setThemeFromSource } from './utils/theme.js';
+import type { CustomColor } from './utils/theme.js';
 
 /**
  * 在指定元素上设置主题

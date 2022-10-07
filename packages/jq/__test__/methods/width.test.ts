@@ -1,11 +1,11 @@
-import { jQuery, jq, assert, JQStatic } from '../utils.js';
-import '../../methods/width.js';
-import '../../methods/height.js';
-import '../../methods/innerWidth.js';
-import '../../methods/innerHeight.js';
-import '../../methods/outerWidth.js';
-import '../../methods/outerWidth.js';
 import '../../methods/get.js';
+import '../../methods/height.js';
+import '../../methods/innerHeight.js';
+import '../../methods/innerWidth.js';
+import '../../methods/outerWidth.js';
+import '../../methods/width.js';
+
+import { jQuery, jq, assert, JQStatic } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .width`, () => {

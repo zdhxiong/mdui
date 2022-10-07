@@ -1,6 +1,6 @@
-import type { PlainObject } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { param } from '../functions/param.js';
+import type { PlainObject } from '../shared/helper.js';
 
 type Value =
   | Record<string, Value>[]

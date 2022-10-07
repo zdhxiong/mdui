@@ -1,5 +1,5 @@
-import type { PlainObject } from '../shared/helper.js';
 import { isObjectLike, eachObject, eachArray } from '../shared/helper.js';
+import type { PlainObject } from '../shared/helper.js';
 
 // @ts-ignore
 type Value = Record<string, Value> | string | number | boolean;

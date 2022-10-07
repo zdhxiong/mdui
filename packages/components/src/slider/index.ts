@@ -1,18 +1,18 @@
-import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import { html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
-import { map } from 'lit/directives/map.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { when } from 'lit/directives/when.js';
-import { styleMap } from 'lit/directives/style-map.js';
 import { live } from 'lit/directives/live.js';
-import { emit } from '@mdui/shared/helpers/event.js';
-import { watch } from '@mdui/shared/decorators/watch.js';
+import { map } from 'lit/directives/map.js';
+import { styleMap } from 'lit/directives/style-map.js';
+import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
-import type { Ripple } from '../ripple/index.js';
+import { watch } from '@mdui/shared/decorators/watch.js';
+import { emit } from '@mdui/shared/helpers/event.js';
 import { SliderBase } from './slider-base.js';
 import { style } from './style.js';
+import type { Ripple } from '../ripple/index.js';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 
 /**
  * @event click - 点击时触发

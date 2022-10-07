@@ -1,8 +1,8 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
  * @slot - 显示的文本

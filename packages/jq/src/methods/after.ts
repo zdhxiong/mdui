@@ -1,5 +1,5 @@
-import type { HTMLString, TypeOrArray } from '../shared/helper.js';
 import './before.js';
+import type { HTMLString, TypeOrArray } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

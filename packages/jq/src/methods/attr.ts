@@ -1,5 +1,6 @@
-import type { PlainObject } from '../shared/helper.js';
-import type { JQ } from '../shared/core.js';
+import { $ } from '../$.js';
+import { getAttribute, setAttribute } from '../shared/attributes.js';
+import { getStyle, cssNumber } from '../shared/css.js';
 import {
   isElement,
   isFunction,
@@ -10,10 +11,9 @@ import {
   eachArray,
   eachObject,
 } from '../shared/helper.js';
-import { $ } from '../$.js';
-import { getStyle, cssNumber } from '../shared/css.js';
-import { getAttribute, setAttribute } from '../shared/attributes.js';
 import './each.js';
+import type { JQ } from '../shared/core.js';
+import type { PlainObject } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

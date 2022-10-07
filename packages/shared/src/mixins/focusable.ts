@@ -1,14 +1,13 @@
-import type { Constructor } from '@open-wc/dedupe-mixin';
-import type { PropertyValues } from 'lit';
-import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 import { getDocument } from 'ssr-window';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/attr.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/each.js';
-import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/off.js';
+import '@mdui/jq/methods/on.js';
+import type { Constructor } from '@open-wc/dedupe-mixin';
+import type { PropertyValues, LitElement } from 'lit';
 
 let isClick = true;
 $(getDocument()).on({

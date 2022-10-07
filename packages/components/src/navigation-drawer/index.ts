@@ -1,26 +1,26 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/css.js';
-import '@mdui/jq/methods/parent.js';
 import '@mdui/jq/methods/innerWidth.js';
-import { Modal } from '@mdui/shared/helpers/modal.js';
+import '@mdui/jq/methods/on.js';
+import '@mdui/jq/methods/parent.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
-import { emit } from '@mdui/shared/helpers/event.js';
-import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
+import { emit } from '@mdui/shared/helpers/event.js';
+import { Modal } from '@mdui/shared/helpers/modal.js';
 import {
   DURATION_MEDIUM_IN,
   DURATION_MEDIUM_OUT,
   EASING_DECELERATION,
   EASING_ACCELERATION,
+  EASING_LINEAR,
 } from '@mdui/shared/helpers/motion.js';
-import { EASING_LINEAR } from '@mdui/shared/helpers/motion.js';
+import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
  * 在手机端，modal 始终为 true；大于手机端时，modal 属性才开始生效

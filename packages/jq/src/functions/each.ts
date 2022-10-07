@@ -1,5 +1,5 @@
-import type { PlainObject } from '../shared/helper.js';
 import { isArrayLike, eachArray, eachObject } from '../shared/helper.js';
+import type { PlainObject } from '../shared/helper.js';
 
 /**
  * 遍历数组，原样返回第一个参数

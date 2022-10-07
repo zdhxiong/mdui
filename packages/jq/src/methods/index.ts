@@ -1,11 +1,11 @@
-import type { Selector } from '../shared/helper.js';
-import type { JQ } from '../shared/core.js';
-import { isString } from '../shared/helper.js';
 import { $ } from '../$.js';
+import { isString } from '../shared/helper.js';
 import './children.js';
 import './eq.js';
 import './get.js';
 import './parent.js';
+import type { JQ } from '../shared/core.js';
+import type { Selector } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

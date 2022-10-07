@@ -1,3 +1,5 @@
+import '../../methods/after.js';
+import '../../methods/children.js';
 import {
   jQuery,
   jq,
@@ -6,8 +8,6 @@ import {
   toTagNameArray,
   toTextContentArray,
 } from '../utils.js';
-import '../../methods/after.js';
-import '../../methods/children.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .after`, () => {

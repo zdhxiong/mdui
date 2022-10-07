@@ -1,11 +1,11 @@
-import type { TemplateResult, CSSResultGroup } from 'lit';
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-import type { MaterialIconsName } from '../icon.js';
+import '../icon.js';
 import { ButtonBase } from './button-base.js';
 import { style } from './style.js';
-import '../icon.js';
+import type { MaterialIconsName } from '../icon.js';
+import type { TemplateResult, CSSResultGroup } from 'lit';
 
 /**
  * @event click - 点击时触发

@@ -1,5 +1,5 @@
-import type { HTMLString, Selector, TypeOrArray } from '../shared/helper.js';
 import './appendTo.js';
+import type { HTMLString, Selector, TypeOrArray } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

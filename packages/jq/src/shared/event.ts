@@ -1,8 +1,8 @@
 import { $ } from '../$.js';
 import { contains } from '../functions/contains.js';
-import { isObjectLike } from './helper.js';
 import '../methods/find.js';
 import '../methods/get.js';
+import { isObjectLike } from './helper.js';
 
 export type EventCallback<TEvent = Event> = (
   this: Element | Document | Window,

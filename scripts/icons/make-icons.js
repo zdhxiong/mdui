@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 
 /**
  * 从 @material-design-icons/svg 项目中生成图标的 Web Components 文件
@@ -36,10 +36,11 @@ const dirMap = new Map(
 
 // 图标组件模板
 // language=TypeScript
-const template = `import { LitElement, TemplateResult, CSSResultGroup } from 'lit';
+const template = `import { LitElement } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
-import { svgTag } from './shared/svg-tag.js';
 import { style } from './shared/style.js';
+import { svgTag } from './shared/svg-tag.js';
+import type { TemplateResult, CSSResultGroup } from 'lit';
 
 /**
  * @summary ![](TemplatePreviewPng)

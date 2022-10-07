@@ -1,5 +1,5 @@
-import { jQuery, jq, assert, JQStatic, selectorToArray } from '../utils.js';
 import '../../static/unique.js';
+import { jQuery, jq, assert, JQStatic, selectorToArray } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - $.unique`, () => {

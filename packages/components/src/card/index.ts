@@ -1,12 +1,12 @@
-import type { TemplateResult, CSSResultGroup } from 'lit';
 import { LitElement, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
-import type { Ripple } from '../ripple/index.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { style } from './style.js';
+import type { Ripple } from '../ripple/index.js';
+import type { TemplateResult, CSSResultGroup } from 'lit';
 
 /**
  * @event click - 点击时触发

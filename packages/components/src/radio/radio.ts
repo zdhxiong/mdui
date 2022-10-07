@@ -1,14 +1,14 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
-import type { Ripple } from '../ripple/index.js';
 import { radioStyle } from './radio-style.js';
+import type { Ripple } from '../ripple/index.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
  * @event click - 点击时触发

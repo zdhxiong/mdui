@@ -1,18 +1,18 @@
-import type { CSSResultGroup } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
-import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/innerWidth.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
-import type { NavigationRailItem as NavigationRailItemOriginal } from './navigation-rail-item.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { navigationRailStyle } from './navigation-rail-style.js';
+import type { NavigationRailItem as NavigationRailItemOriginal } from './navigation-rail-item.js';
+import type { CSSResultGroup } from 'lit';
 
 type NavigationRailItem = NavigationRailItemOriginal & {
   active: boolean;

@@ -1,16 +1,16 @@
-import type { HTMLString, TypeOrArray } from '../shared/helper.js';
-import type { JQ } from '../shared/core.js';
+import { $ } from '../$.js';
+import { getChildNodesArray } from '../shared/dom.js';
 import {
   isFunction,
   isString,
   isElement,
   eachArray,
 } from '../shared/helper.js';
-import { $ } from '../$.js';
-import { getChildNodesArray } from '../shared/dom.js';
 import './each.js';
 import './insertAfter.js';
 import './insertBefore.js';
+import type { JQ } from '../shared/core.js';
+import type { HTMLString, TypeOrArray } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

@@ -1,6 +1,6 @@
-import { jQuery, jq, assert, JQStatic } from '../utils.js';
-import '../../methods/removeProp.js';
 import '../../methods/prop.js';
+import '../../methods/removeProp.js';
+import { jQuery, jq, assert, JQStatic } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .removeProp`, () => {

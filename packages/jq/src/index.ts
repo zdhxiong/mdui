@@ -1,18 +1,5 @@
 import { $ } from './$.js';
 
-// $ 函数的静态方法
-import './static/ajax.js';
-import './static/ajaxSetup.js';
-import './static/contains.js';
-import './static/data.js';
-import './static/each.js';
-import './static/extend.js';
-import './static/map.js';
-import './static/merge.js';
-import './static/param.js';
-import './static/removeData.js';
-import './static/unique.js';
-
 // $ 对象的实例方法
 import './methods/add.js';
 import './methods/addClass.js';
@@ -56,8 +43,8 @@ import './methods/offset.js';
 import './methods/offsetParent.js';
 import './methods/on.js';
 import './methods/one.js';
-import './methods/outerWidth.js';
 import './methods/outerHeight.js';
+import './methods/outerWidth.js';
 import './methods/parent.js';
 import './methods/parents.js';
 import './methods/parentsUntil.js';
@@ -86,5 +73,18 @@ import './methods/toggleClass.js';
 import './methods/trigger.js';
 import './methods/val.js';
 import './methods/width.js';
+
+// $ 函数的静态方法
+import './static/ajax.js';
+import './static/ajaxSetup.js';
+import './static/contains.js';
+import './static/data.js';
+import './static/each.js';
+import './static/extend.js';
+import './static/map.js';
+import './static/merge.js';
+import './static/param.js';
+import './static/removeData.js';
+import './static/unique.js';
 
 export { $ };

@@ -1,7 +1,7 @@
-import { jQuery, jq, assert, JQStatic, JQ } from '../utils.js';
-import '../../methods/prev.js';
-import '../../methods/map.js';
 import '../../methods/get.js';
+import '../../methods/map.js';
+import '../../methods/prev.js';
+import { jQuery, jq, assert, JQStatic, JQ } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .prev`, () => {

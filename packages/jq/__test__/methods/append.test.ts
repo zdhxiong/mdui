@@ -1,3 +1,6 @@
+import '../../methods/append.js';
+import '../../methods/appendTo.js';
+import '../../methods/children.js';
 import {
   jQuery,
   jq,
@@ -9,9 +12,6 @@ import {
   removeSpace,
   toInnerHtmlArray,
 } from '../utils.js';
-import '../../methods/append.js';
-import '../../methods/children.js';
-import '../../methods/appendTo.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .append`, () => {

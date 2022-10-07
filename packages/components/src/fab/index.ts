@@ -1,15 +1,15 @@
-import type { TemplateResult, CSSResultGroup } from 'lit';
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import cc from 'classcat';
-import { watch } from '@mdui/shared/decorators/watch.js';
-import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
-import { delay } from '@mdui/shared/helpers/delay.js';
 import { when } from 'lit/directives/when.js';
+import cc from 'classcat';
+import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
+import { watch } from '@mdui/shared/decorators/watch.js';
+import { delay } from '@mdui/shared/helpers/delay.js';
 import { ButtonBase } from '../button/button-base.js';
-import type { MaterialIconsName } from '../icon.js';
-import { style } from './style.js';
 import '../icon.js';
+import { style } from './style.js';
+import type { MaterialIconsName } from '../icon.js';
+import type { TemplateResult, CSSResultGroup } from 'lit';
 
 /**
  * @event click - 点击时触发

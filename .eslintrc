@@ -14,12 +14,59 @@
     "@typescript-eslint/no-non-null-assertion": 0,
     "@typescript-eslint/ban-ts-comment": 0,
     "prettier/prettier": "error",
+    "import/no-unresolved": "off",
     "import/extensions": ["error", "always", { "ignorePackages": true }],
     "import/no-default-export": "error",
-    "import/order": ["error"]
+    "import/order": ["error", {
+      "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "object", "type"],
+      "pathGroups": [
+        {
+          "pattern": "lit",
+          "group": "external",
+          "position": "before"
+        },
+        {
+          "pattern": "lit/**",
+          "group": "external",
+          "position": "before"
+        },
+        {
+          "pattern": "@mdui/jq/**",
+          "group": "internal",
+          "position": "before"
+        },
+        {
+          "pattern": "@mdui/shared/**",
+          "group": "internal",
+          "position": "before"
+        },
+        {
+          "pattern": "@mdui/icons/**",
+          "group": "internal",
+          "position": "before"
+        },
+        {
+          "pattern": "@mdui/components/**",
+          "group": "internal",
+          "position": "before"
+        },
+        {
+          "pattern": "@mdui/functions/**",
+          "group": "internal",
+          "position": "before"
+        }
+      ],
+      "alphabetize": {
+        "order": "asc"
+      },
+      "pathGroupsExcludedImportTypes": ["type"],
+      "warnOnUnassignedImports": true
+    }]
   },
   "extends": [
     "plugin:@typescript-eslint/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
     "prettier"
   ],
   "overrides": [

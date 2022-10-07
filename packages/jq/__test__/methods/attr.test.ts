@@ -1,6 +1,6 @@
-import { jQuery, jq, assert, JQStatic } from '../utils.js';
-import '../../methods/attr.js';
 import '../../methods/add.js';
+import '../../methods/attr.js';
+import { jQuery, jq, assert, JQStatic } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - $.each`, () => {

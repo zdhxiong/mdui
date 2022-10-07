@@ -1,8 +1,8 @@
-import type { JQ } from '../shared/core.js';
-import { eachArray } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { removeAttribute } from '../shared/attributes.js';
+import { eachArray } from '../shared/helper.js';
 import './each.js';
+import type { JQ } from '../shared/core.js';
 
 declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

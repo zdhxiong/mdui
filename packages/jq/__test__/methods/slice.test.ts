@@ -1,7 +1,7 @@
-import { jQuery, jq, assert, JQStatic } from '../utils.js';
-import '../../methods/slice.js';
 import '../../methods/get.js';
+import '../../methods/slice.js';
 import '../../methods/text.js';
+import { jQuery, jq, assert, JQStatic } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .slice`, () => {

@@ -1,8 +1,8 @@
-import type { PlainObject } from '../shared/helper.js';
-import type { JQ } from '../shared/core.js';
-import type { EventCallback } from '../shared/event.js';
 import { $ } from '../$.js';
 import './on.js';
+import type { JQ } from '../shared/core.js';
+import type { EventCallback } from '../shared/event.js';
+import type { PlainObject } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,8 +1,8 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { tableStyle } from './table-style.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 @customElement('mdui-table')
 export class Table extends LitElement {

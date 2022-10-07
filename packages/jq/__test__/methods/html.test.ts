@@ -1,7 +1,7 @@
-import { jQuery, jq, assert, JQStatic } from '../utils.js';
-import '../../methods/html.js';
-import '../../methods/find.js';
 import '../../methods/eq.js';
+import '../../methods/find.js';
+import '../../methods/html.js';
+import { jQuery, jq, assert, JQStatic } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .html`, () => {

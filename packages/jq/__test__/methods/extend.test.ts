@@ -1,5 +1,5 @@
-import { jQuery, jq, assert, JQStatic, JQ } from '../utils.js';
 import '../../methods/extend.js';
+import { jQuery, jq, assert, JQStatic, JQ } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .extend`, () => {

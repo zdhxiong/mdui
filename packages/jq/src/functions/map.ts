@@ -1,5 +1,5 @@
-import type { PlainObject } from '../shared/helper.js';
 import { each } from './each.js';
+import type { PlainObject } from '../shared/helper.js';
 
 /**
  * 遍历数组，通过函数返回值生成一个新数组

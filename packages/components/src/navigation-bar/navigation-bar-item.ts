@@ -1,18 +1,18 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
-import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
-import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { when } from 'lit/directives/when.js';
+import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
-import type { Ripple } from '../ripple/index.js';
-import type { MaterialIconsName } from '../icon.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
+import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
+import '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { navigationBarItemStyle } from './navigation-bar-item-style.js';
-import '../icon.js';
+import type { MaterialIconsName } from '../icon.js';
+import type { Ripple } from '../ripple/index.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
  * @slot - 文本

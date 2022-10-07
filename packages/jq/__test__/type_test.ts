@@ -28,9 +28,10 @@ $(arr);
 $('.selector');
 $('<div>');
 
-function test<T = string | HTMLElement | ArrayLike<HTMLElement>>(
-  selector: T,
-): JQ<T> {
+function test<T = string>(selector: T): JQ<HTMLElement>;
+function test<T = HTMLElement>(selector: T): JQ<HTMLElement>;
+function test<T = ArrayLike<HTMLElement>>(selector: T): JQ<HTMLElement>;
+function test(selector: any): JQ<HTMLElement> {
   return $(selector).eq(0);
 }
 

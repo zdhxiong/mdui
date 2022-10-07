@@ -1,5 +1,5 @@
-import { jQuery, jq, assert, JQStatic, toIdArray } from '../utils.js';
 import '../../methods/last.js';
+import { jQuery, jq, assert, JQStatic, toIdArray } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .last`, () => {

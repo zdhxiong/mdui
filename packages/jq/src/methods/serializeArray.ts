@@ -1,7 +1,7 @@
-import type { JQ } from '../shared/core.js';
 import { $ } from '../$.js';
 import './each.js';
 import './val.js';
+import type { JQ } from '../shared/core.js';
 
 interface NameValuePair {
   name: string;

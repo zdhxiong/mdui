@@ -1,3 +1,6 @@
+import '../../methods/get.js';
+import '../../methods/parents.js';
+import '../../methods/parentsUntil.js';
 import {
   jQuery,
   jq,
@@ -6,9 +9,6 @@ import {
   toClassNameArray,
   toIdArray,
 } from '../utils.js';
-import '../../methods/parentsUntil.js';
-import '../../methods/parents.js';
-import '../../methods/get.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .parentsUntil`, () => {

@@ -1,4 +1,5 @@
-import type { JQStatic } from './shared/core.js';
+import { JQ } from './shared/core.js';
+import { getChildNodesArray } from './shared/dom.js';
 import {
   isFunction,
   isNode,
@@ -6,8 +7,7 @@ import {
   isArrayLike,
   eachObject,
 } from './shared/helper.js';
-import { JQ } from './shared/core.js';
-import { getChildNodesArray } from './shared/dom.js';
+import type { JQStatic } from './shared/core.js';
 
 const get$ = (): JQStatic => {
   const $ = function (selector?: unknown) {

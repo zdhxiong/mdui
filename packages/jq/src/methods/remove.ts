@@ -1,9 +1,9 @@
-import type { Selector } from '../shared/helper.js';
-import type { JQ } from '../shared/core.js';
 import { $ } from '../$.js';
 import { removeChild } from '../shared/dom.js';
 import './each.js';
 import './is.js';
+import type { JQ } from '../shared/core.js';
+import type { Selector } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

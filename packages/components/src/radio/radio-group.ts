@@ -1,16 +1,16 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
-import { FormController } from '@mdui/shared/controllers/form.js';
-import { watch } from '@mdui/shared/decorators/watch.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
-import type { Radio as RadioOriginal } from './radio.js';
+import { FormController } from '@mdui/shared/controllers/form.js';
+import { watch } from '@mdui/shared/decorators/watch.js';
+import { emit } from '@mdui/shared/helpers/event.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { radioGroupStyle } from './radio-group-style.js';
+import type { Radio as RadioOriginal } from './radio.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 type Radio = RadioOriginal & {
   invalid: boolean;

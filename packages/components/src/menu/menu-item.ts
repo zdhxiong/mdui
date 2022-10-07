@@ -1,25 +1,21 @@
-import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
-import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
-import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
+import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/css.js';
+import '@mdui/jq/methods/height.js';
+import '@mdui/jq/methods/innerHeight.js';
+import '@mdui/jq/methods/innerWidth.js';
+import '@mdui/jq/methods/off.js';
+import '@mdui/jq/methods/on.js';
+import '@mdui/jq/methods/width.js';
+import '@mdui/jq/static/contains.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
-import '@mdui/icons/arrow-right.js';
-import '@mdui/icons/check.js';
-import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/on.js';
-import '@mdui/jq/methods/off.js';
-import '@mdui/jq/methods/width.js';
-import '@mdui/jq/methods/height.js';
-import '@mdui/jq/methods/innerWidth.js';
-import '@mdui/jq/methods/innerHeight.js';
-import '@mdui/jq/methods/css.js';
-import '@mdui/jq/static/contains.js';
+import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
+import { emit } from '@mdui/shared/helpers/event.js';
 import {
   DURATION_FADE_IN,
   DURATION_FADE_OUT,
@@ -28,14 +24,18 @@ import {
   KEYFRAME_FADE_IN,
   KEYFRAME_FADE_OUT,
 } from '@mdui/shared/helpers/motion.js';
-import { emit } from '@mdui/shared/helpers/event.js';
-import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
-import type { MaterialIconsName } from '../icon.js';
-import type { Ripple } from '../ripple/index.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
+import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
+import '@mdui/icons/arrow-right.js';
+import '@mdui/icons/check.js';
+import '../menu.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { menuItemStyle } from './menu-item-style.js';
-import '../menu.js';
+import type { MaterialIconsName } from '../icon.js';
+import type { Ripple } from '../ripple/index.js';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 
 /**
  * @event submenu-open - 子菜单开始打开时，事件被触发。可以通过调用 `event.preventDefault()` 阻止子菜单打开

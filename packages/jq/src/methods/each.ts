@@ -1,6 +1,6 @@
-import type { JQ } from '../shared/core.js';
-import { eachArray } from '../shared/helper.js';
 import { $ } from '../$.js';
+import { eachArray } from '../shared/helper.js';
+import type { JQ } from '../shared/core.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

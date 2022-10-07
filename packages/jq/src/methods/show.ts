@@ -1,8 +1,8 @@
-import type { JQ } from '../shared/core.js';
 import { $ } from '../$.js';
 import { getStyle } from '../shared/css.js';
 import { createElement, appendChild, removeChild } from '../shared/dom.js';
 import './each.js';
+import type { JQ } from '../shared/core.js';
 
 declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

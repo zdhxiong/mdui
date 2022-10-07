@@ -1,7 +1,7 @@
-import { jQuery, jq, assert, JQStatic } from '../utils.js';
 import '../../methods/filter.js';
-import '../../methods/text.js';
 import '../../methods/get.js';
+import '../../methods/text.js';
+import { jQuery, jq, assert, JQStatic } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .filter`, () => {

@@ -1,14 +1,14 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
-import type { MaterialIconsName } from '../icon.js';
-import { ButtonBase } from '../button/button-base.js';
-import { segmentedButtonItemStyle } from './segmented-button-item-style.js';
-import '../icon.js';
 import '@mdui/icons/check.js';
+import { ButtonBase } from '../button/button-base.js';
+import '../icon.js';
+import { segmentedButtonItemStyle } from './segmented-button-item-style.js';
+import type { MaterialIconsName } from '../icon.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
  * @event click - 点击时触发

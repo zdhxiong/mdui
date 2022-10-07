@@ -1,13 +1,13 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
-import type { MaterialIconsName } from '../icon.js';
-import { style } from './style.js';
 import '../icon.js';
+import { style } from './style.js';
+import type { MaterialIconsName } from '../icon.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
  * @summary 头像组件

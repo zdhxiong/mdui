@@ -1,13 +1,13 @@
-import type { Selector, TypeOrArray } from '../shared/helper.js';
-import type { JQ } from '../shared/core.js';
+import { $ } from '../$.js';
 import {
   isDocument,
   isFunction,
   isString,
   isWindow,
 } from '../shared/helper.js';
-import { $ } from '../$.js';
 import './each.js';
+import type { JQ } from '../shared/core.js';
+import type { Selector, TypeOrArray } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

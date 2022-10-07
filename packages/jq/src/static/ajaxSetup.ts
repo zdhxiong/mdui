@@ -1,6 +1,6 @@
-import type { Options } from '../shared/ajax.js';
 import { $ } from '../$.js';
 import { ajaxSetup } from '../functions/ajaxSetup.js';
+import type { Options } from '../shared/ajax.js';
 
 declare module '../shared/core.js' {
   interface JQStatic {

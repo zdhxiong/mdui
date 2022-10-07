@@ -1,13 +1,12 @@
-import type { Constructor } from '@open-wc/dedupe-mixin';
-import type { PropertyValues } from 'lit';
-import { LitElement } from 'lit';
 import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/on.js';
-import '@mdui/jq/methods/off.js';
 import '@mdui/jq/methods/index.js';
+import '@mdui/jq/methods/off.js';
+import '@mdui/jq/methods/on.js';
 import { isArrayLike } from '@mdui/jq/shared/helper.js';
-import type { Ripple } from './index.js';
 import './index.js';
+import type { Ripple } from './index.js';
+import type { Constructor } from '@open-wc/dedupe-mixin';
+import type { PropertyValues, LitElement } from 'lit';
 
 /**
  * hover, pressed, dragged 三个属性用于添加到 rippleTarget 属性指定的元素上，供 CSS 选择题添加样式

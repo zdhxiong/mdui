@@ -1,7 +1,7 @@
-import type { TypeOrArray } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { map } from '../functions/map.js';
 import { JQ } from '../shared/core.js';
+import type { TypeOrArray } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

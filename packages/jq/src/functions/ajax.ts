@@ -1,23 +1,5 @@
-import type { PlainObject } from '../shared/helper.js';
-import type {
-  Method,
-  CallbackName,
-  ErrorCallback,
-  ErrorTextStatus,
-  EventName,
-  SuccessCallback,
-  SuccessTextStatus,
-  TextStatus,
-  Options,
-  EventParams,
-} from '../shared/ajax.js';
-import {
-  isString,
-  isUndefined,
-  eachObject,
-  eachArray,
-} from '../shared/helper.js';
 import { $ } from '../$.js';
+import '../methods/trigger.js';
 import {
   globalOptions,
   ajaxStart,
@@ -30,8 +12,26 @@ import {
   appendQuery,
   mergeOptions,
 } from '../shared/ajax.js';
+import {
+  isString,
+  isUndefined,
+  eachObject,
+  eachArray,
+} from '../shared/helper.js';
 import { param } from './param.js';
-import '../methods/trigger.js';
+import type {
+  Method,
+  CallbackName,
+  ErrorCallback,
+  ErrorTextStatus,
+  EventName,
+  SuccessCallback,
+  SuccessTextStatus,
+  TextStatus,
+  Options,
+  EventParams,
+} from '../shared/ajax.js';
+import type { PlainObject } from '../shared/helper.js';
 
 /**
  * 发送 ajax 请求

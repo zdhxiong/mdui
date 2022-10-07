@@ -1,11 +1,11 @@
-import type { PlainObject } from '../shared/helper.js';
-import type { JQ } from '../shared/core.js';
-import { isFunction } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { extend } from '../functions/extend.js';
+import { isFunction } from '../shared/helper.js';
 import './css.js';
 import './each.js';
 import './position.js';
+import type { JQ } from '../shared/core.js';
+import type { PlainObject } from '../shared/helper.js';
 
 /**
  * 坐标值

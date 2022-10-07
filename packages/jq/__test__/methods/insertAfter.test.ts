@@ -1,3 +1,8 @@
+import '../../methods/children.js';
+import '../../methods/data.js';
+import '../../methods/eq.js';
+import '../../methods/html.js';
+import '../../methods/insertAfter.js';
 import {
   jQuery,
   jq,
@@ -8,11 +13,6 @@ import {
   toTextContentArray,
   toTagNameArray,
 } from '../utils.js';
-import '../../methods/insertAfter.js';
-import '../../methods/children.js';
-import '../../methods/data.js';
-import '../../methods/eq.js';
-import '../../methods/html.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .insertAfter`, () => {

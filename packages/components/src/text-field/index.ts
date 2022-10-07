@@ -1,30 +1,30 @@
-import type { TemplateResult, CSSResultGroup } from 'lit';
 import { LitElement, html } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
-import { when } from 'lit/directives/when.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
-import { classMap } from 'lit/directives/class-map.js';
+import { when } from 'lit/directives/when.js';
 import { animate } from '@lit-labs/motion';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
-import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
+import { emit } from '@mdui/shared/helpers/event.js';
 import {
   DURATION_SMALL,
   EASING_STANDARD,
 } from '@mdui/shared/helpers/motion.js';
-import { style } from './style.js';
-import '../icon.js';
-import '../icon-button.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '@mdui/icons/cancel--outlined.js';
 import '@mdui/icons/error.js';
-import '@mdui/icons/visibility.js';
 import '@mdui/icons/visibility-off.js';
+import '@mdui/icons/visibility.js';
+import '../icon-button.js';
+import '../icon.js';
+import { style } from './style.js';
+import type { TemplateResult, CSSResultGroup } from 'lit';
 
 /**
  * @event click

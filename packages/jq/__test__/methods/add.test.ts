@@ -1,5 +1,5 @@
-import { jQuery, jq, assert, JQStatic, toTagNameArray } from '../utils.js';
 import '../../methods/add.js';
+import { jQuery, jq, assert, JQStatic, toTagNameArray } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .add`, () => {

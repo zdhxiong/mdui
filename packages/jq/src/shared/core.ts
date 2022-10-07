@@ -1,5 +1,5 @@
-import type { PlainObject } from './helper.js';
 import { eachArray } from './helper.js';
+import type { PlainObject } from './helper.js';
 
 /**
  * 为了使用模块扩充，这里不能使用默认导出

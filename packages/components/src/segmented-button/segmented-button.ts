@@ -1,17 +1,17 @@
-import type { CSSResultGroup, TemplateResult } from 'lit';
 import { html, LitElement } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
-import { watch } from '@mdui/shared/decorators/watch.js';
-import { FormController } from '@mdui/shared/controllers/form.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
 import { isString } from '@mdui/jq/shared/helper.js';
-import type { SegmentedButtonItem as SegmentedButtonItemOriginal } from './segmented-button-item.js';
+import { FormController } from '@mdui/shared/controllers/form.js';
+import { watch } from '@mdui/shared/decorators/watch.js';
+import { emit } from '@mdui/shared/helpers/event.js';
+import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { segmentedButtonStyle } from './segmented-button-style.js';
+import type { SegmentedButtonItem as SegmentedButtonItemOriginal } from './segmented-button-item.js';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 type SegmentedButtonItem = SegmentedButtonItemOriginal & {
   selected: boolean;

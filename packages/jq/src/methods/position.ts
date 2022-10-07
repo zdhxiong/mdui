@@ -1,9 +1,9 @@
-import type { JQ } from '../shared/core.js';
 import { $ } from '../$.js';
 import './css.js';
 import './eq.js';
 import './offset.js';
 import './offsetParent.js';
+import type { JQ } from '../shared/core.js';
 
 interface Coordinates {
   left: number;

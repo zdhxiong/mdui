@@ -1,5 +1,5 @@
-import type { HTMLString } from '../shared/helper.js';
 import './val.js';
+import type { HTMLString } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {

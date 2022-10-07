@@ -1,6 +1,6 @@
-import { jQuery, jq, assert, JQStatic, toTextContentArray } from '../utils.js';
-import '../../methods/replaceAll.js';
 import '../../methods/children.js';
+import '../../methods/replaceAll.js';
+import { jQuery, jq, assert, JQStatic, toTextContentArray } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .replaceAll`, () => {

@@ -1,9 +1,9 @@
-import type { TypeOrArray } from '../shared/helper.js';
 import { $ } from '../$.js';
 import { merge } from '../functions/merge.js';
 import { unique } from '../functions/unique.js';
 import { JQ } from '../shared/core.js';
 import './get.js';
+import type { TypeOrArray } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

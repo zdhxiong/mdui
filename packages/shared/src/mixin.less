@@ -1,29 +1,25 @@
 @root-font-size: 16;
 
-/**
- * px 值转 rem
- * 输入: .px(font-size: 24)
- * 输出: font-size: 1.5rem
- */
+// px 值转 rem
+//
+// 输入: .px(font-size: 24)
+// 输出: font-size: 1.5rem
 .px(@name, @px) {
   @{name}: unit((@px / @root-font-size), rem);
 }
 
-/**
- * 系统变量
- * 输入: .sys(font-size, typescale-label-large-size)
- * 输出: font-size: var(--mdui-typescale-label-large-size, 0.875rem)
- */
+// 系统变量
+//
+// 输入: .sys(font-size, typescale-label-large-size)
+// 输出: font-size: var(--mdui-typescale-label-large-size, 0.875rem)
 .sys(@name, @value) {
   @{name}: ~"var(--mdui-@{value})";
 }
 
-/**
- * 颜色值
- *
- * 输入: .color(on-primary, 30%, background-color)
- * 输出: background-color: rgb(var(--mdui-color-on-primary, 255, 255, 255))
- */
+// 颜色值
+//
+// 输入: .color(on-primary, 30%, background-color)
+// 输出: background-color: rgb(var(--mdui-color-on-primary, 255, 255, 255))
 .color(@rgb, @opacity: 1, @name: color) {
   @cssVariable: "--mdui-color-@{rgb}";
 
@@ -52,15 +48,13 @@
   .color(@rgb, @opacity, caret-color);
 }
 
-/**
- * 设置边框
- *
- * 输入: .border(1px, solid, primary, border)
- * 输出: border: 1px solid rgb(103,80,164)
- *
- * 输入: .border(1px, solid, primary, 30%, border-top)
- * 输出: border-top: 1px solid rgba(103,80,164,30%)
- */
+// 设置边框
+//
+// 输入: .border(1px, solid, primary, border)
+// 输出: border: 1px solid rgb(103,80,164)
+//
+// 输入: .border(1px, solid, primary, 30%, border-top)
+// 输出: border-top: 1px solid rgba(103,80,164,30%)
 .border(@width, @style, @rgb, @opacity: 1, @name: border) {
   @cssVariable: "--mdui-color-@{rgb}";
 
@@ -109,12 +103,10 @@
   .px(border-width, @width);
 }
 
-/**
- * 设置 border-radius
- *
- * 输入：.corner(medium)
- * 输出：border-radius: 0.75rem;
- */
+// 设置 border-radius
+//
+// 输入：.corner(medium)
+// 输出：border-radius: 0.75rem;
 .shapeCorner(@value, @placement: null) {
   @cssVariable: "--mdui-shape-corner-@{value}";
 
@@ -165,12 +157,10 @@
   }
 }
 
-/**
- * padding 或 margin 值中的 px 转 rem。传 1 - 4 个参数都行
- *
- * 输入: .padding(24)
- * 输出: padding: 1.5rem
- */
+// padding 或 margin 值中的 px 转 rem。传 1 - 4 个参数都行
+//
+// 输入: .padding(24)
+// 输出: padding: 1.5rem
 .padding(@top, @right: null, @bottom: null, @left: null, @name: padding) {
   & when (@right =null) and (@bottom =null) and (@left =null) {
     @{name}: unit((@top / @root-font-size), rem);
@@ -225,11 +215,9 @@
   .px(margin-left, @value);
 }
 
-/**
- * 设置 box-shadow，同时通过 :before 添加对应的背景色
- *
- * 输入: .elevation(2)
- */
+// 设置 box-shadow，同时通过 :before 添加对应的背景色
+//
+// 输入: .elevation(2)
 .elevation(@value) {
   .sys(box-shadow, ~"elevation-level@{value}");
 

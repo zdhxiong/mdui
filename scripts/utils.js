@@ -1,15 +1,15 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const less = require('less');
-const { ESLint } = require('eslint');
-const postcss = require('postcss');
-const CleanCSS = require('clean-css');
 const autoprefixer = require('autoprefixer');
+const CleanCSS = require('clean-css');
+const { ESLint } = require('eslint');
+const less = require('less');
 const NpmImportPlugin = require('less-plugin-npm-import');
 const {
   minifyHTMLLiterals,
   defaultMinifyOptions,
 } = require('minify-html-literals');
+const postcss = require('postcss');
 
 // 是否是开发模式
 const isDev = process.argv.slice(2)[0] === '--dev';
@@ -385,7 +385,7 @@ function buildWebTypes(metadataPath) {
         cssProperties ? { css: { properties: cssProperties } } : {},
         isComponentsPackage
           ? {
-              priority: 'high',
+              priority: 'highest',
               'doc-url': `https://www.mdui.org/docs/${component.tagName
                 .split('-')
                 .slice(1)

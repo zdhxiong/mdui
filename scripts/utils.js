@@ -240,7 +240,7 @@ function buildVSCodeData(metadataPath) {
             val = val.replace(enumCommentReg, '').trim();
           }
 
-          const isString = val.startsWith(`'`);
+          const isString = val.startsWith(`'`) && val.endsWith(`'`);
           const isNumber = Number(val).toString() === val;
 
           if (isString) {
@@ -323,6 +323,7 @@ function buildWebTypes(metadataPath) {
         'node-packages': [packageInfo.name],
       },
     },
+    'js-types-syntax': 'typescript',
     contributions: {
       html: {
         elements: [],
@@ -369,7 +370,9 @@ function buildWebTypes(metadataPath) {
 
     const attributes = transform(component.attributes);
     const properties = transform(
-      component.members?.filter((member) => member.privacy === 'public'),
+      component.members?.filter(
+        (member) => member.privacy === 'public' && member.kind === 'field',
+      ),
     );
     const events = transform(component.events);
     const cssProperties = transform(component.cssProperties);
@@ -381,7 +384,7 @@ function buildWebTypes(metadataPath) {
           description: component.summary,
           attributes,
         },
-        properties && events ? { js: { properties, events } } : {},
+        properties || events ? { js: { properties, events } } : {},
         cssProperties ? { css: { properties: cssProperties } } : {},
         isComponentsPackage
           ? {
@@ -395,6 +398,206 @@ function buildWebTypes(metadataPath) {
       ),
     );
   });
+
+  // 全局 CSS 类、CSS 变量（当前手动维护）
+  if (isComponentsPackage) {
+    webTypes.contributions.css = {
+      properties: [
+        // 断点
+        { name: '--mdui-breakpoint-handset', description: '手机的断点' },
+        { name: '--mdui-breakpoint-small-tablet', description: '' },
+        { name: '--mdui-breakpoint-small-tablet', description: '' },
+        // 亮色主题颜色
+        { name: '--mdui-color-primary-light', description: '' },
+        { name: '--mdui-color-primary-container-light', description: '' },
+        { name: '--mdui-color-secondary-light', description: '' },
+        { name: '--mdui-color-secondary-container-light', description: '' },
+        { name: '--mdui-color-tertiary-light', description: '' },
+        { name: '--mdui-color-tertiary-container-light', description: '' },
+        { name: '--mdui-color-surface-light', description: '' },
+        { name: '--mdui-color-surface-variant-light', description: '' },
+        { name: '--mdui-color-background-light', description: '' },
+        { name: '--mdui-color-error-light', description: '' },
+        { name: '--mdui-color-error-container-light', description: '' },
+        { name: '--mdui-color-on-primary-light', description: '' },
+        { name: '--mdui-color-on-primary-container-light', description: '' },
+        { name: '--mdui-color-on-secondary-light', description: '' },
+        {
+          name: '--mdui-color-on-secondary-container-light',
+          description: '',
+        },
+        { name: '--mdui-color-on-tertiary-light', description: '' },
+        { name: '--mdui-color-on-tertiary-container-light', description: '' },
+        { name: '--mdui-color-on-surface-light', description: '' },
+        { name: '--mdui-color-on-surface-variant-light', description: '' },
+        { name: '--mdui-color-on-error-light', description: '' },
+        { name: '--mdui-color-on-error-container-light', description: '' },
+        { name: '--mdui-color-on-background-light', description: '' },
+        { name: '--mdui-color-outline-light', description: '' },
+        { name: '--mdui-color-shadow-light', description: '' },
+        { name: '--mdui-color-inverse-surface-light', description: '' },
+        { name: '--mdui-color-inverse-on-surface-light', description: '' },
+        { name: '--mdui-color-inverse-primary-light', description: '' },
+        // 暗色主题颜色
+        { name: '--mdui-color-primary-dark', description: '' },
+        { name: '--mdui-color-primary-container-dark', description: '' },
+        { name: '--mdui-color-secondary-dark', description: '' },
+        { name: '--mdui-color-secondary-container-dark', description: '' },
+        { name: '--mdui-color-tertiary-dark', description: '' },
+        { name: '--mdui-color-tertiary-container-dark', description: '' },
+        { name: '--mdui-color-surface-dark', description: '' },
+        { name: '--mdui-color-surface-variant-dark', description: '' },
+        { name: '--mdui-color-background-dark', description: '' },
+        { name: '--mdui-color-error-dark', description: '' },
+        { name: '--mdui-color-error-container-dark', description: '' },
+        { name: '--mdui-color-on-primary-dark', description: '' },
+        { name: '--mdui-color-on-primary-container-dark', description: '' },
+        { name: '--mdui-color-on-secondary-dark', description: '' },
+        { name: '--mdui-color-on-secondary-container-dark', description: '' },
+        { name: '--mdui-color-on-tertiary-dark', description: '' },
+        { name: '--mdui-color-on-tertiary-container-dark', description: '' },
+        { name: '--mdui-color-on-surface-dark', description: '' },
+        { name: '--mdui-color-on-surface-variant-dark', description: '' },
+        { name: '--mdui-color-on-error-dark', description: '' },
+        { name: '--mdui-color-on-error-container-dark', description: '' },
+        { name: '--mdui-color-on-background-dark', description: '' },
+        { name: '--mdui-color-outline-dark', description: '' },
+        { name: '--mdui-color-shadow-dark', description: '' },
+        { name: '--mdui-color-inverse-surface-dark', description: '' },
+        { name: '--mdui-color-inverse-on-surface-dark', description: '' },
+        { name: '--mdui-color-inverse-primary-dark', description: '' },
+        // 高程
+        { name: '--mdui-elevation-level0', description: '' },
+        { name: '--mdui-elevation-level1', description: '' },
+        { name: '--mdui-elevation-level2', description: '' },
+        { name: '--mdui-elevation-level3', description: '' },
+        { name: '--mdui-elevation-level4', description: '' },
+        { name: '--mdui-elevation-level5', description: '' },
+        // 动画
+        { name: '--mdui-motion-easing-standard', description: '' },
+        { name: '--mdui-motion-easing-accelerate', description: '' },
+        { name: '--mdui-motion-easing-decelerate', description: '' },
+        { name: '--mdui-motion-easing-linear', description: '' },
+        // 圆角值
+        { name: '--mdui-shape-corner-none', description: '' },
+        { name: '--mdui-shape-corner-extra-small', description: '' },
+        { name: '--mdui-shape-corner-small', description: '' },
+        { name: '--mdui-shape-corner-medium', description: '' },
+        { name: '--mdui-shape-corner-large', description: '' },
+        { name: '--mdui-shape-corner-extra-large', description: '' },
+        { name: '--mdui-shape-corner-full', description: '' },
+        // 状态层
+        { name: '--mdui-state-hover-state-layer-opacity', description: '' },
+        { name: '--mdui-state-focus-state-layer-opacity', description: '' },
+        { name: '--mdui-state-pressed-state-layer-opacity', description: '' },
+        { name: '--mdui-state-dragged-state-layer-opacity', description: '' },
+        // 排版（display）
+        { name: '--mdui-typescale-display-large-weight', description: '' },
+        { name: '--mdui-typescale-display-medium-weight', description: '' },
+        { name: '--mdui-typescale-display-small-weight', description: '' },
+        {
+          name: '--mdui-typescale-display-large-line-height',
+          description: '',
+        },
+        {
+          name: '--mdui-typescale-display-medium-line-height',
+          description: '',
+        },
+        {
+          name: '--mdui-typescale-display-small-line-height',
+          description: '',
+        },
+        { name: '--mdui-typescale-display-large-size', description: '' },
+        { name: '--mdui-typescale-display-medium-size', description: '' },
+        { name: '--mdui-typescale-display-small-size', description: '' },
+        { name: '--mdui-typescale-display-large-tracking', description: '' },
+        { name: '--mdui-typescale-display-medium-tracking', description: '' },
+        { name: '--mdui-typescale-display-small-tracking', description: '' },
+        // 排版（headline）
+        { name: '--mdui-typescale-headline-large-weight', description: '' },
+        { name: '--mdui-typescale-headline-medium-weight', description: '' },
+        { name: '--mdui-typescale-headline-small-weight', description: '' },
+        {
+          name: '--mdui-typescale-headline-large-line-height',
+          description: '',
+        },
+        {
+          name: '--mdui-typescale-headline-medium-line-height',
+          description: '',
+        },
+        {
+          name: '--mdui-typescale-headline-small-line-height',
+          description: '',
+        },
+        { name: '--mdui-typescale-headline-large-size', description: '' },
+        { name: '--mdui-typescale-headline-medium-size', description: '' },
+        { name: '--mdui-typescale-headline-small-size', description: '' },
+        { name: '--mdui-typescale-headline-large-tracking', description: '' },
+        {
+          name: '--mdui-typescale-headline-medium-tracking',
+          description: '',
+        },
+        { name: '--mdui-typescale-headline-small-tracking', description: '' },
+        // 排版（title）
+        { name: '--mdui-typescale-title-large-weight', description: '' },
+        { name: '--mdui-typescale-title-medium-weight', description: '' },
+        { name: '--mdui-typescale-title-small-weight', description: '' },
+        { name: '--mdui-typescale-title-large-line-height', description: '' },
+        {
+          name: '--mdui-typescale-title-medium-line-height',
+          description: '',
+        },
+        { name: '--mdui-typescale-title-small-line-height', description: '' },
+        { name: '--mdui-typescale-title-large-size', description: '' },
+        { name: '--mdui-typescale-title-medium-size', description: '' },
+        { name: '--mdui-typescale-title-small-size', description: '' },
+        { name: '--mdui-typescale-title-large-tracking', description: '' },
+        { name: '--mdui-typescale-title-medium-tracking', description: '' },
+        { name: '--mdui-typescale-title-small-tracking', description: '' },
+        // 排版（label）
+        { name: '--mdui-typescale-label-large-weight', description: '' },
+        { name: '--mdui-typescale-label-medium-weight', description: '' },
+        { name: '--mdui-typescale-label-small-weight', description: '' },
+        { name: '--mdui-typescale-label-large-line-height', description: '' },
+        {
+          name: '--mdui-typescale-label-medium-line-height',
+          description: '',
+        },
+        { name: '--mdui-typescale-label-small-line-height', description: '' },
+        { name: '--mdui-typescale-label-large-size', description: '' },
+        { name: '--mdui-typescale-label-medium-size', description: '' },
+        { name: '--mdui-typescale-label-small-size', description: '' },
+        { name: '--mdui-typescale-label-large-tracking', description: '' },
+        { name: '--mdui-typescale-label-medium-tracking', description: '' },
+        { name: '--mdui-typescale-label-small-tracking', description: '' },
+        // 排版（body）
+        { name: '--mdui-typescale-body-large-weight', description: '' },
+        { name: '--mdui-typescale-body-medium-weight', description: '' },
+        { name: '--mdui-typescale-body-small-weight', description: '' },
+        { name: '--mdui-typescale-body-large-line-height', description: '' },
+        { name: '--mdui-typescale-body-medium-line-height', description: '' },
+        { name: '--mdui-typescale-body-small-line-height', description: '' },
+        { name: '--mdui-typescale-body-large-size', description: '' },
+        { name: '--mdui-typescale-body-medium-size', description: '' },
+        { name: '--mdui-typescale-body-small-size', description: '' },
+        { name: '--mdui-typescale-body-large-tracking', description: '' },
+        { name: '--mdui-typescale-body-medium-tracking', description: '' },
+        { name: '--mdui-typescale-body-small-tracking', description: '' },
+      ],
+      classes: [
+        {
+          name: 'mdui-theme-dark',
+          description:
+            '把该 class 添加到 `<body>` 元素上，整个页面将显示成暗色模式',
+        },
+        {
+          name: 'mdui-theme-auto',
+          description:
+            '把该 class 添加到 `<body>` 上，整个页面将根据操作系统的设置，自动切换亮色模式和暗色模式',
+        },
+      ],
+    };
+  }
 
   fs.writeFileSync(
     path.join(path.dirname(metadataPath), 'web-types.json'),

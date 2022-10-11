@@ -67,7 +67,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     /**
      * 通过 Tab 键在元素之间切换焦点时，tabIndex 属性指定了元素获取焦点的顺序
      */
-    @property({ type: Number })
+    @property({ type: Number, attribute: 'tabindex' })
     public override get tabIndex(): number {
       const $this = $(this);
 

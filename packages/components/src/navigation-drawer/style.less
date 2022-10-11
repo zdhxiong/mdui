@@ -20,6 +20,7 @@
 .overlay {
   position: fixed;
   inset: 0;
+  z-index: inherit;
   .backgroundColor(on-surface-variant, 0.4);
 
   :host([contained]) & {
@@ -34,7 +35,7 @@
   left: 0;
   border-radius: 0 var(--shape-corner) var(--shape-corner) 0;
   overflow: auto;
-  z-index: 900;
+  z-index: inherit;
   .width(360);
   .backgroundColor(surface);
   .elevation(0);
@@ -45,7 +46,6 @@
 
   :host([modal]) &,
   :host([handset]) & {
-    z-index: initial;
     .elevation(1);
   }
 

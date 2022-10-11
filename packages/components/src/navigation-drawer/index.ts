@@ -166,12 +166,21 @@ export class NavigationDrawer extends LitElement {
 
   @watch('open')
   protected async onOpenChange() {
+    // 打开
+    // 要区分是否首次渲染，首次渲染时不触发事件，不执行动画；非首次渲染，触发事件，执行动画
     if (this.open) {
-      const requestOpen = emit(this, 'open', {
-        cancelable: true,
-      });
-      if (requestOpen.defaultPrevented) {
-        return;
+      const hasUpdated = this.hasUpdated;
+      if (!hasUpdated) {
+        await this.updateComplete;
+      }
+
+      if (hasUpdated) {
+        const requestOpen = emit(this, 'open', {
+          cancelable: true,
+        });
+        if (requestOpen.defaultPrevented) {
+          return;
+        }
       }
 
       this.style.display = this.isModal ? 'block' : 'contents';
@@ -203,7 +212,7 @@ export class NavigationDrawer extends LitElement {
       await Promise.all([
         this.isModal
           ? animateTo(this.overlay, [{ opacity: 0 }, { opacity: 1 }], {
-              duration: DURATION_MEDIUM_IN,
+              duration: hasUpdated ? DURATION_MEDIUM_IN : 0,
               easing: EASING_LINEAR,
             })
           : animateTo(
@@ -220,7 +229,7 @@ export class NavigationDrawer extends LitElement {
                 },
               ],
               {
-                duration: DURATION_MEDIUM_IN,
+                duration: hasUpdated ? DURATION_MEDIUM_IN : 0,
                 easing: EASING_DECELERATION,
                 fill: 'forwards',
               },
@@ -239,13 +248,21 @@ export class NavigationDrawer extends LitElement {
             },
           ],
           {
-            duration: DURATION_MEDIUM_IN,
+            duration: hasUpdated ? DURATION_MEDIUM_IN : 0,
             easing: EASING_DECELERATION,
           },
         ),
       ]);
-      emit(this, 'opened');
-    } else if (this.hasUpdated) {
+
+      if (hasUpdated) {
+        emit(this, 'opened');
+      }
+
+      return;
+    }
+
+    // 关闭
+    if (!this.open && this.hasUpdated) {
       const requestClose = emit(this, 'close', {
         cancelable: true,
       });
@@ -320,6 +337,7 @@ export class NavigationDrawer extends LitElement {
       }
 
       emit(this, 'closed');
+      return;
     }
   }
 

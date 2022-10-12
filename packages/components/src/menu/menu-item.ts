@@ -88,7 +88,12 @@ export class MenuItem extends AnchorMixin(
   @state() protected submenuCloseDelay!: number;
 
   // 是否已选中该菜单项，由 mdui-menu 控制该参数
-  @property({ type: Boolean, reflect: true }) protected selected = false;
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
+  protected selected = false;
 
   // 是否可聚焦。由 mdui-menu 控制该参数
   @state() protected focusable = false;
@@ -131,7 +136,11 @@ export class MenuItem extends AnchorMixin(
   /**
    * 是否禁用该菜单项
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public disabled = false;
 
   /**
@@ -156,7 +165,12 @@ export class MenuItem extends AnchorMixin(
   /**
    * 是否打开子菜单
    */
-  @property({ type: Boolean, reflect: true, attribute: 'submenu-open' })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'submenu-open',
+  })
   public submenuOpen = false;
 
   override connectedCallback(): void {

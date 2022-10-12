@@ -70,7 +70,11 @@ export class NavigationRailItem extends AnchorMixin(
   /**
    * 是否为激活状态，有 `navigation-rail` 组件控制该参数
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   protected active = false;
 
   /**

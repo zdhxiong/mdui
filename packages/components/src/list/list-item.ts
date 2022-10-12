@@ -91,25 +91,41 @@ export class ListItem extends AnchorMixin(
   /**
    * 是否禁用该列表项，列表项将置灰，且其中的 checkbox、radio、switch 等都将禁用
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public disabled = false;
 
   /**
    * 是否激活该列表项
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public active = false;
 
   /**
    * 是否使列表项不可点击，但其中的 checkbox、radio、switch 等仍可进行交互
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public nonclickable = false;
 
   /**
    * 使用圆角形状的列表项
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public rounded = false;
 
   protected renderInner(): TemplateResult {

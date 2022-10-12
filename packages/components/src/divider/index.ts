@@ -11,19 +11,31 @@ export class Divider extends LitElement {
   /**
    * 是否显示垂直分割线
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public vertical = false;
 
   /**
    * 是否左侧缩进
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public inset = false;
 
   /**
    * 是否左右两侧缩进
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public middle = false;
 
   protected override render(): TemplateResult {

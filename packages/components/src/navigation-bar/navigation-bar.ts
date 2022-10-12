@@ -52,13 +52,22 @@ export class NavigationBar extends LitElement {
   /**
    * 是否隐藏
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public hide = false;
 
   /**
    * 在页面向上滚动时，是否隐藏组件
    */
-  @property({ type: Boolean, reflect: true, attribute: 'hide-on-scroll' })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'hide-on-scroll',
+  })
   public hideOnScroll = false;
 
   /**

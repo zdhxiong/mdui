@@ -63,13 +63,21 @@ export class Dropdown extends LitElement {
   /**
    * dropdown 是否打开
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public open = false;
 
   /**
    * 是否禁用 dropdown
    */
-  @property({ type: Boolean, reflect: false })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public disabled = false;
 
   /**
@@ -118,7 +126,12 @@ export class Dropdown extends LitElement {
   /**
    * 在点击 `<mdui-menu-item>` 元素后，是否仍保持 dropdown 为打开状态
    */
-  @property({ attribute: 'stay-open-on-click', type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'stay-open-on-click',
+  })
   public stayOpenOnClick = false;
 
   /**
@@ -136,7 +149,12 @@ export class Dropdown extends LitElement {
   /**
    * 是否在触发 dropdown 时的光标所在的位置打开 dropdown。通常用于在打开鼠标右键菜单时使用
    */
-  @property({ type: Boolean, reflect: true, attribute: 'open-on-pointer' })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'open-on-pointer',
+  })
   public openOnPointer = false;
 
   /**

@@ -61,31 +61,53 @@ export class NavigationDrawer extends LitElement {
   }
 
   // 断点是否为手机，为 `true` 时，强制使用遮罩层
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   private handset = false;
 
   /**
    * 是否打开抽屉导航
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public open = false;
 
   /**
    * 打开时，是否显示遮罩层
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public modal = false;
 
   /**
    * 在含遮罩层时，是否在按下 ESC 键时，关闭抽屉导航
    */
-  @property({ type: Boolean, attribute: 'close-on-esc' })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'close-on-esc',
+  })
   public closeOnEsc = false;
 
   /**
    * 是否在点击遮罩时，关闭抽屉导航
    */
-  @property({ type: Boolean, attribute: 'close-on-overlay-click' })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'close-on-overlay-click',
+  })
   public closeOnOverlayClick = false;
 
   /**
@@ -102,7 +124,11 @@ export class NavigationDrawer extends LitElement {
    * Note:
    * 设置了该属性时，必须手动在父元素上设置样式 `position: relative; box-sizing: border-box;`
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public contained = false;
 
   override connectedCallback() {

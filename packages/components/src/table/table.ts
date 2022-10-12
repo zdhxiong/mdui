@@ -8,7 +8,11 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 export class Table extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, tableStyle];
 
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public stripe = false;
 
   protected override render(): TemplateResult {

@@ -90,13 +90,21 @@ export class NavigationRail extends LitElement {
    * Note:
    * 设置了该属性时，必须手动在父元素上设置样式 `position: relative; box-sizing: border-box;`
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public contained = false;
 
   /**
    * 是否在导航栏和页面内容之间添加分割线
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public divider = false;
 
   @watch('activeKey')

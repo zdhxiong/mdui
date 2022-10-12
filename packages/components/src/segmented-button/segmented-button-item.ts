@@ -44,7 +44,12 @@ export class SegmentedButtonItem extends ButtonBase {
   /**
    * 是否选中该分段按钮项，由 mdui-segmented-button 组件控制该参数
    */
-  @property({ type: Boolean, reflect: true }) protected selected = false;
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
+  protected selected = false;
 
   /**
    * 左侧的 Material Icons 图标名

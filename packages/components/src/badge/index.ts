@@ -16,7 +16,11 @@ export class Badge extends LitElement {
   /**
    * 是否显示为小圆点
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public dot = false;
 
   protected override render(): TemplateResult | typeof nothing {

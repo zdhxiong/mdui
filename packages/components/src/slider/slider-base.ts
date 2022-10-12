@@ -59,19 +59,31 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
   /**
    * 是否添加刻度标记
    */
-  @property({ type: Boolean, reflect: true, attribute: 'tickmarks' })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public tickmarks = false;
 
   /**
    * 是否不显示文本提示
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public nolabel = false;
 
   /**
    * 是否禁用
    */
-  @property({ type: Boolean })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public disabled = false;
 
   /**
@@ -93,7 +105,11 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
    *
    * 该验证为根据是否通过 `setCustomValidity` 方法设置了值，来判断是否验证通过
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public invalid = false;
 
   /**

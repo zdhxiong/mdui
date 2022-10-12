@@ -43,7 +43,12 @@ export class Ripple extends LitElement {
   /**
    * 是否在点击时不产生涟漪动画
    */
-  @property({ type: Boolean, attribute: 'no-ripple' })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'no-ripple',
+  })
   public noRipple = false;
 
   public startPress(event?: Event): void {

@@ -64,7 +64,11 @@ export class TopAppBar extends LitElement {
   /**
    * 滚动条是否不位于顶部
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   protected scrolling = false;
 
   /**
@@ -84,25 +88,43 @@ export class TopAppBar extends LitElement {
   /**
    * 是否隐藏
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public hide = false;
 
   /**
    * 在页面向下滚动时，是否隐藏组件
    */
-  @property({ type: Boolean, reflect: true, attribute: 'hide-on-scroll' })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'hide-on-scroll',
+  })
   public hideOnScroll = false;
 
   /**
    * 是否缩小成 `variant="small"` 的样式，仅在 `variant="medium"` 或 `variant="large"` 时生效
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public shrink = false;
 
   /**
    * 是否在滚动到顶部时缩小成 `variant="small"` 的样式，仅在 `variant="medium"` 或 `variant="large"` 时生效
    */
-  @property({ type: Boolean, reflect: true, attribute: 'shrink-on-scroll' })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'shrink-on-scroll',
+  })
   public shrinkOnScroll = false;
 
   /**

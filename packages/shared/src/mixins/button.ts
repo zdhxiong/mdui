@@ -37,19 +37,31 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
     /**
      * 是否禁用
      */
-    @property({ type: Boolean, reflect: true })
+    @property({
+      type: Boolean,
+      reflect: true,
+      converter: (value: string | null): boolean => value !== 'false',
+    })
     public disabled = false;
 
     /**
      * 是否为加载中状态
      */
-    @property({ type: Boolean, reflect: true })
+    @property({
+      type: Boolean,
+      reflect: true,
+      converter: (value: string | null): boolean => value !== 'false',
+    })
     public loading = false;
 
     /**
      * 是否在页面加载时自动获得焦点
      */
-    @property({ type: Boolean, reflect: true })
+    @property({
+      type: Boolean,
+      reflect: true,
+      converter: (value: string | null): boolean => value !== 'false',
+    })
     public autofocus = false;
 
     /**
@@ -131,7 +143,12 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
      *
      * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
      */
-    @property({ type: Boolean, reflect: true, attribute: 'formnovalidate' })
+    @property({
+      type: Boolean,
+      reflect: true,
+      converter: (value: string | null): boolean => value !== 'false',
+      attribute: 'formnovalidate',
+    })
     public formNovalidate = false;
 
     /**

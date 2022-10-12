@@ -68,13 +68,21 @@ export class RadioGroup extends LitElement {
    *
    * 该验证为浏览器原生验证 API，基于 `required` 属性的验证结果
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public invalid = false;
 
   /**
    * 提交表单时，是否必须选中其中一个单选框
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public required = false;
 
   @watch('value', true)

@@ -25,13 +25,21 @@ export class List extends LitElement {
   /**
    * 是否使所有列表项都不可点击，但其中的 checkbox、radio、switch 等仍可进行交互
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public nonclickable = false;
 
   /**
    * 是否所有列表项都使用圆角形状
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public rounded = false;
 
   /**

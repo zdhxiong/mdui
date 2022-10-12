@@ -112,19 +112,32 @@ export class Dialog extends LitElement {
   /**
    * 是否打开对话框
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public open = false;
 
   /**
    * 是否为全屏对话框
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public fullscreen = false;
 
   /**
    * 是否在按下 ESC 键时，关闭对话框
    */
-  @property({ type: Boolean, reflect: true, attribute: 'close-on-esc' })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'close-on-esc',
+  })
   public closeOnEsc = false;
 
   /**
@@ -133,6 +146,7 @@ export class Dialog extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
     attribute: 'close-on-overlay-click',
   })
   public closeOnOverlayClick = false;
@@ -140,19 +154,32 @@ export class Dialog extends LitElement {
   /**
    * 是否垂直排列底部操作按钮
    */
-  @property({ type: Boolean, reflect: true, attribute: 'stacked-actions' })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'stacked-actions',
+  })
   public stackedActions = false;
 
   /**
    * 是否可拖拽移动位置
    */
-  /* @property({ type: Boolean, reflect: true })
+  /* @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public draggable = false; */
 
   /**
    * 是否可拖拽改变大小
    */
-  /* @property({ type: Boolean, reflect: true })
+  /* @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public resizable = false; */
 
   override connectedCallback() {

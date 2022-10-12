@@ -53,7 +53,11 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
   /**
    * 是否可点击。为 `true` 时，会添加鼠标悬浮效果、及点击涟漪效果
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public clickable = false;
 
   protected override render(): TemplateResult {

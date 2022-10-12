@@ -159,7 +159,12 @@ export class TextField extends FocusableMixin(LitElement) {
   /**
    * 是否仅在获得焦点时，显示底部帮助文本
    */
-  @property({ type: Boolean, attribute: 'helper-on-focus', reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'helper-on-focus',
+  })
   public helperOnFocus = false;
 
   /**
@@ -171,13 +176,22 @@ export class TextField extends FocusableMixin(LitElement) {
   /**
    * 是否可清空文本框
    */
-  @property({ type: Boolean })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public clearable = false;
 
   /**
    * 文本是否右对齐
    */
-  @property({ type: Boolean, attribute: 'end-aligned', reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'end-aligned',
+  })
   public endAligned = false;
 
   /**
@@ -215,19 +229,31 @@ export class TextField extends FocusableMixin(LitElement) {
   /**
    * 是否为只读
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public readonly = false;
 
   /**
    * 是否为禁用状态
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public disabled = false;
 
   /**
    * 提交表单时，是否必须填写该字段
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public required = false;
 
   /**
@@ -235,7 +261,11 @@ export class TextField extends FocusableMixin(LitElement) {
    *
    * 该验证为浏览器原生验证 API，基于 `type`、`required`、`minlength`、`maxlength` 及 `pattern` 等属性的验证结果
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public invalid = false;
 
   /**
@@ -247,7 +277,11 @@ export class TextField extends FocusableMixin(LitElement) {
   /**
    * 是否根据输入的内容自动调整文本框高度
    */
-  @property({ type: Boolean })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public autosize = false;
 
   /**
@@ -277,7 +311,11 @@ export class TextField extends FocusableMixin(LitElement) {
   /**
    * 是否显示字数统计。必须指定了 maxlength 时，该参数才有效
    */
-  @property({ type: Boolean })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public counter = false;
 
   /**
@@ -307,7 +345,12 @@ export class TextField extends FocusableMixin(LitElement) {
   /**
    * type 为 password 时，设置该属性会添加一个切换按钮，点击时可在密文和明文之间切换
    */
-  @property({ type: Boolean, attribute: 'toggle-password' })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'toggle-password',
+  })
   public togglePassword = false;
 
   /**

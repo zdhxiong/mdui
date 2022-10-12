@@ -55,25 +55,41 @@ export class Chip extends ButtonBase {
   /**
    * 是否包含阴影
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public elevated = false;
 
   /**
    * 是否可选中
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public selectable = false;
 
   /**
    * 是否为选中状态
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public selected = false;
 
   /**
    * 是否可删除。为 `true` 时，在右侧会显示删除图标
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public deletable = false;
 
   /**

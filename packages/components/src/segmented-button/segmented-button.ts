@@ -79,7 +79,11 @@ export class SegmentedButton extends LitElement {
   /**
    * 是否填满父元素宽度
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public fullwidth = false;
 
   /**
@@ -96,7 +100,11 @@ export class SegmentedButton extends LitElement {
   /**
    * 提交表单时，是否必须选中
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public required = false;
 
   /**

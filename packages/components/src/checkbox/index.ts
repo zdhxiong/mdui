@@ -62,25 +62,41 @@ export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
   /**
    * 是否为禁用状态
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public disabled = false;
 
   /**
    * 是否为选中状态
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public checked = false;
 
   /**
    * 是否为不确定状态
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public indeterminate = false;
 
   /**
    * 提交表单时，是否必须选中该复选框
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public required = false;
 
   /**

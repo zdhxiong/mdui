@@ -56,7 +56,11 @@ export class Select extends FocusableMixin(LitElement) {
   /**
    * 是否支持多选
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public multiple = false;
 
   /**
@@ -100,13 +104,22 @@ export class Select extends FocusableMixin(LitElement) {
   /**
    * 是否可清空下拉框
    */
-  @property({ type: Boolean })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public clearable = false;
 
   /**
    * 文本是否右对齐
    */
-  @property({ type: Boolean, attribute: 'end-aligned', reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'end-aligned',
+  })
   public endAligned = false;
 
   /**
@@ -144,19 +157,31 @@ export class Select extends FocusableMixin(LitElement) {
   /**
    * 是否为只读
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public readonly = false;
 
   /**
    * 是否为禁用状态
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public disabled = false;
 
   /**
    * 提交表单时，是否必须填写该字段
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public required = false;
 
   /**
@@ -164,7 +189,11 @@ export class Select extends FocusableMixin(LitElement) {
    *
    * 该验证为浏览器原生验证 API，基于 `required` 属性的验证结果
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public invalid = false;
 
   protected override render(): TemplateResult {

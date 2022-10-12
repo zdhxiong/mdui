@@ -74,13 +74,21 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   /**
    * 是否为禁用状态
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public disabled = false;
 
   /**
    * 是否为选中状态
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public checked = false;
 
   /**
@@ -100,7 +108,11 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   /**
    * 提交表单时，是否必须选中该开关
    */
-  @property({ type: Boolean, reflect: true })
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
   public required = false;
 
   /**

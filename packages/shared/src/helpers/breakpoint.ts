@@ -2,6 +2,7 @@
  * 断点相关的 js 函数
  * 这些函数直接导出到 mdui 全局对象下，供应用使用。框架内部使用时，为避免循环依赖，从 @mdui/shared 包内导入
  */
+import { getDocument, getWindow } from 'ssr-window';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/innerWidth.js';
@@ -23,6 +24,9 @@ type Breakpoint = 'handset' | 'small-tablet' | 'large-tablet' | 'desktop';
  * * `desktop`：桌面电脑
  */
 export const getBreakpoint = (width?: number | HTMLElement): Breakpoint => {
+  const window = getWindow();
+  const document = getDocument();
+
   // 根元素参考值
   const baseFontSize = parseFloat($('html').css('font-size'));
 

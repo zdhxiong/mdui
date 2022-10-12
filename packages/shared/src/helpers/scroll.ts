@@ -1,3 +1,4 @@
+import { getDocument } from 'ssr-window';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/addClass.js';
 import '@mdui/jq/methods/removeClass.js';
@@ -10,9 +11,10 @@ const CSS_CLASS = 'mdui-lock-screen';
  * @param element
  * @param target 锁定该元素的滚动状态，默认为 body
  */
-export const lockScreen = (element: HTMLElement, target = document.body) => {
+export const lockScreen = (element: HTMLElement, target?: HTMLElement) => {
+  const document = getDocument();
   locks.add(element);
-  $(target).addClass(CSS_CLASS);
+  $(target || document.body).addClass(CSS_CLASS);
 };
 
 /**
@@ -20,10 +22,11 @@ export const lockScreen = (element: HTMLElement, target = document.body) => {
  * @param element
  * @param target 锁定该元素的滚动状态，默认为 body
  */
-export const unlockScreen = (element: HTMLElement, target = document.body) => {
+export const unlockScreen = (element: HTMLElement, target?: HTMLElement) => {
+  const document = getDocument();
   locks.delete(element);
 
   if (locks.size === 0) {
-    $(target).removeClass(CSS_CLASS);
+    $(target || document.body).removeClass(CSS_CLASS);
   }
 };

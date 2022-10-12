@@ -1,3 +1,4 @@
+import { getWindow } from 'ssr-window';
 import { extend } from '../functions/extend.js';
 import { eachObject, isUndefined } from './helper.js';
 import type { PlainObject } from './helper.js';
@@ -610,6 +611,7 @@ export const appendQuery = (url: string, query: string): string => {
  * @param url
  */
 export const isCrossDomain = (url: string): boolean => {
+  const window = getWindow();
   return (
     /^([\w-]+:)?\/\/([^/]+)/.test(url) && RegExp.$2 !== window.location.host
   );

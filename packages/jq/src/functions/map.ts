@@ -1,3 +1,4 @@
+import { getWindow } from 'ssr-window';
 import { each } from './each.js';
 import type { PlainObject } from '../shared/helper.js';
 
@@ -89,6 +90,7 @@ export function map<T extends PlainObject, K extends keyof T, TReturn>(
 
 // eslint-disable-next-line
 export function map(elements: any, callback: Function): unknown {
+  const window = getWindow();
   let value;
   const ret: never[] = [];
 

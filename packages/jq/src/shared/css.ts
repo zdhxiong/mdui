@@ -1,3 +1,4 @@
+import { getWindow } from 'ssr-window';
 import { toKebabCase } from './helper.js';
 
 /**
@@ -9,6 +10,7 @@ export const getComputedStyleValue = (
   element: HTMLElement,
   name: string,
 ): string => {
+  const window = getWindow();
   return window.getComputedStyle(element).getPropertyValue(toKebabCase(name));
 };
 

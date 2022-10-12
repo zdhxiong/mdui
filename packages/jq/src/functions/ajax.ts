@@ -1,3 +1,4 @@
+import { getDocument, getWindow } from 'ssr-window';
 import { $ } from '../$.js';
 import '../methods/trigger.js';
 import {
@@ -49,6 +50,9 @@ ajax({
  */
 // eslint-disable-next-line
 export const ajax = <T = any>(options: Options): Promise<T> => {
+  const document = getDocument();
+  const window = getWindow();
+
   // 是否已取消请求
   let isCanceled = false;
 

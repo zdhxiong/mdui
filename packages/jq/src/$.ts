@@ -1,3 +1,4 @@
+import { getDocument } from 'ssr-window';
 import { JQ } from './shared/core.js';
 import { getChildNodesArray } from './shared/dom.js';
 import {
@@ -11,6 +12,8 @@ import type { JQStatic } from './shared/core.js';
 
 const get$ = (): JQStatic => {
   const $ = function (selector?: unknown) {
+    const document = getDocument();
+
     if (!selector) {
       return new JQ();
     }

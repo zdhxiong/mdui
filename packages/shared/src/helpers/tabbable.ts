@@ -1,6 +1,9 @@
+import { getWindow } from 'ssr-window';
+
 /** https://github.com/shoelace-style/shoelace/blob/next/src/internal/tabbable.ts */
 /** Determines if the specified element is tabbable using heuristics inspired by https://github.com/focus-trap/tabbable */
 function isTabbable(el: HTMLElement) {
+  const window = getWindow();
   const tag = el.tagName.toLowerCase();
 
   // Elements with a -1 tab index are not tabbable

@@ -1,3 +1,4 @@
+import { getDocument } from 'ssr-window';
 import { $ } from '../$.js';
 import './css.js';
 import './map.js';
@@ -23,6 +24,8 @@ $('.box').offsetParent()
  * 返回最近的用于定位的父元素
  */
 $.fn.offsetParent = function (this: JQ): JQ {
+  const document = getDocument();
+
   return this.map(function () {
     let offsetParent = this.offsetParent as HTMLElement;
 

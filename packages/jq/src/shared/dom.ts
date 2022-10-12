@@ -1,4 +1,7 @@
+import { getDocument } from 'ssr-window';
+
 export const createElement = (tagName: string): HTMLElement => {
+  const document = getDocument();
   return document.createElement(tagName);
 };
 

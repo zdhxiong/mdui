@@ -1,3 +1,4 @@
+import { getDocument } from 'ssr-window';
 import { $ } from '../$.js';
 import {
   isBorderBox,
@@ -125,6 +126,7 @@ const get = (
   funcIndex: number,
   includeMargin: boolean,
 ): number => {
+  const document = getDocument();
   const clientProp = `client${name}` as 'clientWidth' | 'clientHeight';
   const scrollProp = `scroll${name}` as 'scrollWidth' | 'scrollHeight';
   const offsetProp = `offset${name}` as 'offsetWidth' | 'offsetHeight';

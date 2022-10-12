@@ -7,6 +7,7 @@ import {
   hexFromArgb,
   Scheme,
 } from '@importantimport/material-color-utilities';
+import { getDocument } from 'ssr-window';
 import { toKebabCase } from '@mdui/jq/shared/helper.js';
 
 export interface CustomColor {
@@ -58,6 +59,7 @@ export const setThemeFromSource = (
     customColors?: CustomColor[];
   },
 ): void => {
+  const document = getDocument();
   const target = options?.target || document.body;
   const customColors = (options?.customColors || []).map((color) => {
     const custom = customColor(source, {

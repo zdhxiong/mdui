@@ -1,3 +1,4 @@
+import { getDocument } from 'ssr-window';
 import { $ } from '../$.js';
 import { getStyle } from '../shared/css.js';
 import { createElement, appendChild, removeChild } from '../shared/dom.js';
@@ -27,6 +28,7 @@ const elementDisplay: {
  * @param nodeName
  */
 const defaultDisplay = (nodeName: string): string => {
+  const document = getDocument();
   let element: HTMLElement;
   let display: string;
 

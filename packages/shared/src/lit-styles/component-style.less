@@ -1,3 +1,5 @@
+@import "../mixin.less";
+
 :host {
   box-sizing: border-box;
 }
@@ -19,4 +21,16 @@
 
 [hidden] {
   display: none;
+}
+
+// 滚动条样式
+*::-webkit-scrollbar {
+  .px(width, 8);
+  .px(height, 8);
+
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  .backgroundColor(surface-variant);
 }

@@ -595,6 +595,10 @@ function buildWebTypes(metadataPath) {
           description:
             '把该 class 添加到 `<body>` 上，整个页面将根据操作系统的设置，自动切换亮色模式和暗色模式',
         },
+        {
+          name: 'mdui-prose',
+          description: '文章排版样式',
+        },
       ],
     };
   }

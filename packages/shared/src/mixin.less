@@ -129,6 +129,22 @@
   & when (@placement =end) {
     border-radius: ~"0 var(@{cssVariable}) var(@{cssVariable}) 0";
   }
+
+  & when (@placement =top-start) {
+    border-top-left-radius: ~"var(@{cssVariable})";
+  }
+
+  & when (@placement = top-end) {
+    border-top-right-radius: ~"var(@{cssVariable})";
+  }
+
+  & when (@placement = bottom-start) {
+    border-bottom-left-radius: ~"var(@{cssVariable})";
+  }
+
+  & when (@placement = bottom-end) {
+    border-bottom-right-radius: ~"var(@{cssVariable})";
+  }
 }
 
 .borderRadius(@value, @placement: null) {

@@ -21,7 +21,7 @@ import '@mdui/icons/cancel--outlined.js';
 import '@mdui/icons/error.js';
 import '@mdui/icons/visibility-off.js';
 import '@mdui/icons/visibility.js';
-import '../icon-button.js';
+import '../button-icon.js';
 import '../icon.js';
 import { style } from './style.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
@@ -726,7 +726,7 @@ export class TextField extends FocusableMixin(LitElement) {
       hasClearButton,
       () =>
         html`<span class="suffix-icon has-suffix-icon">
-          <mdui-icon-button
+          <mdui-button-icon
             part="clear-button"
             class="clear"
             tabindex="-1"
@@ -735,7 +735,7 @@ export class TextField extends FocusableMixin(LitElement) {
             <slot name="clear-icon">
               <mdui-icon-cancel--outlined></mdui-icon-cancel--outlined>
             </slot>
-          </mdui-icon-button>
+          </mdui-button-icon>
         </span>`,
     );
   }
@@ -745,7 +745,7 @@ export class TextField extends FocusableMixin(LitElement) {
       this.togglePassword && !this.disabled,
       () =>
         html`<span class="suffix-icon has-suffix-icon">
-          <mdui-icon-button
+          <mdui-button-icon
             part="toggle-password-button"
             class="toggle-password"
             tabindex="-1"
@@ -758,7 +758,7 @@ export class TextField extends FocusableMixin(LitElement) {
               : html`<slot name="hide-password-icon">
                   <mdui-icon-visibility> </mdui-icon-visibility>
                 </slot>`}
-          </mdui-icon-button>
+          </mdui-button-icon>
         </span>`,
     );
   }

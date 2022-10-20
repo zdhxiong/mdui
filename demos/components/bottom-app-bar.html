@@ -31,7 +31,7 @@
   <script type="module">
     import '../../packages/mdui/mdui.css';
     import '../../packages/components/bottom-app-bar.js';
-    import '../../packages/components/icon-button.js';
+    import '../../packages/components/button-icon.js';
     import '../../packages/components/fab.js';
     import '../../packages/components/spacer.js';
     import '../../packages/components/button.js';
@@ -50,10 +50,10 @@
     <section>
       <h2>normal</h2>
       <mdui-bottom-app-bar style="position: relative">
-        <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
-        <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
-        <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
-        <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+        <mdui-button-icon icon="check_box--outlined"></mdui-button-icon>
+        <mdui-button-icon icon="edit--outlined"></mdui-button-icon>
+        <mdui-button-icon icon="mic_none--outlined"></mdui-button-icon>
+        <mdui-button-icon icon="image--outlined"></mdui-button-icon>
         <mdui-spacer></mdui-spacer>
         <mdui-fab icon="add"></mdui-fab>
       </mdui-bottom-app-bar>
@@ -62,10 +62,10 @@
     <section>
       <h2>no fab</h2>
       <mdui-bottom-app-bar style="position: relative">
-        <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
-        <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
-        <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
-        <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+        <mdui-button-icon icon="check_box--outlined"></mdui-button-icon>
+        <mdui-button-icon icon="edit--outlined"></mdui-button-icon>
+        <mdui-button-icon icon="mic_none--outlined"></mdui-button-icon>
+        <mdui-button-icon icon="image--outlined"></mdui-button-icon>
       </mdui-bottom-app-bar>
     </section>
 
@@ -84,16 +84,16 @@
       <h2>with overflow menu</h2>
       <mdui-bottom-app-bar style="position: relative">
         <mdui-dropdown>
-          <mdui-icon-button icon="menu" slot="trigger"></mdui-icon-button>
+          <mdui-button-icon icon="menu" slot="trigger"></mdui-button-icon>
           <mdui-menu>
             <mdui-menu-item>Settings</mdui-menu-item>
             <mdui-menu-item>Send Feedback</mdui-menu-item>
             <mdui-menu-item>Help</mdui-menu-item>
           </mdui-menu>
         </mdui-dropdown>
-        <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
-        <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
-        <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+        <mdui-button-icon icon="edit--outlined"></mdui-button-icon>
+        <mdui-button-icon icon="mic_none--outlined"></mdui-button-icon>
+        <mdui-button-icon icon="image--outlined"></mdui-button-icon>
         <mdui-spacer></mdui-spacer>
         <mdui-fab icon="add"></mdui-fab>
       </mdui-bottom-app-bar>
@@ -103,10 +103,10 @@
       <h2>in container</h2>
       <div class="container" style="position: relative; overflow: hidden">
         <mdui-bottom-app-bar scroll-target="#in-container">
-          <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
-          <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
-          <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
-          <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+          <mdui-button-icon icon="check_box--outlined"></mdui-button-icon>
+          <mdui-button-icon icon="edit--outlined"></mdui-button-icon>
+          <mdui-button-icon icon="mic_none--outlined"></mdui-button-icon>
+          <mdui-button-icon icon="image--outlined"></mdui-button-icon>
           <mdui-spacer></mdui-spacer>
           <mdui-fab icon="add"></mdui-fab>
         </mdui-bottom-app-bar>
@@ -120,10 +120,10 @@
       <h2>hide-on-scroll</h2>
       <div class="container" style="position: relative; overflow: hidden">
         <mdui-bottom-app-bar hide-on-scroll scroll-target="#hide-on-scroll">
-          <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
-          <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
-          <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
-          <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+          <mdui-button-icon icon="check_box--outlined"></mdui-button-icon>
+          <mdui-button-icon icon="edit--outlined"></mdui-button-icon>
+          <mdui-button-icon icon="mic_none--outlined"></mdui-button-icon>
+          <mdui-button-icon icon="image--outlined"></mdui-button-icon>
           <mdui-spacer></mdui-spacer>
           <mdui-fab icon="add"></mdui-fab>
         </mdui-bottom-app-bar>
@@ -137,10 +137,10 @@
       <h2>hide-on-scroll & fab-detach</h2>
       <div class="container" style="position: relative; overflow: hidden">
         <mdui-bottom-app-bar hide-on-scroll fab-detach scroll-target="#hide-on-scroll-fab-detach">
-          <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
-          <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
-          <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
-          <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+          <mdui-button-icon icon="check_box--outlined"></mdui-button-icon>
+          <mdui-button-icon icon="edit--outlined"></mdui-button-icon>
+          <mdui-button-icon icon="mic_none--outlined"></mdui-button-icon>
+          <mdui-button-icon icon="image--outlined"></mdui-button-icon>
           <mdui-spacer></mdui-spacer>
           <mdui-fab icon="add"></mdui-fab>
         </mdui-bottom-app-bar>
@@ -154,10 +154,10 @@
       <h2>scroll-threshold</h2>
       <div class="container" style="position: relative; overflow: hidden">
         <mdui-bottom-app-bar hide-on-scroll fab-detach scroll-threshold="80" scroll-target="#scroll-threshold">
-          <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
-          <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
-          <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
-          <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+          <mdui-button-icon icon="check_box--outlined"></mdui-button-icon>
+          <mdui-button-icon icon="edit--outlined"></mdui-button-icon>
+          <mdui-button-icon icon="mic_none--outlined"></mdui-button-icon>
+          <mdui-button-icon icon="image--outlined"></mdui-button-icon>
           <mdui-spacer></mdui-spacer>
           <mdui-fab icon="add"></mdui-fab>
         </mdui-bottom-app-bar>
@@ -169,10 +169,10 @@
 
     <section>
       <mdui-bottom-app-bar hide-on-scroll fab-detach>
-        <mdui-icon-button icon="check_box--outlined"></mdui-icon-button>
-        <mdui-icon-button icon="edit--outlined"></mdui-icon-button>
-        <mdui-icon-button icon="mic_none--outlined"></mdui-icon-button>
-        <mdui-icon-button icon="image--outlined"></mdui-icon-button>
+        <mdui-button-icon icon="check_box--outlined"></mdui-button-icon>
+        <mdui-button-icon icon="edit--outlined"></mdui-button-icon>
+        <mdui-button-icon icon="mic_none--outlined"></mdui-button-icon>
+        <mdui-button-icon icon="image--outlined"></mdui-button-icon>
         <mdui-spacer></mdui-spacer>
         <mdui-fab icon="add"></mdui-fab>
       </mdui-bottom-app-bar>

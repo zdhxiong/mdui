@@ -27,8 +27,8 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
  *
  * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
-@customElement('mdui-icon-button')
-export class IconButton extends ButtonBase {
+@customElement('mdui-button-icon')
+export class ButtonIcon extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   private readonly hasSlotController = new HasSlotController(
@@ -151,6 +151,6 @@ export class IconButton extends ButtonBase {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mdui-icon-button': IconButton;
+    'mdui-button-icon': ButtonIcon;
   }
 }

@@ -26,7 +26,7 @@
   </style>
   <script type="module">
     import '../../packages/mdui/mdui.css';
-    import '../../packages/components/icon-button.js';
+    import '../../packages/components/button-icon.js';
     import '../../packages/components/fab.js';
     import '../../packages/components/navigation-rail.js';
     import '../../packages/components/navigation-rail-item.js';
@@ -61,7 +61,7 @@
     <section>
       <h2>normal</h2>
       <mdui-navigation-rail>
-        <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+        <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
         <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
         <mdui-navigation-rail-item icon="folder_open--outlined">All Files</mdui-navigation-rail-item>
         <mdui-navigation-rail-item icon="watch_later--outlined">Recent</mdui-navigation-rail-item>
@@ -74,7 +74,7 @@
       <h2>contained</h2>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained>
-          <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+          <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
           <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
           <mdui-navigation-rail-item icon="folder_open--outlined">All Files</mdui-navigation-rail-item>
           <mdui-navigation-rail-item icon="watch_later--outlined">Recent</mdui-navigation-rail-item>
@@ -91,7 +91,7 @@
       <h2>no label</h2>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained>
-          <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+          <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
           <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
           <mdui-navigation-rail-item icon="folder_open--outlined"></mdui-navigation-rail-item>
           <mdui-navigation-rail-item icon="watch_later--outlined"></mdui-navigation-rail-item>
@@ -108,7 +108,7 @@
       <h2>value</h2>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained value="recent">
-          <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+          <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
           <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
           <mdui-navigation-rail-item icon="folder_open--outlined" value="files">All Files</mdui-navigation-rail-item>
           <mdui-navigation-rail-item icon="watch_later--outlined" value="recent">Recent</mdui-navigation-rail-item>
@@ -129,7 +129,7 @@
       </mdui-segmented-button>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained value="recent" placement="right">
-          <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+          <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
           <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
           <mdui-navigation-rail-item icon="folder_open--outlined" value="files">All Files</mdui-navigation-rail-item>
           <mdui-navigation-rail-item icon="watch_later--outlined" value="recent">Recent</mdui-navigation-rail-item>
@@ -151,7 +151,7 @@
       </mdui-segmented-button>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained value="recent" alignment="center">
-          <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+          <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
           <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
           <mdui-navigation-rail-item icon="folder_open--outlined" value="files">All Files</mdui-navigation-rail-item>
           <mdui-navigation-rail-item icon="watch_later--outlined" value="recent">Recent</mdui-navigation-rail-item>
@@ -178,7 +178,7 @@
           <mdui-navigation-rail-item icon="image--outlined" value="images">Images</mdui-navigation-rail-item>
           <mdui-navigation-rail-item icon="library_music--outlined" value="library">Library</mdui-navigation-rail-item>
           <mdui-fab lowered icon="edit--outlined" slot="bottom"></mdui-fab>
-          <mdui-icon-button icon="menu" slot="bottom"></mdui-icon-button>
+          <mdui-button-icon icon="menu" slot="bottom"></mdui-button-icon>
         </mdui-navigation-rail>
         <div style="max-height: 100%; overflow: auto; box-sizing: border-box">
           <div class="fill-placeholder"></div>
@@ -195,14 +195,14 @@
       </mdui-segmented-button>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained value="recent" alignment="center">
-          <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+          <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
           <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
           <mdui-navigation-rail-item icon="folder_open--outlined" value="files">All Files</mdui-navigation-rail-item>
           <mdui-navigation-rail-item icon="watch_later--outlined" value="recent">Recent</mdui-navigation-rail-item>
           <mdui-navigation-rail-item icon="image--outlined" value="images">Images</mdui-navigation-rail-item>
           <mdui-navigation-rail-item icon="library_music--outlined" value="library">Library</mdui-navigation-rail-item>
           <mdui-fab lowered icon="edit--outlined" slot="bottom"></mdui-fab>
-          <mdui-icon-button icon="menu" slot="bottom"></mdui-icon-button>
+          <mdui-button-icon icon="menu" slot="bottom"></mdui-button-icon>
         </mdui-navigation-rail>
         <div style="max-height: 100%; overflow: auto; box-sizing: border-box">
           <div class="fill-placeholder"></div>
@@ -234,7 +234,7 @@
       <h2>divider</h2>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained divider value="recent">
-          <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+          <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
           <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
           <mdui-navigation-rail-item icon="folder_open--outlined" value="files">All Files</mdui-navigation-rail-item>
           <mdui-navigation-rail-item icon="watch_later--outlined" value="recent">Recent</mdui-navigation-rail-item>
@@ -251,7 +251,7 @@
       <h2>badge</h2>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained value="recent">
-          <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+          <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
           <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
           <mdui-navigation-rail-item icon="folder_open--outlined" value="files">All Files
             <mdui-badge dot slot="badge"></mdui-badge>
@@ -274,7 +274,7 @@
       <h2>Active Icon</h2>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained value="recent">
-          <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+          <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
           <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
           <mdui-navigation-rail-item icon="folder_open--outlined" active-icon="folder_open--filled" value="files">All Files</mdui-navigation-rail-item>
           <mdui-navigation-rail-item icon="watch_later--outlined" active-icon="watch_later--filled" value="recent">Recent</mdui-navigation-rail-item>
@@ -291,7 +291,7 @@
       <h2>Active Icon slot</h2>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained value="recent">
-          <mdui-icon-button icon="menu" slot="top"></mdui-icon-button>
+          <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
           <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
           <mdui-navigation-rail-item active-icon="folder--filled" value="files">All Files
             <mdui-icon-folder-open--outlined slot="icon"></mdui-icon-folder-open--outlined>

@@ -22,7 +22,7 @@
     import '../../packages/components/button.js';
     import '../../packages/components/top-app-bar.js';
     import '../../packages/components/top-app-bar-title.js';
-    import '../../packages/components/icon-button.js';
+    import '../../packages/components/button-icon.js';
     import '../../packages/icons/refresh.js';
     import { $ } from '../../packages/jq/$.js';
     import '../../packages/jq/methods/on.js';
@@ -172,7 +172,7 @@
       >
         <!-- dialog 中的 mdui-top-app-bar 会自动设置 scroll-target 属性 -->
         <mdui-top-app-bar slot="header" variant="small">
-          <mdui-icon-button icon="close" class="close"></mdui-icon-button>
+          <mdui-button-icon icon="close" class="close"></mdui-button-icon>
           <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
           <mdui-button variant="text">Save</mdui-button>
         </mdui-top-app-bar>
@@ -192,7 +192,7 @@
         secondary="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
       >
         <mdui-top-app-bar slot="header" variant="small" hide-on-scroll>
-          <mdui-icon-button icon="close" class="close"></mdui-icon-button>
+          <mdui-button-icon icon="close" class="close"></mdui-button-icon>
           <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
           <mdui-button variant="text">Save</mdui-button>
         </mdui-top-app-bar>
@@ -210,7 +210,7 @@
         secondary="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
       >
         <mdui-top-app-bar slot="header" variant="medium" shrink-on-scroll>
-          <mdui-icon-button icon="close" class="close"></mdui-icon-button>
+          <mdui-button-icon icon="close" class="close"></mdui-button-icon>
           <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
           <mdui-button variant="text">Save</mdui-button>
         </mdui-top-app-bar>
@@ -253,7 +253,7 @@
         fullscreen
       >
         <mdui-top-app-bar slot="header">
-          <mdui-icon-button icon="close" class="close"></mdui-icon-button>
+          <mdui-button-icon icon="close" class="close"></mdui-button-icon>
           <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
           <mdui-button variant="text">Save</mdui-button>
         </mdui-top-app-bar>

@@ -14,17 +14,15 @@ export class Badge extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * 是否显示为小圆点
+   * 徽标形状。可选值为：
+   * * `small`
+   * * `large`
    */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
-  })
-  public dot = false;
+  @property({ reflect: true })
+  public variant: 'small' | 'large' = 'large';
 
   protected override render(): TemplateResult | typeof nothing {
-    if (this.dot) {
+    if (this.variant === 'small') {
       return nothing;
     }
 

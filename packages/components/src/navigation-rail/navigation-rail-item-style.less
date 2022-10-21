@@ -5,7 +5,6 @@
 
   position: relative;
   z-index: 0;
-  overflow: hidden;
   width: 100%;
   .stateLayerColor(on-surface-variant);
 }
@@ -54,7 +53,19 @@ mdui-ripple {
 
 ::slotted([slot="badge"]) {
   position: absolute;
-  .translate(12, -8);
+  transform: translate(50%, -50%); // 距离图标左侧和底部 12dp
+
+  :host([placement="right"]) & {
+    transform: translate(-50%, -50%); // 距离图标右侧和底部 12dp
+  }
+}
+
+::slotted([slot="badge"][variant="small"]) {
+  .translate(9, -9); // 位于图标右上角
+
+  :host([placement="right"]) & {
+    .translate(-9, -9); // 位于图标左上角
+  }
 }
 
 .icon,

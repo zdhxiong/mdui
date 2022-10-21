@@ -16,6 +16,7 @@ import type { CSSResultGroup } from 'lit';
 
 type NavigationRailItem = NavigationRailItemOriginal & {
   active: boolean;
+  placement: 'left' | 'right';
   readonly key: number;
 };
 
@@ -130,6 +131,10 @@ export class NavigationRail extends LitElement {
 
   @watch('placement')
   private onPlacementChange() {
+    this.items.forEach((item) => {
+      item.placement = this.placement;
+    });
+
     const isPlacementRight = this.placement === 'right';
     const width = $(this).innerWidth();
 
@@ -158,6 +163,12 @@ export class NavigationRail extends LitElement {
     this.items.forEach((item) => (item.active = this.activeKey === item.key));
   }
 
+  protected onSlotChange() {
+    this.items.forEach((item) => {
+      item.placement = this.placement;
+    });
+  }
+
   protected override render() {
     const hasTopSlot = this.hasSlotController.test('top');
     const hasBottomSlot = this.hasSlotController.test('bottom');
@@ -171,7 +182,7 @@ export class NavigationRail extends LitElement {
       )}
       <span class="top-spacer"></span>
       <span part="items" class="items">
-        <slot @click=${this.onClick}></slot>
+        <slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>
       </span>
       <span class="bottom-spacer"></span>
       ${when(

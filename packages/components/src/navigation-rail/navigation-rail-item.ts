@@ -68,7 +68,7 @@ export class NavigationRailItem extends AnchorMixin(
   @state() protected disabled = false;
 
   /**
-   * 是否为激活状态，有 `navigation-rail` 组件控制该参数
+   * 是否为激活状态，由 `navigation-rail` 组件控制该参数
    */
   @property({
     type: Boolean,
@@ -76,6 +76,12 @@ export class NavigationRailItem extends AnchorMixin(
     converter: (value: string | null): boolean => value !== 'false',
   })
   protected active = false;
+
+  /**
+   * 导航栏的位置，由 `navigation-rail` 组件控制该参数
+   */
+  @property({ reflect: true })
+  protected placement: 'left' | 'right' = 'left';
 
   /**
    * 未激活状态的 Material Icons 图标名

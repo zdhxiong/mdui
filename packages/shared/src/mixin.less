@@ -365,6 +365,38 @@
   .sys(animation-timing-function, ~"motion-easing-@{value}");
 }
 
+// 生成 transition
+//
+// @duration 为 short1、short2 等
+// @timing-function 为 standard、standard-accelerate、emphasized 等
+// @delay 可以为整数，表示毫秒；也可以为 short1、short2 等
+.transition(@property, @duration, @timing-function, @delay: 0) {
+  @durationVariable: "--mdui-motion-duration-@{duration}";
+  @timingFunctionVariable: "--mdui-motion-easing-@{timing-function}";
+
+  & when (@delay =0) {
+    transition: ~"@{property} var(@{durationVariable}) var(@{timingFunctionVariable})";
+  }
+
+  & when not (@delay =0) {
+    & when (isnumber(@delay)) {
+      transition: ~"@{property} var(@{durationVariable}) var(@{timingFunctionVariable}) @{delay}ms";
+    }
+
+    & when not (isnumber(@delay)) {
+      transition: ~"@{property} var(@{durationVariable}) var(@{timingFunctionVariable}) var(--mdui-motion-duration-@{delay})";
+    }
+  }
+}
+
 .transitionTimingFunction(@value) {
   .sys(transition-timing-function, ~"motion-easing-@{value}");
+}
+
+.transitionDuration(@value) {
+  .sys(transition-duration, ~"motion-duration-@{value}");
+}
+
+.transitionDelay(@value) {
+  .sys(transition-delay, ~"motion-duration-@{value}");
 }

@@ -15,10 +15,10 @@
   border-radius: var(--shape-corner-normal);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  transition-timing-function: var(--mdui-motion-easing-standard);
-  transition-duration: 200ms;
   // 先不启用动画，等首次渲染完后再设置 transitionProperty: box-shadow, width
   transition-property: box-shadow;
+  .transitionTimingFunction(emphasized);
+  .transitionDuration(medium4);
   .width(56);
   .height(56);
   .elevation(3);
@@ -139,7 +139,7 @@
 }
 
 .label {
-  transition: opacity 75ms var(--mdui-motion-easing-accelerate) 125ms;
+  .transition(opacity, short2, linear, short2);
 
   .paddingLeft(4);
   .paddingRight(4);
@@ -159,7 +159,7 @@
   :host(:not([extended])) & {
     opacity: 0;
     transition-delay: 0ms;
-    transition-duration: 35ms;
+    .transitionDuration(short1);
   }
 
   :host([size="large"]) & {

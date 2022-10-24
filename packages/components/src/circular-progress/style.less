@@ -3,8 +3,8 @@
 :host {
   position: relative;
   display: inline-block;
-  width: 40px;
-  height: 40px;
+  .width(40);
+  .height(40);
 }
 
 .progress {
@@ -13,7 +13,7 @@
   width: 100%;
   height: 100%;
   text-align: left;
-  transition: opacity 250ms 0ms var(--mdui-motion-easing-linear);
+  .transition(opacity, medium1, linear);
 }
 
 .determinate {
@@ -27,8 +27,8 @@
   }
 
   .circle {
-    transition: stroke-dashoffset 500ms 0ms var(--mdui-motion-easing-standard);
     .stroke(primary);
+    .transition(stroke-dashoffset, long2, standard);
   }
 }
 

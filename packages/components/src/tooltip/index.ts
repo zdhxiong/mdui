@@ -10,12 +10,7 @@ import '@mdui/jq/methods/width.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { emit } from '@mdui/shared/helpers/event.js';
-import {
-  EASING_ACCELERATION,
-  EASING_DECELERATION,
-  DURATION_FADE_IN,
-  DURATION_FADE_OUT,
-} from '@mdui/shared/helpers/motion.js';
+import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
@@ -357,8 +352,8 @@ export class Tooltip extends LitElement {
         this.tooltip,
         [{ transform: 'scale(0)' }, { transform: 'scale(1)' }],
         {
-          duration: DURATION_FADE_IN,
-          easing: EASING_DECELERATION,
+          duration: getDuration(this, 'short4'),
+          easing: getEasing(this, 'standard'),
         },
       );
       emit(this, 'opened');
@@ -375,8 +370,8 @@ export class Tooltip extends LitElement {
         this.tooltip,
         [{ transform: 'scale(1)' }, { transform: 'scale(0)' }],
         {
-          duration: DURATION_FADE_OUT,
-          easing: EASING_ACCELERATION,
+          duration: getDuration(this, 'short4'),
+          easing: getEasing(this, 'standard'),
         },
       );
       this.tooltip.hidden = true;

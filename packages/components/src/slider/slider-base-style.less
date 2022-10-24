@@ -123,7 +123,6 @@ input[type="range"] {
   left: 50%;
   transform: translateX(-50%) scale(0);
   transform-origin: center bottom;
-  transition: transform 75ms var(--mdui-motion-easing-accelerate);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -131,6 +130,7 @@ input[type="range"] {
   white-space: nowrap;
   user-select: none;
   pointer-events: none;
+  .transition(transform, short2, standard);
   .bottom(40);
   .minWidth(28);
   .height(28);
@@ -163,7 +163,7 @@ input[type="range"] {
 
 .label-visible {
   transform: translateX(-50%) scale(1);
-  transition: transform 150ms var(--mdui-motion-easing-decelerate);
+  .transition(transform, short4, standard);
 }
 
 .tickmark {

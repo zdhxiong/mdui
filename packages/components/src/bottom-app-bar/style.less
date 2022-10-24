@@ -12,7 +12,7 @@
   justify-content: flex-start;
   width: 100%;
   border-radius: var(--shape-corner) var(--shape-corner) 0 0;
-  transition: bottom var(--mdui-motion-easing-standard) 250ms;
+  .transition(bottom, long2, emphasized);
   .padding(0, 16);
   .height(80);
   .backgroundColor(surface);
@@ -24,7 +24,7 @@
 }
 
 :host([hide]) {
-  transition-duration: 200ms;
+  .transitionDuration(short4);
   .bottom(-80 - 10);
 }
 
@@ -40,7 +40,7 @@
 :host([fab-detach]) {
   ::slotted(mdui-fab) {
     position: fixed;
-    transition: bottom var(--mdui-motion-easing-standard) 250ms;
+    .transition(bottom, long2, standard);
     .right(16);
     .bottom(12);
   }
@@ -54,7 +54,7 @@
 
 :host([fab-detach][hide]) {
   ::slotted(mdui-fab) {
-    transition-duration: 200ms;
+    .transitionDuration(short4);
     .bottom(16);
     .elevation(2);
   }
@@ -70,29 +70,29 @@
 :host([hide]) ::slotted(:not(mdui-fab)),
 :host([hide]:not([fab-detach])) ::slotted(mdui-fab) {
   transform: translateY(unit((140px / @root-font-size), rem));
-  transition: transform var(--mdui-motion-easing-accelerate) 0ms 200ms;
+  .transition(transform, 0, emphasized-accelerate, short4);
 }
 
 ::slotted(:first-child) {
-  transition: transform var(--mdui-motion-easing-decelerate) 130ms 0ms;
+  .transition(transform, short3, emphasized-decelerate, short1);
 }
 
 ::slotted(:nth-child(2)) {
-  transition: transform var(--mdui-motion-easing-decelerate) 130ms 50ms;
+  .transition(transform, short3, emphasized-decelerate, short3);
 }
 
 ::slotted(:nth-child(3)) {
-  transition: transform var(--mdui-motion-easing-decelerate) 130ms 90ms;
+  .transition(transform, short3, emphasized-decelerate, short4);
 }
 
 ::slotted(:nth-child(4)) {
-  transition: transform var(--mdui-motion-easing-decelerate) 130ms 120ms;
+  .transition(transform, short3, emphasized-decelerate, medium1);
 }
 
 ::slotted(:nth-child(5)) {
-  transition: transform var(--mdui-motion-easing-decelerate) 130ms 140ms;
+  .transition(transform, short3, emphasized-decelerate, medium2);
 }
 
 ::slotted(:nth-child(6)) {
-  transition: transform var(--mdui-motion-easing-decelerate) 130ms 130ms;
+  .transition(transform, short3, emphasized-decelerate, medium3);
 }

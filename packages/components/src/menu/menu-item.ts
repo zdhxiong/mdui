@@ -16,14 +16,7 @@ import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { emit } from '@mdui/shared/helpers/event.js';
-import {
-  DURATION_FADE_IN,
-  DURATION_FADE_OUT,
-  EASING_ACCELERATION,
-  EASING_DECELERATION,
-  KEYFRAME_FADE_IN,
-  KEYFRAME_FADE_OUT,
-} from '@mdui/shared/helpers/motion.js';
+import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
@@ -342,6 +335,10 @@ export class MenuItem extends AnchorMixin(
       return;
     }
 
+    const easingLinear = getEasing(this, 'linear');
+    const easingEmphasizedDecelerate = getEasing(this, 'emphasized-decelerate');
+    const easingEmphasizedAccelerate = getEasing(this, 'emphasized-accelerate');
+
     if (this.submenuOpen) {
       const requestOpen = emit(this, 'submenu-open', {
         cancelable: true,
@@ -350,13 +347,24 @@ export class MenuItem extends AnchorMixin(
         return;
       }
 
+      const duration = getDuration(this, 'medium4');
+
       await stopAnimations(this.submenu);
       this.submenu.hidden = false;
       this.updateSubmenuPositioner();
-      await animateTo(this.submenu, KEYFRAME_FADE_IN, {
-        duration: DURATION_FADE_IN,
-        easing: EASING_DECELERATION,
-      });
+      await Promise.all([
+        animateTo(
+          this.submenu,
+          [{ transform: 'scaleY(0.45)' }, { transform: 'scaleY(1)' }],
+          { duration, easing: easingEmphasizedDecelerate },
+        ),
+        animateTo(
+          this.submenu,
+          [{ opacity: 0 }, { opacity: 1, offset: 0.125 }, { opacity: 1 }],
+          { duration, easing: easingLinear },
+        ),
+      ]);
+
       emit(this, 'submenu-opened');
     } else {
       const requestClose = emit(this, 'submenu-close', {
@@ -366,11 +374,22 @@ export class MenuItem extends AnchorMixin(
         return;
       }
 
+      const duration = getDuration(this, 'short4');
+
       await stopAnimations(this.submenu);
-      await animateTo(this.submenu, KEYFRAME_FADE_OUT, {
-        duration: DURATION_FADE_OUT,
-        easing: EASING_ACCELERATION,
-      });
+      await Promise.all([
+        animateTo(
+          this.submenu,
+          [{ transform: 'scaleY(1)' }, { transform: 'scaleY(0.45)' }],
+          { duration, easing: easingEmphasizedAccelerate },
+        ),
+        animateTo(
+          this.submenu,
+          [{ opacity: 1 }, { opacity: 1, offset: 0.875 }, { opacity: 0 }],
+          { duration, easing: easingLinear },
+        ),
+      ]);
+
       this.submenu.hidden = true;
       emit(this, 'submenu-closed');
     }

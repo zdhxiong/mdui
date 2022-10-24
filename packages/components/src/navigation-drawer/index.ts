@@ -10,13 +10,7 @@ import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { Modal } from '@mdui/shared/helpers/modal.js';
-import {
-  DURATION_MEDIUM_IN,
-  DURATION_MEDIUM_OUT,
-  EASING_DECELERATION,
-  EASING_ACCELERATION,
-  EASING_LINEAR,
-} from '@mdui/shared/helpers/motion.js';
+import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
@@ -192,6 +186,10 @@ export class NavigationDrawer extends LitElement {
 
   @watch('open')
   protected async onOpenChange() {
+    const isRight = this.placement === 'right';
+    const easingLinear = getEasing(this, 'linear');
+    const easingEmphasized = getEasing(this, 'emphasized');
+
     // 打开
     // 要区分是否首次渲染，首次渲染时不触发事件，不执行动画；非首次渲染，触发事件，执行动画
     if (this.open) {
@@ -201,9 +199,7 @@ export class NavigationDrawer extends LitElement {
       }
 
       if (hasUpdated) {
-        const requestOpen = emit(this, 'open', {
-          cancelable: true,
-        });
+        const requestOpen = emit(this, 'open', { cancelable: true });
         if (requestOpen.defaultPrevented) {
           return;
         }
@@ -235,47 +231,42 @@ export class NavigationDrawer extends LitElement {
         }
       });
 
+      const duration = getDuration(this, 'long2');
+
       await Promise.all([
         this.isModal
-          ? animateTo(this.overlay, [{ opacity: 0 }, { opacity: 1 }], {
-              duration: hasUpdated ? DURATION_MEDIUM_IN : 0,
-              easing: EASING_LINEAR,
-            })
+          ? animateTo(
+              this.overlay,
+              [{ opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 1 }],
+              {
+                duration: hasUpdated ? duration : 0,
+                easing: easingLinear,
+              },
+            )
           : animateTo(
               this.lockTarget,
               [
+                { [isRight ? 'paddingRight' : 'paddingLeft']: 0 },
                 {
-                  [this.placement === 'right'
-                    ? 'paddingRight'
-                    : 'paddingLeft']: 0,
-                },
-                {
-                  [this.placement === 'right' ? 'paddingRight' : 'paddingLeft']:
+                  [isRight ? 'paddingRight' : 'paddingLeft']:
                     $(this.panel).innerWidth() + 'px',
                 },
               ],
               {
-                duration: hasUpdated ? DURATION_MEDIUM_IN : 0,
-                easing: EASING_DECELERATION,
+                duration: hasUpdated ? duration : 0,
+                easing: easingEmphasized,
                 fill: 'forwards',
               },
             ),
         animateTo(
           this.panel,
           [
-            {
-              transform:
-                this.placement === 'right'
-                  ? 'translateX(100%)'
-                  : 'translateX(-100%)',
-            },
-            {
-              transform: 'translateX(0)',
-            },
+            { transform: isRight ? 'translateX(100%)' : 'translateX(-100%)' },
+            { transform: 'translateX(0)' },
           ],
           {
-            duration: hasUpdated ? DURATION_MEDIUM_IN : 0,
-            easing: EASING_DECELERATION,
+            duration: hasUpdated ? duration : 0,
+            easing: easingEmphasized,
           },
         ),
       ]);
@@ -289,9 +280,7 @@ export class NavigationDrawer extends LitElement {
 
     // 关闭
     if (!this.open && this.hasUpdated) {
-      const requestClose = emit(this, 'close', {
-        cancelable: true,
-      });
+      const requestClose = emit(this, 'close', { cancelable: true });
       if (requestClose.defaultPrevented) {
         return;
       }
@@ -306,48 +295,37 @@ export class NavigationDrawer extends LitElement {
           : stopAnimations(this.lockTarget),
         stopAnimations(this.panel),
       ]);
+
+      const duration = getDuration(this, 'short4');
+
       await Promise.all([
         this.isModal
           ? animateTo(this.overlay, [{ opacity: 1 }, { opacity: 0 }], {
-              duration: DURATION_MEDIUM_OUT,
-              easing: EASING_LINEAR,
+              duration,
+              easing: easingLinear,
             })
           : animateTo(
               this.lockTarget,
               [
                 {
-                  [this.placement === 'right' ? 'paddingRight' : 'paddingLeft']:
+                  [isRight ? 'paddingRight' : 'paddingLeft']:
                     $(this.panel).innerWidth() + 'px',
                 },
-                {
-                  [this.placement === 'right'
-                    ? 'paddingRight'
-                    : 'paddingLeft']: 0,
-                },
+                { [isRight ? 'paddingRight' : 'paddingLeft']: 0 },
               ],
               {
-                duration: DURATION_MEDIUM_OUT,
-                easing: EASING_ACCELERATION,
+                duration,
+                easing: easingEmphasized,
                 fill: 'forwards',
               },
             ),
         animateTo(
           this.panel,
           [
-            {
-              transform: 'translateX(0)',
-            },
-            {
-              transform:
-                this.placement === 'right'
-                  ? 'translateX(100%)'
-                  : 'translateX(-100%)',
-            },
+            { transform: 'translateX(0)' },
+            { transform: isRight ? 'translateX(100%)' : 'translateX(-100%)' },
           ],
-          {
-            duration: DURATION_MEDIUM_OUT,
-            easing: EASING_ACCELERATION,
-          },
+          { duration, easing: easingEmphasized },
         ),
       ]);
       this.style.display = 'none';

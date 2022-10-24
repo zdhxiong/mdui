@@ -17,12 +17,7 @@ import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { Modal } from '@mdui/shared/helpers/modal.js';
-import {
-  EASING_DECELERATION,
-  EASING_LINEAR,
-  KEYFRAME_FADE_IN,
-  KEYFRAME_FADE_OUT,
-} from '@mdui/shared/helpers/motion.js';
+import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import '../icon.js';
@@ -201,87 +196,158 @@ export class Dialog extends LitElement {
 
   @watch('open')
   protected async onOpenChange() {
-    if (this.open) {
-      const requestOpen = emit(this, 'open', {
-        cancelable: true,
-      });
-      if (requestOpen.defaultPrevented) {
-        return;
-      }
+    const run = async () => {
+      // 内部的 header, body, actions 元素
+      const children = Array.from(
+        this.panel.querySelectorAll<HTMLElement>('.header, .body, .actions'),
+      );
 
-      // dialog 中的 mdui-top-app-bar 始终相对于 .body 元素
-      if ((this.topAppBarElements ?? []).length) {
-        const topAppBarElement = this.topAppBarElements![0];
-        // @ts-ignore
-        topAppBarElement.scrollTarget = this.body;
-      }
+      const easingLinear = getEasing(this, 'linear');
+      const easingEmphasizedDecelerate = getEasing(
+        this,
+        'emphasized-decelerate',
+      );
+      const easingEmphasizedAccelerate = getEasing(
+        this,
+        'emphasized-accelerate',
+      );
 
-      this.style.display = 'flex';
-      this.originalTrigger = document.activeElement as HTMLElement;
-      this.modalHelper.activate();
-      lockScreen(this);
-
-      await Promise.all([
-        stopAnimations(this.overlay),
-        stopAnimations(this.panel),
-      ]);
-
-      // 设置聚焦
-      requestAnimationFrame(() => {
-        const autoFocusTarget = this.querySelector(
-          '[autofocus]',
-        ) as HTMLInputElement;
-        if (autoFocusTarget) {
-          autoFocusTarget.focus({ preventScroll: true });
-        } else {
-          this.panel.focus({ preventScroll: true });
+      if (this.open) {
+        const requestOpen = emit(this, 'open', {
+          cancelable: true,
+        });
+        if (requestOpen.defaultPrevented) {
+          return;
         }
-      });
 
-      await Promise.all([
-        animateTo(this.overlay, [{ opacity: 0 }, { opacity: 1 }], {
-          duration: 150,
-          easing: EASING_LINEAR,
-        }),
-        animateTo(this.panel, KEYFRAME_FADE_IN, {
-          duration: 150,
-          easing: EASING_DECELERATION,
-        }),
-      ]);
-      emit(this, 'opened');
-    } else if (this.hasUpdated) {
-      const requestClose = emit(this, 'close', {
-        cancelable: true,
-      });
-      if (requestClose.defaultPrevented) {
-        return;
+        // dialog 中的 mdui-top-app-bar 始终相对于 .body 元素
+        if ((this.topAppBarElements ?? []).length) {
+          const topAppBarElement = this.topAppBarElements![0];
+          // @ts-ignore
+          topAppBarElement.scrollTarget = this.body;
+        }
+
+        this.style.display = 'flex';
+        this.originalTrigger = document.activeElement as HTMLElement;
+        this.modalHelper.activate();
+        lockScreen(this);
+
+        await Promise.all([
+          stopAnimations(this.overlay),
+          stopAnimations(this.panel),
+          ...children.map((child) => stopAnimations(child)),
+        ]);
+
+        // 设置聚焦
+        requestAnimationFrame(() => {
+          const autoFocusTarget = this.querySelector(
+            '[autofocus]',
+          ) as HTMLInputElement;
+          if (autoFocusTarget) {
+            autoFocusTarget.focus({ preventScroll: true });
+          } else {
+            this.panel.focus({ preventScroll: true });
+          }
+        });
+
+        const duration = getDuration(this, 'medium4');
+
+        await Promise.all([
+          animateTo(
+            this.overlay,
+            [{ opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 1 }],
+            { duration, easing: easingLinear },
+          ),
+          animateTo(
+            this.panel,
+            [
+              { transform: 'translateY(-1.875rem) scaleY(0)' },
+              { transform: 'translateY(0) scaleY(1)' },
+            ],
+            { duration, easing: easingEmphasizedDecelerate },
+          ),
+          animateTo(
+            this.panel,
+            [{ opacity: 0 }, { opacity: 1, offset: 0.1 }, { opacity: 1 }],
+            { duration, easing: easingLinear },
+          ),
+          ...children.map((child) =>
+            animateTo(
+              child,
+              [
+                { opacity: 0 },
+                { opacity: 0, offset: 0.2 },
+                { opacity: 1, offset: 0.8 },
+                { opacity: 1 },
+              ],
+              { duration, easing: easingLinear },
+            ),
+          ),
+        ]);
+
+        emit(this, 'opened');
+      } else if (this.hasUpdated) {
+        const requestClose = emit(this, 'close', {
+          cancelable: true,
+        });
+        if (requestClose.defaultPrevented) {
+          return;
+        }
+
+        this.modalHelper.deactivate();
+        await Promise.all([
+          stopAnimations(this.overlay),
+          stopAnimations(this.panel),
+          ...children.map((child) => stopAnimations(child)),
+        ]);
+
+        const duration = getDuration(this, 'short4');
+
+        await Promise.all([
+          animateTo(this.overlay, [{ opacity: 1 }, { opacity: 0 }], {
+            duration,
+            easing: easingLinear,
+          }),
+          animateTo(
+            this.panel,
+            [
+              { transform: 'translateY(0) scaleY(1)' },
+              { transform: 'translateY(-1.875rem) scaleY(0.6)' },
+            ],
+            { duration, easing: easingEmphasizedAccelerate },
+          ),
+          animateTo(
+            this.panel,
+            [{ opacity: 1 }, { opacity: 1, offset: 0.75 }, { opacity: 0 }],
+            { duration, easing: easingLinear },
+          ),
+          ...children.map((child) =>
+            animateTo(
+              child,
+              [{ opacity: 1 }, { opacity: 0, offset: 0.75 }, { opacity: 0 }],
+              { duration, easing: easingLinear },
+            ),
+          ),
+        ]);
+
+        this.style.display = 'none';
+        unlockScreen(this);
+
+        // 对话框关闭后，恢复焦点到原有的元素上
+        const trigger = this.originalTrigger;
+        if (typeof trigger?.focus === 'function') {
+          setTimeout(() => trigger.focus());
+        }
+
+        emit(this, 'closed');
       }
+    };
 
-      this.modalHelper.deactivate();
-      await Promise.all([
-        stopAnimations(this.overlay),
-        stopAnimations(this.panel),
-      ]);
-      await Promise.all([
-        animateTo(this.overlay, KEYFRAME_FADE_OUT, {
-          duration: 75,
-          easing: EASING_LINEAR,
-        }),
-        animateTo(this.panel, KEYFRAME_FADE_OUT, {
-          duration: 75,
-          easing: EASING_LINEAR,
-        }),
-      ]);
-      this.style.display = 'none';
-      unlockScreen(this);
-
-      // 对话框关闭后，恢复焦点到原有的元素上
-      const trigger = this.originalTrigger;
-      if (typeof trigger?.focus === 'function') {
-        setTimeout(() => trigger.focus());
-      }
-
-      emit(this, 'closed');
+    if (!this.hasUpdated) {
+      await this.updateComplete;
+      await run();
+    } else {
+      await run();
     }
   }
 

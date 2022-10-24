@@ -13,11 +13,15 @@
   justify-content: flex-start;
   width: 100%;
   border-radius: 0 0 var(--shape-corner) var(--shape-corner);
-  transition: all var(--mdui-motion-easing-standard) 250ms;
+  .transition(all, long2, standard);
   .padding(12, 8);
   .height(64);
   .backgroundColor(surface);
   .elevation(0);
+}
+
+:host([shrink-on-scroll]) {
+  .transitionDuration(short4);
 }
 
 :host([scroll-target]) {
@@ -52,31 +56,16 @@
   .marginRight(8);
 }
 
-:host([variant="center-aligned"]) {
-  ::slotted(mdui-top-app-bar-title) {
-    justify-content: center;
-  }
-}
-
 :host([variant="medium"]) {
   .height(112);
-
-  ::slotted(mdui-top-app-bar-title) {
-    opacity: 0;
-  }
 }
 
 :host([variant="large"]) {
   .height(152);
-  .paddingBottom(20);
-
-  ::slotted(mdui-top-app-bar-title) {
-    opacity: 0;
-  }
 }
 
 :host([hide]) {
-  transition-duration: 200ms;
+  .transitionDuration(short4);
   .top(-64 - 10);
 }
 
@@ -90,52 +79,6 @@
 
 :host([shrink][variant="medium"]),
 :host([shrink][variant="large"]) {
-  transition-duration: 200ms;
+  .transitionDuration(short4);
   .height(64);
-  .paddingBottom(12);
-
-  ::slotted(mdui-top-app-bar-title) {
-    opacity: 1;
-    transition-delay: 100ms;
-  }
-}
-
-.large-title {
-  position: absolute;
-  left: 0;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  transition: font-size var(--mdui-motion-easing-standard) 200ms;
-  .top(64);
-  .padding(0, 16);
-  .typescale(title-large);
-
-  :host([variant="medium"]) & {
-    .height(36);
-    .typescale(headline-small);
-  }
-
-  :host([variant="large"]) & {
-    .height(68);
-    .typescale(headline-medium);
-  }
-}
-
-.large-title-inner {
-  :host([variant="medium"]) &,
-  :host([variant="small"]) &,
-  :host([variant="medium"]) & {
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  :host([variant="large"]) & {
-    display: -webkit-box; /* stylelint-disable-line value-no-vendor-prefix */
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
 }

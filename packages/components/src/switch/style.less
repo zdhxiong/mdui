@@ -35,7 +35,9 @@ label {
   display: flex;
   align-items: center;
   border-radius: var(--shape-corner);
-  transition: background-color 100ms var(--mdui-motion-easing-standard), border-width 100ms var(--mdui-motion-easing-standard);
+  transition-property: background-color, border-width;
+  .transitionDuration(short4);
+  .transitionTimingFunction(standard);
   .height(32);
   .width(52);
   .border(2, solid, outline);
@@ -69,7 +71,9 @@ input {
 
 mdui-ripple {
   border-radius: 50%;
-  transition: left 100ms var(--mdui-motion-easing-standard), top 100ms var(--mdui-motion-easing-standard);
+  transition-property: left, top;
+  .transitionDuration(short4);
+  .transitionTimingFunction(standard);
   .width(40);
   .height(40);
 }
@@ -81,8 +85,8 @@ mdui-ripple {
   justify-content: center;
   border-radius: var(--shape-corner-thumb);
   transition-property: width, height, left, background-color;
-  transition-duration: 100ms;
-  transition-timing-function: var(--mdui-motion-easing-standard);
+  .transitionDuration(short4);
+  .transitionTimingFunction(standard);
   .height(16);
   .width(16);
   .left(6);
@@ -167,17 +171,16 @@ mdui-ripple {
 ::slotted([slot="icon"]) {
   opacity: 1;
   transform: scale(1);
-  transition-delay: 30ms;
-  transition-duration: 70ms;
-  transition-timing-function: var(--mdui-motion-easing-decelerate);
+  .transitionDelay(short1);
+  .transitionDuration(short3);
+  .transitionTimingFunction(linear);
   .color(surface-variant);
 
   :host([checked]) & {
     opacity: 0;
     transform: scale(0.92);
     transition-delay: 0ms;
-    transition-duration: 30ms;
-    transition-timing-function: var(--mdui-motion-easing-standard);
+    .transitionDuration(short1);
   }
 
   :host([disabled]) & {
@@ -190,16 +193,15 @@ mdui-ripple {
   opacity: 0;
   transform: scale(0.92);
   transition-delay: 0ms;
-  transition-duration: 30ms;
-  transition-timing-function: var(--mdui-motion-easing-standard);
+  .transitionDuration(short1);
+  .transitionTimingFunction(linear);
   .color(on-primary-container);
 
   :host([checked]) & {
     opacity: 1;
     transform: scale(1);
-    transition-delay: 30ms;
-    transition-duration: 70ms;
-    transition-timing-function: var(--mdui-motion-easing-decelerate);
+    .transitionDelay(short1);
+    .transitionDuration(short3);
   }
 
   :host([disabled]) & {

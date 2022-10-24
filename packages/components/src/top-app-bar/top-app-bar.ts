@@ -3,26 +3,22 @@ import {
   customElement,
   property,
   queryAssignedElements,
-  state,
 } from 'lit/decorators.js';
-import { when } from 'lit/directives/when.js';
-import { animate, AnimateController } from '@lit-labs/motion';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/off.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/one.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
-import {
-  DURATION_MEDIUM_IN,
-  DURATION_MEDIUM_OUT,
-  EASING_LINEAR,
-} from '@mdui/shared/helpers/motion.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { topAppBarStyle } from './top-app-bar-style.js';
-import type { TopAppBarTitle } from './top-app-bar-title.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+
+type TopAppBarTitle = {
+  variant: 'center-aligned' | 'small' | 'medium' | 'large';
+  shrink: boolean;
+};
 
 /**
  * @event show - 开始显示时，事件被触发。可以通过调用 `event.preventDefault()` 阻止显示
@@ -46,20 +42,6 @@ export class TopAppBar extends LitElement {
 
   protected readonly uniqueId = uniqueId();
   protected readonly scrollEventName = `scroll._top_app_bar_${this.uniqueId}`;
-
-  protected readonly animateController = new AnimateController(this, {
-    defaultOptions: {
-      keyframeOptions: {
-        duration: DURATION_MEDIUM_IN,
-        easing: EASING_LINEAR,
-      },
-      in: [{ opacity: 0 }, { opacity: 0, offset: 0.4 }],
-      out: [{ opacity: 1 }, { opacity: 0, offset: 0.5 }, { opacity: 0 }],
-    },
-  });
-
-  @state()
-  protected titleString: string | undefined;
 
   /**
    * 滚动条是否不位于顶部
@@ -163,11 +145,6 @@ export class TopAppBar extends LitElement {
         emit(this, this.hide ? 'hidden' : 'shown');
       }
     });
-
-    await this.updateComplete;
-    this.titleString = this.titleElements.length
-      ? this.titleElements[0].textContent!
-      : undefined;
   }
 
   override disconnectedCallback() {
@@ -197,6 +174,23 @@ export class TopAppBar extends LitElement {
       $(this.scrollTargetContainer).css({
         'padding-top': this.offsetHeight,
       });
+    });
+
+    if (!this.hasUpdated) {
+      await this.updateComplete;
+    }
+    this.titleElements.forEach((titleElement) => {
+      titleElement.variant = this.variant;
+    });
+  }
+
+  @watch('shrink')
+  protected async onShrinkChange() {
+    if (!this.hasUpdated) {
+      await this.updateComplete;
+    }
+    this.titleElements.forEach((titleElement) => {
+      titleElement.shrink = this.shrink;
     });
   }
 
@@ -244,25 +238,7 @@ export class TopAppBar extends LitElement {
   }
 
   protected override render(): TemplateResult {
-    return html`<slot></slot>${when(
-        ['medium', 'large'].includes(this.variant) &&
-          !this.shrink &&
-          !this.hide,
-        () => html`<div
-          part="large-title"
-          class="large-title"
-          ${animate({
-            keyframeOptions: {
-              duration: DURATION_MEDIUM_OUT,
-              easing: EASING_LINEAR,
-            },
-          })}
-        >
-          <div part="large-title-inner" class="large-title-inner">
-            ${this.titleString}
-          </div>
-        </div>`,
-      )}`;
+    return html`<slot></slot>`;
   }
 }
 

@@ -11,10 +11,7 @@ import { FormController } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
-import {
-  DURATION_SMALL,
-  EASING_STANDARD,
-} from '@mdui/shared/helpers/motion.js';
+import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '@mdui/icons/cancel--outlined.js';
@@ -665,8 +662,8 @@ export class TextField extends FocusableMixin(LitElement) {
           class="label"
           ${animate({
             keyframeOptions: {
-              duration: DURATION_SMALL,
-              easing: EASING_STANDARD,
+              duration: getDuration(this, 'short4'),
+              easing: getEasing(this, 'standard'),
             },
           })}
         >

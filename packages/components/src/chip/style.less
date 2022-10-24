@@ -11,8 +11,8 @@
   overflow: hidden;
   border-radius: var(--shape-corner);
   cursor: pointer;
-  transition: box-shadow 200ms var(--mdui-motion-easing-standard);
   -webkit-tap-highlight-color: transparent;
+  .transition(box-shadow, short4, linear);
   .height(32);
   .backgroundColor(surface);
   .border(1px, solid, outline);
@@ -164,9 +164,7 @@
 
 .delete {
   display: inline-flex;
-  transition-duration: 200ms;
-  transition-property: background-color;
-  .transitionTimingFunction(standard);
+  .transition(background-color, short4, linear);
   .padding(4);
   .shapeCorner(full);
   .marginRight(-4);

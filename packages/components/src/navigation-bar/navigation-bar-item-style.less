@@ -19,9 +19,9 @@
   height: 100%;
   text-decoration: none;
   cursor: pointer;
-  transition: padding 225ms var(--mdui-motion-easing-standard);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  .transition(padding, short4, standard);
   .paddingTop(12);
   .paddingBottom(12);
 }
@@ -30,7 +30,7 @@ mdui-ripple {
   z-index: 1;
   left: 50%;
   transform: translateX(-50%);
-  transition: margin-top 225ms var(--mdui-motion-easing-standard);
+  .transition(margin-top, short4, standard);
   .width(64);
   .height(32);
   .marginTop(12);
@@ -50,7 +50,7 @@ mdui-ripple {
 
 .indicator,
 :host([active]) .indicator {
-  transition: background-color 75ms var(--mdui-motion-easing-decelerate), width 225ms var(--mdui-motion-easing-decelerate);
+  transition: background-color var(--mdui-motion-duration-short1) var(--mdui-motion-easing-standard), width var(--mdui-motion-duration-short4) var(--mdui-motion-easing-standard);
 }
 
 ::slotted([slot="badge"]) {
@@ -78,7 +78,7 @@ mdui-ripple {
 .label {
   display: flex;
   align-items: center;
-  transition: opacity 300ms var(--mdui-motion-easing-standard);
+  .transition(opacity, short4, linear);
   .height(16);
   .color(on-surface-variant);
   .marginTop(4);

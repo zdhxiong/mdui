@@ -1,6 +1,34 @@
 :root {
-  --mdui-motion-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
-  --mdui-motion-easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
-  --mdui-motion-easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  // 线性动画（透明度变化使用）
   --mdui-motion-easing-linear: cubic-bezier(0, 0, 1, 1);
+
+  // 标准动画（小组件使用该动画）
+  --mdui-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --mdui-motion-easing-standard-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  --mdui-motion-easing-standard-decelerate: cubic-bezier(0, 0, 0, 1);
+
+  // 强调动画（全屏动画、大型组件使用该动画）
+  --mdui-motion-easing-emphasized: var(--mdui-motion-easing-standard);
+  --mdui-motion-easing-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --mdui-motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+
+  // 持续时间
+  --mdui-motion-duration-short1: 50ms;
+  --mdui-motion-duration-short2: 100ms;
+  --mdui-motion-duration-short3: 150ms;
+  --mdui-motion-duration-short4: 200ms;
+  --mdui-motion-duration-medium1: 250ms;
+  --mdui-motion-duration-medium2: 300ms;
+  --mdui-motion-duration-medium3: 350ms;
+  --mdui-motion-duration-medium4: 400ms;
+  --mdui-motion-duration-long1: 450ms;
+  --mdui-motion-duration-long2: 500ms;
+  --mdui-motion-duration-long3: 550ms;
+  --mdui-motion-duration-long4: 600ms;
+  --mdui-motion-duration-extra-long1: 700ms;
+  --mdui-motion-duration-extra-long2: 800ms;
+  --mdui-motion-duration-extra-long3: 900ms;
+  --mdui-motion-duration-extra-long4: 1000ms;
+
+  // 动画的关键帧在每个组件中单独定义
 }

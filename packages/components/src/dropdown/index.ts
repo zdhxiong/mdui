@@ -15,14 +15,7 @@ import '@mdui/jq/methods/width.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { emit } from '@mdui/shared/helpers/event.js';
-import {
-  DURATION_FADE_IN,
-  DURATION_FADE_OUT,
-  EASING_ACCELERATION,
-  EASING_DECELERATION,
-  KEYFRAME_FADE_IN,
-  KEYFRAME_FADE_OUT,
-} from '@mdui/shared/helpers/motion.js';
+import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
@@ -467,6 +460,10 @@ export class Dropdown extends LitElement {
       return;
     }
 
+    const easingLinear = getEasing(this, 'linear');
+    const easingEmphasizedDecelerate = getEasing(this, 'emphasized-decelerate');
+    const easingEmphasizedAccelerate = getEasing(this, 'emphasized-accelerate');
+
     if (this.open) {
       const requestOpen = emit(this, 'open', {
         cancelable: true,
@@ -475,13 +472,23 @@ export class Dropdown extends LitElement {
         return;
       }
 
+      const duration = getDuration(this, 'medium4');
+
       await stopAnimations(this.panel);
       this.panel.hidden = false;
       this.updatePositioner();
-      await animateTo(this.panel, KEYFRAME_FADE_IN, {
-        duration: DURATION_FADE_IN,
-        easing: EASING_DECELERATION,
-      });
+      await Promise.all([
+        animateTo(
+          this.panel,
+          [{ transform: 'scaleY(0.45)' }, { transform: 'scaleY(1)' }],
+          { duration, easing: easingEmphasizedDecelerate },
+        ),
+        animateTo(
+          this.panel,
+          [{ opacity: 0 }, { opacity: 1, offset: 0.125 }, { opacity: 1 }],
+          { duration, easing: easingLinear },
+        ),
+      ]);
 
       // dropdown 打开后，尝试把焦点放到 panel 中
       if (typeof this.panelSlot?.focus === 'function') {
@@ -497,11 +504,22 @@ export class Dropdown extends LitElement {
         return;
       }
 
+      const duration = getDuration(this, 'short4');
+
       await stopAnimations(this.panel);
-      await animateTo(this.panel, KEYFRAME_FADE_OUT, {
-        duration: DURATION_FADE_OUT,
-        easing: EASING_ACCELERATION,
-      });
+      await Promise.all([
+        animateTo(
+          this.panel,
+          [{ transform: 'scaleY(1)' }, { transform: 'scaleY(0.45)' }],
+          { duration, easing: easingEmphasizedAccelerate },
+        ),
+        animateTo(
+          this.panel,
+          [{ opacity: 1 }, { opacity: 1, offset: 0.875 }, { opacity: 0 }],
+          { duration, easing: easingLinear },
+        ),
+      ]);
+
       this.panel.hidden = true;
 
       // dropdown 关闭时，如果不支持 focus 触发，且焦点在 dropdown 内，则焦点回到 trigger 上

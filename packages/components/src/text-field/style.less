@@ -12,7 +12,7 @@
 .text-field {
   position: relative;
   display: flex;
-  transition: box-shadow 100ms var(--mdui-motion-easing-standard);
+  .transition(box-shadow, short4, standard);
   .padding(0, 16);
 
   &.has-prefix-icon {
@@ -281,7 +281,7 @@
 
 .helper {
   opacity: 1;
-  transition: opacity 150ms var(--mdui-motion-easing-standard);
+  .transition(opacity, short4, linear);
   .typescale(body-small);
 
   :host([disabled]) & {

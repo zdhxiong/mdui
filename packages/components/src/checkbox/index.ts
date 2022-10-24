@@ -8,6 +8,9 @@ import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
+import '@mdui/icons/check-box-outline-blank.js';
+import '@mdui/icons/check-box.js';
+import '@mdui/icons/indeterminate-check-box.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { style } from './style.js';
 import type { Ripple } from '../ripple/index.js';
@@ -24,6 +27,9 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
  * @slot - 文本
  *
  * @csspart control - 选择框
+ * @csspart unchecked-icon 未选中状态图标
+ * @csspart checked-icon 选中状态图标
+ * @csspart indeterminate-icon 未确定状态图标
  * @csspart label - 文本
  */
 @customElement('mdui-checkbox')
@@ -179,6 +185,18 @@ export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
       />
       <i part="control">
         <mdui-ripple></mdui-ripple>
+        <mdui-icon-check-box-outline-blank
+          part="unchecked-icon"
+          class="icon unchecked-icon"
+        ></mdui-icon-check-box-outline-blank>
+        <mdui-icon-check-box
+          part="checked-icon"
+          class="icon checked-icon"
+        ></mdui-icon-check-box>
+        <mdui-icon-indeterminate-check-box
+          part="indeterminate-icon"
+          class="icon indeterminate-icon"
+        ></mdui-icon-indeterminate-check-box>
       </i>
       <span part="label"><slot></slot></span>
     </label>`;

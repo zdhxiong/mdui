@@ -5,6 +5,7 @@ import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
+import '@mdui/icons/radio-button-unchecked.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { radioStyle } from './radio-style.js';
 import type { Ripple } from '../ripple/index.js';
@@ -19,6 +20,8 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @slot - 文本
  *
  * @csspart control - 选择框
+ * @csspart unchecked-icon 未选中状态的图标
+ * @csspart checked-icon 选中状态的图标
  * @csspart label - 文本
  */
 @customElement('mdui-radio')
@@ -92,6 +95,11 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   protected override render(): TemplateResult {
     return html`<i part="control" class=${classMap({ invalid: this.invalid })}>
         <mdui-ripple></mdui-ripple>
+        <mdui-icon-radio-button-unchecked
+          part="unchecked-icon"
+          class="unchecked-icon"
+        ></mdui-icon-radio-button-unchecked>
+        <div part="checked-icon" class="checked-icon"></div>
       </i>
       <span part="label"><slot></slot></span>`;
   }

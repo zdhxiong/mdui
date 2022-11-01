@@ -3,7 +3,7 @@
 :host {
   position: relative;
   display: inline-flex;
-  align-items: flex-start;
+  align-items: center;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
@@ -11,12 +11,39 @@
   zoom: 1;
   -webkit-user-drag: none;
   .borderRadius(2);
-  .typescale(label-large);
+  .fontSize(label-large);
+  .fontWeight(label-large);
+  .letterSpacing(label-large);
 }
 
 :host([disabled]) {
   cursor: default;
   pointer-events: none;
+}
+
+.unchecked-icon {
+  position: absolute;
+  .color(on-surface-variant);
+  .transition(color, short4, standard);
+
+  :host([hover]) &,
+  :host([focused]) &,
+  :host([pressed]) & {
+    .color(on-surface);
+  }
+}
+
+.checked-icon {
+  position: absolute;
+  opacity: 0;
+  border-radius: 50%;
+  transform: scale(0.2);
+  transition-property: background-color, opacity, transform;
+  .transitionDuration(short4);
+  .transitionTimingFunction(standard);
+  .width(10);
+  .height(10);
+  .backgroundColor(primary);
 }
 
 i {
@@ -30,35 +57,6 @@ i {
   .minWidth(40);
   .height(40);
   .stateLayerColor(on-surface);
-
-  /* 图标外圈 */
-  &::after {
-    border-radius: 50%;
-    transition: all 180ms var(--mdui-motion-easing-standard);
-    content: " ";
-    .width(20);
-    .height(20);
-    .border(2, solid, on-surface-variant);
-
-    :host([hover]) &,
-    :host([focused]) &,
-    :host([pressed]) & {
-      .borderColor(on-surface);
-    }
-  }
-
-  // 图标内部圆圈
-  &::before {
-    position: absolute;
-    border-radius: 50%;
-    transform: scale(0);
-    opacity: 0;
-    transition: all 180ms var(--mdui-motion-easing-standard);
-    content: " ";
-    .width(15);
-    .height(15);
-    .backgroundColor(primary);
-  }
 }
 
 span {
@@ -66,21 +64,22 @@ span {
   .paddingTop(10);
   .paddingBottom(10);
   .color(on-surface);
+  .transition(color, short4, standard);
 }
 
 /* 选中状态的图标 */
 :host([checked]) {
   i {
     .stateLayerColor(primary);
+  }
 
-    &::after {
-      .borderColor(primary);
-    }
+  .unchecked-icon {
+    .color(primary);
+  }
 
-    &::before {
-      transform: scale(0.68);
-      opacity: 1;
-    }
+  .checked-icon {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -88,33 +87,26 @@ span {
 i.invalid {
   .stateLayerColor(error);
 
-  &::after {
-    .borderColor(error);
+  .unchecked-icon {
+    .color(error);
   }
 
-  & + span {
-    .color(error);
+  .checked-icon {
+    .backgroundColor(error);
   }
 }
 
 /* 禁用状态的图标 */
 :host([disabled]) {
-  i {
-    &::after {
-      .borderColor(on-surface, 38%);
-    }
-
-    & + span {
-      .color(on-surface, 38%);
-    }
+  .unchecked-icon {
+    .color(on-surface, 38%);
   }
-}
 
-/* 禁用且选中状态的图标 */
-:host([disabled][checked]) {
-  i {
-    &::before {
-      .backgroundColor(on-surface, 38%);
-    }
+  .checked-icon {
+    .backgroundColor(on-surface, 38%);
+  }
+
+  span {
+    .color(on-surface, 38%);
   }
 }

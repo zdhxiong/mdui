@@ -6,12 +6,12 @@
 
   position: relative;
   display: block;
-  overflow: hidden;
   border-radius: var(--shape-corner);
   .stateLayerColor(on-surface);
 }
 
-:host([rounded]) {
+:host([rounded]),
+:host([rounded]) mdui-ripple {
   border-radius: var(--shape-corner-rounded);
 }
 
@@ -44,8 +44,16 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  .padding(8, 16);
+  .padding(8, 24, 8, 16);
   .minHeight(56);
+
+  :host([alignment="start"]) & {
+    align-items: flex-start;
+  }
+
+  :host([alignment="end"]) & {
+    align-items: flex-end;
+  }
 }
 
 .body {
@@ -58,35 +66,24 @@
 
 .primary {
   display: block;
-  .color(on-surface-variant);
-  .typescale(label-large);
-
-  :host([hover]) &,
-  :host([focused]) &,
-  :host([pressed]) & {
-    .color(on-surface);
-  }
+  .color(on-surface);
+  .typescale(body-large);
 
   :host([active]) & {
     .color(on-secondary-container);
   }
 }
 
-/* 规范中没有描述，这里使用和 primary 一样的样式，但字体更细，更浅 */
 .secondary {
   display: none;
-  .color(on-surface-variant, 0.87);
-  .paddingTop(4);
+  .color(on-surface-variant);
   .typescale(body-medium);
 
+  :host([disabled]) &,
   :host([hover]) &,
   :host([focused]) &,
   :host([pressed]) & {
     .color(on-surface);
-  }
-
-  :host([active]) & {
-    .color(on-secondary-container, 0.87);
   }
 }
 
@@ -127,8 +124,9 @@
   display: none;
   flex: 0 0 auto;
   .color(on-surface-variant);
-  .typescale(label-large);
+  .typescale(label-small);
 
+  :host([disabled]) &,
   :host([hover]) &,
   :host([focused]) &,
   :host([pressed]) & {
@@ -151,6 +149,11 @@
 
 .has-start {
   .marginRight(16);
+
+  ::slotted(mdui-checkbox),
+  ::slotted(mdui-radio) {
+    .marginLeft(-8);
+  }
 }
 
 .has-end {
@@ -158,5 +161,10 @@
 
   ::slotted([slot="end"]) {
     text-align: right;
+  }
+
+  ::slotted(mdui-checkbox),
+  ::slotted(mdui-radio) {
+    .marginRight(-8);
   }
 }

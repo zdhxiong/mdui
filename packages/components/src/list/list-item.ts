@@ -128,6 +128,15 @@ export class ListItem extends AnchorMixin(
   })
   public rounded = false;
 
+  /**
+   * 列表项的垂直对齐方式。可选值为：
+   * * `start`：顶部对齐
+   * * `center`：居中对齐
+   * * `end`：底部对齐
+   */
+  @property({ reflect: true })
+  public alignment: 'start' | 'center' | 'end' = 'center';
+
   protected renderInner(): TemplateResult {
     const hasDefaultSlot = this.hasSlotController.test('[default]');
     const hasSecondarySlot = this.hasSlotController.test('secondary');

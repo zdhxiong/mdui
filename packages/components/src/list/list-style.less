@@ -1,13 +1,11 @@
 @import "~@mdui/shared/mixin.less";
 
 :host {
-  --shape-corner: var(--mdui-shape-corner-none);
-
   display: block;
-  border-radius: var(--shape-corner);
+  .padding(8, 0);
 }
 
-::slotted(mdui-divider) {
+::slotted(mdui-divider[middle]) {
   .marginLeft(16);
-  .marginRight(16);
+  .marginRight(24);
 }

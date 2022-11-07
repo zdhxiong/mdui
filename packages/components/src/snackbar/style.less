@@ -1,0 +1,94 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  --shape-corner: var(--mdui-shape-corner-extra-small);
+
+  position: fixed;
+  z-index: 1100;
+  display: none;
+  align-items: center;
+  flex-wrap: wrap;
+  border-radius: var(--shape-corner);
+  .minWidth(320);
+  .maxWidth(576);
+  .padding(4, 0);
+  .elevation(3);
+  .backgroundColor(inverse-surface);
+  .color(inverse-on-surface);
+  .typescale(body-medium);
+}
+
+:host([placement^="top"]) {
+  transform-origin: top;
+  .top(16);
+}
+
+:host([placement^="bottom"]) {
+  transform-origin: bottom;
+  .bottom(16);
+}
+
+:host([placement="top-start"]),
+:host([placement="bottom-start"]) {
+  .left(16);
+}
+
+:host([placement="top-end"]),
+:host([placement="bottom-end"]) {
+  .right(16);
+}
+
+.message {
+  .margin(10, 16);
+
+  :host([message-line="1"]) & {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  :host([message-line="2"]) & {
+    // stylelint-disable-next-line
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+}
+
+.action-group {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  .paddingRight(8);
+}
+
+.close {
+  .margin(0, -4, 0, 4);
+}
+
+.action,
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action,
+.action mdui-button {
+  .color(inverse-primary);
+  .typescale(label-large);
+  .stateLayerColor(inverse-primary);
+}
+
+.action mdui-button::part(button) {
+  .padding(0, 8);
+}
+
+.close,
+.close mdui-button-icon {
+  .fontSize(24);
+  .color(inverse-on-surface);
+  .stateLayerColor(inverse-on-surface);
+}

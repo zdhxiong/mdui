@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>Snackbar</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: Roboto;
+    }
+  </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/components/snackbar.js';
+    import '../../packages/components/button.js';
+    import { $ } from '../../packages/jq/$.js';
+    import '../../packages/jq/methods/on.js';
+    import '../../packages/jq/methods/next.js';
+
+    $('.open').on('click', function() {
+      $(this).next()[0].open = true;
+    });
+  </script>
+</head>
+
+<body>
+  <main>
+    <section>
+      <h2>actions</h2>
+      <mdui-button class="open">no action</mdui-button>
+      <mdui-snackbar>Your photo has been archived</mdui-snackbar>
+
+      <mdui-button class="open">with action</mdui-button>
+      <mdui-snackbar action="Undo">Your photo has been archived</mdui-snackbar>
+
+      <mdui-button class="open">with close</mdui-button>
+      <mdui-snackbar closeable>Your photo has been archived</mdui-snackbar>
+
+      <mdui-button class="open">with action & close</mdui-button>
+      <mdui-snackbar action="Undo" closeable>Your photo has been archived</mdui-snackbar>
+    </section>
+
+    <section>
+      <h2>placement</h2>
+      <mdui-button class="open">placement="top"</mdui-button>
+      <mdui-snackbar placement="top">Your photo has been archived</mdui-snackbar>
+
+      <mdui-button class="open">placement="top-start"</mdui-button>
+      <mdui-snackbar placement="top-start">Your photo has been archived</mdui-snackbar>
+
+      <mdui-button class="open">placement="top-end"</mdui-button>
+      <mdui-snackbar placement="top-end">Your photo has been archived</mdui-snackbar>
+
+      <mdui-button class="open">placement="bottom"</mdui-button>
+      <mdui-snackbar placement="bottom">Your photo has been archived</mdui-snackbar>
+
+      <mdui-button class="open">placement="bottom-start"</mdui-button>
+      <mdui-snackbar placement="bottom-start">Your photo has been archived</mdui-snackbar>
+
+      <mdui-button class="open">placement="bottom-end"</mdui-button>
+      <mdui-snackbar placement="bottom-end">Your photo has been archived</mdui-snackbar>
+    </section>
+
+    <section>
+      <h2>message-line</h2>
+      <mdui-button class="open">message-line="1"</mdui-button>
+      <mdui-snackbar message-line="1">One-line snackbar One-line snackbar One-line snackbar One-line snackbar One-line snackbar One-line snackbar</mdui-snackbar>
+
+      <mdui-button class="open">message-line="2"</mdui-button>
+      <mdui-snackbar message-line="2">Two-line snackbar Two-line snackbar Two-line snackbar Two-line snackbar Two-line snackbar Two-line snackbar Two-line snackbar Two-line snackbar Two-line snackbar Two-line snackbar</mdui-snackbar>
+
+      <mdui-button class="open">no limit</mdui-button>
+      <mdui-snackbar>snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar </mdui-snackbar>
+
+      <mdui-button class="open">multiple line with action</mdui-button>
+      <mdui-snackbar action="Undo">snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar </mdui-snackbar>
+
+      <mdui-button class="open">multiple line with close</mdui-button>
+      <mdui-snackbar closeable>snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar </mdui-snackbar>
+
+      <mdui-button class="open">multiple line with action & close</mdui-button>
+      <mdui-snackbar action="Undo" closeable>snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar snackbar </mdui-snackbar>
+    </section>
+
+    <section>
+      <h2>auto-close-delay</h2>
+      <mdui-button class="open">auto-close-delay="1000"</mdui-button>
+      <mdui-snackbar auto-close-delay="1000">Will close 1000ms later</mdui-snackbar>
+
+      <mdui-button class="open">auto-close-delay="0"</mdui-button>
+      <mdui-snackbar auto-close-delay="0" closeable>Will not auto close</mdui-snackbar>
+    </section>
+
+    <section>
+      <h2>close-on-action-click</h2>
+      <mdui-button class="open">close-on-action-click</mdui-button>
+      <mdui-snackbar close-on-action-click action="Do">Close on action click</mdui-snackbar>
+    </section>
+
+    <section>
+      <h2>close-on-outside-click</h2>
+      <mdui-button class="open">close-on-outside-click</mdui-button>
+      <mdui-snackbar close-on-outside-click>Close on outside click</mdui-snackbar>
+    </section>
+
+    <section>
+      <h2>slot</h2>
+      <mdui-button class="open">action slot</mdui-button>
+      <mdui-snackbar>Your photo has been archived<button slot="action">action</button></mdui-snackbar>
+
+      <mdui-button class="open">close slot</mdui-button>
+      <mdui-snackbar closeable>Your photo has been archived<button slot="close">X</button></mdui-snackbar>
+
+      <mdui-button class="open">action & close slot</mdui-button>
+      <mdui-snackbar closeable>Your photo has been archived<button slot="action">action</button><button slot="close">X</button></mdui-snackbar>
+    </section>
+  </main>
+</body>
+</html>

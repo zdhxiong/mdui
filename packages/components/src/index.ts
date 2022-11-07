@@ -31,6 +31,7 @@ export * from './segmented-button-item.js';
 export * from './segmented-button.js';
 export * from './select.js';
 export * from './slider.js';
+export * from './snackbar.js';
 export * from './spacer.js';
 export * from './switch.js';
 export * from './text-field.js';

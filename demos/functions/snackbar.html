@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>snackbar()</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: Roboto;
+    }
+
+    .form {
+      width: 600px;
+    }
+    @media (max-width: 600px) {
+      .form {
+        width: 100%;
+      }
+    }
+  </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import { $ } from '../../packages/jq/$.js';
+    import '../../packages/jq/methods/on.js';
+    import '../../packages/components/button.js';
+    import '../../packages/components/text-field.js';
+    import '../../packages/components/radio-group.js';
+    import '../../packages/components/radio.js';
+    import '../../packages/components/checkbox.js';
+    import { snackbar } from '../../packages/functions/snackbar.js';
+
+    const form = $('.form')[0];
+    const currentEvent = $('.current-event')[0];
+
+    $('.snackbar').on('click', () => {
+      const formData = new FormData(form);
+      const options = {
+        message: formData.get('message'),
+        placement: formData.get('placement'),
+        action: formData.get('action'),
+        closeable: !!formData.get('closeable'),
+        messageLine: formData.get('messageLine'),
+        autoCloseDelay: formData.get('autoCloseDelay'),
+        closeOnActionClick: !!formData.get('closeOnActionClick'),
+        closeOnOutsideClick: !!formData.get('closeOnOutsideClick'),
+        onClick: () => currentEvent.textContent = 'onClick',
+        onActionClick: () => currentEvent.textContent = 'onActionClick',
+        onOpen: () => currentEvent.textContent = 'onOpen',
+        onOpened: () => currentEvent.textContent = 'onOpened',
+        onClose: () => currentEvent.textContent = 'onClose',
+        onClosed: () => currentEvent.textContent = 'onClosed',
+      };
+      console.log(options);
+      snackbar(options);
+    });
+  </script>
+</head>
+
+<body>
+  <main>
+    <section>
+      <h2>snackbar</h2>
+      <form class="form">
+        <mdui-text-field name="message" label="message" value="Snackbar message"></mdui-text-field>
+        <mdui-radio-group name="placement" value="bottom">
+          <mdui-radio value="top">top</mdui-radio>
+          <mdui-radio value="top-start">top-start</mdui-radio>
+          <mdui-radio value="top-end">top-end</mdui-radio>
+          <mdui-radio value="bottom">bottom</mdui-radio>
+          <mdui-radio value="bottom-start">bottom-start</mdui-radio>
+          <mdui-radio value="bottom-end">bottom-end</mdui-radio>
+        </mdui-radio-group>
+        <mdui-text-field name="action" label="action"></mdui-text-field>
+        <mdui-checkbox name="closeable">closeable</mdui-checkbox>
+<!-- todo select 组件尚未完成       <mdui-select></mdui-select>-->
+        <mdui-text-field name="autoCloseDelay" label="autoCloseDelay" type="number" value="5000"></mdui-text-field>
+        <mdui-checkbox name="closeOnActionClick">closeOnActionClick</mdui-checkbox>
+        <mdui-checkbox name="closeOnOutsideClick">closeOnOutsideClick</mdui-checkbox>
+      </form>
+
+      <mdui-button class="snackbar">snackbar</mdui-button>
+      <div>当前触发的事件（包括：onClick, onActionClick, onOpen, onOpened, onClose, onClosed）：<span class="current-event"></span></div>
+    </section>
+  </main>
+</body>

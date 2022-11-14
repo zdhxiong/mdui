@@ -99,9 +99,15 @@ export const toCamelCase = (string: string): string => {
  * @param string
  */
 export const toKebabCase = (string: string): string => {
-  return string.replace(/[A-Z]/g, (replacer) => {
-    return '-' + replacer.toLowerCase();
-  });
+  if (!string) {
+    return string;
+  }
+
+  return string
+    .replace(/^./, string[0].toLowerCase()) // 首字母转小写
+    .replace(/[A-Z]/g, (replacer) => {
+      return '-' + replacer.toLowerCase();
+    });
 };
 
 /**

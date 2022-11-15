@@ -24,13 +24,13 @@
 }
 
 // 滚动条样式
-*::-webkit-scrollbar {
+:not([no-scrollbar-beauty])::-webkit-scrollbar {
   .px(width, 8);
   .px(height, 8);
 
   background: transparent;
 }
 
-*::-webkit-scrollbar-thumb {
+:not([no-scrollbar-beauty])::-webkit-scrollbar-thumb {
   .backgroundColor(surface-variant);
 }

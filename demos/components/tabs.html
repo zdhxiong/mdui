@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>Tab</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+  />
+  <style>
+    body {
+      font-family: Roboto;
+    }
+
+    mdui-tabs,
+    .swiper {
+      width: 600px;
+    }
+    @media (max-width: 600px) {
+      mdui-tabs,
+      .swiper {
+        width: 100%;
+      }
+    }
+  </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/components/tabs.js';
+    import '../../packages/components/tab.js';
+    import '../../packages/components/tab-panel.js';
+    import '../../packages/components/badge.js';
+    import '../../packages/components/segmented-button-group.js';
+    import '../../packages/components/segmented-button.js';
+    import '../../packages/icons/flight.js';
+    import '../../packages/icons/luggage.js';
+    import '../../packages/icons/explore--outlined.js';
+    import { $ } from '../../packages/jq/$.js';
+    import '../../packages/jq/methods/on.js';
+
+    $('.change-alignment').on('change', function () {
+      $('.update-placement-alignment')[0].alignment = this.value;
+    });
+
+    $('.change-placement').on('change', function () {
+      $('.update-placement-alignment')[0].placement = this.value;
+    });
+
+    import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.esm.browser.min.js';
+    const tabWithSwiper = document.querySelector('.with-swiper');
+    const tabs = Array.from(document.querySelectorAll('.with-swiper mdui-tab'));
+    const getCurrentTabIndex = () => tabs.findIndex(tab => tab.value === tabWithSwiper.value);
+    const swiper = new Swiper('.swiper', {
+      initialSlide: getCurrentTabIndex(),
+      on: {
+        activeIndexChange() {
+          tabWithSwiper.value = tabs[this.activeIndex].value;
+        }
+      }
+    });
+    tabWithSwiper.addEventListener('change', () => {
+      swiper.slideTo(getCurrentTabIndex());
+    });
+  </script>
+</head>
+
+<body>
+  <main>
+    <section>
+      <h2>Primary</h2>
+      <mdui-tabs value="trips">
+        <mdui-tab value="flights">Flights</mdui-tab>
+        <mdui-tab value="trips">Trips</mdui-tab>
+        <mdui-tab value="explore">Explore</mdui-tab>
+        <mdui-tab-panel slot="panel" value="flights">Flights content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="trips">Trips content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="explore">Explore content</mdui-tab-panel>
+      </mdui-tabs>
+    </section>
+
+    <section>
+      <h2>Primary with icon</h2>
+      <mdui-tabs value="trips">
+        <mdui-tab icon="flight" value="flights">Flights</mdui-tab>
+        <mdui-tab icon="luggage" value="trips">Trips</mdui-tab>
+        <mdui-tab icon="explore--outlined" value="explore">Explore</mdui-tab>
+        <mdui-tab-panel slot="panel" value="flights">Flights content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="trips">Trips content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="explore">Explore content</mdui-tab-panel>
+      </mdui-tabs>
+    </section>
+
+    <section>
+      <h2>Secondary</h2>
+      <mdui-tabs variant="secondary" value="trips">
+        <mdui-tab value="flights">Flights</mdui-tab>
+        <mdui-tab value="trips">Trips</mdui-tab>
+        <mdui-tab value="explore">Explore</mdui-tab>
+        <mdui-tab-panel slot="panel" value="flights">Flights content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="trips">Trips content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="explore">Explore content</mdui-tab-panel>
+      </mdui-tabs>
+    </section>
+
+    <section>
+      <h2>Secondary with icon</h2>
+      <mdui-tabs variant="secondary" value="trips">
+        <mdui-tab icon="flight" value="flights">Flights</mdui-tab>
+        <mdui-tab icon="luggage" value="trips">Trips</mdui-tab>
+        <mdui-tab icon="explore--outlined" value="explore">Explore</mdui-tab>
+        <mdui-tab-panel slot="panel" value="flights">Flights content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="trips">Trips content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="explore">Explore content</mdui-tab-panel>
+      </mdui-tabs>
+    </section>
+
+    <section>
+      <h2>placement & alignment</h2>
+      <div style="display: flex; align-items: center; margin-bottom: 8px;">
+        <label>placement：</label>
+        <mdui-segmented-button-group selects="single" value="top" class="change-placement">
+          <mdui-segmented-button value="top">top</mdui-segmented-button>
+          <mdui-segmented-button value="right">right</mdui-segmented-button>
+          <mdui-segmented-button value="bottom">bottom</mdui-segmented-button>
+          <mdui-segmented-button value="left">left</mdui-segmented-button>
+        </mdui-segmented-button-group>
+      </div>
+      <div style="display: flex; align-items: center; margin-bottom: 8px;">
+        <label>alignment：</label>
+        <mdui-segmented-button-group selects="single" value="start" class="change-alignment">
+          <mdui-segmented-button value="start">start</mdui-segmented-button>
+          <mdui-segmented-button value="center">center</mdui-segmented-button>
+          <mdui-segmented-button value="end">end</mdui-segmented-button>
+        </mdui-segmented-button-group>
+      </div>
+      <mdui-tabs value="trips" class="update-placement-alignment">
+        <mdui-tab icon="flight" value="flights">Flights</mdui-tab>
+        <mdui-tab icon="luggage" value="trips">Trips</mdui-tab>
+        <mdui-tab icon="explore--outlined" value="explore">Explore</mdui-tab>
+        <mdui-tab-panel slot="panel" value="flights">Flights content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="trips">Trips content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="explore">Explore content</mdui-tab-panel>
+      </mdui-tabs>
+    </section>
+
+    <section>
+      <h2>fullwidth</h2>
+      <mdui-tabs fullwidth value="trips">
+        <mdui-tab icon="flight" value="flights">Flights</mdui-tab>
+        <mdui-tab icon="luggage" value="trips">Trips</mdui-tab>
+        <mdui-tab icon="explore--outlined" value="explore">Explore</mdui-tab>
+        <mdui-tab-panel slot="panel" value="flights">Flights content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="trips">Trips content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="explore">Explore content</mdui-tab-panel>
+      </mdui-tabs>
+    </section>
+
+    <section>
+      <h2>scroll</h2>
+      <mdui-tabs value="trips">
+        <mdui-tab icon="flight" value="flights">Flights</mdui-tab>
+        <mdui-tab icon="luggage" value="trips">Trips</mdui-tab>
+        <mdui-tab icon="explore--outlined" value="explore">Explore</mdui-tab>
+        <mdui-tab icon="flight" value="four">Four</mdui-tab>
+        <mdui-tab icon="flight" value="five">Five</mdui-tab>
+        <mdui-tab icon="flight" value="six">Six</mdui-tab>
+        <mdui-tab icon="flight" value="seven">Seven</mdui-tab>
+        <mdui-tab icon="flight" value="eight">Eight</mdui-tab>
+        <mdui-tab icon="flight" value="nine">Nine</mdui-tab>
+        <mdui-tab icon="flight" value="ten">Ten</mdui-tab>
+        <mdui-tab-panel slot="panel" value="flights">Flights content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="trips">Trips content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="explore">Explore content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="four">Four content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="five">Five content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="six">Six content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="seven">Seven content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="eight">Eight content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="nine">Nine content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="ten">Ten content</mdui-tab-panel>
+      </mdui-tabs>
+    </section>
+
+    <section>
+      <h2>icon slot</h2>
+      <mdui-tabs value="trips">
+        <mdui-tab value="flights"><mdui-icon-flight slot="icon"></mdui-icon-flight>Flights</mdui-tab>
+        <mdui-tab value="trips"><mdui-icon-luggage slot="icon"></mdui-icon-luggage>Trips</mdui-tab>
+        <mdui-tab value="explore"><mdui-icon-explore--outlined slot="icon"></mdui-icon-explore--outlined>Explore</mdui-tab>
+        <mdui-tab-panel slot="panel" value="flights">Flights content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="trips">Trips content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="explore">Explore content</mdui-tab-panel>
+      </mdui-tabs>
+    </section>
+
+    <section>
+      <h2>with badge</h2>
+      <mdui-tabs value="trips">
+        <mdui-tab value="flights">Flights
+          <mdui-badge variant="small" slot="badge"></mdui-badge>
+        </mdui-tab>
+        <mdui-tab value="trips">Trips
+          <mdui-badge slot="badge">1</mdui-badge>
+        </mdui-tab>
+        <mdui-tab value="explore">Explore
+          <mdui-badge slot="badge">99+</mdui-badge>
+        </mdui-tab>
+        <mdui-tab-panel slot="panel" value="flights">Flights content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="trips">Trips content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="explore">Explore content</mdui-tab-panel>
+      </mdui-tabs>
+
+      <mdui-tabs value="trips">
+        <mdui-tab icon="flight" value="flights">Flights
+          <mdui-badge variant="small" slot="badge"></mdui-badge>
+        </mdui-tab>
+        <mdui-tab icon="luggage" value="trips">Trips
+          <mdui-badge slot="badge">1</mdui-badge>
+        </mdui-tab>
+        <mdui-tab icon="explore--outlined" value="explore">Explore
+          <mdui-badge slot="badge">99+</mdui-badge>
+        </mdui-tab>
+        <mdui-tab-panel slot="panel" value="flights">Flights content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="trips">Trips content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="explore">Explore content</mdui-tab-panel>
+      </mdui-tabs>
+    </section>
+
+    <section>
+      <h2>inline tab</h2>
+      <mdui-tabs value="trips">
+        <mdui-tab icon="flight" value="flights">Flights</mdui-tab>
+        <mdui-tab icon="luggage" value="trips" inline>Trips</mdui-tab>
+        <mdui-tab icon="explore--outlined" value="explore">Explore</mdui-tab>
+        <mdui-tab-panel slot="panel" value="flights">Flights content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="trips">Trips content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="explore">Explore content</mdui-tab-panel>
+      </mdui-tabs>
+    </section>
+
+    <section>
+      <h2>custom slot</h2>
+      <mdui-tabs value="trips">
+        <mdui-tab value="flights">
+          <div slot="custom" style="padding: 24px"><mdui-icon-flight></mdui-icon-flight>Flights<br/>Flights</div>
+        </mdui-tab>
+        <mdui-tab value="trips">
+          <div slot="custom"><mdui-icon-luggage></mdui-icon-luggage>Trips</div>
+        </mdui-tab>
+        <mdui-tab value="explore">
+          <div slot="custom"><mdui-icon-explore--outlined></mdui-icon-explore--outlined>Explore</div>
+        </mdui-tab>
+        <mdui-tab-panel slot="panel" value="flights">Flights content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="trips">Trips content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="explore">Explore content</mdui-tab-panel>
+      </mdui-tabs>
+    </section>
+
+    <section>
+      <h2>with swiper</h2>
+      <mdui-tabs value="trips" class="with-swiper">
+        <mdui-tab icon="flight" value="flights">Flights</mdui-tab>
+        <mdui-tab icon="luggage" value="trips">Trips</mdui-tab>
+        <mdui-tab icon="explore--outlined" value="explore">Explore</mdui-tab>
+        <div slot="panel" class="swiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">Slide 1</div>
+            <div class="swiper-slide">Slide 2</div>
+            <div class="swiper-slide">Slide 3</div>
+          </div>
+        </div>
+      </mdui-tabs>
+    </section>
+  </main>
+</body>
+</html>

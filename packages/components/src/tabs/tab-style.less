@@ -1,0 +1,81 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  position: relative;
+  .stateLayerColor(on-surface);
+}
+
+:host([active]) {
+  .stateLayerColor(primary);
+}
+
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  height: 100%;
+}
+
+.preset {
+  flex-direction: column;
+  .minHeight(48);
+  .padding(10, 16);
+
+  :host([inline]) & {
+    flex-direction: row;
+  }
+}
+
+.icon,
+.label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .color(on-surface-variant);
+
+  :host([hover]) &,
+  :host([focused]) &,
+  :host([pressed]) & {
+    .color(on-surface);
+  }
+
+  :host([active]) & {
+    .color(primary);
+  }
+
+  :host([active][variant="secondary"]) & {
+    .color(on-surface);
+  }
+}
+
+.icon {
+  .fontSize(24);
+
+  ::slotted([slot="badge"]) {
+    position: absolute;
+    transform: translate(50%, -50%); // 距离图标左侧和底部 12dp
+  }
+
+  ::slotted([slot="badge"][variant="small"]) {
+    .translate(9, -9); // 位于图标右上角
+  }
+}
+
+.label {
+  .typescale(title-small);
+
+  ::slotted([slot="badge"]) {
+    position: absolute;
+    left: 100%;
+    bottom: 100%;
+    .translate(-12, 10); // 位于文本右上角，向左下方移动 12dp, 10dp
+  }
+
+  ::slotted([slot="badge"][variant="small"]) {
+    .translate(-6, 6); // 位于文本右上角
+  }
+}

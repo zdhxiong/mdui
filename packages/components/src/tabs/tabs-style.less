@@ -1,0 +1,161 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  display: flex;
+}
+
+:host([placement="top"]) {
+  flex-direction: column;
+}
+
+:host([placement="bottom"]) {
+  flex-direction: column-reverse;
+}
+
+:host([placement="left"]) {
+  flex-direction: row;
+}
+
+:host([placement="right"]) {
+  flex-direction: row-reverse;
+}
+
+.nav {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  overflow-x: auto;
+  .backgroundColor(surface);
+
+  :host([placement="top"]) &,
+  :host([placement="bottom"]) & {
+    flex-direction: row;
+  }
+
+  :host([placement="left"]) &,
+  :host([placement="right"]) & {
+    flex-direction: column;
+  }
+
+  :host([alignment="start"]) & {
+    justify-content: flex-start;
+  }
+
+  :host([alignment="center"]) & {
+    justify-content: center;
+  }
+
+  :host([alignment="end"]) & {
+    justify-content: flex-end;
+  }
+
+  &::after {
+    content: " ";
+    position: absolute;
+    .backgroundColor(surface-variant);
+
+    :host([placement="top"]) &,
+    :host([placement="bottom"]) & {
+      left: 0;
+      width: 100%;
+      .height(1);
+    }
+
+    :host([placement="top"]) & {
+      bottom: 0;
+    }
+
+    :host([placement="bottom"]) & {
+      top: 0;
+    }
+
+    :host([placement="left"]) &,
+    :host([placement="right"]) & {
+      top: 0;
+      height: 100%;
+      .width(1);
+    }
+
+    :host([placement="left"]) & {
+      right: 0;
+    }
+
+    :host([placement="right"]) & {
+      left: 0;
+    }
+  }
+}
+
+.indicator {
+  position: absolute;
+  z-index: 1;
+  .transitionDuration(medium2);
+  .transitionTimingFunction(standard-decelerate);
+  .backgroundColor(primary);
+
+  :host([placement="top"]) &,
+  :host([placement="bottom"]) & {
+    transition-property: transform, left, width;
+  }
+
+  :host([placement="left"]) &,
+  :host([placement="right"]) & {
+    transition-property: transform, top, height;
+  }
+
+  :host([placement="top"]) & {
+    bottom: 0;
+  }
+
+  :host([placement="bottom"]) & {
+    top: 0;
+  }
+
+  :host([placement="left"]) & {
+    right: 0;
+  }
+
+  :host([placement="right"]) & {
+    left: 0;
+  }
+
+  :host([placement="top"][variant="primary"]) &,
+  :host([placement="bottom"][variant="primary"]) & {
+    .height(3);
+  }
+
+  :host([placement="top"][variant="secondary"]) &,
+  :host([placement="bottom"][variant="secondary"]) & {
+    .height(2);
+  }
+
+  :host([placement="left"][variant="primary"]) &,
+  :host([placement="right"][variant="primary"]) & {
+    .width(3);
+  }
+
+  :host([placement="left"][variant="secondary"]) &,
+  :host([placement="right"][variant="secondary"]) & {
+    .width(2);
+  }
+
+  :host([placement="top"][variant="primary"]) & {
+    .borderRadius(3, top);
+  }
+
+  :host([placement="bottom"][variant="primary"]) & {
+    .borderRadius(3, bottom);
+  }
+
+  :host([placement="left"][variant="primary"]) & {
+    .borderRadius(3, start);
+  }
+
+  :host([placement="right"][variant="primary"]) & {
+    .borderRadius(3, end);
+  }
+}
+
+:host([fullwidth]) ::slotted(mdui-tab) {
+  flex: 1;
+}

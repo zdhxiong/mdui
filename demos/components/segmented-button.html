@@ -18,8 +18,8 @@
   </style>
   <script type="module">
     import '../../packages/mdui/mdui.css';
+    import '../../packages/components/segmented-button-group.js';
     import '../../packages/components/segmented-button.js';
-    import '../../packages/components/segmented-button-item.js';
     import '../../packages/components/icon.js';
     import '../../packages/components/button.js';
   </script>
@@ -29,32 +29,32 @@
   <main>
     <section>
       <h2>Segmented Button</h2>
-      <mdui-segmented-button>
-        <mdui-segmented-button-item>Small</mdui-segmented-button-item>
-        <mdui-segmented-button-item selected>Medium</mdui-segmented-button-item>
-        <mdui-segmented-button-item disabled>Disabled</mdui-segmented-button-item>
-        <mdui-segmented-button-item>Large</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group>
+        <mdui-segmented-button>Small</mdui-segmented-button>
+        <mdui-segmented-button selected>Medium</mdui-segmented-button>
+        <mdui-segmented-button disabled>Disabled</mdui-segmented-button>
+        <mdui-segmented-button>Large</mdui-segmented-button>
+      </mdui-segmented-button-group>
     </section>
 
     <section>
       <h2>fullwidth</h2>
-      <mdui-segmented-button fullwidth>
-        <mdui-segmented-button-item>Small</mdui-segmented-button-item>
-        <mdui-segmented-button-item selected>Medium</mdui-segmented-button-item>
-        <mdui-segmented-button-item disabled>Disabled</mdui-segmented-button-item>
-        <mdui-segmented-button-item>Large</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group fullwidth>
+        <mdui-segmented-button>Small</mdui-segmented-button>
+        <mdui-segmented-button selected>Medium</mdui-segmented-button>
+        <mdui-segmented-button disabled>Disabled</mdui-segmented-button>
+        <mdui-segmented-button>Large</mdui-segmented-button>
+      </mdui-segmented-button-group>
     </section>
 
     <section>
       <h2>selects="single"</h2>
-      <mdui-segmented-button selects="single" class="single" value="medium">
-        <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="medium">Medium</mdui-segmented-button-item>
-        <mdui-segmented-button-item disabled value="disabled">Disabled</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group selects="single" class="single" value="medium">
+        <mdui-segmented-button value="small">Small</mdui-segmented-button>
+        <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
+        <mdui-segmented-button disabled value="disabled">Disabled</mdui-segmented-button>
+        <mdui-segmented-button value="large">Large</mdui-segmented-button>
+      </mdui-segmented-button-group>
       <script>
         document.querySelector('.single').addEventListener('change', e => {
           console.log('change event: ', e.target.value);
@@ -64,12 +64,12 @@
 
     <section>
       <h2>selects="multiple"</h2>
-      <mdui-segmented-button selects="multiple" class="multiple" value="medium">
-        <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="medium">Medium</mdui-segmented-button-item>
-        <mdui-segmented-button-item disabled value="disabled">Disabled</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group selects="multiple" class="multiple" value="medium">
+        <mdui-segmented-button value="small">Small</mdui-segmented-button>
+        <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
+        <mdui-segmented-button disabled value="disabled">Disabled</mdui-segmented-button>
+        <mdui-segmented-button value="large">Large</mdui-segmented-button>
+      </mdui-segmented-button-group>
       <script>
         document.querySelector('.multiple').addEventListener('change', e => {
           console.log('change event: ', e.target.value);
@@ -79,85 +79,85 @@
 
     <section>
       <h2>href</h2>
-      <mdui-segmented-button>
-        <mdui-segmented-button-item href="https://www.mdui.org">Small</mdui-segmented-button-item>
-        <mdui-segmented-button-item href="https://www.mdui.org" selected>Medium</mdui-segmented-button-item>
-        <mdui-segmented-button-item href="https://www.mdui.org" disabled>Disabled</mdui-segmented-button-item>
-        <mdui-segmented-button-item href="https://www.mdui.org">Large</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group>
+        <mdui-segmented-button href="https://www.mdui.org">Small</mdui-segmented-button>
+        <mdui-segmented-button href="https://www.mdui.org" selected>Medium</mdui-segmented-button>
+        <mdui-segmented-button href="https://www.mdui.org" disabled>Disabled</mdui-segmented-button>
+        <mdui-segmented-button href="https://www.mdui.org">Large</mdui-segmented-button>
+      </mdui-segmented-button-group>
     </section>
 
     <section>
       <h2>icon only</h2>
-      <mdui-segmented-button>
-        <mdui-segmented-button-item icon="directions_walk"></mdui-segmented-button-item>
-        <mdui-segmented-button-item icon="directions_bus" selected></mdui-segmented-button-item>
-        <mdui-segmented-button-item icon="directions_bus" disabled></mdui-segmented-button-item>
-        <mdui-segmented-button-item icon="directions_car"></mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group>
+        <mdui-segmented-button icon="directions_walk"></mdui-segmented-button>
+        <mdui-segmented-button icon="directions_bus" selected></mdui-segmented-button>
+        <mdui-segmented-button icon="directions_bus" disabled></mdui-segmented-button>
+        <mdui-segmented-button icon="directions_car"></mdui-segmented-button>
+      </mdui-segmented-button-group>
     </section>
 
     <section>
       <h2>icon and label</h2>
-      <mdui-segmented-button>
-        <mdui-segmented-button-item icon="directions_walk">Walking</mdui-segmented-button-item>
-        <mdui-segmented-button-item icon="directions_bus" selected>Transit</mdui-segmented-button-item>
-        <mdui-segmented-button-item icon="directions_bus" disabled>Disabled</mdui-segmented-button-item>
-        <mdui-segmented-button-item icon="directions_car">Driving</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group>
+        <mdui-segmented-button icon="directions_walk">Walking</mdui-segmented-button>
+        <mdui-segmented-button icon="directions_bus" selected>Transit</mdui-segmented-button>
+        <mdui-segmented-button icon="directions_bus" disabled>Disabled</mdui-segmented-button>
+        <mdui-segmented-button icon="directions_car">Driving</mdui-segmented-button>
+      </mdui-segmented-button-group>
     </section>
 
     <section>
       <h2>endIcon and label</h2>
-      <mdui-segmented-button>
-        <mdui-segmented-button-item endIcon="directions_walk">Walking</mdui-segmented-button-item>
-        <mdui-segmented-button-item endIcon="directions_bus" selected>Transit</mdui-segmented-button-item>
-        <mdui-segmented-button-item endIcon="directions_bus" disabled>Disabled</mdui-segmented-button-item>
-        <mdui-segmented-button-item endIcon="directions_car">Driving</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group>
+        <mdui-segmented-button endIcon="directions_walk">Walking</mdui-segmented-button>
+        <mdui-segmented-button endIcon="directions_bus" selected>Transit</mdui-segmented-button>
+        <mdui-segmented-button endIcon="directions_bus" disabled>Disabled</mdui-segmented-button>
+        <mdui-segmented-button endIcon="directions_car">Driving</mdui-segmented-button>
+      </mdui-segmented-button-group>
     </section>
 
     <section>
       <h2>slot</h2>
-      <mdui-segmented-button>
-        <mdui-segmented-button-item>
+      <mdui-segmented-button-group>
+        <mdui-segmented-button>
           <mdui-icon name="directions_walk" slot="start"></mdui-icon>
           Walking
-        </mdui-segmented-button-item>
-        <mdui-segmented-button-item selected>
+        </mdui-segmented-button>
+        <mdui-segmented-button selected>
           Transit
           <mdui-icon name="directions_bus" slot="end"></mdui-icon>
-        </mdui-segmented-button-item>
-        <mdui-segmented-button-item disabled>
+        </mdui-segmented-button>
+        <mdui-segmented-button disabled>
           <mdui-icon name="directions_car" slot="start"></mdui-icon>
           Disabled
           <mdui-icon name="directions_car" slot="end"></mdui-icon>
-        </mdui-segmented-button-item>
-        <mdui-segmented-button-item>
+        </mdui-segmented-button>
+        <mdui-segmented-button>
           <mdui-icon name="directions_car" slot="start"></mdui-icon>
           Driving
           <mdui-icon name="directions_car" slot="end"></mdui-icon>
-        </mdui-segmented-button-item>
-      </mdui-segmented-button>
+        </mdui-segmented-button>
+      </mdui-segmented-button-group>
     </section>
 
     <section>
       <h2>loading</h2>
-      <mdui-segmented-button>
-        <mdui-segmented-button-item>Small</mdui-segmented-button-item>
-        <mdui-segmented-button-item loading>Loading</mdui-segmented-button-item>
-        <mdui-segmented-button-item>Large</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group>
+        <mdui-segmented-button>Small</mdui-segmented-button>
+        <mdui-segmented-button loading>Loading</mdui-segmented-button>
+        <mdui-segmented-button>Large</mdui-segmented-button>
+      </mdui-segmented-button-group>
     </section>
 
     <section>
       <h2>required</h2>
       <form>
-        <mdui-segmented-button required selects="single">
-          <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
-          <mdui-segmented-button-item value="medium">Medium</mdui-segmented-button-item>
-          <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
-        </mdui-segmented-button><br /><br />
+        <mdui-segmented-button-group required selects="single">
+          <mdui-segmented-button value="small">Small</mdui-segmented-button>
+          <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
+          <mdui-segmented-button value="large">Large</mdui-segmented-button>
+        </mdui-segmented-button-group><br /><br />
         <mdui-button type="submit">Submit</mdui-button>
       </form>
     </section>

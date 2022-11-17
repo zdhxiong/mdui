@@ -1,26 +1,79 @@
 @import "~@mdui/shared/mixin.less";
 
 :host {
-  --shape-corner: var(--mdui-shape-corner-full);
-
   position: relative;
   display: inline-flex;
-  .height(40);
-  .typescale(label-large);
-  .color(on-surface);
-  .stateLayerColor(on-surface);
-}
-
-:host([fullwidth]) {
-  display: flex;
-  flex-wrap: nowrap;
-}
-
-select {
-  position: absolute;
-  width: 100%;
+  flex-grow: 1;
+  flex-shrink: 0;
+  float: left;
   height: 100%;
-  padding: 0;
-  opacity: 0;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  .border(1, solid, outline);
+}
+
+.button {
+  width: 100%;
+  .padding(0, 12);
+}
+
+:host([selected]) {
+  .color(on-secondary-container);
+  .backgroundColor(secondary-container);
+  .stateLayerColor(on-secondary-container);
+}
+
+:host([loading]) {
+  mdui-ripple,
+  .button {
+    opacity: 0;
+  }
+
+  mdui-circular-progress {
+    position: absolute;
+    top: calc(50% - unit((18 / 14), em) / 2);
+    left: calc(50% - unit((18 / 14), em) / 2);
+    width: unit((18 / 14), em);
+    height: unit((18 / 14), em);
+  }
+}
+
+:host([disabled]),
+:host([loading]) {
+  cursor: default;
   pointer-events: none;
+  .color(on-surface, 38%);
+  .borderColor(on-surface, 12%);
+}
+
+:host(:not(.mdui-segmented-button-first)) {
+  .marginLeft(-1);
+}
+
+:host(.mdui-segmented-button-first) {
+  border-radius: var(--shape-corner) 0 0 var(--shape-corner);
+}
+
+:host(.mdui-segmented-button-last) {
+  border-radius: 0 var(--shape-corner) var(--shape-corner) 0;
+}
+
+.icon,
+.check,
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
+  font-size: unit((18 / 14), em);
+}
+
+.check {
+  .marginRight(8);
+}
+
+.has-start .label {
+  .paddingLeft(8);
+}
+
+.has-end .label {
+  .paddingRight(8);
 }

@@ -34,8 +34,8 @@
     import '../../packages/components/top-app-bar-title.js';
     import '../../packages/components/button-icon.js';
     import '../../packages/components/button.js';
+    import '../../packages/components/segmented-button-group.js';
     import '../../packages/components/segmented-button.js';
-    import '../../packages/components/segmented-button-item.js';
     import '../../packages/components/avatar.js';
     import '../../packages/components/dropdown.js';
     import '../../packages/components/menu.js';
@@ -309,12 +309,12 @@
         </div>
       </div>
       <br />
-      <mdui-segmented-button value="center-aligned" selects="single" id="change-variant">
-        <mdui-segmented-button-item value="center-aligned">center-aligned</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="small">small</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="medium">medium</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="large">large</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group value="center-aligned" selects="single" id="change-variant">
+        <mdui-segmented-button value="center-aligned">center-aligned</mdui-segmented-button>
+        <mdui-segmented-button value="small">small</mdui-segmented-button>
+        <mdui-segmented-button value="medium">medium</mdui-segmented-button>
+        <mdui-segmented-button value="large">large</mdui-segmented-button>
+      </mdui-segmented-button-group>
     </section>
 
   </main>

@@ -30,8 +30,8 @@
     import '../../packages/components/fab.js';
     import '../../packages/components/navigation-rail.js';
     import '../../packages/components/navigation-rail-item.js';
+    import '../../packages/components/segmented-button-group.js';
     import '../../packages/components/segmented-button.js';
-    import '../../packages/components/segmented-button-item.js';
     import '../../packages/components/badge.js';
     import '../../packages/icons/folder-open--outlined.js';
     import '../../packages/icons/library-music--outlined.js';
@@ -123,10 +123,10 @@
 
     <section>
       <h2>placement</h2>
-      <mdui-segmented-button selects="single" value="right" class="change-placement">
-        <mdui-segmented-button-item value="left">left</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="right">right</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group selects="single" value="right" class="change-placement">
+        <mdui-segmented-button value="left">left</mdui-segmented-button>
+        <mdui-segmented-button value="right">right</mdui-segmented-button>
+      </mdui-segmented-button-group>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained value="recent" placement="right">
           <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
@@ -144,11 +144,11 @@
 
     <section>
       <h2>alignment & top slot</h2>
-      <mdui-segmented-button selects="single" value="center" class="change-alignment">
-        <mdui-segmented-button-item value="top">top</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="center">center</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="bottom">bottom</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group selects="single" value="center" class="change-alignment">
+        <mdui-segmented-button value="top">top</mdui-segmented-button>
+        <mdui-segmented-button value="center">center</mdui-segmented-button>
+        <mdui-segmented-button value="bottom">bottom</mdui-segmented-button>
+      </mdui-segmented-button-group>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained value="recent" alignment="center">
           <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
@@ -166,11 +166,11 @@
 
     <section>
       <h2>alignment & bottom slot</h2>
-      <mdui-segmented-button selects="single" value="center" class="change-alignment">
-        <mdui-segmented-button-item value="top">top</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="center">center</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="bottom">bottom</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group selects="single" value="center" class="change-alignment">
+        <mdui-segmented-button value="top">top</mdui-segmented-button>
+        <mdui-segmented-button value="center">center</mdui-segmented-button>
+        <mdui-segmented-button value="bottom">bottom</mdui-segmented-button>
+      </mdui-segmented-button-group>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained value="recent" alignment="center">
           <mdui-navigation-rail-item icon="folder_open--outlined" value="files">All Files</mdui-navigation-rail-item>
@@ -188,11 +188,11 @@
 
     <section>
       <h2>alignment & top and bottom slot</h2>
-      <mdui-segmented-button selects="single" value="center" class="change-alignment">
-        <mdui-segmented-button-item value="top">top</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="center">center</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="bottom">bottom</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group selects="single" value="center" class="change-alignment">
+        <mdui-segmented-button value="top">top</mdui-segmented-button>
+        <mdui-segmented-button value="center">center</mdui-segmented-button>
+        <mdui-segmented-button value="bottom">bottom</mdui-segmented-button>
+      </mdui-segmented-button-group>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained value="recent" alignment="center">
           <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
@@ -212,11 +212,11 @@
 
     <section>
       <h2>alignment & no top and bottom slot</h2>
-      <mdui-segmented-button selects="single" value="center" class="change-alignment">
-        <mdui-segmented-button-item value="top">top</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="center">center</mdui-segmented-button-item>
-        <mdui-segmented-button-item value="bottom">bottom</mdui-segmented-button-item>
-      </mdui-segmented-button>
+      <mdui-segmented-button-group selects="single" value="center" class="change-alignment">
+        <mdui-segmented-button value="top">top</mdui-segmented-button>
+        <mdui-segmented-button value="center">center</mdui-segmented-button>
+        <mdui-segmented-button value="bottom">bottom</mdui-segmented-button>
+      </mdui-segmented-button-group>
       <div class="container" style="position: relative; overflow: hidden;">
         <mdui-navigation-rail contained value="recent" alignment="center">
           <mdui-navigation-rail-item icon="folder_open--outlined" value="files">All Files</mdui-navigation-rail-item>

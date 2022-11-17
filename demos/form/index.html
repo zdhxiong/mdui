@@ -28,8 +28,8 @@
     import '../../packages/components/radio-group.js';
     import '../../packages/components/radio.js';
     import '../../packages/components/switch.js';
+    import '../../packages/components/segmented-button-group.js';
     import '../../packages/components/segmented-button.js';
-    import '../../packages/components/segmented-button-item.js';
     import '../../packages/components/button.js';
     import '../../packages/components/text-field.js';
   </script>
@@ -52,17 +52,17 @@
         </div>
         <mdui-switch name="switch" value="switch-value"></mdui-switch>
 
-        <mdui-segmented-button selects="single" name="segmented-single">
-          <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
-          <mdui-segmented-button-item value="medium">Medium</mdui-segmented-button-item>
-          <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
-        </mdui-segmented-button>
+        <mdui-segmented-button-group selects="single" name="segmented-single">
+          <mdui-segmented-button value="small">Small</mdui-segmented-button>
+          <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
+          <mdui-segmented-button value="large">Large</mdui-segmented-button>
+        </mdui-segmented-button-group>
 
-        <mdui-segmented-button selects="multiple" name="segmented-multiple">
-          <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
-          <mdui-segmented-button-item value="medium">Medium</mdui-segmented-button-item>
-          <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
-        </mdui-segmented-button>
+        <mdui-segmented-button-group selects="multiple" name="segmented-multiple">
+          <mdui-segmented-button value="small">Small</mdui-segmented-button>
+          <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
+          <mdui-segmented-button value="large">Large</mdui-segmented-button>
+        </mdui-segmented-button-group>
 
         <mdui-text-field name="text-field" label="Text Field"></mdui-text-field>
 
@@ -85,17 +85,17 @@
         </div>
         <mdui-switch name="switch" value="switch-value" required></mdui-switch>
 
-        <mdui-segmented-button selects="single" name="segmented-single" required>
-          <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
-          <mdui-segmented-button-item value="medium">Medium</mdui-segmented-button-item>
-          <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
-        </mdui-segmented-button>
+        <mdui-segmented-button-group selects="single" name="segmented-single" required>
+          <mdui-segmented-button value="small">Small</mdui-segmented-button>
+          <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
+          <mdui-segmented-button value="large">Large</mdui-segmented-button>
+        </mdui-segmented-button-group>
 
-        <mdui-segmented-button selects="multiple" name="segmented-multiple" required>
-          <mdui-segmented-button-item value="small">Small</mdui-segmented-button-item>
-          <mdui-segmented-button-item value="medium">Medium</mdui-segmented-button-item>
-          <mdui-segmented-button-item value="large">Large</mdui-segmented-button-item>
-        </mdui-segmented-button>
+        <mdui-segmented-button-group selects="multiple" name="segmented-multiple" required>
+          <mdui-segmented-button value="small">Small</mdui-segmented-button>
+          <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
+          <mdui-segmented-button value="large">Large</mdui-segmented-button>
+        </mdui-segmented-button-group>
 
         <mdui-text-field name="text-field" label="Text Field" required></mdui-text-field>
 

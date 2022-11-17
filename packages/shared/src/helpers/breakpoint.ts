@@ -8,7 +8,11 @@ import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/innerWidth.js';
 import { isElement, isNumber } from '@mdui/jq/shared/helper.js';
 
-type Breakpoint = 'handset' | 'small-tablet' | 'large-tablet' | 'desktop';
+export type Breakpoint =
+  | 'handset'
+  | 'small-tablet'
+  | 'large-tablet'
+  | 'desktop';
 
 /**
  * 获取断点

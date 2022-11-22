@@ -78,12 +78,12 @@ export class NavigationRail extends LitElement {
 
   /**
    * 导航栏中的 `<mdui-navigation-rail-item>` 元素的对齐方式。可选值为：
-   * * `top`：顶部对齐
+   * * `start`：顶部对齐
    * * `center`：居中对齐
-   * * `bottom`：底部对齐
+   * * `end`：底部对齐
    */
   @property({ reflect: true })
-  public alignment: 'top' | 'center' | 'bottom' = 'top';
+  public alignment: 'start' | 'center' | 'end' = 'start';
 
   /**
    * 默认导航栏相对于 body 元素显示，该参数设置为 true 时，导航栏将相对于它的父元素显示

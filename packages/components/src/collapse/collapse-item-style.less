@@ -1,0 +1,19 @@
+@import "~@mdui/shared/mixin.less";
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.body {
+  overflow: hidden;
+  .transition(height, short4, emphasized);
+
+  &.opened {
+    overflow: visible;
+  }
+
+  :host([active]) & {
+    .transitionDuration(medium4);
+  }
+}

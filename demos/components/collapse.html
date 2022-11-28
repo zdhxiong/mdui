@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>Collapse</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: Roboto;
+    }
+
+    .preset {
+      border: thin solid #a9acaa;
+      border-radius: .5rem;
+      overflow: hidden;
+      max-width: 600px;
+    }
+
+    .preset mdui-collapse-item {
+      border-top: thin solid #a9acaa;
+    }
+
+    .preset mdui-collapse-item:first-child {
+      border-top-left-radius: .625rem;
+      border-top-right-radius: .625rem;
+      border-top: none;
+    }
+
+    .preset mdui-collapse-item:last-child {
+      border-bottom-left-radius: .625rem;
+      border-bottom-right-radius: .625rem;
+    }
+
+    .preset mdui-collapse-item::part(header) {
+      cursor: pointer;
+      padding: 1rem;
+    }
+    .preset[disabled] mdui-collapse-item::part(header),
+    .preset mdui-collapse-item[disabled]::part(header) {
+      cursor: not-allowed;
+      opacity: 0.38;
+      user-select: none;
+    }
+    .preset:not([disabled]) mdui-collapse-item:not([disabled])::part(header):hover {
+      background-color: #efefef;
+    }
+
+    .preset .header-expand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .preset mdui-collapse-item[active] mdui-icon-expand-more {
+      transform: rotate(180deg);
+    }
+  </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/components/collapse.js';
+    import '../../packages/components/collapse-item.js';
+    import '../../packages/icons/expand-more.js';
+    import '../../packages/icons/favorite.js';
+    import '../../packages/components/list.js';
+    import '../../packages/components/list-item.js';
+    import '../../packages/components/card.js';
+    import '../../packages/components/button-icon.js';
+  </script>
+</head>
+
+<body>
+  <main>
+    <section>
+      <h2>normal</h2>
+      <mdui-collapse class="preset">
+        <mdui-collapse-item value="one" header="one header">
+          one content<br/>
+          one content<br/>
+          one content<br/>
+          one content
+        </mdui-collapse-item>
+        <mdui-collapse-item value="two" header="two header">
+          two content<br/>
+          two content<br/>
+          two content<br/>
+          two content
+        </mdui-collapse-item>
+        <mdui-collapse-item value="three" header="three header">
+          three content<br/>
+          three content<br/>
+          three content<br/>
+          three content
+        </mdui-collapse-item>
+      </mdui-collapse>
+    </section>
+
+    <section>
+      <h2>accordion</h2>
+      <mdui-collapse accordion class="preset">
+        <mdui-collapse-item value="one" header="one header">
+          one content<br/>
+          one content<br/>
+          one content<br/>
+          one content
+        </mdui-collapse-item>
+        <mdui-collapse-item value="two" header="two header">
+          two content<br/>
+          two content<br/>
+          two content<br/>
+          two content
+        </mdui-collapse-item>
+        <mdui-collapse-item value="three" header="three header">
+          three content<br/>
+          three content<br/>
+          three content<br/>
+          three content
+        </mdui-collapse-item>
+      </mdui-collapse>
+    </section>
+
+    <section>
+      <h2>default value</h2>
+      <mdui-collapse value="two" class="preset">
+        <mdui-collapse-item value="one" header="one header">
+          one content<br/>
+          one content<br/>
+          one content<br/>
+          one content
+        </mdui-collapse-item>
+        <mdui-collapse-item value="two" header="two header">
+          two content<br/>
+          two content<br/>
+          two content<br/>
+          two content
+        </mdui-collapse-item>
+        <mdui-collapse-item value="three" header="three header">
+          three content<br/>
+          three content<br/>
+          three content<br/>
+          three content
+        </mdui-collapse-item>
+      </mdui-collapse>
+    </section>
+
+    <section>
+      <h2>header slot & trigger</h2>
+      <mdui-collapse value="two" class="preset">
+        <mdui-collapse-item value="one">
+          <div slot="header" class="header-expand">
+            <span>one header</span>
+            <mdui-icon-expand-more></mdui-icon-expand-more>
+          </div>
+          one content<br/>
+          one content<br/>
+          one content<br/>
+          one content
+        </mdui-collapse-item>
+        <mdui-collapse-item value="two" trigger=".trigger-icon">
+          <div slot="header" class="header-expand">
+            <span>two header with trigger</span>
+            <mdui-icon-expand-more class="trigger-icon"></mdui-icon-expand-more>
+          </div>
+          two content<br/>
+          two content<br/>
+          two content<br/>
+          two content
+        </mdui-collapse-item>
+        <mdui-collapse-item value="three">
+          <div slot="header" class="header-expand">
+            <span>three header</span>
+            <mdui-icon-expand-more></mdui-icon-expand-more>
+          </div>
+          three content<br/>
+          three content<br/>
+          three content<br/>
+          three content
+        </mdui-collapse-item>
+      </mdui-collapse>
+    </section>
+
+    <section>
+      <h2>disabled collapse-item</h2>
+      <mdui-collapse value="three" class="preset">
+        <mdui-collapse-item value="one" header="one header">
+          one content<br/>
+          one content<br/>
+          one content<br/>
+          one content
+        </mdui-collapse-item>
+        <mdui-collapse-item value="two" header="two header" disabled>
+          two content<br/>
+          two content<br/>
+          two content<br/>
+          two content
+        </mdui-collapse-item>
+        <mdui-collapse-item value="three" header="three header" disabled>
+          three content<br/>
+          three content<br/>
+          three content<br/>
+          three content
+        </mdui-collapse-item>
+      </mdui-collapse>
+    </section>
+
+    <section>
+      <h2>disabled collapse</h2>
+      <mdui-collapse disabled value="two" class="preset">
+        <mdui-collapse-item value="one" header="one header">
+          one content<br/>
+          one content<br/>
+          one content<br/>
+          one content
+        </mdui-collapse-item>
+        <mdui-collapse-item value="two" header="two header">
+          two content<br/>
+          two content<br/>
+          two content<br/>
+          two content
+        </mdui-collapse-item>
+        <mdui-collapse-item value="three" header="three header">
+          three content<br/>
+          three content<br/>
+          three content<br/>
+          three content
+        </mdui-collapse-item>
+      </mdui-collapse>
+    </section>
+
+    <section>
+      <h2>use with list</h2>
+      <mdui-list>
+        <mdui-list-item>Item 1</mdui-list-item>
+        <mdui-collapse>
+          <mdui-collapse-item>
+            <mdui-list-item slot="header">
+              Item 2
+              <mdui-icon-expand-more slot="end"></mdui-icon-expand-more>
+            </mdui-list-item>
+            <mdui-list-item>subItem 2-1</mdui-list-item>
+            <mdui-list-item>subItem 2-2</mdui-list-item>
+            <mdui-list-item>subItem 2-3</mdui-list-item>
+          </mdui-collapse-item>
+        </mdui-collapse>
+        <mdui-list-item>Item 3</mdui-list-item>
+      </mdui-list>
+    </section>
+
+    <section>
+      <h2>use with card</h2>
+      <mdui-card style="width: 300px;padding: 8px;">
+        <img src="https://picsum.photos/284/100"/>
+        <mdui-collapse>
+          <mdui-collapse-item trigger=".card-expand-button">
+            <div slot="header">
+              <mdui-button-icon>
+                <mdui-icon-favorite></mdui-icon-favorite>
+              </mdui-button-icon>
+              <mdui-button-icon class="card-expand-button" style="float: right;">
+                <mdui-icon-expand-more></mdui-icon-expand-more>
+              </mdui-button-icon>
+            </div>
+            <div>
+              more card content<br/>
+              more card content<br/>
+              more card content<br/>
+              more card content
+            </div>
+          </mdui-collapse-item>
+        </mdui-collapse>
+      </mdui-card>
+    </section>
+  </main>
+</body>
+
+</html>

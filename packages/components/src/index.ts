@@ -7,6 +7,8 @@ export * from './card.js';
 export * from './checkbox.js';
 export * from './chip.js';
 export * from './circular-progress.js';
+export * from './collapse/collapse.js';
+export * from './collapse/collapse-item.js';
 export * from './dialog.js';
 export * from './divider.js';
 export * from './dropdown.js';

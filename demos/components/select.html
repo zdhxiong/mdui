@@ -15,10 +15,42 @@
     body {
       font-family: Roboto;
     }
+
+    mdui-select {
+      width: 280px;
+    }
+
+    @media (max-width: 600px) {
+      mdui-select {
+        width: 100%;
+      }
+    }
+
   </style>
   <script type="module">
     import '../../packages/mdui/mdui.css';
     import '../../packages/components/select.js';
+    import '../../packages/components/menu-item.js';
+    import '../../packages/components/button-icon.js';
+    import { $ } from '../../packages/jq/$.js';
+    import '../../packages/jq/methods/append.js';
+    import '../../packages/jq/methods/children.js';
+    import '../../packages/jq/methods/filter.js';
+    import '../../packages/jq/methods/map.js';
+
+    // mdui-select 元素内不为空的（可包含 slot），填充 mdui-menu-item
+    $('mdui-select')
+      .filter((_, select) => !$(select).children().filter((_, child) => !child.slot).length)
+      .append(`<mdui-menu-item value="item-1">Item One</mdui-menu-item>
+        <mdui-menu-item value="item-2">Item Two</mdui-menu-item>
+        <mdui-menu-item value="item-3">Item Three</mdui-menu-item>
+        <mdui-menu-item value="item-4">Item Four</mdui-menu-item>
+        <mdui-menu-item value="item-5">Item Five</mdui-menu-item>`);
+
+    // multiple select 只能通过 js 设置初始值
+    $('.multiple-value').map((_, select) => {
+      select.value = ['item-2', 'item-3'];
+    });
   </script>
 </head>
 
@@ -26,12 +58,182 @@
   <main>
     <section>
       <h2>normal</h2>
-      <mdui-select>
-        <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
-        <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
-        <mdui-menu-item value="item-3">Item 3</mdui-menu-item>
+      <mdui-select></mdui-select>
+      <mdui-select variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>multiple</h2>
+      <mdui-select multiple></mdui-select>
+      <mdui-select multiple variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>placement</h2>
+      <mdui-select placement="bottom" label="placement=bottom"></mdui-select>
+      <mdui-select placement="bottom" label="placement=bottom" variant="outlined"></mdui-select>
+      <br />
+      <mdui-select placement="top" label="placement=top"></mdui-select>
+      <mdui-select placement="top" label="placement=top" variant="outlined"></mdui-select>
+      <br />
+      <mdui-select placement="auto" label="placement=auto"></mdui-select>
+      <mdui-select placement="auto" label="placement=auto" variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>label</h2>
+      <mdui-select label="select"></mdui-select>
+      <mdui-select label="select" variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>default value</h2>
+      <mdui-select value="item-3" label="single" id="tt"></mdui-select>
+      <mdui-select value="item-3" label="single" variant="outlined"></mdui-select>
+      <br />
+      <mdui-select label="multiple" multiple class="multiple-value"></mdui-select>
+      <mdui-select label="multiple" multiple class="multiple-value" variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>placeholder</h2>
+      <mdui-select label="select" placeholder="select placeholder"></mdui-select>
+      <mdui-select label="select" placeholder="select placeholder" variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>helper</h2>
+      <mdui-select label="select" helper="helper text"></mdui-select>
+      <mdui-select label="select" helper="helper text" variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>clearable</h2>
+      <mdui-select label="select" value="item-2" clearable></mdui-select>
+      <mdui-select label="select" value="item-2" clearable variant="outlined"></mdui-select>
+      <br/>
+      <mdui-select label="select" clearable multiple class="multiple-value"></mdui-select>
+      <mdui-select label="select" clearable multiple class="multiple-value" variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>endAligned</h2>
+      <mdui-select label="select" value="item-2" suffix="%" end-aligned></mdui-select>
+      <mdui-select label="select" value="item-2" suffix="%" end-aligned variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>prefix attr & suffix attr</h2>
+      <mdui-select label="prefix" prefix="$"></mdui-select>
+      <mdui-select label="prefix" prefix="$" variant="outlined"></mdui-select>
+      <br />
+      <mdui-select label="suffix" suffix="/100" end-aligned></mdui-select>
+      <mdui-select label="suffix" suffix="/100" end-aligned variant="outlined"></mdui-select>
+      <br />
+      <mdui-select label="prefix & suffix" prefix="📧" suffix="@gmail.com"></mdui-select>
+      <mdui-select label="prefix & suffix" prefix="📧" suffix="@gmail.com" variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>prefixIcon attr & suffixIcon attr</h2>
+      <mdui-select label="prefixIcon" prefix-icon="search"></mdui-select>
+      <mdui-select label="prefixIcon" prefix-icon="search" variant="outlined"></mdui-select>
+      <br />
+      <mdui-select label="prefixIcon" suffix-icon="mic"></mdui-select>
+      <mdui-select label="prefixIcon" suffix-icon="mic" variant="outlined"></mdui-select>
+      <br />
+      <mdui-select label="prefixIcon" prefix-icon="search" suffix-icon="mic"></mdui-select>
+      <mdui-select label="prefixIcon" prefix-icon="search" suffix-icon="mic" variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>prefix attr & prefixIcon attr | suffix attr & suffixIcon attr</h2>
+      <mdui-select label="prefix & prefixIcon" prefix="$" prefix-icon="search"></mdui-select>
+      <mdui-select label="prefix & prefixIcon" prefix="$" prefix-icon="search" variant="outlined"></mdui-select>
+      <br />
+      <mdui-select label="suffix & suffixIcon" suffix="/100" suffix-icon="mic"></mdui-select>
+      <mdui-select label="suffix & suffixIcon" suffix="/100" suffix-icon="mic" variant="outlined"></mdui-select>
+      <br />
+      <mdui-select label="prefix & prefixIcon | suffix & suffixIcon(long prefix & prefixIcon | suffix & suffixIcon)"
+        prefix="$" prefix-icon="search" suffix="/100" suffix-icon="mic"></mdui-select>
+      <mdui-select label="prefix & prefixIcon | suffix & suffixIcon(long prefix & prefixIcon | suffix & suffixIcon)"
+        prefix="$" prefix-icon="search" suffix="/100" suffix-icon="mic" variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>prefix slot & suffix slot</h2>
+      <mdui-select label="prefix slot">
+        <span slot="prefix">$</span>
       </mdui-select>
+      <mdui-select label="prefix slot" variant="outlined">
+        <span slot="prefix">$</span>
+      </mdui-select>
+      <br />
+      <mdui-select label="suffix slot">
+        <span slot="suffix">/100</span>
+      </mdui-select>
+      <mdui-select label="suffix slot" variant="outlined">
+        <span slot="suffix">/100</span>
+      </mdui-select>
+    </section>
+
+    <section>
+      <h2>prefix-icon slot & suffix-icon</h2>
+      <mdui-select label="icon slot">
+        <mdui-icon slot="prefix-icon" name="search"></mdui-icon>
+        <mdui-icon slot="suffix-icon" name="mic"></mdui-icon>
+      </mdui-select>
+      <mdui-select label="icon slot" variant="outlined">
+        <mdui-icon slot="prefix-icon" name="search"></mdui-icon>
+        <mdui-icon slot="suffix-icon" name="mic"></mdui-icon>
+      </mdui-select>
+      <br />
+      <mdui-select label="icon-button slot">
+        <mdui-button-icon slot="prefix-icon" icon="search"></mdui-button-icon>
+        <mdui-button-icon slot="suffix-icon" icon="delete"></mdui-button-icon>
+      </mdui-select>
+      <mdui-select label="icon-button slot" variant="outlined">
+        <mdui-button-icon slot="prefix-icon" icon="search"></mdui-button-icon>
+        <mdui-button-icon slot="suffix-icon" icon="delete"></mdui-button-icon>
+      </mdui-select>
+    </section>
+
+    <section>
+      <h2>readonly</h2>
+      <mdui-select label="readonly" helper="Example: Wo haha" prefix="$" suffix="/100" readonly
+        value="item-2"></mdui-select>
+      <mdui-select label="readonly" helper="Example: Wo haha" prefix="$" suffix="/100" readonly value="item-2"
+        variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>disabled</h2>
+      <mdui-select label="disabled" helper="Example: Wo haha" prefix="$" suffix="/100" disabled></mdui-select>
+      <mdui-select label="disabled" helper="Example: Wo haha" prefix="$" suffix="/100" disabled
+        variant="outlined"></mdui-select>
+      <br />
+      <mdui-select label="disabled" prefix-icon="search" suffix-icon="mic" disabled></mdui-select>
+      <mdui-select label="disabled" prefix-icon="search" suffix-icon="mic" disabled variant="outlined"></mdui-select>
+      <br />
+      <mdui-select label="disabled" prefix-icon="search" suffix-icon="mic" value="item-2" disabled></mdui-select>
+      <mdui-select label="disabled" prefix-icon="search" suffix-icon="mic" value="item-2" disabled
+        variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>required</h2>
+      <mdui-select label="required" required prefix-icon="search" helper="required"></mdui-select>
+      <mdui-select label="required" required prefix-icon="search" helper="required" variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>error</h2>
+      <mdui-select label="required" required prefix-icon="search" helper="required"
+        error="custom error text"></mdui-select>
+      <mdui-select label="required" required prefix-icon="search" helper="required" error="custom error text"
+        variant="outlined"></mdui-select>
     </section>
   </main>
 </body>
+
 </html>

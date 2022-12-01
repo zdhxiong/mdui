@@ -1,3 +1,33 @@
+@import "~@mdui/shared/mixin.less";
+
 :host {
-  display: block;
+  display: inline-block;
+  width: 100%;
+}
+
+.hidden-input {
+  display: none;
+}
+
+.text-field {
+  cursor: pointer;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  .margin(-8, -4);
+  .minHeight(40);
+
+  :host([variant="filled"][label]) & {
+    .margin(0, -4, -16, -4);
+  }
+}
+
+.chip {
+  .margin(4);
+}
+
+mdui-menu {
+  max-width: none;
 }

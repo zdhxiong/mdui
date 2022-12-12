@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, nothing } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -41,6 +41,7 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
  * @slot hide-password-icon
  * @slot helper
  * @slot error
+ * @slot input
  *
  * @csspart text-field
  * @csspart prefix-icon
@@ -77,11 +78,32 @@ export class TextField extends FocusableMixin(LitElement) {
     this,
     'prefix-icon',
     'suffix-icon',
+    'input',
   );
   protected resizeObserver!: ResizeObserver;
 
   @state() protected isPasswordVisible = false;
   @state() protected hasValue = false;
+
+  /**
+   * 该属性设置为 true 时，则在样式上为 text-field 赋予聚焦状态。实际是否聚焦仍然由 focusableMixin 控制
+   * 该属性仅供 mdui 内部使用，当前 select 组件使用了该属性
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'focused-style',
+  })
+  private focusedStyle = false;
+
+  /**
+   * 是否显示聚焦状态样式
+   */
+  private get isFocusedStyle(): boolean {
+    // @ts-ignore
+    return this.focused || this.focusedStyle;
+  }
 
   /**
    * 是否渲染为 textarea。为 false 时渲染为 input
@@ -138,7 +160,7 @@ export class TextField extends FocusableMixin(LitElement) {
   /**
    * 标签文本
    */
-  @property()
+  @property({ reflect: true })
   public label!: string;
 
   /**
@@ -232,6 +254,12 @@ export class TextField extends FocusableMixin(LitElement) {
     converter: (value: string | null): boolean => value !== 'false',
   })
   public readonly = false;
+
+  /**
+   * 该属性设为 true 时，即使设置了 readonly，仍可以显示 clearable
+   * 当前仅供 select 组件使用
+   */
+  private readonlyButClearable = false;
 
   /**
    * 是否为禁用状态
@@ -485,8 +513,8 @@ export class TextField extends FocusableMixin(LitElement) {
     if (this.value !== this.inputElement.value) {
       this.value = this.inputElement.value;
       this.setTextareaHeight();
-      emit(this, 'sl-input');
-      emit(this, 'sl-change');
+      emit(this, 'input');
+      emit(this, 'change');
     }
   }
 
@@ -716,7 +744,7 @@ export class TextField extends FocusableMixin(LitElement) {
     const hasClearButton =
       this.clearable &&
       !this.disabled &&
-      !this.readonly &&
+      (!this.readonly || this.readonlyButClearable) &&
       (typeof this.value === 'number' || this.value.length > 0);
 
     return when(
@@ -760,10 +788,10 @@ export class TextField extends FocusableMixin(LitElement) {
     );
   }
 
-  protected renderInput(): TemplateResult {
+  protected renderInput(hasInputSlot: boolean): TemplateResult {
     return html`<input
       part="input"
-      class="input"
+      class="input ${classMap({ 'hide-input': hasInputSlot })}"
       type=${this.type === 'password' && this.isPasswordVisible
         ? 'text'
         : this.type}
@@ -771,7 +799,7 @@ export class TextField extends FocusableMixin(LitElement) {
       .value=${live(this.value)}
       placeholder=${ifDefined(
         // @ts-ignore
-        !this.label || this.focused || this.hasValue
+        !this.label || this.isFocusedStyle || this.hasValue
           ? this.placeholder
           : undefined,
       )}
@@ -803,15 +831,15 @@ export class TextField extends FocusableMixin(LitElement) {
     />`;
   }
 
-  protected renderTextArea(): TemplateResult {
+  protected renderTextArea(hasInputSlot: boolean): TemplateResult {
     return html`<textarea
       part="input"
-      class="input"
+      class="input ${classMap({ 'hide-input': hasInputSlot })}"
       name=${ifDefined(this.name)}
       .value=${live(this.value)}
       placeholder=${ifDefined(
         // @ts-ignore
-        !this.label || this.focused || this.hasValue
+        !this.label || this.isFocusedStyle || this.hasValue
           ? this.placeholder
           : undefined,
       )}
@@ -834,16 +862,18 @@ export class TextField extends FocusableMixin(LitElement) {
     ></textarea>`;
   }
 
-  protected renderHelper(): TemplateResult {
+  protected renderHelper(): TemplateResult | typeof nothing {
     return this.invalid && (this.error || this.inputElement.validationMessage)
       ? html`<div part="error" class="error">
           <slot name="error">
             ${this.error || this.inputElement.validationMessage}
           </slot>
         </div>`
-      : html`<div part="helper" class="helper">
+      : this.helper
+      ? html`<div part="helper" class="helper">
           <slot name="helper">${this.helper}</slot>
-        </div>`;
+        </div>`
+      : nothing;
   }
 
   protected renderCounter(): TemplateResult {
@@ -861,6 +891,8 @@ export class TextField extends FocusableMixin(LitElement) {
       this.hasSlotController.test('prefix-icon') || !!this.prefixIcon;
     const hasSuffixIcon =
       this.hasSlotController.test('suffix-icon') || !!this.suffixIcon;
+    // 存在 input slot 时，隐藏组件内部的 .input 元素，使用 slot 代替
+    const hasInputSlot = this.hasSlotController.test('input');
 
     return html`<div
         part="text-field"
@@ -874,14 +906,25 @@ export class TextField extends FocusableMixin(LitElement) {
         ${this.renderPrefix(hasPrefixIcon)}
         <div class="input-container">
           ${this.renderLabel()}
-          ${this.isTextarea ? this.renderTextArea() : this.renderInput()}
+          ${this.isTextarea
+            ? this.renderTextArea(hasInputSlot)
+            : this.renderInput(hasInputSlot)}
+          ${when(
+            hasInputSlot,
+            () => html`<slot name="input" class="input"></slot>`,
+          )}
         </div>
         ${this.renderClearButton()}${this.renderTogglePasswordButton()}
         ${this.renderSuffix(hasSuffixIcon)}
       </div>
-      <div part="supporting" class="supporting">
-        ${this.renderHelper()}${this.renderCounter()}
-      </div>`;
+      ${when(
+        (this.invalid && (this.error || this.inputElement.validationMessage)) ||
+          this.helper ||
+          (this.counter && this.maxlength),
+        () => html`<div part="supporting" class="supporting">
+          ${this.renderHelper()}${this.renderCounter()}
+        </div>`,
+      )}`;
   }
 }
 

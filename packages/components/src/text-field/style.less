@@ -41,11 +41,13 @@
     box-shadow: inset 0 unit((-1 / @root-font-size), rem) 0 0 rgb(var(--mdui-color-on-error-container));
   }
 
-  :host([variant="filled"][focused]) & {
+  :host([variant="filled"][focused]) &,
+  :host([variant="filled"][focused-style]) & {
     box-shadow: inset 0 unit((-2 / @root-font-size), rem) 0 0 rgb(var(--mdui-color-primary));
   }
 
-  :host([variant="filled"][focused][invalid]) & {
+  :host([variant="filled"][focused][invalid]) &,
+  :host([variant="filled"][focused-style][invalid]) & {
     box-shadow: inset 0 unit((-2 / @root-font-size), rem) 0 0 rgb(var(--mdui-color-error));
   }
 
@@ -71,11 +73,13 @@
     box-shadow: inset 0 0 0 unit((1 / @root-font-size), rem) rgb(var(--mdui-color-on-error-container));
   }
 
-  :host([variant="outlined"][focused]) & {
+  :host([variant="outlined"][focused]) &,
+  :host([variant="outlined"][focused-style]) & {
     box-shadow: inset 0 0 0 unit((2 / @root-font-size), rem) rgb(var(--mdui-color-primary));
   }
 
-  :host([variant="outlined"][focused][invalid]) & {
+  :host([variant="outlined"][focused][invalid]) &,
+  :host([variant="outlined"][focused-style][invalid]) & {
     box-shadow: inset 0 0 0 unit((2 / @root-font-size), rem) rgb(var(--mdui-color-error));
   }
 
@@ -108,7 +112,8 @@
     .color(on-error-container);
   }
 
-  :host([focused][invalid]) & {
+  :host([focused][invalid]) &,
+  :host([focused-style][invalid]) & {
     .color(error);
   }
 }
@@ -146,6 +151,7 @@
   }
 
   :host([focused]) &,
+  :host([focused-style]) &,
   .has-value & {
     display: flex;
   }
@@ -195,11 +201,14 @@
   }
 
   :host([variant="filled"][focused]) &,
-  :host([variant="outlined"][focused]) & {
+  :host([variant="filled"][focused-style]) &,
+  :host([variant="outlined"][focused]) &,
+  :host([variant="outlined"][focused-style]) & {
     .color(primary);
   }
 
   :host([variant="filled"][focused]) &,
+  :host([variant="filled"][focused-style]) &,
   :host([variant="filled"]) .has-value &,
   :host([variant="filled"][type="date"]) &,
   :host([variant="filled"][type="datetime-local"]) &,
@@ -211,6 +220,7 @@
   }
 
   :host([variant="outlined"][focused]) &,
+  :host([variant="outlined"][focused-style]) &,
   :host([variant="outlined"]) .has-value &,
   :host([variant="outlined"][type="date"]) &,
   :host([variant="outlined"][type="datetime-local"]) &,
@@ -224,7 +234,9 @@
   }
 
   :host([variant="filled"][focused][invalid]) &,
-  :host([variant="outlined"][focused][invalid]) & {
+  :host([variant="filled"][focused-style][invalid]) &,
+  :host([variant="outlined"][focused][invalid]) &,
+  :host([variant="outlined"][focused-style][invalid]) & {
     .color(error);
   }
 
@@ -235,12 +247,15 @@
 }
 
 .input {
+  display: flex;
+  flex-wrap: wrap;
   width: 100%;
   border: none;
   outline: none;
   background: none;
   appearance: none;
   resize: none;
+  cursor: inherit;
   font-family: inherit;
   .padding(16, 0);
   .typescale(body-large);
@@ -268,6 +283,13 @@
   .padding(24, 0, 8, 0);
 }
 
+.hide-input {
+  opacity: 0;
+  height: 0;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
 .supporting {
   display: flex;
   justify-content: space-between;
@@ -292,7 +314,8 @@
     opacity: 0;
   }
 
-  :host([helper-on-focus][focused]) & {
+  :host([helper-on-focus][focused]) &,
+  :host([helper-on-focus][focused-style]) & {
     opacity: 1;
   }
 }

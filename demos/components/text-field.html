@@ -30,6 +30,7 @@
     import '../../packages/mdui/mdui.css';
     import '../../packages/components/text-field.js';
     import '../../packages/components/button-icon.js';
+    import '../../packages/components/chip.js';
   </script>
 </head>
 
@@ -186,6 +187,17 @@
       </mdui-text-field>
       <mdui-text-field label="icon-button slot" variant="outlined">
         <mdui-button-icon slot="prefix-icon" icon="search"></mdui-button-icon>
+        <mdui-button-icon slot="suffix-icon" icon="delete"></mdui-button-icon>
+      </mdui-text-field>
+    </section>
+
+    <section>
+      <h2>input slot</h2>
+      <mdui-text-field label="input slot" prefix-icon="search">
+        <mdui-chip slot="input" variant="input" deletable>Chip1</mdui-chip>
+        <mdui-chip slot="input" variant="input" deletable>Chip2</mdui-chip>
+        <mdui-chip slot="input" variant="input" deletable>Chip3</mdui-chip>
+        <mdui-chip slot="input" variant="input" deletable>Chip4</mdui-chip>
         <mdui-button-icon slot="suffix-icon" icon="delete"></mdui-button-icon>
       </mdui-text-field>
     </section>

@@ -164,10 +164,10 @@ export class Dropdown extends LitElement {
       return;
     }
 
-    const target = e.target as HTMLElement;
+    const path = e.composedPath();
 
     // 点击 dropdown 外部区域，直接关闭
-    if (!this.contains(target)) {
+    if (!path.includes(this)) {
       this.open = false;
     }
 
@@ -175,7 +175,7 @@ export class Dropdown extends LitElement {
     if (
       this.hasTrigger('contextmenu') &&
       !this.hasTrigger('click') &&
-      (this.triggerSlot === target || this.triggerSlot.contains(target))
+      path.includes(this.triggerSlot)
     ) {
       this.open = false;
     }
@@ -526,7 +526,8 @@ export class Dropdown extends LitElement {
       if (
         !this.hasTrigger('focus') &&
         typeof this.triggerSlot?.focus === 'function' &&
-        this.contains(document.activeElement)
+        (this.contains(document.activeElement) ||
+          this.contains(document.activeElement?.assignedSlot ?? null))
       ) {
         this.triggerSlot.focus();
       }

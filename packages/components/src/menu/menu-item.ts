@@ -25,7 +25,6 @@ import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '@mdui/icons/arrow-right.js';
 import '@mdui/icons/check.js';
-import '../menu.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { menuItemStyle } from './menu-item-style.js';
 import type { MaterialIconsName } from '../icon.js';
@@ -469,9 +468,9 @@ export class MenuItem extends AnchorMixin(
       ${when(
         hasSubmenu,
         () =>
-          html`<mdui-menu part="submenu" class="submenu">
+          html`<div part="submenu" class="submenu">
             <slot name="submenu-item"></slot>
-          </mdui-menu>`,
+          </div>`,
       )}`;
   }
 }

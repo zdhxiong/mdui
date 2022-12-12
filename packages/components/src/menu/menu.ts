@@ -1,6 +1,12 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import {
+  customElement,
+  property,
+  queryAssignedElements,
+  state,
+} from 'lit/decorators.js';
 import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/add.js';
 import '@mdui/jq/methods/children.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
@@ -46,16 +52,21 @@ type MenuItem = MenuItemOriginal & {
 export class Menu extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, menuStyle];
 
+  // 直接子元素（不包含子菜单中的菜单项）
+  @queryAssignedElements({ flatten: true, selector: 'mdui-menu-item' })
+  private childrenItems!: MenuItem[];
+
   // 菜单项元素（包含子菜单中的菜单项）
-  protected get items() {
-    return $(this).find('mdui-menu-item').get() as unknown as MenuItem[];
+  protected get items(): MenuItem[] {
+    return $(this.childrenItems)
+      .find('mdui-menu-item')
+      .add(this.childrenItems)
+      .get();
   }
 
   // 菜单项元素（不包含已禁用的，包含子菜单中的菜单项）
-  protected get itemsEnabled() {
-    return $(this)
-      .find('mdui-menu-item:not([disabled])')
-      .get() as unknown as MenuItem[];
+  protected get itemsEnabled(): MenuItem[] {
+    return this.items.filter((item) => !item.disabled);
   }
 
   // 当前菜单是否为单选

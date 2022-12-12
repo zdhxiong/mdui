@@ -8,8 +8,10 @@ import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/height.js';
 import '@mdui/jq/methods/innerHeight.js';
 import '@mdui/jq/methods/innerWidth.js';
+import '@mdui/jq/methods/is.js';
 import '@mdui/jq/methods/off.js';
 import '@mdui/jq/methods/on.js';
+import '@mdui/jq/methods/parent.js';
 import '@mdui/jq/methods/width.js';
 import '@mdui/jq/static/contains.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
@@ -169,6 +171,11 @@ export class MenuItem extends AnchorMixin(
   override connectedCallback(): void {
     super.connectedCallback();
     $(document).on('pointerdown._menu-item', (e) => this.onOuterClick(e));
+
+    // 如果该菜单项是子菜单项，添加 slot
+    if ($(this).parent().is('mdui-menu-item')) {
+      this.slot = 'submenu-item';
+    }
   }
 
   override disconnectedCallback(): void {

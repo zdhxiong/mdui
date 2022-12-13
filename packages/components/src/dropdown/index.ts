@@ -392,8 +392,8 @@ export class Dropdown extends LitElement {
     }
 
     // 未指定 openOnPointer，则根据 placement 参数设置打开方位
-    let transformOriginX: 'left' | 'right' = 'left';
-    let transformOriginY: 'top' | 'bottom' = 'bottom';
+    let transformOriginX: 'left' | 'right';
+    let transformOriginY: 'top' | 'bottom';
 
     // 自动判断 dropdown 的方位
     if (this.placement === 'auto') {
@@ -401,11 +401,14 @@ export class Dropdown extends LitElement {
         $window.height() - triggerRect.top - triggerRect.height >
         panelRect.height + screenMargin
       ) {
-        // 下方放得下
+        // 下方放得下，放下方
         transformOriginY = 'top';
       } else if (triggerRect.top > panelRect.height + screenMargin) {
-        // 下方放不下，放上方
+        // 上方放得下，放上方
         transformOriginY = 'bottom';
+      } else {
+        // 上方、下方都放不下，默认房下方
+        transformOriginY = 'top';
       }
 
       if ($window.width() - triggerRect.left > panelRect.width + screenMargin) {
@@ -417,6 +420,9 @@ export class Dropdown extends LitElement {
       ) {
         // 左侧放得下，沿着 trigger 右侧放
         transformOriginX = 'right';
+      } else {
+        // 左侧、右侧都放不下，默认沿着 trigger 左侧放
+        transformOriginX = 'left';
       }
     } else {
       const [y, x] = this.placement.split('-') as [

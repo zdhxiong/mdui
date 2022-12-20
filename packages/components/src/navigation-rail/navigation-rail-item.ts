@@ -56,8 +56,8 @@ export class NavigationRailItem extends AnchorMixin(
     return this.disabled;
   }
 
-  protected get focusElement(): HTMLElement {
-    return this.href ? this.renderRoot.querySelector('._a')! : this;
+  protected get focusElement(): HTMLElement | null {
+    return this.href ? this.renderRoot?.querySelector('._a') : this;
   }
 
   protected get rippleDisabled(): boolean {

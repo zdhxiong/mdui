@@ -6,6 +6,7 @@ import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/each.js';
 import '@mdui/jq/methods/off.js';
 import '@mdui/jq/methods/on.js';
+import '@mdui/jq/methods/removeAttr.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
 import type { PropertyValues, LitElement } from 'lit';
 
@@ -122,16 +123,12 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       const $this = $(this);
 
       if (this.focusElement === this) {
-        if (tabIndex !== this.tabIndex) {
-          if (tabIndex !== null) {
-            this._tabIndex = tabIndex;
-          }
-          if (this.focusDisabled) {
-            this.removeAttribute('tabindex');
-          } else {
-            $this.attr('tabindex', tabIndex);
-          }
+        if (tabIndex !== null) {
+          this._tabIndex = tabIndex;
         }
+
+        $this.attr('tabindex', this.focusDisabled ? null : tabIndex);
+
         return;
       }
 
@@ -148,18 +145,17 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       }
 
       if (tabIndex === -1 || this.focusDisabled) {
-        this.setAttribute('tabindex', '-1');
+        $this.attr('tabindex', -1);
         if (tabIndex !== -1) {
           this.manageFocusElementTabindex(tabIndex);
         }
         return;
       }
 
-      if (this.hasAttribute('tabindex')) {
-        this.removeAttribute('tabindex');
-      } else {
+      if (!this.hasAttribute('tabindex')) {
         this._manipulatingTabindex = false;
       }
+
       this.manageFocusElementTabindex(tabIndex);
     }
 
@@ -249,14 +245,16 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       ) {
         this._lastFocusDisabled = this.focusDisabled;
 
+        const $this = $(this);
+
         if (this.focusDisabled) {
-          this.removeAttribute('tabindex');
+          $this.removeAttr('tabindex');
         } else {
           if (this.focusElement === this) {
             this._manipulatingTabindex = true;
-            $(this).attr('tabindex', this._tabIndex);
-          } else {
-            this.removeAttribute('tabindex');
+            $this.attr('tabindex', this._tabIndex);
+          } else if (this.tabIndex > -1) {
+            $this.removeAttr('tabindex');
           }
         }
       }

@@ -30,10 +30,10 @@ export class ButtonBase extends ButtonMixin(
     return this.disabled || this.loading;
   }
 
-  protected get focusElement(): HTMLElement {
+  protected get focusElement(): HTMLElement | null {
     return this.href
-      ? this.renderRoot.querySelector('._a')!
-      : this.renderRoot.querySelector('._button')!;
+      ? this.renderRoot?.querySelector('._a')
+      : this.renderRoot?.querySelector('._button');
   }
 
   override connectedCallback() {

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>Focusable</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: Roboto;
+    }
+
+    mdui-card {
+      width: 100px;
+      height: 61.8px;
+    }
+  </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/components/card.js';
+    import '../../packages/components/button.js';
+  </script>
+</head>
+
+<body>
+<main>
+  <section tabindex="-1">
+    <h2>focusElement === this</h2>
+    <mdui-card clickable tabindex="-1">tabindex=-1</mdui-card>
+    <mdui-card clickable tabindex="3">tabindex=3</mdui-card>
+    <mdui-card clickable tabindex="2">tabindex=2</mdui-card>
+    <mdui-card clickable tabindex="1">tabindex=1</mdui-card>
+    <mdui-card clickable>no tabindex</mdui-card>
+  </section>
+
+  <section tabindex="-1">
+    <h2>focusElement !== this</h2>
+    <mdui-button variant="tonal" tabindex="-1">tabindex=-1</mdui-button>
+    <mdui-button variant="tonal" tabindex="3">tabindex=3</mdui-button>
+    <mdui-button variant="tonal" tabindex="2">tabindex=2</mdui-button>
+    <mdui-button variant="tonal" tabindex="1">tabindex=1</mdui-button>
+    <mdui-button variant="tonal">no stabindex</mdui-button>
+  </section>
+
+</main>
+</body>
+
+</html>

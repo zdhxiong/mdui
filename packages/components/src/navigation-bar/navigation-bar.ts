@@ -46,6 +46,9 @@ export class NavigationBar extends LitElement {
   protected readonly uniqueId = uniqueId();
   protected readonly scrollEventName = `scroll._navigation_bar_${this.uniqueId}`;
 
+  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
+  private hasSetDefaultValue = false;
+
   // 因为 navigation-bar-item 的 value 可能会重复，所以在每个 navigation-bar-item 元素上都添加了一个唯一的 key，通过 activeKey 来记录激活状态的 key
   @state() private activeKey = 0;
 
@@ -108,7 +111,11 @@ export class NavigationBar extends LitElement {
     this.value =
       this.items.find((item) => item.key === this.activeKey)?.value ?? '';
 
-    emit(this, 'change');
+    if (this.hasSetDefaultValue) {
+      emit(this, 'change');
+    } else {
+      this.hasSetDefaultValue = true;
+    }
   }
 
   @watch('value')

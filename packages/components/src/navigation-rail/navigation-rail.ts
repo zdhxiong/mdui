@@ -47,6 +47,9 @@ export class NavigationRail extends LitElement {
     'bottom',
   );
 
+  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
+  private hasSetDefaultValue = false;
+
   // 所有的子项元素
   protected get items() {
     return $(this)
@@ -114,7 +117,11 @@ export class NavigationRail extends LitElement {
     this.value =
       this.items.find((item) => item.key === this.activeKey)?.value ?? '';
 
-    emit(this, 'change');
+    if (this.hasSetDefaultValue) {
+      emit(this, 'change');
+    } else {
+      this.hasSetDefaultValue = true;
+    }
   }
 
   @watch('value')

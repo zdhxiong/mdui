@@ -290,7 +290,7 @@ export class Select extends FocusableMixin(LitElement) {
 
   private async onValueChange(e: Event) {
     const menu = e.target as Menu;
-    this.value = menu.value || '';
+    this.value = menu.value;
     this.invalid = !this.hiddenInputRef.value!.checkValidity();
   }
 

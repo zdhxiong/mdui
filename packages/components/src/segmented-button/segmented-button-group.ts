@@ -40,6 +40,9 @@ export class SegmentedButtonGroup extends LitElement {
       .get() as unknown as SegmentedButton[];
   }
 
+  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
+  private hasSetDefaultValue = false;
+
   // 所有的子项元素（不包含已禁用的）
   protected get itemsEnabled() {
     return $(this)
@@ -147,19 +150,27 @@ export class SegmentedButtonGroup extends LitElement {
     }
   }
 
-  @watch('selectedKeys')
+  @watch('selectedKeys', true)
   private onSelectedKeysChange() {
     // 根据 selectedKeys 读取出对应 segmented-button 的 value
     const values = this.itemsEnabled
       .filter((item) => this.selectedKeys.includes(item.key))
       .map((item) => item.value);
-    this.value = this.isMultiple ? values : values[0];
+    this.value = this.isMultiple ? values : values[0] || '';
 
-    emit(this, 'change');
+    if (this.hasSetDefaultValue) {
+      emit(this, 'change');
+    } else {
+      this.hasSetDefaultValue = true;
+    }
   }
 
   @watch('value')
-  private onValueChange() {
+  private async onValueChange() {
+    if (!this.hasUpdated) {
+      await this.updateComplete;
+    }
+
     // 根据 value 找出对应的 segmented-button，并把这些元素的 key 赋值给 selectedKeys
     if (!this.isSelectable) {
       this.updateSelected();

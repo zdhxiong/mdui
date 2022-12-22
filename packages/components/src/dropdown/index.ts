@@ -50,6 +50,8 @@ export class Dropdown extends LitElement {
     return this.panelSlots[0];
   }
 
+  private resizeObserver!: ResizeObserver;
+
   @query('.panel')
   protected panel!: HTMLElement;
 
@@ -209,8 +211,9 @@ export class Dropdown extends LitElement {
     }
   }
 
-  override connectedCallback(): void {
+  override async connectedCallback() {
     super.connectedCallback();
+
     $(document).on('pointerdown._dropdown', (e) =>
       this.onDocumentClick(e as MouseEvent),
     );
@@ -220,13 +223,23 @@ export class Dropdown extends LitElement {
     $(window).on('scroll._dropdown', () => {
       window.requestAnimationFrame(() => this.onPositionChange());
     });
+
+    // triggerSlot 的尺寸变化时，重新调整 panel 的位置
+    this.resizeObserver = new ResizeObserver(() => {
+      this.updatePositioner();
+    });
+    await this.updateComplete;
+    this.resizeObserver.observe(this.triggerSlot);
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback();
+
     $(document).off('pointerdown._dropdown');
     $(document).off('keydown._dropdown');
     $(window).off('scroll._dropdown');
+
+    this.resizeObserver.unobserve(this.triggerSlot);
   }
 
   protected override firstUpdated(_changedProperties: PropertyValues) {
@@ -234,7 +247,7 @@ export class Dropdown extends LitElement {
 
     $(this).on('mouseleave._dropdown', () => this.onMouseLeave());
 
-    $(this.triggerSlots[0]).on({
+    $(this.triggerSlot).on({
       focus: () => this.onFocus(),
       click: (e) => this.onClick(e as MouseEvent),
       contextmenu: (e) => this.onContextMenu(e as MouseEvent),
@@ -330,7 +343,7 @@ export class Dropdown extends LitElement {
   protected updatePositioner(): void {
     const $panel = $(this.panel);
     const $window = $(window);
-    const triggerRect = this.triggerSlots[0].getBoundingClientRect();
+    const triggerRect = this.triggerSlot.getBoundingClientRect();
     const panelRect = {
       width: Math.max(
         ...(this.panelSlots?.map((panel) => panel.offsetWidth) ?? []),

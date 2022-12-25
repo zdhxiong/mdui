@@ -491,6 +491,11 @@ export class Dropdown extends LitElement {
         return;
       }
 
+      // dropdown 打开时，尝试把焦点放到 panel 中
+      if (typeof this.panelSlot?.focus === 'function') {
+        this.panelSlot.focus();
+      }
+
       const duration = getDuration(this, 'medium4');
 
       await stopAnimations(this.panel);
@@ -509,11 +514,6 @@ export class Dropdown extends LitElement {
         ),
       ]);
 
-      // dropdown 打开后，尝试把焦点放到 panel 中
-      if (typeof this.panelSlot?.focus === 'function') {
-        this.panelSlot.focus();
-      }
-
       emit(this, 'opened');
     } else {
       const requestClose = emit(this, 'close', {
@@ -521,6 +521,16 @@ export class Dropdown extends LitElement {
       });
       if (requestClose.defaultPrevented) {
         return;
+      }
+
+      // dropdown 关闭时，如果不支持 focus 触发，且焦点在 dropdown 内，则焦点回到 trigger 上
+      if (
+        !this.hasTrigger('focus') &&
+        typeof this.triggerSlot?.focus === 'function' &&
+        (this.contains(document.activeElement) ||
+          this.contains(document.activeElement?.assignedSlot ?? null))
+      ) {
+        this.triggerSlot.focus();
       }
 
       const duration = getDuration(this, 'short4');
@@ -540,16 +550,6 @@ export class Dropdown extends LitElement {
       ]);
 
       this.panel.hidden = true;
-
-      // dropdown 关闭时，如果不支持 focus 触发，且焦点在 dropdown 内，则焦点回到 trigger 上
-      if (
-        !this.hasTrigger('focus') &&
-        typeof this.triggerSlot?.focus === 'function' &&
-        (this.contains(document.activeElement) ||
-          this.contains(document.activeElement?.assignedSlot ?? null))
-      ) {
-        this.triggerSlot.focus();
-      }
 
       emit(this, 'closed');
     }

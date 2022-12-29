@@ -1,5 +1,6 @@
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
@@ -8,6 +9,7 @@ import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
 import { segmentedButtonStyle } from './segmented-button-style.js';
 import type { MaterialIconsName } from '../icon.js';
+import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
@@ -31,7 +33,13 @@ export class SegmentedButton extends ButtonBase {
     segmentedButtonStyle,
   ];
 
-  protected readonly hasSlotController = new HasSlotController(
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
+  private readonly hasSlotController = new HasSlotController(
     this,
     '[default]',
     'start',
@@ -63,7 +71,7 @@ export class SegmentedButton extends ButtonBase {
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon!: MaterialIconsName;
 
-  protected renderCheck(): TemplateResult | typeof nothing {
+  private renderCheck(): TemplateResult | typeof nothing {
     if (!this.selected) {
       return nothing;
     }
@@ -71,7 +79,7 @@ export class SegmentedButton extends ButtonBase {
     return html`<mdui-icon-check part="check" class="check"></mdui-icon-check>`;
   }
 
-  protected renderStart(): TemplateResult | typeof nothing {
+  private renderStart(): TemplateResult | typeof nothing {
     const hasLabel = this.hasSlotController.test('[default]');
 
     if (hasLabel && this.selected) {
@@ -90,7 +98,7 @@ export class SegmentedButton extends ButtonBase {
     </slot>`;
   }
 
-  protected renderLabel(): TemplateResult | typeof nothing {
+  private renderLabel(): TemplateResult | typeof nothing {
     const hasLabel = this.hasSlotController.test('[default]');
 
     if (!hasLabel) {
@@ -100,7 +108,7 @@ export class SegmentedButton extends ButtonBase {
     return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
-  protected renderEnd(): TemplateResult {
+  private renderEnd(): TemplateResult {
     return html`<slot name="end">
       ${when(
         this.endIcon,
@@ -113,7 +121,7 @@ export class SegmentedButton extends ButtonBase {
     </slot>`;
   }
 
-  protected renderInner(): (TemplateResult | typeof nothing)[] {
+  private renderInner(): (TemplateResult | typeof nothing)[] {
     return [
       this.renderCheck(),
       this.renderStart(),
@@ -129,19 +137,17 @@ export class SegmentedButton extends ButtonBase {
       (this.icon || hasStartSlot) && !this.selected ? 'has-start' : ''
     } ${this.endIcon || hasEndSlot ? 'has-end' : ''}`;
 
-    return html`<mdui-ripple></mdui-ripple>${this.href
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
         ? this.disabled || this.loading
           ? html`<span part="button" class=${className}>
               ${this.renderInner()}
             </span>`
-          : // @ts-ignore
-            this.renderAnchor({
+          : this.renderAnchor({
               className,
               part: 'button',
               content: this.renderInner(),
             })
-        : // @ts-ignore
-          this.renderButton({
+        : this.renderButton({
             className,
             part: 'button',
             content: this.renderInner(),

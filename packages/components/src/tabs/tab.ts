@@ -1,5 +1,6 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
@@ -31,21 +32,24 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
   static override styles: CSSResultGroup = [componentStyle, tabStyle];
 
-  @query('mdui-ripple', true)
-  protected rippleElement!: Ripple;
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
 
   // 每一个 `<mdui-tab>` 元素都添加一个唯一的 key
   protected readonly key = uniqueId();
 
-  protected get focusDisabled(): boolean {
+  protected override get focusDisabled(): boolean {
     return false;
   }
 
-  protected get focusElement(): HTMLElement {
+  protected override get focusElement(): HTMLElement {
     return this;
   }
 
-  protected get rippleDisabled(): boolean {
+  protected override get rippleDisabled(): boolean {
     return false;
   }
 
@@ -106,7 +110,7 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
       preset: !hasCustomSlot,
     });
 
-    return html`<mdui-ripple></mdui-ripple>
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
       <div part="tab" class="${className}">
         <slot name="custom">
           <div part="icon" class="icon">

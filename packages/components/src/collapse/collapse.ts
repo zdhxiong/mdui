@@ -62,7 +62,7 @@ export class Collapse extends LitElement {
   })
   public disabled = false;
 
-  override async connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
     this.syncItems();
   }

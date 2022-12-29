@@ -20,12 +20,22 @@ $(getDocument()).on({
   },
 });
 
+export declare class FocusableMixinInterface {
+  public autofocus: boolean;
+  public tabIndex: number;
+  protected get focusDisabled(): boolean;
+  protected get focusElement(): HTMLElement | null;
+  public focus(options?: FocusOptions): void;
+  public blur(): void;
+  public click(): void;
+}
+
 /**
  * 参考：https://github.com/adobe/spectrum-web-components/blob/main/packages/shared/src/focusable.ts
  */
 export const FocusableMixin = <T extends Constructor<LitElement>>(
   superclass: T,
-): Constructor<LitElement> & T => {
+): Constructor<FocusableMixinInterface> & T => {
   class FocusableMixinClass extends superclass {
     /**
      * 是否在页面加载时自动获得焦点
@@ -59,7 +69,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       reflect: true,
       converter: (value: string | null): boolean => value !== 'false',
     })
-    protected focused = false;
+    private focused = false;
 
     /**
      * 是否通过键盘切换获得了焦点
@@ -71,7 +81,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       converter: (value: string | null): boolean => value !== 'false',
       attribute: 'focus-visible',
     })
-    protected focusVisible = false;
+    private focusVisible = false;
 
     /**
      * 父类要实现该属性，表示是否禁用 focus 状态
@@ -83,7 +93,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     /**
      * 最终获得焦点的元素
      */
-    protected get focusElement(): HTMLElement {
+    protected get focusElement(): HTMLElement | null {
       throw new Error('Must implement focusElement getter!');
     }
 
@@ -165,9 +175,9 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       }
 
       if (tabIndex === null) {
-        this.focusElement.removeAttribute('tabindex');
+        this.focusElement!.removeAttribute('tabindex');
       } else {
-        this.focusElement.tabIndex = tabIndex;
+        this.focusElement!.tabIndex = tabIndex;
       }
     }
 
@@ -191,7 +201,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
      */
     public override blur(): void {
       if (this.focusElement !== this) {
-        this.focusElement.blur();
+        this.focusElement!.blur();
       } else {
         HTMLElement.prototype.blur.apply(this);
       }
@@ -206,27 +216,27 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       }
 
       if (this.focusElement !== this) {
-        this.focusElement.click();
+        this.focusElement!.click();
       } else {
         HTMLElement.prototype.click.apply(this);
       }
     }
 
-    protected manageAutoFocus(): void {
+    private manageAutoFocus(): void {
       if (this.autofocus) {
         this.dispatchEvent(
           new KeyboardEvent('keydown', {
             code: 'Tab',
           }),
         );
-        this.focusElement.focus();
+        this.focusElement!.focus();
       }
     }
 
-    protected override firstUpdated(changes: PropertyValues): void {
-      super.firstUpdated(changes);
+    protected override firstUpdated(_changedProperties: PropertyValues): void {
+      super.firstUpdated(_changedProperties);
 
-      $(this.focusElement).on({
+      $(this.focusElement!).on({
         'focus._focusable': () => {
           this.focused = true;
           this.focusVisible = !isClick;
@@ -238,7 +248,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       });
     }
 
-    protected override update(changedProperties: PropertyValues): void {
+    protected override update(_changedProperties: PropertyValues): void {
       if (
         this._lastFocusDisabled === undefined ||
         this._lastFocusDisabled !== this.focusDisabled
@@ -259,7 +269,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
         }
       }
 
-      super.update(changedProperties);
+      super.update(_changedProperties);
     }
 
     protected override updated(changedProperties: PropertyValues): void {
@@ -280,5 +290,6 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     }
   }
 
+  // @ts-ignore
   return FocusableMixinClass;
 };

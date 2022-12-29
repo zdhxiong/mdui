@@ -63,27 +63,27 @@ export class TextField extends FocusableMixin(LitElement) {
   static override styles: CSSResultGroup = [componentStyle, style];
 
   @query('.input')
-  protected inputElement!: HTMLInputElement | HTMLTextAreaElement;
+  private readonly inputElement!: HTMLInputElement | HTMLTextAreaElement;
 
-  protected get focusDisabled(): boolean {
+  protected override get focusDisabled(): boolean {
     return this.disabled;
   }
 
-  protected get focusElement(): HTMLElement {
+  protected override get focusElement(): HTMLElement {
     return this.inputElement;
   }
 
-  protected readonly formController: FormController = new FormController(this);
-  protected readonly hasSlotController = new HasSlotController(
+  private readonly formController: FormController = new FormController(this);
+  private readonly hasSlotController = new HasSlotController(
     this,
     'prefix-icon',
     'suffix-icon',
     'input',
   );
-  protected resizeObserver!: ResizeObserver;
+  private resizeObserver!: ResizeObserver;
 
-  @state() protected isPasswordVisible = false;
-  @state() protected hasValue = false;
+  @state() private isPasswordVisible = false;
+  @state() private hasValue = false;
 
   /**
    * 该属性设置为 true 时，则在样式上为 text-field 赋予聚焦状态。实际是否聚焦仍然由 focusableMixin 控制
@@ -108,7 +108,7 @@ export class TextField extends FocusableMixin(LitElement) {
   /**
    * 是否渲染为 textarea。为 false 时渲染为 input
    */
-  protected get isTextarea() {
+  private get isTextarea() {
     return (this.rows && this.rows > 1) || this.autosize;
   }
 
@@ -441,20 +441,20 @@ export class TextField extends FocusableMixin(LitElement) {
     | 'email'
     | 'url';
 
-  get valueAsNumber() {
+  public get valueAsNumber() {
     return (
       (this.inputElement as HTMLInputElement)?.valueAsNumber ??
       parseFloat(this.value)
     );
   }
-  set valueAsNumber(newValue: number) {
+  public set valueAsNumber(newValue: number) {
     const input = document.createElement('input');
     input.type = 'number';
     input.valueAsNumber = newValue;
     this.value = input.value;
   }
 
-  public override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
     this.resizeObserver = new ResizeObserver(() => this.setTextareaHeight());
 
@@ -465,7 +465,7 @@ export class TextField extends FocusableMixin(LitElement) {
     });
   }
 
-  public override disconnectedCallback() {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.resizeObserver.unobserve(this.inputElement);
   }
@@ -545,7 +545,7 @@ export class TextField extends FocusableMixin(LitElement) {
     this.invalid = !this.inputElement.checkValidity();
   }
 
-  protected onChange() {
+  private onChange() {
     this.value = this.inputElement.value;
     if (this.isTextarea) {
       this.setTextareaHeight();
@@ -553,7 +553,7 @@ export class TextField extends FocusableMixin(LitElement) {
     emit(this, 'change');
   }
 
-  protected onClear(event: MouseEvent) {
+  private onClear(event: MouseEvent) {
     this.value = '';
     emit(this, 'clear');
     emit(this, 'input');
@@ -562,7 +562,7 @@ export class TextField extends FocusableMixin(LitElement) {
     event.stopPropagation();
   }
 
-  protected onInput() {
+  private onInput() {
     this.value = this.inputElement.value;
     if (this.isTextarea) {
       this.setTextareaHeight();
@@ -570,11 +570,11 @@ export class TextField extends FocusableMixin(LitElement) {
     emit(this, 'input');
   }
 
-  protected onInvalid() {
+  private onInvalid() {
     this.invalid = true;
   }
 
-  protected onKeyDown(event: KeyboardEvent) {
+  private onKeyDown(event: KeyboardEvent) {
     const hasModifier =
       event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
 
@@ -591,17 +591,17 @@ export class TextField extends FocusableMixin(LitElement) {
   /**
    * textarea 不支持 pattern 属性，所以在 keyup 时执行验证
    */
-  protected onTextAreaKeyUp() {
+  private onTextAreaKeyUp() {
     const patternRegex = new RegExp(this.pattern);
     const hasError = this.value && !this.value.match(patternRegex);
     this.setCustomValidity(hasError ? '请与请求的格式匹配。' : '');
   }
 
-  protected onTogglePassword() {
+  private onTogglePassword() {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
-  protected setTextareaHeight() {
+  private setTextareaHeight() {
     if (this.autosize) {
       this.inputElement.style.height = 'auto';
       this.inputElement.style.height = `${this.inputElement.scrollHeight}px`;
@@ -611,14 +611,14 @@ export class TextField extends FocusableMixin(LitElement) {
   }
 
   @watch('disabled', true)
-  protected onDisabledChange() {
+  private onDisabledChange() {
     // 禁用状态始终为验证通过，所以 disabled 变更时需要重新校验
     this.inputElement.disabled = this.disabled;
     this.invalid = !this.inputElement.checkValidity();
   }
 
   @watch('value')
-  protected onValueChange() {
+  private onValueChange() {
     this.hasValue = !!this.value;
 
     if (this.hasUpdated) {
@@ -627,12 +627,12 @@ export class TextField extends FocusableMixin(LitElement) {
   }
 
   @watch('rows', true)
-  protected onRowsChange() {
+  private onRowsChange() {
     this.setTextareaHeight();
   }
 
   @watch('maxRows')
-  protected async onMaxRowsChange() {
+  private async onMaxRowsChange() {
     if (!this.autosize) {
       return;
     }
@@ -657,7 +657,7 @@ export class TextField extends FocusableMixin(LitElement) {
   }
 
   @watch('minRows')
-  protected async onMinRowsChange() {
+  private async onMinRowsChange() {
     if (!this.autosize) {
       return;
     }
@@ -681,7 +681,7 @@ export class TextField extends FocusableMixin(LitElement) {
     }
   }
 
-  protected renderLabel(): TemplateResult {
+  private renderLabel(): TemplateResult {
     return when(
       this.label,
       () =>
@@ -700,7 +700,7 @@ export class TextField extends FocusableMixin(LitElement) {
     );
   }
 
-  protected renderPrefix(hasPrefixIcon: boolean): TemplateResult {
+  private renderPrefix(hasPrefixIcon: boolean): TemplateResult {
     return html`<span
         part="prefix-icon"
         class="prefix-icon ${classMap({ 'has-prefix-icon': hasPrefixIcon })}"
@@ -717,7 +717,7 @@ export class TextField extends FocusableMixin(LitElement) {
       </span>`;
   }
 
-  protected renderSuffix(hasSuffixIcon: boolean): TemplateResult {
+  private renderSuffix(hasSuffixIcon: boolean): TemplateResult {
     return html`<span part="suffix" class="suffix">
         <slot name="suffix">${this.suffix}</slot>
       </span>
@@ -740,7 +740,7 @@ export class TextField extends FocusableMixin(LitElement) {
           </span>`} `;
   }
 
-  protected renderClearButton(): TemplateResult {
+  private renderClearButton(): TemplateResult {
     const hasClearButton =
       this.clearable &&
       !this.disabled &&
@@ -765,7 +765,7 @@ export class TextField extends FocusableMixin(LitElement) {
     );
   }
 
-  protected renderTogglePasswordButton(): TemplateResult {
+  private renderTogglePasswordButton(): TemplateResult {
     return when(
       this.togglePassword && !this.disabled,
       () =>
@@ -788,7 +788,7 @@ export class TextField extends FocusableMixin(LitElement) {
     );
   }
 
-  protected renderInput(hasInputSlot: boolean): TemplateResult {
+  private renderInput(hasInputSlot: boolean): TemplateResult {
     return html`<input
       part="input"
       class="input ${classMap({ 'hide-input': hasInputSlot })}"
@@ -831,7 +831,7 @@ export class TextField extends FocusableMixin(LitElement) {
     />`;
   }
 
-  protected renderTextArea(hasInputSlot: boolean): TemplateResult {
+  private renderTextArea(hasInputSlot: boolean): TemplateResult {
     return html`<textarea
       part="input"
       class="input ${classMap({ 'hide-input': hasInputSlot })}"
@@ -862,7 +862,7 @@ export class TextField extends FocusableMixin(LitElement) {
     ></textarea>`;
   }
 
-  protected renderHelper(): TemplateResult | typeof nothing {
+  private renderHelper(): TemplateResult | typeof nothing {
     return this.invalid && (this.error || this.inputElement.validationMessage)
       ? html`<div part="error" class="error">
           <slot name="error">
@@ -876,7 +876,7 @@ export class TextField extends FocusableMixin(LitElement) {
       : nothing;
   }
 
-  protected renderCounter(): TemplateResult {
+  private renderCounter(): TemplateResult {
     return when(
       this.counter && this.maxlength,
       () =>

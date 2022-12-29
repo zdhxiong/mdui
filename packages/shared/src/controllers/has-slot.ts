@@ -6,10 +6,10 @@ type SlotName = '[default]' | string;
  * 检查指定的 slot 是否存在
  */
 export class HasSlotController implements ReactiveController {
-  host: ReactiveControllerHost & Element;
-  slotNames: SlotName[] = [];
+  private host: ReactiveControllerHost & Element;
+  private slotNames: SlotName[] = [];
 
-  constructor(
+  public constructor(
     host: ReactiveControllerHost & Element,
     ...slotNames: SlotName[]
   ) {
@@ -18,7 +18,7 @@ export class HasSlotController implements ReactiveController {
     this.onSlotChange = this.onSlotChange.bind(this);
   }
 
-  private hasDefaultSlot() {
+  private hasDefaultSlot(): boolean {
     // @ts-ignore
     return [...this.host.childNodes].some((node) => {
       if (node.nodeType === node.TEXT_NODE && node.textContent!.trim() !== '') {
@@ -36,25 +36,25 @@ export class HasSlotController implements ReactiveController {
     });
   }
 
-  private hasNamedSlot(name: string) {
+  private hasNamedSlot(name: string): boolean {
     return this.host.querySelector(`:scope > [slot="${name}"]`) !== null;
   }
 
-  public test(slotName: SlotName) {
+  public test(slotName: SlotName): boolean {
     return slotName === '[default]'
       ? this.hasDefaultSlot()
       : this.hasNamedSlot(slotName);
   }
 
-  hostConnected() {
+  public hostConnected(): void {
     this.host.shadowRoot!.addEventListener('slotchange', this.onSlotChange);
   }
 
-  hostDisconnected() {
+  public hostDisconnected(): void {
     this.host.shadowRoot!.removeEventListener('slotchange', this.onSlotChange);
   }
 
-  private onSlotChange(event: Event) {
+  private onSlotChange(event: Event): void {
     const slot = event.target as HTMLSlotElement;
 
     if (

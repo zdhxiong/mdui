@@ -3,6 +3,7 @@ import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
@@ -36,25 +37,28 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
 export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
   static override styles: CSSResultGroup = [componentStyle, style];
 
-  @query('mdui-ripple', true)
-  protected rippleElement!: Ripple;
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
 
   @query('input')
-  protected inputElement!: HTMLInputElement;
+  private readonly inputElement!: HTMLInputElement;
 
-  protected get focusDisabled(): boolean {
+  protected override get focusDisabled(): boolean {
     return this.disabled;
   }
 
-  protected get focusElement(): HTMLElement {
+  protected override get focusElement(): HTMLElement {
     return this.inputElement;
   }
 
-  protected get rippleDisabled(): boolean {
+  protected override get rippleDisabled(): boolean {
     return this.disabled;
   }
 
-  protected readonly formController: FormController = new FormController(this, {
+  private readonly formController: FormController = new FormController(this, {
     value: (checkbox: Checkbox) =>
       checkbox.checked ? checkbox.value : undefined,
   });
@@ -184,7 +188,7 @@ export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
         @change=${this.onChange}
       />
       <i part="control">
-        <mdui-ripple></mdui-ripple>
+        <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
         <mdui-icon-check-box-outline-blank
           part="unchecked-icon"
           class="icon unchecked-icon"

@@ -54,10 +54,10 @@ export class Menu extends LitElement {
 
   // 直接子元素（不包含子菜单中的菜单项）
   @queryAssignedElements({ flatten: true, selector: 'mdui-menu-item' })
-  private childrenItems!: MenuItem[];
+  private readonly childrenItems!: MenuItem[];
 
   // 菜单项元素（包含子菜单中的菜单项）
-  protected get items(): MenuItem[] {
+  private get items(): MenuItem[] {
     return $(this.childrenItems)
       .find('mdui-menu-item')
       .add(this.childrenItems)
@@ -68,32 +68,32 @@ export class Menu extends LitElement {
   private hasSetDefaultValue = false;
 
   // 菜单项元素（不包含已禁用的，包含子菜单中的菜单项）
-  protected get itemsEnabled(): MenuItem[] {
+  private get itemsEnabled(): MenuItem[] {
     return this.items.filter((item) => !item.disabled);
   }
 
   // 当前菜单是否为单选
-  protected get isSingle() {
+  private get isSingle() {
     return this.selects === 'single';
   }
 
   // 当前菜单是否为多选
-  protected get isMultiple() {
+  private get isMultiple() {
     return this.selects === 'multiple';
   }
 
   // 当前菜单是否可选择
-  protected get isSelectable() {
+  private get isSelectable() {
     return this.isSingle || this.isMultiple;
   }
 
   // 当前菜单是否为子菜单
-  protected get isSubmenu() {
+  private get isSubmenu() {
     return !$(this).parent().length;
   }
 
   // 最后一次获得焦点的 menu-item 元素。为嵌套菜单时，把不同层级的 menu-item 放到对应索引位的位置
-  protected lastActiveItems: MenuItem[] = [];
+  private lastActiveItems: MenuItem[] = [];
 
   // 最深层级的子菜单中，最后交互过的 menu-item
   private get lastActiveItem() {
@@ -174,7 +174,7 @@ export class Menu extends LitElement {
   @property({ type: Number, reflect: true, attribute: 'submenu-close-delay' })
   public submenuCloseDelay = 200;
 
-  protected override firstUpdated(_changedProperties: PropertyValues) {
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
     this.updateFocusable();
     this.lastActiveItem = this.items.find((item) => item.focusable)!;
@@ -221,7 +221,7 @@ export class Menu extends LitElement {
   @watch('submenuTrigger')
   @watch('submenuOpenDelay')
   @watch('submenuCloseDelay')
-  protected onSlotChange() {
+  private onSlotChange() {
     this.items.forEach((item) => {
       item.dense = this.dense;
       item.selects = this.selects;
@@ -337,7 +337,7 @@ export class Menu extends LitElement {
     }
   }
 
-  protected updateSelected() {
+  private updateSelected() {
     // 选中 menu-item
     this.items.forEach(
       (item) => (item.selected = this.selectedKeys.includes(item.key)),
@@ -374,12 +374,12 @@ export class Menu extends LitElement {
   }
 
   // 聚焦一个 menu-item
-  protected async focusOne(item: MenuItem, options?: FocusOptions) {
+  private async focusOne(item: MenuItem, options?: FocusOptions) {
     await delay(); // 等待 focusableMixin 更新完成
     item.focus(options);
   }
 
-  protected onClick(event: MouseEvent) {
+  private onClick(event: MouseEvent) {
     if (this.isSubmenu) {
       return;
     }
@@ -406,7 +406,7 @@ export class Menu extends LitElement {
     this.focusOne(item);
   }
 
-  protected onKeyDown(event: KeyboardEvent) {
+  private onKeyDown(event: KeyboardEvent) {
     if (this.isSubmenu) {
       return;
     }

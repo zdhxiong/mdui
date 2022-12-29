@@ -15,28 +15,28 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
   static override styles: CSSResultGroup = [componentStyle, sliderBaseStyle];
 
   @query('input')
-  protected input!: HTMLInputElement;
+  protected readonly input!: HTMLInputElement;
 
   @query('.track-active', true)
-  protected trackActive!: HTMLElement;
+  protected readonly trackActive!: HTMLElement;
 
   // 按下时，label 可见
   @state()
   protected labelVisible = false;
 
-  protected get focusElement(): HTMLElement {
+  protected override get focusElement(): HTMLElement {
     return this.input;
   }
 
-  protected get focusDisabled(): boolean {
+  protected override get focusDisabled(): boolean {
     return this.disabled;
   }
 
-  protected get rippleDisabled(): boolean {
+  protected override get rippleDisabled(): boolean {
     return this.disabled;
   }
 
-  protected readonly formController: FormController = new FormController(this);
+  private readonly formController: FormController = new FormController(this);
 
   /**
    * 最小允许值

@@ -1,10 +1,12 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import '../icon.js';
 import { ButtonBase } from './button-base.js';
 import { style } from './style.js';
 import type { MaterialIconsName } from '../icon.js';
+import type { Ripple } from '../ripple/index.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
 
 /**
@@ -27,6 +29,12 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
 @customElement('mdui-button')
 export class Button extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
+
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
 
   /**
    * 按钮形状。可选值为：
@@ -66,7 +74,7 @@ export class Button extends ButtonBase {
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon!: MaterialIconsName;
 
-  protected renderStart(): TemplateResult {
+  private renderStart(): TemplateResult {
     return html`<slot name="start">
       ${when(
         this.icon,
@@ -79,11 +87,11 @@ export class Button extends ButtonBase {
     </slot>`;
   }
 
-  protected renderLabel(): TemplateResult {
+  private renderLabel(): TemplateResult {
     return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
-  protected renderEnd(): TemplateResult {
+  private renderEnd(): TemplateResult {
     return html`<slot name="end">
       ${when(
         this.endIcon,
@@ -96,24 +104,22 @@ export class Button extends ButtonBase {
     </slot>`;
   }
 
-  protected renderInner(): TemplateResult[] {
+  private renderInner(): TemplateResult[] {
     return [this.renderStart(), this.renderLabel(), this.renderEnd()];
   }
 
   protected override render(): TemplateResult {
-    return html`<mdui-ripple></mdui-ripple>${this.href
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
         ? this.disabled || this.loading
           ? html`<span part="button" class="button">
               ${this.renderInner()}
             </span>`
-          : // @ts-ignore
-            this.renderAnchor({
+          : this.renderAnchor({
               className: 'button',
               part: 'button',
               content: this.renderInner(),
             })
-        : // @ts-ignore
-          this.renderButton({
+        : this.renderButton({
             className: 'button',
             part: 'button',
             content: this.renderInner(),

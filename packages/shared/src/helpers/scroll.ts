@@ -11,7 +11,10 @@ const CSS_CLASS = 'mdui-lock-screen';
  * @param element
  * @param target 锁定该元素的滚动状态，默认为 body
  */
-export const lockScreen = (element: HTMLElement, target?: HTMLElement) => {
+export const lockScreen = (
+  element: HTMLElement,
+  target?: HTMLElement,
+): void => {
   const document = getDocument();
   locks.add(element);
   $(target || document.body).addClass(CSS_CLASS);
@@ -22,7 +25,10 @@ export const lockScreen = (element: HTMLElement, target?: HTMLElement) => {
  * @param element
  * @param target 锁定该元素的滚动状态，默认为 body
  */
-export const unlockScreen = (element: HTMLElement, target?: HTMLElement) => {
+export const unlockScreen = (
+  element: HTMLElement,
+  target?: HTMLElement,
+): void => {
   const document = getDocument();
   locks.delete(element);
 

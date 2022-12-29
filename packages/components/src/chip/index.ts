@@ -1,5 +1,6 @@
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
@@ -12,6 +13,7 @@ import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
 import { style } from './style.js';
 import type { MaterialIconsName } from '../icon.js';
+import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 
 /**
@@ -37,6 +39,12 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 @customElement('mdui-chip')
 export class Chip extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
+
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
 
   /**
    * 纸片形状。可选值为：
@@ -104,7 +112,7 @@ export class Chip extends ButtonBase {
   @property({ reflect: true })
   public avatar!: string;
 
-  protected override firstUpdated(_changedProperties: PropertyValues) {
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
 
     $(this).on({
@@ -154,7 +162,7 @@ export class Chip extends ButtonBase {
     emit(this, 'change');
   }
 
-  protected renderLeadingIcon(): TemplateResult {
+  private renderLeadingIcon(): TemplateResult {
     return html`<slot name="icon">
       ${this.selected && ['assist', 'filter'].includes(this.variant)
         ? html`<mdui-icon-check part="check" class="icon"></mdui-icon-check>`
@@ -175,11 +183,11 @@ export class Chip extends ButtonBase {
     </slot>`;
   }
 
-  protected renderLabel(): TemplateResult {
+  private renderLabel(): TemplateResult {
     return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
-  protected renderTrailingIcon(): TemplateResult {
+  private renderTrailingIcon(): TemplateResult {
     return when(
       this.deletable,
       () => html`<span part="delete" class="delete" @click=${this.onDelete}>
@@ -188,7 +196,7 @@ export class Chip extends ButtonBase {
     );
   }
 
-  protected renderInner(): TemplateResult[] {
+  private renderInner(): TemplateResult[] {
     return [
       this.renderLeadingIcon(),
       this.renderLabel(),
@@ -197,19 +205,17 @@ export class Chip extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    return html`<mdui-ripple></mdui-ripple>${this.href
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
         ? this.disabled || this.loading
           ? html`<span part="button" class="button">
               ${this.renderInner()}
             </span>`
-          : // @ts-ignore
-            this.renderAnchor({
+          : this.renderAnchor({
               className: 'button',
               part: 'button',
               content: this.renderInner(),
             })
-        : // @ts-ignore
-          this.renderButton({
+        : this.renderButton({
             className: 'button',
             part: 'button',
             content: this.renderInner(),

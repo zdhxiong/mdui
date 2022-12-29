@@ -13,7 +13,7 @@ import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
-import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { CSSResultGroup, TemplateResult, PropertyValues } from 'lit';
 
 /**
  * @event open - tooltip 开始显示时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 tooltip 打开
@@ -32,12 +32,12 @@ export class Tooltip extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];
 
   @query('.tooltip')
-  protected tooltip!: HTMLElement;
+  private readonly tooltip!: HTMLElement;
 
   @query('.arrow')
-  protected arrow!: HTMLElement;
+  private readonly arrow!: HTMLElement;
 
-  protected target!: HTMLElement;
+  private target!: HTMLElement;
 
   private hoverTimeout!: number;
 
@@ -119,19 +119,20 @@ export class Tooltip extends LitElement {
   @property({ type: Number, reflect: true, attribute: 'z-index' })
   public zIndex = 1000;
 
-  public connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
     $(window).on('scroll._tooltip', () => {
       window.requestAnimationFrame(() => this.onOpenChange());
     });
   }
 
-  public disconnectedCallback() {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
     $(window).off('scroll._tooltip');
   }
 
-  protected firstUpdated() {
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
     this.target = this.getTarget();
 
     $(this.target).on({
@@ -149,7 +150,7 @@ export class Tooltip extends LitElement {
   /**
    * 获取第一个非 <style> 和 content slot 的子元素，作为 tooltip 的目标元素
    */
-  protected getTarget(): HTMLElement {
+  private getTarget(): HTMLElement {
     return [...(this.children as unknown as HTMLElement[])].find(
       (el) =>
         el.tagName.toLowerCase() !== 'style' &&
@@ -157,12 +158,12 @@ export class Tooltip extends LitElement {
     )!;
   }
 
-  protected hasTrigger(trigger: string): boolean {
+  private hasTrigger(trigger: string): boolean {
     const triggers = this.trigger.split(' ');
     return triggers.includes(trigger);
   }
 
-  protected onFocus() {
+  private onFocus() {
     if (this.open || !this.hasTrigger('focus')) {
       return;
     }
@@ -170,7 +171,7 @@ export class Tooltip extends LitElement {
     this.open = true;
   }
 
-  protected onBlur() {
+  private onBlur() {
     if (!this.open || !this.hasTrigger('focus')) {
       return;
     }
@@ -178,7 +179,7 @@ export class Tooltip extends LitElement {
     this.open = false;
   }
 
-  protected onClick(e: MouseEvent) {
+  private onClick(e: MouseEvent) {
     // e.button 为 0 时，为鼠标左键点击。忽略鼠标中间和右键
     if (e.button || !this.hasTrigger('click')) {
       return;
@@ -187,7 +188,7 @@ export class Tooltip extends LitElement {
     this.open = !this.open;
   }
 
-  protected onKeydown(e: KeyboardEvent) {
+  private onKeydown(e: KeyboardEvent) {
     if (!this.open || e.key !== 'Escape') {
       return;
     }
@@ -196,7 +197,7 @@ export class Tooltip extends LitElement {
     this.open = false;
   }
 
-  protected onMouseEnter() {
+  private onMouseEnter() {
     if (this.open || !this.hasTrigger('hover')) {
       return;
     }
@@ -211,7 +212,7 @@ export class Tooltip extends LitElement {
     }
   }
 
-  protected onMouseLeave() {
+  private onMouseLeave() {
     window.clearTimeout(this.hoverTimeout);
 
     if (!this.open || !this.hasTrigger('hover')) {
@@ -225,7 +226,7 @@ export class Tooltip extends LitElement {
     }, this.closeDelay || 50);
   }
 
-  protected updatePositioner(): void {
+  private updatePositioner(): void {
     const $tooltip = $(this.tooltip);
     const $arrow = $(this.arrow);
     const targetRect = this.target.getBoundingClientRect(); // 触发目标的位置和宽高
@@ -331,7 +332,7 @@ export class Tooltip extends LitElement {
   }
 
   @watch('open', true)
-  protected async onOpenChange() {
+  private async onOpenChange() {
     if (this.disabled) {
       this.open = false;
       return;

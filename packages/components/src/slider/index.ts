@@ -3,6 +3,7 @@ import { customElement, property, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { map } from 'lit/directives/map.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
@@ -31,11 +32,14 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 export class Slider extends SliderBase {
   static override styles: CSSResultGroup = [SliderBase.styles, style];
 
-  @query('mdui-ripple', true)
-  protected rippleElement!: Ripple;
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
 
   @query('.handle', true)
-  private handle!: HTMLElement;
+  private readonly handle!: HTMLElement;
 
   /**
    * 滑块的值，将于表单数据一起提交
@@ -43,7 +47,7 @@ export class Slider extends SliderBase {
   @property({ type: Number, reflect: true })
   public value = 0;
 
-  connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
 
     if (this.value < this.min) {
@@ -67,7 +71,7 @@ export class Slider extends SliderBase {
     });
   }
 
-  protected firstUpdated(_changedProperties: PropertyValues) {
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
 
     this.updateStyle();
@@ -112,7 +116,7 @@ export class Slider extends SliderBase {
       <div part="track-inactive" class="track-inactive"></div>
       <div part="track-active" class="track-active"></div>
       <div part="handle" class="handle">
-        <mdui-ripple></mdui-ripple>
+        <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
         ${this.renderLabel(this.value)}
       </div>
       ${when(this.tickmarks, () =>

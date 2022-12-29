@@ -25,10 +25,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 export class Avatar extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];
 
-  protected readonly hasSlotController = new HasSlotController(
-    this,
-    '[default]',
-  );
+  private readonly hasSlotController = new HasSlotController(this, '[default]');
 
   /**
    * 头像的图片地址

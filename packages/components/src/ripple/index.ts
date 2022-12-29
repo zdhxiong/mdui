@@ -29,16 +29,16 @@ export class Ripple extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];
 
   @query('.surface', true)
-  protected surface!: HTMLElement;
+  private readonly surface!: HTMLElement;
 
   @state()
-  protected hover = false;
+  private hover = false;
 
   @state()
-  protected focused = false;
+  private focused = false;
 
   @state()
-  protected dragged = false;
+  private dragged = false;
 
   /**
    * 是否在点击时不产生涟漪动画

@@ -1,13 +1,8 @@
 import { html, PropertyValues } from 'lit';
-import {
-  customElement,
-  property,
-  query,
-  queryAll,
-  state,
-} from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { map } from 'lit/directives/map.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
@@ -36,14 +31,17 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 export class RangeSlider extends SliderBase {
   static override styles: CSSResultGroup = [SliderBase.styles, style];
 
-  @queryAll('mdui-ripple')
-  protected rippleElement!: Ripple[];
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
 
   @query('.handle.start', true)
-  private handleStart!: HTMLElement;
+  private readonly handleStart!: HTMLElement;
 
   @query('.handle.end', true)
-  private handleEnd!: HTMLElement;
+  private readonly handleEnd!: HTMLElement;
 
   /**
    * 当前操作的是哪一个 handle
@@ -54,7 +52,7 @@ export class RangeSlider extends SliderBase {
   // 当前鼠标悬浮在哪个 handle 上
   private hoverHandle?: 'start' | 'end';
 
-  protected getRippleIndex = () => {
+  protected override getRippleIndex = () => {
     if (this.hoverHandle) {
       return this.hoverHandle === 'start' ? 0 : 1;
     }
@@ -80,7 +78,7 @@ export class RangeSlider extends SliderBase {
     });
   }
 
-  connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
 
     this.value = [this.min, this.max];
@@ -123,17 +121,15 @@ export class RangeSlider extends SliderBase {
       'pointermove._slider': (event: PointerEvent) => {
         const currentHandle = getCurrentHandle(event);
         if (this.hoverHandle !== currentHandle) {
-          // @ts-ignore
           this.endHover(event);
           this.hoverHandle = currentHandle;
-          // @ts-ignore
           this.startHover(event);
         }
       },
     });
   }
 
-  protected firstUpdated(_changedProperties: PropertyValues) {
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
 
     this.updateStyle();
@@ -212,7 +208,7 @@ export class RangeSlider extends SliderBase {
           'z-index': this.currentHandle === 'end' ? '2' : '1',
         })}
       >
-        <mdui-ripple></mdui-ripple>
+        <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
         ${this.renderLabel(this.value[1])}
       </div>
       ${when(this.tickmarks, () =>

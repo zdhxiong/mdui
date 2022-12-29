@@ -12,7 +12,7 @@ import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { navigationRailStyle } from './navigation-rail-style.js';
 import type { NavigationRailItem as NavigationRailItemOriginal } from './navigation-rail-item.js';
-import type { CSSResultGroup } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 type NavigationRailItem = NavigationRailItemOriginal & {
   active: boolean;
@@ -51,7 +51,7 @@ export class NavigationRail extends LitElement {
   private hasSetDefaultValue = false;
 
   // 所有的子项元素
-  protected get items() {
+  private get items() {
     return $(this)
       .find('mdui-navigation-rail-item')
       .get() as unknown as NavigationRailItem[];
@@ -170,13 +170,13 @@ export class NavigationRail extends LitElement {
     this.items.forEach((item) => (item.active = this.activeKey === item.key));
   }
 
-  protected onSlotChange() {
+  private onSlotChange() {
     this.items.forEach((item) => {
       item.placement = this.placement;
     });
   }
 
-  protected override render() {
+  protected override render(): TemplateResult {
     const hasTopSlot = this.hasSlotController.test('top');
     const hasBottomSlot = this.hasSlotController.test('bottom');
 

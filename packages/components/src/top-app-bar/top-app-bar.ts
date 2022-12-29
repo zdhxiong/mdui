@@ -38,10 +38,10 @@ export class TopAppBar extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, topAppBarStyle];
 
   @queryAssignedElements({ selector: 'mdui-top-app-bar-title', flatten: true })
-  protected titleElements!: TopAppBarTitle[];
+  private readonly titleElements!: TopAppBarTitle[];
 
-  protected readonly uniqueId = uniqueId();
-  protected readonly scrollEventName = `scroll._top_app_bar_${this.uniqueId}`;
+  private readonly uniqueId = uniqueId();
+  private readonly scrollEventName = `scroll._top_app_bar_${this.uniqueId}`;
 
   /**
    * 滚动条是否不位于顶部
@@ -51,7 +51,7 @@ export class TopAppBar extends LitElement {
     reflect: true,
     converter: (value: string | null): boolean => value !== 'false',
   })
-  protected scrolling = false;
+  private scrolling = false;
 
   /**
    * 顶部应用栏形状。可选值为：
@@ -124,18 +124,18 @@ export class TopAppBar extends LitElement {
   /**
    * 组件需要监听该元素的滚动状态
    */
-  protected get scrollTargetListening(): HTMLElement | Window {
+  private get scrollTargetListening(): HTMLElement | Window {
     return this.scrollTarget ? $(this.scrollTarget)[0] : window;
   }
 
   /**
    * 组件在该容器内滚动
    */
-  protected get scrollTargetContainer(): HTMLElement {
+  private get scrollTargetContainer(): HTMLElement {
     return this.scrollTarget ? $(this.scrollTarget)[0] : document.body;
   }
 
-  override async connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
     $(this.scrollTargetListening).on(this.scrollEventName, () => {
       window.requestAnimationFrame(() => this.onScroll());
@@ -147,7 +147,7 @@ export class TopAppBar extends LitElement {
     });
   }
 
-  override disconnectedCallback() {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
     $(this.scrollTargetListening).off(this.scrollEventName);
   }
@@ -156,7 +156,7 @@ export class TopAppBar extends LitElement {
    * scrollTarget 属性变更时，重新设置时间监听
    */
   @watch('scrollTarget')
-  protected onScrollTargetChange(
+  private onScrollTargetChange(
     oldScrollTarget: string,
     newScrollTarget: string,
   ) {
@@ -168,7 +168,7 @@ export class TopAppBar extends LitElement {
   }
 
   @watch('variant')
-  protected async onVariantChange() {
+  private async onVariantChange() {
     $(this).one('transitionend', () => {
       // variant 变更时，重新为 scrollTargetContainer 元素添加 padding-top。避免 top-app-bar 覆盖内容
       $(this.scrollTargetContainer).css({
@@ -185,7 +185,7 @@ export class TopAppBar extends LitElement {
   }
 
   @watch('shrink')
-  protected async onShrinkChange() {
+  private async onShrinkChange() {
     if (!this.hasUpdated) {
       await this.updateComplete;
     }
@@ -196,7 +196,7 @@ export class TopAppBar extends LitElement {
 
   private lastScrollTop = 0; // 上次滚动后，垂直方向的距离。使用 scrollThreshold
   private lastScrollTopNoThreshold = 0; // 上次滚动后，垂直方向的距离。不使用 scrollThreshold
-  protected onScroll() {
+  private onScroll() {
     const scrollTop =
       (this.scrollTargetListening as Window).scrollY ||
       (this.scrollTargetListening as HTMLElement).scrollTop;

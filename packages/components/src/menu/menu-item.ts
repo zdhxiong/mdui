@@ -1,6 +1,7 @@
 import { html, LitElement } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { $ } from '@mdui/jq/$.js';
@@ -57,14 +58,17 @@ export class MenuItem extends AnchorMixin(
 ) {
   static override styles: CSSResultGroup = [componentStyle, menuItemStyle];
 
-  @query('mdui-ripple')
-  protected rippleElement!: Ripple;
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
 
   @query('.item')
-  protected item!: HTMLElement;
+  private readonly item!: HTMLElement;
 
   @query('.submenu')
-  protected submenu!: HTMLElement;
+  private readonly submenu!: HTMLElement;
 
   // 由 mdui-menu 控制该参数
   @state() protected dense!: boolean;
@@ -92,26 +96,26 @@ export class MenuItem extends AnchorMixin(
   // 是否可聚焦。由 mdui-menu 控制该参数
   @state() protected focusable = false;
 
-  protected get hasSubmenu(): boolean {
+  private get hasSubmenu(): boolean {
     return this.hasSlotController.test('submenu-item');
   }
 
-  protected get focusDisabled(): boolean {
+  protected override get focusDisabled(): boolean {
     return this.disabled || !this.focusable;
   }
 
-  protected get focusElement(): HTMLElement {
+  protected override get focusElement(): HTMLElement {
     return this.href ? this.item : this;
   }
 
-  protected get rippleDisabled(): boolean {
+  protected override get rippleDisabled(): boolean {
     return this.disabled;
   }
 
   // 每一个 menu-item 元素都添加一个唯一的 key
   protected readonly key = uniqueId();
 
-  protected readonly hasSlotController = new HasSlotController(
+  private readonly hasSlotController = new HasSlotController(
     this,
     '[default]',
     'start',
@@ -167,7 +171,7 @@ export class MenuItem extends AnchorMixin(
   })
   public submenuOpen = false;
 
-  override connectedCallback(): void {
+  public override connectedCallback(): void {
     super.connectedCallback();
     $(document).on('pointerdown._menu-item', (e) => this.onOuterClick(e));
 
@@ -177,7 +181,7 @@ export class MenuItem extends AnchorMixin(
     }
   }
 
-  override disconnectedCallback(): void {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
     $(document).off('pointerdown._menu-item');
   }
@@ -185,11 +189,11 @@ export class MenuItem extends AnchorMixin(
   /**
    * 点击子菜单外面的区域，关闭子菜单
    */
-  protected onOuterClick(e: Event) {
+  private onOuterClick(event: Event) {
     if (
       !this.submenuOpen ||
-      this === e.target ||
-      $.contains(this, e.target as HTMLElement)
+      this === event.target ||
+      $.contains(this, event.target as HTMLElement)
     ) {
       return;
     }
@@ -197,7 +201,7 @@ export class MenuItem extends AnchorMixin(
     this.submenuOpen = false;
   }
 
-  protected override firstUpdated(_changedProperties: PropertyValues) {
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
 
     $(this).on({
@@ -215,12 +219,12 @@ export class MenuItem extends AnchorMixin(
     }
   }
 
-  protected hasTrigger(trigger: string): boolean {
+  private hasTrigger(trigger: string): boolean {
     const triggers = this.submenuTrigger.split(' ');
     return triggers.includes(trigger);
   }
 
-  protected onFocus() {
+  private onFocus() {
     if (this.submenuOpen || !this.hasTrigger('focus') || !this.hasSubmenu) {
       return;
     }
@@ -228,7 +232,7 @@ export class MenuItem extends AnchorMixin(
     this.submenuOpen = true;
   }
 
-  protected onBlur() {
+  private onBlur() {
     if (!this.submenuOpen || !this.hasTrigger('focus') || !this.hasSubmenu) {
       return;
     }
@@ -236,30 +240,34 @@ export class MenuItem extends AnchorMixin(
     this.submenuOpen = false;
   }
 
-  protected onClick(e: MouseEvent) {
+  private onClick(event: MouseEvent) {
     // e.button 为 0 时，为鼠标左键点击。忽略鼠标中间和右键
-    if (e.button) {
+    if (event.button) {
       return;
     }
 
     // 切换子菜单打开状态
-    if (!this.hasTrigger('click') || e.target !== this || !this.hasSubmenu) {
+    if (
+      !this.hasTrigger('click') ||
+      event.target !== this ||
+      !this.hasSubmenu
+    ) {
       return;
     }
 
     this.submenuOpen = !this.submenuOpen;
   }
 
-  protected onKeydown(e: KeyboardEvent) {
+  private onKeydown(event: KeyboardEvent) {
     // 切换子菜单打开状态
     if (this.hasSubmenu) {
-      if (!this.submenuOpen && e.key === 'Enter') {
-        e.stopPropagation();
+      if (!this.submenuOpen && event.key === 'Enter') {
+        event.stopPropagation();
         this.submenuOpen = true;
       }
 
-      if (this.submenuOpen && e.key === 'Escape') {
-        e.stopPropagation();
+      if (this.submenuOpen && event.key === 'Escape') {
+        event.stopPropagation();
         this.submenuOpen = false;
       }
     }
@@ -268,7 +276,7 @@ export class MenuItem extends AnchorMixin(
   private submenuOpenTimeout!: number;
   private submenuCloseTimeout!: number;
 
-  protected onMouseEnter() {
+  private onMouseEnter() {
     // 不做 submenuOpen 的判断，因为可以延时打开和关闭
     if (!this.hasTrigger('hover') || !this.hasSubmenu) {
       return;
@@ -284,7 +292,7 @@ export class MenuItem extends AnchorMixin(
     }
   }
 
-  protected onMouseLeave() {
+  private onMouseLeave() {
     // 不做 submenuOpen 的判断，因为可以延时打开和关闭
     if (!this.hasTrigger('hover') || !this.hasSubmenu) {
       return;
@@ -296,7 +304,7 @@ export class MenuItem extends AnchorMixin(
     }, this.submenuCloseDelay || 50);
   }
 
-  protected updateSubmenuPositioner(): void {
+  private updateSubmenuPositioner(): void {
     const $window = $(window);
     const $submenu = $(this.submenu);
     const itemRect = this.getBoundingClientRect();
@@ -335,7 +343,7 @@ export class MenuItem extends AnchorMixin(
   }
 
   @watch('submenuOpen', true)
-  protected async onOpenChange() {
+  private async onOpenChange() {
     if (this.disabled) {
       this.submenuOpen = false;
       return;
@@ -401,7 +409,7 @@ export class MenuItem extends AnchorMixin(
     }
   }
 
-  protected renderInner(hasSubmenu: boolean): TemplateResult {
+  private renderInner(hasSubmenu: boolean): TemplateResult {
     const hasStartSlot = this.hasSlotController.test('start');
     const hasEndSlot = this.hasSlotController.test('end');
     const hasEndTextSlot = this.hasSlotController.test('end-text');
@@ -458,9 +466,9 @@ export class MenuItem extends AnchorMixin(
       dense: this.dense,
     });
 
-    return html`<mdui-ripple></mdui-ripple>${this.href && !this.disabled
-        ? // @ts-ignore
-          this.renderAnchor({
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href &&
+      !this.disabled
+        ? this.renderAnchor({
             className,
             content: this.renderInner(this.hasSubmenu),
           })

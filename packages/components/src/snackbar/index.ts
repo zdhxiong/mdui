@@ -120,7 +120,7 @@ export class Snackbar extends LitElement {
   })
   public closeOnOutsideClick = false;
 
-  override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
 
     $(document).on('pointerdown._snackbar', (e) =>
@@ -128,7 +128,7 @@ export class Snackbar extends LitElement {
     );
   }
 
-  override disconnectedCallback() {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     $(document).off('pointerdown._snackbar');
@@ -150,7 +150,7 @@ export class Snackbar extends LitElement {
   }
 
   @watch('open')
-  protected async onOpenChange() {
+  private async onOpenChange() {
     const isHandset = getBreakpoint() === 'handset';
     const isCenteredHorizontally = ['top', 'bottom'].includes(this.placement);
 

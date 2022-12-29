@@ -1,6 +1,7 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
@@ -39,14 +40,17 @@ export class NavigationBarItem extends AnchorMixin(
     navigationBarItemStyle,
   ];
 
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
   /**
    * 文本的可视状态，由 `navigation-bar` 调用
    */
   @property({ reflect: true, attribute: 'label-visibility' })
   protected labelVisibility!: 'selected' | 'labeled' | 'unlabeled';
-
-  @query('mdui-ripple', true)
-  protected rippleElement!: Ripple;
 
   private readonly hasSlotController = new HasSlotController(
     this,
@@ -56,20 +60,20 @@ export class NavigationBarItem extends AnchorMixin(
   // 每一个 `navigation-bar-item` 元素都添加一个唯一的 key
   protected readonly key = uniqueId();
 
-  protected get focusDisabled(): boolean {
+  protected override get focusDisabled(): boolean {
     return this.disabled;
   }
 
-  protected get focusElement(): HTMLElement | null {
+  protected override get focusElement(): HTMLElement | null {
     return this.href ? this.renderRoot?.querySelector('._a') : this;
   }
 
-  protected get rippleDisabled(): boolean {
+  protected override get rippleDisabled(): boolean {
     return this.disabled;
   }
 
   // 是否禁用该元素，该组件没有禁用状态
-  @state() protected disabled = false;
+  @state() private disabled = false;
 
   /**
    * 是否为激活状态，由 `navigation-bar` 组件控制该参数
@@ -99,11 +103,11 @@ export class NavigationBarItem extends AnchorMixin(
   @property({ reflect: true })
   public value = '';
 
-  protected renderBadge(): TemplateResult {
+  private renderBadge(): TemplateResult {
     return html`<slot name="badge"></slot>`;
   }
 
-  protected renderActiveIcon(): TemplateResult {
+  private renderActiveIcon(): TemplateResult {
     return html`<slot name="active-icon">
       ${when(
         this.activeIcon,
@@ -116,7 +120,7 @@ export class NavigationBarItem extends AnchorMixin(
     </slot>`;
   }
 
-  protected renderIcon(): TemplateResult {
+  private renderIcon(): TemplateResult {
     return html`<slot name="icon">
       ${when(
         this.icon,
@@ -129,11 +133,11 @@ export class NavigationBarItem extends AnchorMixin(
     </slot>`;
   }
 
-  protected renderLabel(): TemplateResult {
+  private renderLabel(): TemplateResult {
     return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
-  protected renderInner(): TemplateResult {
+  private renderInner(): TemplateResult {
     return html`<span
         class="indicator ${classMap({
           'has-active-icon':
@@ -146,10 +150,12 @@ export class NavigationBarItem extends AnchorMixin(
   }
 
   protected override render(): TemplateResult {
-    return html`<mdui-ripple .noRipple=${!this.active}></mdui-ripple>
+    return html`<mdui-ripple
+        .noRipple=${!this.active}
+        ${ref(this.rippleRef)}
+      ></mdui-ripple>
       ${this.href
-        ? // @ts-ignore
-          this.renderAnchor({
+        ? this.renderAnchor({
             className: 'item',
             content: this.renderInner(),
           })

@@ -54,17 +54,17 @@ export class Select extends FocusableMixin(LitElement) {
   private resizeObserver!: ResizeObserver;
 
   @queryAssignedElements({ flatten: true, selector: 'mdui-menu-item' })
-  private menuItems!: MenuItem[];
+  private readonly menuItems!: MenuItem[];
 
-  protected get focusDisabled(): boolean {
+  protected override get focusDisabled(): boolean {
     return this.disabled;
   }
 
-  protected get focusElement(): HTMLElement {
+  protected override get focusElement(): HTMLElement {
     return this.textFieldRef.value!;
   }
 
-  protected readonly formController: FormController = new FormController(this);
+  private readonly formController: FormController = new FormController(this);
   private readonly hasSlotController: HasSlotController = new HasSlotController(
     this,
     'prefix-icon',
@@ -240,7 +240,7 @@ export class Select extends FocusableMixin(LitElement) {
   })
   public invalid = false;
 
-  override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
     this.resizeObserver = new ResizeObserver(() => this.resizeMenu());
 
@@ -249,13 +249,13 @@ export class Select extends FocusableMixin(LitElement) {
     });
   }
 
-  override disconnectedCallback() {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.resizeObserver.unobserve(this.textFieldRef.value!);
   }
 
-  protected override firstUpdated(changes: PropertyValues) {
-    super.firstUpdated(changes);
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
+    super.firstUpdated(_changedProperties);
 
     // 首次渲染时，slot 中的 mdui-menu-item 还未渲染完成，无法读取到其中的文本值
     // 所以需要在首次更新后，再次重新渲染，此时 mdui-menu-item 已渲染完成，可以读取到文本值

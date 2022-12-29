@@ -35,12 +35,12 @@ export class NavigationDrawer extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];
 
   @query('.overlay')
-  protected overlay!: HTMLElement;
+  private readonly overlay!: HTMLElement;
 
   @query('.panel', true)
-  protected panel!: HTMLElement;
+  private readonly panel!: HTMLElement;
 
-  protected resizeObserver!: ResizeObserver;
+  private resizeObserver!: ResizeObserver;
   private modalHelper!: Modal;
 
   // 用于在打开抽屉导航前，记录当前聚焦的元素；在关闭抽屉导航后，把焦点还原到该元素上
@@ -125,7 +125,7 @@ export class NavigationDrawer extends LitElement {
   })
   public contained = false;
 
-  override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
     this.modalHelper = new Modal(this);
 
@@ -145,7 +145,7 @@ export class NavigationDrawer extends LitElement {
     });
   }
 
-  override disconnectedCallback() {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
     unlockScreen(this, this.lockTarget);
   }
@@ -185,7 +185,7 @@ export class NavigationDrawer extends LitElement {
   }
 
   @watch('open')
-  protected async onOpenChange() {
+  private async onOpenChange() {
     const isRight = this.placement === 'right';
     const easingLinear = getEasing(this, 'linear');
     const easingEmphasized = getEasing(this, 'emphasized');
@@ -345,7 +345,7 @@ export class NavigationDrawer extends LitElement {
     }
   }
 
-  protected onOverlayClick() {
+  private onOverlayClick() {
     emit(this, 'overlay-click');
     if (!this.closeOnOverlayClick) {
       return;

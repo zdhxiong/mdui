@@ -21,7 +21,7 @@ export class CircularProgress extends LitElement {
   @property({ type: Number, reflect: true })
   public value!: number;
 
-  protected renderDeterminate(): TemplateResult {
+  private renderDeterminate(): TemplateResult {
     const strokeWidth = 4; // 圆环宽度
     const circleRadius = 18; // 圆环宽度中心点的半径
     const π = 3.1415926;
@@ -51,7 +51,7 @@ export class CircularProgress extends LitElement {
     </svg>`;
   }
 
-  protected renderInDeterminate(): TemplateResult {
+  private renderInDeterminate(): TemplateResult {
     const strokeWidth = 4; // 圆环宽度
     const circleRadius = 18; // 圆环宽度中心点的半径
     const π = 3.1415926;

@@ -1,6 +1,7 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -28,24 +29,27 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   static override styles: CSSResultGroup = [componentStyle, radioStyle];
 
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
   // 是否验证未通过。由 mdui-radio-group 控制该参数
   @state() protected invalid = false;
 
   // 是否可聚焦。由 mdui-radio-group 控制该参数
   @state() protected focusable = false;
 
-  @query('mdui-ripple', true)
-  protected rippleElement!: Ripple;
-
-  protected get focusDisabled(): boolean {
+  protected override get focusDisabled(): boolean {
     return this.disabled || !this.focusable;
   }
 
-  protected get focusElement(): HTMLElement {
+  protected override get focusElement(): HTMLElement {
     return this;
   }
 
-  protected get rippleDisabled(): boolean {
+  protected override get rippleDisabled(): boolean {
     return this.disabled;
   }
 
@@ -75,7 +79,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   })
   public checked = false;
 
-  override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
 
     this.addEventListener('click', () => {
@@ -86,7 +90,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   @watch('checked', true)
-  protected onCheckedChange() {
+  private onCheckedChange() {
     if (this.checked) {
       emit(this, 'change');
     }
@@ -94,7 +98,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
 
   protected override render(): TemplateResult {
     return html`<i part="control" class=${classMap({ invalid: this.invalid })}>
-        <mdui-ripple></mdui-ripple>
+        <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
         <mdui-icon-radio-button-unchecked
           part="unchecked-icon"
           class="unchecked-icon"

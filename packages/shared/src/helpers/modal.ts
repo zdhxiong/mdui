@@ -4,36 +4,36 @@ import { getTabbableBoundary } from './tabbable.js';
 let activeModals: HTMLElement[] = [];
 
 export class Modal {
-  element: HTMLElement;
-  tabDirection: 'forward' | 'backward' = 'forward';
+  private readonly element: HTMLElement;
+  private tabDirection: 'forward' | 'backward' = 'forward';
 
-  constructor(element: HTMLElement) {
+  public constructor(element: HTMLElement) {
     this.element = element;
     this.handleFocusIn = this.handleFocusIn.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
   }
 
-  activate() {
+  public activate(): void {
     activeModals.push(this.element);
     document.addEventListener('focusin', this.handleFocusIn);
     document.addEventListener('keydown', this.handleKeyDown);
     document.addEventListener('keyup', this.handleKeyUp);
   }
 
-  deactivate() {
+  public deactivate(): void {
     activeModals = activeModals.filter((modal) => modal !== this.element);
     document.removeEventListener('focusin', this.handleFocusIn);
     document.removeEventListener('keydown', this.handleKeyDown);
     document.removeEventListener('keyup', this.handleKeyUp);
   }
 
-  isActive() {
+  private isActive(): boolean {
     // The "active" modal is always the most recent one shown
     return activeModals[activeModals.length - 1] === this.element;
   }
 
-  checkFocus() {
+  private checkFocus(): void {
     if (this.isActive()) {
       if (!this.element.matches(':focus-within')) {
         const { start, end } = getTabbableBoundary(this.element);
@@ -46,11 +46,11 @@ export class Modal {
     }
   }
 
-  handleFocusIn() {
+  private handleFocusIn(): void {
     this.checkFocus();
   }
 
-  handleKeyDown(event: KeyboardEvent) {
+  private handleKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Tab' && event.shiftKey) {
       this.tabDirection = 'backward';
     }
@@ -59,7 +59,7 @@ export class Modal {
     requestAnimationFrame(() => this.checkFocus());
   }
 
-  handleKeyUp() {
+  private handleKeyUp(): void {
     this.tabDirection = 'forward';
   }
 }

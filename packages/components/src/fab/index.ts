@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
@@ -9,6 +10,7 @@ import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
 import { style } from './style.js';
 import type { MaterialIconsName } from '../icon.js';
+import type { Ripple } from '../ripple/index.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
 
 /**
@@ -31,6 +33,12 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
 @customElement('mdui-fab')
 export class Fab extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
+
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
 
   private readonly hasSlotController = new HasSlotController(this, 'icon');
 
@@ -107,11 +115,11 @@ export class Fab extends ButtonBase {
     }
   }
 
-  protected renderLabel(): TemplateResult {
+  private renderLabel(): TemplateResult {
     return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
-  protected renderIcon(): TemplateResult {
+  private renderIcon(): TemplateResult {
     return html`<slot name="icon">
       ${when(
         this.icon,
@@ -125,7 +133,7 @@ export class Fab extends ButtonBase {
     </slot>`;
   }
 
-  protected renderInner(): TemplateResult[] {
+  private renderInner(): TemplateResult[] {
     return [this.renderIcon(), this.renderLabel()];
   }
 
@@ -136,19 +144,17 @@ export class Fab extends ButtonBase {
       'has-icon': this.icon || hasIconSlot,
     });
 
-    return html`<mdui-ripple></mdui-ripple>${this.href
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
         ? this.disabled || this.loading
           ? html`<span part="button" class=${className}>
               ${this.renderInner()}
             </span>`
-          : // @ts-ignore
-            this.renderAnchor({
+          : this.renderAnchor({
               className,
               part: 'button',
               content: this.renderInner(),
             })
-        : // @ts-ignore
-          this.renderButton({
+        : this.renderButton({
             className,
             part: 'button',
             content: this.renderInner(),

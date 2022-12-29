@@ -2,7 +2,7 @@ export function animateTo(
   el: HTMLElement,
   keyframes: Keyframe[],
   options?: KeyframeAnimationOptions,
-) {
+): Promise<unknown> {
   return new Promise((resolve) => {
     if (options?.duration === Infinity) {
       throw new Error('Promise-based animations must be finite.');
@@ -18,7 +18,7 @@ export function animateTo(
   });
 }
 
-export function stopAnimations(el: HTMLElement) {
+export function stopAnimations(el: HTMLElement): Promise<unknown> {
   return Promise.all(
     el.getAnimations().map((animation) => {
       return new Promise((resolve) => {

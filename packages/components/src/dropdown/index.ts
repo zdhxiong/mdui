@@ -37,23 +37,23 @@ export class Dropdown extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];
 
   @queryAssignedElements({ slot: 'trigger', flatten: true })
-  protected triggerSlots!: HTMLElement[];
+  private readonly triggerSlots!: HTMLElement[];
 
-  protected get triggerSlot(): HTMLElement {
+  private get triggerSlot(): HTMLElement {
     return this.triggerSlots[0];
   }
 
   @queryAssignedElements({ flatten: true })
-  protected panelSlots!: HTMLElement[];
+  private readonly panelSlots!: HTMLElement[];
 
-  protected get panelSlot(): HTMLElement {
+  private get panelSlot(): HTMLElement {
     return this.panelSlots[0];
   }
 
   private resizeObserver!: ResizeObserver;
 
   @query('.panel')
-  protected panel!: HTMLElement;
+  private readonly panel!: HTMLElement;
 
   /**
    * dropdown 是否打开
@@ -161,7 +161,7 @@ export class Dropdown extends LitElement {
   /**
    * 在 document 上点击时，根据条件判断是否要关闭 dropdown
    */
-  protected onDocumentClick(e: MouseEvent) {
+  private onDocumentClick(e: MouseEvent) {
     if (!this.open) {
       return;
     }
@@ -186,7 +186,7 @@ export class Dropdown extends LitElement {
   /**
    * 在 document 上按下按键时，根据条件判断是否要关闭 dropdown
    */
-  protected onDocumentKeydown(event: KeyboardEvent) {
+  private onDocumentKeydown(event: KeyboardEvent) {
     if (!this.open) {
       return;
     }
@@ -211,7 +211,7 @@ export class Dropdown extends LitElement {
     }
   }
 
-  override async connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
 
     $(document).on('pointerdown._dropdown', (e) =>
@@ -228,11 +228,12 @@ export class Dropdown extends LitElement {
     this.resizeObserver = new ResizeObserver(() => {
       this.updatePositioner();
     });
-    await this.updateComplete;
-    this.resizeObserver.observe(this.triggerSlot);
+    this.updateComplete.then(() => {
+      this.resizeObserver.observe(this.triggerSlot);
+    });
   }
 
-  override disconnectedCallback(): void {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     $(document).off('pointerdown._dropdown');
@@ -242,7 +243,7 @@ export class Dropdown extends LitElement {
     this.resizeObserver.unobserve(this.triggerSlot);
   }
 
-  protected override firstUpdated(_changedProperties: PropertyValues) {
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
 
     $(this).on('mouseleave._dropdown', () => this.onMouseLeave());
@@ -261,14 +262,14 @@ export class Dropdown extends LitElement {
     this.panel.hidden = !this.open || this.disabled;
   }
 
-  protected hasTrigger(
+  private hasTrigger(
     trigger: 'click' | 'hover' | 'focus' | 'contextmenu' | 'manual',
   ): boolean {
     const triggers = this.trigger.split(' ');
     return triggers.includes(trigger);
   }
 
-  protected onFocus() {
+  private onFocus() {
     if (this.open || !this.hasTrigger('focus')) {
       return;
     }
@@ -280,7 +281,7 @@ export class Dropdown extends LitElement {
   private pointerOffsetX!: number;
   private pointerOffsetY!: number;
 
-  protected onClick(e: MouseEvent) {
+  private onClick(e: MouseEvent) {
     // e.button 为 0 时，为鼠标左键点击。忽略鼠标中间和右键
     if (e.button || !this.hasTrigger('click')) {
       return;
@@ -292,13 +293,13 @@ export class Dropdown extends LitElement {
     this.open = !this.open;
   }
 
-  protected onPanelClick(event: MouseEvent) {
+  private onPanelClick(event: MouseEvent) {
     if (!this.stayOpenOnClick && $(event.target!).is('mdui-menu-item')) {
       this.open = false;
     }
   }
 
-  protected onContextMenu(e: MouseEvent) {
+  private onContextMenu(e: MouseEvent) {
     if (!this.hasTrigger('contextmenu')) {
       return;
     }
@@ -312,7 +313,7 @@ export class Dropdown extends LitElement {
   private openTimeout!: number;
   private closeTimeout!: number;
 
-  protected onMouseEnter() {
+  private onMouseEnter() {
     // 不做 open 状态的判断，因为可以延时打开和关闭
     if (!this.hasTrigger('hover')) {
       return;
@@ -328,7 +329,7 @@ export class Dropdown extends LitElement {
     }
   }
 
-  protected onMouseLeave() {
+  private onMouseLeave() {
     // 不做 open 状态的判断，因为可以延时打开和关闭
     if (!this.hasTrigger('hover')) {
       return;
@@ -340,7 +341,7 @@ export class Dropdown extends LitElement {
     }, this.closeDelay || 50);
   }
 
-  protected updatePositioner(): void {
+  private updatePositioner(): void {
     const $panel = $(this.panel);
     const $window = $(window);
     const triggerRect = this.triggerSlot.getBoundingClientRect();
@@ -463,7 +464,7 @@ export class Dropdown extends LitElement {
   @watch('disabled', true)
   @watch('placement', true)
   @watch('openOnPointer', true)
-  protected async onPositionChange() {
+  private async onPositionChange() {
     if (this.disabled || !this.open) {
       return;
     }
@@ -473,7 +474,7 @@ export class Dropdown extends LitElement {
   }
 
   @watch('open', true)
-  protected async onOpenChange() {
+  private async onOpenChange() {
     if (this.disabled) {
       this.open = false;
       return;

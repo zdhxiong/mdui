@@ -34,7 +34,7 @@ export class SegmentedButtonGroup extends LitElement {
   ];
 
   // 所有的子项元素
-  protected get items() {
+  private get items() {
     return $(this)
       .find('mdui-segmented-button')
       .get() as unknown as SegmentedButton[];
@@ -44,29 +44,29 @@ export class SegmentedButtonGroup extends LitElement {
   private hasSetDefaultValue = false;
 
   // 所有的子项元素（不包含已禁用的）
-  protected get itemsEnabled() {
+  private get itemsEnabled() {
     return $(this)
       .find('mdui-segmented-button:not([disabled])')
       .get() as unknown as SegmentedButton[];
   }
 
   @query('select', true)
-  protected input!: HTMLSelectElement;
+  private readonly input!: HTMLSelectElement;
 
-  protected readonly formController: FormController = new FormController(this);
+  private readonly formController: FormController = new FormController(this);
 
   // 是否为单选
-  protected get isSingle() {
+  private get isSingle() {
     return this.selects === 'single';
   }
 
   // 是否为多选
-  protected get isMultiple() {
+  private get isMultiple() {
     return this.selects === 'multiple';
   }
 
   // 是否可选择
-  protected get isSelectable() {
+  private get isSelectable() {
     return this.isSingle || this.isMultiple;
   }
 
@@ -77,7 +77,7 @@ export class SegmentedButtonGroup extends LitElement {
    * 是否验证未通过
    */
   @state()
-  protected invalid = false;
+  private invalid = false;
 
   /**
    * 是否填满父元素宽度
@@ -202,7 +202,7 @@ export class SegmentedButtonGroup extends LitElement {
     this.updateSelected();
   }
 
-  protected updateSelected() {
+  private updateSelected() {
     this.items.forEach(
       (item) => (item.selected = this.selectedKeys.includes(item.key)),
     );
@@ -232,7 +232,7 @@ export class SegmentedButtonGroup extends LitElement {
     this.updateSelected();
   }
 
-  protected onClick(event: MouseEvent) {
+  private onClick(event: MouseEvent) {
     // event.button 为 0 时，为鼠标左键点击。忽略鼠标中间和右键
     if (event.button) {
       return;
@@ -277,7 +277,7 @@ export class SegmentedButtonGroup extends LitElement {
     this.invalid = !this.input.checkValidity();
   }
 
-  protected onSlotChange() {
+  private onSlotChange() {
     const items = this.items;
 
     items.forEach((item, index) => {

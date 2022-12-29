@@ -54,13 +54,13 @@ export class Dialog extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];
 
   @query('.overlay', true)
-  protected overlay!: HTMLElement;
+  private readonly overlay!: HTMLElement;
 
   @query('.panel', true)
-  protected panel!: HTMLElement;
+  private readonly panel!: HTMLElement;
 
   @query('.body', true)
-  protected body!: HTMLElement;
+  private readonly body!: HTMLElement;
 
   /**
    * dialog 组件内包含的 mdui-top-app-bar 组件
@@ -70,7 +70,7 @@ export class Dialog extends LitElement {
     selector: 'mdui-top-app-bar',
     flatten: true,
   })
-  protected topAppBarElements!: TopAppBar[] | null;
+  private readonly topAppBarElements!: TopAppBar[] | null;
 
   private readonly hasSlotController = new HasSlotController(
     this,
@@ -177,7 +177,7 @@ export class Dialog extends LitElement {
   })
   public resizable = false; */
 
-  override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
     this.modalHelper = new Modal(this);
 
@@ -189,13 +189,13 @@ export class Dialog extends LitElement {
     });
   }
 
-  override disconnectedCallback(): void {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
     unlockScreen(this);
   }
 
   @watch('open')
-  protected async onOpenChange() {
+  private async onOpenChange() {
     const run = async () => {
       // 内部的 header, body, actions 元素
       const children = Array.from(
@@ -351,7 +351,7 @@ export class Dialog extends LitElement {
     }
   }
 
-  protected onOverlayClick() {
+  private onOverlayClick() {
     emit(this, 'overlay-click');
     if (!this.closeOnOverlayClick) {
       return;
@@ -360,7 +360,7 @@ export class Dialog extends LitElement {
     this.open = false;
   }
 
-  protected renderIcon(): TemplateResult {
+  private renderIcon(): TemplateResult {
     return html`<div part="icon" class="icon">
       <slot name="icon">
         ${when(
@@ -371,13 +371,13 @@ export class Dialog extends LitElement {
     </div>`;
   }
 
-  protected renderPrimary(): TemplateResult {
+  private renderPrimary(): TemplateResult {
     return html`<div part="primary" class="primary">
       <slot name="primary">${this.primary}</slot>
     </div>`;
   }
 
-  protected renderSecondary(): TemplateResult {
+  private renderSecondary(): TemplateResult {
     return html`<div part="secondary" class="secondary">
       <slot name="secondary">${this.secondary}</slot>
     </div>`;

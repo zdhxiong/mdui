@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
@@ -8,26 +8,30 @@ type RenderButtonOptions = {
   id?: string;
   className?: string;
   part?: string; // csspart 名称
-  content?: TemplateResult | TemplateResult[];
+  content?:
+    | TemplateResult
+    | typeof nothing
+    | (TemplateResult | typeof nothing)[];
   tabindex?: number;
 };
 
-export interface ButtonMixinInterface {
-  disabled: boolean;
-  loading: boolean;
-  autofocus: boolean;
-  name: string;
-  value: string;
-  type: 'submit' | 'reset' | 'button';
-  form?: string;
-  formAction?: string;
-  formEnctype?:
+export declare class ButtonMixinInterface {
+  public disabled: boolean;
+  public loading: boolean;
+  public autofocus: boolean;
+  public name: string;
+  public value: string;
+  public type: 'submit' | 'reset' | 'button';
+  public form?: string;
+  public formAction?: string;
+  public formEnctype?:
     | 'application/x-www-form-urlencoded'
     | 'multipart/form-data'
     | 'text/plain';
-  formMethod?: 'post' | 'get';
-  formNovalidate: boolean;
-  formTarget?: '_self' | '_blank' | '_parent' | '_top';
+  public formMethod?: 'post' | 'get';
+  public formNovalidate: boolean;
+  public formTarget?: '_self' | '_blank' | '_parent' | '_top';
+  protected renderButton(options: RenderButtonOptions): TemplateResult;
 }
 
 export const ButtonMixin = <T extends Constructor<LitElement>>(
@@ -180,5 +184,6 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
     }
   }
 
+  // @ts-ignore
   return ButtonMixinClass;
 };

@@ -3,6 +3,7 @@ import { customElement, property, state, query } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
@@ -37,29 +38,32 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   static override styles: CSSResultGroup = [componentStyle, style];
 
-  @query('mdui-ripple', true)
-  protected rippleElement!: Ripple;
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
 
   @query('input')
-  protected inputElement!: HTMLInputElement;
+  private readonly inputElement!: HTMLInputElement;
 
-  protected get focusDisabled(): boolean {
+  protected override get focusDisabled(): boolean {
     return this.disabled;
   }
 
-  protected get focusElement(): HTMLElement {
+  protected override get focusElement(): HTMLElement {
     return this.inputElement;
   }
 
-  protected get rippleDisabled(): boolean {
+  protected override get rippleDisabled(): boolean {
     return this.disabled;
   }
 
-  protected readonly formController: FormController = new FormController(this, {
+  private readonly formController: FormController = new FormController(this, {
     value: (control: Switch) => (control.checked ? control.value : undefined),
   });
 
-  protected readonly hasSlotController = new HasSlotController(
+  private readonly hasSlotController = new HasSlotController(
     this,
     'icon',
     'checked-icon',
@@ -197,7 +201,7 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
             'has-icon': this.icon || this.hasSlotController.test('icon'),
           })}"
         >
-          <mdui-ripple></mdui-ripple>
+          <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
           <slot name="checked-icon">
             ${this.checkedIcon
               ? html`<mdui-icon

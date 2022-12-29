@@ -37,8 +37,8 @@ type TabPanel = TabPanelOriginal & {
 export class Tabs extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, tabsStyle];
 
-  @query('.nav', true) protected readonly nav?: HTMLElement;
-  @query('.indicator', true) protected readonly indicator?: HTMLElement;
+  @query('.nav', true) private readonly nav?: HTMLElement;
+  @query('.indicator', true) private readonly indicator?: HTMLElement;
 
   private activeTab?: Tab;
   private resizeObserver!: ResizeObserver;
@@ -91,19 +91,19 @@ export class Tabs extends LitElement {
   })
   public fullwidth = false;
 
-  async connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
     this.syncTabsAndPanels();
 
     this.resizeObserver = new ResizeObserver(() => {
       this.updateIndicator();
     });
-
-    await this.updateComplete;
-    this.resizeObserver.observe(this.nav!);
+    this.updateComplete.then(() => {
+      this.resizeObserver.observe(this.nav!);
+    });
   }
 
-  disconnectedCallback() {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.resizeObserver.unobserve(this.nav!);
   }

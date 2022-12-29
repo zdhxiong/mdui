@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html, LitElement, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
@@ -8,15 +8,19 @@ type RenderAnchorOptions = {
   id?: string;
   className?: string;
   part?: string; // csspart 名称
-  content?: TemplateResult | TemplateResult[];
+  content?:
+    | TemplateResult
+    | typeof nothing
+    | (TemplateResult | typeof nothing)[];
   tabindex?: number;
 };
 
-export interface AnchorMixinInterface {
-  href?: string;
-  download?: string;
-  target?: '_blank' | '_parent' | '_self' | '_top';
-  rel?: string;
+export declare class AnchorMixinInterface {
+  public href?: string;
+  public download?: string;
+  public target?: '_blank' | '_parent' | '_self' | '_top';
+  public rel?: string;
+  protected renderAnchor(options: RenderAnchorOptions): TemplateResult;
 }
 
 export const AnchorMixin = <T extends Constructor<LitElement>>(
@@ -79,5 +83,6 @@ export const AnchorMixin = <T extends Constructor<LitElement>>(
     }
   }
 
+  // @ts-ignore
   return AnchorMixinClass;
 };

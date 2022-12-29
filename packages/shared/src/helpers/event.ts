@@ -8,7 +8,7 @@ export const emit = (
   element: HTMLElement,
   type: string,
   options?: CustomEventInit,
-) => {
+): CustomEvent => {
   const event = new CustomEvent(type, {
     bubbles: true,
     cancelable: false,

@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
@@ -10,6 +11,7 @@ import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
 import { style } from './style.js';
 import type { MaterialIconsName } from '../icon.js';
+import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 
 /**
@@ -30,6 +32,12 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 @customElement('mdui-button-icon')
 export class ButtonIcon extends ButtonBase {
   static override styles: CSSResultGroup = [ButtonBase.styles, style];
+
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
 
   private readonly hasSlotController = new HasSlotController(
     this,
@@ -83,7 +91,7 @@ export class ButtonIcon extends ButtonBase {
   })
   public selected = false;
 
-  protected override firstUpdated(_changedProperties: PropertyValues) {
+  protected override firstUpdated(_changedProperties: PropertyValues): void {
     super.firstUpdated(_changedProperties);
 
     $(this).on('click', () => {
@@ -96,11 +104,11 @@ export class ButtonIcon extends ButtonBase {
   }
 
   @watch('selected', true)
-  protected onSelectedChange() {
+  private onSelectedChange() {
     emit(this, 'change');
   }
 
-  protected renderIcon(): TemplateResult {
+  private renderIcon(): TemplateResult {
     const icon = () => {
       return this.hasSlotController.test('[default]')
         ? html`<slot></slot>`
@@ -130,17 +138,15 @@ export class ButtonIcon extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    return html`<mdui-ripple></mdui-ripple>${this.href
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
         ? this.disabled || this.loading
           ? html`<span part="button" class="button">${this.renderIcon()}</span>`
-          : // @ts-ignore
-            this.renderAnchor({
+          : this.renderAnchor({
               className: 'button',
               part: 'button',
               content: this.renderIcon(),
             })
-        : // @ts-ignore
-          this.renderButton({
+        : this.renderButton({
             className: 'button',
             part: 'button',
             content: this.renderIcon(),

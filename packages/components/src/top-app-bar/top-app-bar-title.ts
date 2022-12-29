@@ -19,10 +19,10 @@ export class TopAppBarTitle extends LitElement {
   ];
 
   @query('.label-large')
-  private labelLarge!: HTMLElement;
+  private readonly labelLarge!: HTMLElement;
 
   @query('slot:not([name])')
-  private defaultSlot!: HTMLSlotElement;
+  private readonly defaultSlot!: HTMLSlotElement;
 
   /**
    * 顶部应用栏形状。由 mdui-top-app-bar 组件控制该参数

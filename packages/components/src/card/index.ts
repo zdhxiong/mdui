@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -19,24 +20,27 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
 export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
   static override styles: CSSResultGroup = [componentStyle, style];
 
-  protected get disabled() {
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
+  private get disabled() {
     return !this.href && !this.clickable;
   }
 
-  protected get focusDisabled(): boolean {
+  protected override get focusDisabled(): boolean {
     return this.disabled;
   }
 
-  protected get focusElement(): HTMLElement {
+  protected override get focusElement(): HTMLElement {
     return this;
   }
 
-  protected get rippleDisabled(): boolean {
+  protected override get rippleDisabled(): boolean {
     return this.disabled;
   }
-
-  @query('mdui-ripple')
-  protected rippleElement!: Ripple;
 
   /**
    * 卡片形状。可选值为：
@@ -61,9 +65,8 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
   public clickable = false;
 
   protected override render(): TemplateResult {
-    return html`<mdui-ripple></mdui-ripple>${this.href
-        ? // @ts-ignore
-          this.renderAnchor({
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
+        ? this.renderAnchor({
             className: 'link',
             content: html`<slot></slot>`,
           })

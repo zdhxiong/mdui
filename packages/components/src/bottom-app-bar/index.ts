@@ -25,8 +25,8 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 export class BottomAppBar extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];
 
-  protected readonly uniqueId = uniqueId();
-  protected readonly scrollEventName = `scroll._bottom_app_bar_${this.uniqueId}`;
+  private readonly uniqueId = uniqueId();
+  private readonly scrollEventName = `scroll._bottom_app_bar_${this.uniqueId}`;
 
   /**
    * 是否隐藏
@@ -75,18 +75,18 @@ export class BottomAppBar extends LitElement {
   /**
    * 组件需要监听该元素的滚动状态
    */
-  protected get scrollTargetListening(): HTMLElement | Window {
+  private get scrollTargetListening(): HTMLElement | Window {
     return this.scrollTarget ? $(this.scrollTarget)[0] : window;
   }
 
   /**
    * 组件在该容器内滚动
    */
-  protected get scrollTargetContainer(): HTMLElement {
+  private get scrollTargetContainer(): HTMLElement {
     return this.scrollTarget ? $(this.scrollTarget)[0] : document.body;
   }
 
-  override connectedCallback() {
+  public override connectedCallback(): void {
     super.connectedCallback();
     $(this.scrollTargetListening).on(this.scrollEventName, () => {
       window.requestAnimationFrame(() => this.onScroll());
@@ -98,13 +98,13 @@ export class BottomAppBar extends LitElement {
     });
   }
 
-  override disconnectedCallback() {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
     $(this.scrollTargetListening).off(this.scrollEventName);
   }
 
   @watch('scrollTarget')
-  protected onScrollTargetChange(
+  private onScrollTargetChange(
     oldScrollTarget: string,
     newScrollTarget: string,
   ) {
@@ -116,7 +116,7 @@ export class BottomAppBar extends LitElement {
   }
 
   @watch('hideOnScroll')
-  protected onHideOnScrollChange() {
+  private onHideOnScrollChange() {
     // hideOnScroll 为 false 时，为 scrollTargetContainer 元素添加 padding-bottom。避免 bottom-app-bar 覆盖内容
     $(this.scrollTargetContainer).css({
       'padding-bottom': this.hideOnScroll ? '' : this.offsetHeight,
@@ -124,7 +124,7 @@ export class BottomAppBar extends LitElement {
   }
 
   private lastScrollTop = 0; // 上次滚动后，垂直方向的距离
-  protected onScroll() {
+  private onScroll() {
     if (!this.hideOnScroll) {
       return;
     }

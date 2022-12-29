@@ -17,11 +17,11 @@ export interface FormControllerOptions {
 /* eslint-enable */
 
 export class FormController implements ReactiveController {
-  host: ReactiveControllerHost & Element;
-  form?: HTMLFormElement | null;
-  options: FormControllerOptions;
+  private host: ReactiveControllerHost & Element;
+  private form?: HTMLFormElement | null;
+  private options: FormControllerOptions;
 
-  constructor(
+  public constructor(
     host: ReactiveControllerHost & Element,
     options?: Partial<FormControllerOptions>,
   ) {
@@ -36,12 +36,12 @@ export class FormController implements ReactiveController {
 
         return input.closest('form');
       },
-      name: (input) => (input as HTMLInputElement).name,
-      value: (input) => (input as HTMLInputElement).value,
-      disabled: (input) => (input as HTMLInputElement).disabled,
+      name: (input) => input.name,
+      value: (input) => input.value,
+      disabled: (input) => input.disabled,
       reportValidity: (input) => {
-        return typeof (input as HTMLInputElement).reportValidity === 'function'
-          ? (input as HTMLInputElement).reportValidity()
+        return typeof input.reportValidity === 'function'
+          ? input.reportValidity()
           : true;
       },
       ...options,
@@ -50,7 +50,7 @@ export class FormController implements ReactiveController {
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
-  hostConnected() {
+  public hostConnected(): void {
     this.form = this.options.form(this.host);
 
     if (this.form) {
@@ -61,7 +61,7 @@ export class FormController implements ReactiveController {
     }
   }
 
-  hostDisconnected() {
+  public hostDisconnected(): void {
     if (this.form) {
       $(this.form).off({
         formdata: this.onFormData,
@@ -71,7 +71,7 @@ export class FormController implements ReactiveController {
     }
   }
 
-  protected onFormData(event: FormDataEvent) {
+  private onFormData(event: FormDataEvent): void {
     const disabled = this.options.disabled(this.host);
     const name = this.options.name(this.host);
     const value = this.options.value(this.host);
@@ -87,7 +87,7 @@ export class FormController implements ReactiveController {
     }
   }
 
-  protected onFormSubmit(event: Event) {
+  private onFormSubmit(event: Event): void {
     const disabled = this.options.disabled(this.host);
     const reportValidity = this.options.reportValidity;
 
@@ -102,7 +102,7 @@ export class FormController implements ReactiveController {
     }
   }
 
-  public submit(submitter?: HTMLElement) {
+  public submit(submitter?: HTMLElement): void {
     if (!this.form) {
       return;
     }

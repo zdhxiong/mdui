@@ -1,6 +1,7 @@
 import { html, LitElement } from 'lit';
 import { customElement, query, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -37,21 +38,24 @@ export class ListItem extends AnchorMixin(
 ) {
   static override styles: CSSResultGroup = [componentStyle, listItemStyle];
 
-  @query('mdui-ripple', true)
-  protected rippleElement!: Ripple;
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
 
   @query('.item')
-  protected item!: HTMLElement;
+  private readonly item!: HTMLElement;
 
-  protected get focusDisabled(): boolean {
+  protected override get focusDisabled(): boolean {
     return this.href ? this.disabled : this.disabled || this.nonclickable;
   }
 
-  protected get focusElement(): HTMLElement {
+  protected override get focusElement(): HTMLElement {
     return this.href ? this.item : this;
   }
 
-  protected get rippleDisabled(): boolean {
+  protected override get rippleDisabled(): boolean {
     return this.focusDisabled;
   }
 
@@ -137,7 +141,7 @@ export class ListItem extends AnchorMixin(
   @property({ reflect: true })
   public alignment: 'start' | 'center' | 'end' = 'center';
 
-  protected renderInner(): TemplateResult {
+  private renderInner(): TemplateResult {
     const hasDefaultSlot = this.hasSlotController.test('[default]');
     const hasSecondarySlot = this.hasSlotController.test('secondary');
     const hasStartSlot = this.hasSlotController.test('start');
@@ -176,9 +180,9 @@ export class ListItem extends AnchorMixin(
       preset: !hasCustomSlot,
     });
 
-    return html`<mdui-ripple></mdui-ripple>${this.href && !this.disabled
-        ? // @ts-ignore
-          this.renderAnchor({
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href &&
+      !this.disabled
+        ? this.renderAnchor({
             className,
             content: this.renderInner(),
           })

@@ -18,10 +18,7 @@ export type MaterialIconsName = string;
 export class Icon extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, style];
 
-  protected readonly hasSlotController = new HasSlotController(
-    this,
-    '[default]',
-  );
+  private readonly hasSlotController = new HasSlotController(this, '[default]');
 
   /**
    * Material Icons 图标名

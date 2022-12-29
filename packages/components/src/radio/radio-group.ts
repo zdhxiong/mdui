@@ -29,19 +29,19 @@ export class RadioGroup extends LitElement {
   static override styles: CSSResultGroup = [componentStyle, radioGroupStyle];
 
   @query('input')
-  protected readonly input!: HTMLInputElement;
+  private readonly input!: HTMLInputElement;
 
-  protected get radios() {
+  private get radios() {
     return $(this).find('mdui-radio').get() as unknown as Radio[];
   }
 
-  protected get radiosEnabled() {
+  private get radiosEnabled() {
     return $(this)
       .find('mdui-radio:not([disabled])')
       .get() as unknown as Radio[];
   }
 
-  protected readonly formController: FormController = new FormController(this);
+  private readonly formController: FormController = new FormController(this);
 
   /**
    * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
@@ -86,7 +86,7 @@ export class RadioGroup extends LitElement {
   public required = false;
 
   @watch('value', true)
-  protected async onValueChange() {
+  private async onValueChange() {
     emit(this, 'input');
     emit(this, 'change');
     this.radios.forEach(
@@ -99,14 +99,14 @@ export class RadioGroup extends LitElement {
   }
 
   @watch('invalid')
-  protected onInvalidChange() {
+  private onInvalidChange() {
     this.radiosEnabled.forEach((radio) => (radio.invalid = this.invalid));
   }
 
   // 更新 mdui-radio 的 checked 后，需要更新可聚焦状态
   // 同一个 mdui-radio-group 中的多个 mdui-radio，仅有一个可聚焦
   // 若有已选中的，则已选中的可聚焦；若没有已选中的，则第一个可聚焦
-  protected updateRadioFocusable() {
+  private updateRadioFocusable() {
     const radios = this.radios;
     const radioChecked = radios.find((radio) => radio.checked);
 
@@ -144,7 +144,7 @@ export class RadioGroup extends LitElement {
     this.invalid = !this.input.checkValidity();
   }
 
-  protected async onRadioClick(event: MouseEvent) {
+  private async onRadioClick(event: MouseEvent) {
     const target = event.target as Radio;
     if (target.disabled) {
       return;
@@ -156,7 +156,7 @@ export class RadioGroup extends LitElement {
     target.focus();
   }
 
-  protected onKeyDown(event: KeyboardEvent) {
+  private onKeyDown(event: KeyboardEvent) {
     if (
       !['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(
         event.key,
@@ -190,7 +190,7 @@ export class RadioGroup extends LitElement {
     event.preventDefault();
   }
 
-  protected onSlotChange() {
+  private onSlotChange() {
     this.radios.forEach(
       (radio) => (radio.checked = radio.value === this.value),
     );
@@ -200,7 +200,7 @@ export class RadioGroup extends LitElement {
   /**
    * slot 中的 mdui-radio 的 checked 变更时触发的事件
    */
-  protected onCheckedChange(event: Event) {
+  private onCheckedChange(event: Event) {
     event.stopPropagation();
     const target = event.target as Radio;
     this.value = target.value;

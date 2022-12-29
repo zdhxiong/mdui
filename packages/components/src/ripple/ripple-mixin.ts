@@ -8,6 +8,18 @@ import type { Ripple } from './index.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
 import type { PropertyValues, LitElement } from 'lit';
 
+export declare class RippleMixinInterface {
+  protected get rippleElement(): Ripple | Ripple[] | NodeListOf<Ripple>;
+  protected get rippleDisabled(): boolean | boolean[];
+  protected get rippleTarget():
+    | HTMLElement
+    | HTMLElement[]
+    | NodeListOf<HTMLElement>;
+  protected getRippleIndex: () => number | undefined;
+  protected startHover(event: PointerEvent): void;
+  protected endHover(event: PointerEvent): void;
+}
+
 /**
  * hover, pressed, dragged 三个属性用于添加到 rippleTarget 属性指定的元素上，供 CSS 选择题添加样式
  *
@@ -23,7 +35,7 @@ import type { PropertyValues, LitElement } from 'lit';
  */
 export const RippleMixin = <T extends Constructor<LitElement>>(
   superclass: T,
-): Constructor<LitElement> & T => {
+): Constructor<RippleMixinInterface> & T => {
   class Mixin extends superclass {
     /**
      * 子类要添加该属性，指向 <mdui-ripple> 元素
@@ -256,8 +268,8 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
       this.getRippleElement().endDrag();
     }
 
-    protected async firstUpdated(changes: PropertyValues) {
-      super.firstUpdated(changes);
+    protected override firstUpdated(_changedProperties: PropertyValues): void {
+      super.firstUpdated(_changedProperties);
 
       const $target = $(this.rippleTarget);
 
@@ -293,5 +305,6 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
     }
   }
 
+  // @ts-ignore
   return Mixin;
 };

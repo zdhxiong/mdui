@@ -1,5 +1,5 @@
-import { terser } from 'rollup-plugin-terser';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
 import pkg from '../../packages/jq/package.json';
 
 const banner = `

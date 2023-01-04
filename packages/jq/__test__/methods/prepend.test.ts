@@ -1,5 +1,5 @@
-import '../../methods/prepend.js';
 import '../../methods/children.js';
+import '../../methods/prepend.js';
 import { jQuery, jq, assert, JQStatic, toInnerHtmlArray } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {

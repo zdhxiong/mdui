@@ -15,10 +15,10 @@ type RenderButtonOptions = {
   tabindex?: number;
 };
 
-export declare class ButtonMixinInterface {
+export declare class ButtonMixinInterface extends LitElement {
   public disabled: boolean;
   public loading: boolean;
-  public autofocus: boolean;
+  public override autofocus: boolean;
   public name: string;
   public value: string;
   public type: 'submit' | 'reset' | 'button';
@@ -66,7 +66,7 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
       reflect: true,
       converter: (value: string | null): boolean => value !== 'false',
     })
-    public autofocus = false;
+    public override autofocus = false;
 
     /**
      * 按钮的名称，将与表单数据一起提交

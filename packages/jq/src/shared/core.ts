@@ -5,10 +5,11 @@ import type { PlainObject } from './helper.js';
  * 为了使用模块扩充，这里不能使用默认导出
  */
 export class JQ<T = HTMLElement> implements ArrayLike<T> {
-  length = 0;
   [index: number]: T;
 
-  constructor(arr?: ArrayLike<T>) {
+  public length = 0;
+
+  public constructor(arr?: ArrayLike<T>) {
     if (!arr) {
       return this;
     }
@@ -27,6 +28,9 @@ export class JQ<T = HTMLElement> implements ArrayLike<T> {
  * 为了使用模块扩充，这里不能使用默认导出
  */
 export interface JQStatic {
+  // $ 命名空间上的静态方法
+  [method: string]: unknown;
+
   /**
    * 根据 HTML 字符串或 CSS 选择器创建 JQ 对象
    */
@@ -64,7 +68,4 @@ export interface JQStatic {
 
   // $.fn = JQ.prototype;
   fn: JQ<unknown>;
-
-  // $ 命名空间上的静态方法
-  [method: string]: unknown;
 }

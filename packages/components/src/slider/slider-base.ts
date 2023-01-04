@@ -12,31 +12,10 @@ import { sliderBaseStyle } from './slider-base-style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
-  static override styles: CSSResultGroup = [componentStyle, sliderBaseStyle];
-
-  @query('input')
-  protected readonly input!: HTMLInputElement;
-
-  @query('.track-active', true)
-  protected readonly trackActive!: HTMLElement;
-
-  // 按下时，label 可见
-  @state()
-  protected labelVisible = false;
-
-  protected override get focusElement(): HTMLElement {
-    return this.input;
-  }
-
-  protected override get focusDisabled(): boolean {
-    return this.disabled;
-  }
-
-  protected override get rippleDisabled(): boolean {
-    return this.disabled;
-  }
-
-  private readonly formController: FormController = new FormController(this);
+  public static override styles: CSSResultGroup = [
+    componentStyle,
+    sliderBaseStyle,
+  ];
 
   /**
    * 最小允许值
@@ -112,37 +91,42 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
   })
   public invalid = false;
 
+  @query('input')
+  protected readonly input!: HTMLInputElement;
+
+  @query('.track-active', true)
+  protected readonly trackActive!: HTMLElement;
+
+  // 按下时，label 可见
+  @state()
+  protected labelVisible = false;
+
+  private readonly formController: FormController = new FormController(this);
+
+  protected override get rippleDisabled(): boolean {
+    return this.disabled;
+  }
+
+  protected override get focusElement(): HTMLElement {
+    return this.input;
+  }
+
+  protected override get focusDisabled(): boolean {
+    return this.disabled;
+  }
+
+  @watch('disabled', true)
+  private onDisabledChange() {
+    // 禁用状态始终为验证通过，所以在 disabled 变更时需要重新验证
+    this.input.disabled = this.disabled;
+    this.invalid = !this.checkValidity();
+  }
+
   /**
    * 用于自定义标签的显示格式
    */
   public labelFormatter: (value: number) => string = (value: number) =>
     value.toString();
-
-  /**
-   * 获取候选值组成的数组
-   */
-  protected getCandidateValues() {
-    return Array.from(
-      { length: this.max - this.min + 1 },
-      (_, index) => index + this.min,
-    ).filter((value) => !((value - this.min) % this.step));
-  }
-
-  /**
-   * 渲染浮动标签
-   */
-  protected renderLabel(value: number): TemplateResult {
-    return when(
-      !this.nolabel,
-      () =>
-        html`<div
-          part="label"
-          class="label ${classMap({ 'label-visible': this.labelVisible })}"
-        >
-          ${this.labelFormatter(value)}
-        </div>`,
-    );
-  }
 
   /**
    * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
@@ -171,14 +155,33 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
     this.invalid = !this.input.checkValidity();
   }
 
-  protected onChange() {
-    emit(this, 'change');
+  /**
+   * 获取候选值组成的数组
+   */
+  protected getCandidateValues() {
+    return Array.from(
+      { length: this.max - this.min + 1 },
+      (_, index) => index + this.min,
+    ).filter((value) => !((value - this.min) % this.step));
   }
 
-  @watch('disabled', true)
-  private onDisabledChange() {
-    // 禁用状态始终为验证通过，所以在 disabled 变更时需要重新验证
-    this.input.disabled = this.disabled;
-    this.invalid = !this.checkValidity();
+  /**
+   * 渲染浮动标签
+   */
+  protected renderLabel(value: number): TemplateResult {
+    return when(
+      !this.nolabel,
+      () =>
+        html`<div
+          part="label"
+          class="label ${classMap({ 'label-visible': this.labelVisible })}"
+        >
+          ${this.labelFormatter(value)}
+        </div>`,
+    );
+  }
+
+  protected onChange() {
+    emit(this, 'change');
   }
 }

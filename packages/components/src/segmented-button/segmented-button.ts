@@ -28,36 +28,10 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-segmented-button')
 export class SegmentedButton extends ButtonBase {
-  static override styles: CSSResultGroup = [
+  public static override styles: CSSResultGroup = [
     ButtonBase.styles,
     segmentedButtonStyle,
   ];
-
-  private readonly rippleRef: Ref<Ripple> = createRef();
-
-  protected override get rippleElement() {
-    return this.rippleRef.value!;
-  }
-
-  private readonly hasSlotController = new HasSlotController(
-    this,
-    '[default]',
-    'start',
-    'end',
-  );
-
-  // 每一个 segmented-button 元素都添加一个唯一的 key
-  protected readonly key = uniqueId();
-
-  /**
-   * 是否选中该分段按钮项，由 mdui-segmented-button-group 组件控制该参数
-   */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
-  })
-  protected selected = false;
 
   /**
    * 左侧的 Material Icons 图标名
@@ -70,6 +44,55 @@ export class SegmentedButton extends ButtonBase {
    */
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon!: MaterialIconsName;
+
+  /**
+   * 是否选中该分段按钮项，由 mdui-segmented-button-group 组件控制该参数
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
+  protected selected = false;
+
+  // 每一个 segmented-button 元素都添加一个唯一的 key
+  protected readonly key = uniqueId();
+
+  private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly hasSlotController = new HasSlotController(
+    this,
+    '[default]',
+    'start',
+    'end',
+  );
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
+  protected override render(): TemplateResult {
+    const hasStartSlot = this.hasSlotController.test('start');
+    const hasEndSlot = this.hasSlotController.test('end');
+    const className = `button ${
+      (this.icon || hasStartSlot) && !this.selected ? 'has-start' : ''
+    } ${this.endIcon || hasEndSlot ? 'has-end' : ''}`;
+
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
+        ? this.disabled || this.loading
+          ? html`<span part="button" class=${className}>
+              ${this.renderInner()}
+            </span>`
+          : this.renderAnchor({
+              className,
+              part: 'button',
+              content: this.renderInner(),
+            })
+        : this.renderButton({
+            className,
+            part: 'button',
+            content: this.renderInner(),
+          })}${this.renderLoading()}`;
+  }
 
   private renderCheck(): TemplateResult | typeof nothing {
     if (!this.selected) {
@@ -128,30 +151,6 @@ export class SegmentedButton extends ButtonBase {
       this.renderLabel(),
       this.renderEnd(),
     ];
-  }
-
-  protected override render(): TemplateResult {
-    const hasStartSlot = this.hasSlotController.test('start');
-    const hasEndSlot = this.hasSlotController.test('end');
-    const className = `button ${
-      (this.icon || hasStartSlot) && !this.selected ? 'has-start' : ''
-    } ${this.endIcon || hasEndSlot ? 'has-end' : ''}`;
-
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
-        ? this.disabled || this.loading
-          ? html`<span part="button" class=${className}>
-              ${this.renderInner()}
-            </span>`
-          : this.renderAnchor({
-              className,
-              part: 'button',
-              content: this.renderInner(),
-            })
-        : this.renderButton({
-            className,
-            part: 'button',
-            content: this.renderInner(),
-          })}${this.renderLoading()}`;
   }
 }
 

@@ -20,14 +20,14 @@ $(getDocument()).on({
   },
 });
 
-export declare class FocusableMixinInterface {
-  public autofocus: boolean;
-  public tabIndex: number;
+export declare class FocusableMixinInterface extends LitElement {
+  public override autofocus: boolean;
+  public override tabIndex: number;
   protected get focusDisabled(): boolean;
   protected get focusElement(): HTMLElement | null;
-  public focus(options?: FocusOptions): void;
-  public blur(): void;
-  public click(): void;
+  public override focus(options?: FocusOptions): void;
+  public override blur(): void;
+  public override click(): void;
 }
 
 /**
@@ -82,20 +82,6 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       attribute: 'focus-visible',
     })
     private focusVisible = false;
-
-    /**
-     * 父类要实现该属性，表示是否禁用 focus 状态
-     */
-    protected get focusDisabled(): boolean {
-      throw new Error('Must implement focusDisabled getter!');
-    }
-
-    /**
-     * 最终获得焦点的元素
-     */
-    protected get focusElement(): HTMLElement | null {
-      throw new Error('Must implement focusElement getter!');
-    }
 
     private _manipulatingTabindex = false;
     private _tabIndex = 0;
@@ -169,15 +155,41 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       this.manageFocusElementTabindex(tabIndex);
     }
 
-    private async manageFocusElementTabindex(tabIndex: number): Promise<void> {
-      if (!this.focusElement) {
-        await this.updateComplete;
+    /**
+     * 父类要实现该属性，表示是否禁用 focus 状态
+     */
+    protected get focusDisabled(): boolean {
+      throw new Error('Must implement focusDisabled getter!');
+    }
+
+    /**
+     * 最终获得焦点的元素
+     */
+    protected get focusElement(): HTMLElement | null {
+      throw new Error('Must implement focusElement getter!');
+    }
+
+    public override connectedCallback(): void {
+      super.connectedCallback();
+      this.updateComplete.then(() => {
+        requestAnimationFrame(() => {
+          this.manageAutoFocus();
+        });
+      });
+    }
+
+    /**
+     * 模拟鼠标点击元素
+     */
+    public override click(): void {
+      if (this.focusDisabled) {
+        return;
       }
 
-      if (tabIndex === null) {
-        this.focusElement!.removeAttribute('tabindex');
+      if (this.focusElement !== this) {
+        this.focusElement!.click();
       } else {
-        this.focusElement!.tabIndex = tabIndex;
+        HTMLElement.prototype.click.apply(this);
       }
     }
 
@@ -207,34 +219,8 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    /**
-     * 模拟鼠标点击元素
-     */
-    public override click(): void {
-      if (this.focusDisabled) {
-        return;
-      }
-
-      if (this.focusElement !== this) {
-        this.focusElement!.click();
-      } else {
-        HTMLElement.prototype.click.apply(this);
-      }
-    }
-
-    private manageAutoFocus(): void {
-      if (this.autofocus) {
-        this.dispatchEvent(
-          new KeyboardEvent('keydown', {
-            code: 'Tab',
-          }),
-        );
-        this.focusElement!.focus();
-      }
-    }
-
-    protected override firstUpdated(_changedProperties: PropertyValues): void {
-      super.firstUpdated(_changedProperties);
+    protected override firstUpdated(changedProperties: PropertyValues): void {
+      super.firstUpdated(changedProperties);
 
       $(this.focusElement!).on({
         'focus._focusable': () => {
@@ -248,7 +234,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       });
     }
 
-    protected override update(_changedProperties: PropertyValues): void {
+    protected override update(changedProperties: PropertyValues): void {
       if (
         this._lastFocusDisabled === undefined ||
         this._lastFocusDisabled !== this.focusDisabled
@@ -269,7 +255,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
         }
       }
 
-      super.update(_changedProperties);
+      super.update(changedProperties);
     }
 
     protected override updated(changedProperties: PropertyValues): void {
@@ -280,13 +266,27 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    public override connectedCallback(): void {
-      super.connectedCallback();
-      this.updateComplete.then(() => {
-        requestAnimationFrame(() => {
-          this.manageAutoFocus();
-        });
-      });
+    private async manageFocusElementTabindex(tabIndex: number): Promise<void> {
+      if (!this.focusElement) {
+        await this.updateComplete;
+      }
+
+      if (tabIndex === null) {
+        this.focusElement!.removeAttribute('tabindex');
+      } else {
+        this.focusElement!.tabIndex = tabIndex;
+      }
+    }
+
+    private manageAutoFocus(): void {
+      if (this.autofocus) {
+        this.dispatchEvent(
+          new KeyboardEvent('keydown', {
+            code: 'Tab',
+          }),
+        );
+        this.focusElement!.focus();
+      }
     }
   }
 

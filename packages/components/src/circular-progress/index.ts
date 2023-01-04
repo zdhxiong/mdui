@@ -7,7 +7,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 
 @customElement('mdui-circular-progress')
 export class CircularProgress extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * 进度指示器的最大值
@@ -20,6 +20,19 @@ export class CircularProgress extends LitElement {
    */
   @property({ type: Number, reflect: true })
   public value!: number;
+
+  protected override render(): TemplateResult {
+    const isDeterminate = this.value !== undefined;
+
+    return html`<div
+      class="progress ${classMap({
+        determinate: isDeterminate,
+        indeterminate: !isDeterminate,
+      })}"
+    >
+      ${isDeterminate ? this.renderDeterminate() : this.renderInDeterminate()}
+    </div>`;
+  }
 
   private renderDeterminate(): TemplateResult {
     const strokeWidth = 4; // 圆环宽度
@@ -77,19 +90,6 @@ export class CircularProgress extends LitElement {
       <div class="clipper left">${circle(strokeWidth)}</div>
       <div class="gap-patch">${circle(strokeWidth * 0.8)}</div>
       <div class="clipper right">${circle(strokeWidth)}</div>
-    </div>`;
-  }
-
-  protected override render(): TemplateResult {
-    const isDeterminate = this.value !== undefined;
-
-    return html`<div
-      class="progress ${classMap({
-        determinate: isDeterminate,
-        indeterminate: !isDeterminate,
-      })}"
-    >
-      ${isDeterminate ? this.renderDeterminate() : this.renderInDeterminate()}
     </div>`;
   }
 }

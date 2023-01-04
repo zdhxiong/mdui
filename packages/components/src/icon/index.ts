@@ -16,9 +16,7 @@ export type MaterialIconsName = string;
  */
 @customElement('mdui-icon')
 export class Icon extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
-
-  private readonly hasSlotController = new HasSlotController(this, '[default]');
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * Material Icons 图标名
@@ -31,6 +29,8 @@ export class Icon extends LitElement {
    */
   @property({ reflect: true })
   public src!: string;
+
+  private readonly hasSlotController = new HasSlotController(this, '[default]');
 
   protected override render(): TemplateResult {
     const renderDefault = () => {

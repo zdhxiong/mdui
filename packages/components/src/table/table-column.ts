@@ -10,7 +10,10 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-table-column')
 export class TableColumn extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, tableColumnStyle];
+  public static override styles: CSSResultGroup = [
+    componentStyle,
+    tableColumnStyle,
+  ];
 
   /**
    * 列的字段名

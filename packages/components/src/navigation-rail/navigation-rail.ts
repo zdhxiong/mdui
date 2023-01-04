@@ -36,34 +36,10 @@ type NavigationRailItem = NavigationRailItemOriginal & {
  */
 @customElement('mdui-navigation-rail')
 export class NavigationRail extends LitElement {
-  static override styles: CSSResultGroup = [
+  public static override styles: CSSResultGroup = [
     componentStyle,
     navigationRailStyle,
   ];
-
-  private readonly hasSlotController = new HasSlotController(
-    this,
-    'top',
-    'bottom',
-  );
-
-  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
-  private hasSetDefaultValue = false;
-
-  // 所有的子项元素
-  private get items() {
-    return $(this)
-      .find('mdui-navigation-rail-item')
-      .get() as unknown as NavigationRailItem[];
-  }
-
-  // 因为 navigation-rail-item 的 value 可能会重复，所以在每个 navigation-rail-item 元素上都添加了一个唯一的 key，通过 activeKey 来记录激活状态的 key
-  @state()
-  private activeKey = 0;
-
-  private get parentTarget() {
-    return this.contained ? this.parentElement! : document.body;
-  }
 
   /**
    * 当前选中的 `<mdui-navigation-bar-item>` 的值
@@ -111,6 +87,30 @@ export class NavigationRail extends LitElement {
   })
   public divider = false;
 
+  // 因为 navigation-rail-item 的 value 可能会重复，所以在每个 navigation-rail-item 元素上都添加了一个唯一的 key，通过 activeKey 来记录激活状态的 key
+  @state()
+  private activeKey = 0;
+
+  private readonly hasSlotController = new HasSlotController(
+    this,
+    'top',
+    'bottom',
+  );
+
+  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
+  private hasSetDefaultValue = false;
+
+  // 所有的子项元素
+  private get items() {
+    return $(this)
+      .find('mdui-navigation-rail-item')
+      .get() as unknown as NavigationRailItem[];
+  }
+
+  private get parentTarget() {
+    return this.contained ? this.parentElement! : document.body;
+  }
+
   @watch('activeKey')
   private onActiveKeyChange() {
     // 根据 activeKey 读取对应 navigation-rail-item 的值
@@ -151,6 +151,30 @@ export class NavigationRail extends LitElement {
     });
   }
 
+  protected override render(): TemplateResult {
+    const hasTopSlot = this.hasSlotController.test('top');
+    const hasBottomSlot = this.hasSlotController.test('bottom');
+
+    return html`${when(
+        hasTopSlot,
+        () =>
+          html`<span part="top" class="top">
+            <slot name="top"></slot>
+          </span>`,
+      )}
+      <span class="top-spacer"></span>
+      <span part="items" class="items">
+        <slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>
+      </span>
+      <span class="bottom-spacer"></span>
+      ${when(
+        hasBottomSlot,
+        () => html`<span part="bottom" class="bottom">
+          <slot name="bottom"></slot>
+        </span>`,
+      )}`;
+  }
+
   private onClick(event: MouseEvent): void {
     // event.button 为 0 时，为鼠标左键点击。忽略鼠标中键和右键
     if (event.button) {
@@ -174,30 +198,6 @@ export class NavigationRail extends LitElement {
     this.items.forEach((item) => {
       item.placement = this.placement;
     });
-  }
-
-  protected override render(): TemplateResult {
-    const hasTopSlot = this.hasSlotController.test('top');
-    const hasBottomSlot = this.hasSlotController.test('bottom');
-
-    return html`${when(
-        hasTopSlot,
-        () =>
-          html`<span part="top" class="top">
-            <slot name="top"></slot>
-          </span>`,
-      )}
-      <span class="top-spacer"></span>
-      <span part="items" class="items">
-        <slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>
-      </span>
-      <span class="bottom-spacer"></span>
-      ${when(
-        hasBottomSlot,
-        () => html`<span part="bottom" class="bottom">
-          <slot name="bottom"></slot>
-        </span>`,
-      )}`;
   }
 }
 

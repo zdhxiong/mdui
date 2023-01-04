@@ -9,7 +9,10 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-list-subheader')
 export class ListSubheader extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, listSubheaderStyle];
+  public static override styles: CSSResultGroup = [
+    componentStyle,
+    listSubheaderStyle,
+  ];
 
   protected override render(): TemplateResult {
     return html`<slot></slot>`;

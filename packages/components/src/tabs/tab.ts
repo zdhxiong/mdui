@@ -30,50 +30,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-tab')
 export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
-  static override styles: CSSResultGroup = [componentStyle, tabStyle];
-
-  private readonly rippleRef: Ref<Ripple> = createRef();
-
-  protected override get rippleElement() {
-    return this.rippleRef.value!;
-  }
-
-  // 每一个 `<mdui-tab>` 元素都添加一个唯一的 key
-  protected readonly key = uniqueId();
-
-  protected override get focusDisabled(): boolean {
-    return false;
-  }
-
-  protected override get focusElement(): HTMLElement {
-    return this;
-  }
-
-  protected override get rippleDisabled(): boolean {
-    return false;
-  }
-
-  private readonly hasSlotController = new HasSlotController(
-    this,
-    'icon',
-    'custom',
-  );
-
-  /**
-   * 是否为激活状态，由 `<mdui-tabs>` 组件控制该参数
-   */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
-  })
-  protected active = false;
-
-  /**
-   * 选项卡形状。由 `<mdui-tabs>` 组件控制该参数
-   */
-  @property({ reflect: true })
-  protected variant: 'primary' | 'secondary' = 'primary';
+  public static override styles: CSSResultGroup = [componentStyle, tabStyle];
 
   /**
    * 该选项卡导航项的值
@@ -97,8 +54,46 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
   })
   public inline = false;
 
-  private renderBadge(): TemplateResult {
-    return html`<slot name="badge"></slot>`;
+  /**
+   * 是否为激活状态，由 `<mdui-tabs>` 组件控制该参数
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
+  protected active = false;
+
+  /**
+   * 选项卡形状。由 `<mdui-tabs>` 组件控制该参数
+   */
+  @property({ reflect: true })
+  protected variant: 'primary' | 'secondary' = 'primary';
+
+  // 每一个 `<mdui-tab>` 元素都添加一个唯一的 key
+  protected readonly key = uniqueId();
+
+  private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly hasSlotController = new HasSlotController(
+    this,
+    'icon',
+    'custom',
+  );
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
+  protected override get rippleDisabled(): boolean {
+    return false;
+  }
+
+  protected override get focusElement(): HTMLElement {
+    return this;
+  }
+
+  protected override get focusDisabled(): boolean {
+    return false;
   }
 
   protected override render(): TemplateResult {
@@ -128,6 +123,10 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
           </div>
         </slot>
       </div>`;
+  }
+
+  private renderBadge(): TemplateResult {
+    return html`<slot name="badge"></slot>`;
   }
 }
 

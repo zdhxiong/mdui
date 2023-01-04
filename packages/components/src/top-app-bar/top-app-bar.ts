@@ -35,23 +35,10 @@ type TopAppBarTitle = {
  */
 @customElement('mdui-top-app-bar')
 export class TopAppBar extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, topAppBarStyle];
-
-  @queryAssignedElements({ selector: 'mdui-top-app-bar-title', flatten: true })
-  private readonly titleElements!: TopAppBarTitle[];
-
-  private readonly uniqueId = uniqueId();
-  private readonly scrollEventName = `scroll._top_app_bar_${this.uniqueId}`;
-
-  /**
-   * 滚动条是否不位于顶部
-   */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
-  })
-  private scrolling = false;
+  public static override styles: CSSResultGroup = [
+    componentStyle,
+    topAppBarStyle,
+  ];
 
   /**
    * 顶部应用栏形状。可选值为：
@@ -122,6 +109,28 @@ export class TopAppBar extends LitElement {
   public scrollThreshold!: number;
 
   /**
+   * 滚动条是否不位于顶部
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
+  private scrolling = false;
+
+  @queryAssignedElements({ selector: 'mdui-top-app-bar-title', flatten: true })
+  private readonly titleElements!: TopAppBarTitle[];
+
+  private readonly uniqueId = uniqueId();
+  private readonly scrollEventName = `scroll._top_app_bar_${this.uniqueId}`;
+
+  // 上次滚动后，垂直方向的距离。使用 scrollThreshold
+  private lastScrollTop = 0;
+
+  // 上次滚动后，垂直方向的距离。不使用 scrollThreshold
+  private lastScrollTopNoThreshold = 0;
+
+  /**
    * 组件需要监听该元素的滚动状态
    */
   private get scrollTargetListening(): HTMLElement | Window {
@@ -133,23 +142,6 @@ export class TopAppBar extends LitElement {
    */
   private get scrollTargetContainer(): HTMLElement {
     return this.scrollTarget ? $(this.scrollTarget)[0] : document.body;
-  }
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    $(this.scrollTargetListening).on(this.scrollEventName, () => {
-      window.requestAnimationFrame(() => this.onScroll());
-    });
-    $(this).on('transitionend', (e: TransitionEvent) => {
-      if (e.target === this) {
-        emit(this, this.hide ? 'hidden' : 'shown');
-      }
-    });
-  }
-
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    $(this.scrollTargetListening).off(this.scrollEventName);
   }
 
   /**
@@ -194,8 +186,27 @@ export class TopAppBar extends LitElement {
     });
   }
 
-  private lastScrollTop = 0; // 上次滚动后，垂直方向的距离。使用 scrollThreshold
-  private lastScrollTopNoThreshold = 0; // 上次滚动后，垂直方向的距离。不使用 scrollThreshold
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    $(this.scrollTargetListening).on(this.scrollEventName, () => {
+      window.requestAnimationFrame(() => this.onScroll());
+    });
+    $(this).on('transitionend', (e: TransitionEvent) => {
+      if (e.target === this) {
+        emit(this, this.hide ? 'hidden' : 'shown');
+      }
+    });
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    $(this.scrollTargetListening).off(this.scrollEventName);
+  }
+
+  protected override render(): TemplateResult {
+    return html`<slot></slot>`;
+  }
+
   private onScroll() {
     const scrollTop =
       (this.scrollTargetListening as Window).scrollY ||
@@ -235,10 +246,6 @@ export class TopAppBar extends LitElement {
 
       this.lastScrollTop = scrollTop;
     }
-  }
-
-  protected override render(): TemplateResult {
-    return html`<slot></slot>`;
   }
 }
 

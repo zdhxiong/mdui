@@ -9,7 +9,16 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-tab-panel')
 export class TabPanel extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, tabPanelStyle];
+  public static override styles: CSSResultGroup = [
+    componentStyle,
+    tabPanelStyle,
+  ];
+
+  /**
+   * 该选项卡面板的值
+   */
+  @property({ reflect: true })
+  public value = '';
 
   /**
    * 是否为激活状态，由 `<mdui-tabs>` 组件控制该状态
@@ -20,12 +29,6 @@ export class TabPanel extends LitElement {
     converter: (value: string | null): boolean => value !== 'false',
   })
   protected active = false;
-
-  /**
-   * 该选项卡面板的值
-   */
-  @property({ reflect: true })
-  public value = '';
 
   protected override render(): TemplateResult {
     return html`<slot></slot>`;

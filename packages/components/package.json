@@ -69,9 +69,9 @@
     "@mdui/shared": "workspace:*",
     "@mdui/icons": "workspace:*",
     "classcat": "^5.0.4",
-    "lit": "^2.3.0",
+    "lit": "^2.5.0",
     "@lit-labs/motion": "^1.0.3",
-    "@lit-labs/observers": "^1.0.2",
-    "tslib": "^2.4.0"
+    "@lit-labs/observers": "^1.1.0",
+    "tslib": "^2.4.1"
   }
 }

@@ -15,7 +15,7 @@ type RenderAnchorOptions = {
   tabindex?: number;
 };
 
-export declare class AnchorMixinInterface {
+export declare class AnchorMixinInterface extends LitElement {
   public href?: string;
   public download?: string;
   public target?: '_blank' | '_parent' | '_self' | '_top';

@@ -27,31 +27,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-radio')
 export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
-  static override styles: CSSResultGroup = [componentStyle, radioStyle];
-
-  private readonly rippleRef: Ref<Ripple> = createRef();
-
-  protected override get rippleElement() {
-    return this.rippleRef.value!;
-  }
-
-  // 是否验证未通过。由 mdui-radio-group 控制该参数
-  @state() protected invalid = false;
-
-  // 是否可聚焦。由 mdui-radio-group 控制该参数
-  @state() protected focusable = false;
-
-  protected override get focusDisabled(): boolean {
-    return this.disabled || !this.focusable;
-  }
-
-  protected override get focusElement(): HTMLElement {
-    return this;
-  }
-
-  protected override get rippleDisabled(): boolean {
-    return this.disabled;
-  }
+  public static override styles: CSSResultGroup = [componentStyle, radioStyle];
 
   /**
    * 当前 radio 选项的值
@@ -79,6 +55,39 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   })
   public checked = false;
 
+  // 是否验证未通过。由 mdui-radio-group 控制该参数
+  @state()
+  protected invalid = false;
+
+  // 是否可聚焦。由 mdui-radio-group 控制该参数
+  @state()
+  protected focusable = false;
+
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
+  protected override get rippleDisabled(): boolean {
+    return this.disabled;
+  }
+
+  protected override get focusElement(): HTMLElement {
+    return this;
+  }
+
+  protected override get focusDisabled(): boolean {
+    return this.disabled || !this.focusable;
+  }
+
+  @watch('checked', true)
+  private onCheckedChange() {
+    if (this.checked) {
+      emit(this, 'change');
+    }
+  }
+
   public override connectedCallback(): void {
     super.connectedCallback();
 
@@ -87,13 +96,6 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
         this.checked = true;
       }
     });
-  }
-
-  @watch('checked', true)
-  private onCheckedChange() {
-    if (this.checked) {
-      emit(this, 'change');
-    }
   }
 
   protected override render(): TemplateResult {

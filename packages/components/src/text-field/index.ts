@@ -60,57 +60,7 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
  */
 @customElement('mdui-text-field')
 export class TextField extends FocusableMixin(LitElement) {
-  static override styles: CSSResultGroup = [componentStyle, style];
-
-  @query('.input')
-  private readonly inputElement!: HTMLInputElement | HTMLTextAreaElement;
-
-  protected override get focusDisabled(): boolean {
-    return this.disabled;
-  }
-
-  protected override get focusElement(): HTMLElement {
-    return this.inputElement;
-  }
-
-  private readonly formController: FormController = new FormController(this);
-  private readonly hasSlotController = new HasSlotController(
-    this,
-    'prefix-icon',
-    'suffix-icon',
-    'input',
-  );
-  private resizeObserver!: ResizeObserver;
-
-  @state() private isPasswordVisible = false;
-  @state() private hasValue = false;
-
-  /**
-   * 该属性设置为 true 时，则在样式上为 text-field 赋予聚焦状态。实际是否聚焦仍然由 focusableMixin 控制
-   * 该属性仅供 mdui 内部使用，当前 select 组件使用了该属性
-   */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
-    attribute: 'focused-style',
-  })
-  private focusedStyle = false;
-
-  /**
-   * 是否显示聚焦状态样式
-   */
-  private get isFocusedStyle(): boolean {
-    // @ts-ignore
-    return this.focused || this.focusedStyle;
-  }
-
-  /**
-   * 是否渲染为 textarea。为 false 时渲染为 input
-   */
-  private get isTextarea() {
-    return (this.rows && this.rows > 1) || this.autosize;
-  }
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * 文本框形状。可选值为：
@@ -254,12 +204,6 @@ export class TextField extends FocusableMixin(LitElement) {
     converter: (value: string | null): boolean => value !== 'false',
   })
   public readonly = false;
-
-  /**
-   * 该属性设为 true 时，即使设置了 readonly，仍可以显示 clearable
-   * 当前仅供 select 组件使用
-   */
-  private readonlyButClearable = false;
 
   /**
    * 是否为禁用状态
@@ -441,6 +385,42 @@ export class TextField extends FocusableMixin(LitElement) {
     | 'email'
     | 'url';
 
+  @query('.input')
+  private readonly inputElement!: HTMLInputElement | HTMLTextAreaElement;
+
+  /**
+   * 该属性设置为 true 时，则在样式上为 text-field 赋予聚焦状态。实际是否聚焦仍然由 focusableMixin 控制
+   * 该属性仅供 mdui 内部使用，当前 select 组件使用了该属性
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'focused-style',
+  })
+  private focusedStyle = false;
+
+  @state()
+  private isPasswordVisible = false;
+
+  @state()
+  private hasValue = false;
+
+  private resizeObserver!: ResizeObserver;
+  private readonly formController: FormController = new FormController(this);
+  private readonly hasSlotController = new HasSlotController(
+    this,
+    'prefix-icon',
+    'suffix-icon',
+    'input',
+  );
+
+  /**
+   * 该属性设为 true 时，即使设置了 readonly，仍可以显示 clearable
+   * 当前仅供 select 组件使用
+   */
+  private readonlyButClearable = false;
+
   public get valueAsNumber() {
     return (
       (this.inputElement as HTMLInputElement)?.valueAsNumber ??
@@ -452,6 +432,100 @@ export class TextField extends FocusableMixin(LitElement) {
     input.type = 'number';
     input.valueAsNumber = newValue;
     this.value = input.value;
+  }
+
+  protected override get focusElement(): HTMLElement {
+    return this.inputElement;
+  }
+
+  protected override get focusDisabled(): boolean {
+    return this.disabled;
+  }
+
+  /**
+   * 是否显示聚焦状态样式
+   */
+  private get isFocusedStyle(): boolean {
+    // @ts-ignore
+    return this.focused || this.focusedStyle;
+  }
+
+  /**
+   * 是否渲染为 textarea。为 false 时渲染为 input
+   */
+  private get isTextarea() {
+    return (this.rows && this.rows > 1) || this.autosize;
+  }
+
+  @watch('disabled', true)
+  private onDisabledChange() {
+    // 禁用状态始终为验证通过，所以 disabled 变更时需要重新校验
+    this.inputElement.disabled = this.disabled;
+    this.invalid = !this.inputElement.checkValidity();
+  }
+
+  @watch('value')
+  private onValueChange() {
+    this.hasValue = !!this.value;
+
+    if (this.hasUpdated) {
+      this.invalid = !this.inputElement.checkValidity();
+    }
+  }
+
+  @watch('rows', true)
+  private onRowsChange() {
+    this.setTextareaHeight();
+  }
+
+  @watch('maxRows')
+  private async onMaxRowsChange() {
+    if (!this.autosize) {
+      return;
+    }
+
+    // 设置最大高度，为 line-height * maxRows + padding-top + padding-bottom
+    const setMaxHeight = () => {
+      const $inputElement = $(this.inputElement);
+      $inputElement.css(
+        'max-height',
+        parseFloat($inputElement.css('line-height')) * this.maxRows +
+          parseFloat($inputElement.css('padding-top')) +
+          parseFloat($inputElement.css('padding-bottom')),
+      );
+    };
+
+    if (this.hasUpdated) {
+      setMaxHeight();
+    } else {
+      await this.updateComplete;
+      setMaxHeight();
+    }
+  }
+
+  @watch('minRows')
+  private async onMinRowsChange() {
+    if (!this.autosize) {
+      return;
+    }
+
+    // 设置最小高度，为 line-height * minRows + padding-top + padding-bottom
+    const setMinHeight = () => {
+      const $inputElement = $(this.inputElement);
+      $inputElement.css(
+        'min-height',
+        parseFloat($inputElement.css('line-height')) * this.minRows +
+          parseFloat($inputElement.css('padding-top')) +
+          parseFloat($inputElement.css('padding-bottom')),
+      );
+    };
+
+    if (this.hasUpdated) {
+      setMinHeight();
+    } else {
+      await this.updateComplete;
+      setMinHeight();
+    }
   }
 
   public override connectedCallback(): void {
@@ -545,6 +619,47 @@ export class TextField extends FocusableMixin(LitElement) {
     this.invalid = !this.inputElement.checkValidity();
   }
 
+  protected override render(): TemplateResult {
+    const hasPrefixIcon =
+      this.hasSlotController.test('prefix-icon') || !!this.prefixIcon;
+    const hasSuffixIcon =
+      this.hasSlotController.test('suffix-icon') || !!this.suffixIcon;
+    // 存在 input slot 时，隐藏组件内部的 .input 元素，使用 slot 代替
+    const hasInputSlot = this.hasSlotController.test('input');
+
+    return html`<div
+        part="text-field"
+        class="text-field ${classMap({
+          'has-value': this.hasValue,
+          'has-prefix-icon': hasPrefixIcon,
+          'has-suffix-icon': hasSuffixIcon,
+          'is-firefox': navigator.userAgent.includes('Firefox'),
+        })}"
+      >
+        ${this.renderPrefix(hasPrefixIcon)}
+        <div class="input-container">
+          ${this.renderLabel()}
+          ${this.isTextarea
+            ? this.renderTextArea(hasInputSlot)
+            : this.renderInput(hasInputSlot)}
+          ${when(
+            hasInputSlot,
+            () => html`<slot name="input" class="input"></slot>`,
+          )}
+        </div>
+        ${this.renderClearButton()}${this.renderTogglePasswordButton()}
+        ${this.renderSuffix(hasSuffixIcon)}
+      </div>
+      ${when(
+        (this.invalid && (this.error || this.inputElement.validationMessage)) ||
+          this.helper ||
+          (this.counter && this.maxlength),
+        () => html`<div part="supporting" class="supporting">
+          ${this.renderHelper()}${this.renderCounter()}
+        </div>`,
+      )}`;
+  }
+
   private onChange() {
     this.value = this.inputElement.value;
     if (this.isTextarea) {
@@ -607,77 +722,6 @@ export class TextField extends FocusableMixin(LitElement) {
       this.inputElement.style.height = `${this.inputElement.scrollHeight}px`;
     } else {
       (this.inputElement.style.height as string | undefined) = undefined;
-    }
-  }
-
-  @watch('disabled', true)
-  private onDisabledChange() {
-    // 禁用状态始终为验证通过，所以 disabled 变更时需要重新校验
-    this.inputElement.disabled = this.disabled;
-    this.invalid = !this.inputElement.checkValidity();
-  }
-
-  @watch('value')
-  private onValueChange() {
-    this.hasValue = !!this.value;
-
-    if (this.hasUpdated) {
-      this.invalid = !this.inputElement.checkValidity();
-    }
-  }
-
-  @watch('rows', true)
-  private onRowsChange() {
-    this.setTextareaHeight();
-  }
-
-  @watch('maxRows')
-  private async onMaxRowsChange() {
-    if (!this.autosize) {
-      return;
-    }
-
-    // 设置最大高度，为 line-height * maxRows + padding-top + padding-bottom
-    const setMaxHeight = () => {
-      const $inputElement = $(this.inputElement);
-      $inputElement.css(
-        'max-height',
-        parseFloat($inputElement.css('line-height')) * this.maxRows +
-          parseFloat($inputElement.css('padding-top')) +
-          parseFloat($inputElement.css('padding-bottom')),
-      );
-    };
-
-    if (this.hasUpdated) {
-      setMaxHeight();
-    } else {
-      await this.updateComplete;
-      setMaxHeight();
-    }
-  }
-
-  @watch('minRows')
-  private async onMinRowsChange() {
-    if (!this.autosize) {
-      return;
-    }
-
-    // 设置最小高度，为 line-height * minRows + padding-top + padding-bottom
-    const setMinHeight = () => {
-      const $inputElement = $(this.inputElement);
-      $inputElement.css(
-        'min-height',
-        parseFloat($inputElement.css('line-height')) * this.minRows +
-          parseFloat($inputElement.css('padding-top')) +
-          parseFloat($inputElement.css('padding-bottom')),
-      );
-    };
-
-    if (this.hasUpdated) {
-      setMinHeight();
-    } else {
-      await this.updateComplete;
-      setMinHeight();
     }
   }
 
@@ -884,47 +928,6 @@ export class TextField extends FocusableMixin(LitElement) {
           ${this.value.length}/${this.maxlength}
         </div>`,
     );
-  }
-
-  protected override render(): TemplateResult {
-    const hasPrefixIcon =
-      this.hasSlotController.test('prefix-icon') || !!this.prefixIcon;
-    const hasSuffixIcon =
-      this.hasSlotController.test('suffix-icon') || !!this.suffixIcon;
-    // 存在 input slot 时，隐藏组件内部的 .input 元素，使用 slot 代替
-    const hasInputSlot = this.hasSlotController.test('input');
-
-    return html`<div
-        part="text-field"
-        class="text-field ${classMap({
-          'has-value': this.hasValue,
-          'has-prefix-icon': hasPrefixIcon,
-          'has-suffix-icon': hasSuffixIcon,
-          'is-firefox': navigator.userAgent.includes('Firefox'),
-        })}"
-      >
-        ${this.renderPrefix(hasPrefixIcon)}
-        <div class="input-container">
-          ${this.renderLabel()}
-          ${this.isTextarea
-            ? this.renderTextArea(hasInputSlot)
-            : this.renderInput(hasInputSlot)}
-          ${when(
-            hasInputSlot,
-            () => html`<slot name="input" class="input"></slot>`,
-          )}
-        </div>
-        ${this.renderClearButton()}${this.renderTogglePasswordButton()}
-        ${this.renderSuffix(hasSuffixIcon)}
-      </div>
-      ${when(
-        (this.invalid && (this.error || this.inputElement.validationMessage)) ||
-          this.helper ||
-          (this.counter && this.maxlength),
-        () => html`<div part="supporting" class="supporting">
-          ${this.renderHelper()}${this.renderCounter()}
-        </div>`,
-      )}`;
   }
 }
 

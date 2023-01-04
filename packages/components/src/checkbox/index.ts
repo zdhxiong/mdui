@@ -35,39 +35,7 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
  */
 @customElement('mdui-checkbox')
 export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
-  static override styles: CSSResultGroup = [componentStyle, style];
-
-  private readonly rippleRef: Ref<Ripple> = createRef();
-
-  protected override get rippleElement() {
-    return this.rippleRef.value!;
-  }
-
-  @query('input')
-  private readonly inputElement!: HTMLInputElement;
-
-  protected override get focusDisabled(): boolean {
-    return this.disabled;
-  }
-
-  protected override get focusElement(): HTMLElement {
-    return this.inputElement;
-  }
-
-  protected override get rippleDisabled(): boolean {
-    return this.disabled;
-  }
-
-  private readonly formController: FormController = new FormController(this, {
-    value: (checkbox: Checkbox) =>
-      checkbox.checked ? checkbox.value : undefined,
-  });
-
-  /**
-   * 是否验证未通过
-   */
-  @state()
-  private invalid = false;
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * 是否为禁用状态
@@ -129,6 +97,37 @@ export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
   @property({ reflect: true })
   public value = 'on';
 
+  /**
+   * 是否验证未通过
+   */
+  @state()
+  private invalid = false;
+
+  @query('input')
+  private readonly inputElement!: HTMLInputElement;
+
+  private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly formController: FormController = new FormController(this, {
+    value: (checkbox: Checkbox) =>
+      checkbox.checked ? checkbox.value : undefined,
+  });
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
+  protected override get rippleDisabled(): boolean {
+    return this.disabled;
+  }
+
+  protected override get focusElement(): HTMLElement {
+    return this.inputElement;
+  }
+
+  protected override get focusDisabled(): boolean {
+    return this.disabled;
+  }
+
   @watch('disabled', true)
   @watch('checked', true)
   @watch('indeterminate', true)
@@ -136,15 +135,6 @@ export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
   private async onDisabledChange() {
     await this.updateComplete;
     this.invalid = !this.inputElement.checkValidity();
-  }
-
-  /**
-   * input[type="checkbox"] 的 change 事件无法冒泡越过 shadow dom
-   */
-  private onChange() {
-    this.checked = this.inputElement.checked;
-    this.indeterminate = false;
-    emit(this, 'change');
   }
 
   /**
@@ -204,6 +194,15 @@ export class Checkbox extends RippleMixin(FocusableMixin(LitElement)) {
       </i>
       <span part="label"><slot></slot></span>
     </label>`;
+  }
+
+  /**
+   * input[type="checkbox"] 的 change 事件无法冒泡越过 shadow dom
+   */
+  private onChange() {
+    this.checked = this.inputElement.checked;
+    this.indeterminate = false;
+    emit(this, 'change');
   }
 }
 

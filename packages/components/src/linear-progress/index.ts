@@ -12,7 +12,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-linear-progress')
 export class LinearProgress extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * 进度指示器的最大值

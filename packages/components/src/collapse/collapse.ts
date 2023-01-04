@@ -24,12 +24,10 @@ type CollapseItem = CollapseItemOriginal & {
  */
 @customElement('mdui-collapse')
 export class Collapse extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, collapseStyle];
-
-  private items: CollapseItem[] = [];
-
-  // 因为 collapse-item 的 value 可能会重复，所以在每个 collapse-item 元素上都添加了一个唯一的 key，通过 activeKey 来记录激活状态的 key
-  @state() private activeKeys: number[] = [];
+  public static override styles: CSSResultGroup = [
+    componentStyle,
+    collapseStyle,
+  ];
 
   /**
    * 是否为手风琴模式
@@ -62,10 +60,11 @@ export class Collapse extends LitElement {
   })
   public disabled = false;
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.syncItems();
-  }
+  // 因为 collapse-item 的 value 可能会重复，所以在每个 collapse-item 元素上都添加了一个唯一的 key，通过 activeKey 来记录激活状态的 key
+  @state()
+  private activeKeys: number[] = [];
+
+  private items: CollapseItem[] = [];
 
   @watch('activeKeys', true)
   private onActiveKeysChange() {
@@ -102,6 +101,18 @@ export class Collapse extends LitElement {
     }
 
     this.updateActive();
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.syncItems();
+  }
+
+  protected override render(): TemplateResult {
+    return html`<slot
+      @slotchange=${this.onSlotChange}
+      @click=${this.onClick}
+    ></slot>`;
   }
 
   private syncItems() {
@@ -176,12 +187,5 @@ export class Collapse extends LitElement {
     this.items.forEach(
       (item) => (item.active = this.activeKeys.includes(item.key)),
     );
-  }
-
-  protected override render(): TemplateResult {
-    return html`<slot
-      @slotchange=${this.onSlotChange}
-      @click=${this.onClick}
-    ></slot>`;
   }
 }

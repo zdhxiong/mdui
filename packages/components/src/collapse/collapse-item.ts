@@ -27,24 +27,10 @@ import type { Ref } from 'lit/directives/ref.js';
  */
 @customElement('mdui-collapse-item')
 export class CollapseItem extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, collapseItemStyle];
-
-  private readonly bodyRef: Ref<HTMLElement> = createRef();
-
-  @state() private state: 'open' | 'opened' | 'close' | 'closed' = 'closed';
-
-  // 每一个 `collapse-item` 元素都添加一个唯一的 key
-  protected readonly key = uniqueId();
-
-  /**
-   * 是否为激活状态，由 `collapse` 组件控制该参数
-   */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
-  })
-  protected active = false;
+  public static override styles: CSSResultGroup = [
+    componentStyle,
+    collapseItemStyle,
+  ];
 
   /**
    * 该折叠面板项的值
@@ -74,8 +60,32 @@ export class CollapseItem extends LitElement {
   @property()
   public trigger!: HTMLElement | string;
 
-  protected override firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
+  /**
+   * 是否为激活状态，由 `collapse` 组件控制该参数
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
+  protected active = false;
+
+  @state()
+  private state: 'open' | 'opened' | 'close' | 'closed' = 'closed';
+
+  // 每一个 `collapse-item` 元素都添加一个唯一的 key
+  protected readonly key = uniqueId();
+  private readonly bodyRef: Ref<HTMLElement> = createRef();
+
+  @watch('active', true)
+  private onActiveChange() {
+    this.state = this.active ? 'open' : 'close';
+    emit(this, this.state);
+    this.updateBodyHeight();
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
 
     $(this.bodyRef.value!).on('transitionend', (event: TransitionEvent) => {
       if (event.target === this.bodyRef.value) {
@@ -89,11 +99,17 @@ export class CollapseItem extends LitElement {
     this.updateBodyHeight();
   }
 
-  @watch('active', true)
-  private onActiveChange() {
-    this.state = this.active ? 'open' : 'close';
-    emit(this, this.state);
-    this.updateBodyHeight();
+  protected override render(): TemplateResult {
+    return html`<div part="header" class="header">
+        <slot name="header">${this.header}</slot>
+      </div>
+      <div
+        part="body"
+        class="body ${classMap({ opened: this.state === 'opened' })}"
+        ${ref(this.bodyRef)}
+      >
+        <slot></slot>
+      </div>`;
   }
 
   private updateBodyHeight() {
@@ -112,18 +128,5 @@ export class CollapseItem extends LitElement {
         ? scrollHeight
         : 0,
     );
-  }
-
-  protected override render(): TemplateResult {
-    return html`<div part="header" class="header">
-        <slot name="header">${this.header}</slot>
-      </div>
-      <div
-        part="body"
-        class="body ${classMap({ opened: this.state === 'opened' })}"
-        ${ref(this.bodyRef)}
-      >
-        <slot></slot>
-      </div>`;
   }
 }

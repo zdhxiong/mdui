@@ -8,14 +8,14 @@ import type { Ripple } from './index.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
 import type { PropertyValues, LitElement } from 'lit';
 
-export declare class RippleMixinInterface {
+export declare class RippleMixinInterface extends LitElement {
+  protected getRippleIndex: () => number | undefined;
   protected get rippleElement(): Ripple | Ripple[] | NodeListOf<Ripple>;
   protected get rippleDisabled(): boolean | boolean[];
   protected get rippleTarget():
     | HTMLElement
     | HTMLElement[]
     | NodeListOf<HTMLElement>;
-  protected getRippleIndex: () => number | undefined;
   protected startHover(event: PointerEvent): void;
   protected endHover(event: PointerEvent): void;
 }
@@ -37,6 +37,12 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
   superclass: T,
 ): Constructor<RippleMixinInterface> & T => {
   class Mixin extends superclass {
+    /**
+     * 当前激活的是第几个 <mdui-ripple>。仅一个组件中有多个 <mdui-ripple> 时可以使用该属性
+     * 若值为 undefined，则组件中所有 <mdui-ripple> 都激活
+     */
+    private rippleIndex?: number = undefined;
+
     /**
      * 子类要添加该属性，指向 <mdui-ripple> 元素
      * 如果一个组件中包含多个 <mdui-ripple> 元素，则这里可以是一个数组或 NodeList
@@ -65,11 +71,41 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
       return this;
     }
 
-    /**
-     * 当前激活的是第几个 <mdui-ripple>。仅一个组件中有多个 <mdui-ripple> 时可以使用该属性
-     * 若值为 undefined，则组件中所有 <mdui-ripple> 都激活
-     */
-    private rippleIndex?: number = undefined;
+    protected override firstUpdated(changedProperties: PropertyValues): void {
+      super.firstUpdated(changedProperties);
+
+      const $target = $(this.rippleTarget);
+
+      // 监听到事件时，是在第几个 <mdui-ripple> 上触发的事件，记录到 this.rippleIndex 中
+      const setRippleIndex = (event: Event) => {
+        if (isArrayLike(this.rippleTarget)) {
+          this.rippleIndex = $target.index(event.target as HTMLElement);
+        }
+      };
+
+      $target.on({
+        'pointerdown._ripple': (event: PointerEvent) => {
+          setRippleIndex(event);
+          this.startPress(event);
+        },
+        'pointerenter._ripple': (event: PointerEvent) => {
+          setRippleIndex(event);
+          this.startHover(event);
+        },
+        'pointerleave._ripple': (event: PointerEvent) => {
+          setRippleIndex(event);
+          this.endHover(event);
+        },
+        'focus._ripple': (event: FocusEvent) => {
+          setRippleIndex(event);
+          this.startFocus();
+        },
+        'blur._ripple': (event: FocusEvent) => {
+          setRippleIndex(event);
+          this.endFocus();
+        },
+      });
+    }
 
     /**
      * 获取当前激活的是第几个 <mdui-ripple>。仅一个组件中有多个 <mdui-ripple> 时可以使用该属性
@@ -77,6 +113,29 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
      * 可在子类中手动指定该方法，指定需要激活的 ripple
      */
     protected getRippleIndex: () => number | undefined = () => this.rippleIndex;
+
+    /**
+     * 若存在多个 <mdui-ripple>，但 rippleTarget 为同一个，则 hover 状态无法在多个 <mdui-ripple> 之间切换
+     * 所以把 startHover 和 endHover 设置为 protected，供子类调用
+     * 子类中，在 getRippleIndex() 的返回值变更前调用 endHover(event)，变更后调用 startHover(event)
+     */
+    protected startHover(event: PointerEvent): void {
+      if (event.pointerType !== 'mouse' || this.isRippleDisabled()) {
+        return;
+      }
+
+      this.getRippleTarget().setAttribute('hover', '');
+      this.getRippleElement().startHover();
+    }
+
+    protected endHover(event: PointerEvent): void {
+      if (event.pointerType !== 'mouse' || this.isRippleDisabled()) {
+        return;
+      }
+
+      this.getRippleTarget().removeAttribute('hover');
+      this.getRippleElement().endHover();
+    }
 
     /**
      * 当前激活的 <mdui-ripple> 元素是否被禁用
@@ -130,29 +189,6 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
       }
 
       return target[0];
-    }
-
-    /**
-     * 若存在多个 <mdui-ripple>，但 rippleTarget 为同一个，则 hover 状态无法在多个 <mdui-ripple> 之间切换
-     * 所以把 startHover 和 endHover 设置为 protected，供子类调用
-     * 子类中，在 getRippleIndex() 的返回值变更前调用 endHover(event)，变更后调用 startHover(event)
-     */
-    protected startHover(event: PointerEvent): void {
-      if (event.pointerType !== 'mouse' || this.isRippleDisabled()) {
-        return;
-      }
-
-      this.getRippleTarget().setAttribute('hover', '');
-      this.getRippleElement().startHover();
-    }
-
-    protected endHover(event: PointerEvent): void {
-      if (event.pointerType !== 'mouse' || this.isRippleDisabled()) {
-        return;
-      }
-
-      this.getRippleTarget().removeAttribute('hover');
-      this.getRippleElement().endHover();
     }
 
     private startFocus(): void {
@@ -266,42 +302,6 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
       }
 
       this.getRippleElement().endDrag();
-    }
-
-    protected override firstUpdated(_changedProperties: PropertyValues): void {
-      super.firstUpdated(_changedProperties);
-
-      const $target = $(this.rippleTarget);
-
-      // 监听到事件时，是在第几个 <mdui-ripple> 上触发的事件，记录到 this.rippleIndex 中
-      const setRippleIndex = (event: Event) => {
-        if (isArrayLike(this.rippleTarget)) {
-          this.rippleIndex = $target.index(event.target as HTMLElement);
-        }
-      };
-
-      $target.on({
-        'pointerdown._ripple': (event: PointerEvent) => {
-          setRippleIndex(event);
-          this.startPress(event);
-        },
-        'pointerenter._ripple': (event: PointerEvent) => {
-          setRippleIndex(event);
-          this.startHover(event);
-        },
-        'pointerleave._ripple': (event: PointerEvent) => {
-          setRippleIndex(event);
-          this.endHover(event);
-        },
-        'focus._ripple': (event: FocusEvent) => {
-          setRippleIndex(event);
-          this.startFocus();
-        },
-        'blur._ripple': (event: FocusEvent) => {
-          setRippleIndex(event);
-          this.endFocus();
-        },
-      });
     }
   }
 

@@ -36,56 +36,10 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 export class NavigationRailItem extends AnchorMixin(
   RippleMixin(FocusableMixin(LitElement)),
 ) {
-  static override styles: CSSResultGroup = [
+  public static override styles: CSSResultGroup = [
     componentStyle,
     navigationRailItemStyle,
   ];
-
-  private readonly rippleRef: Ref<Ripple> = createRef();
-
-  protected override get rippleElement() {
-    return this.rippleRef.value!;
-  }
-
-  private readonly hasSlotController = new HasSlotController(
-    this,
-    '[default]',
-    'active-icon',
-  );
-
-  // 每一个 `navigation-rail-item` 元素都添加一个唯一的 key
-  protected readonly key = uniqueId();
-
-  protected override get focusDisabled(): boolean {
-    return this.disabled;
-  }
-
-  protected override get focusElement(): HTMLElement | null {
-    return this.href ? this.renderRoot?.querySelector('._a') : this;
-  }
-
-  protected override get rippleDisabled(): boolean {
-    return this.disabled;
-  }
-
-  // 是否禁用该元素，该组件没有禁用状态
-  @state() private disabled = false;
-
-  /**
-   * 是否为激活状态，由 `navigation-rail` 组件控制该参数
-   */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
-  })
-  protected active = false;
-
-  /**
-   * 导航栏的位置，由 `navigation-rail` 组件控制该参数
-   */
-  @property({ reflect: true })
-  protected placement: 'left' | 'right' = 'left';
 
   /**
    * 未激活状态的 Material Icons 图标名
@@ -104,6 +58,72 @@ export class NavigationRailItem extends AnchorMixin(
    */
   @property({ reflect: true })
   public value = '';
+
+  /**
+   * 是否为激活状态，由 `navigation-rail` 组件控制该参数
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
+  protected active = false;
+
+  /**
+   * 导航栏的位置，由 `navigation-rail` 组件控制该参数
+   */
+  @property({ reflect: true })
+  protected placement: 'left' | 'right' = 'left';
+
+  // 是否禁用该元素，该组件没有禁用状态
+  @state()
+  private disabled = false;
+
+  // 每一个 `navigation-rail-item` 元素都添加一个唯一的 key
+  protected readonly key = uniqueId();
+
+  private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly hasSlotController = new HasSlotController(
+    this,
+    '[default]',
+    'active-icon',
+  );
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
+  protected override get rippleDisabled(): boolean {
+    return this.disabled;
+  }
+
+  protected override get focusElement(): HTMLElement | null {
+    return this.href ? this.renderRoot?.querySelector('._a') : this;
+  }
+
+  protected override get focusDisabled(): boolean {
+    return this.disabled;
+  }
+
+  protected override render(): TemplateResult {
+    const hasDefaultSlot = this.hasSlotController.test('[default]');
+    const className = cc({
+      item: true,
+      'has-label': hasDefaultSlot,
+    });
+
+    return html`${this.href
+        ? this.renderAnchor({
+            className,
+            content: this.renderInner(hasDefaultSlot),
+          })
+        : html`<span class=${className}>
+            ${this.renderInner(hasDefaultSlot)}
+          </span>`}<mdui-ripple
+        .noRipple=${!this.active}
+        ${ref(this.rippleRef)}
+      ></mdui-ripple>`;
+  }
 
   private renderBadge(): TemplateResult {
     return html`<slot name="badge"></slot>`;
@@ -155,26 +175,6 @@ export class NavigationRailItem extends AnchorMixin(
         ${this.renderBadge()}${this.renderActiveIcon()}${this.renderIcon()}
       </span>
       ${this.renderLabel(hasDefaultSlot)}`;
-  }
-
-  protected override render(): TemplateResult {
-    const hasDefaultSlot = this.hasSlotController.test('[default]');
-    const className = cc({
-      item: true,
-      'has-label': hasDefaultSlot,
-    });
-
-    return html`${this.href
-        ? this.renderAnchor({
-            className,
-            content: this.renderInner(hasDefaultSlot),
-          })
-        : html`<span class=${className}>
-            ${this.renderInner(hasDefaultSlot)}
-          </span>`}<mdui-ripple
-        .noRipple=${!this.active}
-        ${ref(this.rippleRef)}
-      ></mdui-ripple>`;
   }
 }
 

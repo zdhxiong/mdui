@@ -26,7 +26,18 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
  */
 @customElement('mdui-ripple')
 export class Ripple extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
+  public static override styles: CSSResultGroup = [componentStyle, style];
+
+  /**
+   * 是否在点击时不产生涟漪动画
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+    attribute: 'no-ripple',
+  })
+  public noRipple = false;
 
   @query('.surface', true)
   private readonly surface!: HTMLElement;
@@ -39,17 +50,6 @@ export class Ripple extends LitElement {
 
   @state()
   private dragged = false;
-
-  /**
-   * 是否在点击时不产生涟漪动画
-   */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
-    attribute: 'no-ripple',
-  })
-  public noRipple = false;
 
   public startPress(event?: Event): void {
     if (this.noRipple) {

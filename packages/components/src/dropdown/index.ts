@@ -34,26 +34,7 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
  */
 @customElement('mdui-dropdown')
 export class Dropdown extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
-
-  @queryAssignedElements({ slot: 'trigger', flatten: true })
-  private readonly triggerSlots!: HTMLElement[];
-
-  private get triggerSlot(): HTMLElement {
-    return this.triggerSlots[0];
-  }
-
-  @queryAssignedElements({ flatten: true })
-  private readonly panelSlots!: HTMLElement[];
-
-  private get panelSlot(): HTMLElement {
-    return this.panelSlots[0];
-  }
-
-  private resizeObserver!: ResizeObserver;
-
-  @query('.panel')
-  private readonly panel!: HTMLElement;
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * dropdown 是否打开
@@ -158,6 +139,192 @@ export class Dropdown extends LitElement {
   @property({ type: Number, reflect: true, attribute: 'z-index' })
   public zIndex = 900;
 
+  @queryAssignedElements({ slot: 'trigger', flatten: true })
+  private readonly triggerSlots!: HTMLElement[];
+
+  @queryAssignedElements({ flatten: true })
+  private readonly panelSlots!: HTMLElement[];
+
+  @query('.panel')
+  private readonly panel!: HTMLElement;
+
+  private resizeObserver!: ResizeObserver;
+
+  // 右键菜单点击位置相对于 trigger 的位置
+  private pointerOffsetX!: number;
+  private pointerOffsetY!: number;
+
+  private openTimeout!: number;
+  private closeTimeout!: number;
+
+  private get triggerSlot(): HTMLElement {
+    return this.triggerSlots[0];
+  }
+
+  private get panelSlot(): HTMLElement {
+    return this.panelSlots[0];
+  }
+
+  // 这些属性变更时，需要更新样式
+  @watch('disabled', true)
+  @watch('placement', true)
+  @watch('openOnPointer', true)
+  private async onPositionChange() {
+    if (this.disabled || !this.open) {
+      return;
+    }
+
+    // 打开动画开始前，设置 panel 的样式
+    this.updatePositioner();
+  }
+
+  @watch('open', true)
+  private async onOpenChange() {
+    if (this.disabled) {
+      this.open = false;
+      return;
+    }
+
+    const easingLinear = getEasing(this, 'linear');
+    const easingEmphasizedDecelerate = getEasing(this, 'emphasized-decelerate');
+    const easingEmphasizedAccelerate = getEasing(this, 'emphasized-accelerate');
+
+    if (this.open) {
+      const requestOpen = emit(this, 'open', {
+        cancelable: true,
+      });
+      if (requestOpen.defaultPrevented) {
+        return;
+      }
+
+      // dropdown 打开时，尝试把焦点放到 panel 中
+      if (typeof this.panelSlot?.focus === 'function') {
+        this.panelSlot.focus();
+      }
+
+      const duration = getDuration(this, 'medium4');
+
+      await stopAnimations(this.panel);
+      this.panel.hidden = false;
+      this.updatePositioner();
+      await Promise.all([
+        animateTo(
+          this.panel,
+          [{ transform: 'scaleY(0.45)' }, { transform: 'scaleY(1)' }],
+          { duration, easing: easingEmphasizedDecelerate },
+        ),
+        animateTo(
+          this.panel,
+          [{ opacity: 0 }, { opacity: 1, offset: 0.125 }, { opacity: 1 }],
+          { duration, easing: easingLinear },
+        ),
+      ]);
+
+      emit(this, 'opened');
+    } else {
+      const requestClose = emit(this, 'close', {
+        cancelable: true,
+      });
+      if (requestClose.defaultPrevented) {
+        return;
+      }
+
+      // dropdown 关闭时，如果不支持 focus 触发，且焦点在 dropdown 内，则焦点回到 trigger 上
+      if (
+        !this.hasTrigger('focus') &&
+        typeof this.triggerSlot?.focus === 'function' &&
+        (this.contains(document.activeElement) ||
+          this.contains(document.activeElement?.assignedSlot ?? null))
+      ) {
+        this.triggerSlot.focus();
+      }
+
+      const duration = getDuration(this, 'short4');
+
+      await stopAnimations(this.panel);
+      await Promise.all([
+        animateTo(
+          this.panel,
+          [{ transform: 'scaleY(1)' }, { transform: 'scaleY(0.45)' }],
+          { duration, easing: easingEmphasizedAccelerate },
+        ),
+        animateTo(
+          this.panel,
+          [{ opacity: 1 }, { opacity: 1, offset: 0.875 }, { opacity: 0 }],
+          { duration, easing: easingLinear },
+        ),
+      ]);
+
+      this.panel.hidden = true;
+
+      emit(this, 'closed');
+    }
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+
+    $(document).on('pointerdown._dropdown', (e) =>
+      this.onDocumentClick(e as MouseEvent),
+    );
+    $(document).on('keydown._dropdown', (e) =>
+      this.onDocumentKeydown(e as KeyboardEvent),
+    );
+    $(window).on('scroll._dropdown', () => {
+      window.requestAnimationFrame(() => this.onPositionChange());
+    });
+
+    // triggerSlot 的尺寸变化时，重新调整 panel 的位置
+    this.resizeObserver = new ResizeObserver(() => {
+      this.updatePositioner();
+    });
+    this.updateComplete.then(() => {
+      this.resizeObserver.observe(this.triggerSlot);
+    });
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    $(document).off('pointerdown._dropdown');
+    $(document).off('keydown._dropdown');
+    $(window).off('scroll._dropdown');
+
+    this.resizeObserver.unobserve(this.triggerSlot);
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+
+    $(this).on('mouseleave._dropdown', () => this.onMouseLeave());
+
+    $(this.triggerSlot).on({
+      focus: () => this.onFocus(),
+      click: (e) => this.onClick(e as MouseEvent),
+      contextmenu: (e) => this.onContextMenu(e as MouseEvent),
+      mouseenter: () => this.onMouseEnter(),
+    });
+
+    $(this.panel).on({
+      click: (e) => this.onPanelClick(e as MouseEvent),
+    });
+
+    this.panel.hidden = !this.open || this.disabled;
+  }
+
+  protected override render(): TemplateResult {
+    return html`<div part="trigger" class="trigger">
+        <slot name="trigger"></slot>
+      </div>
+      <div
+        part="panel"
+        class="panel"
+        style="${styleMap({ zIndex: this.zIndex.toString() })}"
+      >
+        <slot></slot>
+      </div>`;
+  }
+
   /**
    * 在 document 上点击时，根据条件判断是否要关闭 dropdown
    */
@@ -211,57 +378,6 @@ export class Dropdown extends LitElement {
     }
   }
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
-
-    $(document).on('pointerdown._dropdown', (e) =>
-      this.onDocumentClick(e as MouseEvent),
-    );
-    $(document).on('keydown._dropdown', (e) =>
-      this.onDocumentKeydown(e as KeyboardEvent),
-    );
-    $(window).on('scroll._dropdown', () => {
-      window.requestAnimationFrame(() => this.onPositionChange());
-    });
-
-    // triggerSlot 的尺寸变化时，重新调整 panel 的位置
-    this.resizeObserver = new ResizeObserver(() => {
-      this.updatePositioner();
-    });
-    this.updateComplete.then(() => {
-      this.resizeObserver.observe(this.triggerSlot);
-    });
-  }
-
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-
-    $(document).off('pointerdown._dropdown');
-    $(document).off('keydown._dropdown');
-    $(window).off('scroll._dropdown');
-
-    this.resizeObserver.unobserve(this.triggerSlot);
-  }
-
-  protected override firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
-
-    $(this).on('mouseleave._dropdown', () => this.onMouseLeave());
-
-    $(this.triggerSlot).on({
-      focus: () => this.onFocus(),
-      click: (e) => this.onClick(e as MouseEvent),
-      contextmenu: (e) => this.onContextMenu(e as MouseEvent),
-      mouseenter: () => this.onMouseEnter(),
-    });
-
-    $(this.panel).on({
-      click: (e) => this.onPanelClick(e as MouseEvent),
-    });
-
-    this.panel.hidden = !this.open || this.disabled;
-  }
-
   private hasTrigger(
     trigger: 'click' | 'hover' | 'focus' | 'contextmenu' | 'manual',
   ): boolean {
@@ -276,10 +392,6 @@ export class Dropdown extends LitElement {
 
     this.open = true;
   }
-
-  // 右键菜单点击位置相对于 trigger 的位置
-  private pointerOffsetX!: number;
-  private pointerOffsetY!: number;
 
   private onClick(e: MouseEvent) {
     // e.button 为 0 时，为鼠标左键点击。忽略鼠标中间和右键
@@ -309,9 +421,6 @@ export class Dropdown extends LitElement {
     this.pointerOffsetY = e.offsetY;
     this.open = true;
   }
-
-  private openTimeout!: number;
-  private closeTimeout!: number;
 
   private onMouseEnter() {
     // 不做 open 状态的判断，因为可以延时打开和关闭
@@ -458,115 +567,6 @@ export class Dropdown extends LitElement {
           : triggerRect.left + triggerRect.width - panelRect.width,
       transformOrigin: [transformOriginX, transformOriginY].join(' '),
     });
-  }
-
-  // 这些属性变更时，需要更新样式
-  @watch('disabled', true)
-  @watch('placement', true)
-  @watch('openOnPointer', true)
-  private async onPositionChange() {
-    if (this.disabled || !this.open) {
-      return;
-    }
-
-    // 打开动画开始前，设置 panel 的样式
-    this.updatePositioner();
-  }
-
-  @watch('open', true)
-  private async onOpenChange() {
-    if (this.disabled) {
-      this.open = false;
-      return;
-    }
-
-    const easingLinear = getEasing(this, 'linear');
-    const easingEmphasizedDecelerate = getEasing(this, 'emphasized-decelerate');
-    const easingEmphasizedAccelerate = getEasing(this, 'emphasized-accelerate');
-
-    if (this.open) {
-      const requestOpen = emit(this, 'open', {
-        cancelable: true,
-      });
-      if (requestOpen.defaultPrevented) {
-        return;
-      }
-
-      // dropdown 打开时，尝试把焦点放到 panel 中
-      if (typeof this.panelSlot?.focus === 'function') {
-        this.panelSlot.focus();
-      }
-
-      const duration = getDuration(this, 'medium4');
-
-      await stopAnimations(this.panel);
-      this.panel.hidden = false;
-      this.updatePositioner();
-      await Promise.all([
-        animateTo(
-          this.panel,
-          [{ transform: 'scaleY(0.45)' }, { transform: 'scaleY(1)' }],
-          { duration, easing: easingEmphasizedDecelerate },
-        ),
-        animateTo(
-          this.panel,
-          [{ opacity: 0 }, { opacity: 1, offset: 0.125 }, { opacity: 1 }],
-          { duration, easing: easingLinear },
-        ),
-      ]);
-
-      emit(this, 'opened');
-    } else {
-      const requestClose = emit(this, 'close', {
-        cancelable: true,
-      });
-      if (requestClose.defaultPrevented) {
-        return;
-      }
-
-      // dropdown 关闭时，如果不支持 focus 触发，且焦点在 dropdown 内，则焦点回到 trigger 上
-      if (
-        !this.hasTrigger('focus') &&
-        typeof this.triggerSlot?.focus === 'function' &&
-        (this.contains(document.activeElement) ||
-          this.contains(document.activeElement?.assignedSlot ?? null))
-      ) {
-        this.triggerSlot.focus();
-      }
-
-      const duration = getDuration(this, 'short4');
-
-      await stopAnimations(this.panel);
-      await Promise.all([
-        animateTo(
-          this.panel,
-          [{ transform: 'scaleY(1)' }, { transform: 'scaleY(0.45)' }],
-          { duration, easing: easingEmphasizedAccelerate },
-        ),
-        animateTo(
-          this.panel,
-          [{ opacity: 1 }, { opacity: 1, offset: 0.875 }, { opacity: 0 }],
-          { duration, easing: easingLinear },
-        ),
-      ]);
-
-      this.panel.hidden = true;
-
-      emit(this, 'closed');
-    }
-  }
-
-  protected override render(): TemplateResult {
-    return html`<div part="trigger" class="trigger">
-        <slot name="trigger"></slot>
-      </div>
-      <div
-        part="panel"
-        class="panel"
-        style="${styleMap({ zIndex: this.zIndex.toString() })}"
-      >
-        <slot></slot>
-      </div>`;
   }
 }
 

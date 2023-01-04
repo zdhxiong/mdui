@@ -18,6 +18,20 @@ export class HasSlotController implements ReactiveController {
     this.onSlotChange = this.onSlotChange.bind(this);
   }
 
+  public hostConnected(): void {
+    this.host.shadowRoot!.addEventListener('slotchange', this.onSlotChange);
+  }
+
+  public hostDisconnected(): void {
+    this.host.shadowRoot!.removeEventListener('slotchange', this.onSlotChange);
+  }
+
+  public test(slotName: SlotName): boolean {
+    return slotName === '[default]'
+      ? this.hasDefaultSlot()
+      : this.hasNamedSlot(slotName);
+  }
+
   private hasDefaultSlot(): boolean {
     // @ts-ignore
     return [...this.host.childNodes].some((node) => {
@@ -38,20 +52,6 @@ export class HasSlotController implements ReactiveController {
 
   private hasNamedSlot(name: string): boolean {
     return this.host.querySelector(`:scope > [slot="${name}"]`) !== null;
-  }
-
-  public test(slotName: SlotName): boolean {
-    return slotName === '[default]'
-      ? this.hasDefaultSlot()
-      : this.hasNamedSlot(slotName);
-  }
-
-  public hostConnected(): void {
-    this.host.shadowRoot!.addEventListener('slotchange', this.onSlotChange);
-  }
-
-  public hostDisconnected(): void {
-    this.host.shadowRoot!.removeEventListener('slotchange', this.onSlotChange);
   }
 
   private onSlotChange(event: Event): void {

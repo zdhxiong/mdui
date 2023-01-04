@@ -71,37 +71,6 @@ export class FormController implements ReactiveController {
     }
   }
 
-  private onFormData(event: FormDataEvent): void {
-    const disabled = this.options.disabled(this.host);
-    const name = this.options.name(this.host);
-    const value = this.options.value(this.host);
-
-    if (!disabled && typeof name === 'string' && typeof value !== 'undefined') {
-      if (Array.isArray(value)) {
-        value.forEach((val) => {
-          event.formData.append(name, val.toString());
-        });
-      } else {
-        event.formData.append(name, value.toString());
-      }
-    }
-  }
-
-  private onFormSubmit(event: Event): void {
-    const disabled = this.options.disabled(this.host);
-    const reportValidity = this.options.reportValidity;
-
-    if (
-      this.form &&
-      !this.form.noValidate &&
-      !disabled &&
-      !reportValidity(this.host)
-    ) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-    }
-  }
-
   public submit(submitter?: HTMLElement): void {
     if (!this.form) {
       return;
@@ -137,5 +106,36 @@ export class FormController implements ReactiveController {
     this.form.append(button);
     button.click();
     button.remove();
+  }
+
+  private onFormData(event: FormDataEvent): void {
+    const disabled = this.options.disabled(this.host);
+    const name = this.options.name(this.host);
+    const value = this.options.value(this.host);
+
+    if (!disabled && typeof name === 'string' && typeof value !== 'undefined') {
+      if (Array.isArray(value)) {
+        value.forEach((val) => {
+          event.formData.append(name, val.toString());
+        });
+      } else {
+        event.formData.append(name, value.toString());
+      }
+    }
+  }
+
+  private onFormSubmit(event: Event): void {
+    const disabled = this.options.disabled(this.host);
+    const reportValidity = this.options.reportValidity;
+
+    if (
+      this.form &&
+      !this.form.noValidate &&
+      !disabled &&
+      !reportValidity(this.host)
+    ) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
   }
 }

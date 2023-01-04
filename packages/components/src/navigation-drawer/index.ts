@@ -32,35 +32,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-navigation-drawer')
 export class NavigationDrawer extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
-
-  @query('.overlay')
-  private readonly overlay!: HTMLElement;
-
-  @query('.panel', true)
-  private readonly panel!: HTMLElement;
-
-  private resizeObserver!: ResizeObserver;
-  private modalHelper!: Modal;
-
-  // 用于在打开抽屉导航前，记录当前聚焦的元素；在关闭抽屉导航后，把焦点还原到该元素上
-  private originalTrigger!: HTMLElement;
-
-  private get lockTarget() {
-    return this.contained ? this.parentElement! : document.body;
-  }
-
-  private get isModal() {
-    return this.handset || this.modal;
-  }
-
-  // 断点是否为手机，为 `true` 时，强制使用遮罩层
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
-  })
-  private handset = false;
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * 是否打开抽屉导航
@@ -125,50 +97,32 @@ export class NavigationDrawer extends LitElement {
   })
   public contained = false;
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.modalHelper = new Modal(this);
+  // 断点是否为手机，为 `true` 时，强制使用遮罩层
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
+  private handset = false;
 
-    // 监听窗口尺寸变化，重新设置 handset 属性
-    this.resizeObserver = new ResizeObserver(() => this.setHandset());
+  @query('.overlay')
+  private readonly overlay!: HTMLElement;
 
-    $(this).on('keydown', (event: KeyboardEvent) => {
-      if (
-        this.open &&
-        this.closeOnEsc &&
-        event.key === 'Escape' &&
-        this.isModal
-      ) {
-        event.stopPropagation();
-        this.open = false;
-      }
-    });
+  @query('.panel', true)
+  private readonly panel!: HTMLElement;
+
+  private resizeObserver!: ResizeObserver;
+  private modalHelper!: Modal;
+
+  // 用于在打开抽屉导航前，记录当前聚焦的元素；在关闭抽屉导航后，把焦点还原到该元素上
+  private originalTrigger!: HTMLElement;
+
+  private get lockTarget() {
+    return this.contained ? this.parentElement! : document.body;
   }
 
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    unlockScreen(this, this.lockTarget);
-  }
-
-  /**
-   * 重新计算并设置 handset 属性
-   */
-  private setHandset() {
-    // 根元素参考值
-    const baseFontSize = parseFloat($('html').css('font-size'));
-    // 手机端断点值，单位可能为 px 或 rem
-    const breakpointHandset = window
-      .getComputedStyle(document.documentElement)
-      .getPropertyValue('--mdui-breakpoint-handset')
-      .toLowerCase();
-
-    const containerWidth = this.contained
-      ? $(this).parent().innerWidth()
-      : $(window).innerWidth();
-
-    this.handset = breakpointHandset.endsWith('rem')
-      ? containerWidth < parseFloat(breakpointHandset) * baseFontSize
-      : containerWidth < parseFloat(breakpointHandset);
+  private get isModal() {
+    return this.handset || this.modal;
   }
 
   // contained 变更后，修改监听尺寸变化的元素。为 true 时，监听父元素；为 false 时，监听 body
@@ -345,13 +299,29 @@ export class NavigationDrawer extends LitElement {
     }
   }
 
-  private onOverlayClick() {
-    emit(this, 'overlay-click');
-    if (!this.closeOnOverlayClick) {
-      return;
-    }
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.modalHelper = new Modal(this);
 
-    this.open = false;
+    // 监听窗口尺寸变化，重新设置 handset 属性
+    this.resizeObserver = new ResizeObserver(() => this.setHandset());
+
+    $(this).on('keydown', (event: KeyboardEvent) => {
+      if (
+        this.open &&
+        this.closeOnEsc &&
+        event.key === 'Escape' &&
+        this.isModal
+      ) {
+        event.stopPropagation();
+        this.open = false;
+      }
+    });
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    unlockScreen(this, this.lockTarget);
   }
 
   protected override render(): TemplateResult {
@@ -364,6 +334,36 @@ export class NavigationDrawer extends LitElement {
         ></div>`,
       )}
       <div part="panel" class="panel" tabindex="0"><slot></slot></div>`;
+  }
+
+  /**
+   * 重新计算并设置 handset 属性
+   */
+  private setHandset() {
+    // 根元素参考值
+    const baseFontSize = parseFloat($('html').css('font-size'));
+    // 手机端断点值，单位可能为 px 或 rem
+    const breakpointHandset = window
+      .getComputedStyle(document.documentElement)
+      .getPropertyValue('--mdui-breakpoint-handset')
+      .toLowerCase();
+
+    const containerWidth = this.contained
+      ? $(this).parent().innerWidth()
+      : $(window).innerWidth();
+
+    this.handset = breakpointHandset.endsWith('rem')
+      ? containerWidth < parseFloat(breakpointHandset) * baseFontSize
+      : containerWidth < parseFloat(breakpointHandset);
+  }
+
+  private onOverlayClick() {
+    emit(this, 'overlay-click');
+    if (!this.closeOnOverlayClick) {
+      return;
+    }
+
+    this.open = false;
   }
 }
 

@@ -13,7 +13,10 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 export class ButtonBase extends ButtonMixin(
   AnchorMixin(RippleMixin(FocusableMixin(LitElement))),
 ) {
-  static override styles: CSSResultGroup = [componentStyle, buttonBaseStyle];
+  public static override styles: CSSResultGroup = [
+    componentStyle,
+    buttonBaseStyle,
+  ];
 
   private readonly formController: FormController = new FormController(this);
 
@@ -21,14 +24,14 @@ export class ButtonBase extends ButtonMixin(
     return this.disabled || this.loading;
   }
 
-  protected override get focusDisabled(): boolean {
-    return this.disabled || this.loading;
-  }
-
   protected override get focusElement(): HTMLElement | null {
     return this.href
       ? this.renderRoot?.querySelector('._a')
       : this.renderRoot?.querySelector('._button');
+  }
+
+  protected override get focusDisabled(): boolean {
+    return this.disabled || this.loading;
   }
 
   public override connectedCallback(): void {

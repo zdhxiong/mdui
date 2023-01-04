@@ -50,67 +50,7 @@ type MenuItem = MenuItemOriginal & {
  */
 @customElement('mdui-menu')
 export class Menu extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, menuStyle];
-
-  // 直接子元素（不包含子菜单中的菜单项）
-  @queryAssignedElements({ flatten: true, selector: 'mdui-menu-item' })
-  private readonly childrenItems!: MenuItem[];
-
-  // 菜单项元素（包含子菜单中的菜单项）
-  private get items(): MenuItem[] {
-    return $(this.childrenItems)
-      .find('mdui-menu-item')
-      .add(this.childrenItems)
-      .get();
-  }
-
-  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
-  private hasSetDefaultValue = false;
-
-  // 菜单项元素（不包含已禁用的，包含子菜单中的菜单项）
-  private get itemsEnabled(): MenuItem[] {
-    return this.items.filter((item) => !item.disabled);
-  }
-
-  // 当前菜单是否为单选
-  private get isSingle() {
-    return this.selects === 'single';
-  }
-
-  // 当前菜单是否为多选
-  private get isMultiple() {
-    return this.selects === 'multiple';
-  }
-
-  // 当前菜单是否可选择
-  private get isSelectable() {
-    return this.isSingle || this.isMultiple;
-  }
-
-  // 当前菜单是否为子菜单
-  private get isSubmenu() {
-    return !$(this).parent().length;
-  }
-
-  // 最后一次获得焦点的 menu-item 元素。为嵌套菜单时，把不同层级的 menu-item 放到对应索引位的位置
-  private lastActiveItems: MenuItem[] = [];
-
-  // 最深层级的子菜单中，最后交互过的 menu-item
-  private get lastActiveItem() {
-    const index = this.lastActiveItems.length
-      ? this.lastActiveItems.length - 1
-      : 0;
-    return this.lastActiveItems[index];
-  }
-  private set lastActiveItem(item: MenuItem) {
-    const index = this.lastActiveItems.length
-      ? this.lastActiveItems.length - 1
-      : 0;
-    this.lastActiveItems[index] = item;
-  }
-
-  // 因为 menu-item 的 value 可能会重复，所有在每一个 menu-item 元素上都加了一个唯一的 key 属性，通过 selectedKeys 来记录选中状态的 key
-  @state() private selectedKeys: number[] = [];
+  public static override styles: CSSResultGroup = [componentStyle, menuStyle];
 
   /**
    * 菜单项的可选中状态。默认为不可选中。可选值为：
@@ -174,46 +114,65 @@ export class Menu extends LitElement {
   @property({ type: Number, reflect: true, attribute: 'submenu-close-delay' })
   public submenuCloseDelay = 200;
 
-  protected override firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
-    this.updateFocusable();
-    this.lastActiveItem = this.items.find((item) => item.focusable)!;
+  // 因为 menu-item 的 value 可能会重复，所有在每一个 menu-item 元素上都加了一个唯一的 key 属性，通过 selectedKeys 来记录选中状态的 key
+  @state()
+  private selectedKeys: number[] = [];
 
-    $(this).on({
-      // 子菜单打开时，把焦点放到新的子菜单上
-      'submenu-open': (e: CustomEvent) => {
-        const $parentItem = $(e.target as MenuItem);
-        const submenuItemsEnabled = $parentItem
-          .children('mdui-menu-item:not([disabled])')
-          .get() as MenuItem[];
-        const submenuLevel = $parentItem.parents('mdui-menu-item').length + 1; // 打开的是第几级子菜单
-        if (submenuItemsEnabled.length) {
-          this.lastActiveItems[submenuLevel] = submenuItemsEnabled[0];
-          this.updateFocusable();
-          this.focusOne(this.lastActiveItems[submenuLevel]);
-        }
-      },
-      // 子菜单关闭时，把焦点还原到父菜单上
-      'submenu-close': (e) => {
-        const $parentItem = $(e.target as MenuItem);
-        const submenuLevel = $parentItem.parents('mdui-menu-item').length + 1; // 打开的是第几级子菜单
-        if (this.lastActiveItems.length - 1 === submenuLevel) {
-          this.lastActiveItems.pop();
-          this.updateFocusable();
-          if (this.lastActiveItems[submenuLevel - 1]) {
-            this.focusOne(this.lastActiveItems[submenuLevel - 1]);
-          }
-        }
-      },
-    });
+  // 直接子元素（不包含子菜单中的菜单项）
+  @queryAssignedElements({ flatten: true, selector: 'mdui-menu-item' })
+  private readonly childrenItems!: MenuItem[];
+
+  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
+  private hasSetDefaultValue = false;
+
+  // 最后一次获得焦点的 menu-item 元素。为嵌套菜单时，把不同层级的 menu-item 放到对应索引位的位置
+  private lastActiveItems: MenuItem[] = [];
+
+  // 菜单项元素（包含子菜单中的菜单项）
+  private get items(): MenuItem[] {
+    return $(this.childrenItems)
+      .find('mdui-menu-item')
+      .add(this.childrenItems)
+      .get();
   }
 
-  // 获取和指定菜单项同级的所有菜单项
-  private getSiblingsItems(item: MenuItem, onlyEnabled = false): MenuItem[] {
-    return $(item)
-      .parent()
-      .children(`mdui-menu-item${onlyEnabled ? ':not([disabled])' : ''}`)
-      .get();
+  // 菜单项元素（不包含已禁用的，包含子菜单中的菜单项）
+  private get itemsEnabled(): MenuItem[] {
+    return this.items.filter((item) => !item.disabled);
+  }
+
+  // 当前菜单是否为单选
+  private get isSingle() {
+    return this.selects === 'single';
+  }
+
+  // 当前菜单是否为多选
+  private get isMultiple() {
+    return this.selects === 'multiple';
+  }
+
+  // 当前菜单是否可选择
+  private get isSelectable() {
+    return this.isSingle || this.isMultiple;
+  }
+
+  // 当前菜单是否为子菜单
+  private get isSubmenu() {
+    return !$(this).parent().length;
+  }
+
+  // 最深层级的子菜单中，最后交互过的 menu-item
+  private get lastActiveItem() {
+    const index = this.lastActiveItems.length
+      ? this.lastActiveItems.length - 1
+      : 0;
+    return this.lastActiveItems[index];
+  }
+  private set lastActiveItem(item: MenuItem) {
+    const index = this.lastActiveItems.length
+      ? this.lastActiveItems.length - 1
+      : 0;
+    this.lastActiveItems[index] = item;
   }
 
   @watch('dense')
@@ -297,6 +256,74 @@ export class Menu extends LitElement {
 
     this.updateSelected();
     this.updateFocusable();
+  }
+
+  /**
+   * 将焦点设置在当前元素上
+   */
+  public focus(options?: FocusOptions): void {
+    if (this.lastActiveItem) {
+      this.focusOne(this.lastActiveItem, options);
+    }
+  }
+
+  /**
+   * 从当前元素中移除焦点
+   */
+  public blur(): void {
+    if (this.lastActiveItem) {
+      this.lastActiveItem.blur();
+    }
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+    this.updateFocusable();
+    this.lastActiveItem = this.items.find((item) => item.focusable)!;
+
+    $(this).on({
+      // 子菜单打开时，把焦点放到新的子菜单上
+      'submenu-open': (e: CustomEvent) => {
+        const $parentItem = $(e.target as MenuItem);
+        const submenuItemsEnabled = $parentItem
+          .children('mdui-menu-item:not([disabled])')
+          .get() as MenuItem[];
+        const submenuLevel = $parentItem.parents('mdui-menu-item').length + 1; // 打开的是第几级子菜单
+        if (submenuItemsEnabled.length) {
+          this.lastActiveItems[submenuLevel] = submenuItemsEnabled[0];
+          this.updateFocusable();
+          this.focusOne(this.lastActiveItems[submenuLevel]);
+        }
+      },
+      // 子菜单关闭时，把焦点还原到父菜单上
+      'submenu-close': (e) => {
+        const $parentItem = $(e.target as MenuItem);
+        const submenuLevel = $parentItem.parents('mdui-menu-item').length + 1; // 打开的是第几级子菜单
+        if (this.lastActiveItems.length - 1 === submenuLevel) {
+          this.lastActiveItems.pop();
+          this.updateFocusable();
+          if (this.lastActiveItems[submenuLevel - 1]) {
+            this.focusOne(this.lastActiveItems[submenuLevel - 1]);
+          }
+        }
+      },
+    });
+  }
+
+  protected override render(): TemplateResult {
+    return html`<slot
+      @slotchange=${this.onSlotChange}
+      @click=${this.onClick}
+      @keydown=${this.onKeyDown}
+    ></slot>`;
+  }
+
+  // 获取和指定菜单项同级的所有菜单项
+  private getSiblingsItems(item: MenuItem, onlyEnabled = false): MenuItem[] {
+    return $(item)
+      .parent()
+      .children(`mdui-menu-item${onlyEnabled ? ':not([disabled])' : ''}`)
+      .get();
   }
 
   // 更新 menu-item 的可聚焦状态
@@ -462,32 +489,6 @@ export class Menu extends LitElement {
         return;
       }
     }
-  }
-
-  /**
-   * 将焦点设置在当前元素上
-   */
-  public focus(options?: FocusOptions): void {
-    if (this.lastActiveItem) {
-      this.focusOne(this.lastActiveItem, options);
-    }
-  }
-
-  /**
-   * 从当前元素中移除焦点
-   */
-  public blur(): void {
-    if (this.lastActiveItem) {
-      this.lastActiveItem.blur();
-    }
-  }
-
-  protected override render(): TemplateResult {
-    return html`<slot
-      @slotchange=${this.onSlotChange}
-      @click=${this.onClick}
-      @keydown=${this.onKeyDown}
-    ></slot>`;
   }
 }
 

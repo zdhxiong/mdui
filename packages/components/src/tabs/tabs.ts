@@ -35,18 +35,7 @@ type TabPanel = TabPanelOriginal & {
  */
 @customElement('mdui-tabs')
 export class Tabs extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, tabsStyle];
-
-  @query('.nav', true) private readonly nav?: HTMLElement;
-  @query('.indicator', true) private readonly indicator?: HTMLElement;
-
-  private activeTab?: Tab;
-  private resizeObserver!: ResizeObserver;
-  private tabs: Tab[] = [];
-  private panels: TabPanel[] = [];
-
-  // 因为 tab 的 value 可能会重复，所以在每个 tab 元素上都添加了一个唯一的 key，通过 activeKey 来记录激活状态的 key
-  @state() private activeKey = 0;
+  public static override styles: CSSResultGroup = [componentStyle, tabsStyle];
 
   /**
    * 选项卡形状。可选值为：
@@ -91,22 +80,20 @@ export class Tabs extends LitElement {
   })
   public fullwidth = false;
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.syncTabsAndPanels();
+  @query('.nav', true)
+  private readonly nav?: HTMLElement;
 
-    this.resizeObserver = new ResizeObserver(() => {
-      this.updateIndicator();
-    });
-    this.updateComplete.then(() => {
-      this.resizeObserver.observe(this.nav!);
-    });
-  }
+  @query('.indicator', true)
+  private readonly indicator?: HTMLElement;
 
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this.resizeObserver.unobserve(this.nav!);
-  }
+  // 因为 tab 的 value 可能会重复，所以在每个 tab 元素上都添加了一个唯一的 key，通过 activeKey 来记录激活状态的 key
+  @state()
+  private activeKey = 0;
+
+  private activeTab?: Tab;
+  private resizeObserver!: ResizeObserver;
+  private tabs: Tab[] = [];
+  private panels: TabPanel[] = [];
 
   @watch('activeKey', true)
   private onActiveKeyChange() {
@@ -135,6 +122,31 @@ export class Tabs extends LitElement {
   @watch('fullwidth', true)
   private onIndicatorChange() {
     this.updateIndicator();
+  }
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.syncTabsAndPanels();
+
+    this.resizeObserver = new ResizeObserver(() => {
+      this.updateIndicator();
+    });
+    this.updateComplete.then(() => {
+      this.resizeObserver.observe(this.nav!);
+    });
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.resizeObserver.unobserve(this.nav!);
+  }
+
+  protected override render(): TemplateResult {
+    return html`<div part="nav" class="nav" no-scrollbar-beauty>
+        <slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>
+        <div part="indicator" class="indicator"></div>
+      </div>
+      <slot name="panel" @slotchange=${this.onSlotChange}></slot>`;
   }
 
   private syncTabsAndPanels() {
@@ -243,14 +255,6 @@ export class Tabs extends LitElement {
     }
 
     $indicator.css({ ...commonStyle, ...shownStyle });
-  }
-
-  protected override render(): TemplateResult {
-    return html`<div part="nav" class="nav" no-scrollbar-beauty>
-        <slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>
-        <div part="indicator" class="indicator"></div>
-      </div>
-      <slot name="panel" @slotchange=${this.onSlotChange}></slot>`;
   }
 }
 

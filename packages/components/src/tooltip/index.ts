@@ -29,17 +29,7 @@ import type { CSSResultGroup, TemplateResult, PropertyValues } from 'lit';
  */
 @customElement('mdui-tooltip')
 export class Tooltip extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
-
-  @query('.tooltip')
-  private readonly tooltip!: HTMLElement;
-
-  @query('.arrow')
-  private readonly arrow!: HTMLElement;
-
-  private target!: HTMLElement;
-
-  private hoverTimeout!: number;
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * tooltip 的方位。可选值为：
@@ -119,6 +109,76 @@ export class Tooltip extends LitElement {
   @property({ type: Number, reflect: true, attribute: 'z-index' })
   public zIndex = 1000;
 
+  @query('.tooltip')
+  private readonly tooltip!: HTMLElement;
+
+  @query('.arrow')
+  private readonly arrow!: HTMLElement;
+
+  private target!: HTMLElement;
+  private hoverTimeout!: number;
+
+  @watch('disabled', true)
+  @watch('placement', true)
+  @watch('content', true)
+  private async onPositionChange() {
+    if (this.disabled || !this.open) {
+      return;
+    }
+
+    // 打开动画开始前，设置 tooltip 的样式
+    this.updatePositioner();
+  }
+
+  @watch('open', true)
+  private async onOpenChange() {
+    if (this.disabled) {
+      this.open = false;
+      return;
+    }
+
+    if (this.open) {
+      const requestOpen = emit(this, 'open', {
+        cancelable: true,
+      });
+      if (requestOpen.defaultPrevented) {
+        return;
+      }
+
+      await stopAnimations(this.tooltip);
+      this.tooltip.hidden = false;
+      this.updatePositioner();
+      await animateTo(
+        this.tooltip,
+        [{ transform: 'scale(0)' }, { transform: 'scale(1)' }],
+        {
+          duration: getDuration(this, 'short4'),
+          easing: getEasing(this, 'standard'),
+        },
+      );
+      emit(this, 'opened');
+    } else {
+      const requestClose = emit(this, 'close', {
+        cancelable: true,
+      });
+      if (requestClose.defaultPrevented) {
+        return;
+      }
+
+      await stopAnimations(this.tooltip);
+      await animateTo(
+        this.tooltip,
+        [{ transform: 'scale(1)' }, { transform: 'scale(0)' }],
+        {
+          duration: getDuration(this, 'short4'),
+          easing: getEasing(this, 'standard'),
+        },
+      );
+      this.tooltip.hidden = true;
+      emit(this, 'closed');
+    }
+  }
+
   public override connectedCallback(): void {
     super.connectedCallback();
     $(window).on('scroll._tooltip', () => {
@@ -131,8 +191,8 @@ export class Tooltip extends LitElement {
     $(window).off('scroll._tooltip');
   }
 
-  protected override firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
     this.target = this.getTarget();
 
     $(this.target).on({
@@ -145,6 +205,19 @@ export class Tooltip extends LitElement {
     });
 
     this.tooltip.hidden = !this.open || this.disabled;
+  }
+
+  protected override render(): TemplateResult {
+    return html`<slot></slot>
+      <div
+        class="tooltip"
+        style="${styleMap({ zIndex: this.zIndex.toString() })}"
+      >
+        <div class="arrow" part="arrow"></div>
+        <div class="content" part="content">
+          <slot name="content">${this.content}</slot>
+        </div>
+      </div>`;
   }
 
   /**
@@ -317,80 +390,6 @@ export class Tooltip extends LitElement {
         });
         break;
     }
-  }
-
-  @watch('disabled', true)
-  @watch('placement', true)
-  @watch('content', true)
-  private async onPositionChange() {
-    if (this.disabled || !this.open) {
-      return;
-    }
-
-    // 打开动画开始前，设置 tooltip 的样式
-    this.updatePositioner();
-  }
-
-  @watch('open', true)
-  private async onOpenChange() {
-    if (this.disabled) {
-      this.open = false;
-      return;
-    }
-
-    if (this.open) {
-      const requestOpen = emit(this, 'open', {
-        cancelable: true,
-      });
-      if (requestOpen.defaultPrevented) {
-        return;
-      }
-
-      await stopAnimations(this.tooltip);
-      this.tooltip.hidden = false;
-      this.updatePositioner();
-      await animateTo(
-        this.tooltip,
-        [{ transform: 'scale(0)' }, { transform: 'scale(1)' }],
-        {
-          duration: getDuration(this, 'short4'),
-          easing: getEasing(this, 'standard'),
-        },
-      );
-      emit(this, 'opened');
-    } else {
-      const requestClose = emit(this, 'close', {
-        cancelable: true,
-      });
-      if (requestClose.defaultPrevented) {
-        return;
-      }
-
-      await stopAnimations(this.tooltip);
-      await animateTo(
-        this.tooltip,
-        [{ transform: 'scale(1)' }, { transform: 'scale(0)' }],
-        {
-          duration: getDuration(this, 'short4'),
-          easing: getEasing(this, 'standard'),
-        },
-      );
-      this.tooltip.hidden = true;
-      emit(this, 'closed');
-    }
-  }
-
-  protected override render(): TemplateResult {
-    return html`<slot></slot>
-      <div
-        class="tooltip"
-        style="${styleMap({ zIndex: this.zIndex.toString() })}"
-      >
-        <div class="arrow" part="arrow"></div>
-        <div class="content" part="content">
-          <slot name="content">${this.content}</slot>
-        </div>
-      </div>`;
   }
 }
 

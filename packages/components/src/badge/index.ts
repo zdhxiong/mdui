@@ -11,7 +11,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-badge')
 export class Badge extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * 徽标形状。可选值为：

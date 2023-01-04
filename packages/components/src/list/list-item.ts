@@ -36,37 +36,10 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 export class ListItem extends AnchorMixin(
   RippleMixin(FocusableMixin(LitElement)),
 ) {
-  static override styles: CSSResultGroup = [componentStyle, listItemStyle];
-
-  private readonly rippleRef: Ref<Ripple> = createRef();
-
-  protected override get rippleElement() {
-    return this.rippleRef.value!;
-  }
-
-  @query('.item')
-  private readonly item!: HTMLElement;
-
-  protected override get focusDisabled(): boolean {
-    return this.href ? this.disabled : this.disabled || this.nonclickable;
-  }
-
-  protected override get focusElement(): HTMLElement {
-    return this.href ? this.item : this;
-  }
-
-  protected override get rippleDisabled(): boolean {
-    return this.focusDisabled;
-  }
-
-  private readonly hasSlotController = new HasSlotController(
-    this,
-    '[default]',
-    'secondary',
-    'start',
-    'end',
-    'custom',
-  );
+  public static override styles: CSSResultGroup = [
+    componentStyle,
+    listItemStyle,
+  ];
 
   /**
    * 主文本
@@ -141,6 +114,51 @@ export class ListItem extends AnchorMixin(
   @property({ reflect: true })
   public alignment: 'start' | 'center' | 'end' = 'center';
 
+  @query('.item')
+  private readonly item!: HTMLElement;
+
+  private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly hasSlotController = new HasSlotController(
+    this,
+    '[default]',
+    'secondary',
+    'start',
+    'end',
+    'custom',
+  );
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
+  protected override get rippleDisabled(): boolean {
+    return this.focusDisabled;
+  }
+
+  protected override get focusElement(): HTMLElement {
+    return this.href ? this.item : this;
+  }
+
+  protected override get focusDisabled(): boolean {
+    return this.href ? this.disabled : this.disabled || this.nonclickable;
+  }
+
+  protected override render(): TemplateResult {
+    const hasCustomSlot = this.hasSlotController.test('custom');
+    const className = cc({
+      item: true,
+      preset: !hasCustomSlot,
+    });
+
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href &&
+      !this.disabled
+        ? this.renderAnchor({
+            className,
+            content: this.renderInner(),
+          })
+        : html`<div class="${className}">${this.renderInner()}</div>`}`;
+  }
+
   private renderInner(): TemplateResult {
     const hasDefaultSlot = this.hasSlotController.test('[default]');
     const hasSecondarySlot = this.hasSlotController.test('secondary');
@@ -171,22 +189,6 @@ export class ListItem extends AnchorMixin(
         <slot name="end"></slot>
       </div>
     </slot>`;
-  }
-
-  protected override render(): TemplateResult {
-    const hasCustomSlot = this.hasSlotController.test('custom');
-    const className = cc({
-      item: true,
-      preset: !hasCustomSlot,
-    });
-
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href &&
-      !this.disabled
-        ? this.renderAnchor({
-            className,
-            content: this.renderInner(),
-          })
-        : html`<div class="${className}">${this.renderInner()}</div>`}`;
   }
 }
 

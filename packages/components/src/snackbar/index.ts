@@ -36,9 +36,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-snackbar')
 export class Snackbar extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
-
-  private closeTimeout!: number;
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * 是否显示 Snackbar
@@ -120,34 +118,7 @@ export class Snackbar extends LitElement {
   })
   public closeOnOutsideClick = false;
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
-
-    $(document).on('pointerdown._snackbar', (e) =>
-      this.onDocumentClick(e as PointerEvent),
-    );
-  }
-
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-
-    $(document).off('pointerdown._snackbar');
-  }
-
-  /**
-   * 在 document 上点击时，根据条件判断是否要关闭 snackbar
-   */
-  private onDocumentClick(e: PointerEvent) {
-    if (!this.open || !this.closeOnOutsideClick) {
-      return;
-    }
-
-    const target = e.target as HTMLElement;
-
-    if (!this.contains(target) && this !== target) {
-      this.open = false;
-    }
-  }
+  private closeTimeout!: number;
 
   @watch('open')
   private async onOpenChange() {
@@ -316,16 +287,18 @@ export class Snackbar extends LitElement {
     }
   }
 
-  private onActionClick() {
-    emit(this, 'action-click');
+  public override connectedCallback(): void {
+    super.connectedCallback();
 
-    if (this.closeOnActionClick) {
-      this.open = false;
-    }
+    $(document).on('pointerdown._snackbar', (e) =>
+      this.onDocumentClick(e as PointerEvent),
+    );
   }
 
-  private onCloseClick() {
-    this.open = false;
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    $(document).off('pointerdown._snackbar');
   }
 
   protected override render(): TemplateResult {
@@ -357,5 +330,38 @@ export class Snackbar extends LitElement {
           </div>`,
         )}
       </div>`;
+  }
+
+  /**
+   * 在 document 上点击时，根据条件判断是否要关闭 snackbar
+   */
+  private onDocumentClick(e: PointerEvent) {
+    if (!this.open || !this.closeOnOutsideClick) {
+      return;
+    }
+
+    const target = e.target as HTMLElement;
+
+    if (!this.contains(target) && this !== target) {
+      this.open = false;
+    }
+  }
+
+  private onActionClick() {
+    emit(this, 'action-click');
+
+    if (this.closeOnActionClick) {
+      this.open = false;
+    }
+  }
+
+  private onCloseClick() {
+    this.open = false;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mdui-snackbar': Snackbar;
   }
 }

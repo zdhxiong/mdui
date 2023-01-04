@@ -32,15 +32,7 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
  */
 @customElement('mdui-fab')
 export class Fab extends ButtonBase {
-  static override styles: CSSResultGroup = [ButtonBase.styles, style];
-
-  private readonly rippleRef: Ref<Ripple> = createRef();
-
-  protected override get rippleElement() {
-    return this.rippleRef.value!;
-  }
-
-  private readonly hasSlotController = new HasSlotController(this, 'icon');
+  public static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   /**
    * fab 形状。可选值为：
@@ -88,6 +80,13 @@ export class Fab extends ButtonBase {
   })
   public extended = false;
 
+  private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly hasSlotController = new HasSlotController(this, 'icon');
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
   /**
    * extended 变更时，设置动画
    */
@@ -115,28 +114,6 @@ export class Fab extends ButtonBase {
     }
   }
 
-  private renderLabel(): TemplateResult {
-    return html`<span part="label" class="label"><slot></slot></span>`;
-  }
-
-  private renderIcon(): TemplateResult {
-    return html`<slot name="icon">
-      ${when(
-        this.icon,
-        () =>
-          html`<mdui-icon
-            part="icon"
-            class="icon"
-            name=${this.icon}
-          ></mdui-icon>`,
-      )}
-    </slot>`;
-  }
-
-  private renderInner(): TemplateResult[] {
-    return [this.renderIcon(), this.renderLabel()];
-  }
-
   protected override render(): TemplateResult {
     const hasIconSlot = this.hasSlotController.test('icon');
     const className = cc({
@@ -159,6 +136,28 @@ export class Fab extends ButtonBase {
             part: 'button',
             content: this.renderInner(),
           })}${this.renderLoading()}`;
+  }
+
+  private renderLabel(): TemplateResult {
+    return html`<span part="label" class="label"><slot></slot></span>`;
+  }
+
+  private renderIcon(): TemplateResult {
+    return html`<slot name="icon">
+      ${when(
+        this.icon,
+        () =>
+          html`<mdui-icon
+            part="icon"
+            class="icon"
+            name=${this.icon}
+          ></mdui-icon>`,
+      )}
+    </slot>`;
+  }
+
+  private renderInner(): TemplateResult[] {
+    return [this.renderIcon(), this.renderLabel()];
   }
 }
 

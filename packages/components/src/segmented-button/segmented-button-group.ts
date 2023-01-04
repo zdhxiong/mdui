@@ -28,56 +28,10 @@ type SegmentedButton = SegmentedButtonOriginal & {
  */
 @customElement('mdui-segmented-button-group')
 export class SegmentedButtonGroup extends LitElement {
-  static override styles: CSSResultGroup = [
+  public static override styles: CSSResultGroup = [
     componentStyle,
     segmentedButtonGroupStyle,
   ];
-
-  // 所有的子项元素
-  private get items() {
-    return $(this)
-      .find('mdui-segmented-button')
-      .get() as unknown as SegmentedButton[];
-  }
-
-  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
-  private hasSetDefaultValue = false;
-
-  // 所有的子项元素（不包含已禁用的）
-  private get itemsEnabled() {
-    return $(this)
-      .find('mdui-segmented-button:not([disabled])')
-      .get() as unknown as SegmentedButton[];
-  }
-
-  @query('select', true)
-  private readonly input!: HTMLSelectElement;
-
-  private readonly formController: FormController = new FormController(this);
-
-  // 是否为单选
-  private get isSingle() {
-    return this.selects === 'single';
-  }
-
-  // 是否为多选
-  private get isMultiple() {
-    return this.selects === 'multiple';
-  }
-
-  // 是否可选择
-  private get isSelectable() {
-    return this.isSingle || this.isMultiple;
-  }
-
-  // 因为 segmented-button 的 value 可能会重复，所以在每个 segmented-button 元素上都加了一个唯一的 key 属性，通过 selectedKeys 来记录选中状态的 key
-  @state() private selectedKeys: number[] = [];
-
-  /**
-   * 是否验证未通过
-   */
-  @state()
-  private invalid = false;
 
   /**
    * 是否填满父元素宽度
@@ -134,6 +88,53 @@ export class SegmentedButtonGroup extends LitElement {
    */
   @property()
   public value: string | string[] = '';
+
+  @query('select', true)
+  private readonly input!: HTMLSelectElement;
+
+  // 因为 segmented-button 的 value 可能会重复，所以在每个 segmented-button 元素上都加了一个唯一的 key 属性，通过 selectedKeys 来记录选中状态的 key
+  @state()
+  private selectedKeys: number[] = [];
+
+  /**
+   * 是否验证未通过
+   */
+  @state()
+  private invalid = false;
+
+  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
+  private hasSetDefaultValue = false;
+
+  private readonly formController: FormController = new FormController(this);
+
+  // 所有的子项元素
+  private get items() {
+    return $(this)
+      .find('mdui-segmented-button')
+      .get() as unknown as SegmentedButton[];
+  }
+
+  // 所有的子项元素（不包含已禁用的）
+  private get itemsEnabled() {
+    return $(this)
+      .find('mdui-segmented-button:not([disabled])')
+      .get() as unknown as SegmentedButton[];
+  }
+
+  // 是否为单选
+  private get isSingle() {
+    return this.selects === 'single';
+  }
+
+  // 是否为多选
+  private get isMultiple() {
+    return this.selects === 'multiple';
+  }
+
+  // 是否可选择
+  private get isSelectable() {
+    return this.isSingle || this.isMultiple;
+  }
 
   @watch('selects')
   private onSelectsChange() {
@@ -202,6 +203,50 @@ export class SegmentedButtonGroup extends LitElement {
     this.updateSelected();
   }
 
+  /**
+   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
+   */
+  public checkValidity(): boolean {
+    return this.input.checkValidity();
+  }
+
+  /**
+   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`。
+   *
+   * 验证未通过时，还将在组件上显示未通过的提示。
+   */
+  public reportValidity(): boolean {
+    this.invalid = !this.input.reportValidity();
+    return !this.invalid;
+  }
+
+  /**
+   * 设置自定义的错误提示文本。只要文本不为空，则表示字段验证未通过
+   *
+   * @param message 自定义的提示文本
+   */
+  public setCustomValidity(message: string): void {
+    this.input.setCustomValidity(message);
+    this.invalid = !this.input.checkValidity();
+  }
+
+  protected override render(): TemplateResult {
+    return html`<slot
+        @slotchange=${this.onSlotChange}
+        @click=${this.onClick}
+      ></slot>
+      ${when(
+        this.isSelectable,
+        () => html`<select .required=${this.required} tabindex="-1">
+          <option value=""></option>
+          ${when(
+            this.value,
+            () => html`<option selected value=${this.value}></option>`,
+          )}
+        </select>`,
+      )} `;
+  }
+
   private updateSelected() {
     this.items.forEach(
       (item) => (item.selected = this.selectedKeys.includes(item.key)),
@@ -250,33 +295,6 @@ export class SegmentedButtonGroup extends LitElement {
     }
   }
 
-  /**
-   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
-   */
-  public checkValidity(): boolean {
-    return this.input.checkValidity();
-  }
-
-  /**
-   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`。
-   *
-   * 验证未通过时，还将在组件上显示未通过的提示。
-   */
-  public reportValidity(): boolean {
-    this.invalid = !this.input.reportValidity();
-    return !this.invalid;
-  }
-
-  /**
-   * 设置自定义的错误提示文本。只要文本不为空，则表示字段验证未通过
-   *
-   * @param message 自定义的提示文本
-   */
-  public setCustomValidity(message: string): void {
-    this.input.setCustomValidity(message);
-    this.invalid = !this.input.checkValidity();
-  }
-
   private onSlotChange() {
     const items = this.items;
 
@@ -287,23 +305,6 @@ export class SegmentedButtonGroup extends LitElement {
         index === items.length - 1,
       );
     });
-  }
-
-  protected override render(): TemplateResult {
-    return html`<slot
-        @slotchange=${this.onSlotChange}
-        @click=${this.onClick}
-      ></slot>
-      ${when(
-        this.isSelectable,
-        () => html`<select .required=${this.required} tabindex="-1">
-          <option value=""></option>
-          ${when(
-            this.value,
-            () => html`<option selected value=${this.value}></option>`,
-          )}
-        </select>`,
-      )} `;
   }
 }
 

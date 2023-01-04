@@ -30,7 +30,16 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
  */
 @customElement('mdui-slider')
 export class Slider extends SliderBase {
-  static override styles: CSSResultGroup = [SliderBase.styles, style];
+  public static override styles: CSSResultGroup = [SliderBase.styles, style];
+
+  /**
+   * 滑块的值，将于表单数据一起提交
+   */
+  @property({ type: Number, reflect: true })
+  public value = 0;
+
+  @query('.handle', true)
+  private readonly handle!: HTMLElement;
 
   private readonly rippleRef: Ref<Ripple> = createRef();
 
@@ -38,14 +47,15 @@ export class Slider extends SliderBase {
     return this.rippleRef.value!;
   }
 
-  @query('.handle', true)
-  private readonly handle!: HTMLElement;
+  @watch('value', true)
+  private onValueChange() {
+    this.invalid = !this.checkValidity();
 
-  /**
-   * 滑块的值，将于表单数据一起提交
-   */
-  @property({ type: Number, reflect: true })
-  public value = 0;
+    this.input.value = this.value.toString();
+    this.value = parseFloat(this.input.value);
+
+    this.updateStyle();
+  }
 
   public override connectedCallback(): void {
     super.connectedCallback();
@@ -71,32 +81,8 @@ export class Slider extends SliderBase {
     });
   }
 
-  protected override firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
-
-    this.updateStyle();
-  }
-
-  private updateStyle() {
-    const percent = ((this.value - this.min) / (this.max - this.min)) * 100;
-
-    this.trackActive.style.width = `${percent}%`;
-    this.handle.style.left = `${percent}%`;
-  }
-
-  private onInput() {
-    this.value = parseFloat(this.input.value);
-    emit(this, 'input');
-
-    this.updateStyle();
-  }
-
-  @watch('value', true)
-  private onValueChange() {
-    this.invalid = !this.checkValidity();
-
-    this.input.value = this.value.toString();
-    this.value = parseFloat(this.input.value);
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
 
     this.updateStyle();
   }
@@ -134,6 +120,20 @@ export class Slider extends SliderBase {
         ),
       )}
     </label>`;
+  }
+
+  private updateStyle() {
+    const percent = ((this.value - this.min) / (this.max - this.min)) * 100;
+
+    this.trackActive.style.width = `${percent}%`;
+    this.handle.style.left = `${percent}%`;
+  }
+
+  private onInput() {
+    this.value = parseFloat(this.input.value);
+    emit(this, 'input');
+
+    this.updateStyle();
   }
 }
 

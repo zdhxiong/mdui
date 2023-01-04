@@ -29,13 +29,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-range-slider')
 export class RangeSlider extends SliderBase {
-  static override styles: CSSResultGroup = [SliderBase.styles, style];
-
-  private readonly rippleRef: Ref<Ripple> = createRef();
-
-  protected override get rippleElement() {
-    return this.rippleRef.value!;
-  }
+  public static override styles: CSSResultGroup = [SliderBase.styles, style];
 
   @query('.handle.start', true)
   private readonly handleStart!: HTMLElement;
@@ -52,13 +46,7 @@ export class RangeSlider extends SliderBase {
   // 当前鼠标悬浮在哪个 handle 上
   private hoverHandle?: 'start' | 'end';
 
-  protected override getRippleIndex = () => {
-    if (this.hoverHandle) {
-      return this.hoverHandle === 'start' ? 0 : 1;
-    }
-    return this.currentHandle === 'start' ? 0 : 1;
-  };
-
+  private readonly rippleRef: Ref<Ripple> = createRef();
   private _value: number[] = [];
 
   /**
@@ -76,6 +64,10 @@ export class RangeSlider extends SliderBase {
     setTimeout(() => {
       this.updateStyle();
     });
+  }
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
   }
 
   public override connectedCallback(): void {
@@ -129,53 +121,10 @@ export class RangeSlider extends SliderBase {
     });
   }
 
-  protected override firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
 
     this.updateStyle();
-  }
-
-  private updateStyle() {
-    const getPercent = (value: number) =>
-      ((value - this.min) / (this.max - this.min)) * 100;
-
-    const startPercent = getPercent(this.value[0]);
-    const endPercent = getPercent(this.value[1]);
-
-    this.trackActive.style.width = `${endPercent - startPercent}%`;
-    this.trackActive.style.left = `${startPercent}%`;
-    this.handleStart.style.left = `${startPercent}%`;
-    this.handleEnd.style.left = `${endPercent}%`;
-  }
-
-  private onInput() {
-    const isStart = this.currentHandle === 'start';
-    const value = parseFloat(this.input.value);
-    const startValue = this.value[0];
-    const endValue = this.value[1];
-
-    const doInput = () => {
-      emit(this, 'input');
-      this.updateStyle();
-    };
-
-    if (isStart) {
-      if (value <= endValue) {
-        this.value = [value, endValue];
-        doInput();
-      } else if (startValue !== endValue) {
-        this.value = [endValue, endValue];
-        doInput();
-      }
-    } else {
-      if (value >= startValue) {
-        this.value = [startValue, value];
-        doInput();
-      } else if (startValue !== endValue) {
-        this.value = [startValue, startValue];
-        doInput();
-      }
-    }
   }
 
   protected override render(): TemplateResult {
@@ -231,6 +180,56 @@ export class RangeSlider extends SliderBase {
         ),
       )}
     </label>`;
+  }
+
+  protected override getRippleIndex = () => {
+    if (this.hoverHandle) {
+      return this.hoverHandle === 'start' ? 0 : 1;
+    }
+    return this.currentHandle === 'start' ? 0 : 1;
+  };
+
+  private updateStyle() {
+    const getPercent = (value: number) =>
+      ((value - this.min) / (this.max - this.min)) * 100;
+
+    const startPercent = getPercent(this.value[0]);
+    const endPercent = getPercent(this.value[1]);
+
+    this.trackActive.style.width = `${endPercent - startPercent}%`;
+    this.trackActive.style.left = `${startPercent}%`;
+    this.handleStart.style.left = `${startPercent}%`;
+    this.handleEnd.style.left = `${endPercent}%`;
+  }
+
+  private onInput() {
+    const isStart = this.currentHandle === 'start';
+    const value = parseFloat(this.input.value);
+    const startValue = this.value[0];
+    const endValue = this.value[1];
+
+    const doInput = () => {
+      emit(this, 'input');
+      this.updateStyle();
+    };
+
+    if (isStart) {
+      if (value <= endValue) {
+        this.value = [value, endValue];
+        doInput();
+      } else if (startValue !== endValue) {
+        this.value = [endValue, endValue];
+        doInput();
+      }
+    } else {
+      if (value >= startValue) {
+        this.value = [startValue, value];
+        doInput();
+      } else if (startValue !== endValue) {
+        this.value = [startValue, startValue];
+        doInput();
+      }
+    }
   }
 }
 

@@ -23,10 +23,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-bottom-app-bar')
 export class BottomAppBar extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
-
-  private readonly uniqueId = uniqueId();
-  private readonly scrollEventName = `scroll._bottom_app_bar_${this.uniqueId}`;
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * 是否隐藏
@@ -72,6 +69,10 @@ export class BottomAppBar extends LitElement {
   @property({ type: Number, reflect: true, attribute: 'scroll-threshold' })
   public scrollThreshold!: number;
 
+  private readonly uniqueId = uniqueId();
+  private readonly scrollEventName = `scroll._bottom_app_bar_${this.uniqueId}`;
+  private lastScrollTop = 0; // 上次滚动后，垂直方向的距离
+
   /**
    * 组件需要监听该元素的滚动状态
    */
@@ -84,23 +85,6 @@ export class BottomAppBar extends LitElement {
    */
   private get scrollTargetContainer(): HTMLElement {
     return this.scrollTarget ? $(this.scrollTarget)[0] : document.body;
-  }
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    $(this.scrollTargetListening).on(this.scrollEventName, () => {
-      window.requestAnimationFrame(() => this.onScroll());
-    });
-    $(this).on('transitionend', (e: TransitionEvent) => {
-      if (e.target === this) {
-        emit(this, this.hide ? 'hidden' : 'shown');
-      }
-    });
-  }
-
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    $(this.scrollTargetListening).off(this.scrollEventName);
   }
 
   @watch('scrollTarget')
@@ -123,7 +107,27 @@ export class BottomAppBar extends LitElement {
     });
   }
 
-  private lastScrollTop = 0; // 上次滚动后，垂直方向的距离
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    $(this.scrollTargetListening).on(this.scrollEventName, () => {
+      window.requestAnimationFrame(() => this.onScroll());
+    });
+    $(this).on('transitionend', (e: TransitionEvent) => {
+      if (e.target === this) {
+        emit(this, this.hide ? 'hidden' : 'shown');
+      }
+    });
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    $(this.scrollTargetListening).off(this.scrollEventName);
+  }
+
+  protected override render(): TemplateResult {
+    return html`<slot></slot>`;
+  }
+
   private onScroll() {
     if (!this.hideOnScroll) {
       return;
@@ -152,10 +156,6 @@ export class BottomAppBar extends LitElement {
     }
 
     this.lastScrollTop = scrollTop;
-  }
-
-  protected override render(): TemplateResult {
-    return html`<slot></slot>`;
   }
 }
 

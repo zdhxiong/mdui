@@ -38,13 +38,7 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
  */
 @customElement('mdui-chip')
 export class Chip extends ButtonBase {
-  static override styles: CSSResultGroup = [ButtonBase.styles, style];
-
-  private readonly rippleRef: Ref<Ripple> = createRef();
-
-  protected override get rippleElement() {
-    return this.rippleRef.value!;
-  }
+  public static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   /**
    * 纸片形状。可选值为：
@@ -112,13 +106,43 @@ export class Chip extends ButtonBase {
   @property({ reflect: true })
   public avatar!: string;
 
-  protected override firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
+  @watch('selected', true)
+  private onSelectedChange() {
+    emit(this, 'change');
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
 
     $(this).on({
       'click._chip': () => this.onClick(),
       'keydown._chip': (event) => this.onKeyDown(event as KeyboardEvent),
     });
+  }
+
+  protected override render(): TemplateResult {
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
+        ? this.disabled || this.loading
+          ? html`<span part="button" class="button">
+              ${this.renderInner()}
+            </span>`
+          : this.renderAnchor({
+              className: 'button',
+              part: 'button',
+              content: this.renderInner(),
+            })
+        : this.renderButton({
+            className: 'button',
+            part: 'button',
+            content: this.renderInner(),
+          })}
+      ${this.renderLoading()}`;
   }
 
   private onClick() {
@@ -155,11 +179,6 @@ export class Chip extends ButtonBase {
   private onDelete(event: MouseEvent) {
     event.stopPropagation();
     emit(this, 'delete');
-  }
-
-  @watch('selected', true)
-  private onSelectedChange() {
-    emit(this, 'change');
   }
 
   private renderLeadingIcon(): TemplateResult {
@@ -202,25 +221,6 @@ export class Chip extends ButtonBase {
       this.renderLabel(),
       this.renderTrailingIcon(),
     ];
-  }
-
-  protected override render(): TemplateResult {
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
-        ? this.disabled || this.loading
-          ? html`<span part="button" class="button">
-              ${this.renderInner()}
-            </span>`
-          : this.renderAnchor({
-              className: 'button',
-              part: 'button',
-              content: this.renderInner(),
-            })
-        : this.renderButton({
-            className: 'button',
-            part: 'button',
-            content: this.renderInner(),
-          })}
-      ${this.renderLoading()}`;
   }
 }
 

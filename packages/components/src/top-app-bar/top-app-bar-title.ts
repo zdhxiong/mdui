@@ -13,7 +13,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-top-app-bar-title')
 export class TopAppBarTitle extends LitElement {
-  static override styles: CSSResultGroup = [
+  public static override styles: CSSResultGroup = [
     componentStyle,
     topAppBarTitleStyle,
   ];
@@ -44,15 +44,15 @@ export class TopAppBarTitle extends LitElement {
   })
   private shrink = false;
 
-  private onSlotChange() {
-    this.labelLarge.innerHTML = getInnerHtmlFromSlot(this.defaultSlot);
-  }
-
   protected override render(): TemplateResult {
     return html`<div part="label" class="label">
         <slot @slotchange="${this.onSlotChange}"></slot>
       </div>
       <div part="label-large" class="label-large"></div>`;
+  }
+
+  private onSlotChange() {
+    this.labelLarge.innerHTML = getInnerHtmlFromSlot(this.defaultSlot);
   }
 }
 

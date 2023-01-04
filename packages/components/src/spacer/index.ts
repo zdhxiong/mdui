@@ -9,7 +9,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-spacer')
 export class Spacer extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   protected override render(): TemplateResult {
     return html``;

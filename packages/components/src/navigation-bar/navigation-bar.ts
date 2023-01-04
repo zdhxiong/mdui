@@ -34,23 +34,10 @@ type NavigationBarItem = NavigationBarItemOriginal & {
  */
 @customElement('mdui-navigation-bar')
 export class NavigationBar extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, navigationBarStyle];
-
-  // 所有的子项元素
-  private get items() {
-    return $(this)
-      .find('mdui-navigation-bar-item')
-      .get() as unknown as NavigationBarItem[];
-  }
-
-  private readonly uniqueId = uniqueId();
-  private readonly scrollEventName = `scroll._navigation_bar_${this.uniqueId}`;
-
-  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
-  private hasSetDefaultValue = false;
-
-  // 因为 navigation-bar-item 的 value 可能会重复，所以在每个 navigation-bar-item 元素上都添加了一个唯一的 key，通过 activeKey 来记录激活状态的 key
-  @state() private activeKey = 0;
+  public static override styles: CSSResultGroup = [
+    componentStyle,
+    navigationBarStyle,
+  ];
 
   /**
    * 是否隐藏
@@ -105,6 +92,40 @@ export class NavigationBar extends LitElement {
   @property({ type: Number, reflect: true, attribute: 'scroll-threshold' })
   public scrollThreshold!: number;
 
+  // 因为 navigation-bar-item 的 value 可能会重复，所以在每个 navigation-bar-item 元素上都添加了一个唯一的 key，通过 activeKey 来记录激活状态的 key
+  @state()
+  private activeKey = 0;
+
+  private readonly uniqueId = uniqueId();
+  private readonly scrollEventName = `scroll._navigation_bar_${this.uniqueId}`;
+
+  // 上次滚动后，垂直方向的距离
+  private lastScrollTop = 0;
+
+  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
+  private hasSetDefaultValue = false;
+
+  // 所有的子项元素
+  private get items() {
+    return $(this)
+      .find('mdui-navigation-bar-item')
+      .get() as unknown as NavigationBarItem[];
+  }
+
+  /**
+   * 组件需要监听该元素的滚动状态
+   */
+  private get scrollTargetListening(): HTMLElement | Window {
+    return this.scrollTarget ? $(this.scrollTarget)[0] : window;
+  }
+
+  /**
+   * 组件在该容器内滚动
+   */
+  private get scrollTargetContainer(): HTMLElement {
+    return this.scrollTarget ? $(this.scrollTarget)[0] : document.body;
+  }
+
   @watch('activeKey')
   private onActiveKeyChange() {
     // 根据 activeKey 读取对应 navigation-bar-item 的值
@@ -130,37 +151,6 @@ export class NavigationBar extends LitElement {
     this.updateActive();
   }
 
-  /**
-   * 组件需要监听该元素的滚动状态
-   */
-  private get scrollTargetListening(): HTMLElement | Window {
-    return this.scrollTarget ? $(this.scrollTarget)[0] : window;
-  }
-
-  /**
-   * 组件在该容器内滚动
-   */
-  private get scrollTargetContainer(): HTMLElement {
-    return this.scrollTarget ? $(this.scrollTarget)[0] : document.body;
-  }
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    $(this.scrollTargetListening).on(this.scrollEventName, () => {
-      window.requestAnimationFrame(() => this.onScroll());
-    });
-    $(this).on('transitionend', (event: TransitionEvent) => {
-      if (event.target === this) {
-        emit(this, this.hide ? 'hidden' : 'shown');
-      }
-    });
-  }
-
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    $(this.scrollTargetListening).off(this.scrollEventName);
-  }
-
   @watch('scrollTarget')
   private onScrollTargetChange(
     oldScrollTarget: string,
@@ -181,7 +171,30 @@ export class NavigationBar extends LitElement {
     });
   }
 
-  private lastScrollTop = 0; // 上次滚动后，垂直方向的距离
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    $(this.scrollTargetListening).on(this.scrollEventName, () => {
+      window.requestAnimationFrame(() => this.onScroll());
+    });
+    $(this).on('transitionend', (event: TransitionEvent) => {
+      if (event.target === this) {
+        emit(this, this.hide ? 'hidden' : 'shown');
+      }
+    });
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    $(this.scrollTargetListening).off(this.scrollEventName);
+  }
+
+  protected override render(): TemplateResult {
+    return html`<slot
+      @slotchange=${this.onSlotChange}
+      @click=${this.onClick}
+    ></slot>`;
+  }
+
   private onScroll() {
     if (!this.hideOnScroll) {
       return;
@@ -210,13 +223,6 @@ export class NavigationBar extends LitElement {
     }
 
     this.lastScrollTop = scrollTop;
-  }
-
-  protected override render(): TemplateResult {
-    return html`<slot
-      @slotchange=${this.onSlotChange}
-      @click=${this.onClick}
-    ></slot>`;
   }
 
   private onClick(event: MouseEvent): void {

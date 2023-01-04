@@ -35,55 +35,10 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 export class NavigationBarItem extends AnchorMixin(
   RippleMixin(FocusableMixin(LitElement)),
 ) {
-  static override styles: CSSResultGroup = [
+  public static override styles: CSSResultGroup = [
     componentStyle,
     navigationBarItemStyle,
   ];
-
-  private readonly rippleRef: Ref<Ripple> = createRef();
-
-  protected override get rippleElement() {
-    return this.rippleRef.value!;
-  }
-
-  /**
-   * 文本的可视状态，由 `navigation-bar` 调用
-   */
-  @property({ reflect: true, attribute: 'label-visibility' })
-  protected labelVisibility!: 'selected' | 'labeled' | 'unlabeled';
-
-  private readonly hasSlotController = new HasSlotController(
-    this,
-    'active-icon',
-  );
-
-  // 每一个 `navigation-bar-item` 元素都添加一个唯一的 key
-  protected readonly key = uniqueId();
-
-  protected override get focusDisabled(): boolean {
-    return this.disabled;
-  }
-
-  protected override get focusElement(): HTMLElement | null {
-    return this.href ? this.renderRoot?.querySelector('._a') : this;
-  }
-
-  protected override get rippleDisabled(): boolean {
-    return this.disabled;
-  }
-
-  // 是否禁用该元素，该组件没有禁用状态
-  @state() private disabled = false;
-
-  /**
-   * 是否为激活状态，由 `navigation-bar` 组件控制该参数
-   */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
-  })
-  protected active = false;
 
   /**
    * 未激活状态的 Material Icons 图标名
@@ -102,6 +57,64 @@ export class NavigationBarItem extends AnchorMixin(
    */
   @property({ reflect: true })
   public value = '';
+
+  /**
+   * 文本的可视状态，由 `navigation-bar` 调用
+   */
+  @property({ reflect: true, attribute: 'label-visibility' })
+  protected labelVisibility!: 'selected' | 'labeled' | 'unlabeled';
+
+  /**
+   * 是否为激活状态，由 `navigation-bar` 组件控制该参数
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean => value !== 'false',
+  })
+  protected active = false;
+
+  // 是否禁用该元素，该组件没有禁用状态
+  @state()
+  private disabled = false;
+
+  // 每一个 `navigation-bar-item` 元素都添加一个唯一的 key
+  protected readonly key = uniqueId();
+
+  private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly hasSlotController = new HasSlotController(
+    this,
+    'active-icon',
+  );
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
+  protected override get rippleDisabled(): boolean {
+    return this.disabled;
+  }
+
+  protected override get focusElement(): HTMLElement | null {
+    return this.href ? this.renderRoot?.querySelector('._a') : this;
+  }
+
+  protected override get focusDisabled(): boolean {
+    return this.disabled;
+  }
+
+  protected override render(): TemplateResult {
+    return html`<mdui-ripple
+        .noRipple=${!this.active}
+        ${ref(this.rippleRef)}
+      ></mdui-ripple>
+      ${this.href
+        ? this.renderAnchor({
+            className: 'item',
+            content: this.renderInner(),
+          })
+        : html`<span class="item">${this.renderInner()}</span>`} `;
+  }
 
   private renderBadge(): TemplateResult {
     return html`<slot name="badge"></slot>`;
@@ -147,19 +160,6 @@ export class NavigationBarItem extends AnchorMixin(
         ${this.renderBadge()}${this.renderActiveIcon()}${this.renderIcon()}
       </span>
       ${this.renderLabel()}`;
-  }
-
-  protected override render(): TemplateResult {
-    return html`<mdui-ripple
-        .noRipple=${!this.active}
-        ${ref(this.rippleRef)}
-      ></mdui-ripple>
-      ${this.href
-        ? this.renderAnchor({
-            className: 'item',
-            content: this.renderInner(),
-          })
-        : html`<span class="item">${this.renderInner()}</span>`} `;
   }
 }
 

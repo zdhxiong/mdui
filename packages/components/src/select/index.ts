@@ -45,36 +45,8 @@ import type { Ref } from 'lit/directives/ref.js';
 @customElement('mdui-select')
 export class Select extends FocusableMixin(LitElement) {
   // firstUpdated 中调用了 requestUpdate，会产生控制台警告，所以这里关闭 change-in-update 警告
-  static override enabledWarnings: WarningKind[] = ['migration'];
-  static override styles: CSSResultGroup = [componentStyle, style];
-
-  private readonly menuRef: Ref<Menu> = createRef();
-  private readonly textFieldRef: Ref<TextField> = createRef();
-  private readonly hiddenInputRef: Ref<HTMLInputElement> = createRef();
-  private resizeObserver!: ResizeObserver;
-
-  @queryAssignedElements({ flatten: true, selector: 'mdui-menu-item' })
-  private readonly menuItems!: MenuItem[];
-
-  protected override get focusDisabled(): boolean {
-    return this.disabled;
-  }
-
-  protected override get focusElement(): HTMLElement {
-    return this.textFieldRef.value!;
-  }
-
-  private readonly formController: FormController = new FormController(this);
-  private readonly hasSlotController: HasSlotController = new HasSlotController(
-    this,
-    'prefix-icon',
-    'prefix',
-    'suffix',
-    'suffix-icon',
-    'clear-icon',
-    'helper',
-    'error',
-  );
+  public static override enabledWarnings: WarningKind[] = ['migration'];
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * 下拉框形状。可选值为：
@@ -240,6 +212,33 @@ export class Select extends FocusableMixin(LitElement) {
   })
   public invalid = false;
 
+  @queryAssignedElements({ flatten: true, selector: 'mdui-menu-item' })
+  private readonly menuItems!: MenuItem[];
+
+  private resizeObserver!: ResizeObserver;
+  private readonly menuRef: Ref<Menu> = createRef();
+  private readonly textFieldRef: Ref<TextField> = createRef();
+  private readonly hiddenInputRef: Ref<HTMLInputElement> = createRef();
+  private readonly formController: FormController = new FormController(this);
+  private readonly hasSlotController: HasSlotController = new HasSlotController(
+    this,
+    'prefix-icon',
+    'prefix',
+    'suffix',
+    'suffix-icon',
+    'clear-icon',
+    'helper',
+    'error',
+  );
+
+  protected override get focusElement(): HTMLElement {
+    return this.textFieldRef.value!;
+  }
+
+  protected override get focusDisabled(): boolean {
+    return this.disabled;
+  }
+
   public override connectedCallback(): void {
     super.connectedCallback();
     this.resizeObserver = new ResizeObserver(() => this.resizeMenu());
@@ -252,73 +251,6 @@ export class Select extends FocusableMixin(LitElement) {
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.resizeObserver.unobserve(this.textFieldRef.value!);
-  }
-
-  protected override firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
-
-    // 首次渲染时，slot 中的 mdui-menu-item 还未渲染完成，无法读取到其中的文本值
-    // 所以需要在首次更新后，再次重新渲染，此时 mdui-menu-item 已渲染完成，可以读取到文本值
-    this.requestUpdate();
-  }
-
-  private getMenuItemLabelByValue(valueItem: string) {
-    if (!this.menuItems.length) {
-      return '';
-    }
-
-    return (
-      this.menuItems.find((item) => item.value === valueItem)?.textContent || ''
-    );
-  }
-
-  private resizeMenu() {
-    this.menuRef.value!.style.width = `${
-      this.textFieldRef.value!.clientWidth
-    }px`;
-  }
-
-  private async onDropdownOpen() {
-    // @ts-ignore
-    this.textFieldRef.value!.focusedStyle = true;
-  }
-
-  private onDropdownClose() {
-    // @ts-ignore
-    this.textFieldRef.value!.focusedStyle = false;
-  }
-
-  private async onValueChange(e: Event) {
-    const menu = e.target as Menu;
-    this.value = menu.value;
-    this.invalid = !this.hiddenInputRef.value!.checkValidity();
-  }
-
-  /**
-   * multiple 为 true 时，点 chip 的删除按钮，删除其中一个值
-   */
-  private onDeleteOneValue(valueItem: string) {
-    const value = [...this.value];
-
-    if (value.includes(valueItem)) {
-      value.splice(value.indexOf(valueItem), 1);
-    }
-
-    this.value = value;
-  }
-
-  private onClear() {
-    this.value = this.multiple ? [] : '';
-  }
-
-  /**
-   * 焦点在 text-field 上时，按下回车键，打开下拉选项
-   */
-  private onTextFieldKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      this.textFieldRef.value!.click();
-    }
   }
 
   /**
@@ -346,6 +278,14 @@ export class Select extends FocusableMixin(LitElement) {
   public setCustomValidity(message: string): void {
     this.hiddenInputRef.value!.setCustomValidity(message);
     this.invalid = !this.hiddenInputRef.value!.checkValidity();
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
+
+    // 首次渲染时，slot 中的 mdui-menu-item 还未渲染完成，无法读取到其中的文本值
+    // 所以需要在首次更新后，再次重新渲染，此时 mdui-menu-item 已渲染完成，可以读取到文本值
+    this.requestUpdate();
   }
 
   protected override render(): TemplateResult {
@@ -444,6 +384,65 @@ export class Select extends FocusableMixin(LitElement) {
           <slot></slot>
         </mdui-menu>
       </mdui-dropdown>`;
+  }
+
+  private getMenuItemLabelByValue(valueItem: string) {
+    if (!this.menuItems.length) {
+      return '';
+    }
+
+    return (
+      this.menuItems.find((item) => item.value === valueItem)?.textContent || ''
+    );
+  }
+
+  private resizeMenu() {
+    this.menuRef.value!.style.width = `${
+      this.textFieldRef.value!.clientWidth
+    }px`;
+  }
+
+  private async onDropdownOpen() {
+    // @ts-ignore
+    this.textFieldRef.value!.focusedStyle = true;
+  }
+
+  private onDropdownClose() {
+    // @ts-ignore
+    this.textFieldRef.value!.focusedStyle = false;
+  }
+
+  private async onValueChange(e: Event) {
+    const menu = e.target as Menu;
+    this.value = menu.value;
+    this.invalid = !this.hiddenInputRef.value!.checkValidity();
+  }
+
+  /**
+   * multiple 为 true 时，点 chip 的删除按钮，删除其中一个值
+   */
+  private onDeleteOneValue(valueItem: string) {
+    const value = [...this.value];
+
+    if (value.includes(valueItem)) {
+      value.splice(value.indexOf(valueItem), 1);
+    }
+
+    this.value = value;
+  }
+
+  private onClear() {
+    this.value = this.multiple ? [] : '';
+  }
+
+  /**
+   * 焦点在 text-field 上时，按下回车键，打开下拉选项
+   */
+  private onTextFieldKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.textFieldRef.value!.click();
+    }
   }
 }
 

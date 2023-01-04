@@ -51,40 +51,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-dialog')
 export class Dialog extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
-
-  @query('.overlay', true)
-  private readonly overlay!: HTMLElement;
-
-  @query('.panel', true)
-  private readonly panel!: HTMLElement;
-
-  @query('.body', true)
-  private readonly body!: HTMLElement;
-
-  /**
-   * dialog 组件内包含的 mdui-top-app-bar 组件
-   */
-  @queryAssignedElements({
-    slot: 'header',
-    selector: 'mdui-top-app-bar',
-    flatten: true,
-  })
-  private readonly topAppBarElements!: TopAppBar[] | null;
-
-  private readonly hasSlotController = new HasSlotController(
-    this,
-    'header',
-    'icon',
-    'primary',
-    'secondary',
-    'action',
-    '[default]',
-  );
-  private modalHelper!: Modal;
-
-  // 用于在打开对话框前，记录当前聚焦的元素；在关闭对话框后，把焦点还原到该元素上
-  private originalTrigger!: HTMLElement;
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * 顶部的 Material Icons 图标名
@@ -177,22 +144,38 @@ export class Dialog extends LitElement {
   })
   public resizable = false; */
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.modalHelper = new Modal(this);
+  @query('.overlay', true)
+  private readonly overlay!: HTMLElement;
 
-    $(this).on('keydown', (event: KeyboardEvent) => {
-      if (this.open && this.closeOnEsc && event.key === 'Escape') {
-        event.stopPropagation();
-        this.open = false;
-      }
-    });
-  }
+  @query('.panel', true)
+  private readonly panel!: HTMLElement;
 
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    unlockScreen(this);
-  }
+  @query('.body', true)
+  private readonly body!: HTMLElement;
+
+  /**
+   * dialog 组件内包含的 mdui-top-app-bar 组件
+   */
+  @queryAssignedElements({
+    slot: 'header',
+    selector: 'mdui-top-app-bar',
+    flatten: true,
+  })
+  private readonly topAppBarElements!: TopAppBar[] | null;
+
+  // 用于在打开对话框前，记录当前聚焦的元素；在关闭对话框后，把焦点还原到该元素上
+  private originalTrigger!: HTMLElement;
+
+  private modalHelper!: Modal;
+  private readonly hasSlotController = new HasSlotController(
+    this,
+    'header',
+    'icon',
+    'primary',
+    'secondary',
+    'action',
+    '[default]',
+  );
 
   @watch('open')
   private async onOpenChange() {
@@ -351,36 +334,21 @@ export class Dialog extends LitElement {
     }
   }
 
-  private onOverlayClick() {
-    emit(this, 'overlay-click');
-    if (!this.closeOnOverlayClick) {
-      return;
-    }
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.modalHelper = new Modal(this);
 
-    this.open = false;
+    $(this).on('keydown', (event: KeyboardEvent) => {
+      if (this.open && this.closeOnEsc && event.key === 'Escape') {
+        event.stopPropagation();
+        this.open = false;
+      }
+    });
   }
 
-  private renderIcon(): TemplateResult {
-    return html`<div part="icon" class="icon">
-      <slot name="icon">
-        ${when(
-          this.icon,
-          () => html`<mdui-icon name=${this.icon}></mdui-icon>`,
-        )}
-      </slot>
-    </div>`;
-  }
-
-  private renderPrimary(): TemplateResult {
-    return html`<div part="primary" class="primary">
-      <slot name="primary">${this.primary}</slot>
-    </div>`;
-  }
-
-  private renderSecondary(): TemplateResult {
-    return html`<div part="secondary" class="secondary">
-      <slot name="secondary">${this.secondary}</slot>
-    </div>`;
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    unlockScreen(this);
   }
 
   protected override render(): TemplateResult {
@@ -429,6 +397,38 @@ export class Dialog extends LitElement {
             </div>`,
         )}
       </div>`;
+  }
+
+  private onOverlayClick() {
+    emit(this, 'overlay-click');
+    if (!this.closeOnOverlayClick) {
+      return;
+    }
+
+    this.open = false;
+  }
+
+  private renderIcon(): TemplateResult {
+    return html`<div part="icon" class="icon">
+      <slot name="icon">
+        ${when(
+          this.icon,
+          () => html`<mdui-icon name=${this.icon}></mdui-icon>`,
+        )}
+      </slot>
+    </div>`;
+  }
+
+  private renderPrimary(): TemplateResult {
+    return html`<div part="primary" class="primary">
+      <slot name="primary">${this.primary}</slot>
+    </div>`;
+  }
+
+  private renderSecondary(): TemplateResult {
+    return html`<div part="secondary" class="secondary">
+      <slot name="secondary">${this.secondary}</slot>
+    </div>`;
   }
 }
 

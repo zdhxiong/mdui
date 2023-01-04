@@ -23,9 +23,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  */
 @customElement('mdui-avatar')
 export class Avatar extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
-
-  private readonly hasSlotController = new HasSlotController(this, '[default]');
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * 头像的图片地址
@@ -56,6 +54,8 @@ export class Avatar extends LitElement {
    */
   @property({ reflect: true })
   public label!: string;
+
+  private readonly hasSlotController = new HasSlotController(this, '[default]');
 
   protected override render(): TemplateResult {
     return this.hasSlotController.test('[default]')

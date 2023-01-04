@@ -28,13 +28,7 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
  */
 @customElement('mdui-button')
 export class Button extends ButtonBase {
-  static override styles: CSSResultGroup = [ButtonBase.styles, style];
-
-  private readonly rippleRef: Ref<Ripple> = createRef();
-
-  protected override get rippleElement() {
-    return this.rippleRef.value!;
-  }
+  public static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   /**
    * 按钮形状。可选值为：
@@ -74,6 +68,31 @@ export class Button extends ButtonBase {
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon!: MaterialIconsName;
 
+  private readonly rippleRef: Ref<Ripple> = createRef();
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
+  protected override render(): TemplateResult {
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
+        ? this.disabled || this.loading
+          ? html`<span part="button" class="button">
+              ${this.renderInner()}
+            </span>`
+          : this.renderAnchor({
+              className: 'button',
+              part: 'button',
+              content: this.renderInner(),
+            })
+        : this.renderButton({
+            className: 'button',
+            part: 'button',
+            content: this.renderInner(),
+          })}
+      ${this.renderLoading()}`;
+  }
+
   private renderStart(): TemplateResult {
     return html`<slot name="start">
       ${when(
@@ -106,25 +125,6 @@ export class Button extends ButtonBase {
 
   private renderInner(): TemplateResult[] {
     return [this.renderStart(), this.renderLabel(), this.renderEnd()];
-  }
-
-  protected override render(): TemplateResult {
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
-        ? this.disabled || this.loading
-          ? html`<span part="button" class="button">
-              ${this.renderInner()}
-            </span>`
-          : this.renderAnchor({
-              className: 'button',
-              part: 'button',
-              content: this.renderInner(),
-            })
-        : this.renderButton({
-            className: 'button',
-            part: 'button',
-            content: this.renderInner(),
-          })}
-      ${this.renderLoading()}`;
   }
 }
 

@@ -6,7 +6,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 
 @customElement('mdui-table')
 export class Table extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, tableStyle];
+  public static override styles: CSSResultGroup = [componentStyle, tableStyle];
 
   @property({
     type: Boolean,

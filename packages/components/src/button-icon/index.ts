@@ -31,19 +31,7 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
  */
 @customElement('mdui-button-icon')
 export class ButtonIcon extends ButtonBase {
-  static override styles: CSSResultGroup = [ButtonBase.styles, style];
-
-  private readonly rippleRef: Ref<Ripple> = createRef();
-
-  protected override get rippleElement() {
-    return this.rippleRef.value!;
-  }
-
-  private readonly hasSlotController = new HasSlotController(
-    this,
-    '[default]',
-    'selected-icon',
-  );
+  public static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   /**
    * 图标按钮的形状。可选值为：
@@ -91,8 +79,24 @@ export class ButtonIcon extends ButtonBase {
   })
   public selected = false;
 
-  protected override firstUpdated(_changedProperties: PropertyValues): void {
-    super.firstUpdated(_changedProperties);
+  private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly hasSlotController = new HasSlotController(
+    this,
+    '[default]',
+    'selected-icon',
+  );
+
+  protected override get rippleElement() {
+    return this.rippleRef.value!;
+  }
+
+  @watch('selected', true)
+  private onSelectedChange() {
+    emit(this, 'change');
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
 
     $(this).on('click', () => {
       if (!this.selectable || this.disabled) {
@@ -103,9 +107,21 @@ export class ButtonIcon extends ButtonBase {
     });
   }
 
-  @watch('selected', true)
-  private onSelectedChange() {
-    emit(this, 'change');
+  protected override render(): TemplateResult {
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
+        ? this.disabled || this.loading
+          ? html`<span part="button" class="button">${this.renderIcon()}</span>`
+          : this.renderAnchor({
+              className: 'button',
+              part: 'button',
+              content: this.renderIcon(),
+            })
+        : this.renderButton({
+            className: 'button',
+            part: 'button',
+            content: this.renderIcon(),
+          })}
+      ${this.renderLoading()}`;
   }
 
   private renderIcon(): TemplateResult {
@@ -135,23 +151,6 @@ export class ButtonIcon extends ButtonBase {
         : icon();
 
     return this.selected ? selectedIcon : icon();
-  }
-
-  protected override render(): TemplateResult {
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
-        ? this.disabled || this.loading
-          ? html`<span part="button" class="button">${this.renderIcon()}</span>`
-          : this.renderAnchor({
-              className: 'button',
-              part: 'button',
-              content: this.renderIcon(),
-            })
-        : this.renderButton({
-            className: 'button',
-            part: 'button',
-            content: this.renderIcon(),
-          })}
-      ${this.renderLoading()}`;
   }
 }
 

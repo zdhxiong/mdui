@@ -6,7 +6,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 
 @customElement('mdui-divider')
 export class Divider extends LitElement {
-  static override styles: CSSResultGroup = [componentStyle, style];
+  public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
    * 是否显示垂直分割线

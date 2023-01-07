@@ -147,6 +147,7 @@ export class RangeSlider extends SliderBase {
           'z-index': this.currentHandle === 'start' ? '2' : '1',
         })}
       >
+        <div class="elevation"></div>
         <mdui-ripple></mdui-ripple>
         ${this.renderLabel(this.value[0])}
       </div>
@@ -157,6 +158,7 @@ export class RangeSlider extends SliderBase {
           'z-index': this.currentHandle === 'end' ? '2' : '1',
         })}
       >
+        <div class="elevation"></div>
         <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
         ${this.renderLabel(this.value[1])}
       </div>

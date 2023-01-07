@@ -30,18 +30,20 @@
 }
 
 :host([variant="elevated"]) {
-  .elevation(1);
+  .elevationInit(1);
   .backgroundColor(surface);
   .stateLayerColor(primary);
 }
 
 :host([variant="filled"]) {
+  .elevationInit(0);
   .color(on-primary);
   .backgroundColor(primary);
   .stateLayerColor(on-primary);
 }
 
 :host([variant="tonal"]) {
+  .elevationInit(0);
   .color(on-secondary-container);
   .backgroundColor(secondary-container);
   .stateLayerColor(on-secondary-container);

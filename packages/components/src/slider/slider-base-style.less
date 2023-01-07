@@ -83,7 +83,7 @@ input[type="range"] {
   }
 
   &::before,
-  &::after {
+  .elevation {
     position: absolute;
     display: block;
     content: " ";
@@ -94,9 +94,9 @@ input[type="range"] {
     .shapeCorner(full);
   }
 
-  &::after {
+  .elevation {
     .backgroundColor(primary);
-    .elevation(1);
+    .elevationInit(1);
 
     :host([invalid]) & {
       .backgroundColor(error);

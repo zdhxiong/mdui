@@ -102,6 +102,7 @@ export class Slider extends SliderBase {
       <div part="track-inactive" class="track-inactive"></div>
       <div part="track-active" class="track-active"></div>
       <div part="handle" class="handle">
+        <div class="elevation"></div>
         <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
         ${this.renderLabel(this.value)}
       </div>

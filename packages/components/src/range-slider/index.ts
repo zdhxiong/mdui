@@ -41,7 +41,8 @@ export class RangeSlider extends SliderBase {
   // 当前鼠标悬浮在哪个 handle 上
   private hoverHandle?: 'start' | 'end';
 
-  private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly rippleStartRef: Ref<Ripple> = createRef();
+  private readonly rippleEndRef: Ref<Ripple> = createRef();
   private readonly handleStartRef: Ref<HTMLElement> = createRef();
   private readonly handleEndRef: Ref<HTMLElement> = createRef();
   private _value: number[] = [];
@@ -57,14 +58,13 @@ export class RangeSlider extends SliderBase {
     return this._value;
   }
   public set value(_value: number[]) {
+    const oldValue = [...this._value];
     this._value = _value;
-    setTimeout(() => {
-      this.updateStyle();
-    });
+    this.requestUpdate('value', oldValue);
   }
 
   protected override get rippleElement() {
-    return this.rippleRef.value!;
+    return [this.rippleStartRef.value!, this.rippleEndRef.value!];
   }
 
   public override connectedCallback(): void {
@@ -151,7 +151,7 @@ export class RangeSlider extends SliderBase {
         })}
       >
         <div class="elevation"></div>
-        <mdui-ripple></mdui-ripple>
+        <mdui-ripple ${ref(this.rippleStartRef)}></mdui-ripple>
         ${this.renderLabel(this.value[0])}
       </div>
       <div
@@ -163,7 +163,7 @@ export class RangeSlider extends SliderBase {
         })}
       >
         <div class="elevation"></div>
-        <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
+        <mdui-ripple ${ref(this.rippleEndRef)}></mdui-ripple>
         ${this.renderLabel(this.value[1])}
       </div>
       ${when(this.tickmarks, () =>

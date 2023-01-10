@@ -1,6 +1,7 @@
 import { LitElement, html } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/addClass.js';
 import '@mdui/jq/methods/children.js';
@@ -18,6 +19,7 @@ import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { JQ } from '@mdui/jq/shared/core.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * 处理点击时的涟漪动画；及添加 hover、focused、dragged 的背景色
@@ -39,9 +41,6 @@ export class Ripple extends LitElement {
   })
   public noRipple = false;
 
-  @query('.surface', true)
-  private readonly surface!: HTMLElement;
-
   @state()
   private hover = false;
 
@@ -51,12 +50,14 @@ export class Ripple extends LitElement {
   @state()
   private dragged = false;
 
+  private readonly surfaceRef: Ref<HTMLElement> = createRef();
+
   public startPress(event?: Event): void {
     if (this.noRipple) {
       return;
     }
 
-    const $surface = $(this.surface);
+    const $surface = $(this.surfaceRef.value!);
     const surfaceHeight = $surface.innerHeight();
     const surfaceWidth = $surface.innerWidth();
 
@@ -118,7 +119,7 @@ export class Ripple extends LitElement {
         wave.style.setProperty('--mdui-comp-ripple-transition-x', translateX);
         wave.style.setProperty('--mdui-comp-ripple-transition-y', translateY);
       })
-      .prependTo(this.surface)
+      .prependTo(this.surfaceRef.value!)
       .each((_, wave) => wave.clientLeft) // 重绘
       .css('transform', translate)
       .on('animationend', function (event) {
@@ -132,7 +133,7 @@ export class Ripple extends LitElement {
   }
 
   public endPress(): void {
-    const $waves = $(this.surface)
+    const $waves = $(this.surfaceRef.value!)
       .children()
       .filter((_, wave) => !$(wave).data('removing'))
       .data('removing', true);
@@ -188,6 +189,7 @@ export class Ripple extends LitElement {
 
   protected override render(): TemplateResult {
     return html`<div
+      ${ref(this.surfaceRef)}
       class="surface ${classMap({
         hover: this.hover,
         focused: this.focused,

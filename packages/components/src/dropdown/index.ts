@@ -2,9 +2,9 @@ import { html, LitElement } from 'lit';
 import {
   customElement,
   property,
-  query,
   queryAssignedElements,
 } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/height.js';
@@ -19,6 +19,7 @@ import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @event open - dropdown 开始打开时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 dropdown 打开
@@ -145,17 +146,15 @@ export class Dropdown extends LitElement {
   @queryAssignedElements({ flatten: true })
   private readonly panelSlots!: HTMLElement[];
 
-  @query('.panel')
-  private readonly panel!: HTMLElement;
-
-  private resizeObserver!: ResizeObserver;
-
   // 右键菜单点击位置相对于 trigger 的位置
   private pointerOffsetX!: number;
   private pointerOffsetY!: number;
 
   private openTimeout!: number;
   private closeTimeout!: number;
+
+  private resizeObserver!: ResizeObserver;
+  private readonly panelRef: Ref<HTMLElement> = createRef();
 
   private get triggerSlot(): HTMLElement {
     return this.triggerSlots[0];
@@ -204,17 +203,17 @@ export class Dropdown extends LitElement {
 
       const duration = getDuration(this, 'medium4');
 
-      await stopAnimations(this.panel);
-      this.panel.hidden = false;
+      await stopAnimations(this.panelRef.value!);
+      this.panelRef.value!.hidden = false;
       this.updatePositioner();
       await Promise.all([
         animateTo(
-          this.panel,
+          this.panelRef.value!,
           [{ transform: 'scaleY(0.45)' }, { transform: 'scaleY(1)' }],
           { duration, easing: easingEmphasizedDecelerate },
         ),
         animateTo(
-          this.panel,
+          this.panelRef.value!,
           [{ opacity: 0 }, { opacity: 1, offset: 0.125 }, { opacity: 1 }],
           { duration, easing: easingLinear },
         ),
@@ -241,21 +240,21 @@ export class Dropdown extends LitElement {
 
       const duration = getDuration(this, 'short4');
 
-      await stopAnimations(this.panel);
+      await stopAnimations(this.panelRef.value!);
       await Promise.all([
         animateTo(
-          this.panel,
+          this.panelRef.value!,
           [{ transform: 'scaleY(1)' }, { transform: 'scaleY(0.45)' }],
           { duration, easing: easingEmphasizedAccelerate },
         ),
         animateTo(
-          this.panel,
+          this.panelRef.value!,
           [{ opacity: 1 }, { opacity: 1, offset: 0.875 }, { opacity: 0 }],
           { duration, easing: easingLinear },
         ),
       ]);
 
-      this.panel.hidden = true;
+      this.panelRef.value!.hidden = true;
 
       emit(this, 'closed');
     }
@@ -305,11 +304,11 @@ export class Dropdown extends LitElement {
       mouseenter: () => this.onMouseEnter(),
     });
 
-    $(this.panel).on({
+    $(this.panelRef.value!).on({
       click: (e) => this.onPanelClick(e as MouseEvent),
     });
 
-    this.panel.hidden = !this.open || this.disabled;
+    this.panelRef.value!.hidden = !this.open || this.disabled;
   }
 
   protected override render(): TemplateResult {
@@ -317,6 +316,7 @@ export class Dropdown extends LitElement {
         <slot name="trigger"></slot>
       </div>
       <div
+        ${ref(this.panelRef)}
         part="panel"
         class="panel"
         style="${styleMap({ zIndex: this.zIndex.toString() })}"
@@ -451,7 +451,7 @@ export class Dropdown extends LitElement {
   }
 
   private updatePositioner(): void {
-    const $panel = $(this.panel);
+    const $panel = $(this.panelRef.value!);
     const $window = $(window);
     const triggerRect = this.triggerSlot.getBoundingClientRect();
     const panelRect = {

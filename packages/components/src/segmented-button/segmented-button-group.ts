@@ -1,5 +1,6 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/find.js';
@@ -12,6 +13,7 @@ import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { segmentedButtonGroupStyle } from './segmented-button-group-style.js';
 import type { SegmentedButton as SegmentedButtonOriginal } from './segmented-button.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 type SegmentedButton = SegmentedButtonOriginal & {
   selected: boolean;
@@ -89,9 +91,6 @@ export class SegmentedButtonGroup extends LitElement {
   @property()
   public value: string | string[] = '';
 
-  @query('select', true)
-  private readonly input!: HTMLSelectElement;
-
   // 因为 segmented-button 的 value 可能会重复，所以在每个 segmented-button 元素上都加了一个唯一的 key 属性，通过 selectedKeys 来记录选中状态的 key
   @state()
   private selectedKeys: number[] = [];
@@ -105,6 +104,7 @@ export class SegmentedButtonGroup extends LitElement {
   // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
   private hasSetDefaultValue = false;
 
+  private readonly inputRef: Ref<HTMLSelectElement> = createRef();
   private readonly formController: FormController = new FormController(this);
 
   // 所有的子项元素
@@ -207,7 +207,7 @@ export class SegmentedButtonGroup extends LitElement {
    * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
    */
   public checkValidity(): boolean {
-    return this.input.checkValidity();
+    return this.inputRef.value!.checkValidity();
   }
 
   /**
@@ -216,7 +216,7 @@ export class SegmentedButtonGroup extends LitElement {
    * 验证未通过时，还将在组件上显示未通过的提示。
    */
   public reportValidity(): boolean {
-    this.invalid = !this.input.reportValidity();
+    this.invalid = !this.inputRef.value!.reportValidity();
     return !this.invalid;
   }
 
@@ -226,8 +226,8 @@ export class SegmentedButtonGroup extends LitElement {
    * @param message 自定义的提示文本
    */
   public setCustomValidity(message: string): void {
-    this.input.setCustomValidity(message);
-    this.invalid = !this.input.checkValidity();
+    this.inputRef.value!.setCustomValidity(message);
+    this.invalid = !this.inputRef.value!.checkValidity();
   }
 
   protected override render(): TemplateResult {
@@ -237,7 +237,11 @@ export class SegmentedButtonGroup extends LitElement {
       ></slot>
       ${when(
         this.isSelectable,
-        () => html`<select .required=${this.required} tabindex="-1">
+        () => html`<select
+          ${ref(this.inputRef)}
+          .required=${this.required}
+          tabindex="-1"
+        >
           <option value=""></option>
           ${when(
             this.value,

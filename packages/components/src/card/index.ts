@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { createRef, Ref, ref } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -8,6 +8,7 @@ import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { style } from './style.js';
 import type { Ripple } from '../ripple/index.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @event click - 点击时触发

@@ -3,6 +3,8 @@ import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
 import type { TemplateResult } from 'lit';
+import type { DirectiveResult } from 'lit/directive.js';
+import type { RefDirective } from 'lit/directives/ref.js';
 
 type RenderAnchorOptions = {
   id?: string;
@@ -13,6 +15,7 @@ type RenderAnchorOptions = {
     | typeof nothing
     | (TemplateResult | typeof nothing)[];
   tabindex?: number;
+  refDirective?: DirectiveResult<typeof RefDirective>;
 };
 
 export declare class AnchorMixinInterface extends LitElement {
@@ -68,8 +71,10 @@ export const AnchorMixin = <T extends Constructor<LitElement>>(
       className,
       part,
       content = html`<slot></slot>`,
+      refDirective,
     }: RenderAnchorOptions): TemplateResult {
       return html`<a
+        ${refDirective}
         id=${ifDefined(id)}
         class="_a ${className ? className : ''}"
         part=${ifDefined(part)}

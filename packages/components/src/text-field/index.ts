@@ -1,8 +1,9 @@
 import { LitElement, html, nothing } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { animate } from '@lit-labs/motion';
 import { $ } from '@mdui/jq/$.js';
@@ -22,6 +23,7 @@ import '../button-icon.js';
 import '../icon.js';
 import { style } from './style.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @event click
@@ -385,9 +387,6 @@ export class TextField extends FocusableMixin(LitElement) {
     | 'email'
     | 'url';
 
-  @query('.input')
-  private readonly inputElement!: HTMLInputElement | HTMLTextAreaElement;
-
   /**
    * 该属性设置为 true 时，则在样式上为 text-field 赋予聚焦状态。实际是否聚焦仍然由 focusableMixin 控制
    * 该属性仅供 mdui 内部使用，当前 select 组件使用了该属性
@@ -407,6 +406,8 @@ export class TextField extends FocusableMixin(LitElement) {
   private hasValue = false;
 
   private resizeObserver!: ResizeObserver;
+  private readonly inputRef: Ref<HTMLInputElement | HTMLTextAreaElement> =
+    createRef();
   private readonly formController: FormController = new FormController(this);
   private readonly hasSlotController = new HasSlotController(
     this,
@@ -423,7 +424,7 @@ export class TextField extends FocusableMixin(LitElement) {
 
   public get valueAsNumber() {
     return (
-      (this.inputElement as HTMLInputElement)?.valueAsNumber ??
+      (this.inputRef.value as HTMLInputElement)?.valueAsNumber ??
       parseFloat(this.value)
     );
   }
@@ -435,7 +436,7 @@ export class TextField extends FocusableMixin(LitElement) {
   }
 
   protected override get focusElement(): HTMLElement {
-    return this.inputElement;
+    return this.inputRef.value!;
   }
 
   protected override get focusDisabled(): boolean {
@@ -460,8 +461,8 @@ export class TextField extends FocusableMixin(LitElement) {
   @watch('disabled', true)
   private onDisabledChange() {
     // 禁用状态始终为验证通过，所以 disabled 变更时需要重新校验
-    this.inputElement.disabled = this.disabled;
-    this.invalid = !this.inputElement.checkValidity();
+    this.inputRef.value!.disabled = this.disabled;
+    this.invalid = !this.inputRef.value!.checkValidity();
   }
 
   @watch('value')
@@ -469,7 +470,7 @@ export class TextField extends FocusableMixin(LitElement) {
     this.hasValue = !!this.value;
 
     if (this.hasUpdated) {
-      this.invalid = !this.inputElement.checkValidity();
+      this.invalid = !this.inputRef.value!.checkValidity();
     }
   }
 
@@ -486,12 +487,12 @@ export class TextField extends FocusableMixin(LitElement) {
 
     // 设置最大高度，为 line-height * maxRows + padding-top + padding-bottom
     const setMaxHeight = () => {
-      const $inputElement = $(this.inputElement);
-      $inputElement.css(
+      const $input = $(this.inputRef.value!);
+      $input.css(
         'max-height',
-        parseFloat($inputElement.css('line-height')) * this.maxRows +
-          parseFloat($inputElement.css('padding-top')) +
-          parseFloat($inputElement.css('padding-bottom')),
+        parseFloat($input.css('line-height')) * this.maxRows +
+          parseFloat($input.css('padding-top')) +
+          parseFloat($input.css('padding-bottom')),
       );
     };
 
@@ -511,12 +512,12 @@ export class TextField extends FocusableMixin(LitElement) {
 
     // 设置最小高度，为 line-height * minRows + padding-top + padding-bottom
     const setMinHeight = () => {
-      const $inputElement = $(this.inputElement);
-      $inputElement.css(
+      const $input = $(this.inputRef.value!);
+      $input.css(
         'min-height',
-        parseFloat($inputElement.css('line-height')) * this.minRows +
-          parseFloat($inputElement.css('padding-top')) +
-          parseFloat($inputElement.css('padding-bottom')),
+        parseFloat($input.css('line-height')) * this.minRows +
+          parseFloat($input.css('padding-top')) +
+          parseFloat($input.css('padding-bottom')),
       );
     };
 
@@ -533,22 +534,22 @@ export class TextField extends FocusableMixin(LitElement) {
     this.resizeObserver = new ResizeObserver(() => this.setTextareaHeight());
 
     this.updateComplete.then(() => {
-      this.invalid = !this.inputElement.checkValidity();
+      this.invalid = !this.inputRef.value!.checkValidity();
       this.setTextareaHeight();
-      this.resizeObserver.observe(this.inputElement);
+      this.resizeObserver.observe(this.inputRef.value!);
     });
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.resizeObserver.unobserve(this.inputElement);
+    this.resizeObserver.unobserve(this.inputRef.value!);
   }
 
   /**
    * 选中文本框中的文本
    */
   public select(): void {
-    this.inputElement.select();
+    this.inputRef.value!.select();
   }
 
   /**
@@ -562,7 +563,7 @@ export class TextField extends FocusableMixin(LitElement) {
     selectionEnd: number,
     selectionDirection: 'forward' | 'backward' | 'none' = 'none',
   ): void {
-    this.inputElement.setSelectionRange(
+    this.inputRef.value!.setSelectionRange(
       selectionStart,
       selectionEnd,
       selectionDirection,
@@ -582,10 +583,10 @@ export class TextField extends FocusableMixin(LitElement) {
     end: number,
     selectMode: 'select' | 'start' | 'end' | 'preserve' = 'preserve',
   ): void {
-    this.inputElement.setRangeText(replacement, start, end, selectMode);
+    this.inputRef.value!.setRangeText(replacement, start, end, selectMode);
 
-    if (this.value !== this.inputElement.value) {
-      this.value = this.inputElement.value;
+    if (this.value !== this.inputRef.value!.value) {
+      this.value = this.inputRef.value!.value;
       this.setTextareaHeight();
       emit(this, 'input');
       emit(this, 'change');
@@ -596,7 +597,7 @@ export class TextField extends FocusableMixin(LitElement) {
    * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
    */
   public checkValidity(): boolean {
-    return this.inputElement.checkValidity();
+    return this.inputRef.value!.checkValidity();
   }
 
   /**
@@ -605,7 +606,7 @@ export class TextField extends FocusableMixin(LitElement) {
    * 验证未通过时，还将在组件上显示未通过的提示。
    */
   public reportValidity(): boolean {
-    this.invalid = !this.inputElement.reportValidity();
+    this.invalid = !this.inputRef.value!.reportValidity();
     return !this.invalid;
   }
 
@@ -615,8 +616,8 @@ export class TextField extends FocusableMixin(LitElement) {
    * @param message 自定义的提示文本
    */
   public setCustomValidity(message: string): void {
-    this.inputElement.setCustomValidity(message);
-    this.invalid = !this.inputElement.checkValidity();
+    this.inputRef.value!.setCustomValidity(message);
+    this.invalid = !this.inputRef.value!.checkValidity();
   }
 
   protected override render(): TemplateResult {
@@ -651,7 +652,8 @@ export class TextField extends FocusableMixin(LitElement) {
         ${this.renderSuffix(hasSuffixIcon)}
       </div>
       ${when(
-        (this.invalid && (this.error || this.inputElement.validationMessage)) ||
+        (this.invalid &&
+          (this.error || this.inputRef.value!.validationMessage)) ||
           this.helper ||
           (this.counter && this.maxlength),
         () => html`<div part="supporting" class="supporting">
@@ -661,7 +663,7 @@ export class TextField extends FocusableMixin(LitElement) {
   }
 
   private onChange() {
-    this.value = this.inputElement.value;
+    this.value = this.inputRef.value!.value;
     if (this.isTextarea) {
       this.setTextareaHeight();
     }
@@ -678,7 +680,7 @@ export class TextField extends FocusableMixin(LitElement) {
   }
 
   private onInput() {
-    this.value = this.inputElement.value;
+    this.value = this.inputRef.value!.value;
     if (this.isTextarea) {
       this.setTextareaHeight();
     }
@@ -718,10 +720,12 @@ export class TextField extends FocusableMixin(LitElement) {
 
   private setTextareaHeight() {
     if (this.autosize) {
-      this.inputElement.style.height = 'auto';
-      this.inputElement.style.height = `${this.inputElement.scrollHeight}px`;
+      this.inputRef.value!.style.height = 'auto';
+      this.inputRef.value!.style.height = `${
+        this.inputRef.value!.scrollHeight
+      }px`;
     } else {
-      (this.inputElement.style.height as string | undefined) = undefined;
+      (this.inputRef.value!.style.height as string | undefined) = undefined;
     }
   }
 
@@ -834,6 +838,7 @@ export class TextField extends FocusableMixin(LitElement) {
 
   private renderInput(hasInputSlot: boolean): TemplateResult {
     return html`<input
+      ${ref(this.inputRef)}
       part="input"
       class="input ${classMap({ 'hide-input': hasInputSlot })}"
       type=${this.type === 'password' && this.isPasswordVisible
@@ -877,6 +882,7 @@ export class TextField extends FocusableMixin(LitElement) {
 
   private renderTextArea(hasInputSlot: boolean): TemplateResult {
     return html`<textarea
+      ${ref(this.inputRef)}
       part="input"
       class="input ${classMap({ 'hide-input': hasInputSlot })}"
       name=${ifDefined(this.name)}
@@ -907,10 +913,11 @@ export class TextField extends FocusableMixin(LitElement) {
   }
 
   private renderHelper(): TemplateResult | typeof nothing {
-    return this.invalid && (this.error || this.inputElement.validationMessage)
+    return this.invalid &&
+      (this.error || this.inputRef.value!.validationMessage)
       ? html`<div part="error" class="error">
           <slot name="error">
-            ${this.error || this.inputElement.validationMessage}
+            ${this.error || this.inputRef.value!.validationMessage}
           </slot>
         </div>`
       : this.helper

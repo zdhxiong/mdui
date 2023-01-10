@@ -1,6 +1,6 @@
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { createRef, Ref, ref } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
@@ -11,6 +11,7 @@ import { segmentedButtonStyle } from './segmented-button-style.js';
 import type { MaterialIconsName } from '../icon.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @event click - 点击时触发

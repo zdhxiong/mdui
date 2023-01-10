@@ -1,7 +1,7 @@
 import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { createRef, Ref, ref } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
@@ -14,6 +14,7 @@ import { navigationBarItemStyle } from './navigation-bar-item-style.js';
 import type { MaterialIconsName } from '../icon.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @slot - 文本

@@ -1,5 +1,6 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/children.js';
 import '@mdui/jq/methods/css.js';
@@ -12,6 +13,7 @@ import { tabsStyle } from './tabs-style.js';
 import type { TabPanel as TabPanelOriginal } from './tab-panel.js';
 import type { Tab as TabOriginal } from './tab.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 type Tab = TabOriginal & {
   active: boolean;
@@ -80,12 +82,6 @@ export class Tabs extends LitElement {
   })
   public fullwidth = false;
 
-  @query('.nav', true)
-  private readonly nav?: HTMLElement;
-
-  @query('.indicator', true)
-  private readonly indicator?: HTMLElement;
-
   // 因为 tab 的 value 可能会重复，所以在每个 tab 元素上都添加了一个唯一的 key，通过 activeKey 来记录激活状态的 key
   @state()
   private activeKey = 0;
@@ -94,6 +90,8 @@ export class Tabs extends LitElement {
   private resizeObserver!: ResizeObserver;
   private tabs: Tab[] = [];
   private panels: TabPanel[] = [];
+  private readonly navRef: Ref<HTMLElement> = createRef();
+  private readonly indicatorRef: Ref<HTMLElement> = createRef();
 
   @watch('activeKey', true)
   private onActiveKeyChange() {
@@ -132,19 +130,24 @@ export class Tabs extends LitElement {
       this.updateIndicator();
     });
     this.updateComplete.then(() => {
-      this.resizeObserver.observe(this.nav!);
+      this.resizeObserver.observe(this.navRef.value!);
     });
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.resizeObserver.unobserve(this.nav!);
+    this.resizeObserver.unobserve(this.navRef.value!);
   }
 
   protected override render(): TemplateResult {
-    return html`<div part="nav" class="nav" no-scrollbar-beauty>
+    return html`<div
+        ${ref(this.navRef)}
+        part="nav"
+        class="nav"
+        no-scrollbar-beauty
+      >
         <slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>
-        <div part="indicator" class="indicator"></div>
+        <div ${ref(this.indicatorRef)} part="indicator" class="indicator"></div>
       </div>
       <slot name="panel" @slotchange=${this.onSlotChange}></slot>`;
   }
@@ -193,7 +196,7 @@ export class Tabs extends LitElement {
     await this.updateComplete;
 
     const activeTab = this.activeTab;
-    const $indicator = $(this.indicator!);
+    const $indicator = $(this.indicatorRef.value!);
     const isVertical = ['left', 'right'].includes(this.placement);
 
     // 没有激活的，不显示指示器

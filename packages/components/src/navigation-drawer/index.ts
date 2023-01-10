@@ -1,5 +1,6 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
@@ -15,6 +16,7 @@ import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * 在手机端，modal 始终为 true；大于手机端时，modal 属性才开始生效
@@ -105,17 +107,13 @@ export class NavigationDrawer extends LitElement {
   })
   private handset = false;
 
-  @query('.overlay')
-  private readonly overlay!: HTMLElement;
-
-  @query('.panel', true)
-  private readonly panel!: HTMLElement;
+  // 用于在打开抽屉导航前，记录当前聚焦的元素；在关闭抽屉导航后，把焦点还原到该元素上
+  private originalTrigger!: HTMLElement;
 
   private resizeObserver!: ResizeObserver;
   private modalHelper!: Modal;
-
-  // 用于在打开抽屉导航前，记录当前聚焦的元素；在关闭抽屉导航后，把焦点还原到该元素上
-  private originalTrigger!: HTMLElement;
+  private readonly overlayRef: Ref<HTMLElement> = createRef();
+  private readonly panelRef: Ref<HTMLElement> = createRef();
 
   private get lockTarget() {
     return this.contained ? this.parentElement! : document.body;
@@ -168,9 +166,9 @@ export class NavigationDrawer extends LitElement {
 
       await Promise.all([
         this.isModal
-          ? stopAnimations(this.overlay)
+          ? stopAnimations(this.overlayRef.value!)
           : stopAnimations(this.lockTarget),
-        stopAnimations(this.panel),
+        stopAnimations(this.panelRef.value!),
       ]);
 
       // 设置聚焦
@@ -181,7 +179,7 @@ export class NavigationDrawer extends LitElement {
         if (autoFocusTarget) {
           autoFocusTarget.focus({ preventScroll: true });
         } else {
-          this.panel.focus({ preventScroll: true });
+          this.panelRef.value!.focus({ preventScroll: true });
         }
       });
 
@@ -190,7 +188,7 @@ export class NavigationDrawer extends LitElement {
       await Promise.all([
         this.isModal
           ? animateTo(
-              this.overlay,
+              this.overlayRef.value!,
               [{ opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 1 }],
               {
                 duration: hasUpdated ? duration : 0,
@@ -203,7 +201,7 @@ export class NavigationDrawer extends LitElement {
                 { [isRight ? 'paddingRight' : 'paddingLeft']: 0 },
                 {
                   [isRight ? 'paddingRight' : 'paddingLeft']:
-                    $(this.panel).innerWidth() + 'px',
+                    $(this.panelRef.value!).innerWidth() + 'px',
                 },
               ],
               {
@@ -213,7 +211,7 @@ export class NavigationDrawer extends LitElement {
               },
             ),
         animateTo(
-          this.panel,
+          this.panelRef.value!,
           [
             { transform: isRight ? 'translateX(100%)' : 'translateX(-100%)' },
             { transform: 'translateX(0)' },
@@ -245,25 +243,29 @@ export class NavigationDrawer extends LitElement {
 
       await Promise.all([
         this.isModal
-          ? stopAnimations(this.overlay)
+          ? stopAnimations(this.overlayRef.value!)
           : stopAnimations(this.lockTarget),
-        stopAnimations(this.panel),
+        stopAnimations(this.panelRef.value!),
       ]);
 
       const duration = getDuration(this, 'short4');
 
       await Promise.all([
         this.isModal
-          ? animateTo(this.overlay, [{ opacity: 1 }, { opacity: 0 }], {
-              duration,
-              easing: easingLinear,
-            })
+          ? animateTo(
+              this.overlayRef.value!,
+              [{ opacity: 1 }, { opacity: 0 }],
+              {
+                duration,
+                easing: easingLinear,
+              },
+            )
           : animateTo(
               this.lockTarget,
               [
                 {
                   [isRight ? 'paddingRight' : 'paddingLeft']:
-                    $(this.panel).innerWidth() + 'px',
+                    $(this.panelRef.value!).innerWidth() + 'px',
                 },
                 { [isRight ? 'paddingRight' : 'paddingLeft']: 0 },
               ],
@@ -274,7 +276,7 @@ export class NavigationDrawer extends LitElement {
               },
             ),
         animateTo(
-          this.panel,
+          this.panelRef.value!,
           [
             { transform: 'translateX(0)' },
             { transform: isRight ? 'translateX(100%)' : 'translateX(-100%)' },
@@ -328,12 +330,15 @@ export class NavigationDrawer extends LitElement {
     return html`${when(
         this.isModal,
         () => html`<div
+          ${ref(this.overlayRef)}
           part="overlay"
           class="overlay"
           @click=${this.onOverlayClick}
         ></div>`,
       )}
-      <div part="panel" class="panel" tabindex="0"><slot></slot></div>`;
+      <div ${ref(this.panelRef)} part="panel" class="panel" tabindex="0">
+        <slot></slot>
+      </div>`;
   }
 
   /**

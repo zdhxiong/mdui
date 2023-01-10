@@ -1,7 +1,7 @@
 import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { ref, createRef } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/height.js';
 import '@mdui/jq/methods/on.js';

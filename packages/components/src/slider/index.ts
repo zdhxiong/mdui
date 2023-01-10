@@ -1,9 +1,9 @@
 import { html } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
 import { map } from 'lit/directives/map.js';
-import { createRef, Ref, ref } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
@@ -14,6 +14,7 @@ import { SliderBase } from './slider-base.js';
 import { style } from './style.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @event click - 点击时触发
@@ -38,10 +39,8 @@ export class Slider extends SliderBase {
   @property({ type: Number, reflect: true })
   public value = 0;
 
-  @query('.handle', true)
-  private readonly handle!: HTMLElement;
-
   private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly handleRef: Ref<HTMLElement> = createRef();
 
   protected override get rippleElement() {
     return this.rippleRef.value!;
@@ -51,8 +50,8 @@ export class Slider extends SliderBase {
   private onValueChange() {
     this.invalid = !this.checkValidity();
 
-    this.input.value = this.value.toString();
-    this.value = parseFloat(this.input.value);
+    this.inputRef.value!.value = this.value.toString();
+    this.value = parseFloat(this.inputRef.value!.value);
 
     this.updateStyle();
   }
@@ -90,6 +89,7 @@ export class Slider extends SliderBase {
   protected override render(): TemplateResult {
     return html`<label>
       <input
+        ${ref(this.inputRef)}
         type="range"
         step=${this.step}
         min=${this.min}
@@ -100,8 +100,12 @@ export class Slider extends SliderBase {
         @change=${this.onChange}
       />
       <div part="track-inactive" class="track-inactive"></div>
-      <div part="track-active" class="track-active"></div>
-      <div part="handle" class="handle">
+      <div
+        ${ref(this.trackActiveRef)}
+        part="track-active"
+        class="track-active"
+      ></div>
+      <div ${ref(this.handleRef)} part="handle" class="handle">
         <div class="elevation"></div>
         <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
         ${this.renderLabel(this.value)}
@@ -126,12 +130,12 @@ export class Slider extends SliderBase {
   private updateStyle() {
     const percent = ((this.value - this.min) / (this.max - this.min)) * 100;
 
-    this.trackActive.style.width = `${percent}%`;
-    this.handle.style.left = `${percent}%`;
+    this.trackActiveRef.value!.style.width = `${percent}%`;
+    this.handleRef.value!.style.left = `${percent}%`;
   }
 
   private onInput() {
-    this.value = parseFloat(this.input.value);
+    this.value = parseFloat(this.inputRef.value!.value);
     emit(this, 'input');
 
     this.updateStyle();

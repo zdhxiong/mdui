@@ -1,6 +1,7 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
@@ -11,6 +12,7 @@ import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { radioGroupStyle } from './radio-group-style.js';
 import type { Radio as RadioOriginal } from './radio.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 type Radio = RadioOriginal & {
   invalid: boolean;
@@ -73,9 +75,7 @@ export class RadioGroup extends LitElement {
   })
   public required = false;
 
-  @query('input')
-  private readonly input!: HTMLInputElement;
-
+  private readonly inputRef: Ref<HTMLInputElement> = createRef();
   private readonly formController: FormController = new FormController(this);
 
   private get radios() {
@@ -110,7 +110,7 @@ export class RadioGroup extends LitElement {
    * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
    */
   public checkValidity(): boolean {
-    return this.input.checkValidity();
+    return this.inputRef.value!.checkValidity();
   }
 
   /**
@@ -119,7 +119,7 @@ export class RadioGroup extends LitElement {
    * 验证未通过时，还将在组件上显示未通过的提示。
    */
   public reportValidity(): boolean {
-    this.invalid = !this.input.reportValidity();
+    this.invalid = !this.inputRef.value!.reportValidity();
     return !this.invalid;
   }
 
@@ -129,13 +129,14 @@ export class RadioGroup extends LitElement {
    * @param message 自定义的提示文本
    */
   public setCustomValidity(message: string): void {
-    this.input.setCustomValidity(message);
-    this.invalid = !this.input.checkValidity();
+    this.inputRef.value!.setCustomValidity(message);
+    this.invalid = !this.inputRef.value!.checkValidity();
   }
 
   protected override render(): TemplateResult {
     return html`<fieldset>
       <input
+        ${ref(this.inputRef)}
         type="text"
         class="input"
         ?required=${this.required}

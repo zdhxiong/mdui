@@ -1,8 +1,8 @@
 import { html, PropertyValues } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { map } from 'lit/directives/map.js';
-import { createRef, Ref, ref } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
@@ -13,6 +13,7 @@ import { SliderBase } from '../slider/slider-base.js';
 import { style } from './style.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @event click - 点击时触发
@@ -31,12 +32,6 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 export class RangeSlider extends SliderBase {
   public static override styles: CSSResultGroup = [SliderBase.styles, style];
 
-  @query('.handle.start', true)
-  private readonly handleStart!: HTMLElement;
-
-  @query('.handle.end', true)
-  private readonly handleEnd!: HTMLElement;
-
   /**
    * 当前操作的是哪一个 handle
    */
@@ -47,6 +42,8 @@ export class RangeSlider extends SliderBase {
   private hoverHandle?: 'start' | 'end';
 
   private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly handleStartRef: Ref<HTMLElement> = createRef();
+  private readonly handleEndRef: Ref<HTMLElement> = createRef();
   private _value: number[] = [];
 
   /**
@@ -130,6 +127,7 @@ export class RangeSlider extends SliderBase {
   protected override render(): TemplateResult {
     return html`<label>
       <input
+        ${ref(this.inputRef)}
         type="range"
         step=${this.step}
         min=${this.min}
@@ -139,8 +137,13 @@ export class RangeSlider extends SliderBase {
         @change=${this.onChange}
       />
       <div part="track-inactive" class="track-inactive"></div>
-      <div part="track-active" class="track-active"></div>
       <div
+        ${ref(this.trackActiveRef)}
+        part="track-active"
+        class="track-active"
+      ></div>
+      <div
+        ${ref(this.handleStartRef)}
         part="handle"
         class="handle start"
         style=${styleMap({
@@ -152,6 +155,7 @@ export class RangeSlider extends SliderBase {
         ${this.renderLabel(this.value[0])}
       </div>
       <div
+        ${ref(this.handleEndRef)}
         part="handle"
         class="handle end"
         style=${styleMap({
@@ -198,15 +202,15 @@ export class RangeSlider extends SliderBase {
     const startPercent = getPercent(this.value[0]);
     const endPercent = getPercent(this.value[1]);
 
-    this.trackActive.style.width = `${endPercent - startPercent}%`;
-    this.trackActive.style.left = `${startPercent}%`;
-    this.handleStart.style.left = `${startPercent}%`;
-    this.handleEnd.style.left = `${endPercent}%`;
+    this.trackActiveRef.value!.style.width = `${endPercent - startPercent}%`;
+    this.trackActiveRef.value!.style.left = `${startPercent}%`;
+    this.handleStartRef.value!.style.left = `${startPercent}%`;
+    this.handleEndRef.value!.style.left = `${endPercent}%`;
   }
 
   private onInput() {
     const isStart = this.currentHandle === 'start';
-    const value = parseFloat(this.input.value);
+    const value = parseFloat(this.inputRef.value!.value);
     const startValue = this.value[0];
     const endValue = this.value[1];
 

@@ -1,7 +1,7 @@
 import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { createRef, Ref, ref } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -11,6 +11,7 @@ import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { radioStyle } from './radio-style.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @event click - 点击时触发

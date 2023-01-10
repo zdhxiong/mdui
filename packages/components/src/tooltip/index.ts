@@ -1,5 +1,6 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
@@ -14,6 +15,7 @@ import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult, PropertyValues } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @event open - tooltip 开始显示时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 tooltip 打开
@@ -109,14 +111,10 @@ export class Tooltip extends LitElement {
   @property({ type: Number, reflect: true, attribute: 'z-index' })
   public zIndex = 1000;
 
-  @query('.tooltip')
-  private readonly tooltip!: HTMLElement;
-
-  @query('.arrow')
-  private readonly arrow!: HTMLElement;
-
   private target!: HTMLElement;
   private hoverTimeout!: number;
+  private readonly tooltipRef: Ref<HTMLElement> = createRef();
+  private readonly arrowRef: Ref<HTMLElement> = createRef();
 
   @watch('disabled', true)
   @watch('placement', true)
@@ -145,11 +143,11 @@ export class Tooltip extends LitElement {
         return;
       }
 
-      await stopAnimations(this.tooltip);
-      this.tooltip.hidden = false;
+      await stopAnimations(this.tooltipRef.value!);
+      this.tooltipRef.value!.hidden = false;
       this.updatePositioner();
       await animateTo(
-        this.tooltip,
+        this.tooltipRef.value!,
         [{ transform: 'scale(0)' }, { transform: 'scale(1)' }],
         {
           duration: getDuration(this, 'short4'),
@@ -165,16 +163,16 @@ export class Tooltip extends LitElement {
         return;
       }
 
-      await stopAnimations(this.tooltip);
+      await stopAnimations(this.tooltipRef.value!);
       await animateTo(
-        this.tooltip,
+        this.tooltipRef.value!,
         [{ transform: 'scale(1)' }, { transform: 'scale(0)' }],
         {
           duration: getDuration(this, 'short4'),
           easing: getEasing(this, 'standard'),
         },
       );
-      this.tooltip.hidden = true;
+      this.tooltipRef.value!.hidden = true;
       emit(this, 'closed');
     }
   }
@@ -204,16 +202,17 @@ export class Tooltip extends LitElement {
       mouseleave: () => this.onMouseLeave(),
     });
 
-    this.tooltip.hidden = !this.open || this.disabled;
+    this.tooltipRef.value!.hidden = !this.open || this.disabled;
   }
 
   protected override render(): TemplateResult {
     return html`<slot></slot>
       <div
+        ${ref(this.tooltipRef)}
         class="tooltip"
         style="${styleMap({ zIndex: this.zIndex.toString() })}"
       >
-        <div class="arrow" part="arrow"></div>
+        <div ${ref(this.arrowRef)} class="arrow" part="arrow"></div>
         <div class="content" part="content">
           <slot name="content">${this.content}</slot>
         </div>
@@ -300,16 +299,16 @@ export class Tooltip extends LitElement {
   }
 
   private updatePositioner(): void {
-    const $tooltip = $(this.tooltip);
-    const $arrow = $(this.arrow);
+    const $tooltip = $(this.tooltipRef.value!);
+    const $arrow = $(this.arrowRef.value!);
     const targetRect = this.target.getBoundingClientRect(); // 触发目标的位置和宽高
     const tooltipRect = {
-      width: this.tooltip.offsetWidth,
-      height: this.tooltip.offsetHeight,
+      width: this.tooltipRef.value!.offsetWidth,
+      height: this.tooltipRef.value!.offsetHeight,
     }; // tooltip 的宽高
     const arrowRect = {
-      width: this.arrow.offsetWidth,
-      height: this.arrow.offsetHeight,
+      width: this.arrowRef.value!.offsetWidth,
+      height: this.arrowRef.value!.offsetHeight,
     }; // arrow 的宽高
     const targetMargin = 4; // 触发目标和 tooltip 之间的间距
 

@@ -1,7 +1,7 @@
 import { html, LitElement, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { createRef, Ref, ref } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
@@ -15,6 +15,7 @@ import { navigationRailItemStyle } from './navigation-rail-item-style.js';
 import type { MaterialIconsName } from '../icon.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @slot - 文本

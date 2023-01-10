@@ -1,7 +1,7 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { createRef, Ref, ref } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { $ } from '@mdui/jq/$.js';
@@ -31,6 +31,7 @@ import { menuItemStyle } from './menu-item-style.js';
 import type { MaterialIconsName } from '../icon.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @event submenu-open - 子菜单开始打开时，事件被触发。可以通过调用 `event.preventDefault()` 阻止子菜单打开
@@ -139,18 +140,14 @@ export class MenuItem extends AnchorMixin(
   @state()
   protected focusable = false;
 
-  @query('.item')
-  private readonly item!: HTMLElement;
-
-  @query('.submenu')
-  private readonly submenu!: HTMLElement;
-
   // 每一个 menu-item 元素都添加一个唯一的 key
   protected readonly key = uniqueId();
 
   private submenuOpenTimeout!: number;
   private submenuCloseTimeout!: number;
   private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly itemRef: Ref<HTMLElement> = createRef();
+  private readonly submenuRef: Ref<HTMLElement> = createRef();
   private readonly hasSlotController = new HasSlotController(
     this,
     '[default]',
@@ -166,7 +163,7 @@ export class MenuItem extends AnchorMixin(
   }
 
   protected override get focusElement(): HTMLElement {
-    return this.href ? this.item : this;
+    return this.href ? this.itemRef.value! : this;
   }
 
   protected override get rippleDisabled(): boolean {
@@ -202,17 +199,17 @@ export class MenuItem extends AnchorMixin(
 
       const duration = getDuration(this, 'medium4');
 
-      await stopAnimations(this.submenu);
-      this.submenu.hidden = false;
+      await stopAnimations(this.submenuRef.value!);
+      this.submenuRef.value!.hidden = false;
       this.updateSubmenuPositioner();
       await Promise.all([
         animateTo(
-          this.submenu,
+          this.submenuRef.value!,
           [{ transform: 'scaleY(0.45)' }, { transform: 'scaleY(1)' }],
           { duration, easing: easingEmphasizedDecelerate },
         ),
         animateTo(
-          this.submenu,
+          this.submenuRef.value!,
           [{ opacity: 0 }, { opacity: 1, offset: 0.125 }, { opacity: 1 }],
           { duration, easing: easingLinear },
         ),
@@ -229,21 +226,21 @@ export class MenuItem extends AnchorMixin(
 
       const duration = getDuration(this, 'short4');
 
-      await stopAnimations(this.submenu);
+      await stopAnimations(this.submenuRef.value!);
       await Promise.all([
         animateTo(
-          this.submenu,
+          this.submenuRef.value!,
           [{ transform: 'scaleY(1)' }, { transform: 'scaleY(0.45)' }],
           { duration, easing: easingEmphasizedAccelerate },
         ),
         animateTo(
-          this.submenu,
+          this.submenuRef.value!,
           [{ opacity: 1 }, { opacity: 1, offset: 0.875 }, { opacity: 0 }],
           { duration, easing: easingLinear },
         ),
       ]);
 
-      this.submenu.hidden = true;
+      this.submenuRef.value!.hidden = true;
       emit(this, 'submenu-closed');
     }
   }
@@ -275,8 +272,8 @@ export class MenuItem extends AnchorMixin(
       mouseleave: () => this.onMouseLeave(),
     });
 
-    if (this.submenu) {
-      this.submenu.hidden =
+    if (this.submenuRef.value) {
+      this.submenuRef.value.hidden =
         !this.submenuOpen || this.disabled || !this.hasSubmenu;
     }
   }
@@ -295,12 +292,15 @@ export class MenuItem extends AnchorMixin(
         ? this.renderAnchor({
             className,
             content: this.renderInner(this.hasSubmenu),
+            refDirective: ref(this.itemRef),
           })
-        : html`<div class=${className}>${this.renderInner(hasSubmenu)}</div>`}
+        : html`<div ${ref(this.itemRef)} class=${className}>
+            ${this.renderInner(hasSubmenu)}
+          </div>`}
       ${when(
         hasSubmenu,
         () =>
-          html`<div part="submenu" class="submenu">
+          html`<div ${ref(this.submenuRef)} part="submenu" class="submenu">
             <slot name="submenu-item"></slot>
           </div>`,
       )}`;
@@ -405,7 +405,7 @@ export class MenuItem extends AnchorMixin(
 
   private updateSubmenuPositioner(): void {
     const $window = $(window);
-    const $submenu = $(this.submenu);
+    const $submenu = $(this.submenuRef.value!);
     const itemRect = this.getBoundingClientRect();
     const submenuWidth = $submenu.innerWidth();
     const submenuHeight = $submenu.innerHeight();
@@ -431,7 +431,7 @@ export class MenuItem extends AnchorMixin(
       placementY = 'left';
     }
 
-    $(this.submenu).css({
+    $(this.submenuRef.value!).css({
       top: placementX === 'bottom' ? 0 : itemRect.height - submenuHeight,
       left: placementY === 'right' ? itemRect.width : -submenuWidth,
       transformOrigin: [

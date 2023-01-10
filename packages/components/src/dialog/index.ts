@@ -2,10 +2,10 @@ import { html, LitElement } from 'lit';
 import {
   customElement,
   property,
-  query,
   queryAssignedElements,
 } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/addClass.js';
@@ -25,6 +25,7 @@ import { style } from './style.js';
 import type { MaterialIconsName } from '../icon.js';
 import type { TopAppBar } from '../top-app-bar/top-app-bar.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @event open - 在对话框打开之前触发。可以通过调用 `event.preventDefault()` 阻止对话框打开
@@ -144,15 +145,6 @@ export class Dialog extends LitElement {
   })
   public resizable = false; */
 
-  @query('.overlay', true)
-  private readonly overlay!: HTMLElement;
-
-  @query('.panel', true)
-  private readonly panel!: HTMLElement;
-
-  @query('.body', true)
-  private readonly body!: HTMLElement;
-
   /**
    * dialog 组件内包含的 mdui-top-app-bar 组件
    */
@@ -167,6 +159,9 @@ export class Dialog extends LitElement {
   private originalTrigger!: HTMLElement;
 
   private modalHelper!: Modal;
+  private readonly overlayRef: Ref<HTMLElement> = createRef();
+  private readonly panelRef: Ref<HTMLElement> = createRef();
+  private readonly bodyRef: Ref<HTMLElement> = createRef();
   private readonly hasSlotController = new HasSlotController(
     this,
     'header',
@@ -182,7 +177,9 @@ export class Dialog extends LitElement {
     const run = async () => {
       // 内部的 header, body, actions 元素
       const children = Array.from(
-        this.panel.querySelectorAll<HTMLElement>('.header, .body, .actions'),
+        this.panelRef.value!.querySelectorAll<HTMLElement>(
+          '.header, .body, .actions',
+        ),
       );
 
       const easingLinear = getEasing(this, 'linear');
@@ -207,7 +204,7 @@ export class Dialog extends LitElement {
         if ((this.topAppBarElements ?? []).length) {
           const topAppBarElement = this.topAppBarElements![0];
           // @ts-ignore
-          topAppBarElement.scrollTarget = this.body;
+          topAppBarElement.scrollTarget = this.bodyRef.value!;
         }
 
         this.style.display = 'flex';
@@ -216,8 +213,8 @@ export class Dialog extends LitElement {
         lockScreen(this);
 
         await Promise.all([
-          stopAnimations(this.overlay),
-          stopAnimations(this.panel),
+          stopAnimations(this.overlayRef.value!),
+          stopAnimations(this.panelRef.value!),
           ...children.map((child) => stopAnimations(child)),
         ]);
 
@@ -229,7 +226,7 @@ export class Dialog extends LitElement {
           if (autoFocusTarget) {
             autoFocusTarget.focus({ preventScroll: true });
           } else {
-            this.panel.focus({ preventScroll: true });
+            this.panelRef.value!.focus({ preventScroll: true });
           }
         });
 
@@ -237,12 +234,12 @@ export class Dialog extends LitElement {
 
         await Promise.all([
           animateTo(
-            this.overlay,
+            this.overlayRef.value!,
             [{ opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 1 }],
             { duration, easing: easingLinear },
           ),
           animateTo(
-            this.panel,
+            this.panelRef.value!,
             [
               { transform: 'translateY(-1.875rem) scaleY(0)' },
               { transform: 'translateY(0) scaleY(1)' },
@@ -250,7 +247,7 @@ export class Dialog extends LitElement {
             { duration, easing: easingEmphasizedDecelerate },
           ),
           animateTo(
-            this.panel,
+            this.panelRef.value!,
             [{ opacity: 0 }, { opacity: 1, offset: 0.1 }, { opacity: 1 }],
             { duration, easing: easingLinear },
           ),
@@ -279,20 +276,20 @@ export class Dialog extends LitElement {
 
         this.modalHelper.deactivate();
         await Promise.all([
-          stopAnimations(this.overlay),
-          stopAnimations(this.panel),
+          stopAnimations(this.overlayRef.value!),
+          stopAnimations(this.panelRef.value!),
           ...children.map((child) => stopAnimations(child)),
         ]);
 
         const duration = getDuration(this, 'short4');
 
         await Promise.all([
-          animateTo(this.overlay, [{ opacity: 1 }, { opacity: 0 }], {
+          animateTo(this.overlayRef.value!, [{ opacity: 1 }, { opacity: 0 }], {
             duration,
             easing: easingLinear,
           }),
           animateTo(
-            this.panel,
+            this.panelRef.value!,
             [
               { transform: 'translateY(0) scaleY(1)' },
               { transform: 'translateY(-1.875rem) scaleY(0.6)' },
@@ -300,7 +297,7 @@ export class Dialog extends LitElement {
             { duration, easing: easingEmphasizedAccelerate },
           ),
           animateTo(
-            this.panel,
+            this.panelRef.value!,
             [{ opacity: 1 }, { opacity: 1, offset: 0.75 }, { opacity: 0 }],
             { duration, easing: easingLinear },
           ),
@@ -364,12 +361,13 @@ export class Dialog extends LitElement {
     const hasSecondary = hasSecondarySlot || this.secondary;
 
     return html`<div
+        ${ref(this.overlayRef)}
         part="overlay"
         class="overlay"
         @click="${this.onOverlayClick}"
         tabindex="-1"
       ></div>
-      <div part="panel" class="panel" tabindex="0">
+      <div ${ref(this.panelRef)} part="panel" class="panel" tabindex="0">
         ${when(
           hasHeaderSlot || hasIcon || hasPrimary,
           () => html`<div
@@ -384,7 +382,7 @@ export class Dialog extends LitElement {
         )}
         ${when(
           hasDefaultSlot || hasSecondary,
-          () => html`<div part="body" class="body">
+          () => html`<div ${ref(this.bodyRef)} part="body" class="body">
             ${when(hasSecondary, () => this.renderSecondary())}
             <slot></slot>
           </div>`,

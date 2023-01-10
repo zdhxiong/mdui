@@ -1,7 +1,7 @@
 import { html, LitElement } from 'lit';
-import { customElement, query, property } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { createRef, Ref, ref } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -11,6 +11,7 @@ import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { listItemStyle } from './list-item-style.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @event click - 点击时触发
@@ -114,10 +115,8 @@ export class ListItem extends AnchorMixin(
   @property({ reflect: true })
   public alignment: 'start' | 'center' | 'end' = 'center';
 
-  @query('.item')
-  private readonly item!: HTMLElement;
-
   private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly itemRef: Ref<HTMLElement> = createRef();
   private readonly hasSlotController = new HasSlotController(
     this,
     '[default]',
@@ -136,7 +135,7 @@ export class ListItem extends AnchorMixin(
   }
 
   protected override get focusElement(): HTMLElement {
-    return this.href ? this.item : this;
+    return this.href ? this.itemRef.value! : this;
   }
 
   protected override get focusDisabled(): boolean {
@@ -155,8 +154,11 @@ export class ListItem extends AnchorMixin(
         ? this.renderAnchor({
             className,
             content: this.renderInner(),
+            refDirective: ref(this.itemRef),
           })
-        : html`<div class="${className}">${this.renderInner()}</div>`}`;
+        : html`<div class="${className}" ${ref(this.itemRef)}>
+            ${this.renderInner()}
+          </div>`}`;
   }
 
   private renderInner(): TemplateResult {

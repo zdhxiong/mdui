@@ -1,6 +1,6 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { createRef, Ref, ref } from 'lit/directives/ref.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
@@ -13,6 +13,7 @@ import { style } from './style.js';
 import type { MaterialIconsName } from '../icon.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @event click - 点击时触发

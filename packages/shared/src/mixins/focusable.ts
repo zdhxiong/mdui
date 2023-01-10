@@ -24,7 +24,7 @@ export declare class FocusableMixinInterface extends LitElement {
   public override autofocus: boolean;
   public override tabIndex: number;
   protected get focusDisabled(): boolean;
-  protected get focusElement(): HTMLElement | null;
+  protected get focusElement(): HTMLElement | null | undefined;
   public override focus(options?: FocusOptions): void;
   public override blur(): void;
   public override click(): void;
@@ -165,7 +165,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     /**
      * 最终获得焦点的元素
      */
-    protected get focusElement(): HTMLElement | null {
+    protected get focusElement(): HTMLElement | null | undefined {
       throw new Error('Must implement focusElement getter!');
     }
 

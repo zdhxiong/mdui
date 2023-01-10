@@ -1,9 +1,11 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 import { getInnerHtmlFromSlot } from '@mdui/shared/helpers/slot.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { topAppBarTitleStyle } from './top-app-bar-title-style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @slot - 顶部应用栏的标题文本
@@ -17,12 +19,6 @@ export class TopAppBarTitle extends LitElement {
     componentStyle,
     topAppBarTitleStyle,
   ];
-
-  @query('.label-large')
-  private readonly labelLarge!: HTMLElement;
-
-  @query('slot:not([name])')
-  private readonly defaultSlot!: HTMLSlotElement;
 
   /**
    * 顶部应用栏形状。由 mdui-top-app-bar 组件控制该参数
@@ -44,15 +40,27 @@ export class TopAppBarTitle extends LitElement {
   })
   private shrink = false;
 
+  private readonly labelLargeRef: Ref<HTMLElement> = createRef();
+  private readonly defaultSlotRef: Ref<HTMLSlotElement> = createRef();
+
   protected override render(): TemplateResult {
     return html`<div part="label" class="label">
-        <slot @slotchange="${this.onSlotChange}"></slot>
+        <slot
+          ${ref(this.defaultSlotRef)}
+          @slotchange="${this.onSlotChange}"
+        ></slot>
       </div>
-      <div part="label-large" class="label-large"></div>`;
+      <div
+        ${ref(this.labelLargeRef)}
+        part="label-large"
+        class="label-large"
+      ></div>`;
   }
 
   private onSlotChange() {
-    this.labelLarge.innerHTML = getInnerHtmlFromSlot(this.defaultSlot);
+    this.labelLargeRef.value!.innerHTML = getInnerHtmlFromSlot(
+      this.defaultSlotRef.value!,
+    );
   }
 }
 

@@ -2,6 +2,7 @@ import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
+import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import '@mdui/icons/check.js';
@@ -52,9 +53,31 @@ export class SegmentedButton extends ButtonBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   protected selected = false;
+
+  /**
+   * 是否验证未通过。由 mdui-segmented-button-group 控制该参数
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
+  })
+  protected invalid = false;
+
+  // 父组件中是否设置了禁用。由 mdui-radio-group 控制该参数
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
+    attribute: 'group-disabled',
+  })
+  protected groupDisabled = false;
 
   // 每一个 segmented-button 元素都添加一个唯一的 key
   protected readonly key = uniqueId();
@@ -74,25 +97,33 @@ export class SegmentedButton extends ButtonBase {
   protected override render(): TemplateResult {
     const hasStartSlot = this.hasSlotController.test('start');
     const hasEndSlot = this.hasSlotController.test('end');
-    const className = `button ${
-      (this.icon || hasStartSlot) && !this.selected ? 'has-start' : ''
-    } ${this.endIcon || hasEndSlot ? 'has-end' : ''}`;
+    const className = cc({
+      button: true,
+      'has-start': (this.icon || hasStartSlot) && !this.selected,
+      'has-end': this.endIcon || hasEndSlot,
+    });
 
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
-        ? this.disabled || this.loading
-          ? html`<span part="button" class=${className}>
-              ${this.renderInner()}
-            </span>`
-          : this.renderAnchor({
-              className,
-              part: 'button',
-              content: this.renderInner(),
-            })
-        : this.renderButton({
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
+      ${this.isButton()
+        ? this.renderButton({
             className,
             part: 'button',
             content: this.renderInner(),
-          })}${this.renderLoading()}`;
+          })
+        : this.isDisabled() || this.loading
+        ? html`<span part="button" class=${className}>
+            ${this.renderInner()}
+          </span>`
+        : this.renderAnchor({
+            className,
+            part: 'button',
+            content: this.renderInner(),
+          })}
+      ${this.renderLoading()}`;
+  }
+
+  private isDisabled(): boolean {
+    return this.disabled || this.groupDisabled;
   }
 
   private renderCheck(): TemplateResult | typeof nothing {

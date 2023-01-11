@@ -3,7 +3,6 @@ import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
-import { FormController } from '@mdui/shared/controllers/form.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -43,7 +42,8 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public tickmarks = false;
 
@@ -53,7 +53,8 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public nolabel = false;
 
@@ -63,7 +64,8 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public disabled = false;
 
@@ -89,7 +91,8 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public invalid = false;
 
@@ -98,8 +101,22 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
   protected labelVisible = false;
 
   protected readonly inputRef: Ref<HTMLInputElement> = createRef();
+  protected readonly invalidRef: Ref<HTMLInputElement> = createRef();
   protected readonly trackActiveRef: Ref<HTMLElement> = createRef();
-  private readonly formController: FormController = new FormController(this);
+
+  /**
+   * 表单验证状态对象
+   */
+  public get validity(): ValidityState {
+    return this.invalidRef.value!.validity;
+  }
+
+  /**
+   * 表单验证的错误提示信息
+   */
+  public get validationMessage(): string {
+    return this.invalidRef.value!.validationMessage;
+  }
 
   protected override get rippleDisabled(): boolean {
     return this.disabled;
@@ -115,9 +132,7 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
 
   @watch('disabled', true)
   private onDisabledChange() {
-    // 禁用状态始终为验证通过，所以在 disabled 变更时需要重新验证
-    this.inputRef.value!.disabled = this.disabled;
-    this.invalid = !this.checkValidity();
+    this.invalid = !this.invalidRef.value!.checkValidity();
   }
 
   /**
@@ -130,7 +145,17 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
    * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
    */
   public checkValidity(): boolean {
-    return this.inputRef.value!.checkValidity();
+    const valid = this.invalidRef.value!.checkValidity();
+
+    if (!valid) {
+      emit(this, 'invalid', {
+        bubbles: false,
+        cancelable: true,
+        composed: false,
+      });
+    }
+
+    return valid;
   }
 
   /**
@@ -139,7 +164,21 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
    * 验证未通过时，还将在组件上显示未通过的提示。
    */
   public reportValidity(): boolean {
-    this.invalid = !this.inputRef.value!.reportValidity();
+    this.invalid = !this.invalidRef.value!.reportValidity();
+
+    if (this.invalid) {
+      const requestInvalid = emit(this, 'invalid', {
+        bubbles: false,
+        cancelable: true,
+        composed: false,
+      });
+
+      // 调用了 preventDefault() 时，隐藏默认的表单错误提示
+      this.invalidRef.value!.style.display = requestInvalid.defaultPrevented
+        ? 'none'
+        : 'inline-block';
+    }
+
     return !this.invalid;
   }
 
@@ -149,8 +188,8 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
    * @param message 自定义的提示文本
    */
   public setCustomValidity(message: string): void {
-    this.inputRef.value!.setCustomValidity(message);
-    this.invalid = !this.inputRef.value!.checkValidity();
+    this.invalidRef.value!.setCustomValidity(message);
+    this.invalid = !this.invalidRef.value!.checkValidity();
   }
 
   /**

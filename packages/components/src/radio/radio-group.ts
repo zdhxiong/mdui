@@ -5,18 +5,21 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
-import { FormController } from '@mdui/shared/controllers/form.js';
+import { FormController, formResets } from '@mdui/shared/controllers/form.js';
+import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { radioGroupStyle } from './radio-group-style.js';
 import type { Radio as RadioOriginal } from './radio.js';
+import type { FormControl } from '@mdui/jq/shared/form.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 type Radio = RadioOriginal & {
   invalid: boolean;
   focusable: boolean;
+  groupDisabled: boolean;
 };
 
 /**
@@ -27,11 +30,22 @@ type Radio = RadioOriginal & {
  * @slot - `<mdui-radio>` 元素
  */
 @customElement('mdui-radio-group')
-export class RadioGroup extends LitElement {
+export class RadioGroup extends LitElement implements FormControl {
   public static override styles: CSSResultGroup = [
     componentStyle,
     radioGroupStyle,
   ];
+
+  /**
+   * 是否为禁用状态
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
+  })
+  public disabled = false;
 
   /**
    * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
@@ -51,19 +65,13 @@ export class RadioGroup extends LitElement {
    * 单选框的值，将于表单数据一起提交
    */
   @property({ reflect: true })
-  public value!: string;
+  public value = '';
 
   /**
-   * 是否验证未通过
-   *
-   * 该验证为浏览器原生验证 API，基于 `required` 属性的验证结果
+   * 默认选中的值。在重置表单时，将重置为该默认值。该属性只能通过 JavaScript 属性设置
    */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
-  })
-  public invalid = false;
+  @defaultValue()
+  public defaultValue?: string = undefined;
 
   /**
    * 提交表单时，是否必须选中其中一个单选框
@@ -71,12 +79,38 @@ export class RadioGroup extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public required = false;
 
+  /**
+   * 是否验证未通过
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
+  })
+  private invalid = false;
+
   private readonly inputRef: Ref<HTMLInputElement> = createRef();
   private readonly formController: FormController = new FormController(this);
+
+  /**
+   * 表单验证状态对象
+   */
+  public get validity(): ValidityState {
+    return this.inputRef.value!.validity;
+  }
+
+  /**
+   * 表单验证的错误提示信息
+   */
+  public get validationMessage(): string {
+    return this.inputRef.value!.validationMessage;
+  }
 
   private get radios() {
     return $(this).find('mdui-radio').get() as unknown as Radio[];
@@ -98,7 +132,15 @@ export class RadioGroup extends LitElement {
     this.updateRadioFocusable();
 
     await this.updateComplete;
-    this.invalid = !this.checkValidity();
+
+    // reset 引起的值变更，不执行验证；直接修改值引起的变更，需要进行验证
+    const form = this.formController.getForm();
+    if (form && formResets.get(form)?.has(this)) {
+      this.invalid = false;
+      formResets.get(form)!.delete(this);
+    } else {
+      this.invalid = !this.inputRef.value!.checkValidity();
+    }
   }
 
   @watch('invalid')
@@ -106,11 +148,26 @@ export class RadioGroup extends LitElement {
     this.radiosEnabled.forEach((radio) => (radio.invalid = this.invalid));
   }
 
+  @watch('disabled')
+  private onDisabledChange() {
+    this.radios.forEach((radio) => (radio.groupDisabled = this.disabled));
+  }
+
   /**
    * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
    */
   public checkValidity(): boolean {
-    return this.inputRef.value!.checkValidity();
+    const valid = this.inputRef.value!.checkValidity();
+
+    if (!valid) {
+      emit(this, 'invalid', {
+        bubbles: false,
+        cancelable: true,
+        composed: false,
+      });
+    }
+
+    return valid;
   }
 
   /**
@@ -120,6 +177,20 @@ export class RadioGroup extends LitElement {
    */
   public reportValidity(): boolean {
     this.invalid = !this.inputRef.value!.reportValidity();
+
+    if (this.invalid) {
+      const requestInvalid = emit(this, 'invalid', {
+        bubbles: false,
+        cancelable: true,
+        composed: false,
+      });
+
+      // 调用了 preventDefault() 时，隐藏默认的表单错误提示
+      this.inputRef.value!.style.display = requestInvalid.defaultPrevented
+        ? 'none'
+        : 'inline-block';
+    }
+
     return !this.invalid;
   }
 
@@ -137,10 +208,12 @@ export class RadioGroup extends LitElement {
     return html`<fieldset>
       <input
         ${ref(this.inputRef)}
-        type="text"
+        type="radio"
         class="input"
-        ?required=${this.required}
+        name=${ifDefined(this.name)}
         value=${ifDefined(this.value)}
+        .checked=${!!this.value}
+        .required=${this.required}
         tabindex="-1"
       />
       <slot

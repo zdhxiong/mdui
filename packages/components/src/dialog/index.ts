@@ -78,7 +78,8 @@ export class Dialog extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public open = false;
 
@@ -88,7 +89,8 @@ export class Dialog extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public fullscreen = false;
 
@@ -98,7 +100,8 @@ export class Dialog extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'close-on-esc',
   })
   public closeOnEsc = false;
@@ -109,7 +112,8 @@ export class Dialog extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'close-on-overlay-click',
   })
   public closeOnOverlayClick = false;
@@ -120,7 +124,8 @@ export class Dialog extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'stacked-actions',
   })
   public stackedActions = false;
@@ -131,7 +136,8 @@ export class Dialog extends LitElement {
   /* @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public draggable = false; */
 
@@ -141,7 +147,8 @@ export class Dialog extends LitElement {
   /* @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public resizable = false; */
 

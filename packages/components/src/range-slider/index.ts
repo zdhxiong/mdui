@@ -8,10 +8,13 @@ import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/on.js';
+import { FormController, formResets } from '@mdui/shared/controllers/form.js';
+import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { SliderBase } from '../slider/slider-base.js';
 import { style } from './style.js';
 import type { Ripple } from '../ripple/index.js';
+import type { FormControl } from '@mdui/jq/shared/form.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
@@ -21,6 +24,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event blur - 失去焦点时触发
  * @event change - 在值发生了变更，且失去了焦点时，将触发该事件
  * @event input - 值变更时触发
+ * @event invalid - 表单字段验证未通过时触发
  *
  * @csspart track-inactive - 底部未激活状态的轨道
  * @csspart track-active - 已激活状态的轨道
@@ -29,8 +33,14 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart tickmark - 刻度标记
  */
 @customElement('mdui-range-slider')
-export class RangeSlider extends SliderBase {
+export class RangeSlider extends SliderBase implements FormControl {
   public static override styles: CSSResultGroup = [SliderBase.styles, style];
+
+  /**
+   * 默认值。在重置表单时，将重置为该默认值。该属性只能通过 JavaScript 属性设置
+   */
+  @defaultValue()
+  public defaultValue: number[] = [];
 
   /**
    * 当前操作的是哪一个 handle
@@ -45,6 +55,7 @@ export class RangeSlider extends SliderBase {
   private readonly rippleEndRef: Ref<Ripple> = createRef();
   private readonly handleStartRef: Ref<HTMLElement> = createRef();
   private readonly handleEndRef: Ref<HTMLElement> = createRef();
+  private readonly formController: FormController = new FormController(this);
   private _value: number[] = [];
 
   /**
@@ -61,6 +72,17 @@ export class RangeSlider extends SliderBase {
     const oldValue = [...this._value];
     this._value = _value;
     this.requestUpdate('value', oldValue);
+
+    this.updateComplete.then(() => {
+      // reset 引起的值变更，不执行验证；直接修改值引起的变更，需要进行验证
+      const form = this.formController.getForm();
+      if (form && formResets.get(form)?.has(this)) {
+        this.invalid = false;
+        formResets.get(form)!.delete(this);
+      } else {
+        this.invalid = !this.invalidRef.value!.checkValidity();
+      }
+    });
   }
 
   protected override get rippleElement() {
@@ -71,6 +93,10 @@ export class RangeSlider extends SliderBase {
     super.connectedCallback();
 
     this.value = [this.min, this.max];
+
+    if (!this.defaultValue.length) {
+      this.defaultValue = [...this.value];
+    }
 
     // 在轨道上点击时，计算出点击位置在 <input type="range"> 元素上的值
     // 若该值在 this.value 的两个值中间位置的左侧，则表示操作的是左侧的值，否则操作的是右侧的值
@@ -124,6 +150,10 @@ export class RangeSlider extends SliderBase {
     this.updateStyle();
   }
 
+  /**
+   * <input /> 用于提供拖拽操作
+   * <input class="invalid" /> 用于提供 html5 自带的表单错误提示
+   */
   protected override render(): TemplateResult {
     return html`<label>
       <input
@@ -135,6 +165,15 @@ export class RangeSlider extends SliderBase {
         ?disabled=${this.disabled}
         @input=${this.onInput}
         @change=${this.onChange}
+      />
+      <input
+        ${ref(this.invalidRef)}
+        class="invalid"
+        type="range"
+        step=${this.step}
+        min=${this.min}
+        max=${this.max}
+        ?disabled=${this.disabled}
       />
       <div part="track-inactive" class="track-inactive"></div>
       <div

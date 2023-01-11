@@ -74,7 +74,8 @@ export class MenuItem extends AnchorMixin(
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public disabled = false;
 
@@ -103,7 +104,8 @@ export class MenuItem extends AnchorMixin(
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'submenu-open',
   })
   public submenuOpen = false;
@@ -112,7 +114,8 @@ export class MenuItem extends AnchorMixin(
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   protected selected = false;
 

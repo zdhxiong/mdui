@@ -1,6 +1,5 @@
 import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
@@ -42,7 +41,8 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public disabled = false;
 
@@ -52,13 +52,29 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public checked = false;
 
   // 是否验证未通过。由 mdui-radio-group 控制该参数
-  @state()
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
+  })
   protected invalid = false;
+
+  // 父组件中是否设置了禁用。由 mdui-radio-group 控制该参数
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
+    attribute: 'group-disabled',
+  })
+  protected groupDisabled = false;
 
   // 是否可聚焦。由 mdui-radio-group 控制该参数
   @state()
@@ -71,7 +87,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   protected override get rippleDisabled(): boolean {
-    return this.disabled;
+    return this.isDisabled();
   }
 
   protected override get focusElement(): HTMLElement {
@@ -79,7 +95,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   protected override get focusDisabled(): boolean {
-    return this.disabled || !this.focusable;
+    return this.isDisabled() || !this.focusable;
   }
 
   @watch('checked', true)
@@ -93,14 +109,14 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
     super.connectedCallback();
 
     this.addEventListener('click', () => {
-      if (!this.disabled) {
+      if (!this.isDisabled()) {
         this.checked = true;
       }
     });
   }
 
   protected override render(): TemplateResult {
-    return html`<i part="control" class=${classMap({ invalid: this.invalid })}>
+    return html`<i part="control">
         <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
         <mdui-icon-radio-button-unchecked
           part="unchecked-icon"
@@ -109,6 +125,10 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
         <div part="checked-icon" class="checked-icon"></div>
       </i>
       <span part="label"><slot></slot></span>`;
+  }
+
+  private isDisabled(): boolean {
+    return this.disabled || this.groupDisabled;
   }
 }
 

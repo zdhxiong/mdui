@@ -8,11 +8,14 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/on.js';
+import { FormController, formResets } from '@mdui/shared/controllers/form.js';
+import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { SliderBase } from './slider-base.js';
 import { style } from './style.js';
 import type { Ripple } from '../ripple/index.js';
+import type { FormControl } from '@mdui/jq/shared/form.js';
 import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
@@ -22,6 +25,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event blur - 失去焦点时触发
  * @event change - 在值发生了变更，且失去了焦点时，将触发该事件
  * @event input - 值变更时触发
+ * @event invalid - 表单字段验证未通过时触发
  *
  * @csspart track-inactive - 底部未激活状态的轨道
  * @csspart track-active - 已激活状态的轨道
@@ -30,7 +34,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart tickmark - 刻度标记
  */
 @customElement('mdui-slider')
-export class Slider extends SliderBase {
+export class Slider extends SliderBase implements FormControl {
   public static override styles: CSSResultGroup = [SliderBase.styles, style];
 
   /**
@@ -39,8 +43,15 @@ export class Slider extends SliderBase {
   @property({ type: Number, reflect: true })
   public value = 0;
 
+  /**
+   * 默认值。在重置表单时，将重置为该默认值。该属性只能通过 JavaScript 属性设置
+   */
+  @defaultValue()
+  public defaultValue = 0;
+
   private readonly rippleRef: Ref<Ripple> = createRef();
   private readonly handleRef: Ref<HTMLElement> = createRef();
+  private readonly formController: FormController = new FormController(this);
 
   protected override get rippleElement() {
     return this.rippleRef.value!;
@@ -48,7 +59,14 @@ export class Slider extends SliderBase {
 
   @watch('value', true)
   private onValueChange() {
-    this.invalid = !this.checkValidity();
+    // reset 引起的值变更，不执行验证；直接修改值引起的变更，需要进行验证
+    const form = this.formController.getForm();
+    if (form && formResets.get(form)?.has(this)) {
+      this.invalid = false;
+      formResets.get(form)!.delete(this);
+    } else {
+      this.invalid = !this.invalidRef.value!.checkValidity();
+    }
 
     this.inputRef.value!.value = this.value.toString();
     this.value = parseFloat(this.inputRef.value!.value);
@@ -86,6 +104,10 @@ export class Slider extends SliderBase {
     this.updateStyle();
   }
 
+  /**
+   * <input /> 用于提供拖拽操作
+   * <input class="invalid" /> 用于提供 html5 自带的表单错误提示
+   */
   protected override render(): TemplateResult {
     return html`<label>
       <input
@@ -98,6 +120,16 @@ export class Slider extends SliderBase {
         .value=${live(this.value.toString())}
         @input=${this.onInput}
         @change=${this.onChange}
+      />
+      <input
+        ${ref(this.invalidRef)}
+        class="invalid"
+        type="range"
+        step=${this.step}
+        min=${this.min}
+        max=${this.max}
+        ?disabled=${this.disabled}
+        .value=${live(this.value.toString())}
       />
       <div part="track-inactive" class="track-inactive"></div>
       <div

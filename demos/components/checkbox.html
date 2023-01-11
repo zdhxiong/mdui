@@ -20,6 +20,12 @@
     import '../../packages/mdui/mdui.css';
     import '../../packages/components/checkbox.js';
     import '../../packages/components/button.js';
+    import { $ } from '../../packages/jq/$.js';
+    import '../../packages/jq/methods/on.js';
+
+    $('.prevent-default').on('invalid', (e) => {
+      e.preventDefault()
+    });
   </script>
 </head>
 
@@ -72,11 +78,13 @@
       <form>
         <mdui-checkbox name="checkbox[]" required></mdui-checkbox>
         <mdui-checkbox name="checkbox[]" required>Checkbox</mdui-checkbox>
+        <mdui-checkbox name="checkbox[]" required class="prevent-default">preventDefault()</mdui-checkbox>
         <mdui-checkbox name="checkbox[]" required disabled></mdui-checkbox>
         <mdui-checkbox name="checkbox[]" required disabled indeterminate>Checkbox</mdui-checkbox>
         <div class="mdui-theme-dark">
           <mdui-checkbox name="checkbox[]" required></mdui-checkbox>
           <mdui-checkbox name="checkbox[]" required>Checkbox</mdui-checkbox>
+          <mdui-checkbox name="checkbox[]" required class="prevent-default">preventDefault()</mdui-checkbox>
           <mdui-checkbox name="checkbox[]" required disabled></mdui-checkbox>
           <mdui-checkbox name="checkbox[]" required disabled indeterminate>Checkbox</mdui-checkbox>
         </div>

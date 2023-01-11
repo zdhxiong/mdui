@@ -21,6 +21,10 @@
       flex-direction: column;
       align-items: start;
     }
+
+    .error {
+      color: red;
+    }
   </style>
   <script type="module">
     import '../../packages/mdui/mdui.css';
@@ -31,7 +35,139 @@
     import '../../packages/components/segmented-button-group.js';
     import '../../packages/components/segmented-button.js';
     import '../../packages/components/button.js';
+    import '../../packages/components/select.js';
+    import '../../packages/components/menu-item.js';
     import '../../packages/components/text-field.js';
+    import '../../packages/components/slider.js';
+    import '../../packages/components/range-slider.js';
+    import { $ } from '../../packages/jq/index.js';
+    import Schema from 'https://cdn.jsdelivr.net/npm/async-validator@4.2.5/+esm';
+
+    await Promise.allSettled([
+      customElements.whenDefined('mdui-slider'),
+      customElements.whenDefined('mdui-range-slider')
+    ]);
+
+    /**
+     * 结合 async-validator 的表单验证
+     */
+    // 表单字段
+    const fieldNames = [
+      'checkbox-checked', 'checkbox-unchecked', 'radio', 'switch', 'slider',
+      'range-slider', 'segmented-single', 'segmented-multiple', 'select-single',
+      'select-multiple', 'text-field'
+    ];
+    const $fields = $(fieldNames).map((i, fieldName) => $(`.form [name="${fieldName}"]`)[0]);
+
+    // 表单字段报错时，隐藏默认报错 UI，使用自定义的样式
+    $fields.on('invalid', function(e) {
+      e.preventDefault();
+      $(this).next('.error').html(this.validationMessage);
+    });
+
+    // 验证规则
+    const descriptor = {
+      'checkbox-checked'(rule, value) {
+        return value === 'checkbox-value1';
+      },
+      'checkbox-unchecked'(rule, value) {
+        return value === undefined;
+      },
+      radio(rule, value) {
+        return value === 'radio-value2'
+      },
+      switch(rule, value) {
+        if (value === 'switch-value') {
+          return true;
+        }
+        return new Error('place select')
+      },
+      slider(rule, value) {
+        return value > 50;
+      },
+      'range-slider'(rule, value) {
+        return value[0] > 20 && value[1] < 80;
+      },
+      'segmented-single': {
+        asyncValidator(rule, value) {
+          return new Promise((resolve, reject) => {
+            if (value === 'medium') {
+              resolve();
+            } else {
+              reject('place select medium');
+            }
+          });
+        }
+      },
+      'segmented-multiple'(rule, value) {
+        return value.length === 2 && value[0] === 'medium' && value[1] === 'large';
+      },
+      'select-single'(rule, value) {
+        return value === 'item-2';
+      },
+      'select-multiple': {
+        asyncValidator(rule, value) {
+          return new Promise((resolve, reject) => {
+            if (value.length === 2 && value[0] === 'item-2' && value[1] === 'item-3') {
+              resolve();
+            } else {
+              reject('place select Item2 and Item3');
+            }
+          })
+        }
+      },
+      'text-field'(rule, value) {
+        if (value === 'text-field') {
+          return true;
+        }
+        return new Error('place input text-field');
+      }
+    };
+    const validator = new Schema(descriptor);
+
+    // 清空验证结果
+    const clearInvalid = () => {
+      $fields
+        .each((i, field) => field.setCustomValidity(''))
+        .next('.error')
+        .html('');
+    }
+
+    // 执行验证
+    const doValid = () => {
+      clearInvalid();
+
+      return new Promise((resolve, reject) => {
+        validator.validate($form.serializeObject())
+          .then(resolve)
+          .catch(({ errors }) => {
+            fieldNames.forEach(fieldName => {
+              const errorInfo = errors.find(error => error.field === fieldName);
+              const $field = $fields.filter((i, element) => element.name === fieldName);
+
+              $field[0].setCustomValidity(errorInfo ? errorInfo.message : '');
+              $field[0].reportValidity();
+            });
+
+            reject();
+          });
+      });
+    }
+
+    const $form = $('.form');
+    const $submit = $('.submit');
+
+    // 提交表单
+    $submit.on('click', () => {
+      doValid().then(() => {
+        alert('pass');
+      });
+    });
+
+    // 重置表单
+    $form.on('reset', () => {
+      clearInvalid();
+    });
   </script>
 </head>
 
@@ -41,8 +177,9 @@
       <h2>表单提交</h2>
       <form method="get">
         <div>
-          <mdui-checkbox name="checkbox[]" value="checkbox-value1">Checkbox1</mdui-checkbox>
-          <mdui-checkbox name="checkbox[]" value="checkbox-value2">Checkbox2</mdui-checkbox>
+          <mdui-checkbox name="checkbox" value="checkbox-value1">Checkbox1</mdui-checkbox>
+          <br/>
+          <mdui-checkbox name="checkbox" value="checkbox-value2">Checkbox2</mdui-checkbox>
         </div>
         <div>
           <mdui-radio-group name="radio">
@@ -51,6 +188,9 @@
           </mdui-radio-group>
         </div>
         <mdui-switch name="switch" value="switch-value"></mdui-switch>
+
+        <mdui-slider name="slider"></mdui-slider>
+        <mdui-range-slider name="range-slider"></mdui-range-slider>
 
         <mdui-segmented-button-group selects="single" name="segmented-single">
           <mdui-segmented-button value="small">Small</mdui-segmented-button>
@@ -64,9 +204,23 @@
           <mdui-segmented-button value="large">Large</mdui-segmented-button>
         </mdui-segmented-button-group>
 
+        <mdui-select name="select-single" placeholder="single select">
+          <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
+          <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
+          <mdui-menu-item value="item-3">Item 3</mdui-menu-item>
+        </mdui-select>
+        <mdui-select multiple name="select-multiple" label="multiple select">
+          <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
+          <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
+          <mdui-menu-item value="item-3">Item 3</mdui-menu-item>
+        </mdui-select>
+
         <mdui-text-field name="text-field" label="Text Field"></mdui-text-field>
 
-        <mdui-button type="submit" name="submit" value="submit-value">value: submit</mdui-button>
+        <div>
+          <mdui-button type="submit" name="submit" value="submit-value">value: submit</mdui-button>
+          <mdui-button type="reset">reset</mdui-button>
+        </div>
       </form>
     </section>
 
@@ -74,8 +228,9 @@
       <h2>Required</h2>
       <form method="get">
         <div>
-          <mdui-checkbox name="checkbox[]" value="checkbox-value1" required>Checkbox1</mdui-checkbox>
-          <mdui-checkbox name="checkbox[]" value="checkbox-value2" required>Checkbox2</mdui-checkbox>
+          <mdui-checkbox name="checkbox" value="checkbox-value1" required>Checkbox1</mdui-checkbox>
+          <br/>
+          <mdui-checkbox name="checkbox" value="checkbox-value2" required>Checkbox2</mdui-checkbox>
         </div>
         <div>
           <mdui-radio-group name="radio" required>
@@ -84,6 +239,9 @@
           </mdui-radio-group>
         </div>
         <mdui-switch name="switch" value="switch-value" required></mdui-switch>
+
+        <mdui-slider name="slider"></mdui-slider>
+        <mdui-range-slider name="range-slider"></mdui-range-slider>
 
         <mdui-segmented-button-group selects="single" name="segmented-single" required>
           <mdui-segmented-button value="small">Small</mdui-segmented-button>
@@ -97,9 +255,84 @@
           <mdui-segmented-button value="large">Large</mdui-segmented-button>
         </mdui-segmented-button-group>
 
+        <mdui-select name="select-single" required placeholder="single select">
+          <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
+          <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
+          <mdui-menu-item value="item-3">Item 3</mdui-menu-item>
+        </mdui-select>
+        <mdui-select multiple required name="select-multiple" label="multiple select">
+          <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
+          <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
+          <mdui-menu-item value="item-3">Item 3</mdui-menu-item>
+        </mdui-select>
+
         <mdui-text-field name="text-field" label="Text Field" required></mdui-text-field>
 
-        <mdui-button type="submit" name="submit" value="submit-value">value: submit</mdui-button>
+        <div>
+          <mdui-button type="submit" name="submit" value="submit-value">value: submit</mdui-button>
+          <mdui-button type="reset">reset</mdui-button>
+        </div>
+      </form>
+    </section>
+
+    <section>
+      <h2>Custom validate</h2>
+      <form method="post" class="form">
+        <div>
+          <mdui-checkbox name="checkbox-checked" value="checkbox-value1">checked</mdui-checkbox>
+          <div class="error"></div>
+
+          <mdui-checkbox name="checkbox-unchecked" value="checkbox-value2">unchecked</mdui-checkbox>
+          <div class="error"></div>
+        </div>
+        <div>
+          <mdui-radio-group name="radio">
+            <mdui-radio value="radio-value1">unchecked</mdui-radio>
+            <mdui-radio value="radio-value2">checked</mdui-radio>
+          </mdui-radio-group>
+          <div class="error"></div>
+        </div>
+        <mdui-switch name="switch" value="switch-value"></mdui-switch>
+        <div class="error"></div>
+
+        <mdui-slider name="slider"></mdui-slider>
+        <div class="error"></div>
+
+        <mdui-range-slider name="range-slider"></mdui-range-slider>
+        <div class="error"></div>
+
+        <mdui-segmented-button-group selects="single" name="segmented-single">
+          <mdui-segmented-button value="small">Small</mdui-segmented-button>
+          <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
+          <mdui-segmented-button value="large">Large</mdui-segmented-button>
+        </mdui-segmented-button-group>
+        <div class="error"></div>
+
+        <mdui-segmented-button-group selects="multiple" name="segmented-multiple">
+          <mdui-segmented-button value="small">Small</mdui-segmented-button>
+          <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
+          <mdui-segmented-button value="large">Large</mdui-segmented-button>
+        </mdui-segmented-button-group>
+        <div class="error"></div>
+
+        <mdui-select name="select-single" placeholder="single select">
+          <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
+          <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
+          <mdui-menu-item value="item-3">Item 3</mdui-menu-item>
+        </mdui-select>
+
+        <mdui-select multiple name="select-multiple" label="multiple select">
+          <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
+          <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
+          <mdui-menu-item value="item-3">Item 3</mdui-menu-item>
+        </mdui-select>
+
+        <mdui-text-field name="text-field" label="Text Field"></mdui-text-field>
+
+        <div>
+          <mdui-button type="button" name="submit" value="submit-value" class="submit">submit</mdui-button>
+          <mdui-button type="reset">reset</mdui-button>
+        </div>
       </form>
     </section>
   </main>

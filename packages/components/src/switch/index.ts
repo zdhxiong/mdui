@@ -1,12 +1,13 @@
 import { html, LitElement, nothing } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
-import { FormController } from '@mdui/shared/controllers/form.js';
+import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
+import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -16,6 +17,7 @@ import '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { style } from './style.js';
 import type { Ripple } from '../ripple/index.js';
+import type { FormControl } from '@mdui/jq/shared/form.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
@@ -36,7 +38,10 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart checked-icon 选中状态的图标
  */
 @customElement('mdui-switch')
-export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
+export class Switch
+  extends RippleMixin(FocusableMixin(LitElement))
+  implements FormControl
+{
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -45,7 +50,8 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public disabled = false;
 
@@ -55,9 +61,16 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public checked = false;
+
+  /**
+   * 默认选中状态。在重置表单时，将重置为该默认状态。该属性只能通过 JavaScript 属性设置
+   */
+  @defaultValue('checked')
+  public defaultChecked = false;
 
   /**
    * 未选中状态的图标
@@ -79,7 +92,8 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public required = false;
 
@@ -106,19 +120,40 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   /**
    * 是否验证未通过
    */
-  @state()
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
+  })
   private invalid = false;
 
   private readonly rippleRef: Ref<Ripple> = createRef();
   private readonly inputRef: Ref<HTMLInputElement> = createRef();
   private readonly formController: FormController = new FormController(this, {
-    value: (control: Switch) => (control.checked ? control.value : undefined),
+    value: (control) => (control.checked ? control.value : undefined),
+    defaultValue: (control) => control.defaultChecked!,
+    setValue: (control, checked) => (control.checked = checked as boolean),
   });
   private readonly hasSlotController = new HasSlotController(
     this,
     'icon',
     'checked-icon',
   );
+
+  /**
+   * 表单验证状态对象
+   */
+  public get validity(): ValidityState {
+    return this.inputRef.value!.validity;
+  }
+
+  /**
+   * 表单验证的错误提示信息
+   */
+  public get validationMessage(): string {
+    return this.inputRef.value!.validationMessage;
+  }
 
   protected override get rippleElement() {
     return this.rippleRef.value!;
@@ -137,18 +172,41 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   @watch('disabled', true)
-  @watch('checked', true)
   @watch('required', true)
   private async onDisabledChange() {
     await this.updateComplete;
     this.invalid = !this.inputRef.value!.checkValidity();
   }
 
+  @watch('checked', true)
+  private async onCheckedChange() {
+    await this.updateComplete;
+
+    // reset 引起的值变更，不执行验证；直接修改值引起的变更，需要进行验证
+    const form = this.formController.getForm();
+    if (form && formResets.get(form)?.has(this)) {
+      this.invalid = false;
+      formResets.get(form)!.delete(this);
+    } else {
+      this.invalid = !this.inputRef.value!.checkValidity();
+    }
+  }
+
   /**
    * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
    */
   public checkValidity(): boolean {
-    return this.inputRef.value!.checkValidity();
+    const valid = this.inputRef.value!.checkValidity();
+
+    if (!valid) {
+      emit(this, 'invalid', {
+        bubbles: false,
+        cancelable: true,
+        composed: false,
+      });
+    }
+
+    return valid;
   }
 
   /**
@@ -158,6 +216,20 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
    */
   public reportValidity(): boolean {
     this.invalid = !this.inputRef.value!.reportValidity();
+
+    if (this.invalid) {
+      const requestInvalid = emit(this, 'invalid', {
+        bubbles: false,
+        cancelable: true,
+        composed: false,
+      });
+
+      // 调用了 preventDefault() 时，隐藏默认的表单错误提示
+      this.inputRef.value!.style.display = requestInvalid.defaultPrevented
+        ? 'none'
+        : 'inline-block';
+    }
+
     return !this.invalid;
   }
 
@@ -175,7 +247,6 @@ export class Switch extends RippleMixin(FocusableMixin(LitElement)) {
     return html`<label>
       <input
         ${ref(this.inputRef)}
-        class=${classMap({ invalid: this.invalid })}
         type="checkbox"
         name=${ifDefined(this.name)}
         value=${ifDefined(this.value)}

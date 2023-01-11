@@ -66,7 +66,8 @@ export class ButtonIcon extends ButtonBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public selectable = false;
 
@@ -76,7 +77,8 @@ export class ButtonIcon extends ButtonBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public selected = false;
 
@@ -109,15 +111,16 @@ export class ButtonIcon extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
-        ? this.disabled || this.loading
-          ? html`<span part="button" class="button">${this.renderIcon()}</span>`
-          : this.renderAnchor({
-              className: 'button',
-              part: 'button',
-              content: this.renderIcon(),
-            })
-        : this.renderButton({
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
+      ${this.isButton()
+        ? this.renderButton({
+            className: 'button',
+            part: 'button',
+            content: this.renderIcon(),
+          })
+        : this.disabled || this.loading
+        ? html`<span part="button" class="button">${this.renderIcon()}</span>`
+        : this.renderAnchor({
             className: 'button',
             part: 'button',
             content: this.renderIcon(),

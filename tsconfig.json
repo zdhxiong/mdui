@@ -9,7 +9,7 @@
     "useDefineForClassFields": false,
     "module": "es2015",
     "target": "es2019",
-    "lib": ["es2019", "dom"],
+    "lib": ["es2019", "dom", "dom.iterable"],
     "sourceMap": true,
     "inlineSources": true,
     "declaration": true,

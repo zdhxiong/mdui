@@ -42,7 +42,8 @@ export class NavigationDrawer extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public open = false;
 
@@ -52,7 +53,8 @@ export class NavigationDrawer extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public modal = false;
 
@@ -62,7 +64,8 @@ export class NavigationDrawer extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'close-on-esc',
   })
   public closeOnEsc = false;
@@ -73,7 +76,8 @@ export class NavigationDrawer extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'close-on-overlay-click',
   })
   public closeOnOverlayClick = false;
@@ -95,7 +99,8 @@ export class NavigationDrawer extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public contained = false;
 
@@ -103,7 +108,8 @@ export class NavigationDrawer extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   private handset = false;
 

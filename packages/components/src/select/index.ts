@@ -4,11 +4,15 @@ import {
   property,
   queryAssignedElements,
 } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
-import { FormController } from '@mdui/shared/controllers/form.js';
+import { isString } from '@mdui/jq/shared/helper.js';
+import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
+import { defaultValue } from '@mdui/shared/decorators/default-value.js';
+import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '../chip.js';
@@ -19,6 +23,7 @@ import { style } from './style.js';
 import type { MenuItem } from '../menu/menu-item.js';
 import type { Menu } from '../menu/menu.js';
 import type { TextField } from '../text-field.js';
+import type { FormControl } from '@mdui/jq/shared/form.js';
 import type { CSSResultGroup, TemplateResult, WarningKind } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
@@ -37,13 +42,12 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot suffix-icon
  * @slot clear-icon
  * @slot helper
- * @slot error
  *
  * @csspart text-field 文本框，即 `<mdui-text-field>` 元素
  * @csspart menu 下拉菜单，即 `<mdui-menu>` 元素
  */
 @customElement('mdui-select')
-export class Select extends FocusableMixin(LitElement) {
+export class Select extends FocusableMixin(LitElement) implements FormControl {
   // firstUpdated 中调用了 requestUpdate，会产生控制台警告，所以这里关闭 change-in-update 警告
   public static override enabledWarnings: WarningKind[] = ['migration'];
   public static override styles: CSSResultGroup = [componentStyle, style];
@@ -62,7 +66,8 @@ export class Select extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public multiple = false;
 
@@ -80,6 +85,12 @@ export class Select extends FocusableMixin(LitElement) {
    */
   @property()
   public value: string | string[] = '';
+
+  /**
+   * 默认选中的值。在重置表单时，将重置为该默认值。该属性只能通过 JavaScript 属性设置
+   */
+  @defaultValue()
+  public defaultValue: string | string[] = '';
 
   /**
    * 标签文本
@@ -100,18 +111,13 @@ export class Select extends FocusableMixin(LitElement) {
   public helper!: string;
 
   /**
-   * 验证错误时的错误文本
-   */
-  @property()
-  public error!: string;
-
-  /**
    * 是否可清空下拉框
    */
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public clearable = false;
 
@@ -133,7 +139,8 @@ export class Select extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'end-aligned',
   })
   public endAligned = false;
@@ -176,7 +183,8 @@ export class Select extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public readonly = false;
 
@@ -186,7 +194,8 @@ export class Select extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public disabled = false;
 
@@ -196,7 +205,8 @@ export class Select extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public required = false;
 
@@ -208,9 +218,10 @@ export class Select extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
-  public invalid = false;
+  private invalid = false;
 
   @queryAssignedElements({ flatten: true, selector: 'mdui-menu-item' })
   private readonly menuItems!: MenuItem[];
@@ -228,8 +239,21 @@ export class Select extends FocusableMixin(LitElement) {
     'suffix-icon',
     'clear-icon',
     'helper',
-    'error',
   );
+
+  /**
+   * 表单验证状态对象
+   */
+  public get validity(): ValidityState {
+    return this.hiddenInputRef.value!.validity;
+  }
+
+  /**
+   * 表单验证的错误提示信息
+   */
+  public get validationMessage(): string {
+    return this.hiddenInputRef.value!.validationMessage;
+  }
 
   protected override get focusElement(): HTMLElement {
     return this.textFieldRef.value!;
@@ -241,6 +265,14 @@ export class Select extends FocusableMixin(LitElement) {
 
   public override connectedCallback(): void {
     super.connectedCallback();
+
+    this.value =
+      this.multiple && isString(this.value)
+        ? this.value
+          ? [this.value]
+          : []
+        : this.value;
+    this.defaultValue = this.multiple ? [] : '';
     this.resizeObserver = new ResizeObserver(() => this.resizeMenu());
 
     this.updateComplete.then(() => {
@@ -257,7 +289,17 @@ export class Select extends FocusableMixin(LitElement) {
    * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
    */
   public checkValidity(): boolean {
-    return this.hiddenInputRef.value!.checkValidity();
+    const valid = this.hiddenInputRef.value!.checkValidity();
+
+    if (!valid) {
+      emit(this, 'invalid', {
+        bubbles: false,
+        cancelable: true,
+        composed: false,
+      });
+    }
+
+    return valid;
   }
 
   /**
@@ -267,6 +309,15 @@ export class Select extends FocusableMixin(LitElement) {
    */
   public reportValidity(): boolean {
     this.invalid = !this.hiddenInputRef.value!.reportValidity();
+
+    if (this.invalid) {
+      emit(this, 'invalid', {
+        bubbles: false,
+        cancelable: true,
+        composed: false,
+      });
+    }
+
     return !this.invalid;
   }
 
@@ -291,13 +342,38 @@ export class Select extends FocusableMixin(LitElement) {
   protected override render(): TemplateResult {
     const hasSelection = this.multiple ? this.value.length : this.value;
 
-    return html`<input
-        ${ref(this.hiddenInputRef)}
-        class="hidden-input"
-        ?required=${this.required}
-        .value=${hasSelection ? ' ' : ''}
-        tabindex="-1"
-      />
+    return html`${when(
+        !this.multiple,
+        () =>
+          html`<input
+            ${ref(this.hiddenInputRef)}
+            type="radio"
+            class="hidden-input"
+            name=${ifDefined(this.name)}
+            value=${ifDefined(this.value)}
+            .required=${this.required}
+            .disabled=${this.disabled}
+            .checked=${hasSelection}
+            tabindex="-1"
+          />`,
+      )}${when(
+        this.multiple,
+        () => html`<select
+          ${ref(this.hiddenInputRef)}
+          class="hidden-input"
+          name=${ifDefined(this.name)}
+          value=${ifDefined(this.value)}
+          .required=${this.required}
+          .disabled=${this.disabled}
+          multiple
+          tabindex="-1"
+        >
+          ${map(
+            this.value,
+            (value) => html`<option selected value=${value}></option>`,
+          )}
+        </select>`,
+      )}
       <mdui-dropdown
         .stayOpenOnClick=${this.multiple}
         .disabled=${this.readonly || this.disabled}
@@ -325,7 +401,7 @@ export class Select extends FocusableMixin(LitElement) {
           .label=${this.label}
           .placeholder=${this.placeholder}
           .helper=${this.helper}
-          .error=${this.error}
+          .error=${this.hiddenInputRef.value?.validationMessage}
           .clearable=${this.clearable}
           .endAligned=${this.endAligned}
           .prefix=${this.prefix}
@@ -348,7 +424,6 @@ export class Select extends FocusableMixin(LitElement) {
               'suffix-icon',
               'clear-icon',
               'helper',
-              'error',
             ],
             (slotName) =>
               this.hasSlotController.test(slotName)
@@ -356,7 +431,7 @@ export class Select extends FocusableMixin(LitElement) {
                 : nothing,
           )}
           ${when(
-            this.multiple,
+            this.multiple && this.value.length,
             () =>
               html`<div slot="input" class="chips">
                 ${map(
@@ -415,7 +490,17 @@ export class Select extends FocusableMixin(LitElement) {
   private async onValueChange(e: Event) {
     const menu = e.target as Menu;
     this.value = menu.value;
-    this.invalid = !this.hiddenInputRef.value!.checkValidity();
+
+    await this.updateComplete;
+
+    // reset 引起的值变更，不执行验证；直接修改值引起的变更，需要进行验证
+    const form = this.formController.getForm();
+    if (form && formResets.get(form)?.has(this)) {
+      this.invalid = false;
+      formResets.get(form)!.delete(this);
+    } else {
+      this.invalid = !this.hiddenInputRef.value!.checkValidity();
+    }
   }
 
   /**

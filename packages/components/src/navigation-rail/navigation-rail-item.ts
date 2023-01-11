@@ -66,7 +66,8 @@ export class NavigationRailItem extends AnchorMixin(
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   protected active = false;
 

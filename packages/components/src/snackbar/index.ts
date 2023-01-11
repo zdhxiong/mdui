@@ -44,7 +44,8 @@ export class Snackbar extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public open = false;
 
@@ -78,7 +79,8 @@ export class Snackbar extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public closeable = false;
 
@@ -103,7 +105,8 @@ export class Snackbar extends LitElement {
     type: Boolean,
     reflect: true,
     attribute: 'close-on-action-click',
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public closeOnActionClick = false;
 
@@ -114,7 +117,8 @@ export class Snackbar extends LitElement {
     type: Boolean,
     reflect: true,
     attribute: 'close-on-outside-click',
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public closeOnOutsideClick = false;
 

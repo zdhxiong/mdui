@@ -44,7 +44,8 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
     @property({
       type: Boolean,
       reflect: true,
-      converter: (value: string | null): boolean => value !== 'false',
+      converter: (value: string | null): boolean =>
+        value !== null && value !== 'false',
     })
     public disabled = false;
 
@@ -54,7 +55,8 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
     @property({
       type: Boolean,
       reflect: true,
-      converter: (value: string | null): boolean => value !== 'false',
+      converter: (value: string | null): boolean =>
+        value !== null && value !== 'false',
     })
     public loading = false;
 
@@ -64,7 +66,8 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
     @property({
       type: Boolean,
       reflect: true,
-      converter: (value: string | null): boolean => value !== 'false',
+      converter: (value: string | null): boolean =>
+        value !== null && value !== 'false',
     })
     public override autofocus = false;
 
@@ -150,7 +153,8 @@ export const ButtonMixin = <T extends Constructor<LitElement>>(
     @property({
       type: Boolean,
       reflect: true,
-      converter: (value: string | null): boolean => value !== 'false',
+      converter: (value: string | null): boolean =>
+        value !== null && value !== 'false',
       attribute: 'formnovalidate',
     })
     public formNovalidate = false;

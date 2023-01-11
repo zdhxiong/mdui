@@ -21,6 +21,12 @@
     import '../../packages/components/switch.js';
     import '../../packages/components/icon.js';
     import '../../packages/components/button.js';
+    import { $ } from '../../packages/jq/$.js';
+    import '../../packages/jq/methods/on.js';
+
+    $('.prevent-default').on('invalid', (e) => {
+      e.preventDefault();
+    });
   </script>
 </head>
 
@@ -67,9 +73,11 @@
       <h2>Required</h2>
       <form>
         <mdui-switch name="switch[]" required></mdui-switch>
+        <mdui-switch name="switch[]" required class="prevent-default"></mdui-switch>
         <mdui-switch name="switch[]" required disabled></mdui-switch>
         <div class="mdui-theme-dark">
           <mdui-switch name="switch[]" required></mdui-switch>
+          <mdui-switch name="switch[]" required class="prevent-default"></mdui-switch>
           <mdui-switch name="switch[]" required disabled></mdui-switch>
         </div>
         <br />

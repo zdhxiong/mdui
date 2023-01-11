@@ -11,11 +11,6 @@
   .letterSpacing(label-large);
 }
 
-:host([disabled]) {
-  cursor: default;
-  pointer-events: none;
-}
-
 label {
   display: inline-flex;
   align-items: center;
@@ -76,74 +71,81 @@ span {
   .transition(color, short4, standard);
 }
 
-input {
-  // 选中状态的图标
-  &:checked + i {
+// 选中状态的图标
+:host([checked]) {
+  i {
     .stateLayerColor(primary);
-
-    .icon {
-      .color(primary);
-    }
-
-    .indeterminate-icon {
-      opacity: 0;
-      transform: scale(0.5);
-    }
-
-    .checked-icon {
-      opacity: 1;
-      transform: scale(1);
-    }
   }
 
-  // 不确定状态的图标
-  &:indeterminate + i {
-    .stateLayerColor(primary);
-
-    .icon {
-      .color(primary);
-    }
-
-    .checked-icon {
-      opacity: 0;
-      transform: scale(0.5);
-    }
-
-    .indeterminate-icon {
-      opacity: 1;
-      transform: scale(1);
-    }
+  .icon {
+    .color(primary);
   }
 
-  // 验证不通过状态的图标
-  &.invalid + i {
+  .indeterminate-icon {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  .checked-icon {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// 不确定状态的图标
+:host([indeterminate]) {
+  i {
+    .stateLayerColor(primary);
+  }
+
+  .icon {
+    .color(primary);
+  }
+
+  .checked-icon {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  .indeterminate-icon {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// 验证不通过状态的图标
+:host([invalid]) {
+  i {
     .stateLayerColor(error);
-
-    .icon {
-      .color(error);
-    }
-
-    & + span {
-      .color(error);
-    }
   }
 
-  // 禁用状态的图标
-  &:disabled + i {
-    .icon {
-      .color(on-surface, 38%);
-    }
-
-    & + span {
-      .color(on-surface, 38%);
-    }
+  .icon {
+    .color(error);
   }
 
-  // 禁用且选中状态、禁用且不确定状态
-  &:disabled:checked + i,
-  &:disabled:indeterminate + i {
-    .unchecked-icon {
-      opacity: 0;
-    }
+  span {
+    .color(error);
+  }
+}
+
+// 禁用状态的图标
+:host([disabled]) {
+  cursor: default;
+  pointer-events: none;
+
+  .icon {
+    .color(on-surface, 38%);
+  }
+
+  span {
+    .color(on-surface, 38%);
+  }
+}
+
+// 禁用且选中状态、禁用且不确定状态
+:host([disabled][checked]),
+:host([disabled][indeterminate]) {
+  .unchecked-icon {
+    opacity: 0;
   }
 }

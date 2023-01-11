@@ -1,35 +1,42 @@
 import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { map } from 'lit/directives/map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
 import { isString } from '@mdui/jq/shared/helper.js';
-import { FormController } from '@mdui/shared/controllers/form.js';
+import { FormController, formResets } from '@mdui/shared/controllers/form.js';
+import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { segmentedButtonGroupStyle } from './segmented-button-group-style.js';
 import type { SegmentedButton as SegmentedButtonOriginal } from './segmented-button.js';
+import type { FormControl } from '@mdui/jq/shared/form.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 type SegmentedButton = SegmentedButtonOriginal & {
   selected: boolean;
+  invalid: boolean;
+  groupDisabled: boolean;
   readonly key: number;
 };
 
 /**
  * @event click - 点击时触发
  * @event change - 选中的值变更时触发
+ * @event invalid - 表单字段验证未通过时触发
  *
  * @slot - `<mdui-segmented-button>` 组件
  *
  * @csspart --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-segmented-button-group')
-export class SegmentedButtonGroup extends LitElement {
+export class SegmentedButtonGroup extends LitElement implements FormControl {
   public static override styles: CSSResultGroup = [
     componentStyle,
     segmentedButtonGroupStyle,
@@ -41,7 +48,8 @@ export class SegmentedButtonGroup extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public fullwidth = false;
 
@@ -57,12 +65,24 @@ export class SegmentedButtonGroup extends LitElement {
     | 'multiple' /*分段按钮项为多选*/;
 
   /**
+   * 是否为禁用状态
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
+  })
+  public disabled = false;
+
+  /**
    * 提交表单时，是否必须选中
    */
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public required = false;
 
@@ -91,6 +111,12 @@ export class SegmentedButtonGroup extends LitElement {
   @property()
   public value: string | string[] = '';
 
+  /**
+   * 默认选中的值。在重置表单时，将重置为该默认值。该属性只能通过 JavaScript 属性设置
+   */
+  @defaultValue()
+  public defaultValue: string | string[] = '';
+
   // 因为 segmented-button 的 value 可能会重复，所以在每个 segmented-button 元素上都加了一个唯一的 key 属性，通过 selectedKeys 来记录选中状态的 key
   @state()
   private selectedKeys: number[] = [];
@@ -98,7 +124,12 @@ export class SegmentedButtonGroup extends LitElement {
   /**
    * 是否验证未通过
    */
-  @state()
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
+  })
   private invalid = false;
 
   // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
@@ -106,6 +137,20 @@ export class SegmentedButtonGroup extends LitElement {
 
   private readonly inputRef: Ref<HTMLSelectElement> = createRef();
   private readonly formController: FormController = new FormController(this);
+
+  /**
+   * 表单验证状态对象
+   */
+  public get validity(): ValidityState {
+    return this.inputRef.value!.validity;
+  }
+
+  /**
+   * 表单验证的错误提示信息
+   */
+  public get validationMessage(): string {
+    return this.inputRef.value!.validationMessage;
+  }
 
   // 所有的子项元素
   private get items() {
@@ -168,13 +213,15 @@ export class SegmentedButtonGroup extends LitElement {
 
   @watch('value')
   private async onValueChange() {
-    if (!this.hasUpdated) {
+    const hasUpdated = this.hasUpdated;
+
+    if (!hasUpdated) {
       await this.updateComplete;
     }
 
     // 根据 value 找出对应的 segmented-button，并把这些元素的 key 赋值给 selectedKeys
     if (!this.isSelectable) {
-      this.updateSelected();
+      this.updateSelected(hasUpdated);
       return;
     }
 
@@ -200,14 +247,46 @@ export class SegmentedButtonGroup extends LitElement {
         .map((item) => item.key);
     }
 
-    this.updateSelected();
+    this.updateSelected(hasUpdated);
+  }
+
+  @watch('invalid')
+  private onInvalidChange() {
+    this.itemsEnabled.forEach((item) => (item.invalid = this.invalid));
+  }
+
+  @watch('disabled')
+  private onDisabledChange() {
+    this.items.forEach((item) => (item.groupDisabled = this.disabled));
+  }
+
+  public override connectedCallback() {
+    super.connectedCallback();
+
+    this.value =
+      this.isMultiple && isString(this.value)
+        ? this.value
+          ? [this.value]
+          : []
+        : this.value;
+    this.defaultValue = this.selects === 'multiple' ? [] : '';
   }
 
   /**
    * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
    */
   public checkValidity(): boolean {
-    return this.inputRef.value!.checkValidity();
+    const valid = this.inputRef.value!.checkValidity();
+
+    if (!valid) {
+      emit(this, 'invalid', {
+        bubbles: false,
+        cancelable: true,
+        composed: false,
+      });
+    }
+
+    return valid;
   }
 
   /**
@@ -217,6 +296,20 @@ export class SegmentedButtonGroup extends LitElement {
    */
   public reportValidity(): boolean {
     this.invalid = !this.inputRef.value!.reportValidity();
+
+    if (this.invalid) {
+      const requestInvalid = emit(this, 'invalid', {
+        bubbles: false,
+        cancelable: true,
+        composed: false,
+      });
+
+      // 调用了 preventDefault() 时，隐藏默认的表单错误提示
+      this.inputRef.value!.style.display = requestInvalid.defaultPrevented
+        ? 'none'
+        : 'inline-block';
+    }
+
     return !this.invalid;
   }
 
@@ -231,30 +324,54 @@ export class SegmentedButtonGroup extends LitElement {
   }
 
   protected override render(): TemplateResult {
-    return html`<slot
-        @slotchange=${this.onSlotChange}
-        @click=${this.onClick}
-      ></slot>
-      ${when(
-        this.isSelectable,
-        () => html`<select
-          ${ref(this.inputRef)}
-          .required=${this.required}
-          tabindex="-1"
-        >
-          <option value=""></option>
-          ${when(
-            this.value,
-            () => html`<option selected value=${this.value}></option>`,
-          )}
-        </select>`,
-      )} `;
+    return html`${when(
+        this.isSelectable && this.isSingle,
+        () =>
+          html`<input
+            ${ref(this.inputRef)}
+            type="radio"
+            name=${ifDefined(this.name)}
+            value=${ifDefined(this.value)}
+            .required=${this.required}
+            .checked=${!!this.value}
+            tabindex="-1"
+          />`,
+      )}${when(
+        this.isSelectable && this.isMultiple,
+        () =>
+          html`<select
+            ${ref(this.inputRef)}
+            name=${ifDefined(this.name)}
+            value=${ifDefined(this.value)}
+            .required=${this.required}
+            multiple
+            tabindex="-1"
+          >
+            ${map(
+              this.value,
+              (value) => html`<option selected value=${value}></option>`,
+            )}
+          </select>`,
+      )}<slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>`;
   }
 
-  private updateSelected() {
+  private async updateSelected(hasUpdated: boolean) {
     this.items.forEach(
       (item) => (item.selected = this.selectedKeys.includes(item.key)),
     );
+
+    if (hasUpdated) {
+      await this.updateComplete;
+
+      // reset 引起的值变更，不执行验证；直接修改值引起的变更，需要进行验证
+      const form = this.formController.getForm();
+      if (form && formResets.get(form)?.has(this)) {
+        this.invalid = false;
+        formResets.get(form)!.delete(this);
+      } else {
+        this.invalid = !this.inputRef.value!.checkValidity();
+      }
+    }
   }
 
   // 切换一个元素的选中状态
@@ -278,7 +395,7 @@ export class SegmentedButtonGroup extends LitElement {
       }
     }
 
-    this.updateSelected();
+    this.updateSelected(this.hasUpdated);
   }
 
   private onClick(event: MouseEvent) {

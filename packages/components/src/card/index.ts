@@ -39,7 +39,8 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public clickable = false;
 

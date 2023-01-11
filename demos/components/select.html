@@ -31,12 +31,14 @@
     import '../../packages/mdui/mdui.css';
     import '../../packages/components/select.js';
     import '../../packages/components/menu-item.js';
+    import '../../packages/components/button.js';
     import '../../packages/components/button-icon.js';
     import { $ } from '../../packages/jq/$.js';
     import '../../packages/jq/methods/append.js';
     import '../../packages/jq/methods/children.js';
     import '../../packages/jq/methods/filter.js';
     import '../../packages/jq/methods/map.js';
+    import '../../packages/jq/methods/on.js';
 
     // mdui-select 元素内不为空的（可包含 slot），填充 mdui-menu-item
     $('mdui-select')
@@ -50,6 +52,14 @@
     // multiple select 只能通过 js 设置初始值
     $('.multiple-value').map((_, select) => {
       select.value = ['item-2', 'item-3'];
+    });
+
+    $('.invalid').on('change', function () {
+      if (this.value !== 'item-3') {
+        this.setCustomValidity('请选择 item 3');
+      } else {
+        this.setCustomValidity('');
+      }
     });
   </script>
 </head>
@@ -222,16 +232,21 @@
 
     <section>
       <h2>required</h2>
-      <mdui-select label="required" required prefix-icon="search" helper="required"></mdui-select>
-      <mdui-select label="required" required prefix-icon="search" helper="required" variant="outlined"></mdui-select>
+      <form>
+        <mdui-select label="required" required prefix-icon="search" helper="required"></mdui-select>
+        <mdui-select label="required" required prefix-icon="search" helper="required" variant="outlined"></mdui-select>
+        <br/>
+        <mdui-button type="submit">Submit</mdui-button>
+      </form>
     </section>
 
     <section>
-      <h2>error</h2>
-      <mdui-select label="required" required prefix-icon="search" helper="required"
-        error="custom error text"></mdui-select>
-      <mdui-select label="required" required prefix-icon="search" helper="required" error="custom error text"
-        variant="outlined"></mdui-select>
+      <h2>invalid</h2>
+      <form>
+        <mdui-select label="验证选择 item 3" required class="invalid"></mdui-select>
+        <br/>
+        <mdui-button type="submit">Submit</mdui-button>
+      </form>
     </section>
   </main>
 </body>

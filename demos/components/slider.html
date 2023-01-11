@@ -20,26 +20,63 @@
     import '../../packages/mdui/mdui.css';
     import '../../packages/components/slider.js';
     import '../../packages/components/range-slider.js';
+    import '../../packages/components/button.js';
     import { $ } from '../../packages/jq/$.js';
     import '../../packages/jq/methods/each.js';
 
-    setTimeout(() => {
-      $('.invalid-slider').each((_, slider) => {
-        slider.setCustomValidity('验证未通过，hahaha');
-      });
-    });
+    await Promise.allSettled([
+      customElements.whenDefined('mdui-slider'),
+      customElements.whenDefined('mdui-range-slider')
+    ]);
 
+    // label 格式化
     $('.label-formatter').each((_, slider) => {
       slider.labelFormatter = (value) => {
         return `${value}小时`
       }
     });
 
+    // 设置初始值
     $('.range-slider-disabled').each((_, slider) => {
       slider.value = [20, 60];
     });
     $('.range-slider-default-value').each((_, slider) => {
       slider.value = [2, 6];
+    });
+
+    // 表单验证及 invalid 事件
+    const validateSlider = slider => {
+      if (slider.value <= 50) {
+        slider.setCustomValidity('值必须大于50');
+      } else {
+        slider.setCustomValidity('');
+      }
+    }
+    const validateRangeSlider = rangeSlider => {
+      if (rangeSlider.value[0] <= 20 || rangeSlider.value[1] >= 80) {
+        rangeSlider.setCustomValidity('值必须大于20，且小于80');
+      } else {
+        rangeSlider.setCustomValidity('');
+      }
+    }
+
+    $('.invalid')
+      .each((_, slider) => {
+        validateSlider(slider);
+      })
+      .on('change', function () {
+        validateSlider(this);
+      });
+    $('.invalid-range')
+      .each((_, rangeSlider) => {
+        validateRangeSlider(rangeSlider);
+      })
+      .on('change', function () {
+        validateRangeSlider(this);
+      });
+
+    $('.invalid-prevent').on('invalid', (e) => {
+      e.preventDefault();
     });
   </script>
 </head>
@@ -126,16 +163,20 @@
 
     <section>
       <h2>invalid</h2>
-      <mdui-slider class="invalid-slider"></mdui-slider>
-      <mdui-slider class="invalid-slider" max="10" tickmarks></mdui-slider>
-      <mdui-range-slider class="invalid-slider"></mdui-range-slider>
-      <mdui-range-slider class="invalid-slider" max="10" tickmarks></mdui-range-slider>
-      <div class="mdui-theme-dark">
-        <mdui-slider class="invalid-slider"></mdui-slider>
-        <mdui-slider class="invalid-slider" max="10" tickmarks></mdui-slider>
-        <mdui-range-slider class="invalid-slider"></mdui-range-slider>
-        <mdui-range-slider class="invalid-slider" max="10" tickmarks></mdui-range-slider>
-      </div>
+      <form>
+        <mdui-slider class="invalid"></mdui-slider>
+        <mdui-slider class="invalid invalid-prevent"></mdui-slider>
+        <mdui-range-slider class="invalid-range"></mdui-range-slider>
+        <mdui-range-slider class="invalid-range invalid-prevent"></mdui-range-slider>
+        <div class="mdui-theme-dark">
+          <mdui-slider class="invalid"></mdui-slider>
+          <mdui-slider class="invalid invalid-prevent"></mdui-slider>
+          <mdui-range-slider class="invalid-range"></mdui-range-slider>
+          <mdui-range-slider class="invalid-range invalid-prevent"></mdui-range-slider>
+        </div>
+        <br/>
+        <mdui-button type="submit">Submit</mdui-button>
+      </form>
     </section>
   </main>
 </body>

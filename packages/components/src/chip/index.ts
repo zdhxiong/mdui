@@ -61,7 +61,8 @@ export class Chip extends ButtonBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public elevated = false;
 
@@ -71,7 +72,8 @@ export class Chip extends ButtonBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public selectable = false;
 
@@ -81,7 +83,8 @@ export class Chip extends ButtonBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public selected = false;
 
@@ -91,7 +94,8 @@ export class Chip extends ButtonBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public deletable = false;
 
@@ -128,17 +132,18 @@ export class Chip extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
-        ? this.disabled || this.loading
-          ? html`<span part="button" class="button">
-              ${this.renderInner()}
-            </span>`
-          : this.renderAnchor({
-              className: 'button',
-              part: 'button',
-              content: this.renderInner(),
-            })
-        : this.renderButton({
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
+      ${this.isButton()
+        ? this.renderButton({
+            className: 'button',
+            part: 'button',
+            content: this.renderInner(),
+          })
+        : this.disabled || this.loading
+        ? html`<span part="button" class="button">
+            ${this.renderInner()}
+          </span>`
+        : this.renderAnchor({
             className: 'button',
             part: 'button',
             content: this.renderInner(),

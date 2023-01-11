@@ -8,8 +8,9 @@ import { when } from 'lit/directives/when.js';
 import { animate } from '@lit-labs/motion';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
-import { FormController } from '@mdui/shared/controllers/form.js';
+import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
+import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
@@ -22,6 +23,7 @@ import '@mdui/icons/visibility.js';
 import '../button-icon.js';
 import '../icon.js';
 import { style } from './style.js';
+import type { FormControl } from '@mdui/jq/shared/form.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
@@ -42,7 +44,6 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot show-password-icon
  * @slot hide-password-icon
  * @slot helper
- * @slot error
  * @slot input
  *
  * @csspart text-field
@@ -61,7 +62,10 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart counter
  */
 @customElement('mdui-text-field')
-export class TextField extends FocusableMixin(LitElement) {
+export class TextField
+  extends FocusableMixin(LitElement)
+  implements FormControl
+{
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -110,6 +114,12 @@ export class TextField extends FocusableMixin(LitElement) {
   public value = '';
 
   /**
+   * 默认值。在重置表单时，将重置为该默认值。该属性只能通过 JavaScript 属性设置
+   */
+  @defaultValue()
+  public defaultValue = '';
+
+  /**
    * 标签文本
    */
   @property({ reflect: true })
@@ -133,16 +143,11 @@ export class TextField extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'helper-on-focus',
   })
   public helperOnFocus = false;
-
-  /**
-   * 验证错误时的错误文本
-   */
-  @property()
-  public error!: string;
 
   /**
    * 是否可清空文本框
@@ -150,7 +155,8 @@ export class TextField extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public clearable = false;
 
@@ -160,7 +166,8 @@ export class TextField extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'end-aligned',
   })
   public endAligned = false;
@@ -203,7 +210,8 @@ export class TextField extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public readonly = false;
 
@@ -213,7 +221,8 @@ export class TextField extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public disabled = false;
 
@@ -223,21 +232,10 @@ export class TextField extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public required = false;
-
-  /**
-   * 是否验证未通过
-   *
-   * 该验证为浏览器原生验证 API，基于 `type`、`required`、`minlength`、`maxlength` 及 `pattern` 等属性的验证结果
-   */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
-  })
-  public invalid = false;
 
   /**
    * 文本框固定显示的行数
@@ -251,7 +249,8 @@ export class TextField extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public autosize = false;
 
@@ -285,7 +284,8 @@ export class TextField extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public counter = false;
 
@@ -319,7 +319,8 @@ export class TextField extends FocusableMixin(LitElement) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'toggle-password',
   })
   public togglePassword = false;
@@ -388,13 +389,27 @@ export class TextField extends FocusableMixin(LitElement) {
     | 'url';
 
   /**
+   * 是否验证未通过
+   *
+   * 该验证为浏览器原生验证 API，基于 `type`、`required`、`minlength`、`maxlength` 及 `pattern` 等属性的验证结果
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
+  })
+  private invalid = false;
+
+  /**
    * 该属性设置为 true 时，则在样式上为 text-field 赋予聚焦状态。实际是否聚焦仍然由 focusableMixin 控制
    * 该属性仅供 mdui 内部使用，当前 select 组件使用了该属性
    */
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'focused-style',
   })
   private focusedStyle = false;
@@ -404,6 +419,13 @@ export class TextField extends FocusableMixin(LitElement) {
 
   @state()
   private hasValue = false;
+
+  /**
+   * 通过该属性传入了错误文案时，会优先显示该文案。需要配合 invalid=true 使用
+   * 当前仅供 select 组件使用
+   */
+  @state()
+  private error = '';
 
   private resizeObserver!: ResizeObserver;
   private readonly inputRef: Ref<HTMLInputElement | HTMLTextAreaElement> =
@@ -421,6 +443,20 @@ export class TextField extends FocusableMixin(LitElement) {
    * 当前仅供 select 组件使用
    */
   private readonlyButClearable = false;
+
+  /**
+   * 表单验证状态对象
+   */
+  public get validity(): ValidityState {
+    return this.inputRef.value!.validity;
+  }
+
+  /**
+   * 表单验证的错误提示信息
+   */
+  public get validationMessage(): string {
+    return this.inputRef.value!.validationMessage;
+  }
 
   public get valueAsNumber() {
     return (
@@ -466,11 +502,20 @@ export class TextField extends FocusableMixin(LitElement) {
   }
 
   @watch('value')
-  private onValueChange() {
+  private async onValueChange() {
     this.hasValue = !!this.value;
 
     if (this.hasUpdated) {
-      this.invalid = !this.inputRef.value!.checkValidity();
+      await this.updateComplete;
+
+      // reset 引起的值变更，不执行验证；直接修改值引起的变更，需要进行验证
+      const form = this.formController.getForm();
+      if (form && formResets.get(form)?.has(this)) {
+        this.invalid = false;
+        formResets.get(form)!.delete(this);
+      } else {
+        this.invalid = !this.inputRef.value!.checkValidity();
+      }
     }
   }
 
@@ -534,7 +579,6 @@ export class TextField extends FocusableMixin(LitElement) {
     this.resizeObserver = new ResizeObserver(() => this.setTextareaHeight());
 
     this.updateComplete.then(() => {
-      this.invalid = !this.inputRef.value!.checkValidity();
       this.setTextareaHeight();
       this.resizeObserver.observe(this.inputRef.value!);
     });
@@ -597,7 +641,17 @@ export class TextField extends FocusableMixin(LitElement) {
    * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
    */
   public checkValidity(): boolean {
-    return this.inputRef.value!.checkValidity();
+    const valid = this.inputRef.value!.checkValidity();
+
+    if (!valid) {
+      emit(this, 'invalid', {
+        bubbles: false,
+        cancelable: true,
+        composed: false,
+      });
+    }
+
+    return valid;
   }
 
   /**
@@ -607,6 +661,15 @@ export class TextField extends FocusableMixin(LitElement) {
    */
   public reportValidity(): boolean {
     this.invalid = !this.inputRef.value!.reportValidity();
+
+    if (this.invalid) {
+      emit(this, 'invalid', {
+        bubbles: false,
+        cancelable: true,
+        composed: false,
+      });
+    }
+
     return !this.invalid;
   }
 
@@ -687,8 +750,8 @@ export class TextField extends FocusableMixin(LitElement) {
     emit(this, 'input');
   }
 
-  private onInvalid() {
-    this.invalid = true;
+  private onInvalid(event: Event) {
+    event.preventDefault();
   }
 
   private onKeyDown(event: KeyboardEvent) {
@@ -916,9 +979,7 @@ export class TextField extends FocusableMixin(LitElement) {
     return this.invalid &&
       (this.error || this.inputRef.value!.validationMessage)
       ? html`<div part="error" class="error">
-          <slot name="error">
-            ${this.error || this.inputRef.value!.validationMessage}
-          </slot>
+          ${this.error || this.inputRef.value!.validationMessage}
         </div>`
       : this.helper
       ? html`<div part="helper" class="helper">

@@ -22,6 +22,12 @@
     import '../../packages/components/segmented-button.js';
     import '../../packages/components/icon.js';
     import '../../packages/components/button.js';
+    import { $ } from '../../packages/jq/$.js';
+    import '../../packages/jq/methods/on.js';
+
+    $('.prevent-default').on('invalid', (e) => {
+      e.preventDefault()
+    });
   </script>
 </head>
 
@@ -30,6 +36,16 @@
     <section>
       <h2>Segmented Button</h2>
       <mdui-segmented-button-group>
+        <mdui-segmented-button>Small</mdui-segmented-button>
+        <mdui-segmented-button selected>Medium</mdui-segmented-button>
+        <mdui-segmented-button disabled>Disabled</mdui-segmented-button>
+        <mdui-segmented-button>Large</mdui-segmented-button>
+      </mdui-segmented-button-group>
+    </section>
+
+    <section>
+      <h2>Segmented Button Disabled</h2>
+      <mdui-segmented-button-group disabled>
         <mdui-segmented-button>Small</mdui-segmented-button>
         <mdui-segmented-button selected>Medium</mdui-segmented-button>
         <mdui-segmented-button disabled>Disabled</mdui-segmented-button>
@@ -157,7 +173,13 @@
           <mdui-segmented-button value="small">Small</mdui-segmented-button>
           <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
           <mdui-segmented-button value="large">Large</mdui-segmented-button>
-        </mdui-segmented-button-group><br /><br />
+        </mdui-segmented-button-group>
+        <mdui-segmented-button-group required selects="single" class="prevent-default">
+          <mdui-segmented-button value="small">preventDefault()</mdui-segmented-button>
+          <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
+          <mdui-segmented-button value="large">Large</mdui-segmented-button>
+        </mdui-segmented-button-group>
+        <br /><br />
         <mdui-button type="submit">Submit</mdui-button>
       </form>
     </section>

@@ -16,11 +16,6 @@
   .letterSpacing(label-large);
 }
 
-:host([disabled]) {
-  cursor: default;
-  pointer-events: none;
-}
-
 .unchecked-icon {
   position: absolute;
   .color(on-surface-variant);
@@ -84,7 +79,7 @@ span {
 }
 
 /* 验证不通过状态 */
-i.invalid {
+:host([invalid]) {
   .stateLayerColor(error);
 
   .unchecked-icon {
@@ -94,10 +89,18 @@ i.invalid {
   .checked-icon {
     .backgroundColor(error);
   }
+
+  span {
+    .color(error);
+  }
 }
 
 /* 禁用状态的图标 */
-:host([disabled]) {
+:host([disabled]),
+:host([group-disabled]) {
+  cursor: default;
+  pointer-events: none;
+
   .unchecked-icon {
     .color(on-surface, 38%);
   }

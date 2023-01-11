@@ -31,7 +31,8 @@ export class BottomAppBar extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public hide = false;
 
@@ -41,7 +42,8 @@ export class BottomAppBar extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'hide-on-scroll',
   })
   public hideOnScroll = false;
@@ -52,7 +54,8 @@ export class BottomAppBar extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'fab-detach',
   })
   public fabDetach = false;

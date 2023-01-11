@@ -33,7 +33,6 @@ export class HasSlotController implements ReactiveController {
   }
 
   private hasDefaultSlot(): boolean {
-    // @ts-ignore
     return [...this.host.childNodes].some((node) => {
       if (node.nodeType === node.TEXT_NODE && node.textContent!.trim() !== '') {
         return true;

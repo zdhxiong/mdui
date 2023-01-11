@@ -29,8 +29,19 @@
   <script type="module">
     import '../../packages/mdui/mdui.css';
     import '../../packages/components/text-field.js';
+    import '../../packages/components/button.js';
     import '../../packages/components/button-icon.js';
     import '../../packages/components/chip.js';
+    import { $ } from '../../packages/jq/$.js';
+    import '../../packages/jq/methods/on.js';
+
+    $('.invalid').on('input', function () {
+      if (this.value !== 'success') {
+        this.setCustomValidity('请输入 success');
+      } else {
+        this.setCustomValidity('');
+      }
+    });
   </script>
 </head>
 
@@ -267,32 +278,47 @@
 
     <section>
       <h2>required</h2>
-      <mdui-text-field label="required" required prefix-icon="search" helper="required"></mdui-text-field>
-      <mdui-text-field label="required" required prefix-icon="search" helper="required" variant="outlined"></mdui-text-field>
-    </section>
-
-    <section>
-      <h2>error</h2>
-      <mdui-text-field label="required" required prefix-icon="search" helper="required" error="custom error text"></mdui-text-field>
-      <mdui-text-field label="required" required prefix-icon="search" helper="required" error="custom error text" variant="outlined"></mdui-text-field>
+      <form>
+        <mdui-text-field label="required" required prefix-icon="search" helper="required"></mdui-text-field>
+        <mdui-text-field label="required" required prefix-icon="search" helper="required" variant="outlined"></mdui-text-field>
+        <br/>
+        <mdui-button type="submit">Submit</mdui-button>
+      </form>
     </section>
 
     <section>
       <h2>validation</h2>
-      <mdui-text-field label="minlength:2, maxlength:10" minlength="2" maxlength="10" prefix-icon="search" suffix-icon="delete" helper="helper text" counter></mdui-text-field>
-      <mdui-text-field label="minlength:2, maxlength:10" minlength="2" maxlength="10" prefix-icon="search" suffix-icon="delete" helper="helper text" counter variant="outlined"></mdui-text-field>
-      <br/>
-      <mdui-text-field label="min,max,step" type="number" min="2" max="10" step="2"></mdui-text-field>
-      <mdui-text-field label="min,max,step" type="number" min="2" max="10" step="2" variant="outlined"></mdui-text-field>
+      <form>
+        <mdui-text-field label="minlength:2, maxlength:10" minlength="2" maxlength="10" prefix-icon="search" suffix-icon="delete" helper="helper text" counter></mdui-text-field>
+        <mdui-text-field label="minlength:2, maxlength:10" minlength="2" maxlength="10" prefix-icon="search" suffix-icon="delete" helper="helper text" counter variant="outlined"></mdui-text-field>
+        <br/>
+        <mdui-text-field label="min,max,step" type="number" min="2" max="10" step="2"></mdui-text-field>
+        <mdui-text-field label="min,max,step" type="number" min="2" max="10" step="2" variant="outlined"></mdui-text-field>
+        <br/>
+        <mdui-button type="submit">Submit</mdui-button>
+      </form>
     </section>
 
     <section>
       <h2>pattern 至少包含6位，且包含大小写字母</h2>
-      <mdui-text-field label="pattern input" pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z]).*$"></mdui-text-field>
-      <mdui-text-field label="pattern input" pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z]).*$" variant="outlined"></mdui-text-field>
-      <br/>
-      <mdui-text-field label="pattern textarea" rows="4" pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z]).*$"></mdui-text-field>
-      <mdui-text-field label="pattern textarea" rows="4" pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z]).*$" variant="outlined"></mdui-text-field>
+      <form>
+        <mdui-text-field label="pattern input" pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z]).*$"></mdui-text-field>
+        <mdui-text-field label="pattern input" pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z]).*$" variant="outlined"></mdui-text-field>
+        <br/>
+        <mdui-text-field label="pattern textarea" rows="4" pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z]).*$"></mdui-text-field>
+        <mdui-text-field label="pattern textarea" rows="4" pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z]).*$" variant="outlined"></mdui-text-field>
+        <br/>
+        <mdui-button type="submit">Submit</mdui-button>
+      </form>
+    </section>
+
+    <section>
+      <h2>invalid</h2>
+      <form>
+        <mdui-text-field label="验证输入 success" required class="invalid"></mdui-text-field>
+        <br/>
+        <mdui-button type="submit">Submit</mdui-button>
+      </form>
     </section>
 
   </main>

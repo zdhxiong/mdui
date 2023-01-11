@@ -18,6 +18,15 @@
   .padding(0, 12);
 }
 
+:host([invalid]) {
+  .color(error);
+  .borderColor(error);
+
+  .button {
+    .backgroundColor(error-container);
+  }
+}
+
 :host([selected]) {
   .color(on-secondary-container);
   .backgroundColor(secondary-container);
@@ -40,6 +49,7 @@
 }
 
 :host([disabled]),
+:host([group-disabled]),
 :host([loading]) {
   cursor: default;
   pointer-events: none;

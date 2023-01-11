@@ -77,7 +77,8 @@ export class Fab extends ButtonBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public extended = false;
 
@@ -122,21 +123,23 @@ export class Fab extends ButtonBase {
       'has-icon': this.icon || hasIconSlot,
     });
 
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
-        ? this.disabled || this.loading
-          ? html`<span part="button" class=${className}>
-              ${this.renderInner()}
-            </span>`
-          : this.renderAnchor({
-              className,
-              part: 'button',
-              content: this.renderInner(),
-            })
-        : this.renderButton({
+    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
+      ${this.isButton()
+        ? this.renderButton({
             className,
             part: 'button',
             content: this.renderInner(),
-          })}${this.renderLoading()}`;
+          })
+        : this.disabled || this.loading
+        ? html`<span part="button" class=${className}>
+            ${this.renderInner()}
+          </span>`
+        : this.renderAnchor({
+            className,
+            part: 'button',
+            content: this.renderInner(),
+          })}
+      ${this.renderLoading()}`;
   }
 
   private renderLabel(): TemplateResult {

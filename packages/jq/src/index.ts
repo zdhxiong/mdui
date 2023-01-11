@@ -64,6 +64,7 @@ import './methods/replaceAll.js';
 import './methods/replaceWith.js';
 import './methods/serialize.js';
 import './methods/serializeArray.js';
+import './methods/serializeObject.js';
 import './methods/show.js';
 import './methods/siblings.js';
 import './methods/slice.js';

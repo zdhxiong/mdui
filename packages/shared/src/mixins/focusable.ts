@@ -56,7 +56,8 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
        * 这段代码不能封装成函数，否则生成 custom-elements.json 会识别不了
        * 这段注释仅在这里写一次，其他地方不再重复
        */
-      converter: (value: string | null): boolean => value !== 'false',
+      converter: (value: string | null): boolean =>
+        value !== null && value !== 'false',
     })
     public override autofocus = false;
 
@@ -67,7 +68,8 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     @property({
       type: Boolean,
       reflect: true,
-      converter: (value: string | null): boolean => value !== 'false',
+      converter: (value: string | null): boolean =>
+        value !== null && value !== 'false',
     })
     private focused = false;
 
@@ -78,7 +80,8 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     @property({
       type: Boolean,
       reflect: true,
-      converter: (value: string | null): boolean => value !== 'false',
+      converter: (value: string | null): boolean =>
+        value !== null && value !== 'false',
       attribute: 'focus-visible',
     })
     private focusVisible = false;

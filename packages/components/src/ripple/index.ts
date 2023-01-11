@@ -36,7 +36,8 @@ export class Ripple extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'no-ripple',
   })
   public noRipple = false;

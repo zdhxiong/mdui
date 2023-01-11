@@ -30,6 +30,10 @@
         .find(`mdui-radio[value="${this.value}"]`)[0]
         .checked = true;
     });
+
+    $('.prevent-default').on('invalid', (e) => {
+      e.preventDefault();
+    });
   </script>
 </head>
 
@@ -72,6 +76,24 @@
     </section>
 
     <section>
+      <h2>Radio Group Disabled</h2>
+      <mdui-radio-group name="radio1" disabled>
+        <mdui-radio value="one"></mdui-radio>
+        <mdui-radio value="two">Radio</mdui-radio>
+        <mdui-radio value="three" disabled></mdui-radio>
+        <mdui-radio value="four" disabled>Radio</mdui-radio>
+      </mdui-radio-group>
+      <div class="mdui-theme-dark">
+        <mdui-radio-group name="radio1-1" disabled>
+          <mdui-radio value="one"></mdui-radio>
+          <mdui-radio value="two">Radio</mdui-radio>
+          <mdui-radio value="three" disabled></mdui-radio>
+          <mdui-radio value="four" disabled>Radio</mdui-radio>
+        </mdui-radio-group>
+      </div>
+    </section>
+
+    <section>
       <h2>Radio Group Required</h2>
       <form>
         <mdui-radio-group required name="radio3">
@@ -80,12 +102,20 @@
           <mdui-radio value="three" disabled></mdui-radio>
           <mdui-radio value="four" disabled>Radio</mdui-radio>
         </mdui-radio-group>
+        <mdui-radio-group required name="radio3-prevent" class="prevent-default">
+          <mdui-radio value="one">preventDefault()</mdui-radio>
+          <mdui-radio value="two">preventDefault()</mdui-radio>
+        </mdui-radio-group>
         <div class="mdui-theme-dark">
           <mdui-radio-group required name="radio3-1">
             <mdui-radio value="one"></mdui-radio>
             <mdui-radio value="two">Radio</mdui-radio>
             <mdui-radio value="three" disabled></mdui-radio>
             <mdui-radio value="four" disabled>Radio</mdui-radio>
+          </mdui-radio-group>
+          <mdui-radio-group required name="radio3-prevent" class="prevent-default">
+            <mdui-radio value="one">preventDefault()</mdui-radio>
+            <mdui-radio value="two">preventDefault()</mdui-radio>
           </mdui-radio-group>
         </div>
         <br />

@@ -60,7 +60,8 @@ export class TopAppBar extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public hide = false;
 
@@ -70,7 +71,8 @@ export class TopAppBar extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'hide-on-scroll',
   })
   public hideOnScroll = false;
@@ -81,7 +83,8 @@ export class TopAppBar extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   public shrink = false;
 
@@ -91,7 +94,8 @@ export class TopAppBar extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
     attribute: 'shrink-on-scroll',
   })
   public shrinkOnScroll = false;
@@ -114,7 +118,8 @@ export class TopAppBar extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean => value !== 'false',
+    converter: (value: string | null): boolean =>
+      value !== null && value !== 'false',
   })
   private scrolling = false;
 

@@ -668,6 +668,8 @@ export class TextField
         cancelable: true,
         composed: false,
       });
+
+      this.focus();
     }
 
     return !this.invalid;

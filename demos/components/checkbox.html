@@ -23,8 +23,9 @@
     import { $ } from '../../packages/jq/$.js';
     import '../../packages/jq/methods/on.js';
 
-    $('.prevent-default').on('invalid', (e) => {
-      e.preventDefault()
+    // 隐藏默认错误提示
+    $('.prevent-default').on('invalid', function (e) {
+      e.preventDefault();
     });
   </script>
 </head>

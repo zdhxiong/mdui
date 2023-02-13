@@ -94,6 +94,14 @@ export class SegmentedButton extends ButtonBase {
     return this.rippleRef.value!;
   }
 
+  protected override get rippleDisabled(): boolean {
+    return this.isDisabled() || this.loading;
+  }
+
+  protected override get focusDisabled(): boolean {
+    return this.isDisabled() || this.loading;
+  }
+
   protected override render(): TemplateResult {
     const hasStartSlot = this.hasSlotController.test('start');
     const hasEndSlot = this.hasSlotController.test('end');

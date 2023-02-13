@@ -225,9 +225,10 @@ export class Switch
       });
 
       // 调用了 preventDefault() 时，隐藏默认的表单错误提示
-      this.inputRef.value!.style.display = requestInvalid.defaultPrevented
-        ? 'none'
-        : 'inline-block';
+      if (requestInvalid.defaultPrevented) {
+        this.blur();
+        this.focus();
+      }
     }
 
     return !this.invalid;

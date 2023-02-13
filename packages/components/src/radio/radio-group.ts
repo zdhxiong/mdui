@@ -186,9 +186,10 @@ export class RadioGroup extends LitElement implements FormControl {
       });
 
       // 调用了 preventDefault() 时，隐藏默认的表单错误提示
-      this.inputRef.value!.style.display = requestInvalid.defaultPrevented
-        ? 'none'
-        : 'inline-block';
+      if (requestInvalid.defaultPrevented) {
+        this.inputRef.value!.blur();
+        this.inputRef.value!.focus();
+      }
     }
 
     return !this.invalid;
@@ -215,6 +216,7 @@ export class RadioGroup extends LitElement implements FormControl {
         .checked=${!!this.value}
         .required=${this.required}
         tabindex="-1"
+        @keydown=${this.onKeyDown}
       />
       <slot
         @click=${this.onRadioClick}
@@ -251,6 +253,9 @@ export class RadioGroup extends LitElement implements FormControl {
     target.focus();
   }
 
+  /**
+   * 在内部的 `<mdui-radio>` 上按下按键时，在 `<mdui-radio>` 之间切换焦点
+   */
   private onKeyDown(event: KeyboardEvent) {
     if (
       !['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(

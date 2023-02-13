@@ -37,11 +37,11 @@
     });
 
     // 设置初始值
-    $('.range-slider-disabled').each((_, slider) => {
-      slider.value = [20, 60];
+    $('.range-slider-disabled').each(function () {
+      this.value = [20, 60];
     });
-    $('.range-slider-default-value').each((_, slider) => {
-      slider.value = [2, 6];
+    $('.range-slider-default-value').each(function () {
+      this.value = [2, 6];
     });
 
     // 表单验证及 invalid 事件
@@ -61,15 +61,15 @@
     }
 
     $('.invalid')
-      .each((_, slider) => {
-        validateSlider(slider);
+      .each(function () {
+        validateSlider(this);
       })
       .on('change', function () {
         validateSlider(this);
       });
     $('.invalid-range')
-      .each((_, rangeSlider) => {
-        validateRangeSlider(rangeSlider);
+      .each(function () {
+        validateRangeSlider(this);
       })
       .on('change', function () {
         validateRangeSlider(this);

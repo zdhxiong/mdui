@@ -305,9 +305,10 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
       });
 
       // 调用了 preventDefault() 时，隐藏默认的表单错误提示
-      this.inputRef.value!.style.display = requestInvalid.defaultPrevented
-        ? 'none'
-        : 'inline-block';
+      if (requestInvalid.defaultPrevented) {
+        this.inputRef.value!.blur();
+        this.inputRef.value!.focus();
+      }
     }
 
     return !this.invalid;
@@ -331,10 +332,12 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
             ${ref(this.inputRef)}
             type="radio"
             name=${ifDefined(this.name)}
-            value=${ifDefined(this.value)}
+            value="1"
+            .disabled=${this.disabled}
             .required=${this.required}
             .checked=${!!this.value}
             tabindex="-1"
+            @keydown=${this.onInputKeyDown}
           />`,
       )}${when(
         this.isSelectable && this.isMultiple,
@@ -342,10 +345,11 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
           html`<select
             ${ref(this.inputRef)}
             name=${ifDefined(this.name)}
-            value=${ifDefined(this.value)}
+            .disabled=${this.disabled}
             .required=${this.required}
             multiple
             tabindex="-1"
+            @keydown=${this.onInputKeyDown}
           >
             ${map(
               this.value,
@@ -413,6 +417,29 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
 
     if (this.isSelectable && item.value) {
       this.selectOne(item);
+    }
+  }
+
+  /**
+   * 在隐藏的 `<input>` 或 `<select>` 上按下按键时，切换选中状态
+   */
+  private onInputKeyDown(event: KeyboardEvent) {
+    if (!['Enter', ' '].includes(event.key)) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (this.isSingle) {
+      const input = event.target as HTMLInputElement;
+      input.checked = !input.checked;
+      this.selectOne(this.itemsEnabled[0]);
+      this.itemsEnabled[0].focus();
+    }
+
+    if (this.isMultiple) {
+      this.selectOne(this.itemsEnabled[0]);
+      this.itemsEnabled[0].focus();
     }
   }
 

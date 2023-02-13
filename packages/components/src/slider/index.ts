@@ -65,7 +65,7 @@ export class Slider extends SliderBase implements FormControl {
       this.invalid = false;
       formResets.get(form)!.delete(this);
     } else {
-      this.invalid = !this.invalidRef.value!.checkValidity();
+      this.invalid = !this.inputRef.value!.checkValidity();
     }
 
     this.inputRef.value!.value = this.value.toString();
@@ -120,16 +120,6 @@ export class Slider extends SliderBase implements FormControl {
         .value=${live(this.value.toString())}
         @input=${this.onInput}
         @change=${this.onChange}
-      />
-      <input
-        ${ref(this.invalidRef)}
-        class="invalid"
-        type="range"
-        step=${this.step}
-        min=${this.min}
-        max=${this.max}
-        ?disabled=${this.disabled}
-        .value=${live(this.value.toString())}
       />
       <div part="track-inactive" class="track-inactive"></div>
       <div

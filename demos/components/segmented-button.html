@@ -168,13 +168,24 @@
 
     <section>
       <h2>required</h2>
-      <form>
-        <mdui-segmented-button-group required selects="single">
+      <form method="get">
+        <mdui-segmented-button-group required selects="single" name="single1">
           <mdui-segmented-button value="small">Small</mdui-segmented-button>
           <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
           <mdui-segmented-button value="large">Large</mdui-segmented-button>
         </mdui-segmented-button-group>
-        <mdui-segmented-button-group required selects="single" class="prevent-default">
+        <mdui-segmented-button-group required selects="single" name="single2" class="prevent-default">
+          <mdui-segmented-button value="small">preventDefault()</mdui-segmented-button>
+          <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
+          <mdui-segmented-button value="large">Large</mdui-segmented-button>
+        </mdui-segmented-button-group>
+        <br/>
+        <mdui-segmented-button-group required selects="multiple" name="multiple1">
+          <mdui-segmented-button value="small">Small</mdui-segmented-button>
+          <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
+          <mdui-segmented-button value="large">Large</mdui-segmented-button>
+        </mdui-segmented-button-group>
+        <mdui-segmented-button-group required selects="multiple" name="multiple2" class="prevent-default">
           <mdui-segmented-button value="small">preventDefault()</mdui-segmented-button>
           <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
           <mdui-segmented-button value="large">Large</mdui-segmented-button>

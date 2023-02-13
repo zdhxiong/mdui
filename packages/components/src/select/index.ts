@@ -316,6 +316,8 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
         cancelable: true,
         composed: false,
       });
+
+      this.focus();
     }
 
     return !this.invalid;
@@ -340,7 +342,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   }
 
   protected override render(): TemplateResult {
-    const hasSelection = this.multiple ? this.value.length : this.value;
+    const hasSelection = this.multiple ? !!this.value.length : !!this.value;
 
     return html`${when(
         !this.multiple,

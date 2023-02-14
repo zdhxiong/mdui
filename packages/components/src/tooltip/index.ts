@@ -27,7 +27,6 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot content - tooltip 的内容，可以包含 HTML。若只包含纯文本，可以使用 content 属性代替
  *
  * @csspart content - tooltip 的内容
- * @csspart arrow - tooltip 中的箭头
  */
 @customElement('mdui-tooltip')
 export class Tooltip extends LitElement {
@@ -116,7 +115,6 @@ export class Tooltip extends LitElement {
   private target!: HTMLElement;
   private hoverTimeout!: number;
   private readonly tooltipRef: Ref<HTMLElement> = createRef();
-  private readonly arrowRef: Ref<HTMLElement> = createRef();
 
   @watch('disabled', true)
   @watch('placement', true)
@@ -214,7 +212,6 @@ export class Tooltip extends LitElement {
         class="tooltip"
         style="${styleMap({ zIndex: this.zIndex.toString() })}"
       >
-        <div ${ref(this.arrowRef)} class="arrow" part="arrow"></div>
         <div class="content" part="content">
           <slot name="content">${this.content}</slot>
         </div>
@@ -302,16 +299,11 @@ export class Tooltip extends LitElement {
 
   private updatePositioner(): void {
     const $tooltip = $(this.tooltipRef.value!);
-    const $arrow = $(this.arrowRef.value!);
     const targetRect = this.target.getBoundingClientRect(); // 触发目标的位置和宽高
     const tooltipRect = {
       width: this.tooltipRef.value!.offsetWidth,
       height: this.tooltipRef.value!.offsetHeight,
     }; // tooltip 的宽高
-    const arrowRect = {
-      width: this.arrowRef.value!.offsetWidth,
-      height: this.arrowRef.value!.offsetHeight,
-    }; // arrow 的宽高
     const targetMargin = 4; // 触发目标和 tooltip 之间的间距
 
     let placement = this.placement;
@@ -346,10 +338,6 @@ export class Tooltip extends LitElement {
             targetRect.left + targetRect.width / 2 - tooltipRect.width / 2
           }px`,
         });
-        $arrow.css({
-          top: '6px',
-          left: `${tooltipRect.width / 2 - arrowRect.width / 2}px`,
-        });
         break;
       case 'top':
         $tooltip.css({
@@ -358,10 +346,6 @@ export class Tooltip extends LitElement {
           left: `${
             targetRect.left + targetRect.width / 2 - tooltipRect.width / 2
           }px`,
-        });
-        $arrow.css({
-          bottom: '6px',
-          left: `${tooltipRect.width / 2 - arrowRect.width / 2}px`,
         });
         break;
       case 'left':
@@ -372,10 +356,6 @@ export class Tooltip extends LitElement {
           }px`,
           left: `${targetRect.left - tooltipRect.width - targetMargin}px`,
         });
-        $arrow.css({
-          right: '6px',
-          top: `${tooltipRect.height / 2 - arrowRect.height / 2}px`,
-        });
         break;
       default:
         $tooltip.css({
@@ -384,10 +364,6 @@ export class Tooltip extends LitElement {
             targetRect.top + targetRect.height / 2 - tooltipRect.height / 2
           }px`,
           left: `${targetRect.left + targetRect.width + targetMargin}px`,
-        });
-        $arrow.css({
-          left: '6px',
-          top: `${tooltipRect.height / 2 - arrowRect.height / 2}px`,
         });
         break;
     }

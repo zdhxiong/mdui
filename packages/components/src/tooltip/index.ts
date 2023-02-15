@@ -33,20 +33,36 @@ export class Tooltip extends LitElement {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * tooltip 的方位。可选值为：
-   * * `auto`
-   * * `top`
-   * * `bottom`
-   * * `left`
-   * * `right`
+   * tooltip 的位置。可选值为：
+   * * `auto`：自动判断位置
+   * * `top-start`：位于上方，且左对齐
+   * * `top`：位于上方，且居中对齐
+   * * `top-end`：位于上方，且右对齐
+   * * `bottom-start`：位于下方，且左对齐
+   * * `bottom`：位于下方，且居中对齐
+   * * `bottom-end`：位于下方，且右对齐
+   * * `left-start`：位于左侧，且顶部对齐
+   * * `left`：位于左侧，且居中对齐
+   * * `left-end`：位于左侧，且底部对齐
+   * * `right-start`：位于右侧，且顶部对齐
+   * * `right`：位于右侧，且居中对齐
+   * * `right-end`：位于右侧，且底部对齐
    */
   @property({ reflect: true })
   public placement:
-    | 'auto' /*自动判断位置。默认在下方。优先级为 `top` > `bottom` > `left` > `right`*/
-    | 'top'
-    | 'bottom'
-    | 'left'
-    | 'right' = 'auto';
+    | 'auto' /*自动判断位置*/
+    | 'top-start' /*位于上方，且左对齐*/
+    | 'top' /*位于上方，且居中对齐*/
+    | 'top-end' /*位于上方，且右对齐*/
+    | 'bottom-start' /*位于下方，且左对齐*/
+    | 'bottom' /*位于下方，且居中对齐*/
+    | 'bottom-end' /*位于下方，且右对齐*/
+    | 'left-start' /*位于左侧，且顶部对齐*/
+    | 'left' /*位于左侧，且居中对齐*/
+    | 'left-end' /*位于左侧，且底部对齐*/
+    | 'right-start' /*位于右侧，且顶部对齐*/
+    | 'right' /*位于右侧，且居中对齐*/
+    | 'right-end' /*位于右侧，且底部对齐*/ = 'auto';
 
   /**
    * hover 触发显示的延时，单位为毫秒
@@ -304,69 +320,104 @@ export class Tooltip extends LitElement {
       width: this.tooltipRef.value!.offsetWidth,
       height: this.tooltipRef.value!.offsetHeight,
     }; // tooltip 的宽高
-    const targetMargin = 4; // 触发目标和 tooltip 之间的间距
+    const targetMargin = 8; // 触发目标和 tooltip 之间的间距
 
+    let transformOriginX: 'left' | 'right' | 'center';
+    let transformOriginY: 'top' | 'bottom' | 'center';
+    let top: number;
+    let left: number;
     let placement = this.placement;
+
     // 自动判断 tooltip 方位
-    if (this.placement === 'auto') {
-      if (targetMargin + tooltipRect.height < targetRect.top) {
+    // 优先级为 top>bottom>left>right
+    if (placement === 'auto') {
+      if (targetRect.top > tooltipRect.height + targetMargin) {
+        // 上方放得下，放上方
         placement = 'top';
       } else if (
-        targetMargin + tooltipRect.height + targetRect.top + targetRect.height <
-        $(window).height()
+        $(window).height() - targetRect.top - targetRect.height >
+        tooltipRect.height + targetMargin
       ) {
+        // 下方放得下，放下方
         placement = 'bottom';
-      } else if (targetMargin + tooltipRect.width < targetRect.left) {
+      } else if (targetRect.left > tooltipRect.width + targetMargin) {
+        // 左侧放得下，放左侧
         placement = 'left';
       } else if (
-        targetMargin + tooltipRect.width + targetRect.width <
-        $(window).width() - targetRect.left
+        $(window).width() - targetRect.left - targetRect.width >
+        tooltipRect.width + targetMargin
       ) {
+        // 右侧放得下，放右侧
         placement = 'right';
       } else {
-        placement = 'bottom';
+        // 默认放上方
+        placement = 'top';
       }
     }
 
-    // 获取位置
-    switch (placement) {
-      case 'bottom':
-        $tooltip.css({
-          transformOrigin: 'top center',
-          top: `${targetRect.top + targetRect.height + targetMargin}px`,
-          left: `${
-            targetRect.left + targetRect.width / 2 - tooltipRect.width / 2
-          }px`,
-        });
-        break;
+    // 根据 placement 计算 tooltip 的位置和方向
+    const [position, alignment] = placement.split('-') as [
+      'top' | 'bottom' | 'left' | 'right',
+      'start' | 'end' | undefined,
+    ];
+
+    switch (position) {
       case 'top':
-        $tooltip.css({
-          transformOrigin: 'bottom center',
-          top: `${targetRect.top - tooltipRect.height - targetMargin}px`,
-          left: `${
-            targetRect.left + targetRect.width / 2 - tooltipRect.width / 2
-          }px`,
-        });
+        transformOriginY = 'bottom';
+        top = targetRect.top - tooltipRect.height - targetMargin;
         break;
-      case 'left':
-        $tooltip.css({
-          transformOrigin: 'center right',
-          top: `${
-            targetRect.top + targetRect.height / 2 - tooltipRect.height / 2
-          }px`,
-          left: `${targetRect.left - tooltipRect.width - targetMargin}px`,
-        });
+      case 'bottom':
+        transformOriginY = 'top';
+        top = targetRect.top + targetRect.height + targetMargin;
         break;
       default:
-        $tooltip.css({
-          transformOrigin: 'center left',
-          top: `${
-            targetRect.top + targetRect.height / 2 - tooltipRect.height / 2
-          }px`,
-          left: `${targetRect.left + targetRect.width + targetMargin}px`,
-        });
+        transformOriginY = 'center';
+        switch (alignment) {
+          case 'start':
+            top = targetRect.top;
+            break;
+          case 'end':
+            top = targetRect.top + targetRect.height - tooltipRect.height;
+            break;
+          default:
+            top =
+              targetRect.top + targetRect.height / 2 - tooltipRect.height / 2;
+            break;
+        }
         break;
     }
+
+    switch (position) {
+      case 'left':
+        transformOriginX = 'right';
+        left = targetRect.left - tooltipRect.width - targetMargin;
+        break;
+      case 'right':
+        transformOriginX = 'left';
+        left = targetRect.left + targetRect.width + targetMargin;
+        break;
+      default:
+        transformOriginX = 'center';
+        switch (alignment) {
+          case 'start':
+            left = targetRect.left;
+            break;
+          case 'end':
+            left = targetRect.left + targetRect.width - tooltipRect.width;
+            break;
+          default:
+            left =
+              targetRect.left + targetRect.width / 2 - tooltipRect.width / 2;
+            break;
+        }
+        break;
+    }
+
+    $tooltip.css({
+      top,
+      left,
+      transformOrigin: [transformOriginX, transformOriginY].join(' '),
+    });
   }
 }
 

@@ -54,23 +54,34 @@ export class Tabs extends LitElement {
   public value = '';
 
   /**
-   * 对齐方式。可选值为：
-   * * `start`：左对齐
-   * * `center`：居中对齐
-   * * `end`：右对齐
-   */
-  @property({ reflect: true })
-  public alignment: 'start' | 'center' | 'end' = 'start';
-
-  /**
    * 选项卡位置。可选值为：
-   * * `top`：选项卡位于上方
-   * * `right`：选项卡位于右侧
-   * * `bottom`：选项卡位于下方
-   * * `left`：选项卡位于左侧
+   * * `top-start`：位于上方，且左对齐
+   * * `top`：位于上方，且居中对齐
+   * * `top-end`：位于上方，且右对齐
+   * * `bottom-start`：位于下方，且左对齐
+   * * `bottom`：位于下方，且居中对齐
+   * * `bottom-end`：位于下方，且右对齐
+   * * `left-start`：位于左侧，且顶部对齐
+   * * `left`：位于左侧，且居中对齐
+   * * `left-end`：位于左侧，且底部对齐
+   * * `right-start`：位于右侧，且顶部对齐
+   * * `right`：位于右侧，且居中对齐
+   * * `right-end`：位于右侧，且底部对齐
    */
   @property({ reflect: true })
-  public placement: 'top' | 'right' | 'bottom' | 'left' = 'top';
+  public placement:
+    | 'top-start' /*位于上方，且左对齐*/
+    | 'top' /*位于上方，且居中对齐*/
+    | 'top-end' /*位于上方，且右对齐*/
+    | 'bottom-start' /*位于下方，且左对齐*/
+    | 'bottom' /*位于下方，且居中对齐*/
+    | 'bottom-end' /*位于下方，且右对齐*/
+    | 'left-start' /*位于左侧，且顶部对齐*/
+    | 'left' /*位于左侧，且居中对齐*/
+    | 'left-end' /*位于左侧，且底部对齐*/
+    | 'right-start' /*位于右侧，且顶部对齐*/
+    | 'right' /*位于右侧，且居中对齐*/
+    | 'right-end' /*位于右侧，且底部对齐*/ = 'top-start';
 
   /**
    * 是否填满父元素宽度
@@ -116,7 +127,6 @@ export class Tabs extends LitElement {
   }
 
   @watch('variant', true)
-  @watch('alignment', true)
   @watch('placement', true)
   @watch('fullwidth', true)
   private onIndicatorChange() {
@@ -198,7 +208,8 @@ export class Tabs extends LitElement {
 
     const activeTab = this.activeTab;
     const $indicator = $(this.indicatorRef.value!);
-    const isVertical = ['left', 'right'].includes(this.placement);
+    const isVertical =
+      this.placement.startsWith('left') || this.placement.startsWith('right');
 
     // 没有激活的，不显示指示器
     if (!activeTab) {

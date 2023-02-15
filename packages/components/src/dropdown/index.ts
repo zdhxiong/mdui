@@ -87,20 +87,36 @@ export class Dropdown extends LitElement {
     | 'click hover focus contextmenu' = 'click';
 
   /**
-   * dropdown 内容的方位。可选值为：
-   * * `auto`：自动判断方位
-   * * `bottom-start`：位于下方，且左对齐
-   * * `bottom-end`：位于下方，且右对齐
+   * dropdown 内容的位置。可选值为：
+   * * `auto`：自动判断位置
    * * `top-start`：位于上方，且左对齐
+   * * `top`：位于上方，且居中对齐
    * * `top-end`：位于上方，且右对齐
+   * * `bottom-start`：位于下方，且左对齐
+   * * `bottom`：位于下方，且居中对齐
+   * * `bottom-end`：位于下方，且右对齐
+   * * `left-start`：位于左侧，且顶部对齐
+   * * `left`：位于左侧，且居中对齐
+   * * `left-end`：位于左侧，且底部对齐
+   * * `right-start`：位于右侧，且顶部对齐
+   * * `right`：位于右侧，且居中对齐
+   * * `right-end`：位于右侧，且底部对齐
    */
   @property({ reflect: true })
   public placement:
-    | 'auto' /*自动判断方位*/
-    | 'bottom-start' /*位于下方，且左对齐*/
-    | 'bottom-end' /*位于下方，且右对齐*/
+    | 'auto' /*自动判断位置*/
     | 'top-start' /*位于上方，且左对齐*/
-    | 'top-end' /*位于上方，且右对齐*/ = 'auto';
+    | 'top' /*位于上方，且居中对齐*/
+    | 'top-end' /*位于上方，且右对齐*/
+    | 'bottom-start' /*位于下方，且左对齐*/
+    | 'bottom' /*位于下方，且居中对齐*/
+    | 'bottom-end' /*位于下方，且右对齐*/
+    | 'left-start' /*位于左侧，且顶部对齐*/
+    | 'left' /*位于左侧，且居中对齐*/
+    | 'left-end' /*位于左侧，且底部对齐*/
+    | 'right-start' /*位于右侧，且顶部对齐*/
+    | 'right' /*位于右侧，且居中对齐*/
+    | 'right-end' /*位于右侧，且底部对齐*/ = 'auto';
 
   /**
    * 在点击 `<mdui-menu-item>` 元素后，是否仍保持 dropdown 为打开状态
@@ -153,6 +169,9 @@ export class Dropdown extends LitElement {
   // 右键菜单点击位置相对于 trigger 的位置
   private pointerOffsetX!: number;
   private pointerOffsetY!: number;
+
+  // 打开动画的方向（横向、竖向）
+  private animateDirection!: 'horizontal' | 'vertical';
 
   private openTimeout!: number;
   private closeTimeout!: number;
@@ -213,7 +232,10 @@ export class Dropdown extends LitElement {
       await Promise.all([
         animateTo(
           this.panelRef.value!,
-          [{ transform: 'scaleY(0.45)' }, { transform: 'scaleY(1)' }],
+          [
+            { transform: `${this.getCssScaleName()}(0.45)` },
+            { transform: `${this.getCssScaleName()}(1)` },
+          ],
           { duration, easing: easingEmphasizedDecelerate },
         ),
         animateTo(
@@ -248,7 +270,10 @@ export class Dropdown extends LitElement {
       await Promise.all([
         animateTo(
           this.panelRef.value!,
-          [{ transform: 'scaleY(1)' }, { transform: 'scaleY(0.45)' }],
+          [
+            { transform: `${this.getCssScaleName()}(1)` },
+            { transform: `${this.getCssScaleName()}(0.45)` },
+          ],
           { duration, easing: easingEmphasizedAccelerate },
         ),
         animateTo(
@@ -327,6 +352,13 @@ export class Dropdown extends LitElement {
       >
         <slot></slot>
       </div>`;
+  }
+
+  /**
+   * 获取 dropdown 打开、关闭动画的 CSS scaleX 或 scaleY
+   */
+  private getCssScaleName() {
+    return this.animateDirection === 'horizontal' ? 'scaleX' : 'scaleY';
   }
 
   /**
@@ -457,118 +489,181 @@ export class Dropdown extends LitElement {
   private updatePositioner(): void {
     const $panel = $(this.panelRef.value!);
     const $window = $(window);
-    const triggerRect = this.triggerSlot.getBoundingClientRect();
+    const panelSlots = this.panelSlots;
     const panelRect = {
-      width: Math.max(
-        ...(this.panelSlots?.map((panel) => panel.offsetWidth) ?? []),
-      ),
-      height: this.panelSlots
+      width: Math.max(...(panelSlots?.map((panel) => panel.offsetWidth) ?? [])),
+      height: panelSlots
         ?.map((panel) => panel.offsetHeight)
         .reduce((total, height) => total + height),
     };
+
+    // 在光标位置触发时，假设 triggerSlot 的宽高为 0，位置位于光标位置
+    const triggerClientRect = this.triggerSlot.getBoundingClientRect();
+    const triggerRect = this.openOnPointer
+      ? {
+          top: this.pointerOffsetY + triggerClientRect.top,
+          left: this.pointerOffsetX + triggerClientRect.left,
+          width: 0,
+          height: 0,
+        }
+      : triggerClientRect;
+
     // dropdown 与屏幕边界至少保留 8px 间距
     const screenMargin = 8;
 
-    // 指定了 openOnPointer，则在光标位置打开 dropdown
-    // 始终在光标右侧打开，若光标右侧空间不足，则显示在屏幕最右侧
-    // 优先在光标下侧打开；若光标下侧空间不足，则在上侧打开；若上侧空间也不足，则位于屏幕顶部打开
-    if (this.openOnPointer) {
-      let left: number;
-      let top: number;
-      let transformOriginX: 'left' | 'right';
-      let transformOriginY: 'top' | 'bottom';
-      if (
-        $window.width() - triggerRect.left - this.pointerOffsetX >
-        panelRect.width + screenMargin
-      ) {
-        // 右侧放得下
-        left = triggerRect.left + this.pointerOffsetX;
-        transformOriginX = 'left';
-      } else {
-        // 右侧放不下时，放左侧
-        left = $window.width() - panelRect.width - screenMargin;
-        transformOriginX = 'right';
-      }
-
-      if (
-        $window.height() - triggerRect.top - this.pointerOffsetY >
-        panelRect.height + screenMargin
-      ) {
-        // 下方放得下
-        top = triggerRect.top + this.pointerOffsetY;
-        transformOriginY = 'top';
-      } else if (
-        triggerRect.top + this.pointerOffsetY >
-        panelRect.height + screenMargin
-      ) {
-        // 上方放得下
-        top = triggerRect.top + this.pointerOffsetY - panelRect.height;
-        transformOriginY = 'bottom';
-      } else {
-        // 上方、下方都放不下，放在屏幕顶部
-        top = screenMargin;
-        transformOriginY = 'top';
-      }
-
-      $panel.css({
-        left,
-        top,
-        transformOrigin: [transformOriginX, transformOriginY].join(' '),
-      });
-      return;
-    }
-
-    // 未指定 openOnPointer，则根据 placement 参数设置打开方位
-    let transformOriginX: 'left' | 'right';
-    let transformOriginY: 'top' | 'bottom';
+    let transformOriginX: 'left' | 'right' | 'center';
+    let transformOriginY: 'top' | 'bottom' | 'center';
+    let top: number;
+    let left: number;
+    let placement = this.placement;
 
     // 自动判断 dropdown 的方位
-    if (this.placement === 'auto') {
+    // 优先级为 bottom>top>right>left，start>center>end
+    if (placement === 'auto') {
+      const windowWidth = $window.width();
+      const windowHeight = $window.height();
+      let position: 'top' | 'bottom' | 'left' | 'right';
+      let alignment: 'start' | 'end' | undefined;
+
       if (
-        $window.height() - triggerRect.top - triggerRect.height >
+        windowHeight - triggerRect.top - triggerRect.height >
         panelRect.height + screenMargin
       ) {
         // 下方放得下，放下方
-        transformOriginY = 'top';
+        position = 'bottom';
       } else if (triggerRect.top > panelRect.height + screenMargin) {
         // 上方放得下，放上方
-        transformOriginY = 'bottom';
+        position = 'top';
+      } else if (
+        windowWidth - triggerRect.left - triggerRect.width >
+        panelRect.width + screenMargin
+      ) {
+        // 右侧放得下，放右侧
+        position = 'right';
+      } else if (triggerRect.left > panelRect.width + screenMargin) {
+        // 左侧放得下，放左侧
+        position = 'left';
       } else {
-        // 上方、下方都放不下，默认房下方
-        transformOriginY = 'top';
+        // 默认放下方
+        position = 'bottom';
       }
 
-      if ($window.width() - triggerRect.left > panelRect.width + screenMargin) {
-        // 右侧放得下，沿着 trigger 左侧放
-        transformOriginX = 'left';
-      } else if (
-        triggerRect.left + triggerRect.width + screenMargin >
-        panelRect.width
-      ) {
-        // 左侧放得下，沿着 trigger 右侧放
-        transformOriginX = 'right';
+      if (['top', 'bottom'].includes(position)) {
+        if (windowWidth - triggerRect.left > panelRect.width + screenMargin) {
+          // 左对齐放得下，左对齐
+          alignment = 'start';
+        } else if (
+          triggerRect.left + triggerRect.width / 2 >
+            panelRect.width / 2 + screenMargin &&
+          windowWidth - triggerRect.left - triggerRect.width / 2 >
+            panelRect.width / 2 + screenMargin
+        ) {
+          // 居中对齐放得下，居中对齐
+          alignment = undefined;
+        } else if (
+          triggerRect.left + triggerRect.width >
+          panelRect.width + screenMargin
+        ) {
+          // 右对齐放得下，右对齐
+          alignment = 'end';
+        } else {
+          // 默认左对齐
+          alignment = 'start';
+        }
       } else {
-        // 左侧、右侧都放不下，默认沿着 trigger 左侧放
-        transformOriginX = 'left';
+        if (windowHeight - triggerRect.top > panelRect.height + screenMargin) {
+          // 顶部对齐放得下，顶部对齐
+          alignment = 'start';
+        } else if (
+          triggerRect.top + triggerRect.height / 2 >
+            panelRect.height / 2 + screenMargin &&
+          windowHeight - triggerRect.top - triggerRect.height / 2 >
+            panelRect.height / 2 + screenMargin
+        ) {
+          // 居中对齐放得下，居中对齐
+          alignment = undefined;
+        } else if (
+          triggerRect.top + triggerRect.height >
+          panelRect.height + screenMargin
+        ) {
+          // 底部对齐放得下，底部对齐
+          alignment = 'end';
+        } else {
+          // 默认顶部对齐
+          alignment = 'start';
+        }
       }
-    } else {
-      const [y, x] = this.placement.split('-') as [
-        'top' | 'bottom',
-        'start' | 'end',
-      ];
-      transformOriginX = x === 'start' ? 'left' : 'right';
-      transformOriginY = y === 'top' ? 'bottom' : 'top';
+
+      placement = alignment
+        ? ([position, alignment].join('-') as typeof placement)
+        : position;
+    }
+
+    // 根据 placement 计算 panel 的位置和方向
+    const [position, alignment] = placement.split('-') as [
+      'top' | 'bottom' | 'left' | 'right',
+      'start' | 'end' | undefined,
+    ];
+
+    this.animateDirection = ['top', 'bottom'].includes(position)
+      ? 'vertical'
+      : 'horizontal';
+
+    switch (position) {
+      case 'top':
+        transformOriginY = 'bottom';
+        top = triggerRect.top - panelRect.height;
+        break;
+      case 'bottom':
+        transformOriginY = 'top';
+        top = triggerRect.top + triggerRect.height;
+        break;
+      default:
+        transformOriginY = 'center';
+        switch (alignment) {
+          case 'start':
+            top = triggerRect.top;
+            break;
+          case 'end':
+            top = triggerRect.top + triggerRect.height - panelRect.height;
+            break;
+          default:
+            top =
+              triggerRect.top + triggerRect.height / 2 - panelRect.height / 2;
+            break;
+        }
+        break;
+    }
+
+    switch (position) {
+      case 'left':
+        transformOriginX = 'right';
+        left = triggerRect.left - panelRect.width;
+        break;
+      case 'right':
+        transformOriginX = 'left';
+        left = triggerRect.left + triggerRect.width;
+        break;
+      default:
+        transformOriginX = 'center';
+        switch (alignment) {
+          case 'start':
+            left = triggerRect.left;
+            break;
+          case 'end':
+            left = triggerRect.left + triggerRect.width - panelRect.width;
+            break;
+          default:
+            left =
+              triggerRect.left + triggerRect.width / 2 - panelRect.width / 2;
+            break;
+        }
+        break;
     }
 
     $panel.css({
-      top:
-        transformOriginY === 'top'
-          ? triggerRect.top + triggerRect.height
-          : triggerRect.top - panelRect.height,
-      left:
-        transformOriginX === 'left'
-          ? triggerRect.left
-          : triggerRect.left + triggerRect.width - panelRect.width,
+      top,
+      left,
       transformOrigin: [transformOriginX, transformOriginY].join(' '),
     });
   }

@@ -37,20 +37,16 @@
     import '../../packages/components/tab.js';
     import '../../packages/components/tab-panel.js';
     import '../../packages/components/badge.js';
-    import '../../packages/components/segmented-button-group.js';
-    import '../../packages/components/segmented-button.js';
+    import '../../packages/components/select.js';
+    import '../../packages/components/menu-item.js';
     import '../../packages/icons/flight.js';
     import '../../packages/icons/luggage.js';
     import '../../packages/icons/explore--outlined.js';
     import { $ } from '../../packages/jq/$.js';
     import '../../packages/jq/methods/on.js';
 
-    $('.change-alignment').on('change', function () {
-      $('.update-placement-alignment')[0].alignment = this.value;
-    });
-
     $('.change-placement').on('change', function () {
-      $('.update-placement-alignment')[0].placement = this.value;
+      $('.update-placement')[0].placement = this.value;
     });
 
     import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.esm.browser.min.js';
@@ -122,31 +118,31 @@
     </section>
 
     <section>
-      <h2>placement & alignment</h2>
+      <h2>placement</h2>
       <div style="display: flex; align-items: center; margin-bottom: 8px;">
         <label>placement：</label>
-        <mdui-segmented-button-group selects="single" value="top" class="change-placement">
-          <mdui-segmented-button value="top">top</mdui-segmented-button>
-          <mdui-segmented-button value="right">right</mdui-segmented-button>
-          <mdui-segmented-button value="bottom">bottom</mdui-segmented-button>
-          <mdui-segmented-button value="left">left</mdui-segmented-button>
-        </mdui-segmented-button-group>
+        <mdui-select class="change-placement" style="width: 160px">
+          <mdui-menu-item value="top-start">top-start</mdui-menu-item>
+          <mdui-menu-item value="top">top</mdui-menu-item>
+          <mdui-menu-item value="top-end">top-end</mdui-menu-item>
+          <mdui-menu-item value="bottom-start">bottom-start</mdui-menu-item>
+          <mdui-menu-item value="bottom">bottom</mdui-menu-item>
+          <mdui-menu-item value="bottom-end">bottom-end</mdui-menu-item>
+          <mdui-menu-item value="left-start">left-start</mdui-menu-item>
+          <mdui-menu-item value="left">left</mdui-menu-item>
+          <mdui-menu-item value="left-end">left-end</mdui-menu-item>
+          <mdui-menu-item value="right-start">right-start</mdui-menu-item>
+          <mdui-menu-item value="right">right</mdui-menu-item>
+          <mdui-menu-item value="right-end">right-end</mdui-menu-item>
+        </mdui-select>
       </div>
-      <div style="display: flex; align-items: center; margin-bottom: 8px;">
-        <label>alignment：</label>
-        <mdui-segmented-button-group selects="single" value="start" class="change-alignment">
-          <mdui-segmented-button value="start">start</mdui-segmented-button>
-          <mdui-segmented-button value="center">center</mdui-segmented-button>
-          <mdui-segmented-button value="end">end</mdui-segmented-button>
-        </mdui-segmented-button-group>
-      </div>
-      <mdui-tabs value="trips" class="update-placement-alignment">
+      <mdui-tabs value="trips" class="update-placement">
         <mdui-tab icon="flight" value="flights">Flights</mdui-tab>
         <mdui-tab icon="luggage" value="trips">Trips</mdui-tab>
         <mdui-tab icon="explore--outlined" value="explore">Explore</mdui-tab>
-        <mdui-tab-panel slot="panel" value="flights">Flights content</mdui-tab-panel>
-        <mdui-tab-panel slot="panel" value="trips">Trips content</mdui-tab-panel>
-        <mdui-tab-panel slot="panel" value="explore">Explore content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="flights" style="height: 300px">Flights content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="trips" style="height: 300px">Trips content</mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="explore" style="height: 300px">Explore content</mdui-tab-panel>
       </mdui-tabs>
     </section>
 

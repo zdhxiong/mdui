@@ -34,7 +34,7 @@
   },
   "homepage": "https://www.mdui.org",
   "dependencies": {
-    "tslib": "^2.4.1",
+    "tslib": "^2.5.0",
     "@mdui/components": "workspace:*",
     "@mdui/functions": "workspace:*",
     "@mdui/shared": "workspace:*",

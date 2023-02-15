@@ -31,8 +31,8 @@
     "@mdui/icons": "workspace:*",
     "@mdui/jq": "workspace:*",
     "@mdui/shared": "workspace:*",
-    "lit": "^2.5.0",
+    "lit": "^2.6.1",
     "ssr-window": "^4.0.2",
-    "tslib": "^2.4.1"
+    "tslib": "^2.5.0"
   }
 }

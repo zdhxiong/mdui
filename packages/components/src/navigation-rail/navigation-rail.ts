@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
@@ -6,12 +6,15 @@ import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
 import '@mdui/jq/methods/innerWidth.js';
+import { isNodeName } from '@mdui/jq/shared/helper.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { LayoutItemBase } from '../layout/layout-item-base.js';
 import { navigationRailStyle } from './navigation-rail-style.js';
 import type { NavigationRailItem as NavigationRailItemOriginal } from './navigation-rail-item.js';
+import type { LayoutPlacement } from '../layout/helper.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 type NavigationRailItem = NavigationRailItemOriginal & {
@@ -35,7 +38,7 @@ type NavigationRailItem = NavigationRailItemOriginal & {
  * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-navigation-rail')
-export class NavigationRail extends LitElement {
+export class NavigationRail extends LayoutItemBase {
   public static override styles: CSSResultGroup = [
     componentStyle,
     navigationRailStyle,
@@ -102,6 +105,10 @@ export class NavigationRail extends LitElement {
   // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
   private hasSetDefaultValue = false;
 
+  protected override get layoutPlacement(): LayoutPlacement {
+    return this.placement;
+  }
+
   // 所有的子项元素
   private get items() {
     return $(this)
@@ -110,14 +117,20 @@ export class NavigationRail extends LitElement {
   }
 
   private get parentTarget() {
-    return this.contained ? this.parentElement! : document.body;
+    return this.contained || this.isParentLayout
+      ? this.parentElement!
+      : document.body;
+  }
+
+  private get isRight() {
+    return this.placement === 'right';
   }
 
   @watch('activeKey')
   private onActiveKeyChange() {
     // 根据 activeKey 读取对应 navigation-rail-item 的值
-    this.value =
-      this.items.find((item) => item.key === this.activeKey)?.value ?? '';
+    const item = this.items.find((item) => item.key === this.activeKey);
+    this.value = item?.value ?? '';
 
     if (this.hasSetDefaultValue) {
       emit(this, 'change');
@@ -138,19 +151,61 @@ export class NavigationRail extends LitElement {
     this.updateActive();
   }
 
+  // 首次渲染在 @watch('placement') 中已经执行，这里跳过
+  @watch('contained', true)
+  private onContainedChange() {
+    if (this.isParentLayout) {
+      return;
+    }
+
+    $(document.body).css({
+      paddingLeft: this.contained || this.isRight ? null : this.offsetWidth,
+      paddingRight: this.contained || !this.isRight ? null : this.offsetWidth,
+    });
+    $(this.parentElement!).css({
+      paddingLeft: this.contained && !this.isRight ? this.offsetWidth : null,
+      paddingRight: this.contained && this.isRight ? this.offsetWidth : null,
+    });
+  }
+
   @watch('placement')
   private onPlacementChange() {
+    this.layoutManager?.updateLayout(this);
+
     this.items.forEach((item) => {
       item.placement = this.placement;
     });
 
-    const isPlacementRight = this.placement === 'right';
-    const width = $(this).innerWidth();
+    if (this.isParentLayout) {
+      return;
+    }
 
     $(this.parentTarget).css({
-      'padding-left': isPlacementRight ? 0 : width,
-      'padding-right': isPlacementRight ? width : 0,
+      paddingLeft: this.isRight ? null : this.offsetWidth,
+      paddingRight: this.isRight ? this.offsetWidth : null,
     });
+  }
+
+  public override connectedCallback() {
+    super.connectedCallback();
+
+    if (!this.isParentLayout) {
+      $(this.parentTarget).css({
+        paddingLeft: this.isRight ? null : this.offsetWidth,
+        paddingRight: this.isRight ? this.offsetWidth : null,
+      });
+    }
+  }
+
+  public override disconnectedCallback() {
+    super.disconnectedCallback();
+
+    if (!this.isParentLayout) {
+      $(this.parentTarget).css({
+        paddingLeft: this.isRight ? undefined : null,
+        paddingRight: this.isRight ? null : undefined,
+      });
+    }
   }
 
   protected override render(): TemplateResult {

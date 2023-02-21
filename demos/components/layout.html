@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>Layout</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: Roboto;
+    }
+    mdui-layout {
+      box-shadow: rgb(0 0 0 / 19%) 0 0.5px 1.5px 0, rgb(0 0 0 / 4%) 0 0 1px 0;
+    }
+    mdui-layout-main {
+      min-height: 300px;
+      background-color: #108ee9;
+    }
+  </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/components/layout.js';
+    import '../../packages/components/layout-item.js';
+    import '../../packages/components/layout-main.js';
+    import '../../packages/components/top-app-bar.js';
+    import '../../packages/components/top-app-bar-title.js';
+    import '../../packages/components/navigation-drawer.js';
+    import '../../packages/components/navigation-bar.js';
+    import '../../packages/components/navigation-rail.js';
+    import '../../packages/components/navigation-rail-item.js';
+    import '../../packages/components/bottom-app-bar.js';
+    import '../../packages/components/list.js';
+    import '../../packages/components/list-item.js';
+    import '../../packages/components/list-subheader.js';
+    import '../../packages/components/icon.js';
+    import '../../packages/components/divider.js';
+    import '../../packages/components/button-icon.js';
+    import '../../packages/components/spacer.js';
+    import '../../packages/components/dropdown.js';
+    import '../../packages/components/menu.js';
+    import '../../packages/components/menu-item.js';
+    import { $ } from '../../packages/jq/index.js';
+
+    // 点击按钮切换 drawer 打开状态
+    $(document).on('click', '.toggle-drawer', function() {
+      const drawer = $(this).parents('mdui-layout').find('mdui-navigation-drawer')[0];
+
+      drawer.open = !drawer.open;
+    });
+
+    $('mdui-top-app-bar').html(`<mdui-button-icon icon="menu" class="toggle-drawer"></mdui-button-icon>
+        <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
+        <mdui-spacer></mdui-spacer>
+        <mdui-button-icon icon="attach_file"></mdui-button-icon>
+        <mdui-button-icon icon="today"></mdui-button-icon>
+        <mdui-dropdown>
+          <mdui-button-icon icon="more_vert" slot="trigger"></mdui-button-icon>
+          <mdui-menu>
+            <mdui-menu-item>Settings</mdui-menu-item>
+            <mdui-menu-item>Send Feedback</mdui-menu-item>
+            <mdui-menu-item>Help</mdui-menu-item>
+          </mdui-menu>
+        </mdui-dropdown>`);
+
+    $('mdui-navigation-drawer').html(`<mdui-list rounded>
+        <mdui-list-subheader>Mail</mdui-list-subheader>
+        <mdui-list-item active>
+          <mdui-icon slot="start" name="inbox"></mdui-icon>
+          Inbox
+          <span slot="end">24</span>
+        </mdui-list-item>
+        <mdui-list-item>
+          <mdui-icon slot="start" name="send"></mdui-icon>
+          Outbox
+          <span slot="end">100+</span>
+        </mdui-list-item>
+        <mdui-list-item><mdui-icon slot="start" name="favorite_border"></mdui-icon>Favorites</mdui-list-item>
+        <mdui-list-item><mdui-icon slot="start" name="delete_outline"></mdui-icon>Trash</mdui-list-item>
+        <mdui-divider></mdui-divider>
+        <mdui-list-subheader>Labels</mdui-list-subheader>
+        <mdui-list-item><mdui-icon slot="start" name="fiber_manual_record"></mdui-icon>Label</mdui-list-item>
+        <mdui-list-item><mdui-icon slot="start" name="fiber_manual_record"></mdui-icon>Label</mdui-list-item>
+        <mdui-list-item><mdui-icon slot="start" name="fiber_manual_record"></mdui-icon>Label</mdui-list-item>
+        <mdui-list-item><mdui-icon slot="start" name="fiber_manual_record"></mdui-icon>Label</mdui-list-item>
+      </mdui-list>`);
+
+    $('mdui-navigation-rail').html(`<mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
+        <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
+        <mdui-navigation-rail-item icon="folder_open--outlined">All Files</mdui-navigation-rail-item>
+        <mdui-navigation-rail-item icon="watch_later--outlined">Recent</mdui-navigation-rail-item>
+        <mdui-navigation-rail-item icon="image--outlined">Images</mdui-navigation-rail-item>
+        <mdui-navigation-rail-item icon="library_music--outlined">Library</mdui-navigation-rail-item>`);
+  </script>
+</head>
+
+<body>
+<main>
+  <section>
+    <h2>top - drawer - main</h2>
+    <mdui-layout>
+      <mdui-top-app-bar></mdui-top-app-bar>
+      <mdui-navigation-drawer open></mdui-navigation-drawer>
+      <mdui-layout-main>Main</mdui-layout-main>
+    </mdui-layout>
+  </section>
+
+  <section>
+    <h2>drawer - top - main</h2>
+    <mdui-layout>
+      <mdui-navigation-drawer open></mdui-navigation-drawer>
+      <mdui-top-app-bar></mdui-top-app-bar>
+      <mdui-layout-main>Main</mdui-layout-main>
+    </mdui-layout>
+  </section>
+
+  <section>
+    <h2>top - rail - main</h2>
+    <mdui-layout>
+      <mdui-top-app-bar></mdui-top-app-bar>
+      <mdui-navigation-rail open></mdui-navigation-rail>
+      <mdui-layout-main>Main</mdui-layout-main>
+    </mdui-layout>
+  </section>
+
+  <section>
+    <h2>rail - top - main</h2>
+    <mdui-layout>
+      <mdui-navigation-rail open></mdui-navigation-rail>
+      <mdui-top-app-bar></mdui-top-app-bar>
+      <mdui-layout-main>Main</mdui-layout-main>
+    </mdui-layout>
+  </section>
+
+  <section>
+    <h2>top - drawer - drawer(right) - main</h2>
+    <mdui-layout>
+      <mdui-top-app-bar></mdui-top-app-bar>
+      <mdui-navigation-drawer open></mdui-navigation-drawer>
+      <mdui-navigation-drawer open placement="right"></mdui-navigation-drawer>
+      <mdui-layout-main>Main</mdui-layout-main>
+    </mdui-layout>
+  </section>
+
+  <section>
+    <h2>drawer - rail - top - drawer(right) - bottom - bar - main</h2>
+    <mdui-layout>
+      <mdui-navigation-drawer open></mdui-navigation-drawer>
+      <mdui-navigation-rail></mdui-navigation-rail>
+      <mdui-top-app-bar></mdui-top-app-bar>
+      <mdui-navigation-drawer open placement="right"></mdui-navigation-drawer>
+      <mdui-bottom-app-bar></mdui-bottom-app-bar>
+      <mdui-navigation-bar></mdui-navigation-bar>
+      <mdui-layout-main>Main</mdui-layout-main>
+    </mdui-layout>
+  </section>
+
+  <section>
+    <h2>item(top) - item(bottom) - item(left) - main</h2>
+    <mdui-layout>
+      <mdui-layout-item placement="top" style="height: 56px; background-color: #7dbcea"></mdui-layout-item>
+      <mdui-layout-item placement="bottom" style="height: 40px; background-color: #7dbcea"></mdui-layout-item>
+      <mdui-layout-item placement="left" style="width: 120px; background-color: #3ba0e9"></mdui-layout-item>
+      <mdui-layout-main>Main</mdui-layout-main>
+    </mdui-layout>
+  </section>
+</main>
+</body>
+
+</html>

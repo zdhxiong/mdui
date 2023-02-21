@@ -17,7 +17,7 @@ declare module '../shared/core.js' {
 $('.box').add('.selected');
 ```
      */
-    add(selector: string | TypeOrArray<Element> | JQ | null): this;
+    add(selector: string | TypeOrArray<Element> | JQ | null | undefined): this;
   }
 }
 

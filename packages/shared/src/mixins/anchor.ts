@@ -1,8 +1,8 @@
-import { html, LitElement, nothing } from 'lit';
+import { html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
-import type { TemplateResult } from 'lit';
+import type { LitElement, TemplateResult } from 'lit';
 import type { DirectiveResult } from 'lit/directive.js';
 import type { RefDirective } from 'lit/directives/ref.js';
 

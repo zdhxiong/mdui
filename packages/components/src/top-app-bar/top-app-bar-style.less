@@ -7,25 +7,27 @@
   top: 0;
   right: 0;
   left: 0;
-  z-index: 100;
   display: flex;
+  flex: 0 0 auto;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 100%;
   border-radius: 0 0 var(--shape-corner) var(--shape-corner);
-  .transition(all, long2, standard);
+  z-index: 100;
+  transition-property: top, height;
+  .transitionDuration(long2);
+  .transitionTimingFunction(standard);
   .padding(12, 8);
   .height(64);
   .backgroundColor(surface);
   .elevationInit(0);
 }
 
-:host([shrink-on-scroll]) {
-  .transitionDuration(short4);
+:host([scroll-target]:not([scroll-target=""])) {
+  position: absolute;
 }
 
-:host([scroll-target]) {
-  position: absolute;
+:host([scroll-behavior~="shrink"]) {
+  .transitionDuration(short4);
 }
 
 :host([scrolling]) {

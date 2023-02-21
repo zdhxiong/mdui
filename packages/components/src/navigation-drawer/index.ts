@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
@@ -6,16 +6,19 @@ import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/innerWidth.js';
 import '@mdui/jq/methods/on.js';
-import '@mdui/jq/methods/parent.js';
+import { isNull } from '@mdui/jq/shared/helper.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
+import { getBreakpoint } from '@mdui/shared/helpers/breakpoint.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { Modal } from '@mdui/shared/helpers/modal.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { LayoutItemBase } from '../layout/layout-item-base.js';
 import { style } from './style.js';
+import type { LayoutPlacement } from '../layout/helper.js';
 import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
@@ -35,7 +38,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart panel - 抽屉导航容器
  */
 @customElement('mdui-navigation-drawer')
-export class NavigationDrawer extends LitElement {
+export class NavigationDrawer extends LayoutItemBase {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -51,6 +54,7 @@ export class NavigationDrawer extends LitElement {
 
   /**
    * 打开时，是否显示遮罩层
+   * 在断点为 `handset` 时，会无视该参数，始终显示遮罩层
    */
   @property({
     type: Boolean,
@@ -89,7 +93,7 @@ export class NavigationDrawer extends LitElement {
    * * `left`
    * * `right`
    */
-  @property()
+  @property({ reflect: true })
   public placement: 'left' | 'right' = 'left';
 
   /**
@@ -123,8 +127,14 @@ export class NavigationDrawer extends LitElement {
   private readonly overlayRef: Ref<HTMLElement> = createRef();
   private readonly panelRef: Ref<HTMLElement> = createRef();
 
+  protected override get layoutPlacement(): LayoutPlacement {
+    return this.placement;
+  }
+
   private get lockTarget() {
-    return this.contained ? this.parentElement! : document.body;
+    return this.contained || this.isParentLayout
+      ? this.parentElement!
+      : document.body;
   }
 
   private get isModal() {
@@ -135,20 +145,60 @@ export class NavigationDrawer extends LitElement {
   @watch('contained')
   private onContainedChange() {
     if (this.hasUpdated) {
-      this.resizeObserver.unobserve(
-        this.contained ? document.body : this.parentElement!,
-      );
+      this.observeResize?.unobserve();
     }
-    this.resizeObserver.observe(
+
+    this.observeResize = observeResize(
       this.contained ? this.parentElement! : document.body,
+      () => {
+        const target = this.contained ? this.parentElement! : undefined;
+        this.handset = getBreakpoint(target) === 'handset';
+
+        // 若位于 layout 中，且为模态化，则重新布局时，占据的宽度为 0
+        if (this.isParentLayout) {
+          this.layoutManager!.updateLayout(this, {
+            width: this.isModal ? 0 : undefined,
+          });
+        }
+      },
     );
+  }
+
+  @watch('placement')
+  private onPlacementChange() {
+    if (this.isParentLayout) {
+      this.layoutManager!.updateLayout(this);
+    }
   }
 
   @watch('open')
   private async onOpenChange() {
+    let panel = this.panelRef.value!;
+    let overlay = this.overlayRef.value!;
     const isRight = this.placement === 'right';
+    const paddingPropName = isRight ? 'paddingRight' : 'paddingLeft';
     const easingLinear = getEasing(this, 'linear');
     const easingEmphasized = getEasing(this, 'emphasized');
+
+    // 在当前 drawer 位于 layout 中时，设置所有 layout-item 和 layout-main 元素的 transition 样式
+    const setLayoutTransition = (duration: number | null, easing?: string) => {
+      $(this.layoutManager!.getItemsAndMain()).css(
+        'transition',
+        isNull(duration) ? null : `all ${duration}ms ${easing}`,
+      );
+    };
+
+    // 停止原有动画
+    const stopOldAnimations = async () => {
+      await Promise.all([
+        this.isModal
+          ? stopAnimations(overlay)
+          : !this.isParentLayout
+          ? stopAnimations(this.lockTarget)
+          : Promise.resolve(),
+        this.isModal ? stopAnimations(panel) : stopAnimations(this),
+      ]);
+    };
 
     // 打开
     // 要区分是否首次渲染，首次渲染时不触发事件，不执行动画；非首次渲染，触发事件，执行动画
@@ -156,6 +206,8 @@ export class NavigationDrawer extends LitElement {
       const hasUpdated = this.hasUpdated;
       if (!hasUpdated) {
         await this.updateComplete;
+        panel = this.panelRef.value!;
+        overlay = this.overlayRef.value!;
       }
 
       if (hasUpdated) {
@@ -165,19 +217,16 @@ export class NavigationDrawer extends LitElement {
         }
       }
 
-      this.style.display = this.isModal ? 'block' : 'contents';
+      // todo 为模态化时，不参与 layout 布局
+
+      this.style.display = 'block';
       this.originalTrigger = document.activeElement as HTMLElement;
       if (this.isModal) {
         this.modalHelper.activate();
         lockScreen(this, this.lockTarget);
       }
 
-      await Promise.all([
-        this.isModal
-          ? stopAnimations(this.overlayRef.value!)
-          : stopAnimations(this.lockTarget),
-        stopAnimations(this.panelRef.value!),
-      ]);
+      await stopOldAnimations();
 
       // 设置聚焦
       requestAnimationFrame(() => {
@@ -187,41 +236,56 @@ export class NavigationDrawer extends LitElement {
         if (autoFocusTarget) {
           autoFocusTarget.focus({ preventScroll: true });
         } else {
-          this.panelRef.value!.focus({ preventScroll: true });
+          panel.focus({ preventScroll: true });
         }
       });
 
       const duration = getDuration(this, 'long2');
+      const animations = [];
 
-      await Promise.all([
-        this.isModal
-          ? animateTo(
-              this.overlayRef.value!,
-              [{ opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 1 }],
-              {
-                duration: hasUpdated ? duration : 0,
-                easing: easingLinear,
-              },
-            )
-          : animateTo(
-              this.lockTarget,
-              [
-                { [isRight ? 'paddingRight' : 'paddingLeft']: 0 },
-                {
-                  [isRight ? 'paddingRight' : 'paddingLeft']:
-                    $(this.panelRef.value!).innerWidth() + 'px',
-                },
-              ],
-              {
-                duration: hasUpdated ? duration : 0,
-                easing: easingEmphasized,
-                fill: 'forwards',
-              },
-            ),
+      // 模态框 drawer，显示 overlay 动画
+      if (this.isModal) {
+        animations.push(
+          animateTo(
+            overlay,
+            [{ opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 1 }],
+            {
+              duration: hasUpdated ? duration : 0,
+              easing: easingLinear,
+            },
+          ),
+        );
+      }
+      // 不位于 layout 中，父元素 padding 变化的动画
+      else if (!this.isParentLayout) {
+        animations.push(
+          animateTo(
+            this.lockTarget,
+            [
+              { [paddingPropName]: 0 },
+              { [paddingPropName]: $(panel).innerWidth() + 'px' },
+            ],
+            {
+              duration: hasUpdated ? duration : 0,
+              easing: easingEmphasized,
+              fill: 'forwards',
+            },
+          ),
+        );
+      }
+
+      // 若位于 layout 中，则 layout-main 的 padding 变化需要有和 drawer 相同的动画
+      // 但首次渲染不执行动画
+      if (this.isParentLayout && hasUpdated) {
+        setLayoutTransition(duration, easingEmphasized);
+      }
+
+      // drawer 显示动画
+      animations.push(
         animateTo(
-          this.panelRef.value!,
+          this.isModal ? panel : this,
           [
-            { transform: isRight ? 'translateX(100%)' : 'translateX(-100%)' },
+            { transform: `translateX(${isRight ? '' : '-'}100%)` },
             { transform: 'translateX(0)' },
           ],
           {
@@ -229,7 +293,14 @@ export class NavigationDrawer extends LitElement {
             easing: easingEmphasized,
           },
         ),
-      ]);
+      );
+
+      await Promise.all(animations);
+
+      // 若位于 layout 中，则 drawer 动画完成后，移除 layout-main 的动画
+      if (this.isParentLayout && hasUpdated) {
+        setLayoutTransition(null);
+      }
 
       if (hasUpdated) {
         emit(this, 'opened');
@@ -249,49 +320,67 @@ export class NavigationDrawer extends LitElement {
         this.modalHelper.deactivate();
       }
 
-      await Promise.all([
-        this.isModal
-          ? stopAnimations(this.overlayRef.value!)
-          : stopAnimations(this.lockTarget),
-        stopAnimations(this.panelRef.value!),
-      ]);
+      await stopOldAnimations();
 
       const duration = getDuration(this, 'short4');
+      const animations = [];
 
-      await Promise.all([
-        this.isModal
-          ? animateTo(
-              this.overlayRef.value!,
-              [{ opacity: 1 }, { opacity: 0 }],
-              {
-                duration,
-                easing: easingLinear,
-              },
-            )
-          : animateTo(
-              this.lockTarget,
-              [
-                {
-                  [isRight ? 'paddingRight' : 'paddingLeft']:
-                    $(this.panelRef.value!).innerWidth() + 'px',
-                },
-                { [isRight ? 'paddingRight' : 'paddingLeft']: 0 },
-              ],
-              {
-                duration,
-                easing: easingEmphasized,
-                fill: 'forwards',
-              },
-            ),
+      // 模态框 drawer，显示 overlay 动画
+      if (this.isModal) {
+        animations.push(
+          animateTo(overlay, [{ opacity: 1 }, { opacity: 0 }], {
+            duration,
+            easing: easingLinear,
+          }),
+        );
+      }
+
+      // 不位于 layout 中，父元素 padding 变化的动画
+      else if (!this.isParentLayout) {
+        animations.push(
+          animateTo(
+            this.lockTarget,
+            [
+              { [paddingPropName]: $(panel).innerWidth() + 'px' },
+              { [paddingPropName]: 0 },
+            ],
+            {
+              duration,
+              easing: easingEmphasized,
+              fill: 'forwards',
+            },
+          ),
+        );
+      }
+
+      // 若位于 layout 中，则 layout-main 的 padding 变化需要有和 drawer 相同的动画
+      if (this.isParentLayout) {
+        setLayoutTransition(duration, easingEmphasized);
+
+        // 关闭动画开始时，drawer 的宽度不变。等到关闭动画结束，drawer 的宽度才变为 0
+        // 为了 layout-main 的动画能在关闭动画开始时就执行，强制调用 updateLayout 更新布局
+        this.layoutManager!.updateLayout(this, { width: 0 });
+      }
+
+      // drawer 显示动画
+      animations.push(
         animateTo(
-          this.panelRef.value!,
+          this.isModal ? panel : this,
           [
             { transform: 'translateX(0)' },
-            { transform: isRight ? 'translateX(100%)' : 'translateX(-100%)' },
+            { transform: `translateX(${isRight ? '' : '-'}100%)` },
           ],
           { duration, easing: easingEmphasized },
         ),
-      ]);
+      );
+
+      await Promise.all(animations);
+
+      // 若位于 layout 中，则 drawer 动画结束后，移除 layout-main 的动画
+      if (this.isParentLayout) {
+        setLayoutTransition(null);
+      }
+
       this.style.display = 'none';
 
       if (this.isModal) {
@@ -312,11 +401,6 @@ export class NavigationDrawer extends LitElement {
   public override connectedCallback(): void {
     super.connectedCallback();
     this.modalHelper = new Modal(this);
-
-    // 监听窗口尺寸变化，重新设置 handset 属性
-    this.observeResize = observeResize(this.parentElement!, () =>
-      this.setHandset(),
-    );
 
     $(this).on('keydown', (event: KeyboardEvent) => {
       if (
@@ -350,27 +434,6 @@ export class NavigationDrawer extends LitElement {
       <div ${ref(this.panelRef)} part="panel" class="panel" tabindex="0">
         <slot></slot>
       </div>`;
-  }
-
-  /**
-   * 重新计算并设置 handset 属性
-   */
-  private setHandset() {
-    // 根元素参考值
-    const baseFontSize = parseFloat($('html').css('font-size'));
-    // 手机端断点值，单位可能为 px 或 rem
-    const breakpointHandset = window
-      .getComputedStyle(document.documentElement)
-      .getPropertyValue('--mdui-breakpoint-handset')
-      .toLowerCase();
-
-    const containerWidth = this.contained
-      ? $(this).parent().innerWidth()
-      : $(window).innerWidth();
-
-    this.handset = breakpointHandset.endsWith('rem')
-      ? containerWidth < parseFloat(breakpointHandset) * baseFontSize
-      : containerWidth < parseFloat(breakpointHandset);
   }
 
   private onOverlayClick() {

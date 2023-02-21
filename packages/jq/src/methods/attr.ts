@@ -7,9 +7,9 @@ import {
   isNumber,
   isUndefined,
   isObjectLike,
-  toCamelCase,
   eachArray,
   eachObject,
+  toKebabCase,
 } from '../shared/helper.js';
 import './each.js';
 import type { JQ } from '../shared/core.js';
@@ -129,12 +129,15 @@ eachArray(['attr', 'prop', 'css'], (name, nameIndex) => {
     }
 
     // css
-    key = toCamelCase(key);
+    key = toKebabCase(key);
+    // 获取默认后缀。以 -- 开头的为 CSS 变量，不添加后缀；值为数值类型的不添加后缀
+    const getSuffix = () =>
+      key.startsWith('--') || cssNumber.includes(key) ? '' : 'px';
 
-    // @ts-ignore
-    element.style[key] = isNumber(value)
-      ? `${value}${cssNumber.includes(key) ? '' : 'px'}`
-      : value;
+    element.style.setProperty(
+      key,
+      isNumber(value) ? `${value}${getSuffix()}` : value,
+    );
   };
 
   // eslint-disable-next-line

@@ -21,8 +21,11 @@ export type Selector = string;
  */
 export type TypeOrArray<T> = T | ArrayLike<T>;
 
-export const isNodeName = (element: Element, name: string): boolean => {
-  return element.nodeName.toLowerCase() === name.toLowerCase();
+export const isNodeName = (
+  element: Element | null | undefined,
+  name: string,
+): boolean => {
+  return element?.nodeName.toLowerCase() === name.toLowerCase();
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-types

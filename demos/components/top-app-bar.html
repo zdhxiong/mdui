@@ -16,13 +16,20 @@
       font-family: Roboto;
     }
     .container {
+      display: flex;
+      flex-direction: column;
       position: relative;
       width: 667px;
       height: 375px;
-      overflow: auto;
+      overflow: hidden;
       box-shadow: 0 0.85px 3px 0 rgba(0, 0, 0, 19%), 0 0.25px 1px 0 rgba(0, 0, 0, 3.9%);
     }
-    @media (max-width: 700px) {
+    @media (min-width: 667px) {
+      mdui-top-app-bar {
+        width: 667px;
+      }
+    }
+    @media (max-width: 666px) {
       .container {
         width: 100%;
       }
@@ -41,143 +48,112 @@
     import '../../packages/components/menu.js';
     import '../../packages/components/menu-item.js';
     import '../../packages/components/spacer.js';
-    import { $ } from '../../packages/jq/$.js';
-    import '../../packages/jq/methods/on.js';
-    import '../../packages/jq/methods/prev.js';
-    import '../../packages/jq/methods/css.js';
-    import '../../packages/jq/methods/append.js';
+    import { $ } from '../../packages/jq/index.js';
 
     // variant 值切换
-    $('#change-variant').on('change', (e) => {
-      $('#change-variant-appbar')[0].variant = e.target.value;
+    $('body').on('change', function(e) {
+      if (e.target.tagName.toLowerCase() === 'mdui-segmented-button-group') {
+        $(e.target).parents('section').find('mdui-top-app-bar')[0].variant = e.target.value;
+      }
     });
 
+    // 填充 variant 切换按钮
+    $('.fill-variant-change-button').append(`<mdui-segmented-button-group value="center-aligned" selects="single" class="change-variant">
+        <mdui-segmented-button value="center-aligned">center-aligned</mdui-segmented-button>
+        <mdui-segmented-button value="small">small</mdui-segmented-button>
+        <mdui-segmented-button value="medium">medium</mdui-segmented-button>
+        <mdui-segmented-button value="large">large</mdui-segmented-button>
+      </mdui-segmented-button-group>`);
+
+    // 填充占位文本
     $('.fill-placeholder').append(...Array.from({length: 100}, (_, index) => index + 1).map(item => `<p>${item}</p>`));
   </script>
 </head>
 
 <body>
-  <mdui-top-app-bar variant="large" shrink-on-scroll style="z-index: 2000">
-    <mdui-button-icon icon="menu"></mdui-button-icon>
-    <mdui-top-app-bar-title>Hiking Trips with Elie in Santa Monica and Joshua Tree! Hiking Trips with Elie in Santa Monica and Joshua Tree!</mdui-top-app-bar-title>
-    <mdui-spacer></mdui-spacer>
-    <mdui-button-icon icon="attach_file"></mdui-button-icon>
-    <mdui-button-icon icon="today"></mdui-button-icon>
-    <mdui-button-icon icon="more_vert"></mdui-button-icon>
-  </mdui-top-app-bar>
-
   <main>
     <section>
       <h2>center-aligned</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar variant="center-aligned" scroll-target="#center-aligned">
-          <mdui-button-icon icon="menu"></mdui-button-icon>
-          <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
-          <mdui-spacer></mdui-spacer>
-          <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
-        </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="center-aligned">
-          <div class="fill-placeholder"></div>
-        </div>
-      </div>
+      <mdui-top-app-bar variant="center-aligned" style="position: relative;">
+        <mdui-button-icon icon="menu"></mdui-button-icon>
+        <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
+        <mdui-spacer></mdui-spacer>
+        <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
+      </mdui-top-app-bar>
     </section>
 
     <section>
       <h2>small</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar variant="small" scroll-target="#small">
-          <mdui-button-icon icon="menu"></mdui-button-icon>
-          <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
-          <mdui-spacer></mdui-spacer>
-          <mdui-button-icon icon="attach_file"></mdui-button-icon>
-          <mdui-button-icon icon="today"></mdui-button-icon>
-          <mdui-button-icon icon="more_vert"></mdui-button-icon>
-        </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="small">
-          <div class="fill-placeholder"></div>
-        </div>
-      </div>
+      <mdui-top-app-bar variant="small" style="position: relative;">
+        <mdui-button-icon icon="menu"></mdui-button-icon>
+        <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
+        <mdui-spacer></mdui-spacer>
+        <mdui-button-icon icon="attach_file"></mdui-button-icon>
+        <mdui-button-icon icon="today"></mdui-button-icon>
+        <mdui-button-icon icon="more_vert"></mdui-button-icon>
+      </mdui-top-app-bar>
     </section>
 
     <section>
       <h2>medium</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar variant="medium" scroll-target="#medium">
-          <mdui-button-icon icon="menu"></mdui-button-icon>
-          <mdui-top-app-bar-title>Headline Small</mdui-top-app-bar-title>
-          <mdui-spacer></mdui-spacer>
-          <mdui-button-icon icon="attach_file"></mdui-button-icon>
-          <mdui-button-icon icon="today"></mdui-button-icon>
-          <mdui-button-icon icon="more_vert"></mdui-button-icon>
-        </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="medium">
-          <div class="fill-placeholder"></div>
-        </div>
-      </div>
+      <mdui-top-app-bar variant="medium" style="position: relative;">
+        <mdui-button-icon icon="menu"></mdui-button-icon>
+        <mdui-top-app-bar-title>Headline Small</mdui-top-app-bar-title>
+        <mdui-spacer></mdui-spacer>
+        <mdui-button-icon icon="attach_file"></mdui-button-icon>
+        <mdui-button-icon icon="today"></mdui-button-icon>
+        <mdui-button-icon icon="more_vert"></mdui-button-icon>
+      </mdui-top-app-bar>
     </section>
 
     <section>
       <h2>large</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar variant="large" scroll-target="#large">
-          <mdui-button-icon icon="menu"></mdui-button-icon>
-          <mdui-top-app-bar-title>Headline Medium</mdui-top-app-bar-title>
-          <mdui-spacer></mdui-spacer>
-          <mdui-button-icon icon="attach_file"></mdui-button-icon>
-          <mdui-button-icon icon="today"></mdui-button-icon>
-          <mdui-button-icon icon="more_vert"></mdui-button-icon>
-        </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="large">
-          <div class="fill-placeholder"></div>
-        </div>
-      </div>
+      <mdui-top-app-bar variant="large" style="position: relative;">
+        <mdui-button-icon icon="menu"></mdui-button-icon>
+        <mdui-top-app-bar-title>Headline Medium</mdui-top-app-bar-title>
+        <mdui-spacer></mdui-spacer>
+        <mdui-button-icon icon="attach_file"></mdui-button-icon>
+        <mdui-button-icon icon="today"></mdui-button-icon>
+        <mdui-button-icon icon="more_vert"></mdui-button-icon>
+      </mdui-top-app-bar>
     </section>
 
     <section>
       <h2>with overflow menu</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar variant="center-aligned" scroll-target="#with-overflow-menu">
-          <mdui-button-icon icon="menu"></mdui-button-icon>
-          <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
-          <mdui-spacer></mdui-spacer>
-          <mdui-button-icon icon="attach_file"></mdui-button-icon>
-          <mdui-button-icon icon="today"></mdui-button-icon>
-          <mdui-dropdown>
-            <mdui-button-icon icon="more_vert" slot="trigger"></mdui-button-icon>
-            <mdui-menu>
-              <mdui-menu-item>Settings</mdui-menu-item>
-              <mdui-menu-item>Send Feedback</mdui-menu-item>
-              <mdui-menu-item>Help</mdui-menu-item>
-            </mdui-menu>
-          </mdui-dropdown>
-        </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="with-overflow-menu">
-          <div class="fill-placeholder"></div>
-        </div>
-      </div>
+      <mdui-top-app-bar variant="center-aligned" style="position: relative;">
+        <mdui-button-icon icon="menu"></mdui-button-icon>
+        <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
+        <mdui-spacer></mdui-spacer>
+        <mdui-button-icon icon="attach_file"></mdui-button-icon>
+        <mdui-button-icon icon="today"></mdui-button-icon>
+        <mdui-dropdown>
+          <mdui-button-icon icon="more_vert" slot="trigger"></mdui-button-icon>
+          <mdui-menu>
+            <mdui-menu-item>Settings</mdui-menu-item>
+            <mdui-menu-item>Send Feedback</mdui-menu-item>
+            <mdui-menu-item>Help</mdui-menu-item>
+          </mdui-menu>
+        </mdui-dropdown>
+      </mdui-top-app-bar>
     </section>
 
     <section>
-      <h2>hide-on-scroll & center-aligned</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar variant="center-aligned" hide-on-scroll scroll-target="#hide-on-scroll-center-aligned">
-          <mdui-button-icon icon="menu"></mdui-button-icon>
-          <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
-          <mdui-spacer></mdui-spacer>
-          <mdui-button-icon icon="attach_file"></mdui-button-icon>
-          <mdui-button-icon icon="today"></mdui-button-icon>
-          <mdui-button-icon icon="more_vert"></mdui-button-icon>
-        </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="hide-on-scroll-center-aligned">
-          <div class="fill-placeholder"></div>
-        </div>
-      </div>
+      <h2>no scroll-target & scroll-behavior="hide" & default position:fixed</h2>
+      <mdui-top-app-bar scroll-behavior="hide" style="z-index: 999">
+        <mdui-button-icon icon="menu"></mdui-button-icon>
+        <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
+        <mdui-spacer></mdui-spacer>
+        <mdui-button-icon icon="attach_file"></mdui-button-icon>
+        <mdui-button-icon icon="today"></mdui-button-icon>
+        <mdui-button-icon icon="more_vert"></mdui-button-icon>
+      </mdui-top-app-bar>
+      <div class="fill-variant-change-button"></div>
     </section>
 
     <section>
-      <h2>hide-on-scroll & small</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar variant="small" hide-on-scroll scroll-target="#hide-on-scroll-small">
+      <h2>scroll-behavior="elevate"</h2>
+      <div class="container">
+        <mdui-top-app-bar scroll-target="#elevate" scroll-behavior="elevate">
           <mdui-button-icon icon="menu"></mdui-button-icon>
           <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
           <mdui-spacer></mdui-spacer>
@@ -185,16 +161,18 @@
           <mdui-button-icon icon="today"></mdui-button-icon>
           <mdui-button-icon icon="more_vert"></mdui-button-icon>
         </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="hide-on-scroll-small">
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="elevate">
           <div class="fill-placeholder"></div>
         </div>
       </div>
+      <br/>
+      <div class="fill-variant-change-button"></div>
     </section>
 
     <section>
-      <h2>hide-on-scroll & medium</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar variant="medium" hide-on-scroll scroll-target="#hide-on-scroll-medium">
+      <h2>scroll-behavior="hide"</h2>
+      <div class="container">
+        <mdui-top-app-bar scroll-target="#hide" scroll-behavior="hide">
           <mdui-button-icon icon="menu"></mdui-button-icon>
           <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
           <mdui-spacer></mdui-spacer>
@@ -202,16 +180,18 @@
           <mdui-button-icon icon="today"></mdui-button-icon>
           <mdui-button-icon icon="more_vert"></mdui-button-icon>
         </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="hide-on-scroll-medium">
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="hide">
           <div class="fill-placeholder"></div>
         </div>
       </div>
+      <br/>
+      <div class="fill-variant-change-button"></div>
     </section>
 
     <section>
-      <h2>hide-on-scroll & large</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar variant="large" hide-on-scroll scroll-target="#hide-on-scroll-large">
+      <h2>scroll-behavior="hide" & scroll-threshold</h2>
+      <div class="container">
+        <mdui-top-app-bar scroll-threshold="80" scroll-target="#hide-threshold" scroll-behavior="hide">
           <mdui-button-icon icon="menu"></mdui-button-icon>
           <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
           <mdui-spacer></mdui-spacer>
@@ -219,33 +199,18 @@
           <mdui-button-icon icon="today"></mdui-button-icon>
           <mdui-button-icon icon="more_vert"></mdui-button-icon>
         </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="hide-on-scroll-large">
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="hide-threshold">
           <div class="fill-placeholder"></div>
         </div>
       </div>
+      <br/>
+      <div class="fill-variant-change-button"></div>
     </section>
 
     <section>
-      <h2>hide-on-scroll & scroll-threshold</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar hide-on-scroll scroll-threshold="80" scroll-target="#hide-on-scroll-scroll-threshold">
-          <mdui-button-icon icon="menu"></mdui-button-icon>
-          <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
-          <mdui-spacer></mdui-spacer>
-          <mdui-button-icon icon="attach_file"></mdui-button-icon>
-          <mdui-button-icon icon="today"></mdui-button-icon>
-          <mdui-button-icon icon="more_vert"></mdui-button-icon>
-        </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="hide-on-scroll-scroll-threshold">
-          <div class="fill-placeholder"></div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>shrink-on-scroll & medium</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar variant="medium" shrink-on-scroll scroll-target="#shrink-on-scroll-medium">
+      <h2>scroll-behavior="shrink"</h2>
+      <div class="container">
+        <mdui-top-app-bar scroll-target="#shrink" scroll-behavior="shrink">
           <mdui-button-icon icon="menu"></mdui-button-icon>
           <mdui-top-app-bar-title>Hiking Trips with Elie in Santa Monica and Joshua Tree!</mdui-top-app-bar-title>
           <mdui-spacer></mdui-spacer>
@@ -253,68 +218,50 @@
           <mdui-button-icon icon="today"></mdui-button-icon>
           <mdui-button-icon icon="more_vert"></mdui-button-icon>
         </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="shrink-on-scroll-medium">
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="shrink">
           <div class="fill-placeholder"></div>
         </div>
       </div>
+      <br/>
+      <div class="fill-variant-change-button"></div>
     </section>
 
     <section>
-      <h2>shrink-on-scroll & large</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar variant="large" shrink-on-scroll scroll-target="#shrink-on-scroll-large">
+      <h2>scroll-behavior="shrink" & scroll-threshold</h2>
+      <div class="container">
+        <mdui-top-app-bar scroll-threshold="80" scroll-target="#shrink-threshold" scroll-behavior="shrink">
           <mdui-button-icon icon="menu"></mdui-button-icon>
-          <mdui-top-app-bar-title>Hiking Trips with Elie in Santa Monica and Joshua Tree! Hiking Trips with Elie in Santa Monica and Joshua Tree!</mdui-top-app-bar-title>
+          <mdui-top-app-bar-title>Hiking Trips with Elie in Santa Monica and Joshua Tree!</mdui-top-app-bar-title>
           <mdui-spacer></mdui-spacer>
           <mdui-button-icon icon="attach_file"></mdui-button-icon>
           <mdui-button-icon icon="today"></mdui-button-icon>
           <mdui-button-icon icon="more_vert"></mdui-button-icon>
         </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="shrink-on-scroll-large">
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="shrink-threshold">
           <div class="fill-placeholder"></div>
         </div>
       </div>
+      <br/>
+      <div class="fill-variant-change-button"></div>
     </section>
 
     <section>
-      <h2>shrink-on-scroll & large & scroll-threshold</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar variant="large" shrink-on-scroll scroll-threshold="80" scroll-target="#shrink-on-scroll-large-scroll-threshold">
+      <h2>scroll-behavior="shrink elevate"</h2>
+      <div class="container">
+        <mdui-top-app-bar scroll-target="#shrink-elevate" scroll-behavior="shrink elevate">
           <mdui-button-icon icon="menu"></mdui-button-icon>
-          <mdui-top-app-bar-title>Hiking Trips with Elie in Santa Monica and Joshua Tree! Hiking Trips with Elie in Santa Monica and Joshua Tree!</mdui-top-app-bar-title>
+          <mdui-top-app-bar-title>Hiking Trips with Elie in Santa Monica and Joshua Tree!</mdui-top-app-bar-title>
           <mdui-spacer></mdui-spacer>
           <mdui-button-icon icon="attach_file"></mdui-button-icon>
           <mdui-button-icon icon="today"></mdui-button-icon>
           <mdui-button-icon icon="more_vert"></mdui-button-icon>
         </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="shrink-on-scroll-large-scroll-threshold">
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="shrink-elevate">
           <div class="fill-placeholder"></div>
         </div>
       </div>
-    </section>
-
-    <section>
-      <h2>variant 切换</h2>
-      <div class="container" style="position: relative; overflow: hidden">
-        <mdui-top-app-bar variant="center-aligned" scroll-target="#variant-change" id="change-variant-appbar">
-          <mdui-button-icon icon="menu"></mdui-button-icon>
-          <mdui-top-app-bar-title>Hiking Trips with Elie in Santa Monica and Joshua Tree! Hiking Trips with Elie in Santa Monica and Joshua Tree!</mdui-top-app-bar-title>
-          <mdui-spacer></mdui-spacer>
-          <mdui-button-icon icon="attach_file"></mdui-button-icon>
-          <mdui-button-icon icon="today"></mdui-button-icon>
-          <mdui-button-icon icon="more_vert"></mdui-button-icon>
-        </mdui-top-app-bar>
-        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="variant-change">
-          <div class="fill-placeholder"></div>
-        </div>
-      </div>
-      <br />
-      <mdui-segmented-button-group value="center-aligned" selects="single" id="change-variant">
-        <mdui-segmented-button value="center-aligned">center-aligned</mdui-segmented-button>
-        <mdui-segmented-button value="small">small</mdui-segmented-button>
-        <mdui-segmented-button value="medium">medium</mdui-segmented-button>
-        <mdui-segmented-button value="large">large</mdui-segmented-button>
-      </mdui-segmented-button-group>
+      <br/>
+      <div class="fill-variant-change-button"></div>
     </section>
 
   </main>

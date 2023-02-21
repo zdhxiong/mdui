@@ -4,13 +4,30 @@
   --shape-corner: var(--mdui-shape-corner-large);
 
   display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  .width(360);
+}
+
+:host([placement="right"]) {
+  left: initial;
+  right: 0;
 }
 
 :host([modal]),
 :host([handset]) {
-  position: fixed;
-  inset: 0;
+  top: 0 !important;
+  right: 0;
+  bottom: 0 !important;
   z-index: 900;
+  width: initial;
+}
+
+:host([placement="right"][modal]),
+:host([placement="right"][handset]) {
+  left: 0;
 }
 
 :host([contained]) {
@@ -18,40 +35,37 @@
 }
 
 .overlay {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: inherit;
   .backgroundColor(on-surface-variant, 0.4);
-
-  :host([contained]) & {
-    position: absolute;
-  }
 }
 
 .panel {
-  position: fixed;
+  position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
-  border-radius: 0 var(--shape-corner) var(--shape-corner) 0;
+  width: 100%;
   overflow: auto;
   z-index: inherit;
-  .width(360);
   .backgroundColor(surface);
   .elevationInit(0);
 
-  :host([contained]) & {
-    position: absolute;
-  }
-
   :host([modal]) &,
   :host([handset]) & {
+    border-radius: 0 var(--shape-corner) var(--shape-corner) 0;
+    .width(360);
     .elevation(1);
   }
 
   :host([placement="right"]) & {
     left: initial;
     right: 0;
+  }
+
+  :host([placement="right"][modal]) &,
+  :host([placement="right"][handset]) & {
     border-radius: var(--shape-corner) 0 0 var(--shape-corner);
   }
 }

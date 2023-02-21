@@ -8,16 +8,18 @@
   bottom: 0;
   left: 0;
   display: flex;
-  width: 100%;
+  flex: 0 0 auto;
   overflow: hidden;
   border-radius: var(--shape-corner) var(--shape-corner) 0 0;
-  .transition(all, long2, emphasized);
+  transition-property: transform;
+  .transitionDuration(long2);
+  .transitionTimingFunction(emphasized);
   .height(80);
   .backgroundColor(surface);
   .elevationInit(2);
 }
 
-:host([scroll-target]) {
+:host([scroll-target]:not([scroll-target=""])) {
   position: absolute;
 }
 

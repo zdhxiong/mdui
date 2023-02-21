@@ -37,17 +37,15 @@
     import '../../packages/components/list-item.js';
     import '../../packages/components/list-subheader.js';
     import '../../packages/components/divider.js';
-    import { $ } from '../../packages/jq/$.js';
-    import '../../packages/jq/methods/on.js';
-    import '../../packages/jq/methods/prop.js';
+    import { $ } from '../../packages/jq/index.js';
 
     $(() => {
       $('#change-nonclickable').on('change', function () {
-        $('mdui-list').prop('nonclickable', $(this).prop('checked'));
+        $('mdui-list-item').prop('nonclickable', $(this).prop('checked'));
       });
 
       $('#change-rounded').on('change', function () {
-        $('mdui-list').prop('rounded', $(this).prop('checked'));
+        $('mdui-list-item').prop('rounded', $(this).prop('checked'));
       });
     });
   </script>

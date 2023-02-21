@@ -8,9 +8,9 @@
   bottom: 0;
   left: 0;
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: flex-start;
-  width: 100%;
   border-radius: var(--shape-corner) var(--shape-corner) 0 0;
   .transition(bottom, long2, emphasized);
   .padding(0, 16);
@@ -19,7 +19,7 @@
   .elevationInit(2);
 }
 
-:host([scroll-target]) {
+:host([scroll-target]:not([scroll-target=""])) {
   position: absolute;
 }
 
@@ -39,20 +39,14 @@
 // 含 fab-detach 属性时，fab 脱离 bottom-app-bar
 :host([fab-detach]) {
   ::slotted(mdui-fab) {
-    position: fixed;
+    position: absolute;
     .transition(bottom, long2, standard);
     .right(16);
     .bottom(12);
   }
 }
 
-:host([fab-detach][scroll-target]) {
-  ::slotted(mdui-fab) {
-    position: absolute;
-  }
-}
-
-:host([fab-detach][hide]) {
+:host([fab-detach][hide][scroll-behavior~="hide"]) {
   ::slotted(mdui-fab) {
     .transitionDuration(short4);
     .bottom(16);
@@ -60,7 +54,7 @@
   }
 }
 
-:host([fab-detach][hide][scroll-target]) {
+:host([fab-detach][hide][scroll-behavior~="hide"][scroll-target]:not([scroll-target=""])) {
   ::slotted(mdui-fab) {
     .bottom(80 + 10 + 16);
   }

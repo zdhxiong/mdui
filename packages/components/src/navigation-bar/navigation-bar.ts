@@ -1,17 +1,19 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
-import '@mdui/jq/methods/off.js';
 import '@mdui/jq/methods/on.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { ScrollBehaviorMixin } from '@mdui/shared/mixins/scrollBehavior.js';
+import { LayoutItemBase } from '../layout/layout-item-base.js';
 import { navigationBarStyle } from './navigation-bar-style.js';
 import type { NavigationBarItem as NavigationBarItemOriginal } from './navigation-bar-item.js';
+import type { LayoutPlacement } from '../layout/helper.js';
+import type { ScrollPaddingPosition } from '@mdui/shared/mixins/scrollBehavior.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 type NavigationBarItem = NavigationBarItemOriginal & {
@@ -33,7 +35,7 @@ type NavigationBarItem = NavigationBarItemOriginal & {
  * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-navigation-bar')
-export class NavigationBar extends LitElement {
+export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
   public static override styles: CSSResultGroup = [
     componentStyle,
     navigationBarStyle,
@@ -49,18 +51,6 @@ export class NavigationBar extends LitElement {
       value !== null && value !== 'false',
   })
   public hide = false;
-
-  /**
-   * 在页面向上滚动时，是否隐藏组件
-   */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
-    attribute: 'hide-on-scroll',
-  })
-  public hideOnScroll = false;
 
   /**
    * 文本的可视状态。可选值为：
@@ -83,29 +73,32 @@ export class NavigationBar extends LitElement {
   public value = '';
 
   /**
-   * 需要监听其滚动事件的元素的 CSS 选择器。默认为监听 window 滚动
+   * 滚动行为。可选值为：
+   * * `hide`：滚动时隐藏
    */
-  @property({ reflect: true, attribute: 'scroll-target' })
-  public scrollTarget!: string;
-
-  /**
-   * 在 hide-on-scroll 激活之前的滚动距离
-   */
-  @property({ type: Number, reflect: true, attribute: 'scroll-threshold' })
-  public scrollThreshold!: number;
+  @property({ reflect: true, attribute: 'scroll-behavior' })
+  public scrollBehavior?: 'hide' /*滚动时隐藏*/;
 
   // 因为 navigation-bar-item 的 value 可能会重复，所以在每个 navigation-bar-item 元素上都添加了一个唯一的 key，通过 activeKey 来记录激活状态的 key
   @state()
   private activeKey = 0;
 
   private readonly uniqueId = uniqueId();
-  private readonly scrollEventName = `scroll._navigation_bar_${this.uniqueId}`;
-
-  // 上次滚动后，垂直方向的距离
-  private lastScrollTop = 0;
 
   // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
   private hasSetDefaultValue = false;
+
+  protected get scrollUniqueName(): string {
+    return `_navigation_bar_${this.uniqueId}`;
+  }
+
+  protected get scrollPaddingPosition(): ScrollPaddingPosition {
+    return 'bottom';
+  }
+
+  protected override get layoutPlacement(): LayoutPlacement {
+    return 'bottom';
+  }
 
   // 所有的子项元素
   private get items() {
@@ -114,25 +107,11 @@ export class NavigationBar extends LitElement {
       .get() as unknown as NavigationBarItem[];
   }
 
-  /**
-   * 组件需要监听该元素的滚动状态
-   */
-  private get scrollTargetListening(): HTMLElement | Window {
-    return this.scrollTarget ? $(this.scrollTarget)[0] : window;
-  }
-
-  /**
-   * 组件在该容器内滚动
-   */
-  private get scrollTargetContainer(): HTMLElement {
-    return this.scrollTarget ? $(this.scrollTarget)[0] : document.body;
-  }
-
   @watch('activeKey')
   private onActiveKeyChange() {
     // 根据 activeKey 读取对应 navigation-bar-item 的值
-    this.value =
-      this.items.find((item) => item.key === this.activeKey)?.value ?? '';
+    const item = this.items.find((item) => item.key === this.activeKey);
+    this.value = item?.value ?? '';
 
     if (this.hasSetDefaultValue) {
       emit(this, 'change');
@@ -153,41 +132,14 @@ export class NavigationBar extends LitElement {
     this.updateActive();
   }
 
-  @watch('scrollTarget')
-  private onScrollTargetChange(
-    oldScrollTarget: string,
-    newScrollTarget: string,
-  ) {
-    $(oldScrollTarget ?? window).off(this.scrollEventName);
-    $(newScrollTarget).on(this.scrollEventName, () => {
-      window.requestAnimationFrame(() => this.onScroll());
-    });
-    this.onScroll();
-  }
-
-  @watch('hideOnScroll')
-  private onHideOnScrollChange() {
-    // hideOnScroll 为 false 时，为 scrollTargetContainer 元素添加 padding-bottom。避免 navigation-bar 覆盖内容
-    $(this.scrollTargetContainer).css({
-      'padding-bottom': this.hideOnScroll ? '' : this.offsetHeight,
-    });
-  }
-
   public override connectedCallback(): void {
     super.connectedCallback();
-    $(this.scrollTargetListening).on(this.scrollEventName, () => {
-      window.requestAnimationFrame(() => this.onScroll());
-    });
+
     $(this).on('transitionend', (event: TransitionEvent) => {
       if (event.target === this) {
         emit(this, this.hide ? 'hidden' : 'shown');
       }
     });
-  }
-
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    $(this.scrollTargetListening).off(this.scrollEventName);
   }
 
   protected override render(): TemplateResult {
@@ -197,34 +149,26 @@ export class NavigationBar extends LitElement {
     ></slot>`;
   }
 
-  private onScroll() {
-    if (!this.hideOnScroll) {
-      return;
-    }
-
-    const scrollTop =
-      (this.scrollTargetListening as Window).scrollY ||
-      (this.scrollTargetListening as HTMLElement).scrollTop;
-
-    if (
-      Math.abs(scrollTop - this.lastScrollTop) <= (this.scrollThreshold || 0)
-    ) {
-      return;
-    }
-
-    if (scrollTop > this.lastScrollTop && !this.hide) {
+  /**
+   * 滚动行为
+   * 当前仅支持 hide 这一个行为，所以不做行为类型判断
+   */
+  protected runScrollThreshold(isScrollingUp: boolean) {
+    // 向下滚动
+    if (!isScrollingUp && !this.hide) {
       const requestHide = emit(this, 'hide');
       if (!requestHide.defaultPrevented) {
         this.hide = true;
       }
-    } else if (scrollTop < this.lastScrollTop && this.hide) {
+    }
+
+    // 向上滚动
+    if (isScrollingUp && this.hide) {
       const requestShow = emit(this, 'show');
       if (!requestShow.defaultPrevented) {
         this.hide = false;
       }
     }
-
-    this.lastScrollTop = scrollTop;
   }
 
   private onClick(event: MouseEvent): void {

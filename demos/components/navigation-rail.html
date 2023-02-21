@@ -38,11 +38,7 @@
     import '../../packages/icons/library-music.js';
     import '../../packages/icons/watch-later.js';
     import '../../packages/icons/image--outlined.js';
-    import { $ } from '../../packages/jq/$.js';
-    import '../../packages/jq/methods/append.js';
-    import '../../packages/jq/methods/on.js';
-    import '../../packages/jq/methods/next.js';
-    import '../../packages/jq/methods/find.js';
+    import { $ } from '../../packages/jq/index.js';
 
     $('.fill-placeholder').append(...Array.from({length: 100}, (_, index) => index + 1).map(item => `<p>${item}</p>`));
 

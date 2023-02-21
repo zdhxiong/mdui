@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import {
   customElement,
   property,
@@ -12,7 +12,11 @@ import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { ScrollBehaviorMixin } from '@mdui/shared/mixins/scrollBehavior.js';
+import { LayoutItemBase } from '../layout/layout-item-base.js';
 import { topAppBarStyle } from './top-app-bar-style.js';
+import type { LayoutPlacement } from '../layout/helper.js';
+import type { ScrollPaddingPosition } from '@mdui/shared/mixins/scrollBehavior.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 type TopAppBarTitle = {
@@ -34,7 +38,7 @@ type TopAppBarTitle = {
  * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  */
 @customElement('mdui-top-app-bar')
-export class TopAppBar extends LitElement {
+export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   public static override styles: CSSResultGroup = [
     componentStyle,
     topAppBarStyle,
@@ -66,18 +70,6 @@ export class TopAppBar extends LitElement {
   public hide = false;
 
   /**
-   * 在页面向下滚动时，是否隐藏组件
-   */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
-    attribute: 'hide-on-scroll',
-  })
-  public hideOnScroll = false;
-
-  /**
    * 是否缩小成 `variant="small"` 的样式，仅在 `variant="medium"` 或 `variant="large"` 时生效
    */
   @property({
@@ -89,28 +81,15 @@ export class TopAppBar extends LitElement {
   public shrink = false;
 
   /**
-   * 是否在滚动到顶部时缩小成 `variant="small"` 的样式，仅在 `variant="medium"` 或 `variant="large"` 时生效
+   * 滚动行为。可选值为：
+   * * `hide`：滚动时隐藏
+   * * `shrink`：滚动时缩小成 `variant="small"` 的样式
    */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
-    attribute: 'shrink-on-scroll',
-  })
-  public shrinkOnScroll = false;
-
-  /**
-   * 需要监听其滚动事件的元素的 CSS 选择器。默认为监听 window 滚动
-   */
-  @property({ reflect: true, attribute: 'scroll-target' })
-  public scrollTarget!: string;
-
-  /**
-   * 在 hide-on-scroll 激活之前的滚动距离
-   */
-  @property({ type: Number, reflect: true, attribute: 'scroll-threshold' })
-  public scrollThreshold!: number;
+  @property({ reflect: true, attribute: 'scroll-behavior' })
+  public scrollBehavior?:
+    | 'hide' /*滚动时隐藏*/
+    | 'shrink' /*滚动时缩小成 `variant="small"` 的样式*/
+    | 'elevate' /*滚动时添加阴影*/;
 
   /**
    * 滚动条是否不位于顶部
@@ -127,55 +106,30 @@ export class TopAppBar extends LitElement {
   private readonly titleElements!: TopAppBarTitle[];
 
   private readonly uniqueId = uniqueId();
-  private readonly scrollEventName = `scroll._top_app_bar_${this.uniqueId}`;
 
-  // 上次滚动后，垂直方向的距离。使用 scrollThreshold
-  private lastScrollTop = 0;
-
-  // 上次滚动后，垂直方向的距离。不使用 scrollThreshold
-  private lastScrollTopNoThreshold = 0;
-
-  /**
-   * 组件需要监听该元素的滚动状态
-   */
-  private get scrollTargetListening(): HTMLElement | Window {
-    return this.scrollTarget ? $(this.scrollTarget)[0] : window;
+  protected get scrollUniqueName(): string {
+    return `_top_app_bar_${this.uniqueId}`;
   }
 
-  /**
-   * 组件在该容器内滚动
-   */
-  private get scrollTargetContainer(): HTMLElement {
-    return this.scrollTarget ? $(this.scrollTarget)[0] : document.body;
+  protected get scrollPaddingPosition(): ScrollPaddingPosition {
+    return 'top';
   }
 
-  /**
-   * scrollTarget 属性变更时，重新设置时间监听
-   */
-  @watch('scrollTarget')
-  private onScrollTargetChange(
-    oldScrollTarget: string,
-    newScrollTarget: string,
-  ) {
-    $(oldScrollTarget ?? window).off(this.scrollEventName);
-    $(newScrollTarget).on(this.scrollEventName, () => {
-      window.requestAnimationFrame(() => this.onScroll());
-    });
-    this.onScroll();
+  protected override get layoutPlacement(): LayoutPlacement {
+    return 'top';
   }
 
   @watch('variant')
   private async onVariantChange() {
     $(this).one('transitionend', () => {
       // variant 变更时，重新为 scrollTargetContainer 元素添加 padding-top。避免 top-app-bar 覆盖内容
-      $(this.scrollTargetContainer).css({
-        'padding-top': this.offsetHeight,
-      });
+      this.updateContainerPadding();
     });
 
     if (!this.hasUpdated) {
       await this.updateComplete;
     }
+
     this.titleElements.forEach((titleElement) => {
       titleElement.variant = this.variant;
     });
@@ -193,9 +147,7 @@ export class TopAppBar extends LitElement {
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    $(this.scrollTargetListening).on(this.scrollEventName, () => {
-      window.requestAnimationFrame(() => this.onScroll());
-    });
+
     $(this).on('transitionend', (e: TransitionEvent) => {
       if (e.target === this) {
         emit(this, this.hide ? 'hidden' : 'shown');
@@ -203,53 +155,50 @@ export class TopAppBar extends LitElement {
     });
   }
 
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    $(this.scrollTargetListening).off(this.scrollEventName);
-  }
-
   protected override render(): TemplateResult {
     return html`<slot></slot>`;
   }
 
-  private onScroll() {
-    const scrollTop =
-      (this.scrollTargetListening as Window).scrollY ||
-      (this.scrollTargetListening as HTMLElement).scrollTop;
-    this.scrolling = !!scrollTop;
-
-    // 在向下滚动时，缩小；向上滚动到顶部时，复原。shrinkOnScroll 不应用 scrollThreshold 属性
-    if (this.shrinkOnScroll) {
-      if (scrollTop > this.lastScrollTop) {
-        this.shrink = true;
-      } else if (!scrollTop) {
+  protected runScrollNoThreshold(isScrollingUp: boolean, scrollTop: number) {
+    // 向上滚动到顶部时，复原（无视 scrollThreshold 属性，否则会无法复原）
+    if (this.hasScrollBehavior('shrink')) {
+      // 到距离顶部 8px 即开始复原，显得灵敏些
+      if (isScrollingUp && scrollTop < 8) {
         this.shrink = false;
       }
+    }
+  }
 
-      this.lastScrollTopNoThreshold = scrollTop;
+  protected runScrollThreshold(isScrollingUp: boolean, scrollTop: number) {
+    // 滚动时添加阴影
+    if (this.hasScrollBehavior('elevate')) {
+      this.scrolling = !!scrollTop;
     }
 
-    // hideOnScroll 要应用 scrollThreshold 属性
-    if (
-      Math.abs(scrollTop - this.lastScrollTop) <= (this.scrollThreshold || 0)
-    ) {
-      return;
+    // 向下滚动时，缩小
+    if (this.hasScrollBehavior('shrink')) {
+      if (!isScrollingUp) {
+        this.shrink = true;
+      }
     }
 
-    if (this.hideOnScroll) {
-      if (scrollTop > this.lastScrollTop && !this.hide) {
+    // 滚动时隐藏
+    if (this.hasScrollBehavior('hide')) {
+      // 向下滚动
+      if (!isScrollingUp && !this.hide) {
         const requestHide = emit(this, 'hide');
         if (!requestHide.defaultPrevented) {
           this.hide = true;
         }
-      } else if (scrollTop < this.lastScrollTop && this.hide) {
+      }
+
+      // 向上滚动
+      if (isScrollingUp && this.hide) {
         const requestShow = emit(this, 'show');
         if (!requestShow.defaultPrevented) {
           this.hide = false;
         }
       }
-
-      this.lastScrollTop = scrollTop;
     }
   }
 }

@@ -36,12 +36,7 @@
     import '../../packages/components/list-subheader.js';
     import '../../packages/components/divider.js';
     import '../../packages/components/icon.js';
-    import { $ } from '../../packages/jq/$.js';
-    import '../../packages/jq/methods/on.js';
-    import '../../packages/jq/methods/append.js';
-    import '../../packages/jq/methods/prev.js';
-    import '../../packages/jq/methods/is.js';
-    import '../../packages/jq/methods/parent.js';
+    import { $ } from '../../packages/jq/index.js';
 
     $('.open').on('click', function() {
       if ($(this).prev().is('mdui-navigation-drawer')) {
@@ -63,6 +58,7 @@
   <section>
     <h2>normal</h2>
     <mdui-navigation-drawer close-on-esc close-on-overlay-click>
+      <mdui-button class="close">close</mdui-button>
       <mdui-list rounded>
         <mdui-list-subheader>Mail</mdui-list-subheader>
         <mdui-list-item active>

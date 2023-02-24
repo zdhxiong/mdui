@@ -14,6 +14,7 @@ import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
+import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '@mdui/icons/cancel--outlined.js';
@@ -24,6 +25,7 @@ import '../button-icon.js';
 import '../icon.js';
 import { style } from './style.js';
 import type { FormControl } from '@mdui/jq/shared/form.js';
+import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
@@ -427,7 +429,7 @@ export class TextField
   @state()
   private error = '';
 
-  private resizeObserver!: ResizeObserver;
+  private observeResize?: ObserveResize;
   private readonly inputRef: Ref<HTMLInputElement | HTMLTextAreaElement> =
     createRef();
   private readonly formController: FormController = new FormController(this);
@@ -576,17 +578,18 @@ export class TextField
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    this.resizeObserver = new ResizeObserver(() => this.setTextareaHeight());
 
     this.updateComplete.then(() => {
       this.setTextareaHeight();
-      this.resizeObserver.observe(this.inputRef.value!);
+      this.observeResize = observeResize(this.inputRef.value!, () =>
+        this.setTextareaHeight(),
+      );
     });
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.resizeObserver.unobserve(this.inputRef.value!);
+    this.observeResize?.unobserve();
   }
 
   /**

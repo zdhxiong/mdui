@@ -8,10 +8,12 @@ import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { tabsStyle } from './tabs-style.js';
 import type { TabPanel as TabPanelOriginal } from './tab-panel.js';
 import type { Tab as TabOriginal } from './tab.js';
+import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
@@ -99,7 +101,7 @@ export class Tabs extends LitElement {
   private activeKey = 0;
 
   private activeTab?: Tab;
-  private resizeObserver!: ResizeObserver;
+  private observeResize?: ObserveResize;
   private tabs: Tab[] = [];
   private panels: TabPanel[] = [];
   private readonly navRef: Ref<HTMLElement> = createRef();
@@ -137,17 +139,16 @@ export class Tabs extends LitElement {
     super.connectedCallback();
     this.syncTabsAndPanels();
 
-    this.resizeObserver = new ResizeObserver(() => {
-      this.updateIndicator();
-    });
     this.updateComplete.then(() => {
-      this.resizeObserver.observe(this.navRef.value!);
+      this.observeResize = observeResize(this.navRef.value!, () =>
+        this.updateIndicator(),
+      );
     });
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.resizeObserver.unobserve(this.navRef.value!);
+    this.observeResize?.unobserve();
   }
 
   protected override render(): TemplateResult {

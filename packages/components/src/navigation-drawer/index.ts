@@ -12,9 +12,11 @@ import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { Modal } from '@mdui/shared/helpers/modal.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
+import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
+import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
@@ -116,7 +118,7 @@ export class NavigationDrawer extends LitElement {
   // 用于在打开抽屉导航前，记录当前聚焦的元素；在关闭抽屉导航后，把焦点还原到该元素上
   private originalTrigger!: HTMLElement;
 
-  private resizeObserver!: ResizeObserver;
+  private observeResize?: ObserveResize;
   private modalHelper!: Modal;
   private readonly overlayRef: Ref<HTMLElement> = createRef();
   private readonly panelRef: Ref<HTMLElement> = createRef();
@@ -312,7 +314,9 @@ export class NavigationDrawer extends LitElement {
     this.modalHelper = new Modal(this);
 
     // 监听窗口尺寸变化，重新设置 handset 属性
-    this.resizeObserver = new ResizeObserver(() => this.setHandset());
+    this.observeResize = observeResize(this.parentElement!, () =>
+      this.setHandset(),
+    );
 
     $(this).on('keydown', (event: KeyboardEvent) => {
       if (
@@ -330,6 +334,7 @@ export class NavigationDrawer extends LitElement {
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     unlockScreen(this, this.lockTarget);
+    this.observeResize?.unobserve();
   }
 
   protected override render(): TemplateResult {

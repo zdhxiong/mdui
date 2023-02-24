@@ -16,8 +16,10 @@ import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
+import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
+import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
 import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
@@ -176,7 +178,7 @@ export class Dropdown extends LitElement {
   private openTimeout!: number;
   private closeTimeout!: number;
 
-  private resizeObserver!: ResizeObserver;
+  private observeResize?: ObserveResize;
   private readonly panelRef: Ref<HTMLElement> = createRef();
 
   private get triggerSlot(): HTMLElement {
@@ -303,11 +305,10 @@ export class Dropdown extends LitElement {
     });
 
     // triggerSlot 的尺寸变化时，重新调整 panel 的位置
-    this.resizeObserver = new ResizeObserver(() => {
-      this.updatePositioner();
-    });
     this.updateComplete.then(() => {
-      this.resizeObserver.observe(this.triggerSlot);
+      this.observeResize = observeResize(this.triggerSlot, () => {
+        this.updatePositioner();
+      });
     });
   }
 
@@ -318,7 +319,7 @@ export class Dropdown extends LitElement {
     $(document).off('keydown._dropdown');
     $(window).off('scroll._dropdown');
 
-    this.resizeObserver.unobserve(this.triggerSlot);
+    this.observeResize?.unobserve();
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {

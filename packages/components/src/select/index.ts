@@ -13,6 +13,7 @@ import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '../chip.js';
@@ -24,6 +25,7 @@ import type { MenuItem } from '../menu/menu-item.js';
 import type { Menu } from '../menu/menu.js';
 import type { TextField } from '../text-field.js';
 import type { FormControl } from '@mdui/jq/shared/form.js';
+import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
 import type { CSSResultGroup, TemplateResult, WarningKind } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
@@ -226,7 +228,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   @queryAssignedElements({ flatten: true, selector: 'mdui-menu-item' })
   private readonly menuItems!: MenuItem[];
 
-  private resizeObserver!: ResizeObserver;
+  private observeResize?: ObserveResize;
   private readonly menuRef: Ref<Menu> = createRef();
   private readonly textFieldRef: Ref<TextField> = createRef();
   private readonly hiddenInputRef: Ref<HTMLInputElement> = createRef();
@@ -273,16 +275,17 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
           : []
         : this.value;
     this.defaultValue = this.multiple ? [] : '';
-    this.resizeObserver = new ResizeObserver(() => this.resizeMenu());
 
     this.updateComplete.then(() => {
-      this.resizeObserver.observe(this.textFieldRef.value!);
+      this.observeResize = observeResize(this.textFieldRef.value!, () =>
+        this.resizeMenu(),
+      );
     });
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this.resizeObserver.unobserve(this.textFieldRef.value!);
+    this.observeResize?.unobserve();
   }
 
   /**

@@ -10,8 +10,6 @@ import '@mdui/jq/methods/height.js';
 import '@mdui/jq/methods/innerHeight.js';
 import '@mdui/jq/methods/innerWidth.js';
 import '@mdui/jq/methods/is.js';
-import '@mdui/jq/methods/off.js';
-import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/parent.js';
 import '@mdui/jq/methods/width.js';
 import '@mdui/jq/static/contains.js';
@@ -161,6 +159,18 @@ export class MenuItem extends AnchorMixin(
     'custom',
   );
 
+  public constructor() {
+    super();
+
+    this.onOuterClick = this.onOuterClick.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onKeydown = this.onKeydown.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
+  }
+
   protected override get focusDisabled(): boolean {
     return this.disabled || !this.focusable;
   }
@@ -250,7 +260,8 @@ export class MenuItem extends AnchorMixin(
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    $(document).on('pointerdown._menu-item', (e) => this.onOuterClick(e));
+
+    document.addEventListener('pointerdown', this.onOuterClick);
 
     // 如果该菜单项是子菜单项，添加 slot
     if ($(this).parent().is('mdui-menu-item')) {
@@ -260,20 +271,19 @@ export class MenuItem extends AnchorMixin(
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
-    $(document).off('pointerdown._menu-item');
+
+    document.removeEventListener('pointerdown', this.onOuterClick);
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
 
-    $(this).on({
-      focus: () => this.onFocus(),
-      blur: () => this.onBlur(),
-      click: (e) => this.onClick(e as MouseEvent),
-      keydown: (e) => this.onKeydown(e as KeyboardEvent),
-      mouseenter: () => this.onMouseEnter(),
-      mouseleave: () => this.onMouseLeave(),
-    });
+    this.addEventListener('focus', this.onFocus);
+    this.addEventListener('blur', this.onBlur);
+    this.addEventListener('click', this.onClick);
+    this.addEventListener('keydown', this.onKeydown);
+    this.addEventListener('mouseenter', this.onMouseEnter);
+    this.addEventListener('mouseleave', this.onMouseLeave);
 
     if (this.submenuRef.value) {
       this.submenuRef.value.hidden =

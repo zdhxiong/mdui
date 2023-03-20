@@ -7,7 +7,6 @@ import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
-import '@mdui/jq/methods/on.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { emit } from '@mdui/shared/helpers/event.js';
@@ -119,30 +118,36 @@ export class RangeSlider extends SliderBase implements FormControl {
       return pointerValue > middleValue ? 'end' : 'start';
     };
 
-    $(this).on({
-      'touchstart._slider mousedown._slider': () => {
-        if (!this.disabled) {
-          this.labelVisible = true;
-        }
-      },
-      'touchend._slider mouseup._slider': () => {
-        if (!this.disabled) {
-          this.labelVisible = false;
-        }
-      },
-      // 按下鼠标时，计算当前操作的是起始值还是结束值
-      'pointerdown._slider': (event: PointerEvent) => {
-        this.currentHandle = getCurrentHandle(event);
-      },
-      // 移动鼠标时，修改 mdui-ripple 的 hover 状态
-      'pointermove._slider': (event: PointerEvent) => {
-        const currentHandle = getCurrentHandle(event);
-        if (this.hoverHandle !== currentHandle) {
-          this.endHover(event);
-          this.hoverHandle = currentHandle;
-          this.startHover(event);
-        }
-      },
+    const onTouchStart = () => {
+      if (!this.disabled) {
+        this.labelVisible = true;
+      }
+    };
+
+    const onTouchEnd = () => {
+      if (!this.disabled) {
+        this.labelVisible = false;
+      }
+    };
+
+    this.addEventListener('touchstart', onTouchStart);
+    this.addEventListener('mousedown', onTouchStart);
+    this.addEventListener('touchend', onTouchEnd);
+    this.addEventListener('mouseup', onTouchEnd);
+
+    // 按下鼠标时，计算当前操作的是起始值还是结束值
+    this.addEventListener('pointerdown', (event: PointerEvent) => {
+      this.currentHandle = getCurrentHandle(event);
+    });
+
+    // 移动鼠标时，修改 mdui-ripple 的 hover 状态
+    this.addEventListener('pointermove', (event: PointerEvent) => {
+      const currentHandle = getCurrentHandle(event);
+      if (this.hoverHandle !== currentHandle) {
+        this.endHover(event);
+        this.hoverHandle = currentHandle;
+        this.startHover(event);
+      }
     });
   }
 

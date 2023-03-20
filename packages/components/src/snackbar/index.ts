@@ -1,8 +1,6 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/on.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { getBreakpoint } from '@mdui/shared/helpers/breakpoint.js';
@@ -123,6 +121,12 @@ export class Snackbar extends LitElement {
   public closeOnOutsideClick = false;
 
   private closeTimeout!: number;
+
+  public constructor() {
+    super();
+
+    this.onDocumentClick = this.onDocumentClick.bind(this);
+  }
 
   @watch('open')
   private async onOpenChange() {
@@ -294,15 +298,13 @@ export class Snackbar extends LitElement {
   public override connectedCallback(): void {
     super.connectedCallback();
 
-    $(document).on('pointerdown._snackbar', (e) =>
-      this.onDocumentClick(e as PointerEvent),
-    );
+    document.addEventListener('pointerdown', this.onDocumentClick);
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    $(document).off('pointerdown._snackbar');
+    document.removeEventListener('pointerdown', this.onDocumentClick);
   }
 
   protected override render(): TemplateResult {

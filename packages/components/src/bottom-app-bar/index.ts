@@ -1,9 +1,6 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/on.js';
 import { emit } from '@mdui/shared/helpers/event.js';
-import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { ScrollBehaviorMixin } from '@mdui/shared/mixins/scrollBehavior.js';
 import { LayoutItemBase } from '../layout/layout-item-base.js';
@@ -56,12 +53,6 @@ export class BottomAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   @property({ reflect: true, attribute: 'scroll-behavior' })
   public scrollBehavior?: 'hide' /*滚动时隐藏*/;
 
-  private readonly uniqueId = uniqueId();
-
-  protected get scrollUniqueName(): string {
-    return `_bottom_app_bar_${this.uniqueId}`;
-  }
-
   protected get scrollPaddingPosition(): ScrollPaddingPosition {
     return 'bottom';
   }
@@ -73,7 +64,7 @@ export class BottomAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   public override connectedCallback(): void {
     super.connectedCallback();
 
-    $(this).on('transitionend', (event: TransitionEvent) => {
+    this.addEventListener('transitionend', (event: TransitionEvent) => {
       if (event.target === this) {
         emit(this, this.hide ? 'hidden' : 'shown');
       }

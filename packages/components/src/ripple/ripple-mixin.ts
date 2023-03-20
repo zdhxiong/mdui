@@ -1,7 +1,5 @@
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/index.js';
-import '@mdui/jq/methods/off.js';
-import '@mdui/jq/methods/on.js';
 import { isArrayLike } from '@mdui/jq/shared/helper.js';
 import './index.js';
 import type { Ripple } from './index.js';
@@ -74,36 +72,44 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
     protected override firstUpdated(changedProperties: PropertyValues): void {
       super.firstUpdated(changedProperties);
 
-      const $target = $(this.rippleTarget);
+      const $rippleTarget = $(this.rippleTarget);
 
       // 监听到事件时，是在第几个 <mdui-ripple> 上触发的事件，记录到 this.rippleIndex 中
       const setRippleIndex = (event: Event) => {
         if (isArrayLike(this.rippleTarget)) {
-          this.rippleIndex = $target.index(event.target as HTMLElement);
+          this.rippleIndex = $rippleTarget.index(event.target as HTMLElement);
         }
       };
 
-      $target.on({
-        'pointerdown._ripple': (event: PointerEvent) => {
+      const rippleTargetArr = isArrayLike(this.rippleTarget)
+        ? this.rippleTarget
+        : [this.rippleTarget];
+
+      rippleTargetArr.forEach((rippleTarget) => {
+        rippleTarget.addEventListener('pointerdown', (event: PointerEvent) => {
           setRippleIndex(event);
           this.startPress(event);
-        },
-        'pointerenter._ripple': (event: PointerEvent) => {
+        });
+
+        rippleTarget.addEventListener('pointerenter', (event: PointerEvent) => {
           setRippleIndex(event);
           this.startHover(event);
-        },
-        'pointerleave._ripple': (event: PointerEvent) => {
+        });
+
+        rippleTarget.addEventListener('pointerleave', (event: PointerEvent) => {
           setRippleIndex(event);
           this.endHover(event);
-        },
-        'focus._ripple': (event: FocusEvent) => {
+        });
+
+        rippleTarget.addEventListener('focus', (event: FocusEvent) => {
           setRippleIndex(event);
           this.startFocus();
-        },
-        'blur._ripple': (event: FocusEvent) => {
+        });
+
+        rippleTarget.addEventListener('blur', (event: FocusEvent) => {
           setRippleIndex(event);
           this.endFocus();
-        },
+        });
       });
     }
 
@@ -216,8 +222,6 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
       const target = this.getRippleTarget();
       target.setAttribute('pressed', '');
 
-      const $target = $(target);
-
       // 手指触摸触发涟漪
       if (['touch', 'pen'].includes(event.pointerType)) {
         let hidden = false;
@@ -241,7 +245,8 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
             this.endPress();
           }
 
-          $target.off('pointerup._ripple pointercancel._ripple', hideRipple);
+          target.removeEventListener('pointerup', hideRipple);
+          target.removeEventListener('pointercancel', hideRipple);
         };
 
         // 手指移动后，移除涟漪动画
@@ -251,31 +256,31 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
             timer = 0;
           }
 
-          $target.off('touchmove._ripple', touchMove);
+          target.removeEventListener('touchmove', touchMove);
         };
 
         // pointermove 事件过于灵敏，可能在未触发 touchmove 的情况下，触发了 pointermove 事件，导致正常的点击操作没有显示涟漪
         // 因此这里监听 touchmove 事件
-        $target
-          .on('touchmove._ripple', touchMove)
-          .on('pointerup._ripple pointercancel._ripple', hideRipple);
+        target.addEventListener('touchmove', touchMove);
+        target.addEventListener('pointerup', hideRipple);
+        target.addEventListener('pointercancel', hideRipple);
       }
 
       // 鼠标点击触发涟漪，点击后立即触发涟漪（仅鼠标左键能触发涟漪）
       if (event.pointerType === 'mouse' && event.button === 0) {
         const hideRipple = () => {
           this.endPress();
-          $target.off(
-            'pointerup._ripple pointercancel._ripple pointerleave._ripple',
-            hideRipple,
-          );
+
+          target.removeEventListener('pointerup', hideRipple);
+          target.removeEventListener('pointercancel', hideRipple);
+          target.removeEventListener('pointerleave', hideRipple);
         };
 
         this.getRippleElement().startPress(event);
-        $target.on(
-          'pointerup._ripple pointercancel._ripple pointerleave._ripple',
-          hideRipple,
-        );
+
+        target.addEventListener('pointerup', hideRipple);
+        target.addEventListener('pointercancel', hideRipple);
+        target.addEventListener('pointerleave', hideRipple);
       }
     }
 

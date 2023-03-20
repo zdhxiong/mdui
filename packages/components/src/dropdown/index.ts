@@ -5,11 +5,9 @@ import {
   queryAssignedElements,
 } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { styleMap } from 'lit/directives/style-map.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/height.js';
 import '@mdui/jq/methods/is.js';
-import '@mdui/jq/methods/off.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/width.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
@@ -175,6 +173,20 @@ export class Dropdown extends LitElement {
   private observeResize?: ObserveResize;
   private readonly panelRef: Ref<HTMLElement> = createRef();
 
+  public constructor() {
+    super();
+
+    this.onDocumentClick = this.onDocumentClick.bind(this);
+    this.onDocumentKeydown = this.onDocumentKeydown.bind(this);
+    this.onWindowScroll = this.onWindowScroll.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onContextMenu = this.onContextMenu.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onPanelClick = this.onPanelClick.bind(this);
+  }
+
   private get triggerSlot(): HTMLElement {
     return this.triggerSlots[0];
   }
@@ -288,15 +300,9 @@ export class Dropdown extends LitElement {
   public override connectedCallback(): void {
     super.connectedCallback();
 
-    $(document).on('pointerdown._dropdown', (e) =>
-      this.onDocumentClick(e as MouseEvent),
-    );
-    $(document).on('keydown._dropdown', (e) =>
-      this.onDocumentKeydown(e as KeyboardEvent),
-    );
-    $(window).on('scroll._dropdown', () => {
-      window.requestAnimationFrame(() => this.onPositionChange());
-    });
+    document.addEventListener('pointerdown', this.onDocumentClick);
+    document.addEventListener('keydown', this.onDocumentKeydown);
+    window.addEventListener('scroll', this.onWindowScroll);
 
     // triggerSlot 的尺寸变化时，重新调整 panel 的位置
     this.updateComplete.then(() => {
@@ -309,9 +315,9 @@ export class Dropdown extends LitElement {
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    $(document).off('pointerdown._dropdown');
-    $(document).off('keydown._dropdown');
-    $(window).off('scroll._dropdown');
+    document.removeEventListener('pointerdown', this.onDocumentClick);
+    document.removeEventListener('keydown', this.onDocumentKeydown);
+    window.removeEventListener('scroll', this.onWindowScroll);
 
     this.observeResize?.unobserve();
   }
@@ -319,18 +325,13 @@ export class Dropdown extends LitElement {
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
 
-    $(this).on('mouseleave._dropdown', () => this.onMouseLeave());
+    this.addEventListener('mouseleave', this.onMouseLeave);
+    this.triggerSlot.addEventListener('focus', this.onFocus);
+    this.triggerSlot.addEventListener('click', this.onClick);
+    this.triggerSlot.addEventListener('contextmenu', this.onContextMenu);
+    this.triggerSlot.addEventListener('mouseenter', this.onMouseEnter);
 
-    $(this.triggerSlot).on({
-      focus: () => this.onFocus(),
-      click: (e) => this.onClick(e as MouseEvent),
-      contextmenu: (e) => this.onContextMenu(e as MouseEvent),
-      mouseenter: () => this.onMouseEnter(),
-    });
-
-    $(this.panelRef.value!).on({
-      click: (e) => this.onPanelClick(e as MouseEvent),
-    });
+    $(this.panelRef.value!).on('click', this.onPanelClick);
 
     this.panelRef.value!.hidden = !this.open || this.disabled;
   }
@@ -402,6 +403,10 @@ export class Dropdown extends LitElement {
 
       this.open = false;
     }
+  }
+
+  private onWindowScroll() {
+    window.requestAnimationFrame(() => this.onPositionChange());
   }
 
   private hasTrigger(

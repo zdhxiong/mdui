@@ -3,10 +3,8 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
-import '@mdui/jq/methods/on.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
-import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { ScrollBehaviorMixin } from '@mdui/shared/mixins/scrollBehavior.js';
 import { LayoutItemBase } from '../layout/layout-item-base.js';
@@ -83,14 +81,8 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
   @state()
   private activeKey = 0;
 
-  private readonly uniqueId = uniqueId();
-
   // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
   private hasSetDefaultValue = false;
-
-  protected get scrollUniqueName(): string {
-    return `_navigation_bar_${this.uniqueId}`;
-  }
 
   protected get scrollPaddingPosition(): ScrollPaddingPosition {
     return 'bottom';
@@ -135,7 +127,7 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
   public override connectedCallback(): void {
     super.connectedCallback();
 
-    $(this).on('transitionend', (event: TransitionEvent) => {
+    this.addEventListener('transitionend', (event: TransitionEvent) => {
       if (event.target === this) {
         emit(this, this.hide ? 'hidden' : 'shown');
       }

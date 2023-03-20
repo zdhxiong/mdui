@@ -200,6 +200,7 @@ export class ButtonBase extends AnchorMixin(
 
   public override connectedCallback(): void {
     super.connectedCallback();
+
     this.addEventListener('click', () => {
       if (this.type === 'submit') {
         this.formController.submit(this);

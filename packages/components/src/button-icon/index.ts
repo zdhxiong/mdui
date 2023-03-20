@@ -2,8 +2,6 @@ import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
-import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/on.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
@@ -101,7 +99,7 @@ export class ButtonIcon extends ButtonBase {
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
 
-    $(this).on('click', () => {
+    this.addEventListener('click', () => {
       if (!this.selectable || this.disabled) {
         return;
       }

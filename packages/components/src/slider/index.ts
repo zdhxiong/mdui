@@ -6,8 +6,6 @@ import { map } from 'lit/directives/map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { when } from 'lit/directives/when.js';
-import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/on.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
@@ -84,18 +82,22 @@ export class Slider extends SliderBase implements FormControl {
       this.value = this.max;
     }
 
-    $(this).on({
-      'touchstart._slider mousedown._slider': () => {
-        if (!this.disabled) {
-          this.labelVisible = true;
-        }
-      },
-      'touchend._slider mouseup._slider': () => {
-        if (!this.disabled) {
-          this.labelVisible = false;
-        }
-      },
-    });
+    const onTouchStart = () => {
+      if (!this.disabled) {
+        this.labelVisible = true;
+      }
+    };
+
+    const onTouchEnd = () => {
+      if (!this.disabled) {
+        this.labelVisible = false;
+      }
+    };
+
+    this.addEventListener('touchstart', onTouchStart);
+    this.addEventListener('mousedown', onTouchStart);
+    this.addEventListener('touchend', onTouchEnd);
+    this.addEventListener('mouseup', onTouchEnd);
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {

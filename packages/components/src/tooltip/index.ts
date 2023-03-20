@@ -1,12 +1,9 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { styleMap } from 'lit/directives/style-map.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/height.js';
-import '@mdui/jq/methods/off.js';
-import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/width.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
@@ -126,6 +123,18 @@ export class Tooltip extends LitElement {
   private hoverTimeout!: number;
   private readonly tooltipRef: Ref<HTMLElement> = createRef();
 
+  public constructor() {
+    super();
+
+    this.onWindowScroll = this.onWindowScroll.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onKeydown = this.onKeydown.bind(this);
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
+  }
+
   @watch('disabled', true)
   @watch('placement', true)
   @watch('content', true)
@@ -189,28 +198,26 @@ export class Tooltip extends LitElement {
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    $(window).on('scroll._tooltip', () => {
-      window.requestAnimationFrame(() => this.onOpenChange());
-    });
+
+    window.addEventListener('scroll', this.onWindowScroll);
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
-    $(window).off('scroll._tooltip');
+
+    window.removeEventListener('scroll', this.onWindowScroll);
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
     this.target = this.getTarget();
 
-    $(this.target).on({
-      focus: () => this.onFocus(),
-      blur: () => this.onBlur(),
-      pointerdown: (e) => this.onClick(e as MouseEvent),
-      keydown: (e) => this.onKeydown(e as KeyboardEvent),
-      mouseenter: () => this.onMouseEnter(),
-      mouseleave: () => this.onMouseLeave(),
-    });
+    this.target.addEventListener('focus', this.onFocus);
+    this.target.addEventListener('blur', this.onBlur);
+    this.target.addEventListener('pointerdown', this.onClick);
+    this.target.addEventListener('keydown', this.onKeydown);
+    this.target.addEventListener('mouseenter', this.onMouseEnter);
+    this.target.addEventListener('mouseleave', this.onMouseLeave);
 
     this.tooltipRef.value!.hidden = !this.open || this.disabled;
   }
@@ -301,6 +308,10 @@ export class Tooltip extends LitElement {
     this.hoverTimeout = window.setTimeout(() => {
       this.open = false;
     }, this.closeDelay || 50);
+  }
+
+  private onWindowScroll() {
+    window.requestAnimationFrame(() => this.onOpenChange());
   }
 
   private updatePositioner(): void {

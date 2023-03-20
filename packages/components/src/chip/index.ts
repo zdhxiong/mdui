@@ -2,8 +2,6 @@ import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
-import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/on.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import '@mdui/icons/check.js';
@@ -113,6 +111,13 @@ export class Chip extends ButtonBase {
 
   private readonly rippleRef: Ref<Ripple> = createRef();
 
+  public constructor() {
+    super();
+
+    this.onClick = this.onClick.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
+  }
+
   protected override get rippleElement() {
     return this.rippleRef.value!;
   }
@@ -125,10 +130,8 @@ export class Chip extends ButtonBase {
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
 
-    $(this).on({
-      'click._chip': () => this.onClick(),
-      'keydown._chip': (event) => this.onKeyDown(event as KeyboardEvent),
-    });
+    this.addEventListener('click', this.onClick);
+    this.addEventListener('keydown', this.onKeyDown);
   }
 
   protected override render(): TemplateResult {

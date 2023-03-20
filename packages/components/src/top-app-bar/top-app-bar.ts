@@ -4,13 +4,8 @@ import {
   property,
   queryAssignedElements,
 } from 'lit/decorators.js';
-import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/off.js';
-import '@mdui/jq/methods/on.js';
-import '@mdui/jq/methods/one.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
-import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { ScrollBehaviorMixin } from '@mdui/shared/mixins/scrollBehavior.js';
 import { LayoutItemBase } from '../layout/layout-item-base.js';
@@ -105,12 +100,6 @@ export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   @queryAssignedElements({ selector: 'mdui-top-app-bar-title', flatten: true })
   private readonly titleElements!: TopAppBarTitle[];
 
-  private readonly uniqueId = uniqueId();
-
-  protected get scrollUniqueName(): string {
-    return `_top_app_bar_${this.uniqueId}`;
-  }
-
   protected get scrollPaddingPosition(): ScrollPaddingPosition {
     return 'top';
   }
@@ -121,10 +110,14 @@ export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
 
   @watch('variant')
   private async onVariantChange() {
-    $(this).one('transitionend', () => {
-      // variant 变更时，重新为 scrollTargetContainer 元素添加 padding-top。避免 top-app-bar 覆盖内容
-      this.updateContainerPadding();
-    });
+    // variant 变更时，重新为 scrollTargetContainer 元素添加 padding-top。避免 top-app-bar 覆盖内容
+    this.addEventListener(
+      'transitionend',
+      () => {
+        this.updateContainerPadding();
+      },
+      { once: true },
+    );
 
     if (!this.hasUpdated) {
       await this.updateComplete;
@@ -148,7 +141,7 @@ export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   public override connectedCallback(): void {
     super.connectedCallback();
 
-    $(this).on('transitionend', (e: TransitionEvent) => {
+    this.addEventListener('transitionend', (e: TransitionEvent) => {
       if (e.target === this) {
         emit(this, this.hide ? 'hidden' : 'shown');
       }

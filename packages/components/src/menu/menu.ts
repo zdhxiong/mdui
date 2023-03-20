@@ -11,7 +11,6 @@ import '@mdui/jq/methods/children.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
 import '@mdui/jq/methods/is.js';
-import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/parent.js';
 import '@mdui/jq/methods/parents.js';
 import { isString } from '@mdui/jq/shared/helper.js';
@@ -282,32 +281,33 @@ export class Menu extends LitElement {
     this.updateFocusable();
     this.lastActiveItem = this.items.find((item) => item.focusable)!;
 
-    $(this).on({
-      // 子菜单打开时，把焦点放到新的子菜单上
-      'submenu-open': (e: CustomEvent) => {
-        const $parentItem = $(e.target as MenuItem);
-        const submenuItemsEnabled = $parentItem
-          .children('mdui-menu-item:not([disabled])')
-          .get() as MenuItem[];
-        const submenuLevel = $parentItem.parents('mdui-menu-item').length + 1; // 打开的是第几级子菜单
-        if (submenuItemsEnabled.length) {
-          this.lastActiveItems[submenuLevel] = submenuItemsEnabled[0];
-          this.updateFocusable();
-          this.focusOne(this.lastActiveItems[submenuLevel]);
+    // 子菜单打开时，把焦点放到新的子菜单上
+    this.addEventListener('submenu-open', (e) => {
+      const $parentItem = $(e.target as MenuItem);
+      const submenuItemsEnabled = $parentItem
+        .children('mdui-menu-item:not([disabled])')
+        .get() as MenuItem[];
+      const submenuLevel = $parentItem.parents('mdui-menu-item').length + 1; // 打开的是第几级子菜单
+
+      if (submenuItemsEnabled.length) {
+        this.lastActiveItems[submenuLevel] = submenuItemsEnabled[0];
+        this.updateFocusable();
+        this.focusOne(this.lastActiveItems[submenuLevel]);
+      }
+    });
+
+    // 子菜单关闭时，把焦点还原到父菜单上
+    this.addEventListener('submenu-close', (e) => {
+      const $parentItem = $(e.target as MenuItem);
+      const submenuLevel = $parentItem.parents('mdui-menu-item').length + 1; // 打开的是第几级子菜单
+
+      if (this.lastActiveItems.length - 1 === submenuLevel) {
+        this.lastActiveItems.pop();
+        this.updateFocusable();
+        if (this.lastActiveItems[submenuLevel - 1]) {
+          this.focusOne(this.lastActiveItems[submenuLevel - 1]);
         }
-      },
-      // 子菜单关闭时，把焦点还原到父菜单上
-      'submenu-close': (e) => {
-        const $parentItem = $(e.target as MenuItem);
-        const submenuLevel = $parentItem.parents('mdui-menu-item').length + 1; // 打开的是第几级子菜单
-        if (this.lastActiveItems.length - 1 === submenuLevel) {
-          this.lastActiveItems.pop();
-          this.updateFocusable();
-          if (this.lastActiveItems[submenuLevel - 1]) {
-            this.focusOne(this.lastActiveItems[submenuLevel - 1]);
-          }
-        }
-      },
+      }
     });
   }
 

@@ -4,8 +4,6 @@
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/attr.js';
 import '@mdui/jq/methods/css.js';
-import '@mdui/jq/methods/off.js';
-import '@mdui/jq/methods/on.js';
 import { formCollections } from '@mdui/jq/shared/form.js';
 import { isFunction, isString, isUndefined } from '@mdui/jq/shared/helper.js';
 import type { FormControl, FormControlValue } from '@mdui/jq/shared/form.js';
@@ -139,11 +137,9 @@ export class FormController implements ReactiveController {
       formCollections.set(this.form, new Set([this.host]));
     }
 
-    $(this.form).on({
-      formdata: this.onFormData,
-      submit: this.onFormSubmit,
-      reset: this.onFormReset,
-    });
+    this.form.addEventListener('formdata', this.onFormData);
+    this.form.addEventListener('submit', this.onFormSubmit);
+    this.form.addEventListener('reset', this.onFormReset);
 
     if (!reportValidityOverloads.has(this.form)) {
       reportValidityOverloads.set(this.form, this.form.reportValidity);
@@ -155,11 +151,9 @@ export class FormController implements ReactiveController {
     if (this.form) {
       formCollections.get(this.form)!.delete(this.host);
 
-      $(this.form).off({
-        formdata: this.onFormData,
-        submit: this.onFormSubmit,
-        reset: this.onFormReset,
-      });
+      this.form.removeEventListener('formdata', this.onFormData);
+      this.form.removeEventListener('submit', this.onFormSubmit);
+      this.form.removeEventListener('reset', this.onFormReset);
 
       if (
         reportValidityOverloads.has(this.form) &&

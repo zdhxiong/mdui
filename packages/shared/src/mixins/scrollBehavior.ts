@@ -1,8 +1,6 @@
 import { property } from 'lit/decorators.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
-import '@mdui/jq/methods/off.js';
-import '@mdui/jq/methods/on.js';
 import { isNodeName } from '@mdui/jq/shared/helper.js';
 import { watch } from '../decorators/watch.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
@@ -29,7 +27,6 @@ export declare class ScrollBehaviorMixinInterface extends LitElement {
  * @property() public scrollBehavior
  * protected runScrollThreshold(isScrollingUp: boolean, scrollTop: number): void;
  * protected runScrollNoThreshold(isScrollingUp: boolean, scrollTop: number): void;
- * protected get scrollUniqueName(): string;
  * protected get scrollPaddingPosition(): ScrollPaddingPosition
  */
 export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
@@ -72,11 +69,10 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
      */
     private isParentLayout = false;
 
-    /**
-     * 每个组件实例都要提供一个唯一名称，用于事件名称中
-     */
-    protected get scrollUniqueName(): string {
-      throw new Error('Must implement scrollUniqueName getter');
+    public constructor(...args: any[]) {
+      super(...args);
+
+      this.onListeningScroll = this.onListeningScroll.bind(this);
     }
 
     /**
@@ -84,13 +80,6 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
      */
     protected get scrollPaddingPosition(): ScrollPaddingPosition {
       throw new Error('Must implement scrollPaddingPosition getter');
-    }
-
-    /**
-     * 滚动事件的事件名
-     */
-    private get eventName() {
-      return `scroll.${this.scrollUniqueName}`;
     }
 
     @watch('scrollTarget')
@@ -106,16 +95,14 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
 
       const oldListening = this.getListening(oldValue);
       if (oldListening) {
-        $(oldListening).off(this.eventName);
+        oldListening.removeEventListener('scroll', this.onListeningScroll);
       }
 
       const newListening = this.getListening(newValue);
       if (newListening) {
         this.updateScrollTop(newListening);
 
-        $(newListening).on(this.eventName, () => {
-          window.requestAnimationFrame(() => this.onScroll(newListening));
-        });
+        newListening.addEventListener('scroll', this.onListeningScroll);
       }
     }
 
@@ -134,11 +121,9 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
       if (this.scrollBehavior) {
         this.updateScrollTop(listening);
 
-        $(listening).on(this.eventName, () => {
-          window.requestAnimationFrame(() => this.onScroll(listening));
-        });
+        listening.addEventListener('scroll', this.onListeningScroll);
       } else {
-        $(listening).off(this.eventName);
+        listening.removeEventListener('scroll', this.onListeningScroll);
       }
     }
 
@@ -218,6 +203,12 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
       } else {
         $(container).css({ [propName]: null });
       }
+    }
+
+    private onListeningScroll() {
+      const listening = this.getListening(this.scrollTarget)!;
+
+      window.requestAnimationFrame(() => this.onScroll(listening));
     }
 
     /**

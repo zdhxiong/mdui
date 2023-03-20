@@ -4,20 +4,18 @@ import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/attr.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/each.js';
-import '@mdui/jq/methods/off.js';
-import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/removeAttr.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
 import type { PropertyValues, LitElement } from 'lit';
 
 let isClick = true;
-$(getDocument()).on({
-  'pointerdown._focusable': () => {
-    isClick = true;
-  },
-  'keydown._focusable': () => {
-    isClick = false;
-  },
+const document = getDocument();
+
+document.addEventListener('pointerdown', () => {
+  isClick = true;
+});
+document.addEventListener('keydown', () => {
+  isClick = false;
 });
 
 export declare class FocusableMixinInterface extends LitElement {
@@ -133,16 +131,18 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
         return;
       }
 
+      const onPointerDown = () => {
+        if (this.tabIndex === -1) {
+          this.tabIndex = 0;
+          this.focus({ preventScroll: true });
+        }
+      };
+
       if (tabIndex === -1) {
-        $this.on('pointerdown._focusable', () => {
-          if (this.tabIndex === -1) {
-            this.tabIndex = 0;
-            this.focus({ preventScroll: true });
-          }
-        });
+        this.addEventListener('pointerdown', onPointerDown);
       } else {
         this._manipulatingTabindex = true;
-        $this.off('pointerdown._focusable');
+        this.removeEventListener('pointerdown', onPointerDown);
       }
 
       if (tabIndex === -1 || this.focusDisabled) {
@@ -227,15 +227,13 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     protected override firstUpdated(changedProperties: PropertyValues): void {
       super.firstUpdated(changedProperties);
 
-      $(this.focusElement!).on({
-        'focus._focusable': () => {
-          this.focused = true;
-          this.focusVisible = !isClick;
-        },
-        'blur._focusable': () => {
-          this.focused = false;
-          this.focusVisible = false;
-        },
+      this.focusElement!.addEventListener('focus', () => {
+        this.focused = true;
+        this.focusVisible = !isClick;
+      });
+      this.focusElement!.addEventListener('blur', () => {
+        this.focused = false;
+        this.focusVisible = false;
       });
     }
 

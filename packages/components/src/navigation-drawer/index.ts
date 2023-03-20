@@ -5,7 +5,6 @@ import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/innerWidth.js';
-import '@mdui/jq/methods/on.js';
 import { isNull } from '@mdui/jq/shared/helper.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
@@ -402,7 +401,7 @@ export class NavigationDrawer extends LayoutItemBase {
     super.connectedCallback();
     this.modalHelper = new Modal(this);
 
-    $(this).on('keydown', (event: KeyboardEvent) => {
+    this.addEventListener('keydown', (event: KeyboardEvent) => {
       if (
         this.open &&
         this.closeOnEsc &&

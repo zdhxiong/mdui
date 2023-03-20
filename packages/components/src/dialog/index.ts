@@ -7,11 +7,6 @@ import {
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
-import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/addClass.js';
-import '@mdui/jq/methods/off.js';
-import '@mdui/jq/methods/on.js';
-import '@mdui/jq/methods/removeClass.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
@@ -342,7 +337,7 @@ export class Dialog extends LitElement {
     super.connectedCallback();
     this.modalHelper = new Modal(this);
 
-    $(this).on('keydown', (event: KeyboardEvent) => {
+    this.addEventListener('keydown', (event: KeyboardEvent) => {
       if (this.open && this.closeOnEsc && event.key === 'Escape') {
         event.stopPropagation();
         this.open = false;

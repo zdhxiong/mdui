@@ -2,6 +2,7 @@
 
 :host {
   --shape-corner: var(--mdui-shape-corner-none);
+  --z-index: 2000;
 
   position: fixed;
   top: 0;
@@ -12,7 +13,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   border-radius: 0 0 var(--shape-corner) var(--shape-corner);
-  z-index: 100;
+  z-index: var(--z-index);
   transition-property: top, height;
   .transitionDuration(long2);
   .transitionTimingFunction(standard);

@@ -122,12 +122,6 @@ export class Tooltip extends LitElement {
   })
   public open = false;
 
-  /**
-   * tooltip 的 zIndex 的值
-   */
-  @property({ type: Number, reflect: true, attribute: 'z-index' })
-  public zIndex = 1000;
-
   private target!: HTMLElement;
   private hoverTimeout!: number;
   private readonly tooltipRef: Ref<HTMLElement> = createRef();
@@ -223,11 +217,7 @@ export class Tooltip extends LitElement {
 
   protected override render(): TemplateResult {
     return html`<slot></slot>
-      <div
-        ${ref(this.tooltipRef)}
-        class="tooltip"
-        style="${styleMap({ zIndex: this.zIndex.toString() })}"
-      >
+      <div ${ref(this.tooltipRef)} class="tooltip">
         <div class="content" part="content">
           <slot name="content">${this.content}</slot>
         </div>

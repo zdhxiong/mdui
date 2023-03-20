@@ -2,6 +2,7 @@
 
 :host {
   --shape-corner: var(--mdui-shape-corner-none);
+  --z-index: 2000;
 
   position: fixed;
   top: 0;
@@ -11,6 +12,7 @@
   flex-direction: column;
   align-items: center;
   border-radius: 0 var(--shape-corner) var(--shape-corner) 0;
+  z-index: var(--z-index);
   .width(80);
   .backgroundColor(surface);
   .padding(6, 12);

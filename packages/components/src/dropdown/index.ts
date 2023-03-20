@@ -156,12 +156,6 @@ export class Dropdown extends LitElement {
   })
   public openOnPointer = false;
 
-  /**
-   * dropdown 下拉内容的 zIndex 的值
-   */
-  @property({ type: Number, reflect: true, attribute: 'z-index' })
-  public zIndex = 900;
-
   @queryAssignedElements({ slot: 'trigger', flatten: true })
   private readonly triggerSlots!: HTMLElement[];
 
@@ -345,12 +339,7 @@ export class Dropdown extends LitElement {
     return html`<div part="trigger" class="trigger">
         <slot name="trigger"></slot>
       </div>
-      <div
-        ${ref(this.panelRef)}
-        part="panel"
-        class="panel"
-        style="${styleMap({ zIndex: this.zIndex.toString() })}"
-      >
+      <div ${ref(this.panelRef)} part="panel" class="panel">
         <slot></slot>
       </div>`;
   }

@@ -1,11 +1,14 @@
 @import url("~@mdui/shared/mixin.less");
 
 :host {
+  --z-index: 2500;
+
   display: contents;
 }
 
 .tooltip {
   position: fixed;
+  z-index: var(--z-index);
 }
 
 .content {

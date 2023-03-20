@@ -2,12 +2,14 @@
 
 :host {
   --shape-corner: var(--mdui-shape-corner-large);
+  --z-index: 2200;
 
   display: none;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
+  z-index: 1;
   .width(360);
 }
 
@@ -21,8 +23,8 @@
   top: 0 !important;
   right: 0;
   bottom: 0 !important;
-  z-index: 900;
   width: initial;
+  z-index: var(--z-index);
 }
 
 :host([placement="right"][modal]),

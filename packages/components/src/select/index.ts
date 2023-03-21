@@ -448,8 +448,9 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
                       deletable
                       tabindex="-1"
                       @delete=${() => this.onDeleteOneValue(valueItem)}
-                      >${this.getMenuItemLabelByValue(valueItem)}</mdui-chip
-                    >`,
+                    >
+                      ${this.getMenuItemLabelByValue(valueItem)}
+                    </mdui-chip>`,
                 )}
               </div>`,
           )}
@@ -468,11 +469,12 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
 
   private getMenuItemLabelByValue(valueItem: string) {
     if (!this.menuItems.length) {
-      return '';
+      return valueItem;
     }
 
     return (
-      this.menuItems.find((item) => item.value === valueItem)?.textContent || ''
+      this.menuItems.find((item) => item.value === valueItem)?.textContent ||
+      valueItem
     );
   }
 

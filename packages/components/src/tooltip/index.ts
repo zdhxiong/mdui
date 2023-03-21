@@ -135,31 +135,35 @@ export class Tooltip extends LitElement {
     this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
-  @watch('disabled', true)
   @watch('placement', true)
   @watch('content', true)
   private async onPositionChange() {
-    if (this.disabled || !this.open) {
-      return;
+    if (this.open) {
+      this.updatePositioner();
     }
-
-    // 打开动画开始前，设置 tooltip 的样式
-    this.updatePositioner();
   }
 
-  @watch('open', true)
+  @watch('open')
   private async onOpenChange() {
-    if (this.disabled) {
-      this.open = false;
-      return;
-    }
+    const hasUpdated = this.hasUpdated;
 
+    const duration = getDuration(this, 'short4');
+    const easing = getEasing(this, 'standard');
+
+    // 打开
+    // 要区分是否首次渲染，首次渲染时不触发事件，不执行动画；非首次渲染，触发事件，执行动画
     if (this.open) {
-      const requestOpen = emit(this, 'open', {
-        cancelable: true,
-      });
-      if (requestOpen.defaultPrevented) {
-        return;
+      if (!hasUpdated) {
+        await this.updateComplete;
+      }
+
+      if (hasUpdated) {
+        const requestOpen = emit(this, 'open', {
+          cancelable: true,
+        });
+        if (requestOpen.defaultPrevented) {
+          return;
+        }
       }
 
       await stopAnimations(this.tooltipRef.value!);
@@ -169,12 +173,20 @@ export class Tooltip extends LitElement {
         this.tooltipRef.value!,
         [{ transform: 'scale(0)' }, { transform: 'scale(1)' }],
         {
-          duration: getDuration(this, 'short4'),
-          easing: getEasing(this, 'standard'),
+          duration: hasUpdated ? duration : 0,
+          easing,
         },
       );
-      emit(this, 'opened');
-    } else {
+
+      if (hasUpdated) {
+        emit(this, 'opened');
+      }
+
+      return;
+    }
+
+    // 关闭
+    if (!this.open && hasUpdated) {
       const requestClose = emit(this, 'close', {
         cancelable: true,
       });
@@ -186,13 +198,11 @@ export class Tooltip extends LitElement {
       await animateTo(
         this.tooltipRef.value!,
         [{ transform: 'scale(1)' }, { transform: 'scale(0)' }],
-        {
-          duration: getDuration(this, 'short4'),
-          easing: getEasing(this, 'standard'),
-        },
+        { duration, easing },
       );
       this.tooltipRef.value!.hidden = true;
       emit(this, 'closed');
+      return;
     }
   }
 
@@ -218,13 +228,11 @@ export class Tooltip extends LitElement {
     this.target.addEventListener('keydown', this.onKeydown);
     this.target.addEventListener('mouseenter', this.onMouseEnter);
     this.target.addEventListener('mouseleave', this.onMouseLeave);
-
-    this.tooltipRef.value!.hidden = !this.open || this.disabled;
   }
 
   protected override render(): TemplateResult {
     return html`<slot></slot>
-      <div ${ref(this.tooltipRef)} class="tooltip">
+      <div ${ref(this.tooltipRef)} class="tooltip" hidden>
         <div class="content" part="content">
           <slot name="content">${this.content}</slot>
         </div>
@@ -248,7 +256,7 @@ export class Tooltip extends LitElement {
   }
 
   private onFocus() {
-    if (this.open || !this.hasTrigger('focus')) {
+    if (this.disabled || this.open || !this.hasTrigger('focus')) {
       return;
     }
 
@@ -256,7 +264,7 @@ export class Tooltip extends LitElement {
   }
 
   private onBlur() {
-    if (!this.open || !this.hasTrigger('focus')) {
+    if (this.disabled || !this.open || !this.hasTrigger('focus')) {
       return;
     }
 
@@ -265,7 +273,7 @@ export class Tooltip extends LitElement {
 
   private onClick(e: MouseEvent) {
     // e.button 为 0 时，为鼠标左键点击。忽略鼠标中间和右键
-    if (e.button || !this.hasTrigger('click')) {
+    if (this.disabled || e.button || !this.hasTrigger('click')) {
       return;
     }
 
@@ -273,7 +281,7 @@ export class Tooltip extends LitElement {
   }
 
   private onKeydown(e: KeyboardEvent) {
-    if (!this.open || e.key !== 'Escape') {
+    if (this.disabled || !this.open || e.key !== 'Escape') {
       return;
     }
 
@@ -282,7 +290,7 @@ export class Tooltip extends LitElement {
   }
 
   private onMouseEnter() {
-    if (this.open || !this.hasTrigger('hover')) {
+    if (this.disabled || this.open || !this.hasTrigger('hover')) {
       return;
     }
 
@@ -299,7 +307,7 @@ export class Tooltip extends LitElement {
   private onMouseLeave() {
     window.clearTimeout(this.hoverTimeout);
 
-    if (!this.open || !this.hasTrigger('hover')) {
+    if (this.disabled || !this.open || !this.hasTrigger('hover')) {
       return;
     }
 
@@ -311,7 +319,7 @@ export class Tooltip extends LitElement {
   }
 
   private onWindowScroll() {
-    window.requestAnimationFrame(() => this.onOpenChange());
+    window.requestAnimationFrame(() => this.updatePositioner());
   }
 
   private updatePositioner(): void {

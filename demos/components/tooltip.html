@@ -25,9 +25,7 @@
     import '../../packages/components/tooltip.js';
     import '../../packages/components/button.js';
     import '../../packages/components/avatar.js';
-    import { $ } from '../../packages/jq/$.js';
-    import '../../packages/jq/methods/on.js';
-    import '../../packages/jq/methods/each.js';
+    import { $ } from '../../packages/jq/index.js';
 
     $(() => {
       const $tooltip = $('.manual-tooltip')
@@ -49,7 +47,7 @@
   <main>
     <section>
       <h2>Trigger</h2>
-      <mdui-tooltip trigger="click" content="click">
+      <mdui-tooltip trigger="click" content="click" open>
         <mdui-button variant="elevated">Click</mdui-button>
       </mdui-tooltip>
       <mdui-tooltip trigger="hover" content="hover">

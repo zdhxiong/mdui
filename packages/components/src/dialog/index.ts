@@ -176,160 +176,174 @@ export class Dialog extends LitElement {
 
   @watch('open')
   private async onOpenChange() {
-    const run = async () => {
-      // 内部的 header, body, actions 元素
-      const children = Array.from(
-        this.panelRef.value!.querySelectorAll<HTMLElement>(
-          '.header, .body, .actions',
-        ),
-      );
+    const hasUpdated = this.hasUpdated;
 
-      const easingLinear = getEasing(this, 'linear');
-      const easingEmphasizedDecelerate = getEasing(
-        this,
-        'emphasized-decelerate',
-      );
-      const easingEmphasizedAccelerate = getEasing(
-        this,
-        'emphasized-accelerate',
-      );
+    if (!hasUpdated) {
+      await this.updateComplete;
+    }
 
-      if (this.open) {
+    // 内部的 header, body, actions 元素
+    const children = Array.from(
+      this.panelRef.value!.querySelectorAll<HTMLElement>(
+        '.header, .body, .actions',
+      ),
+    );
+
+    const easingLinear = getEasing(this, 'linear');
+    const easingEmphasizedDecelerate = getEasing(this, 'emphasized-decelerate');
+    const easingEmphasizedAccelerate = getEasing(this, 'emphasized-accelerate');
+
+    // 打开
+    // 要区分是否首次渲染，首次渲染不触发事件，不执行动画；非首次渲染，触发事件，执行动画
+    if (this.open) {
+      if (hasUpdated) {
         const requestOpen = emit(this, 'open', {
           cancelable: true,
         });
         if (requestOpen.defaultPrevented) {
           return;
         }
-
-        // dialog 中的 mdui-top-app-bar 始终相对于 .body 元素
-        if ((this.topAppBarElements ?? []).length) {
-          const topAppBarElement = this.topAppBarElements![0];
-          // @ts-ignore
-          topAppBarElement.scrollTarget = this.bodyRef.value!;
-        }
-
-        this.style.display = 'flex';
-        this.originalTrigger = document.activeElement as HTMLElement;
-        this.modalHelper.activate();
-        lockScreen(this);
-
-        await Promise.all([
-          stopAnimations(this.overlayRef.value!),
-          stopAnimations(this.panelRef.value!),
-          ...children.map((child) => stopAnimations(child)),
-        ]);
-
-        // 设置聚焦
-        requestAnimationFrame(() => {
-          const autoFocusTarget = this.querySelector(
-            '[autofocus]',
-          ) as HTMLInputElement;
-          if (autoFocusTarget) {
-            autoFocusTarget.focus({ preventScroll: true });
-          } else {
-            this.panelRef.value!.focus({ preventScroll: true });
-          }
-        });
-
-        const duration = getDuration(this, 'medium4');
-
-        await Promise.all([
-          animateTo(
-            this.overlayRef.value!,
-            [{ opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 1 }],
-            { duration, easing: easingLinear },
-          ),
-          animateTo(
-            this.panelRef.value!,
-            [
-              { transform: 'translateY(-1.875rem) scaleY(0)' },
-              { transform: 'translateY(0) scaleY(1)' },
-            ],
-            { duration, easing: easingEmphasizedDecelerate },
-          ),
-          animateTo(
-            this.panelRef.value!,
-            [{ opacity: 0 }, { opacity: 1, offset: 0.1 }, { opacity: 1 }],
-            { duration, easing: easingLinear },
-          ),
-          ...children.map((child) =>
-            animateTo(
-              child,
-              [
-                { opacity: 0 },
-                { opacity: 0, offset: 0.2 },
-                { opacity: 1, offset: 0.8 },
-                { opacity: 1 },
-              ],
-              { duration, easing: easingLinear },
-            ),
-          ),
-        ]);
-
-        emit(this, 'opened');
-      } else if (this.hasUpdated) {
-        const requestClose = emit(this, 'close', {
-          cancelable: true,
-        });
-        if (requestClose.defaultPrevented) {
-          return;
-        }
-
-        this.modalHelper.deactivate();
-        await Promise.all([
-          stopAnimations(this.overlayRef.value!),
-          stopAnimations(this.panelRef.value!),
-          ...children.map((child) => stopAnimations(child)),
-        ]);
-
-        const duration = getDuration(this, 'short4');
-
-        await Promise.all([
-          animateTo(this.overlayRef.value!, [{ opacity: 1 }, { opacity: 0 }], {
-            duration,
-            easing: easingLinear,
-          }),
-          animateTo(
-            this.panelRef.value!,
-            [
-              { transform: 'translateY(0) scaleY(1)' },
-              { transform: 'translateY(-1.875rem) scaleY(0.6)' },
-            ],
-            { duration, easing: easingEmphasizedAccelerate },
-          ),
-          animateTo(
-            this.panelRef.value!,
-            [{ opacity: 1 }, { opacity: 1, offset: 0.75 }, { opacity: 0 }],
-            { duration, easing: easingLinear },
-          ),
-          ...children.map((child) =>
-            animateTo(
-              child,
-              [{ opacity: 1 }, { opacity: 0, offset: 0.75 }, { opacity: 0 }],
-              { duration, easing: easingLinear },
-            ),
-          ),
-        ]);
-
-        this.style.display = 'none';
-        unlockScreen(this);
-
-        // 对话框关闭后，恢复焦点到原有的元素上
-        const trigger = this.originalTrigger;
-        if (typeof trigger?.focus === 'function') {
-          setTimeout(() => trigger.focus());
-        }
-
-        emit(this, 'closed');
       }
-    };
 
-    if (!this.hasUpdated) {
-      await this.updateComplete;
-      await run();
-    } else {
-      await run();
+      // dialog 中的 mdui-top-app-bar 始终相对于 .body 元素
+      if ((this.topAppBarElements ?? []).length) {
+        const topAppBarElement = this.topAppBarElements![0];
+        // @ts-ignore
+        topAppBarElement.scrollTarget = this.bodyRef.value!;
+      }
+
+      this.style.display = 'flex';
+      this.originalTrigger = document.activeElement as HTMLElement;
+      this.modalHelper.activate();
+      lockScreen(this);
+
+      await Promise.all([
+        stopAnimations(this.overlayRef.value!),
+        stopAnimations(this.panelRef.value!),
+        ...children.map((child) => stopAnimations(child)),
+      ]);
+
+      // 设置聚焦
+      requestAnimationFrame(() => {
+        const autoFocusTarget = this.querySelector(
+          '[autofocus]',
+        ) as HTMLInputElement;
+        if (autoFocusTarget) {
+          autoFocusTarget.focus({ preventScroll: true });
+        } else {
+          this.panelRef.value!.focus({ preventScroll: true });
+        }
+      });
+
+      const duration = getDuration(this, 'medium4');
+
+      await Promise.all([
+        animateTo(
+          this.overlayRef.value!,
+          [{ opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 1 }],
+          {
+            duration: hasUpdated ? duration : 0,
+            easing: easingLinear,
+          },
+        ),
+        animateTo(
+          this.panelRef.value!,
+          [
+            { transform: 'translateY(-1.875rem) scaleY(0)' },
+            { transform: 'translateY(0) scaleY(1)' },
+          ],
+          {
+            duration: hasUpdated ? duration : 0,
+            easing: easingEmphasizedDecelerate,
+          },
+        ),
+        animateTo(
+          this.panelRef.value!,
+          [{ opacity: 0 }, { opacity: 1, offset: 0.1 }, { opacity: 1 }],
+          {
+            duration: hasUpdated ? duration : 0,
+            easing: easingLinear,
+          },
+        ),
+        ...children.map((child) =>
+          animateTo(
+            child,
+            [
+              { opacity: 0 },
+              { opacity: 0, offset: 0.2 },
+              { opacity: 1, offset: 0.8 },
+              { opacity: 1 },
+            ],
+            {
+              duration: hasUpdated ? duration : 0,
+              easing: easingLinear,
+            },
+          ),
+        ),
+      ]);
+
+      if (hasUpdated) {
+        emit(this, 'opened');
+      }
+
+      return;
+    }
+
+    if (!this.open && hasUpdated) {
+      const requestClose = emit(this, 'close', {
+        cancelable: true,
+      });
+      if (requestClose.defaultPrevented) {
+        return;
+      }
+
+      this.modalHelper.deactivate();
+      await Promise.all([
+        stopAnimations(this.overlayRef.value!),
+        stopAnimations(this.panelRef.value!),
+        ...children.map((child) => stopAnimations(child)),
+      ]);
+
+      const duration = getDuration(this, 'short4');
+
+      await Promise.all([
+        animateTo(this.overlayRef.value!, [{ opacity: 1 }, { opacity: 0 }], {
+          duration,
+          easing: easingLinear,
+        }),
+        animateTo(
+          this.panelRef.value!,
+          [
+            { transform: 'translateY(0) scaleY(1)' },
+            { transform: 'translateY(-1.875rem) scaleY(0.6)' },
+          ],
+          { duration, easing: easingEmphasizedAccelerate },
+        ),
+        animateTo(
+          this.panelRef.value!,
+          [{ opacity: 1 }, { opacity: 1, offset: 0.75 }, { opacity: 0 }],
+          { duration, easing: easingLinear },
+        ),
+        ...children.map((child) =>
+          animateTo(
+            child,
+            [{ opacity: 1 }, { opacity: 0, offset: 0.75 }, { opacity: 0 }],
+            { duration, easing: easingLinear },
+          ),
+        ),
+      ]);
+
+      this.style.display = 'none';
+      unlockScreen(this);
+
+      // 对话框关闭后，恢复焦点到原有的元素上
+      const trigger = this.originalTrigger;
+      if (typeof trigger?.focus === 'function') {
+        setTimeout(() => trigger.focus());
+      }
+
+      emit(this, 'closed');
+      return;
     }
   }
 

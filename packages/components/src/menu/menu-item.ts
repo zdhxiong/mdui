@@ -191,23 +191,28 @@ export class MenuItem extends AnchorMixin(
     return this.hasSlotController.test('submenu-item');
   }
 
-  @watch('submenuOpen', true)
+  @watch('submenuOpen')
   private async onOpenChange() {
-    if (this.disabled) {
-      this.submenuOpen = false;
-      return;
-    }
+    const hasUpdated = this.hasUpdated;
 
     const easingLinear = getEasing(this, 'linear');
     const easingEmphasizedDecelerate = getEasing(this, 'emphasized-decelerate');
     const easingEmphasizedAccelerate = getEasing(this, 'emphasized-accelerate');
 
+    // 打开
+    // 要区分是否首次渲染，首次渲染时不触发事件，不执行动画；非首次渲染，触发事件，执行动画
     if (this.submenuOpen) {
-      const requestOpen = emit(this, 'submenu-open', {
-        cancelable: true,
-      });
-      if (requestOpen.defaultPrevented) {
-        return;
+      if (!hasUpdated) {
+        await this.updateComplete;
+      }
+
+      if (hasUpdated) {
+        const requestOpen = emit(this, 'submenu-open', {
+          cancelable: true,
+        });
+        if (requestOpen.defaultPrevented) {
+          return;
+        }
       }
 
       const duration = getDuration(this, 'medium4');
@@ -219,17 +224,30 @@ export class MenuItem extends AnchorMixin(
         animateTo(
           this.submenuRef.value!,
           [{ transform: 'scaleY(0.45)' }, { transform: 'scaleY(1)' }],
-          { duration, easing: easingEmphasizedDecelerate },
+          {
+            duration: hasUpdated ? duration : 0,
+            easing: easingEmphasizedDecelerate,
+          },
         ),
         animateTo(
           this.submenuRef.value!,
           [{ opacity: 0 }, { opacity: 1, offset: 0.125 }, { opacity: 1 }],
-          { duration, easing: easingLinear },
+          {
+            duration: hasUpdated ? duration : 0,
+            easing: easingLinear,
+          },
         ),
       ]);
 
-      emit(this, 'submenu-opened');
-    } else {
+      if (hasUpdated) {
+        emit(this, 'submenu-opened');
+      }
+
+      return;
+    }
+
+    // 关闭
+    if (!this.submenuOpen && hasUpdated) {
       const requestClose = emit(this, 'submenu-close', {
         cancelable: true,
       });
@@ -284,11 +302,6 @@ export class MenuItem extends AnchorMixin(
     this.addEventListener('keydown', this.onKeydown);
     this.addEventListener('mouseenter', this.onMouseEnter);
     this.addEventListener('mouseleave', this.onMouseLeave);
-
-    if (this.submenuRef.value) {
-      this.submenuRef.value.hidden =
-        !this.submenuOpen || this.disabled || !this.hasSubmenu;
-    }
   }
 
   protected override render(): TemplateResult {
@@ -313,7 +326,12 @@ export class MenuItem extends AnchorMixin(
       ${when(
         hasSubmenu,
         () =>
-          html`<div ${ref(this.submenuRef)} part="submenu" class="submenu">
+          html`<div
+            ${ref(this.submenuRef)}
+            part="submenu"
+            class="submenu"
+            hidden
+          >
             <slot name="submenu-item"></slot>
           </div>`,
       )}`;
@@ -324,14 +342,13 @@ export class MenuItem extends AnchorMixin(
    */
   private onOuterClick(event: Event) {
     if (
-      !this.submenuOpen ||
-      this === event.target ||
-      $.contains(this, event.target as HTMLElement)
+      !this.disabled &&
+      this.submenuOpen &&
+      this !== event.target &&
+      !$.contains(this, event.target as HTMLElement)
     ) {
-      return;
+      this.submenuOpen = false;
     }
-
-    this.submenuOpen = false;
   }
 
   private hasTrigger(trigger: string): boolean {
@@ -340,7 +357,12 @@ export class MenuItem extends AnchorMixin(
   }
 
   private onFocus() {
-    if (this.submenuOpen || !this.hasTrigger('focus') || !this.hasSubmenu) {
+    if (
+      this.disabled ||
+      this.submenuOpen ||
+      !this.hasTrigger('focus') ||
+      !this.hasSubmenu
+    ) {
       return;
     }
 
@@ -348,7 +370,12 @@ export class MenuItem extends AnchorMixin(
   }
 
   private onBlur() {
-    if (!this.submenuOpen || !this.hasTrigger('focus') || !this.hasSubmenu) {
+    if (
+      this.disabled ||
+      !this.submenuOpen ||
+      !this.hasTrigger('focus') ||
+      !this.hasSubmenu
+    ) {
       return;
     }
 
@@ -357,7 +384,7 @@ export class MenuItem extends AnchorMixin(
 
   private onClick(event: MouseEvent) {
     // e.button 为 0 时，为鼠标左键点击。忽略鼠标中间和右键
-    if (event.button) {
+    if (this.disabled || event.button) {
       return;
     }
 
@@ -375,7 +402,7 @@ export class MenuItem extends AnchorMixin(
 
   private onKeydown(event: KeyboardEvent) {
     // 切换子菜单打开状态
-    if (this.hasSubmenu) {
+    if (!this.disabled && this.hasSubmenu) {
       if (!this.submenuOpen && event.key === 'Enter') {
         event.stopPropagation();
         this.submenuOpen = true;
@@ -390,7 +417,7 @@ export class MenuItem extends AnchorMixin(
 
   private onMouseEnter() {
     // 不做 submenuOpen 的判断，因为可以延时打开和关闭
-    if (!this.hasTrigger('hover') || !this.hasSubmenu) {
+    if (this.disabled || !this.hasTrigger('hover') || !this.hasSubmenu) {
       return;
     }
 
@@ -406,7 +433,7 @@ export class MenuItem extends AnchorMixin(
 
   private onMouseLeave() {
     // 不做 submenuOpen 的判断，因为可以延时打开和关闭
-    if (!this.hasTrigger('hover') || !this.hasSubmenu) {
+    if (this.disabled || !this.hasTrigger('hover') || !this.hasSubmenu) {
       return;
     }
 

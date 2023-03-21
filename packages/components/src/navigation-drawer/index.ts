@@ -216,8 +216,6 @@ export class NavigationDrawer extends LayoutItemBase {
         }
       }
 
-      // todo 为模态化时，不参与 layout 布局
-
       this.style.display = 'block';
       this.originalTrigger = document.activeElement as HTMLElement;
       if (this.isModal) {

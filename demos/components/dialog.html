@@ -24,11 +24,7 @@
     import '../../packages/components/top-app-bar-title.js';
     import '../../packages/components/button-icon.js';
     import '../../packages/icons/refresh.js';
-    import { $ } from '../../packages/jq/$.js';
-    import '../../packages/jq/methods/on.js';
-    import '../../packages/jq/methods/prev.js';
-    import '../../packages/jq/methods/append.js';
-    import '../../packages/jq/methods/parents.js';
+    import { $ } from '../../packages/jq/index.js';
 
     $('.open').on('click', function() {
       $(this).prev()[0].open = true;

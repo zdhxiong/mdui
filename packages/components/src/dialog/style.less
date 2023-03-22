@@ -13,10 +13,22 @@
   .padding(48);
 }
 
+::slotted(mdui-top-app-bar[slot="header"]) {
+  // 这里如果使用 --shape-corner，则用的是在 mdui-top-app-bar 组件内定义的 --shape-corner
+  // 期望使用 dialog 的 --shape-corner
+  border-top-left-radius: var(--mdui-shape-corner-extra-large);
+  border-top-right-radius: var(--mdui-shape-corner-extra-large);
+}
+
 :host([fullscreen]) {
   --shape-corner: var(--mdui-shape-corner-none);
 
   padding: 0;
+
+  ::slotted(mdui-top-app-bar[slot="header"]) {
+    border-top-left-radius: var(--mdui-shape-corner-none);
+    border-top-right-radius: var(--mdui-shape-corner-none);
+  }
 }
 
 .overlay {
@@ -87,7 +99,7 @@
   overflow: auto;
 
   .header + & {
-    .paddingTop(16);
+    .marginTop(16);
   }
 }
 

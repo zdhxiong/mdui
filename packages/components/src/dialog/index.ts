@@ -205,14 +205,24 @@ export class Dialog extends LitElement {
         }
       }
 
-      // dialog 中的 mdui-top-app-bar 始终相对于 .body 元素
-      if ((this.topAppBarElements ?? []).length) {
-        const topAppBarElement = this.topAppBarElements![0];
-        // @ts-ignore
-        topAppBarElement.scrollTarget = this.bodyRef.value!;
+      this.style.display = 'flex';
+
+      // 包含 <mdui-top-app-bar slot="header"> 时
+      const topAppBarElements = this.topAppBarElements ?? [];
+      if (topAppBarElements.length) {
+        const topAppBarElement = topAppBarElements[0];
+
+        // top-app-bar 未设置 scrollTarget 时，默认设置为 bodyRef
+        // scrollTarget 属性在内部也可以为 DOM 元素，但公开的 api 只接受字符串
+        if (!topAppBarElement.scrollTarget) {
+          topAppBarElement.scrollTarget = this.bodyRef
+            .value! as unknown as string;
+        }
+
+        // 移除 header 和 body 之间的 margin
+        this.bodyRef.value!.style.marginTop = '0';
       }
 
-      this.style.display = 'flex';
       this.originalTrigger = document.activeElement as HTMLElement;
       this.modalHelper.activate();
       lockScreen(this);

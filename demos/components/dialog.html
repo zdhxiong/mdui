@@ -162,12 +162,10 @@
       <mdui-dialog
         close-on-esc
         close-on-overlay-click
-        icon="refresh"
-        primary="Reset settings?"
         secondary="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
       >
         <!-- dialog 中的 mdui-top-app-bar 会自动设置 scroll-target 属性 -->
-        <mdui-top-app-bar slot="header" variant="small">
+        <mdui-top-app-bar slot="header" variant="small" scroll-behavior="elevate">
           <mdui-button-icon icon="close" class="close"></mdui-button-icon>
           <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
           <mdui-button variant="text">Save</mdui-button>
@@ -183,11 +181,9 @@
         close-on-esc
         close-on-overlay-click
         fullscreen
-        icon="refresh"
-        primary="Reset settings?"
         secondary="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
       >
-        <mdui-top-app-bar slot="header" variant="small" hide-on-scroll>
+        <mdui-top-app-bar slot="header" variant="small" scroll-behavior="elevate">
           <mdui-button-icon icon="close" class="close"></mdui-button-icon>
           <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
           <mdui-button variant="text">Save</mdui-button>
@@ -198,14 +194,14 @@
     </section>
 
     <section>
-      <h2>header slot with top-app-bar & shrink-on-scroll & fullscreen</h2>
+      <h2>header slot with top-app-bar & shrink & fullscreen</h2>
       <mdui-dialog
         close-on-esc
         close-on-overlay-click
         fullscreen
         secondary="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
       >
-        <mdui-top-app-bar slot="header" variant="medium" shrink-on-scroll>
+        <mdui-top-app-bar slot="header" variant="medium" scroll-behavior="elevate shrink">
           <mdui-button-icon icon="close" class="close"></mdui-button-icon>
           <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
           <mdui-button variant="text">Save</mdui-button>
@@ -248,7 +244,7 @@
         close-on-overlay-click
         fullscreen
       >
-        <mdui-top-app-bar slot="header">
+        <mdui-top-app-bar slot="header" scroll-behavior="elevate">
           <mdui-button-icon icon="close" class="close"></mdui-button-icon>
           <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
           <mdui-button variant="text">Save</mdui-button>

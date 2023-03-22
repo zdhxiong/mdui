@@ -110,16 +110,16 @@ export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
 
   @watch('variant')
   private async onVariantChange() {
-    // variant 变更时，重新为 scrollTargetContainer 元素添加 padding-top。避免 top-app-bar 覆盖内容
-    this.addEventListener(
-      'transitionend',
-      () => {
-        this.updateContainerPadding();
-      },
-      { once: true },
-    );
-
-    if (!this.hasUpdated) {
+    if (this.hasUpdated) {
+      // variant 变更时，重新为 scrollTargetContainer 元素添加 padding-top。避免 top-app-bar 覆盖内容
+      this.addEventListener(
+        'transitionend',
+        () => {
+          this.updateContainerPadding();
+        },
+        { once: true },
+      );
+    } else {
       await this.updateComplete;
     }
 

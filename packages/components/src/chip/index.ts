@@ -1,12 +1,13 @@
 import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
+import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import '@mdui/icons/check.js';
 import '@mdui/icons/clear.js';
-import '../avatar.js';
 import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
 import { style } from './style.js';
@@ -23,14 +24,18 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event delete - 点击删除图标时触发
  *
  * @slot - 文本
- * @slot icon - 图标
+ * @slot icon - 左侧图标
+ * @slot selected-icon - 选中状态的左侧图标
+ * @slot end-icon - 右侧图标
+ * @slot delete-icon - 删除图标
  *
  * @csspart button - 内部的 button 或 a 元素
  * @csspart label - 文本
- * @csspart check - 选中状态图标
- * @csspart icon - 图标
- * @csspart avatar - 头像
- * @csspart delete - 删除图标
+ * @csspart icon - 左侧图标
+ * @csspart selected-icon - 选中状态的左侧图标
+ * @csspart end-icon - 右侧图标
+ * @csspart delete-icon-wrapper - 删除图标的容器
+ * @csspart delete-icon - 删除图标
  * @csspart loading - 加载中动画
  *
  * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
@@ -104,12 +109,25 @@ export class Chip extends ButtonBase {
   public icon!: MaterialIconsName;
 
   /**
-   * 左侧的头像链接
+   * 选中状态，左侧的 Material Icons 图标名
    */
-  @property({ reflect: true })
-  public avatar!: string;
+  @property({ reflect: true, attribute: 'selected-icon' })
+  public selectedIcon!: MaterialIconsName;
+
+  /**
+   * 右侧的 Material Icons 图标名
+   */
+  @property({ reflect: true, attribute: 'end-icon' })
+  public endIcon!: MaterialIconsName;
+
+  /**
+   * 右侧的 Material Icons 图标名
+   */
+  @property({ reflect: true, attribute: 'delete-icon' })
+  public deleteIcon!: MaterialIconsName;
 
   private readonly rippleRef: Ref<Ripple> = createRef();
+  private readonly hasSlotController = new HasSlotController(this, 'end-icon');
 
   public constructor() {
     super();
@@ -190,45 +208,93 @@ export class Chip extends ButtonBase {
     emit(this, 'delete');
   }
 
-  private renderLeadingIcon(): TemplateResult {
-    return html`<slot name="icon">
-      ${this.selected && ['assist', 'filter'].includes(this.variant)
-        ? html`<mdui-icon-check part="check" class="icon"></mdui-icon-check>`
-        : this.icon
-        ? html`<mdui-icon
-            part="icon"
-            class="icon"
-            name=${this.icon}
-          ></mdui-icon>`
-        : this.avatar
-        ? html`<mdui-avatar
-            part="avatar"
-            class="avatar"
-            fit="cover"
-            src=${this.avatar}
-          ></mdui-avatar>`
-        : nothing}
-    </slot>`;
+  private renderStart(): TemplateResult {
+    return this.selected
+      ? html`<slot name="selected-icon">${this.renderSelectedIcon()}</slot>`
+      : html`<slot name="icon">${this.renderIcon()}</slot>`;
+  }
+
+  private renderIcon(): TemplateResult {
+    return when(
+      this.icon,
+      () => html`<mdui-icon
+        part="icon"
+        class="icon"
+        name=${this.icon}
+      ></mdui-icon>`,
+    );
+  }
+
+  private renderSelectedIcon(): TemplateResult {
+    if (this.selectedIcon) {
+      return html`<mdui-icon
+        part="selected-icon"
+        class="icon"
+        name="${this.selectedIcon}"
+      ></mdui-icon>`;
+    }
+
+    if (this.variant === 'assist' || this.variant === 'filter') {
+      return html`<mdui-icon-check
+        part="selected-icon"
+        class="icon"
+      ></mdui-icon-check>`;
+    }
+
+    return this.renderIcon();
   }
 
   private renderLabel(): TemplateResult {
     return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
-  private renderTrailingIcon(): TemplateResult {
-    return when(
-      this.deletable,
-      () => html`<span part="delete" class="delete" @click=${this.onDelete}>
-        <mdui-icon-clear></mdui-icon-clear>
-      </span>`,
-    );
+  private renderEnd(): TemplateResult {
+    return html`<slot name="end-icon">
+      ${when(
+        this.endIcon,
+        () => html`<mdui-icon
+          part="end-icon"
+          class="end-icon"
+          name="${this.endIcon}"
+        ></mdui-icon>`,
+      )}
+    </slot>`;
+  }
+
+  private renderDeleteIcon(): TemplateResult {
+    if (!this.deletable) {
+      return html`${nothing}`;
+    }
+
+    return html`<span
+      part="delete-icon-wrapper"
+      class="delete-icon-wrapper ${classMap({
+        'has-end-icon': this.endIcon || this.hasSlotController.test('end-icon'),
+      })}"
+    >
+      <slot name="delete-icon" @click=${this.onDelete}>
+        ${when(
+          this.deleteIcon,
+          () => html`<mdui-icon
+            part="delete-icon"
+            class="delete-icon"
+            name="${this.deleteIcon}"
+          ></mdui-icon>`,
+          () => html`<mdui-icon-clear
+            part="delete-icon"
+            class="delete-icon"
+          ></mdui-icon-clear>`,
+        )}
+      </slot>
+    </span>`;
   }
 
   private renderInner(): TemplateResult[] {
     return [
-      this.renderLeadingIcon(),
+      this.renderStart(),
       this.renderLabel(),
-      this.renderTrailingIcon(),
+      this.renderEnd(),
+      this.renderDeleteIcon(),
     ];
   }
 }

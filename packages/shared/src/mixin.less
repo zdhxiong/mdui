@@ -272,6 +272,8 @@
   }
 }
 .elevation(@value) {
+  .sys(box-shadow, ~"elevation-level@{value}");
+
   &::before {
     ._elevation(@value);
   }

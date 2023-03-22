@@ -15,100 +15,90 @@
     body {
       font-family: Roboto;
     }
+    .diff-variant {
+      margin-top: 16px;
+    }
   </style>
   <script type="module">
     import '../../packages/mdui/mdui.css';
     import '../../packages/components/chip.js';
     import '../../packages/components/icon.js';
+    import '../../packages/components/avatar.js';
+    import '../../packages/components/segmented-button-group.js';
+    import '../../packages/components/segmented-button.js';
+    import { $ } from '../../packages/jq/index.js';
+
+    $('.change-variant').on('change', function() {
+      $('.diff-variant').find('mdui-chip').prop('variant', this.value);
+    });
   </script>
 </head>
 
 <body>
   <main>
     <section>
-      <h2>Assist Chip</h2>
-      <mdui-chip variant="assist">Chip</mdui-chip>
-      <mdui-chip variant="assist" icon="directions_car">Chip</mdui-chip>
-      <mdui-chip variant="assist" deletable>Chip</mdui-chip>
-      <mdui-chip variant="assist" icon="directions_car" deletable>Chip</mdui-chip>
-      <mdui-chip variant="assist">
-        <mdui-icon name="directions_car" slot="icon"></mdui-icon>
-        Chip
-      </mdui-chip>
-      <mdui-chip variant="assist" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4">Chip</mdui-chip>
-      <mdui-chip variant="assist" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" deletable>Chip</mdui-chip>
-      <mdui-chip variant="assist" icon="directions_car" deletable selected>Chip</mdui-chip>
-      <mdui-chip variant="assist" elevated>Chip</mdui-chip>
-      <mdui-chip variant="assist" elevated selected>Chip</mdui-chip>
-      <mdui-chip variant="assist" disabled>Chip</mdui-chip>
-    </section>
+      <h2>normal</h2>
+      <mdui-segmented-button-group selects="single" value="assist" class="change-variant">
+        <mdui-segmented-button value="assist">assist</mdui-segmented-button>
+        <mdui-segmented-button value="filter">filter</mdui-segmented-button>
+        <mdui-segmented-button value="input">input</mdui-segmented-button>
+        <mdui-segmented-button value="suggestion">suggestion</mdui-segmented-button>
+      </mdui-segmented-button-group>
 
-    <section>
-      <h2>Filter Chip</h2>
-      <mdui-chip variant="filter">Chip</mdui-chip>
-      <mdui-chip variant="filter" icon="directions_car">Chip</mdui-chip>
-      <mdui-chip variant="filter" deletable>Chip</mdui-chip>
-      <mdui-chip variant="filter" icon="directions_car" deletable>Chip</mdui-chip>
-      <mdui-chip variant="filter">
-        <mdui-icon name="directions_car" slot="icon"></mdui-icon>
-        Chip
-      </mdui-chip>
-      <mdui-chip variant="filter" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4">Chip</mdui-chip>
-      <mdui-chip variant="filter" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" deletable>Chip</mdui-chip>
-      <mdui-chip variant="filter" icon="directions_car" deletable selected>Chip</mdui-chip>
-      <mdui-chip variant="filter" elevated>Chip</mdui-chip>
-      <mdui-chip variant="filter" elevated selected>Chip</mdui-chip>
-      <mdui-chip variant="filter" disabled>Chip</mdui-chip>
-    </section>
-
-    <section>
-      <h2>Input Chip</h2>
-      <mdui-chip variant="input">Chip</mdui-chip>
-      <mdui-chip variant="input" icon="directions_car">Chip</mdui-chip>
-      <mdui-chip variant="input" deletable>Chip</mdui-chip>
-      <mdui-chip variant="input" icon="directions_car" deletable>Chip</mdui-chip>
-      <mdui-chip variant="input">
-        <mdui-icon name="directions_car" slot="icon"></mdui-icon>
-        Chip
-      </mdui-chip>
-      <mdui-chip variant="input" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4">Chip</mdui-chip>
-      <mdui-chip variant="input" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" deletable>Chip</mdui-chip>
-      <mdui-chip variant="input" icon="directions_car" deletable selected>Chip</mdui-chip>
-      <mdui-chip variant="input" elevated>Chip</mdui-chip>
-      <mdui-chip variant="input" elevated selected>Chip</mdui-chip>
-      <mdui-chip variant="input" disabled>Chip</mdui-chip>
-    </section>
-
-    <section>
-      <h2>Suggestion Chip</h2>
-      <mdui-chip variant="suggestion">Chip</mdui-chip>
-      <mdui-chip variant="suggestion" icon="directions_car">Chip</mdui-chip>
-      <mdui-chip variant="suggestion" deletable>Chip</mdui-chip>
-      <mdui-chip variant="suggestion" icon="directions_car" deletable>Chip</mdui-chip>
-      <mdui-chip variant="suggestion">
-        <mdui-icon name="directions_car" slot="icon"></mdui-icon>
-        Chip
-      </mdui-chip>
-      <mdui-chip variant="suggestion" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4">Chip</mdui-chip>
-      <mdui-chip variant="suggestion" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" deletable>Chip</mdui-chip>
-      <mdui-chip variant="suggestion" icon="directions_car" deletable selected>Chip</mdui-chip>
-      <mdui-chip variant="suggestion" elevated>Chip</mdui-chip>
-      <mdui-chip variant="suggestion" elevated selected>Chip</mdui-chip>
-      <mdui-chip variant="suggestion" disabled>Chip</mdui-chip>
+      <div class="diff-variant">
+        <mdui-chip variant="assist">chip</mdui-chip>
+        <mdui-chip variant="assist" selectable>selectable</mdui-chip>
+        <mdui-chip variant="assist" icon="directions_car">icon</mdui-chip>
+        <mdui-chip variant="assist" icon="directions_car" selectable>icon selectable</mdui-chip>
+        <mdui-chip variant="assist" selected>selected</mdui-chip>
+        <mdui-chip variant="assist" deletable>deletable</mdui-chip>
+        <mdui-chip variant="assist" icon="directions_car" deletable>icon & deletable</mdui-chip>
+        <mdui-chip variant="assist" icon="directions_car" selected-icon="star" selectable>selected-icon</mdui-chip>
+        <mdui-chip variant="assist" icon="directions_car" end-icon="star">end-icon</mdui-chip>
+        <mdui-chip variant="assist" icon="directions_car" end-icon="star" deletable>end-icon & deletable</mdui-chip>
+        <mdui-chip variant="assist" icon="directions_car" delete-icon="delete">delete-icon</mdui-chip>
+        <mdui-chip variant="assist" elevated>elevated</mdui-chip>
+        <mdui-chip variant="assist" elevated selectable>elevated & selectable</mdui-chip>
+        <br/><br/>
+        <mdui-chip variant="assist">
+          <mdui-icon name="directions_car" slot="icon"></mdui-icon>
+          icon slot
+        </mdui-chip>
+        <mdui-chip variant="assist">
+          <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" slot="icon"></mdui-avatar>
+          icon slot(avatar)
+        </mdui-chip>
+        <mdui-chip variant="assist" icon="directions_car" selectable>
+          <mdui-icon name="star" slot="selected-icon"></mdui-icon>
+          selected-icon slot
+        </mdui-chip>
+        <mdui-chip variant="assist" icon="directions_car" selectable>
+          <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" slot="selected-icon"></mdui-avatar>
+          selected-icon slot(avatar)
+        </mdui-chip>
+        <mdui-chip variant="assist">
+          <mdui-icon name="directions_car" slot="end-icon"></mdui-icon>
+          end-icon slot
+        </mdui-chip>
+        <mdui-chip variant="assist">
+          <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" slot="end-icon"></mdui-avatar>
+          end-icon slot(avatar)
+        </mdui-chip>
+        <mdui-chip variant="assist" deletable>
+          <mdui-icon name="delete" slot="delete-icon"></mdui-icon>
+          delete-icon slot
+        </mdui-chip>
+        <mdui-chip variant="assist" deletable>
+          <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" slot="delete-icon"></mdui-avatar>
+          delete-icon slot(avatar)
+        </mdui-chip>
+      </div>
     </section>
 
     <section>
       <h2>href</h2>
       <mdui-chip variant="assist" href="https://www.mdui.org" target="_blank">link</mdui-chip>
       <mdui-chip variant="assist" href="https://www.mdui.org" target="_blank" disabled>disabled</mdui-chip>
-    </section>
-
-    <section>
-      <h2>selectable</h2>
-      <mdui-chip variant="assist" selectable>assist</mdui-chip>
-      <mdui-chip variant="filter" selectable>filter</mdui-chip>
-      <mdui-chip variant="input" selectable>input</mdui-chip>
-      <mdui-chip variant="suggestion" selectable>suggestion</mdui-chip>
     </section>
 
     <h1>状态</h1>
@@ -845,9 +835,18 @@
               <mdui-chip variant="input" deletable dragged>Dragged</mdui-chip>
             </div>
             <div style="padding: 92px 16px 0">
-              <mdui-chip variant="input" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" deletable>Enabled</mdui-chip>
-              <mdui-chip variant="input" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" deletable disabled>Disabled</mdui-chip>
-              <mdui-chip variant="input" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" deletable dragged>Dragged</mdui-chip>
+              <mdui-chip variant="input" deletable>
+                <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" slot="icon"></mdui-avatar>
+                Enabled
+              </mdui-chip>
+              <mdui-chip variant="input" deletable disabled>
+                <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" slot="icon"></mdui-avatar>
+                Disabled
+              </mdui-chip>
+              <mdui-chip variant="input" deletable dragged>
+                <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" slot="icon"></mdui-avatar>
+                Dragged
+              </mdui-chip>
             </div>
             <div style="padding: 33px 16px 0">
               <mdui-chip variant="input" icon="directions_car--outlined" deletable>Enabled</mdui-chip>
@@ -872,9 +871,18 @@
               <mdui-chip variant="input" deletable dragged>Dragged</mdui-chip>
             </div>
             <div style="padding: 92px 16px 0">
-              <mdui-chip variant="input" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" deletable>Enabled</mdui-chip>
-              <mdui-chip variant="input" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" deletable disabled>Disabled</mdui-chip>
-              <mdui-chip variant="input" avatar="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" deletable dragged>Dragged</mdui-chip>
+              <mdui-chip variant="input" deletable>
+                <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" slot="icon"></mdui-avatar>
+                Enabled
+              </mdui-chip>
+              <mdui-chip variant="input" deletable disabled>
+                <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" slot="icon"></mdui-avatar>
+                Disabled
+              </mdui-chip>
+              <mdui-chip variant="input" deletable dragged>
+                <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" slot="icon"></mdui-avatar>
+                Dragged
+              </mdui-chip>
             </div>
             <div style="padding: 33px 16px 0">
               <mdui-chip variant="input" icon="directions_car--outlined" deletable>Enabled</mdui-chip>

@@ -130,7 +130,10 @@
 }
 
 .icon,
-::slotted([slot="icon"]) {
+.end-icon,
+::slotted([slot="icon"]),
+::slotted([slot="selected-icon"]),
+::slotted([slot="end-icon"]) {
   display: inline-flex;
   // 图标 font-size 为 18px，文案为 14px
   font-size: unit((18 / 14), em);
@@ -138,10 +141,6 @@
 
   :host([variant="assist"]) & {
     .color(primary);
-  }
-
-  :host([variant="input"]) & {
-    .marginLeft(4);
   }
 
   :host([selected]) & {
@@ -154,7 +153,24 @@
   }
 }
 
-.avatar {
+.icon,
+::slotted([slot="icon"]),
+::slotted([slot="selected-icon"]) {
+  :host([variant="input"]) & {
+    .marginLeft(4);
+  }
+}
+
+.end-icon,
+::slotted([slot="end-icon"]) {
+  :host([variant="input"]) & {
+    .marginRight(4);
+  }
+}
+
+::slotted(mdui-avatar[slot="icon"]),
+::slotted(mdui-avatar[slot="selected-icon"]),
+::slotted(mdui-avatar[slot="end-icon"]) {
   .width(24);
   .height(24);
 
@@ -163,13 +179,13 @@
   }
 }
 
-.delete {
+.delete-icon-wrapper {
   display: inline-flex;
   .transition(background-color, short4, linear);
-  .padding(4);
   .shapeCorner(full);
   .marginRight(-4);
   .marginLeft(-4);
+  .padding(4);
   .color(on-surface-variant);
 
   &:hover {
@@ -187,9 +203,19 @@
   :host([disabled]) & {
     .color(on-surface, 38%);
   }
+}
 
-  * {
-    // 图标 font-size 为 18px，文案为 14px
-    font-size: unit((18 / 14), em);
-  }
+.delete-icon,
+::slotted([slot="delete-icon"]) {
+  // 图标 font-size 为 18px，文案为 14px
+  font-size: unit((18 / 14), em);
+}
+
+::slotted(mdui-avatar[slot="delete-icon"]) {
+  .width(18);
+  .height(18);
+}
+
+.has-end-icon {
+  .marginLeft(4);
 }

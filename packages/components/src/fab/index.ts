@@ -138,8 +138,7 @@ export class Fab extends ButtonBase {
             className,
             part: 'button',
             content: this.renderInner(),
-          })}
-      ${this.renderLoading()}`;
+          })}`;
   }
 
   private renderLabel(): TemplateResult {
@@ -147,6 +146,10 @@ export class Fab extends ButtonBase {
   }
 
   private renderIcon(): TemplateResult {
+    if (this.loading) {
+      return this.renderLoading();
+    }
+
     return html`<slot name="icon">
       ${when(
         this.icon,

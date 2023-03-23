@@ -33,28 +33,17 @@
   .stateLayerColor(on-secondary-container);
 }
 
-:host([loading]) {
-  mdui-ripple,
-  .button {
-    opacity: 0;
-  }
-
-  mdui-circular-progress {
-    position: absolute;
-    top: calc(50% - unit((18 / 14), em) / 2);
-    left: calc(50% - unit((18 / 14), em) / 2);
-    width: unit((18 / 14), em);
-    height: unit((18 / 14), em);
-  }
-}
-
 :host([disabled]),
-:host([group-disabled]),
-:host([loading]) {
+:host([group-disabled]) {
   cursor: default;
   pointer-events: none;
   .color(on-surface, 38%);
   .borderColor(on-surface, 12%);
+}
+
+:host([loading]) {
+  cursor: default;
+  pointer-events: none;
 }
 
 :host(:not(.mdui-segmented-button-first)) {
@@ -76,8 +65,13 @@
   font-size: unit((18 / 14), em);
 }
 
-.check {
-  .marginRight(8);
+mdui-circular-progress {
+  .width(18);
+  .height(18);
+
+  :host([disabled]) & {
+    opacity: 0.38;
+  }
 }
 
 .has-start .label {

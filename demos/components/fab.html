@@ -22,6 +22,14 @@
     import '../../packages/components/icon.js';
     import '../../packages/components/button.js';
     import '../../packages/icons/edit.js';
+    import { $ } from '../../packages/jq/index.js';
+
+    $('.loading').on('click', function () {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+      }, 2000);
+    });
   </script>
 </head>
 
@@ -85,12 +93,12 @@
 
     <section>
       <h2>loading</h2>
-      <mdui-fab icon="edit" loading size="small"></mdui-fab>
-      <mdui-fab icon="edit" loading></mdui-fab>
-      <mdui-fab icon="edit" loading size="large"></mdui-fab>
-      <mdui-fab icon="edit" extended loading size="small">Extended FAB</mdui-fab>
-      <mdui-fab icon="edit" extended loading>Extended FAB</mdui-fab>
-      <mdui-fab icon="edit" extended loading size="large">Extended FAB</mdui-fab>
+      <mdui-fab icon="edit" class="loading" size="small"></mdui-fab>
+      <mdui-fab icon="edit" class="loading"></mdui-fab>
+      <mdui-fab icon="edit" class="loading" size="large"></mdui-fab>
+      <mdui-fab icon="edit" extended class="loading" size="small">Extended FAB</mdui-fab>
+      <mdui-fab icon="edit" extended class="loading">Extended FAB</mdui-fab>
+      <mdui-fab icon="edit" extended class="loading" size="large">Extended FAB</mdui-fab>
     </section>
 
     <section>

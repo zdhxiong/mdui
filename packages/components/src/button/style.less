@@ -89,27 +89,16 @@
   .elevation(1);
 }
 
-:host([loading]) {
-  mdui-ripple,
-  .button {
-    opacity: 0;
-  }
-
-  mdui-circular-progress {
-    position: absolute;
-    top: calc(50% - unit((18 / 14), em) / 2);
-    left: calc(50% - unit((18 / 14), em) / 2);
-    width: unit((18 / 14), em);
-    height: unit((18 / 14), em);
-  }
-}
-
-:host([disabled]),
-:host([loading]) {
+:host([disabled]) {
   cursor: default;
   pointer-events: none;
   .color(on-surface, 38%);
   .elevation(0);
+}
+
+:host([loading]) {
+  cursor: default;
+  pointer-events: none;
 }
 
 :host([variant="elevated"][disabled]),
@@ -137,4 +126,14 @@
   display: inline-flex;
   // 图标 font-size 为 18px，文案为 14px
   font-size: unit((18 / 14), em);
+}
+
+mdui-circular-progress {
+  display: inline-flex;
+  .width(18);
+  .height(18);
+
+  :host([disabled]) & {
+    opacity: 0.38;
+  }
 }

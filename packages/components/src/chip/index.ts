@@ -168,8 +168,7 @@ export class Chip extends ButtonBase {
             className: 'button',
             part: 'button',
             content: this.renderInner(),
-          })}
-      ${this.renderLoading()}`;
+          })}`;
   }
 
   private onClick() {
@@ -209,6 +208,10 @@ export class Chip extends ButtonBase {
   }
 
   private renderStart(): TemplateResult {
+    if (this.loading) {
+      return this.renderLoading();
+    }
+
     return this.selected
       ? html`<slot name="selected-icon">${this.renderSelectedIcon()}</slot>`
       : html`<slot name="icon">${this.renderIcon()}</slot>`;

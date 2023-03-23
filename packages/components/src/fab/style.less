@@ -101,37 +101,17 @@
   .height(96);
 }
 
-:host([loading]) {
-  mdui-ripple,
-  .button {
-    opacity: 0;
-  }
-
-  mdui-circular-progress {
-    position: absolute;
-    top: calc(50% - unit((24 / 14), em) / 2);
-    left: calc(50% - unit((24 / 14), em) / 2);
-    width: unit((24 / 14), em);
-    height: unit((24 / 14), em);
-  }
-}
-
-:host([loading][size="large"]) {
-  mdui-circular-progress {
-    top: calc(50% - unit((36 / 14), em) / 2);
-    left: calc(50% - unit((36 / 14), em) / 2);
-    width: unit((36 / 14), em);
-    height: unit((36 / 14), em);
-  }
-}
-
-:host([disabled]),
-:host([loading]) {
+:host([disabled]) {
   cursor: default;
   pointer-events: none;
   .color(on-surface, 38%);
   .backgroundColor(on-surface, 12%);
   .elevation(0);
+}
+
+:host([loading]) {
+  cursor: default;
+  pointer-events: none;
 }
 
 :host([extended]) {
@@ -177,5 +157,20 @@
   // large 为 36px，文案为 14px
   :host([size="large"]) & {
     font-size: unit((36 / 14), em);
+  }
+}
+
+mdui-circular-progress {
+  display: inline-flex;
+  .width(24);
+  .height(24);
+
+  :host([size="large"]) & {
+    .width(36);
+    .height(36);
+  }
+
+  :host([disabled]) & {
+    opacity: 0.38;
   }
 }

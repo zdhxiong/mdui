@@ -27,6 +27,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart start - 左侧的元素
  * @csspart label - 文本内容的容器
  * @csspart end - 右侧的元素
+ * @csspart loading - 加载状态图标
  */
 @customElement('mdui-segmented-button')
 export class SegmentedButton extends ButtonBase {
@@ -107,7 +108,7 @@ export class SegmentedButton extends ButtonBase {
     const hasEndSlot = this.hasSlotController.test('end');
     const className = cc({
       button: true,
-      'has-start': (this.icon || hasStartSlot) && !this.selected,
+      'has-start': (this.icon || hasStartSlot) || this.selected || this.loading,
       'has-end': this.endIcon || hasEndSlot,
     });
 
@@ -126,27 +127,23 @@ export class SegmentedButton extends ButtonBase {
             className,
             part: 'button',
             content: this.renderInner(),
-          })}
-      ${this.renderLoading()}`;
+          })}`;
   }
 
   private isDisabled(): boolean {
     return this.disabled || this.groupDisabled;
   }
 
-  private renderCheck(): TemplateResult | typeof nothing {
-    if (!this.selected) {
-      return nothing;
+  private renderStart(): TemplateResult {
+    if (this.loading) {
+      return this.renderLoading();
     }
 
-    return html`<mdui-icon-check part="check" class="check"></mdui-icon-check>`;
-  }
-
-  private renderStart(): TemplateResult | typeof nothing {
-    const hasLabel = this.hasSlotController.test('[default]');
-
-    if (hasLabel && this.selected) {
-      return nothing;
+    if (this.selected) {
+      return html`<mdui-icon-check
+        part="check"
+        class="check"
+      ></mdui-icon-check>`;
     }
 
     return html`<slot name="start">
@@ -185,12 +182,7 @@ export class SegmentedButton extends ButtonBase {
   }
 
   private renderInner(): (TemplateResult | typeof nothing)[] {
-    return [
-      this.renderCheck(),
-      this.renderStart(),
-      this.renderLabel(),
-      this.renderEnd(),
-    ];
+    return [this.renderStart(), this.renderLabel(), this.renderEnd()];
   }
 }
 

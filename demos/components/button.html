@@ -21,6 +21,14 @@
     import '../../packages/components/button.js';
     import '../../packages/components/icon.js';
     import '../../packages/icons/settings.js';
+    import { $ } from '../../packages/jq/index.js';
+
+    $('.loading').on('click', function () {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+      }, 2000);
+    });
   </script>
 </head>
 
@@ -73,11 +81,11 @@
 
     <section>
       <h2>loading</h2>
-      <mdui-button variant="elevated" loading>button</mdui-button>
-      <mdui-button variant="filled" disabled loading>button</mdui-button>
-      <mdui-button variant="tonal" icon="settings" loading>button</mdui-button>
-      <mdui-button variant="outlined" end-icon="settings--outlined" loading>button</mdui-button>
-      <mdui-button variant="text" icon="settings" loading>button</mdui-button>
+      <mdui-button variant="elevated" class="loading">loading</mdui-button>
+      <mdui-button variant="filled" disabled class="loading">loading</mdui-button>
+      <mdui-button variant="tonal" icon="settings" class="loading">loading</mdui-button>
+      <mdui-button variant="outlined" end-icon="settings--outlined" class="loading">loading</mdui-button>
+      <mdui-button variant="text" icon="settings" class="loading">loading</mdui-button>
     </section>
 
     <section>

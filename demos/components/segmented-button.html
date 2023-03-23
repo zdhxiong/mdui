@@ -22,11 +22,17 @@
     import '../../packages/components/segmented-button.js';
     import '../../packages/components/icon.js';
     import '../../packages/components/button.js';
-    import { $ } from '../../packages/jq/$.js';
-    import '../../packages/jq/methods/on.js';
+    import { $ } from '../../packages/jq/index.js';
 
     $('.prevent-default').on('invalid', (e) => {
       e.preventDefault()
+    });
+
+    $('.loading').on('click', function () {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+      }, 2000);
     });
   </script>
 </head>
@@ -67,7 +73,7 @@
       <h2>selects="single"</h2>
       <mdui-segmented-button-group selects="single" class="single" value="medium">
         <mdui-segmented-button value="small">Small</mdui-segmented-button>
-        <mdui-segmented-button value="medium">Medium</mdui-segmented-button>
+        <mdui-segmented-button value="medium" icon="directions_walk">Medium</mdui-segmented-button>
         <mdui-segmented-button disabled value="disabled">Disabled</mdui-segmented-button>
         <mdui-segmented-button value="large">Large</mdui-segmented-button>
       </mdui-segmented-button-group>
@@ -126,10 +132,10 @@
     <section>
       <h2>endIcon and label</h2>
       <mdui-segmented-button-group>
-        <mdui-segmented-button endIcon="directions_walk">Walking</mdui-segmented-button>
-        <mdui-segmented-button endIcon="directions_bus" selected>Transit</mdui-segmented-button>
-        <mdui-segmented-button endIcon="directions_bus" disabled>Disabled</mdui-segmented-button>
-        <mdui-segmented-button endIcon="directions_car">Driving</mdui-segmented-button>
+        <mdui-segmented-button end-icon="directions_walk">Walking</mdui-segmented-button>
+        <mdui-segmented-button end-icon="directions_bus" selected>Transit</mdui-segmented-button>
+        <mdui-segmented-button end-icon="directions_bus" disabled>Disabled</mdui-segmented-button>
+        <mdui-segmented-button end-icon="directions_car">Driving</mdui-segmented-button>
       </mdui-segmented-button-group>
     </section>
 
@@ -160,9 +166,13 @@
     <section>
       <h2>loading</h2>
       <mdui-segmented-button-group>
-        <mdui-segmented-button>Small</mdui-segmented-button>
-        <mdui-segmented-button loading>Loading</mdui-segmented-button>
-        <mdui-segmented-button>Large</mdui-segmented-button>
+        <mdui-segmented-button class="loading">Small</mdui-segmented-button>
+        <mdui-segmented-button class="loading" icon="directions_walk"></mdui-segmented-button>
+        <mdui-segmented-button class="loading" icon="directions_walk">Loading</mdui-segmented-button>
+        <mdui-segmented-button class="loading">
+          <mdui-icon name="directions_walk" slot="start"></mdui-icon>
+          Large
+        </mdui-segmented-button>
       </mdui-segmented-button-group>
     </section>
 

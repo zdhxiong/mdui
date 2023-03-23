@@ -31,6 +31,13 @@
     $('.change-variant').on('change', function() {
       $('.diff-variant').find('mdui-chip').prop('variant', this.value);
     });
+
+    $('.loading').on('click', function () {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+      }, 2000);
+    });
   </script>
 </head>
 
@@ -59,7 +66,9 @@
         <mdui-chip variant="assist" icon="directions_car" delete-icon="delete">delete-icon</mdui-chip>
         <mdui-chip variant="assist" elevated>elevated</mdui-chip>
         <mdui-chip variant="assist" elevated selectable>elevated & selectable</mdui-chip>
+
         <br/><br/>
+
         <mdui-chip variant="assist">
           <mdui-icon name="directions_car" slot="icon"></mdui-icon>
           icon slot
@@ -92,6 +101,11 @@
           <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" slot="delete-icon"></mdui-avatar>
           delete-icon slot(avatar)
         </mdui-chip>
+
+        <br/><br/>
+
+        <mdui-chip variant="assist" class="loading">loading</mdui-chip>
+        <mdui-chip variant="assist" icon="directions_car" class="loading">loading</mdui-chip>
       </div>
     </section>
 

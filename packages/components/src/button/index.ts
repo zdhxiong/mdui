@@ -92,11 +92,14 @@ export class Button extends ButtonBase {
             className: 'button',
             part: 'button',
             content: this.renderInner(),
-          })}
-      ${this.renderLoading()}`;
+          })}`;
   }
 
   private renderStart(): TemplateResult {
+    if (this.loading) {
+      return this.renderLoading();
+    }
+
     return html`<slot name="start">
       ${when(
         this.icon,

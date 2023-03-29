@@ -76,7 +76,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   /**
    * 下拉框名称，将与表单数据一起提交
    */
-  @property()
+  @property({ reflect: true })
   public name!: string;
 
   /**
@@ -103,13 +103,13 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   /**
    * 提示文本
    */
-  @property()
+  @property({ reflect: true })
   public placeholder!: string;
 
   /**
    * 下拉框底部的帮助文本
    */
-  @property()
+  @property({ reflect: true })
   public helper!: string;
 
   /**
@@ -150,25 +150,25 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   /**
    * 下拉框的前缀文本。仅在聚焦状态，或下拉框有值时才会显示
    */
-  @property()
+  @property({ reflect: true })
   public prefix!: string;
 
   /**
    * 下拉框的后缀文本。仅在聚焦状态，或下拉框有值时才会显示
    */
-  @property()
+  @property({ reflect: true })
   public suffix!: string;
 
   /**
    * 下拉框的前缀图标
    */
-  @property({ attribute: 'prefix-icon' })
+  @property({ reflect: true, attribute: 'prefix-icon' })
   public prefixIcon!: string;
 
   /**
    * 下拉框的后缀图标
    */
-  @property({ attribute: 'suffix-icon' })
+  @property({ reflect: true, attribute: 'suffix-icon' })
   public suffixIcon!: string;
 
   /**
@@ -176,7 +176,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
    *
    * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
    */
-  @property()
+  @property({ reflect: true })
   public form!: string;
 
   /**

@@ -47,7 +47,7 @@ export class NavigationRail extends LayoutItemBase {
   /**
    * 当前选中的 `<mdui-navigation-bar-item>` 的值
    */
-  @property()
+  @property({ reflect: true })
   public value = '';
 
   /**

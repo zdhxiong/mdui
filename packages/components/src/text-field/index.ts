@@ -106,7 +106,7 @@ export class TextField
   /**
    * 文本框名称，将与表单数据一起提交
    */
-  @property()
+  @property({ reflect: true })
   public name!: string;
 
   /**
@@ -130,13 +130,13 @@ export class TextField
   /**
    * 提示文本
    */
-  @property()
+  @property({ reflect: true })
   public placeholder!: string;
 
   /**
    * 文本框底部的帮助文本
    */
-  @property()
+  @property({ reflect: true })
   public helper!: string;
 
   /**
@@ -177,25 +177,25 @@ export class TextField
   /**
    * 文本框的前缀文本。仅在聚焦状态，或文本框有值时才会显示
    */
-  @property()
+  @property({ reflect: true })
   public prefix!: string;
 
   /**
    * 文本框的后缀文本。仅在聚焦状态，或文本框有值时才会显示
    */
-  @property()
+  @property({ reflect: true })
   public suffix!: string;
 
   /**
    * 文本框的前缀图标
    */
-  @property({ attribute: 'prefix-icon' })
+  @property({ reflect: true, attribute: 'prefix-icon' })
   public prefixIcon!: string;
 
   /**
    * 文本框的后缀图标
    */
-  @property({ attribute: 'suffix-icon' })
+  @property({ reflect: true, attribute: 'suffix-icon' })
   public suffixIcon!: string;
 
   /**
@@ -203,7 +203,7 @@ export class TextField
    *
    * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
    */
-  @property()
+  @property({ reflect: true })
   public form!: string;
 
   /**
@@ -259,25 +259,25 @@ export class TextField
   /**
    * autosize 为 true 时，可以通过该属性指定最小行数
    */
-  @property({ type: Number, attribute: 'min-rows' })
+  @property({ type: Number, reflect: true, attribute: 'min-rows' })
   public minRows!: number;
 
   /**
    * autosize 为 true 时，可以通过该属性指定最大行数
    */
-  @property({ type: Number, attribute: 'max-rows' })
+  @property({ type: Number, reflect: true, attribute: 'max-rows' })
   public maxRows!: number;
 
   /**
    * 允许输入的最小字符数
    */
-  @property({ type: Number })
+  @property({ type: Number, reflect: true })
   public minlength!: number;
 
   /**
    * 允许输入的最大字符数
    */
-  @property({ type: Number })
+  @property({ type: Number, reflect: true })
   public maxlength!: number;
 
   /**
@@ -294,25 +294,25 @@ export class TextField
   /**
    * 当 type 为 number 时，允许输入的最小数值
    */
-  @property({ type: Number })
+  @property({ type: Number, reflect: true })
   public min!: number;
 
   /**
    * 当 type 为 number 时，允许输入的最大数值
    */
-  @property({ type: Number })
+  @property({ type: Number, reflect: true })
   public max!: number;
 
   /**
    * type 为 number 或 range 时，数值在增减过程固定改变的值
    */
-  @property({ type: Number })
+  @property({ type: Number, reflect: true })
   public step!: number;
 
   /**
    * 表单验证的正则表达式
    */
-  @property()
+  @property({ reflect: true })
   public pattern!: string;
 
   /**
@@ -344,7 +344,7 @@ export class TextField
   /**
    * input 元素的 autocorrect 属性
    */
-  @property()
+  @property({ reflect: true })
   public autocorrect!: string;
 
   /**

@@ -32,7 +32,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   /**
    * 当前 radio 选项的值
    */
-  @property()
+  @property({ reflect: true })
   public value!: string;
 
   /**

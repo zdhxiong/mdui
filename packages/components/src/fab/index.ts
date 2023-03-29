@@ -66,12 +66,6 @@ export class Fab extends ButtonBase {
   public icon!: MaterialIconsName;
 
   /**
-   * todo
-   */
-  @property({ reflect: true })
-  public tooltip!: string;
-
-  /**
    * 是否为展开状态
    */
   @property({

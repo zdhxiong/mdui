@@ -21,19 +21,19 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
   /**
    * 最小允许值
    */
-  @property({ type: Number })
+  @property({ type: Number, reflect: true })
   public min = 0;
 
   /**
    * 最大允许值
    */
-  @property({ type: Number })
+  @property({ type: Number, reflect: true })
   public max = 100;
 
   /**
    * 步进间隔
    */
-  @property({ type: Number })
+  @property({ type: Number, reflect: true })
   public step = 1;
 
   /**

@@ -40,6 +40,13 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
      */
     @property({
       type: Boolean,
+      /**
+       * 哪些属性需要 reflect: true？
+       * 一般所有属性都需要 reflect，但以下情况除外：
+       * 1. 会频繁变更的属性
+       * 2. 属性同步会造成较大性能开销的属性
+       * 3. 复杂类型属性（数组、对象等，仅提供 property，不提供 attribute）
+       */
       reflect: true,
       /**
        * 在原生的 HTML 中，布尔属性只要添加了属性名，不论属性值设置成什么，属性值都是 true
@@ -93,7 +100,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     /**
      * 通过 Tab 键在元素之间切换焦点时，tabIndex 属性指定了元素获取焦点的顺序
      */
-    @property({ type: Number, attribute: 'tabindex' })
+    @property({ type: Number, reflect: true, attribute: 'tabindex' })
     public override get tabIndex(): number {
       const $this = $(this);
 

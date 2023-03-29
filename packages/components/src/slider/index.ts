@@ -38,7 +38,7 @@ export class Slider extends SliderBase implements FormControl {
   /**
    * 滑块的值，将于表单数据一起提交
    */
-  @property({ type: Number, reflect: true })
+  @property({ type: Number })
   public value = 0;
 
   /**

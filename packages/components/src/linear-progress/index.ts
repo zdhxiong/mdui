@@ -23,7 +23,7 @@ export class LinearProgress extends LitElement {
   /**
    * 进度指示器的当前值。若未指定该值，则为不确定状态
    */
-  @property({ type: Number, reflect: true })
+  @property({ type: Number })
   public value!: number;
 
   protected override render(): TemplateResult {

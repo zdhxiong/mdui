@@ -39,7 +39,7 @@ export class CollapseItem extends LitElement {
   public value = '';
 
   /**
-   * 该折叠面板项的头部内容
+   * 该折叠面板项的头部文本
    */
   @property({ reflect: true })
   public header = '';

@@ -47,25 +47,25 @@ export class ListItem extends AnchorMixin(
    * 主文本
    */
   @property({ reflect: true })
-  public primary!: string;
+  public primary?: string;
 
   /**
    * 主文本行数，超过行数限制后会截断显示。默认为没有行数限制
    */
   @property({ type: Number, reflect: true, attribute: 'primary-line' })
-  public primaryLine!: 1 | 2 | 3;
+  public primaryLine?: 1 | 2 | 3;
 
   /**
    * 副文本
    */
   @property({ reflect: true })
-  public secondary!: string;
+  public secondary?: string;
 
   /**
    * 副文本行数，超过行数限制后会截断显示。默认为没有行数限制
    */
   @property({ type: Number, reflect: true, attribute: 'secondary-line' })
-  public secondaryLine!: 1 | 2 | 3;
+  public secondaryLine?: 1 | 2 | 3;
 
   /**
    * 是否禁用该列表项，列表项将置灰，且其中的 checkbox、radio、switch 等都将禁用
@@ -120,7 +120,6 @@ export class ListItem extends AnchorMixin(
   private readonly itemRef: Ref<HTMLElement> = createRef();
   private readonly hasSlotController = new HasSlotController(
     this,
-    '[default]',
     'secondary',
     'start',
     'end',
@@ -163,7 +162,6 @@ export class ListItem extends AnchorMixin(
   }
 
   private renderInner(): TemplateResult {
-    const hasDefaultSlot = this.hasSlotController.test('[default]');
     const hasSecondarySlot = this.hasSlotController.test('secondary');
     const hasStartSlot = this.hasSlotController.test('start');
     const hasEndSlot = this.hasSlotController.test('end');
@@ -177,7 +175,7 @@ export class ListItem extends AnchorMixin(
       </div>
       <div part="body" class="body">
         <div part="primary" class="primary">
-          ${hasDefaultSlot ? html`<slot></slot>` : this.primary}
+          <slot>${this.primary}</slot>
         </div>
         <div
           part="secondary"

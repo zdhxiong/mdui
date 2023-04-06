@@ -54,7 +54,7 @@ export class Tabs extends LitElement {
    * 当前激活的 `<mdui-tab>` 的值
    */
   @property({ reflect: true })
-  public value = '';
+  public value?: string;
 
   /**
    * 选项卡位置。可选值为：
@@ -110,20 +110,15 @@ export class Tabs extends LitElement {
   @watch('activeKey', true)
   private onActiveKeyChange() {
     // 根据 activeKey 读取对应 tab 的值
-    this.value =
-      this.tabs.find((tab) => tab.key === this.activeKey)?.value ?? '';
+    this.value = this.tabs.find((tab) => tab.key === this.activeKey)?.value;
 
     emit(this, 'change');
   }
 
   @watch('value')
   private onValueChange() {
-    if (!this.value) {
-      this.activeKey = 0;
-    } else {
-      const tab = this.tabs.find((tab) => tab.value === this.value);
-      this.activeKey = tab ? tab.key : 0;
-    }
+    const tab = this.tabs.find((tab) => tab.value === this.value);
+    this.activeKey = tab?.key ?? 0;
 
     this.updateActive();
   }

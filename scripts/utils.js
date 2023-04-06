@@ -221,7 +221,13 @@ function buildVSCodeData(metadataPath) {
     }
 
     const attributes = component.attributes?.map((attr) => {
-      const type = attr.type?.text;
+      // 可选属性的值可能为 string | undefined，这里移除 undefined
+      const type = (attr.type?.text ?? '')
+        .split('|')
+        .map((v) => v.trim())
+        .filter((v) => v && v !== 'undefined')
+        .join(' | ');
+
       let values = [];
       let valueSet = undefined;
 
@@ -342,7 +348,13 @@ function buildWebTypes(metadataPath) {
       }
 
       return items.map((item) => {
-        const type = item.type?.text;
+        // 可选属性的值可能为 string | undefined，这里移除 undefined
+        const type = (item.type?.text ?? '')
+          .split('|')
+          .map((v) => v.trim())
+          .filter((v) => v && v !== 'undefined')
+          .join(' | ');
+
         let values = [];
 
         if (type) {

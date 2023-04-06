@@ -1,11 +1,11 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { when } from 'lit/directives/when.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
 import { style } from './style.js';
@@ -51,13 +51,13 @@ export class ButtonIcon extends ButtonBase {
    * Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon!: MaterialIconsName;
+  public icon?: MaterialIconsName;
 
   /**
    * 选中状态的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'selected-icon' })
-  public selectedIcon!: MaterialIconsName;
+  public selectedIcon?: MaterialIconsName;
 
   /**
    * 是否可选中
@@ -126,21 +126,18 @@ export class ButtonIcon extends ButtonBase {
   }
 
   private renderIcon(): TemplateResult {
-    const icon = () => {
-      return this.hasSlotController.test('[default]')
+    const icon = () =>
+      this.hasSlotController.test('[default]')
         ? html`<slot></slot>`
-        : html`${when(
-            this.icon,
-            () =>
-              html`<mdui-icon
-                part="icon"
-                class="icon"
-                name=${this.icon}
-              ></mdui-icon>`,
-          )}`;
-    };
+        : this.icon
+        ? html`<mdui-icon
+            part="icon"
+            class="icon"
+            name=${this.icon}
+          ></mdui-icon>`
+        : nothingTemplate;
 
-    const selectedIcon =
+    const selectedIcon = () =>
       this.hasSlotController.test('selected-icon') || this.selectedIcon
         ? html`<slot name="selected-icon">
             <mdui-icon
@@ -151,7 +148,7 @@ export class ButtonIcon extends ButtonBase {
           </slot>`
         : icon();
 
-    return this.selected ? selectedIcon : icon();
+    return this.selected ? selectedIcon() : icon();
   }
 }
 

@@ -2,10 +2,10 @@ import { html, LitElement, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
@@ -47,19 +47,19 @@ export class NavigationRailItem extends AnchorMixin(
    * 未激活状态的 Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon!: MaterialIconsName;
+  public icon?: MaterialIconsName;
 
   /**
    * 激活状态的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'active-icon' })
-  public activeIcon!: MaterialIconsName;
+  public activeIcon?: MaterialIconsName;
 
   /**
    * 导航项的值
    */
   @property({ reflect: true })
-  public value = '';
+  public value?: string;
 
   /**
    * 是否为激活状态，由 `navigation-rail` 组件控制该参数
@@ -133,27 +133,25 @@ export class NavigationRailItem extends AnchorMixin(
 
   private renderActiveIcon(): TemplateResult {
     return html`<slot name="active-icon">
-      ${when(
-        this.activeIcon,
-        () => html`<mdui-icon
-          part="active-icon"
-          class="active-icon"
-          name=${this.activeIcon}
-        ></mdui-icon>`,
-      )}
+      ${this.activeIcon
+        ? html`<mdui-icon
+            part="active-icon"
+            class="active-icon"
+            name=${this.activeIcon}
+          ></mdui-icon>`
+        : nothingTemplate}
     </slot>`;
   }
 
   private renderIcon(): TemplateResult {
     return html`<slot name="icon">
-      ${when(
-        this.icon,
-        () => html`<mdui-icon
-          part="icon"
-          class="icon"
-          name=${this.icon}
-        ></mdui-icon>`,
-      )}
+      ${this.icon
+        ? html`<mdui-icon
+            part="icon"
+            class="icon"
+            name=${this.icon}
+          ></mdui-icon>`
+        : nothingTemplate}
     </slot>`;
   }
 

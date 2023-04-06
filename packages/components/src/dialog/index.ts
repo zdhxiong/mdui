@@ -15,6 +15,7 @@ import { emit } from '@mdui/shared/helpers/event.js';
 import { Modal } from '@mdui/shared/helpers/modal.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import '../icon.js';
 import { style } from './style.js';
@@ -54,19 +55,19 @@ export class Dialog extends LitElement {
    * 顶部的 Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon!: MaterialIconsName;
+  public icon?: MaterialIconsName;
 
   /**
    * 标题
    */
   @property({ reflect: true })
-  public primary!: string;
+  public primary?: string;
 
   /**
    * 标题下方的文本
    */
   @property({ reflect: true })
-  public secondary!: string;
+  public secondary?: string;
 
   /**
    * 是否打开对话框
@@ -378,9 +379,9 @@ export class Dialog extends LitElement {
     const hasActionSlot = this.hasSlotController.test('action');
     const hasDefaultSlot = this.hasSlotController.test('[default]');
 
-    const hasIcon = hasIconSlot || this.icon;
-    const hasPrimary = hasPrimarySlot || this.primary;
-    const hasSecondary = hasSecondarySlot || this.secondary;
+    const hasIcon = hasIconSlot || !!this.icon;
+    const hasPrimary = hasPrimarySlot || !!this.primary;
+    const hasSecondary = hasSecondarySlot || !!this.secondary;
 
     return html`<div
         ${ref(this.overlayRef)}
@@ -431,10 +432,9 @@ export class Dialog extends LitElement {
   private renderIcon(): TemplateResult {
     return html`<div part="icon" class="icon">
       <slot name="icon">
-        ${when(
-          this.icon,
-          () => html`<mdui-icon name=${this.icon}></mdui-icon>`,
-        )}
+        ${this.icon
+          ? html`<mdui-icon name=${this.icon}></mdui-icon>`
+          : nothingTemplate}
       </slot>
     </div>`;
   }

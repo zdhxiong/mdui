@@ -68,7 +68,7 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
    * 当前选中的 `<mdui-navigation-bar-item>` 的值
    */
   @property({ reflect: true })
-  public value = '';
+  public value?: string;
 
   /**
    * 滚动行为。可选值为：
@@ -103,7 +103,7 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
   private onActiveKeyChange() {
     // 根据 activeKey 读取对应 navigation-bar-item 的值
     const item = this.items.find((item) => item.key === this.activeKey);
-    this.value = item?.value ?? '';
+    this.value = item?.value;
 
     if (this.hasSetDefaultValue) {
       emit(this, 'change');
@@ -114,12 +114,8 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
 
   @watch('value')
   private onValueChange() {
-    if (!this.value) {
-      this.activeKey = 0;
-    } else {
-      const item = this.items.find((item) => item.value === this.value);
-      this.activeKey = item ? item.key : 0;
-    }
+    const item = this.items.find((item) => item.value === this.value);
+    this.activeKey = item?.key ?? 0;
 
     this.updateActive();
   }

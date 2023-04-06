@@ -5,6 +5,7 @@ import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -38,13 +39,13 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
    * 该选项卡导航项的值
    */
   @property({ reflect: true })
-  public value = '';
+  public value?: string;
 
   /**
    * Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon!: MaterialIconsName;
+  public icon?: MaterialIconsName;
 
   /**
    * 是否把图标和文本水平排列
@@ -113,10 +114,9 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
           <div part="icon" class="icon">
             ${when(hasIconSlot || this.icon, this.renderBadge)}
             <slot name="icon">
-              ${when(
-                this.icon,
-                () => html`<mdui-icon name=${this.icon}></mdui-icon>`,
-              )}
+              ${this.icon
+                ? html`<mdui-icon name=${this.icon}></mdui-icon>`
+                : nothingTemplate}
             </slot>
           </div>
           <div part="label" class="label">

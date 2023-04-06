@@ -22,13 +22,13 @@ export class Icon extends LitElement {
    * Material Icons 图标名
    */
   @property({ reflect: true })
-  public name!: MaterialIconsName;
+  public name?: MaterialIconsName;
 
   /**
    * svg 图标的路径
    */
   @property({ reflect: true })
-  public src!: string;
+  public src?: string;
 
   private readonly hasSlotController = new HasSlotController(this, '[default]');
 

@@ -1,16 +1,16 @@
-import { html, LitElement, nothing } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { when } from 'lit/directives/when.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '@mdui/icons/check.js';
@@ -75,7 +75,7 @@ export class Switch
    * 未选中状态的图标
    */
   @property({ reflect: true })
-  public icon!: string;
+  public icon?: string;
 
   /**
    * 选中状态的图标
@@ -83,7 +83,7 @@ export class Switch
    * 默认为 check，可传入空字符串移除默认图标
    */
   @property({ reflect: true, attribute: 'checked-icon' })
-  public checkedIcon!: string;
+  public checkedIcon?: string;
 
   /**
    * 提交表单时，是否必须选中该开关
@@ -101,13 +101,13 @@ export class Switch
    * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
    */
   @property({ reflect: true })
-  public form!: string;
+  public form?: string;
 
   /**
    * 开关的名称，将与表单数据一起提交
    */
   @property({ reflect: true })
-  public name!: string;
+  public name = '';
 
   /**
    * 开关的值，将于表单数据一起提交
@@ -269,21 +269,20 @@ export class Switch
                   name=${this.checkedIcon}
                 ></mdui-icon>`
               : this.checkedIcon === ''
-              ? nothing
+              ? nothingTemplate
               : html`<mdui-icon-check
                   part="checked-icon"
                   class="checked-icon"
                 ></mdui-icon-check>`}
           </slot>
           <slot name="icon">
-            ${when(
-              this.icon,
-              () => html`<mdui-icon
-                part="icon"
-                class="icon"
-                name=${this.icon}
-              ></mdui-icon>`,
-            )}
+            ${this.icon
+              ? html`<mdui-icon
+                  part="icon"
+                  class="icon"
+                  name=${this.icon}
+                ></mdui-icon>`
+              : nothingTemplate}
           </slot>
         </div>
       </div>

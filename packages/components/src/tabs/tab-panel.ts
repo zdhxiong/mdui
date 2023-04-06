@@ -19,7 +19,7 @@ export class TabPanel extends LitElement {
    * 该选项卡面板的值
    */
   @property({ reflect: true })
-  public value = '';
+  public value?: string;
 
   /**
    * 是否为激活状态，由 `<mdui-tabs>` 组件控制该状态

@@ -77,7 +77,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
    * 下拉框名称，将与表单数据一起提交
    */
   @property({ reflect: true })
-  public name!: string;
+  public name = '';
 
   /**
    * 下拉框的值，将与表单数据一起提交。
@@ -98,19 +98,19 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
    * 标签文本
    */
   @property({ reflect: true })
-  public label!: string;
+  public label?: string;
 
   /**
    * 提示文本
    */
   @property({ reflect: true })
-  public placeholder!: string;
+  public placeholder?: string;
 
   /**
    * 下拉框底部的帮助文本
    */
   @property({ reflect: true })
-  public helper!: string;
+  public helper?: string;
 
   /**
    * 是否可清空下拉框
@@ -155,19 +155,19 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
    * 下拉框的后缀文本。仅在聚焦状态，或下拉框有值时才会显示
    */
   @property({ reflect: true })
-  public suffix!: string;
+  public suffix?: string;
 
   /**
    * 下拉框的前缀图标
    */
   @property({ reflect: true, attribute: 'prefix-icon' })
-  public prefixIcon!: string;
+  public prefixIcon?: string;
 
   /**
    * 下拉框的后缀图标
    */
   @property({ reflect: true, attribute: 'suffix-icon' })
-  public suffixIcon!: string;
+  public suffixIcon?: string;
 
   /**
    * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
@@ -175,7 +175,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
    * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
    */
   @property({ reflect: true })
-  public form!: string;
+  public form?: string;
 
   /**
    * 是否为只读
@@ -341,10 +341,23 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   protected override render(): TemplateResult {
     const hasSelection = this.multiple ? !!this.value.length : !!this.value;
 
-    return html`${when(
-        !this.multiple,
-        () =>
-          html`<input
+    return html`${this.multiple
+        ? html`<select
+            ${ref(this.hiddenInputRef)}
+            class="hidden-input"
+            name=${ifDefined(this.name)}
+            value=${ifDefined(this.value)}
+            .required=${this.required}
+            .disabled=${this.disabled}
+            multiple
+            tabindex="-1"
+          >
+            ${map(
+              this.value,
+              (value) => html`<option selected value=${value}></option>`,
+            )}
+          </select>`
+        : html`<input
             ${ref(this.hiddenInputRef)}
             type="radio"
             class="hidden-input"
@@ -354,25 +367,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
             .disabled=${this.disabled}
             .checked=${hasSelection}
             tabindex="-1"
-          />`,
-      )}${when(
-        this.multiple,
-        () => html`<select
-          ${ref(this.hiddenInputRef)}
-          class="hidden-input"
-          name=${ifDefined(this.name)}
-          value=${ifDefined(this.value)}
-          .required=${this.required}
-          .disabled=${this.disabled}
-          multiple
-          tabindex="-1"
-        >
-          ${map(
-            this.value,
-            (value) => html`<option selected value=${value}></option>`,
-          )}
-        </select>`,
-      )}
+          />`}
       <mdui-dropdown
         .stayOpenOnClick=${this.multiple}
         .disabled=${this.readonly || this.disabled}
@@ -490,7 +485,9 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
 
   private async onValueChange(e: Event) {
     const menu = e.target as Menu;
-    this.value = menu.value;
+    this.value = this.multiple
+      ? (menu.value as string[]).map((v) => v ?? '')
+      : (menu.value as string | undefined) ?? '';
 
     await this.updateComplete;
 

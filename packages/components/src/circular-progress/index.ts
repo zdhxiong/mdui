@@ -1,6 +1,7 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { isUndefined } from '@mdui/jq/shared/helper.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
@@ -13,16 +14,16 @@ export class CircularProgress extends LitElement {
    * 进度指示器的最大值
    */
   @property({ type: Number, reflect: true })
-  public max!: number;
+  public max = 1;
 
   /**
    * 进度指示器的当前值。若未指定该值，则为不确定状态
    */
   @property({ type: Number })
-  public value!: number;
+  public value?: number;
 
   protected override render(): TemplateResult {
-    const isDeterminate = this.value !== undefined;
+    const isDeterminate = !isUndefined(this.value);
 
     return html`<div
       class="progress ${classMap({
@@ -35,14 +36,14 @@ export class CircularProgress extends LitElement {
   }
 
   private renderDeterminate(): TemplateResult {
+    const value = this.value!;
     const strokeWidth = 4; // 圆环宽度
     const circleRadius = 18; // 圆环宽度中心点的半径
     const π = 3.1415926;
     const center = circleRadius + strokeWidth / 2;
     const circumference = 2 * π * circleRadius;
     const determinateStrokeDashOffset =
-      (1 - this.value / Math.max(this.max ?? this.value, this.value)) *
-      circumference;
+      (1 - value / Math.max(this.max ?? value, value)) * circumference;
 
     return html`<svg viewBox="0 0 ${center * 2} ${center * 2}">
       <circle

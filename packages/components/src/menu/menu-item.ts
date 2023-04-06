@@ -12,6 +12,7 @@ import '@mdui/jq/methods/innerWidth.js';
 import '@mdui/jq/methods/is.js';
 import '@mdui/jq/methods/parent.js';
 import '@mdui/jq/methods/width.js';
+import { isUndefined } from '@mdui/jq/shared/helper.js';
 import '@mdui/jq/static/contains.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
@@ -65,7 +66,7 @@ export class MenuItem extends AnchorMixin(
    * 该菜单项的值
    */
   @property({ reflect: true })
-  public value = '';
+  public value?: string;
 
   /**
    * 是否禁用该菜单项
@@ -82,19 +83,19 @@ export class MenuItem extends AnchorMixin(
    * 如果需要在左侧留出一个图标的位置，可以传入空字符串进行占位
    */
   @property({ reflect: true })
-  public icon!: MaterialIconsName;
+  public icon?: MaterialIconsName;
 
   /**
    * 右侧的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'end-icon' })
-  public endIcon!: MaterialIconsName;
+  public endIcon?: MaterialIconsName;
 
   /**
    * 右侧的文本
    */
   @property({ reflect: true, attribute: 'end-text' })
-  public endText!: string;
+  public endText?: string;
 
   /**
    * 是否打开子菜单
@@ -117,23 +118,23 @@ export class MenuItem extends AnchorMixin(
 
   // 由 mdui-menu 控制该参数
   @state()
-  protected dense!: boolean;
+  protected dense = false;
 
   // 由 mdui-menu 控制该参数
   @state()
-  protected selects!: undefined | 'single' | 'multiple';
+  protected selects?: 'single' | 'multiple';
 
   // 由 mdui-menu 控制该参数
   @state()
-  protected submenuTrigger!: string;
+  protected submenuTrigger?: string;
 
   // 由 mdui-menu 控制该参数
   @state()
-  protected submenuOpenDelay!: number;
+  protected submenuOpenDelay?: number;
 
   // 由 mdui-menu 控制该参数
   @state()
-  protected submenuCloseDelay!: number;
+  protected submenuCloseDelay?: number;
 
   // 是否可聚焦。由 mdui-menu 控制该参数
   @state()
@@ -350,8 +351,9 @@ export class MenuItem extends AnchorMixin(
   }
 
   private hasTrigger(trigger: string): boolean {
-    const triggers = this.submenuTrigger.split(' ');
-    return triggers.includes(trigger);
+    return this.submenuTrigger
+      ? this.submenuTrigger.split(' ').includes(trigger)
+      : false;
   }
 
   private onFocus() {
@@ -490,7 +492,7 @@ export class MenuItem extends AnchorMixin(
         class="start-icon ${classMap({
           'has-start':
             hasStartSlot ||
-            this.icon !== undefined ||
+            !isUndefined(this.icon) ||
             this.selects === 'single' ||
             this.selects === 'multiple',
         })}"
@@ -507,7 +509,7 @@ export class MenuItem extends AnchorMixin(
       <div
         part="end-text"
         class="end-text ${classMap({
-          'has-end-text': hasEndTextSlot || this.endText,
+          'has-end-text': hasEndTextSlot || !!this.endText,
         })}"
       >
         <slot name="end-text">${this.endText}</slot>
@@ -521,7 +523,7 @@ export class MenuItem extends AnchorMixin(
         ${hasSubmenu && !hasEndSlot && !this.endIcon
           ? html`<mdui-icon-arrow-right></mdui-icon-arrow-right>`
           : html`<slot name="end">
-              <mdui-icon name=${this.endIcon}></mdui-icon>
+              <mdui-icon name=${this.endIcon!}></mdui-icon>
             </slot>`}
       </div>
     </slot>`;

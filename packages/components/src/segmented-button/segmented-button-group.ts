@@ -59,8 +59,7 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
    * * `multiple`：可以选中多个
    */
   @property({ reflect: true })
-  public selects!:
-    | undefined
+  public selects?:
     | 'single' /*分段按钮项为单选*/
     | 'multiple' /*分段按钮项为多选*/;
 
@@ -90,13 +89,13 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
    * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
    */
   @property({ reflect: true })
-  public form!: string;
+  public form?: string;
 
   /**
    * 提交表单时的名称，将与表单数据一起提交
    */
   @property({ reflect: true })
-  public name!: string;
+  public name = '';
 
   /**
    * 当前选中的 `<mdui-segmented-button>` 的值

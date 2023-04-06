@@ -1,12 +1,12 @@
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { when } from 'lit/directives/when.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import '@mdui/icons/check.js';
 import '@mdui/icons/clear.js';
 import { ButtonBase } from '../button/button-base.js';
@@ -103,25 +103,25 @@ export class Chip extends ButtonBase {
    * 左侧的 Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon!: MaterialIconsName;
+  public icon?: MaterialIconsName;
 
   /**
    * 选中状态，左侧的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'selected-icon' })
-  public selectedIcon!: MaterialIconsName;
+  public selectedIcon?: MaterialIconsName;
 
   /**
    * 右侧的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'end-icon' })
-  public endIcon!: MaterialIconsName;
+  public endIcon?: MaterialIconsName;
 
   /**
    * 右侧的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'delete-icon' })
-  public deleteIcon!: MaterialIconsName;
+  public deleteIcon?: MaterialIconsName;
 
   private readonly rippleRef: Ref<Ripple> = createRef();
   private readonly hasSlotController = new HasSlotController(this, 'end-icon');
@@ -215,14 +215,9 @@ export class Chip extends ButtonBase {
   }
 
   private renderIcon(): TemplateResult {
-    return when(
-      this.icon,
-      () => html`<mdui-icon
-        part="icon"
-        class="icon"
-        name=${this.icon}
-      ></mdui-icon>`,
-    );
+    return this.icon
+      ? html`<mdui-icon part="icon" class="icon" name=${this.icon}></mdui-icon>`
+      : nothingTemplate;
   }
 
   private renderSelectedIcon(): TemplateResult {
@@ -250,20 +245,19 @@ export class Chip extends ButtonBase {
 
   private renderEnd(): TemplateResult {
     return html`<slot name="end-icon">
-      ${when(
-        this.endIcon,
-        () => html`<mdui-icon
-          part="end-icon"
-          class="end-icon"
-          name="${this.endIcon}"
-        ></mdui-icon>`,
-      )}
+      ${this.endIcon
+        ? html`<mdui-icon
+            part="end-icon"
+            class="end-icon"
+            name="${this.endIcon}"
+          ></mdui-icon>`
+        : nothingTemplate}
     </slot>`;
   }
 
   private renderDeleteIcon(): TemplateResult {
     if (!this.deletable) {
-      return html`${nothing}`;
+      return nothingTemplate;
     }
 
     return html`<span
@@ -273,18 +267,16 @@ export class Chip extends ButtonBase {
       })}"
     >
       <slot name="delete-icon" @click=${this.onDelete}>
-        ${when(
-          this.deleteIcon,
-          () => html`<mdui-icon
-            part="delete-icon"
-            class="delete-icon"
-            name="${this.deleteIcon}"
-          ></mdui-icon>`,
-          () => html`<mdui-icon-clear
-            part="delete-icon"
-            class="delete-icon"
-          ></mdui-icon-clear>`,
-        )}
+        ${this.deleteIcon
+          ? html`<mdui-icon
+              part="delete-icon"
+              class="delete-icon"
+              name="${this.deleteIcon}"
+            ></mdui-icon>`
+          : html`<mdui-icon-clear
+              part="delete-icon"
+              class="delete-icon"
+            ></mdui-icon-clear>`}
       </slot>
     </span>`;
   }

@@ -7,6 +7,7 @@ import { getBreakpoint } from '@mdui/shared/helpers/breakpoint.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import '@mdui/icons/clear.js';
 import '../button-icon.js';
@@ -69,7 +70,7 @@ export class Snackbar extends LitElement {
    * 操作按钮的文本
    */
   @property({ reflect: true, attribute: 'action' })
-  public action!: string;
+  public action?: string;
 
   /**
    * 是否在右侧显示关闭按钮
@@ -87,7 +88,7 @@ export class Snackbar extends LitElement {
    * * `2`：消息文本最多显示两行
    */
   @property({ type: Number, reflect: true, attribute: 'message-line' })
-  public messageLine!: 1 | 2;
+  public messageLine?: 1 | 2;
 
   /**
    * 在多长时间后自动关闭（单位为毫秒）。设置为 0 时，不自动关闭
@@ -311,11 +312,9 @@ export class Snackbar extends LitElement {
       <div part="action-group" class="action-group">
         <div part="action" class="action" @click=${this.onActionClick}>
           <slot name="action">
-            ${when(
-              this.action,
-              () =>
-                html`<mdui-button variant="text">${this.action}</mdui-button>`,
-            )}
+            ${this.action
+              ? html`<mdui-button variant="text">${this.action}</mdui-button>`
+              : nothingTemplate}
           </slot>
         </div>
         ${when(

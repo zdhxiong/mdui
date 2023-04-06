@@ -1,10 +1,11 @@
-import { LitElement, html, nothing } from 'lit';
+import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { when } from 'lit/directives/when.js';
+import cc from 'classcat';
 import { FormController } from '@mdui/shared/controllers/form.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -17,10 +18,7 @@ type RenderButtonOptions = {
   id?: string;
   className?: string;
   part?: string; // csspart 名称
-  content?:
-    | TemplateResult
-    | typeof nothing
-    | (TemplateResult | typeof nothing)[];
+  content?: TemplateResult | TemplateResult[];
   tabindex?: number;
 };
 
@@ -100,7 +98,7 @@ export class ButtonBase extends AnchorMixin(
    * **Note**：仅在未指定 `href` 属性时可用
    */
   @property({ reflect: true })
-  public form!: string;
+  public form?: string;
 
   /**
    *
@@ -109,7 +107,7 @@ export class ButtonBase extends AnchorMixin(
    * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
    */
   @property({ reflect: true, attribute: 'formaction' })
-  public formAction!: string;
+  public formAction?: string;
 
   /**
    * 覆盖 `form` 元素的 `enctype` 属性。可选值为：
@@ -120,7 +118,7 @@ export class ButtonBase extends AnchorMixin(
    * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
    */
   @property({ reflect: true, attribute: 'formenctype' })
-  public formEnctype!:
+  public formEnctype?:
     | 'application/x-www-form-urlencoded'
     | 'multipart/form-data'
     | 'text/plain';
@@ -133,7 +131,7 @@ export class ButtonBase extends AnchorMixin(
    * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
    */
   @property({ reflect: true, attribute: 'formmethod' })
-  public formMethod!: 'post' | 'get';
+  public formMethod?: 'post' | 'get';
 
   /**
    *
@@ -159,7 +157,7 @@ export class ButtonBase extends AnchorMixin(
    * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
    */
   @property({ reflect: true, attribute: 'formtarget' })
-  public formTarget!: '_self' | '_blank' | '_parent' | '_top';
+  public formTarget?: '_self' | '_blank' | '_parent' | '_top';
 
   private readonly formController: FormController = new FormController(this);
 
@@ -269,11 +267,9 @@ export class ButtonBase extends AnchorMixin(
   }
 
   protected renderLoading(): TemplateResult {
-    return when(
-      this.loading,
-      () =>
-        html`<mdui-circular-progress part="loading"></mdui-circular-progress>`,
-    );
+    return this.loading
+      ? html`<mdui-circular-progress part="loading"></mdui-circular-progress>`
+      : nothingTemplate;
   }
 
   protected renderButton({
@@ -284,7 +280,7 @@ export class ButtonBase extends AnchorMixin(
   }: RenderButtonOptions): TemplateResult {
     return html`<button
       id=${ifDefined(id)}
-      class="_button ${className ? className : ''}"
+      class=${cc(['_button', className])}
       part=${ifDefined(part)}
       ?disabled=${this.rippleDisabled || this.focusDisabled}
     >

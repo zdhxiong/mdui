@@ -78,7 +78,7 @@ export class Tooltip extends LitElement {
    * tooltip 的内容
    */
   @property({ reflect: true })
-  public content!: string;
+  public content?: string;
 
   /**
    * 触发方式，支持传入多个值，用空格分隔。可选值为：

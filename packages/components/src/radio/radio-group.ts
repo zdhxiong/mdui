@@ -53,13 +53,13 @@ export class RadioGroup extends LitElement implements FormControl {
    * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
    */
   @property({ reflect: true })
-  public form!: string;
+  public form?: string;
 
   /**
    * 单选框名称，将与表单数据一起提交
    */
   @property({ reflect: true })
-  public name!: string;
+  public name = '';
 
   /**
    * 单选框的值，将于表单数据一起提交
@@ -71,7 +71,7 @@ export class RadioGroup extends LitElement implements FormControl {
    * 默认选中的值。在重置表单时，将重置为该默认值。该属性只能通过 JavaScript 属性设置
    */
   @defaultValue()
-  public defaultValue?: string = undefined;
+  public defaultValue = '';
 
   /**
    * 提交表单时，是否必须选中其中一个单选框

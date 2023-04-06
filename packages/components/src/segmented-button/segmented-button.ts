@@ -1,10 +1,11 @@
-import { html, nothing } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import '@mdui/icons/check.js';
 import { ButtonBase } from '../button/button-base.js';
@@ -41,13 +42,13 @@ export class SegmentedButton extends ButtonBase {
    * 左侧的 Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon!: MaterialIconsName;
+  public icon?: MaterialIconsName;
 
   /**
    * 右侧的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'end-icon' })
-  public endIcon!: MaterialIconsName;
+  public endIcon?: MaterialIconsName;
 
   /**
    * 是否选中该分段按钮项，由 mdui-segmented-button-group 组件控制该参数
@@ -145,22 +146,21 @@ export class SegmentedButton extends ButtonBase {
     }
 
     return html`<slot name="start">
-      ${when(
-        this.icon,
-        () => html`<mdui-icon
-          part="start"
-          class="icon"
-          name=${this.icon}
-        ></mdui-icon>`,
-      )}
+      ${this.icon
+        ? html`<mdui-icon
+            part="start"
+            class="icon"
+            name=${this.icon}
+          ></mdui-icon>`
+        : nothingTemplate}
     </slot>`;
   }
 
-  private renderLabel(): TemplateResult | typeof nothing {
+  private renderLabel(): TemplateResult {
     const hasLabel = this.hasSlotController.test('[default]');
 
     if (!hasLabel) {
-      return nothing;
+      return nothingTemplate;
     }
 
     return html`<span part="label" class="label"><slot></slot></span>`;
@@ -168,18 +168,17 @@ export class SegmentedButton extends ButtonBase {
 
   private renderEnd(): TemplateResult {
     return html`<slot name="end">
-      ${when(
-        this.endIcon,
-        () => html`<mdui-icon
-          part="end"
-          class="icon"
-          name=${this.endIcon}
-        ></mdui-icon>`,
-      )}
+      ${this.endIcon
+        ? html`<mdui-icon
+            part="end"
+            class="icon"
+            name=${this.endIcon}
+          ></mdui-icon>`
+        : nothingTemplate}
     </slot>`;
   }
 
-  private renderInner(): (TemplateResult | typeof nothing)[] {
+  private renderInner(): TemplateResult[] {
     return [this.renderStart(), this.renderLabel(), this.renderEnd()];
   }
 }

@@ -29,7 +29,7 @@ export class Avatar extends LitElement {
    * 头像的图片地址
    */
   @property({ reflect: true })
-  public src!: string;
+  public src?: string;
 
   /**
    * 图片如何适应容器框，同原生的 object-fit。可选值为：
@@ -41,19 +41,19 @@ export class Avatar extends LitElement {
    * * `scale-down`：保持原有尺寸比例。内容的尺寸与 none 或 contain 中的一个相同，取决于它们两个之间谁得到的对象尺寸会更小一些
    */
   @property({ reflect: true })
-  public fit!: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
+  public fit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
 
   /**
    * 头像的 Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon!: MaterialIconsName;
+  public icon?: MaterialIconsName;
 
   /**
    * 描述头像的替换文本
    */
   @property({ reflect: true })
-  public label!: string;
+  public label?: string;
 
   private readonly hasSlotController = new HasSlotController(this, '[default]');
 

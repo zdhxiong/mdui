@@ -1,5 +1,6 @@
-import { html, LitElement, nothing } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
@@ -21,9 +22,9 @@ export class Badge extends LitElement {
   @property({ reflect: true })
   public variant: 'small' | 'large' = 'large';
 
-  protected override render(): TemplateResult | typeof nothing {
+  protected override render(): TemplateResult {
     if (this.variant === 'small') {
-      return nothing;
+      return nothingTemplate;
     }
 
     return html`<slot></slot>`;

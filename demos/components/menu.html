@@ -47,7 +47,7 @@
       });
 
       $('#selects-single').on('change', function () {
-        $('#selects-single-value').text(this.value);
+        $('#selects-single-value').text(this.value || '');
       });
 
       $('#selects-multiple').on('change', function () {

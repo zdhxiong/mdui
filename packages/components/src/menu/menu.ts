@@ -58,10 +58,7 @@ export class Menu extends LitElement {
    * * `multiple`：可以选中多个
    */
   @property({ reflect: true })
-  public selects!:
-    | undefined
-    | 'single' /*菜单项为单选*/
-    | 'multiple' /*菜单项为多选*/;
+  public selects?: 'single' /*菜单项为单选*/ | 'multiple' /*菜单项为多选*/;
 
   /**
    * 当前选中的 `<mdui-menu-item>` 的值
@@ -72,7 +69,7 @@ export class Menu extends LitElement {
    * 所以，在 `selects="multiple"` 时，如果要修改该值，只能通过修改 JavaScript 属性值实现。
    */
   @property()
-  public value: string | string[] = '';
+  public value?: string | string[];
 
   /**
    * 菜单项是否使用更紧凑的布局
@@ -210,8 +207,8 @@ export class Menu extends LitElement {
     // 根据 selectedKeys 读取出对应 menu-item 的 value
     const values = this.itemsEnabled
       .filter((item) => this.selectedKeys.includes(item.key))
-      .map((item) => item.value);
-    this.value = this.isMultiple ? values : values[0] || '';
+      .map((item) => item.value!);
+    this.value = this.isMultiple ? values : values[0] || undefined;
 
     if (this.hasSetDefaultValue) {
       emit(this, 'change');
@@ -234,11 +231,11 @@ export class Menu extends LitElement {
 
     const values = (
       this.isSingle
-        ? [this.value as string]
+        ? [this.value as string | undefined]
         : // 多选时，传入的值可能是字符串（通过 attribute 属性设置）；或字符串数组（通过 property 属性设置）
         isString(this.value)
-        ? [this.value]
-        : this.value
+        ? [this.value as string]
+        : (this.value as string[])
     ).filter((i) => i);
 
     if (!values.length) {

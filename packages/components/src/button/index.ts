@@ -1,8 +1,8 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { when } from 'lit/directives/when.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import '../icon.js';
 import { ButtonBase } from './button-base.js';
 import { style } from './style.js';
@@ -62,13 +62,13 @@ export class Button extends ButtonBase {
    * 左侧的 Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon!: MaterialIconsName;
+  public icon?: MaterialIconsName;
 
   /**
    * 右侧的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'end-icon' })
-  public endIcon!: MaterialIconsName;
+  public endIcon?: MaterialIconsName;
 
   private readonly rippleRef: Ref<Ripple> = createRef();
 
@@ -101,14 +101,13 @@ export class Button extends ButtonBase {
     }
 
     return html`<slot name="start">
-      ${when(
-        this.icon,
-        () => html`<mdui-icon
-          part="start"
-          class="icon"
-          name=${this.icon}
-        ></mdui-icon>`,
-      )}
+      ${this.icon
+        ? html`<mdui-icon
+            part="start"
+            class="icon"
+            name=${this.icon}
+          ></mdui-icon>`
+        : nothingTemplate}
     </slot>`;
   }
 
@@ -118,14 +117,13 @@ export class Button extends ButtonBase {
 
   private renderEnd(): TemplateResult {
     return html`<slot name="end">
-      ${when(
-        this.endIcon,
-        () => html`<mdui-icon
-          part="end"
-          class="icon"
-          name=${this.endIcon}
-        ></mdui-icon>`,
-      )}
+      ${this.endIcon
+        ? html`<mdui-icon
+            part="end"
+            class="icon"
+            name=${this.endIcon}
+          ></mdui-icon>`
+        : nothingTemplate}
     </slot>`;
   }
 

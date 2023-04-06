@@ -1,12 +1,12 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { delay } from '@mdui/shared/helpers/delay.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
 import { style } from './style.js';
@@ -64,7 +64,7 @@ export class Fab extends ButtonBase {
    * Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon!: MaterialIconsName;
+  public icon?: MaterialIconsName;
 
   /**
    * 是否为展开状态
@@ -145,15 +145,13 @@ export class Fab extends ButtonBase {
     }
 
     return html`<slot name="icon">
-      ${when(
-        this.icon,
-        () =>
-          html`<mdui-icon
+      ${this.icon
+        ? html`<mdui-icon
             part="icon"
             class="icon"
             name=${this.icon}
-          ></mdui-icon>`,
-      )}
+          ></mdui-icon>`
+        : nothingTemplate}
     </slot>`;
   }
 

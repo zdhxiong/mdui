@@ -1,4 +1,4 @@
-import { LitElement, html, nothing } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -16,6 +16,7 @@ import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { observeResize } from '@mdui/shared/helpers/observeResize.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '@mdui/icons/cancel--outlined.js';
@@ -27,7 +28,7 @@ import '../icon.js';
 import { style } from './style.js';
 import type { FormControl } from '@mdui/jq/shared/form.js';
 import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
-import type { TemplateResult, CSSResultGroup } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
@@ -108,7 +109,7 @@ export class TextField
    * 文本框名称，将与表单数据一起提交
    */
   @property({ reflect: true })
-  public name!: string;
+  public name = '';
 
   /**
    * 文本框的值，将与表单数据一起提交
@@ -126,19 +127,19 @@ export class TextField
    * 标签文本
    */
   @property({ reflect: true })
-  public label!: string;
+  public label?: string;
 
   /**
    * 提示文本
    */
   @property({ reflect: true })
-  public placeholder!: string;
+  public placeholder?: string;
 
   /**
    * 文本框底部的帮助文本
    */
   @property({ reflect: true })
-  public helper!: string;
+  public helper?: string;
 
   /**
    * 是否仅在获得焦点时，显示底部帮助文本
@@ -182,19 +183,19 @@ export class TextField
    * 文本框的后缀文本。仅在聚焦状态，或文本框有值时才会显示
    */
   @property({ reflect: true })
-  public suffix!: string;
+  public suffix?: string;
 
   /**
    * 文本框的前缀图标
    */
   @property({ reflect: true, attribute: 'prefix-icon' })
-  public prefixIcon!: string;
+  public prefixIcon?: string;
 
   /**
    * 文本框的后缀图标
    */
   @property({ reflect: true, attribute: 'suffix-icon' })
-  public suffixIcon!: string;
+  public suffixIcon?: string;
 
   /**
    * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
@@ -202,7 +203,7 @@ export class TextField
    * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
    */
   @property({ reflect: true })
-  public form!: string;
+  public form?: string;
 
   /**
    * 是否为只读
@@ -238,7 +239,7 @@ export class TextField
    * 文本框固定显示的行数
    */
   @property({ type: Number, reflect: true })
-  public rows!: number;
+  public rows?: number;
 
   /**
    * 是否根据输入的内容自动调整文本框高度
@@ -254,25 +255,25 @@ export class TextField
    * autosize 为 true 时，可以通过该属性指定最小行数
    */
   @property({ type: Number, reflect: true, attribute: 'min-rows' })
-  public minRows!: number;
+  public minRows?: number;
 
   /**
    * autosize 为 true 时，可以通过该属性指定最大行数
    */
   @property({ type: Number, reflect: true, attribute: 'max-rows' })
-  public maxRows!: number;
+  public maxRows?: number;
 
   /**
    * 允许输入的最小字符数
    */
   @property({ type: Number, reflect: true })
-  public minlength!: number;
+  public minlength?: number;
 
   /**
    * 允许输入的最大字符数
    */
   @property({ type: Number, reflect: true })
-  public maxlength!: number;
+  public maxlength?: number;
 
   /**
    * 是否显示字数统计。必须指定了 maxlength 时，该参数才有效
@@ -288,25 +289,25 @@ export class TextField
    * 当 type 为 number 时，允许输入的最小数值
    */
   @property({ type: Number, reflect: true })
-  public min!: number;
+  public min?: number;
 
   /**
    * 当 type 为 number 时，允许输入的最大数值
    */
   @property({ type: Number, reflect: true })
-  public max!: number;
+  public max?: number;
 
   /**
    * type 为 number 或 range 时，数值在增减过程固定改变的值
    */
   @property({ type: Number, reflect: true })
-  public step!: number;
+  public step?: number;
 
   /**
    * 表单验证的正则表达式
    */
   @property({ reflect: true })
-  public pattern!: string;
+  public pattern?: string;
 
   /**
    * type 为 password 时，设置该属性会添加一个切换按钮，点击时可在密文和明文之间切换
@@ -337,7 +338,7 @@ export class TextField
    * input 元素的 autocorrect 属性
    */
   @property({ reflect: true })
-  public autocorrect!: string;
+  public autocorrect?: string;
 
   /**
    * 是否使用浏览器的记忆功能自动填充文本。可选值为：
@@ -345,7 +346,7 @@ export class TextField
    * * `on`：浏览器根据用户之前输入的内容或者习惯，在用户输入的时候给出相应输入提示
    */
   @property({ reflect: true })
-  public autocomplete!:
+  public autocomplete?:
     | 'off' /*不使用浏览器的记忆自动填充，使用者必须输入他们想要输入的所有内容。或者网页提供了自己的自动填充方法*/
     | 'on' /*浏览器根据用户之前输入的内容或者习惯，在用户输入的时候给出相应输入提示*/;
 
@@ -353,7 +354,7 @@ export class TextField
    * input 元素的 enterkeyhint 属性。可用于定制虚拟键盘上的 Enter 键的显示状态
    */
   @property({ reflect: true })
-  public enterkeyhint!:
+  public enterkeyhint?:
     | 'enter'
     | 'done'
     | 'go'
@@ -372,7 +373,7 @@ export class TextField
    * input 元素的 inputmode 属性。用于定制使用哪种虚拟键盘
    */
   @property({ reflect: true })
-  public inputmode!:
+  public inputmode?:
     | 'none'
     | 'text'
     | 'decimal'
@@ -527,7 +528,7 @@ export class TextField
       const $input = $(this.inputRef.value!);
       $input.css(
         'max-height',
-        parseFloat($input.css('line-height')) * this.maxRows +
+        parseFloat($input.css('line-height')) * (this.maxRows ?? 1) +
           parseFloat($input.css('padding-top')) +
           parseFloat($input.css('padding-bottom')),
       );
@@ -552,7 +553,7 @@ export class TextField
       const $input = $(this.inputRef.value!);
       $input.css(
         'min-height',
-        parseFloat($input.css('line-height')) * this.minRows +
+        parseFloat($input.css('line-height')) * (this.minRows ?? 1) +
           parseFloat($input.css('padding-top')) +
           parseFloat($input.css('padding-bottom')),
       );
@@ -767,9 +768,11 @@ export class TextField
    * textarea 不支持 pattern 属性，所以在 keyup 时执行验证
    */
   private onTextAreaKeyUp() {
-    const patternRegex = new RegExp(this.pattern);
-    const hasError = this.value && !this.value.match(patternRegex);
-    this.setCustomValidity(hasError ? '请与请求的格式匹配。' : '');
+    if (this.pattern) {
+      const patternRegex = new RegExp(this.pattern);
+      const hasError = this.value && !this.value.match(patternRegex);
+      this.setCustomValidity(hasError ? '请与请求的格式匹配。' : '');
+    }
   }
 
   private onTogglePassword() {
@@ -788,10 +791,8 @@ export class TextField
   }
 
   private renderLabel(): TemplateResult {
-    return when(
-      this.label,
-      () =>
-        html`<label
+    return this.label
+      ? html`<label
           part="label"
           class="label"
           ${animate({
@@ -802,8 +803,8 @@ export class TextField
           })}
         >
           ${this.label}
-        </label>`,
-    );
+        </label>`
+      : nothingTemplate;
   }
 
   private renderPrefix(hasPrefixIcon: boolean): TemplateResult {
@@ -812,10 +813,9 @@ export class TextField
         class="prefix-icon ${classMap({ 'has-prefix-icon': hasPrefixIcon })}"
       >
         <slot name="prefix-icon">
-          ${when(
-            this.prefixIcon,
-            () => html`<mdui-icon name=${this.prefixIcon}></mdui-icon>`,
-          )}
+          ${this.prefixIcon
+            ? html`<mdui-icon name=${this.prefixIcon}></mdui-icon>`
+            : nothingTemplate}
         </slot>
       </span>
       <span part="prefix" class="prefix">
@@ -838,10 +838,9 @@ export class TextField
             })}"
           >
             <slot name="suffix-icon">
-              ${when(
-                this.suffixIcon,
-                () => html`<mdui-icon name=${this.suffixIcon}></mdui-icon>`,
-              )}
+              ${this.suffixIcon
+                ? html`<mdui-icon name=${this.suffixIcon}></mdui-icon>`
+                : nothingTemplate}
             </slot>
           </span>`} `;
   }
@@ -970,7 +969,7 @@ export class TextField
     ></textarea>`;
   }
 
-  private renderHelper(): TemplateResult | typeof nothing {
+  private renderHelper(): TemplateResult {
     return this.invalid &&
       (this.error || this.inputRef.value!.validationMessage)
       ? html`<div part="error" class="error">
@@ -980,17 +979,15 @@ export class TextField
       ? html`<div part="helper" class="helper">
           <slot name="helper">${this.helper}</slot>
         </div>`
-      : nothing;
+      : nothingTemplate;
   }
 
   private renderCounter(): TemplateResult {
-    return when(
-      this.counter && this.maxlength,
-      () =>
-        html`<div part="counter" class="counter">
+    return this.counter && this.maxlength
+      ? html`<div part="counter" class="counter">
           ${this.value.length}/${this.maxlength}
-        </div>`,
-    );
+        </div>`
+      : nothingTemplate;
   }
 }
 

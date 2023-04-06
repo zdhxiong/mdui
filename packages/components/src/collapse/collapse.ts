@@ -49,7 +49,7 @@ export class Collapse extends LitElement {
    * 所以，在 `accordion` 为 `false` 时，如果要修改该值，只能通过修改 JavaScript 属性值实现。
    */
   @property()
-  public value: string | string[] = [];
+  public value?: string | string[];
 
   /**
    * 是否禁用该折叠面板
@@ -71,11 +71,10 @@ export class Collapse extends LitElement {
   private onActiveKeysChange() {
     // 根据 activeKeys 读取对应 collapse-item 的值
     this.value = this.accordion
-      ? this.items.find((item) => this.activeKeys.includes(item.key))?.value ??
-        ''
+      ? this.items.find((item) => this.activeKeys.includes(item.key))?.value
       : this.items
           .filter((item) => this.activeKeys.includes(item.key))
-          .map((item) => item.value);
+          .map((item) => item.value!);
 
     emit(this, 'change');
   }
@@ -83,7 +82,7 @@ export class Collapse extends LitElement {
   @watch('value')
   private onValueChange() {
     if (this.accordion) {
-      const value = this.value as string;
+      const value = this.value as string | undefined;
       if (!value) {
         this.activeKeys = [];
       } else {
@@ -96,7 +95,7 @@ export class Collapse extends LitElement {
         this.activeKeys = [];
       } else {
         this.activeKeys = this.items
-          .filter((item) => value.includes(item.value))
+          .filter((item) => value.includes(item.value!))
           .map((item) => item.key);
       }
     }
@@ -145,7 +144,9 @@ export class Collapse extends LitElement {
     // 指定了 trigger 时，点击了其他地方时，忽略
     if (
       item.trigger &&
-      !path.find((element) => isElement(element) && $(element).is(item.trigger))
+      !path.find(
+        (element) => isElement(element) && $(element).is(item.trigger!),
+      )
     ) {
       return;
     }

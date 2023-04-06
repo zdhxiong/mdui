@@ -49,7 +49,7 @@ export class NavigationRail extends LayoutItemBase {
    * 当前选中的 `<mdui-navigation-bar-item>` 的值
    */
   @property({ reflect: true })
-  public value = '';
+  public value?: string;
 
   /**
    * 导航栏的位置。可选值为：
@@ -129,7 +129,7 @@ export class NavigationRail extends LayoutItemBase {
   private onActiveKeyChange() {
     // 根据 activeKey 读取对应 navigation-rail-item 的值
     const item = this.items.find((item) => item.key === this.activeKey);
-    this.value = item?.value ?? '';
+    this.value = item?.value;
 
     if (this.hasSetDefaultValue) {
       emit(this, 'change');
@@ -140,12 +140,8 @@ export class NavigationRail extends LayoutItemBase {
 
   @watch('value')
   private onValueChange() {
-    if (!this.value) {
-      this.activeKey = 0;
-    } else {
-      const item = this.items.find((item) => item.value === this.value);
-      this.activeKey = item ? item.key : 0;
-    }
+    const item = this.items.find((item) => item.value === this.value);
+    this.activeKey = item?.key ?? 0;
 
     this.updateActive();
   }

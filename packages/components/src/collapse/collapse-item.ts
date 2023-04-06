@@ -37,13 +37,13 @@ export class CollapseItem extends LitElement {
    * 该折叠面板项的值
    */
   @property({ reflect: true })
-  public value = '';
+  public value?: string;
 
   /**
    * 该折叠面板项的头部文本
    */
   @property({ reflect: true })
-  public header = '';
+  public header?: string;
 
   /**
    * 是否禁用该折叠面板项
@@ -59,7 +59,7 @@ export class CollapseItem extends LitElement {
    * 点击该元素时触发折叠，值可以是 DOM 元素或 CSS 选择器。默认为点击整个 header 区域触发
    */
   @property()
-  public trigger!: HTMLElement | string;
+  public trigger?: HTMLElement | string;
 
   /**
    * 是否为激活状态，由 `collapse` 组件控制该参数

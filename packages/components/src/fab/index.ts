@@ -5,6 +5,7 @@ import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { delay } from '@mdui/shared/helpers/delay.js';
 import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
@@ -71,8 +72,7 @@ export class Fab extends ButtonBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public extended = false;
 

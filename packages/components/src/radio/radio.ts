@@ -2,6 +2,7 @@ import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -41,8 +42,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public disabled = false;
 
@@ -52,8 +52,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public checked = false;
 
@@ -61,8 +60,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   protected invalid = false;
 
@@ -70,8 +68,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
     attribute: 'group-disabled',
   })
   protected groupDisabled = false;

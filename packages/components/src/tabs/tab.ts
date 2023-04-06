@@ -4,6 +4,7 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -51,8 +52,7 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public inline = false;
 
@@ -62,8 +62,7 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   protected active = false;
 

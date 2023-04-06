@@ -9,6 +9,7 @@ import '@mdui/jq/methods/innerWidth.js';
 import { isNodeName } from '@mdui/jq/shared/helper.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { LayoutItemBase } from '../layout/layout-item-base.js';
@@ -76,8 +77,7 @@ export class NavigationRail extends LayoutItemBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public contained = false;
 
@@ -87,8 +87,7 @@ export class NavigationRail extends LayoutItemBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public divider = false;
 

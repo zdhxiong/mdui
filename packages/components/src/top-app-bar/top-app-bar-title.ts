@@ -1,6 +1,7 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { getInnerHtmlFromSlot } from '@mdui/shared/helpers/slot.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { topAppBarTitleStyle } from './top-app-bar-title-style.js';
@@ -36,8 +37,7 @@ export class TopAppBarTitle extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   private shrink = false;
 

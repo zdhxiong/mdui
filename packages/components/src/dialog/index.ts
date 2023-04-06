@@ -10,6 +10,7 @@ import { when } from 'lit/directives/when.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { Modal } from '@mdui/shared/helpers/modal.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
@@ -73,8 +74,7 @@ export class Dialog extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public open = false;
 
@@ -84,8 +84,7 @@ export class Dialog extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public fullscreen = false;
 
@@ -95,8 +94,7 @@ export class Dialog extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
     attribute: 'close-on-esc',
   })
   public closeOnEsc = false;
@@ -107,8 +105,7 @@ export class Dialog extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
     attribute: 'close-on-overlay-click',
   })
   public closeOnOverlayClick = false;
@@ -119,8 +116,7 @@ export class Dialog extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
     attribute: 'stacked-actions',
   })
   public stackedActions = false;

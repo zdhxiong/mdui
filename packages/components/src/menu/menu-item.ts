@@ -16,6 +16,7 @@ import '@mdui/jq/static/contains.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
@@ -72,8 +73,7 @@ export class MenuItem extends AnchorMixin(
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public disabled = false;
 
@@ -102,8 +102,7 @@ export class MenuItem extends AnchorMixin(
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
     attribute: 'submenu-open',
   })
   public submenuOpen = false;
@@ -112,8 +111,7 @@ export class MenuItem extends AnchorMixin(
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   protected selected = false;
 

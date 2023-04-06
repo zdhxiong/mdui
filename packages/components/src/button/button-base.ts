@@ -3,6 +3,7 @@ import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { when } from 'lit/directives/when.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
@@ -37,8 +38,7 @@ export class ButtonBase extends AnchorMixin(
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public disabled = false;
 
@@ -48,8 +48,7 @@ export class ButtonBase extends AnchorMixin(
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public loading = false;
 
@@ -59,8 +58,7 @@ export class ButtonBase extends AnchorMixin(
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public override autofocus = false;
 
@@ -146,8 +144,7 @@ export class ButtonBase extends AnchorMixin(
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
     attribute: 'formnovalidate',
   })
   public formNovalidate = false;

@@ -6,6 +6,7 @@ import '@mdui/jq/methods/get.js';
 import '@mdui/jq/methods/is.js';
 import { isElement } from '@mdui/jq/shared/helper.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { collapseStyle } from './collapse-style.js';
@@ -35,8 +36,7 @@ export class Collapse extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public accordion = false;
 
@@ -57,8 +57,7 @@ export class Collapse extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public disabled = false;
 

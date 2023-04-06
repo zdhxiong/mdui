@@ -9,6 +9,7 @@ import { isNull } from '@mdui/jq/shared/helper.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { getBreakpoint } from '@mdui/shared/helpers/breakpoint.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { Modal } from '@mdui/shared/helpers/modal.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
@@ -46,8 +47,7 @@ export class NavigationDrawer extends LayoutItemBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public open = false;
 
@@ -58,8 +58,7 @@ export class NavigationDrawer extends LayoutItemBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public modal = false;
 
@@ -69,8 +68,7 @@ export class NavigationDrawer extends LayoutItemBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
     attribute: 'close-on-esc',
   })
   public closeOnEsc = false;
@@ -81,8 +79,7 @@ export class NavigationDrawer extends LayoutItemBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
     attribute: 'close-on-overlay-click',
   })
   public closeOnOverlayClick = false;
@@ -104,8 +101,7 @@ export class NavigationDrawer extends LayoutItemBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public contained = false;
 
@@ -113,8 +109,7 @@ export class NavigationDrawer extends LayoutItemBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   private handset = false;
 

@@ -15,6 +15,7 @@ import '@mdui/jq/methods/offset.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/prependTo.js';
 import '@mdui/jq/methods/remove.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { JQ } from '@mdui/jq/shared/core.js';
@@ -36,8 +37,7 @@ export class Ripple extends LitElement {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
     attribute: 'no-ripple',
   })
   public noRipple = false;

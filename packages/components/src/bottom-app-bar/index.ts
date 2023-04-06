@@ -1,5 +1,6 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { ScrollBehaviorMixin } from '@mdui/shared/mixins/scrollBehavior.js';
@@ -29,8 +30,7 @@ export class BottomAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public hide = false;
 
@@ -40,8 +40,7 @@ export class BottomAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
     attribute: 'fab-detach',
   })
   public fabDetach = false;

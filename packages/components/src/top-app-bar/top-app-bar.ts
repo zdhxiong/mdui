@@ -5,6 +5,7 @@ import {
   queryAssignedElements,
 } from 'lit/decorators.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { ScrollBehaviorMixin } from '@mdui/shared/mixins/scrollBehavior.js';
@@ -59,8 +60,7 @@ export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public hide = false;
 
@@ -70,8 +70,7 @@ export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public shrink = false;
 
@@ -92,8 +91,7 @@ export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   private scrolling = false;
 

@@ -2,6 +2,7 @@ import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import '../icon.js';
 import { ButtonBase } from './button-base.js';
 import { style } from './style.js';
@@ -53,8 +54,7 @@ export class Button extends ButtonBase {
   @property({
     type: Boolean,
     reflect: true,
-    converter: (value: string | null): boolean =>
-      value !== null && value !== 'false',
+    converter: booleanConverter,
   })
   public fullwidth = false;
 

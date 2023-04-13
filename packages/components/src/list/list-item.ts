@@ -5,11 +5,14 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
+import '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { listItemStyle } from './list-item-style.js';
+import type { MaterialIconsName } from '../icon/index.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
@@ -68,6 +71,18 @@ export class ListItem extends AnchorMixin(
   public secondaryLine?: 1 | 2 | 3;
 
   /**
+   * 左侧的 Material Icons 图标名
+   */
+  @property({ reflect: true })
+  public icon?: MaterialIconsName;
+
+  /**
+   * 右侧的 Material Icons 图标名
+   */
+  @property({ reflect: true, attribute: 'end-icon' })
+  public endIcon?: MaterialIconsName;
+
+  /**
    * 是否禁用该列表项，列表项将置灰，且其中的 checkbox、radio、switch 等都将禁用
    */
   @property({
@@ -120,6 +135,7 @@ export class ListItem extends AnchorMixin(
   private readonly itemRef: Ref<HTMLElement> = createRef();
   private readonly hasSlotController = new HasSlotController(
     this,
+    '[default]',
     'secondary',
     'start',
     'end',
@@ -144,9 +160,16 @@ export class ListItem extends AnchorMixin(
 
   protected override render(): TemplateResult {
     const hasCustomSlot = this.hasSlotController.test('custom');
+    const hasStartSlot = this.hasSlotController.test('start');
+    const hasEndSlot = this.hasSlotController.test('end');
+    const hasSecondarySlot = this.hasSlotController.test('secondary');
+
     const className = cc({
       item: true,
       preset: !hasCustomSlot,
+      'has-start': this.icon || hasStartSlot,
+      'has-end': this.endIcon || hasEndSlot,
+      'has-secondary': this.secondary || hasSecondarySlot,
     });
 
     return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href &&
@@ -162,33 +185,35 @@ export class ListItem extends AnchorMixin(
   }
 
   private renderInner(): TemplateResult {
-    const hasSecondarySlot = this.hasSlotController.test('secondary');
-    const hasStartSlot = this.hasSlotController.test('start');
-    const hasEndSlot = this.hasSlotController.test('end');
+    const hasDefaultSlot = this.hasSlotController.test('[default]');
 
     return html`<slot name="custom">
-      <div
-        part="start"
-        class="start ${classMap({ 'has-start': hasStartSlot })}"
-      >
-        <slot name="start"></slot>
-      </div>
+      <slot name="start">
+        ${this.icon
+          ? html`<mdui-icon
+              part="start"
+              class="start"
+              name=${this.icon}
+            ></mdui-icon>`
+          : nothingTemplate}
+      </slot>
       <div part="body" class="body">
         <div part="primary" class="primary">
-          <slot>${this.primary}</slot>
+          ${hasDefaultSlot ? html`<slot></slot>` : this.primary}
         </div>
-        <div
-          part="secondary"
-          class="secondary ${classMap({
-            'has-secondary': this.secondary || hasSecondarySlot,
-          })}"
-        >
+        <div part="secondary" class="secondary">
           <slot name="secondary">${this.secondary}</slot>
         </div>
       </div>
-      <div part="end" class="end ${classMap({ 'has-end': hasEndSlot })}">
-        <slot name="end"></slot>
-      </div>
+      <slot name="end">
+        ${this.endIcon
+          ? html`<mdui-icon
+              part="end"
+              class="end"
+              name=${this.endIcon}
+            ></mdui-icon>`
+          : nothingTemplate}
+      </slot>
     </slot>`;
   }
 }

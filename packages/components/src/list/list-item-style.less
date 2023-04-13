@@ -87,7 +87,7 @@
   }
 }
 
-.has-secondary {
+.has-secondary .secondary {
   display: block;
 }
 
@@ -120,11 +120,12 @@
 }
 
 .start,
-.end {
-  display: none;
+.end,
+::slotted([slot="start"]),
+::slotted([slot="end"]) {
+  display: flex;
   flex: 0 0 auto;
   .color(on-surface-variant);
-  .typescale(label-small);
 
   :host([disabled]) &,
   :host([hover]) &,
@@ -138,33 +139,38 @@
   }
 }
 
-.has-start,
-.has-end {
-  display: flex;
+::slotted(:not(mdui-icon)[slot="start"]),
+::slotted(:not(mdui-icon)[slot="end"]) {
+  .typescale(label-small);
+}
 
-  ::slotted(mdui-icon) {
-    .fontSize(24);
-  }
+.start,
+.end,
+::slotted(mdui-icon[slot="start"]),
+::slotted(mdui-icon[slot="end"]) {
+  .fontSize(24);
 }
 
 .has-start {
-  .marginRight(16);
+  .start,
+  ::slotted([slot="start"]) {
+    .marginRight(16);
+  }
 
-  ::slotted(mdui-checkbox),
-  ::slotted(mdui-radio) {
+  ::slotted(mdui-checkbox[slot="start"]),
+  ::slotted(mdui-radio[slot="start"]) {
     .marginLeft(-8);
   }
 }
 
 .has-end {
-  .marginLeft(16);
-
+  .end,
   ::slotted([slot="end"]) {
-    text-align: right;
+    .marginLeft(16);
   }
 
-  ::slotted(mdui-checkbox),
-  ::slotted(mdui-radio) {
+  ::slotted(mdui-checkbox[slot="end"]),
+  ::slotted(mdui-radio[slot="end"]) {
     .marginRight(-8);
   }
 }

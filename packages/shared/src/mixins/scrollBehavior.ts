@@ -11,7 +11,7 @@ type ScrollBehavior = 'hide' | 'shrink' | 'elevate';
 export type ScrollPaddingPosition = 'top' | 'bottom';
 
 export declare class ScrollBehaviorMixinInterface extends LitElement {
-  public scrollTarget?: string;
+  public scrollTarget?: HTMLElement | string;
   public scrollBehavior?: ScrollBehavior;
   public scrollThreshold?: number;
   protected updateContainerPadding(): void;
@@ -34,10 +34,10 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
 ): Constructor<ScrollBehaviorMixinInterface> & T => {
   class ScrollBehaviorMixinClass extends superclass {
     /**
-     * 需要监听其滚动事件的元素的 CSS 选择器。默认为监听 `window`
+     * 需要监听其滚动事件的元素，值可以是 DOM 元素或 CSS 选择器。默认为监听 `window`
      */
-    @property({ reflect: true, attribute: 'scroll-target' })
-    public scrollTarget?: string;
+    @property({ attribute: 'scroll-target' })
+    public scrollTarget?: HTMLElement | string;
 
     /**
      * 滚动行为。可选值为：
@@ -252,14 +252,18 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
     /**
      * 获取组件需要监听哪个元素的滚动状态
      */
-    private getListening(target?: string): HTMLElement | Window | undefined {
+    private getListening(
+      target?: HTMLElement | string,
+    ): HTMLElement | Window | undefined {
       return target ? $(target)[0] : window;
     }
 
     /**
      * 获取组件在哪个容器内滚动
      */
-    private getContainer(target?: string): HTMLElement | undefined {
+    private getContainer(
+      target?: HTMLElement | string,
+    ): HTMLElement | undefined {
       return target ? $(target)[0] : document.body;
     }
   }

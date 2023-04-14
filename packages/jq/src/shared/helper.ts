@@ -2,9 +2,7 @@
  * 键名为字符串的对象
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type PlainObject<T = any> = {
-  [key: string]: T;
-};
+export type PlainObject<T = any> = Record<string, T>;
 
 /**
  * HTML 字符串类型

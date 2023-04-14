@@ -210,10 +210,8 @@ export class Dialog extends LitElement {
         const topAppBarElement = topAppBarElements[0];
 
         // top-app-bar 未设置 scrollTarget 时，默认设置为 bodyRef
-        // scrollTarget 属性在内部也可以为 DOM 元素，但公开的 api 只接受字符串
         if (!topAppBarElement.scrollTarget) {
-          topAppBarElement.scrollTarget = this.bodyRef
-            .value! as unknown as string;
+          topAppBarElement.scrollTarget = this.bodyRef.value;
         }
 
         // 移除 header 和 body 之间的 margin

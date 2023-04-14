@@ -61,6 +61,9 @@ export interface JQStatic {
    */
   <T extends PlainObject>(object: T): JQ<T>;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (object: any): JQ;
+
   /**
    * 返回空的 JQ 对象
    */

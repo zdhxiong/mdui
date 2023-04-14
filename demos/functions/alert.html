@@ -2,7 +2,7 @@
 <html lang="zh">
 
 <head>
-  <title>snackbar()</title>
+  <title>alert()</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
   <link
@@ -30,32 +30,29 @@
     import { $ } from '../../packages/jq/index.js';
     import '../../packages/components/button.js';
     import '../../packages/components/text-field.js';
-    import '../../packages/components/radio-group.js';
-    import '../../packages/components/radio.js';
+    import '../../packages/components/checkbox.js';
     import '../../packages/components/select.js';
     import '../../packages/components/menu-item.js';
-    import '../../packages/components/checkbox.js';
-    import { snackbar } from '../../packages/functions/snackbar.js';
+    import { alert } from '../../packages/functions/alert.js';
 
     const form = $('.form')[0];
     const currentEvent = $('.current-event')[0];
+    const returnPromise = $('.return-promise')[0];
 
-    $('.snackbar').on('click', () => {
+    $('.alert').on('click', () => {
       const formData = new FormData(form);
       const options = {
-        message: formData.get('message'),
-        placement: formData.get('placement'),
-        action: formData.get('action'),
-        closeable: !!formData.get('closeable'),
-        messageLine: formData.get('messageLine'),
-        autoCloseDelay: formData.get('autoCloseDelay'),
-        closeOnOutsideClick: !!formData.get('closeOnOutsideClick'),
+        headline: formData.get('headline'),
+        description: formData.get('description'),
+        icon: formData.get('icon'),
+        closeOnEsc: !!formData.get('closeOnEsc'),
+        closeOnOverlayClick: !!formData.get('closeOnOverlayClick'),
+        confirmText: formData.get('confirmText'),
         queue: !!formData.get('queue'),
-        onClick: () => currentEvent.textContent = 'onClick',
-        onActionClick: () => {
-          const onActionClickReturn = formData.get('onActionClick');
+        onConfirm: () => {
+          const onConfirmReturn = formData.get('onConfirm');
 
-          switch (onActionClickReturn) {
+          switch (onConfirmReturn) {
             case 'false':
               return false;
             case 'promise-resolve':
@@ -72,9 +69,16 @@
         onOpened: () => currentEvent.textContent = 'onOpened',
         onClose: () => currentEvent.textContent = 'onClose',
         onClosed: () => currentEvent.textContent = 'onClosed',
+        onOverlayClick: () => currentEvent.textContent = 'onOverlayClick',
       };
       console.log(options);
-      snackbar(options);
+
+      returnPromise.textContent = '';
+      alert(options).then(() => {
+        returnPromise.textContent = 'resolve';
+      }).catch(() => {
+        returnPromise.textContent = 'reject';
+      });
     });
   </script>
 </head>
@@ -82,35 +86,25 @@
 <body>
   <main>
     <section>
-      <h2>snackbar</h2>
+      <h2>alert</h2>
       <form class="form">
-        <mdui-text-field name="message" label="message" value="Snackbar message"></mdui-text-field>
-        <mdui-radio-group name="placement" value="bottom">
-          <mdui-radio value="top">top</mdui-radio>
-          <mdui-radio value="top-start">top-start</mdui-radio>
-          <mdui-radio value="top-end">top-end</mdui-radio>
-          <mdui-radio value="bottom">bottom</mdui-radio>
-          <mdui-radio value="bottom-start">bottom-start</mdui-radio>
-          <mdui-radio value="bottom-end">bottom-end</mdui-radio>
-        </mdui-radio-group>
-        <mdui-text-field name="action" label="action"></mdui-text-field>
-        <mdui-checkbox name="closeable">closeable</mdui-checkbox>
-        <mdui-select name="messageLine" clearable label="messageLine">
-          <mdui-menu-item value="1">1行</mdui-menu-item>
-          <mdui-menu-item value="2">2行</mdui-menu-item>
-        </mdui-select>
-        <mdui-text-field name="autoCloseDelay" label="autoCloseDelay" type="number" value="5000"></mdui-text-field>
-        <mdui-checkbox name="closeOnOutsideClick">closeOnOutsideClick</mdui-checkbox>
+        <mdui-text-field name="headline" label="headline"></mdui-text-field>
+        <mdui-text-field name="description" label="description" value="description"></mdui-text-field>
+        <mdui-text-field name="icon" label="icon"></mdui-text-field>
+        <mdui-checkbox name="closeOnEsc">closeOnEsc</mdui-checkbox>
+        <mdui-checkbox name="closeOnOverlayClick">closeOnOverlayClick</mdui-checkbox>
+        <mdui-text-field name="confirmText" label="confirmText" value="OK"></mdui-text-field>
         <mdui-checkbox name="queue">queue</mdui-checkbox>
-        <mdui-select name="onActionClick" label="onActionClick return" clearable>
+        <mdui-select name="onConfirm" label="onConfirm return" clearable>
           <mdui-menu-item value="false">false</mdui-menu-item>
           <mdui-menu-item value="promise-resolve">promise resolve</mdui-menu-item>
           <mdui-menu-item value="promise-reject">promise reject</mdui-menu-item>
         </mdui-select>
       </form>
 
-      <mdui-button class="snackbar">snackbar</mdui-button>
-      <div>当前触发的事件（包括：onClick, onActionClick, onOpen, onOpened, onClose, onClosed）：<span class="current-event"></span></div>
+      <mdui-button class="alert">alert</mdui-button>
+      <div>当前触发的事件（包括：onOpen、onOpened、onClose、onClosed、onOverlayClick）：<span class="current-event"></span></div>
+      <div>当前返回 promise：<span class="return-promise"></span></div>
     </section>
   </main>
 </body>

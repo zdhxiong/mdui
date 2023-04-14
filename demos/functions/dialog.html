@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>dialog()</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: Roboto;
+    }
+
+    .form {
+      width: 600px;
+    }
+    @media (max-width: 600px) {
+      .form {
+        width: 100%;
+      }
+    }
+  </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import { $ } from '../../packages/jq/index.js';
+    import '../../packages/components/button.js';
+    import '../../packages/components/text-field.js';
+    import '../../packages/components/checkbox.js';
+    import { dialog } from '../../packages/functions/dialog.js';
+
+    const form = $('.form')[0];
+    const currentEvent = $('.current-event')[0];
+
+    $('.dialog').on('click', () => {
+      const formData = new FormData(form);
+      const options = {
+        headline: formData.get('headline'),
+        description: formData.get('description'),
+        body: formData.get('body'),
+        icon: formData.get('icon'),
+        closeOnEsc: !!formData.get('closeOnEsc'),
+        closeOnOverlayClick: !!formData.get('closeOnOverlayClick'),
+        actions: [
+          { text: 'Cancel', onClick: () => currentEvent.textContent = 'Cancel onClick' },
+          { text: 'OK', onClick: () => currentEvent.textContent = 'OK onClick' },
+        ],
+        stackedActions: !!formData.get('stackedActions'),
+        queue: !!formData.get('queue'),
+        onOpen: () => currentEvent.textContent = 'onOpen',
+        onOpened: () => currentEvent.textContent = 'onOpened',
+        onClose: () => currentEvent.textContent = 'onClose',
+        onClosed: () => currentEvent.textContent = 'onClosed',
+        onOverlayClick: () => currentEvent.textContent = 'onOverlayClick',
+      };
+      console.log(options);
+      dialog(options);
+    });
+  </script>
+</head>
+<body>
+  <main>
+    <section>
+      <h2>dialog</h2>
+      <form class="form">
+        <mdui-text-field name="headline" label="headline"></mdui-text-field>
+        <mdui-text-field name="description" label="description"></mdui-text-field>
+        <mdui-text-field name="body" label="body" autosize></mdui-text-field>
+        <mdui-text-field name="icon" label="icon"></mdui-text-field>
+        <mdui-checkbox name="closeOnEsc">closeOnEsc</mdui-checkbox>
+        <mdui-checkbox name="closeOnOverlayClick">closeOnOverlayClick</mdui-checkbox>
+        <mdui-checkbox name="stackedActions">stackedActions</mdui-checkbox>
+        <mdui-checkbox name="queue">queue</mdui-checkbox>
+      </form>
+
+      <mdui-button class="dialog">dialog</mdui-button>
+      <div>当前触发的事件（包括：onOpen, onOpened, onClose, onClosed, onOverlayClick）：<span class="current-event"></span></div>
+    </section>
+  </main>
+</body>

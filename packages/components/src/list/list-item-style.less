@@ -64,7 +64,7 @@
   min-width: 0;
 }
 
-.primary {
+.headline {
   display: block;
   .color(on-surface);
   .typescale(body-large);
@@ -74,7 +74,7 @@
   }
 }
 
-.secondary {
+.description {
   display: none;
   .color(on-surface-variant);
   .typescale(body-medium);
@@ -87,21 +87,21 @@
   }
 }
 
-.has-secondary .secondary {
+.has-description .description {
   display: block;
 }
 
-:host([primary-line="1"]) .primary,
-:host([secondary-line="1"]) .secondary {
+:host([headline-line="1"]) .headline,
+:host([description-line="1"]) .description {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-:host([primary-line="2"]) .primary,
-:host([secondary-line="2"]) .secondary,
-:host([primary-line="3"]) .primary,
-:host([secondary-line="3"]) .secondary {
+:host([headline-line="2"]) .headline,
+:host([description-line="2"]) .description,
+:host([headline-line="3"]) .headline,
+:host([description-line="3"]) .description {
   // stylelint-disable-next-line
   display: -webkit-box;
   overflow: hidden;
@@ -109,13 +109,13 @@
   -webkit-box-orient: vertical;
 }
 
-:host([primary-line="2"]) .primary,
-:host([secondary-line="2"]) .secondary {
+:host([headline-line="2"]) .headline,
+:host([description-line="2"]) .description {
   -webkit-line-clamp: 2;
 }
 
-:host([primary-line="3"]) .primary,
-:host([secondary-line="3"]) .secondary {
+:host([headline-line="3"]) .headline,
+:host([description-line="3"]) .description {
   -webkit-line-clamp: 3;
 }
 

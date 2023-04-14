@@ -62,41 +62,41 @@
       <h2>Normal</h2>
       <mdui-list>
         <mdui-list-item
-          primary-line="1"
-          primary="Primary one line. Primary one line. Primary one line. Primary one line. Primary one line."
+          headline-line="1"
+          headline="headline one line. headline one line. headline one line. headline one line. headline one line."
         ></mdui-list-item>
         <mdui-list-item
-          primary-line="2"
-          primary="Primary two line. Primary two line. Primary two line. Primary two line. Primary two line. Primary two line."
+          headline-line="2"
+          headline="headline two line. headline two line. headline two line. headline two line. headline two line. headline two line."
         ></mdui-list-item>
         <mdui-list-item
-          primary-line="3"
-          primary="Primary three line. Primary three line. Primary three line. Primary three line. Primary three line. Primary three line. Primary three line. Primary three line."
+          headline-line="3"
+          headline="headline three line. headline three line. headline three line. headline three line. headline three line. headline three line. headline three line. headline three line."
         ></mdui-list-item>
         <mdui-list-item
-          primary="Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line. Primary unlimited line."
+          headline="headline unlimited line. headline unlimited line. headline unlimited line. headline unlimited line. headline unlimited line. headline unlimited line. headline unlimited line. headline unlimited line. headline unlimited line. headline unlimited line. headline unlimited line."
         ></mdui-list-item>
         <mdui-list-item
-          secondary-line="1"
-          primary="Primary"
-          secondary="Secondary one line. Secondary one line. Secondary one line. Secondary one line."
+          description-line="1"
+          headline="headline"
+          description="description one line. description one line. description one line. description one line."
         ></mdui-list-item>
         <mdui-list-item
-          secondary-line="2"
-          primary="Primary"
-          secondary="Secondary two line. Secondary two line. Secondary two line. Secondary two line. Secondary two line. Secondary two line."
+          description-line="2"
+          headline="headline"
+          description="description two line. description two line. description two line. description two line. description two line. description two line."
         ></mdui-list-item>
         <mdui-list-item
-          secondary-line="3"
-          primary="Primary"
-          secondary="Secondary three line. Secondary three line. Secondary three line. Secondary three line. Secondary three line. Secondary three line. Secondary three line. "
+          description-line="3"
+          headline="headline"
+          description="description three line. description three line. description three line. description three line. description three line. description three line. description three line. "
         ></mdui-list-item>
         <mdui-list-item
-          primary="Primary"
-          secondary="Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line. Secondary unlimited line."
+          headline="headline"
+          description="description unlimited line. description unlimited line. description unlimited line. description unlimited line. description unlimited line. description unlimited line. description unlimited line. description unlimited line. description unlimited line. description unlimited line."
         ></mdui-list-item>
-        <mdui-list-item>Primary slot<span slot="secondary">Secondary slot</span></mdui-list-item>
-        <mdui-list-item icon="settings" end-icon="settings" secondary="secondary">icon & endIcon property</mdui-list-item>
+        <mdui-list-item>headline slot<span slot="description">description slot</span></mdui-list-item>
+        <mdui-list-item icon="settings" end-icon="settings" description="description">icon & endIcon property</mdui-list-item>
       </mdui-list>
     </section>
 
@@ -120,11 +120,11 @@
     </section>
 
     <section>
-      <h2>primary and secondary with html</h2>
+      <h2>headline and description with html</h2>
       <mdui-list>
         <mdui-list-item>
           <div style="color: red">Brunch this weekend?</div>
-          <div slot="secondary" style="font-size: 14px;"><span style="font-weight: bold; font-size: 12px;">Ali Connors —
+          <div slot="description" style="font-size: 14px;"><span style="font-weight: bold; font-size: 12px;">Ali Connors —
             </span>I'll be in your neighborhood doing errands this weekend. Do you want to hang out?</div>
         </mdui-list-item>
       </mdui-list>
@@ -145,31 +145,31 @@
     <section>
       <h2>With start slot</h2>
       <mdui-list>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <mdui-checkbox slot="start" tabindex="-1"></mdui-checkbox>
         </mdui-list-item>
-        <mdui-list-item primary="List item" secondary="secondary">
+        <mdui-list-item headline="List item" description="description">
           <mdui-radio slot="start"></mdui-radio>
         </mdui-list-item>
         <mdui-list-item
-          primary="List item long long long long long long long long long long"
-          secondary="secondary long long long long long long long long long long long long"
+          headline="List item long long long long long long long long long long"
+          description="description long long long long long long long long long long long long"
         >
           <mdui-switch slot="start"></mdui-switch>
         </mdui-list-item>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <mdui-icon slot="start" name="settings"></mdui-icon>
         </mdui-list-item>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <mdui-avatar slot="start">M</mdui-avatar>
         </mdui-list-item>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <mdui-avatar slot="start" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
         </mdui-list-item>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <img slot="start" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" />
         </mdui-list-item>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <span slot="start">text</span>
         </mdui-list-item>
       </mdui-list>
@@ -178,31 +178,31 @@
     <section>
       <h2>With end slot</h2>
       <mdui-list>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <mdui-checkbox slot="end"></mdui-checkbox>
         </mdui-list-item>
-        <mdui-list-item primary="List item" secondary="secondary">
+        <mdui-list-item headline="List item" description="description">
           <mdui-radio slot="end"></mdui-radio>
         </mdui-list-item>
         <mdui-list-item
-          primary="List item long long long long long long long long long long"
-          secondary="secondary long long long long long long long long long long long long"
+          headline="List item long long long long long long long long long long"
+          description="description long long long long long long long long long long long long"
         >
           <mdui-switch slot="end"></mdui-switch>
         </mdui-list-item>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <mdui-icon slot="end" name="settings"></mdui-icon>
         </mdui-list-item>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <mdui-avatar slot="end">M</mdui-avatar>
         </mdui-list-item>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <mdui-avatar slot="end" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
         </mdui-list-item>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <img slot="end" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" />
         </mdui-list-item>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <span slot="end">text</span>
         </mdui-list-item>
       </mdui-list>
@@ -211,26 +211,26 @@
     <section>
       <h2>With start and end slot</h2>
       <mdui-list>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <mdui-checkbox slot="start"></mdui-checkbox>
           <span slot="end">text</span>
         </mdui-list-item>
-        <mdui-list-item primary="List item" secondary="secondary">
+        <mdui-list-item headline="List item" description="description">
           <mdui-radio slot="start"></mdui-radio>
           <mdui-icon slot="end" name="settings"></mdui-icon>
         </mdui-list-item>
         <mdui-list-item
-          primary="List item long long long long long long long long long long"
-          secondary="secondary long long long long long long long long long long long long"
+          headline="List item long long long long long long long long long long"
+          description="description long long long long long long long long long long long long"
         >
           <mdui-avatar slot="start" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
           <mdui-switch slot="end"></mdui-switch>
         </mdui-list-item>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <mdui-icon slot="start" name="settings"></mdui-icon>
           <span slot="end">text</span>
         </mdui-list-item>
-        <mdui-list-item primary="List item">
+        <mdui-list-item headline="List item">
           <img slot="start" src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" />
           <mdui-checkbox slot="end"></mdui-checkbox>
         </mdui-list-item>
@@ -241,24 +241,24 @@
       <h2>alignItems</h2>
       <mdui-list>
         <mdui-list-item
-          primary="alignItems:center"
-          secondary="secondary long long long long long long long long long long long long"
+          headline="alignItems:center"
+          description="description long long long long long long long long long long long long"
           alignment="center"
         >
           <mdui-radio slot="start"></mdui-radio>
           <mdui-checkbox slot="end"></mdui-checkbox>
         </mdui-list-item>
         <mdui-list-item
-          primary="alignItems:flex-start"
-          secondary="secondary long long long long long long long long long long long long"
+          headline="alignItems:flex-start"
+          description="description long long long long long long long long long long long long"
           alignment="start"
         >
           <mdui-radio slot="start"></mdui-radio>
           <mdui-checkbox slot="end"></mdui-checkbox>
         </mdui-list-item>
         <mdui-list-item
-          primary="alignItems:flex-end"
-          secondary="secondary long long long long long long long long long long long long"
+          headline="alignItems:flex-end"
+          description="description long long long long long long long long long long long long"
           alignment="end"
         >
           <mdui-radio slot="start"></mdui-radio>

@@ -42,7 +42,7 @@ $(document).off('click dbclick', '.box');
     off<TEvent extends Event>(
       eventName: string,
       selector: string,
-      callback?: EventCallback<TEvent> | false,
+      callback?: EventCallback<TEvent, T> | false,
     ): this;
 
     /**
@@ -71,7 +71,7 @@ $('.box').off('click dbclick');
      */
     off<TEvent extends Event>(
       eventName: string,
-      callback?: EventCallback<TEvent> | false,
+      callback?: EventCallback<TEvent, T> | false,
     ): this;
 
     /**
@@ -99,7 +99,7 @@ $('.wrapper').off({
 ```
      */
     off<TEvent extends Event>(
-      events: PlainObject<EventCallback<TEvent> | false>,
+      events: PlainObject<EventCallback<TEvent, T> | false>,
       selector?: string,
     ): this;
 

@@ -93,54 +93,54 @@
     </section>
 
     <section>
-      <h2>icon attr & primary attr</h2>
+      <h2>icon attr & headline attr</h2>
       <mdui-dialog
         close-on-esc
         close-on-overlay-click
         icon="refresh"
-        primary="Reset settings?"
+        headline="Reset settings?"
       >body</mdui-dialog>
       <mdui-button class="open">open</mdui-button>
     </section>
 
     <section>
-      <h2>icon attr & secondary attr</h2>
+      <h2>icon attr & description attr</h2>
       <mdui-dialog
         close-on-esc
         close-on-overlay-click
         icon="refresh"
-        secondary="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
+        description="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
       >body</mdui-dialog>
       <mdui-button class="open">open</mdui-button>
     </section>
 
     <section>
-      <h2>primary attr</h2>
+      <h2>headline attr</h2>
       <mdui-dialog
         close-on-esc
         close-on-overlay-click
-        primary="Reset settings?"
+        headline="Reset settings?"
       >body</mdui-dialog>
       <mdui-button class="open">open</mdui-button>
     </section>
 
     <section>
-      <h2>primary attr & secondary attr</h2>
+      <h2>headline attr & description attr</h2>
       <mdui-dialog
         close-on-esc
         close-on-overlay-click
-        primary="Reset settings?"
-        secondary="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
+        headline="Reset settings?"
+        description="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
       >body</mdui-dialog>
       <mdui-button class="open">open</mdui-button>
     </section>
 
     <section>
-      <h2>secondary attr</h2>
+      <h2>description attr</h2>
       <mdui-dialog
         close-on-esc
         close-on-overlay-click
-        secondary="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
+        description="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
       >body</mdui-dialog>
       <mdui-button class="open">open</mdui-button>
     </section>
@@ -162,7 +162,7 @@
       <mdui-dialog
         close-on-esc
         close-on-overlay-click
-        secondary="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
+        description="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
       >
         <!-- dialog 中的 mdui-top-app-bar 会自动设置 scroll-target 属性 -->
         <mdui-top-app-bar slot="header" variant="small" scroll-behavior="elevate">
@@ -181,7 +181,7 @@
         close-on-esc
         close-on-overlay-click
         fullscreen
-        secondary="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
+        description="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
       >
         <mdui-top-app-bar slot="header" variant="small" scroll-behavior="elevate">
           <mdui-button-icon icon="close" class="close"></mdui-button-icon>
@@ -199,7 +199,7 @@
         close-on-esc
         close-on-overlay-click
         fullscreen
-        secondary="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
+        description="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
       >
         <mdui-top-app-bar slot="header" variant="medium" scroll-behavior="elevate shrink">
           <mdui-button-icon icon="close" class="close"></mdui-button-icon>
@@ -212,14 +212,14 @@
     </section>
 
     <section>
-      <h2>icon slot & primary slot & secondary slot</h2>
+      <h2>icon slot & headline slot & description slot</h2>
       <mdui-dialog
         close-on-esc
         close-on-overlay-click
       >
         <mdui-icon-refresh slot="icon"></mdui-icon-refresh>
-        <div slot="primary"><span style="color: red">Reset</span> Settings?</div>
-        <div slot="secondary"><span style="color: red">This</span> will reset you app preferences back to their default settings, Them following accounts will also be signed out:</div>
+        <div slot="headline"><span style="color: red">Reset</span> Settings?</div>
+        <div slot="description"><span style="color: red">This</span> will reset you app preferences back to their default settings, Them following accounts will also be signed out:</div>
       </mdui-dialog>
       <mdui-button class="open">open</mdui-button>
     </section>
@@ -229,7 +229,7 @@
       <mdui-dialog
         close-on-esc
         close-on-overlay-click
-        primary="Reset settings?"
+        headline="Reset settings?"
       >body
         <mdui-button variant="text" slot="action">Cancel</mdui-button>
         <mdui-button variant="text" slot="action">Accept</mdui-button>
@@ -261,7 +261,7 @@
         close-on-esc
         close-on-overlay-click
         stacked-actions
-        primary="Reset settings?"
+        headline="Reset settings?"
       >body
         <mdui-button variant="text" slot="action">Turn on traffic updates</mdui-button>
         <mdui-button variant="text" slot="action">Ask again later</mdui-button>

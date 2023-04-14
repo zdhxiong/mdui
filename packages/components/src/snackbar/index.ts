@@ -73,6 +73,17 @@ export class Snackbar extends LitElement {
   public action?: string;
 
   /**
+   * 操作按钮是否为 loading 状态
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: booleanConverter,
+    attribute: 'action-loading',
+  })
+  public actionLoading = false;
+
+  /**
    * 是否在右侧显示关闭按钮
    */
   @property({
@@ -95,17 +106,6 @@ export class Snackbar extends LitElement {
    */
   @property({ type: Number, reflect: true, attribute: 'auto-close-delay' })
   public autoCloseDelay = 5000;
-
-  /**
-   * 点击操作按钮时是否关闭 Snackbar
-   */
-  @property({
-    type: Boolean,
-    reflect: true,
-    attribute: 'close-on-action-click',
-    converter: booleanConverter,
-  })
-  public closeOnActionClick = false;
 
   /**
    * 点击或触摸 Snackbar 以外的区域时是否关闭 Snackbar
@@ -313,7 +313,9 @@ export class Snackbar extends LitElement {
         <div part="action" class="action" @click=${this.onActionClick}>
           <slot name="action">
             ${this.action
-              ? html`<mdui-button variant="text">${this.action}</mdui-button>`
+              ? html`<mdui-button variant="text" loading=${this.actionLoading}>
+                  ${this.action}
+                </mdui-button>`
               : nothingTemplate}
           </slot>
         </div>
@@ -351,10 +353,6 @@ export class Snackbar extends LitElement {
 
   private onActionClick() {
     emit(this, 'action-click');
-
-    if (this.closeOnActionClick) {
-      this.open = false;
-    }
   }
 
   private onCloseClick() {

@@ -23,7 +23,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event blur - 失去焦点时触发
  *
  * @slot - 主文本
- * @slot secondary - 副文本
+ * @slot description - 副文本
  * @slot start - 左侧 slot
  * @slot end - 右侧 slot
  * @slot custom - 任意自定义内容
@@ -31,8 +31,8 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart start - 左侧 slot
  * @csspart end - 右侧 slot
  * @csspart body - 中间部分
- * @csspart primary - 主标题
- * @csspart secondary - 副标题
+ * @csspart headline - 主标题
+ * @csspart description - 副标题
  *
  * @cssprop --shape-corner 列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
  * @cssprop --shape-corner-rounded 指定了 `rounded` 时，列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
@@ -50,25 +50,25 @@ export class ListItem extends AnchorMixin(
    * 主文本
    */
   @property({ reflect: true })
-  public primary?: string;
+  public headline?: string;
 
   /**
    * 主文本行数，超过行数限制后会截断显示。默认为没有行数限制
    */
-  @property({ type: Number, reflect: true, attribute: 'primary-line' })
-  public primaryLine?: 1 | 2 | 3;
+  @property({ type: Number, reflect: true, attribute: 'headline-line' })
+  public headlineLine?: 1 | 2 | 3;
 
   /**
    * 副文本
    */
   @property({ reflect: true })
-  public secondary?: string;
+  public description?: string;
 
   /**
    * 副文本行数，超过行数限制后会截断显示。默认为没有行数限制
    */
-  @property({ type: Number, reflect: true, attribute: 'secondary-line' })
-  public secondaryLine?: 1 | 2 | 3;
+  @property({ type: Number, reflect: true, attribute: 'description-line' })
+  public descriptionLine?: 1 | 2 | 3;
 
   /**
    * 左侧的 Material Icons 图标名
@@ -136,7 +136,7 @@ export class ListItem extends AnchorMixin(
   private readonly hasSlotController = new HasSlotController(
     this,
     '[default]',
-    'secondary',
+    'description',
     'start',
     'end',
     'custom',
@@ -162,14 +162,14 @@ export class ListItem extends AnchorMixin(
     const hasCustomSlot = this.hasSlotController.test('custom');
     const hasStartSlot = this.hasSlotController.test('start');
     const hasEndSlot = this.hasSlotController.test('end');
-    const hasSecondarySlot = this.hasSlotController.test('secondary');
+    const hasDescriptionSlot = this.hasSlotController.test('description');
 
     const className = cc({
       item: true,
       preset: !hasCustomSlot,
       'has-start': this.icon || hasStartSlot,
       'has-end': this.endIcon || hasEndSlot,
-      'has-secondary': this.secondary || hasSecondarySlot,
+      'has-description': this.description || hasDescriptionSlot,
     });
 
     return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href &&
@@ -198,11 +198,11 @@ export class ListItem extends AnchorMixin(
           : nothingTemplate}
       </slot>
       <div part="body" class="body">
-        <div part="primary" class="primary">
-          ${hasDefaultSlot ? html`<slot></slot>` : this.primary}
+        <div part="headline" class="headline">
+          ${hasDefaultSlot ? html`<slot></slot>` : this.headline}
         </div>
-        <div part="secondary" class="secondary">
-          <slot name="secondary">${this.secondary}</slot>
+        <div part="description" class="description">
+          <slot name="description">${this.description}</slot>
         </div>
       </div>
       <slot name="end">

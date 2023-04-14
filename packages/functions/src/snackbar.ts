@@ -1,8 +1,9 @@
+import isPromise from 'is-promise';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/appendTo.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/remove.js';
-import { toKebabCase } from '@mdui/jq/shared/helper.js';
+import { returnTrue, toKebabCase } from '@mdui/jq/shared/helper.js';
 import { dequeue, queue } from '@mdui/shared/helpers/queue.js';
 import { Snackbar } from '@mdui/components/snackbar.js';
 
@@ -52,47 +53,55 @@ interface Options {
   autoCloseDelay?: number;
 
   /**
-   * 点击操作按钮时是否关闭 Snackbar
-   */
-  closeOnActionClick?: boolean;
-
-  /**
    * 点击或触摸 Snackbar 以外的区域时是否关闭 Snackbar
    */
   closeOnOutsideClick?: boolean;
 
   /**
-   * 点击 Snackbar 时的回调函数
+   * 是否启用队列。
+   * 默认不启用队列，在多次调用该函数时，将同时显示多个 snackbar；启用队列后，将在上一个 snackbar 关闭后才打开下一个 snackbar。
+   */
+  queue?: boolean;
+
+  /**
+   * 点击 Snackbar 时的回调函数。
+   * 函数参数为 snackbar 实例，`this` 也指向 snackbar 实例。
    * @param snackbar
    */
   onClick?: (snackbar: Snackbar) => void;
 
   /**
-   * 点击操作按钮时的回调函数
+   * 点击操作按钮时的回调函数。
+   * 函数参数为 snackbar 实例，`this` 也指向 snackbar 实例。
+   * 默认点击后会关闭 snackbar；若返回值为 false，则不关闭 snackbar；若返回值为 promise，则将在 promise 被 resolve 后，关闭 snackbar
    * @param snackbar
    */
-  onActionClick?: (snackbar: Snackbar) => void;
+  onActionClick?: (snackbar: Snackbar) => void | boolean | Promise<void>;
 
   /**
-   * Snackbar 开始显示时的回调函数
+   * Snackbar 开始显示时的回调函数。
+   * 函数参数为 snackbar 实例，`this` 也指向 snackbar 实例。
    * @param snackbar
    */
   onOpen?: (snackbar: Snackbar) => void;
 
   /**
-   * Snackbar 显示动画完成时的回调函数
+   * Snackbar 显示动画完成时的回调函数。
+   * 函数参数为 snackbar 实例，`this` 也指向 snackbar 实例。
    * @param snackbar
    */
   onOpened?: (snackbar: Snackbar) => void;
 
   /**
-   * Snackbar 开始隐藏时的回调函数
+   * Snackbar 开始隐藏时的回调函数。
+   * 函数参数为 snackbar 实例，`this` 也指向 snackbar 实例。
    * @param snackbar
    */
   onClose?: (snackbar: Snackbar) => void;
 
   /**
-   * Snackbar 隐藏动画完成时的回调函数
+   * Snackbar 隐藏动画完成时的回调函数。
+   * 函数参数为 snackbar 实例，`this` 也指向 snackbar 实例。
    * @param snackbar
    */
   onClosed?: (snackbar: Snackbar) => void;
@@ -125,7 +134,27 @@ export const snackbar = (options: Options): Snackbar => {
       const eventName = toKebabCase(key.slice(2));
 
       $snackbar.on(eventName, () => {
-        value(snackbar);
+        if (key === 'onActionClick') {
+          const actionClick = (options.onActionClick ?? returnTrue).call(
+            snackbar,
+            snackbar,
+          );
+
+          if (isPromise(actionClick)) {
+            snackbar.actionLoading = true;
+            actionClick
+              .then(() => {
+                snackbar.open = false;
+              })
+              .finally(() => {
+                snackbar.actionLoading = false;
+              });
+          } else if (actionClick !== false) {
+            snackbar.open = false;
+          }
+        } else {
+          value.call(snackbar, snackbar);
+        }
       });
     } else {
       // @ts-ignore
@@ -133,15 +162,20 @@ export const snackbar = (options: Options): Snackbar => {
     }
   });
 
-  $snackbar.on('closed', () => {
+  $snackbar.appendTo('body').on('closed', () => {
     $snackbar.remove();
-    currentSnackbar = undefined;
-    dequeue(queueName);
+
+    if (options.queue) {
+      currentSnackbar = undefined;
+      dequeue(queueName);
+    }
   });
 
-  $snackbar.appendTo('body');
-
-  if (currentSnackbar) {
+  if (!options.queue) {
+    setTimeout(() => {
+      snackbar.open = true;
+    });
+  } else if (currentSnackbar) {
     queue(queueName, () => {
       snackbar.open = true;
       currentSnackbar = snackbar;

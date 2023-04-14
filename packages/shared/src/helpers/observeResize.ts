@@ -15,7 +15,7 @@ type Callback = (
 
 interface CallbackOptions {
   /**
-   * 执行的回调函数
+   * 执行的回调函数。`this` 指向监听的元素
    */
   callback: Callback;
 
@@ -34,7 +34,7 @@ let observer: ResizeObserver;
 /**
  * 监听元素的尺寸变化
  * @param target 监听该元素的尺寸变化
- * @param callback 尺寸变化时执行的回调函数
+ * @param callback 尺寸变化时执行的回调函数，`this` 指向监听的元素
  */
 export const observeResize = (
   target: HTMLElement,

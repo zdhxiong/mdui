@@ -22,7 +22,7 @@ declare module '../shared/core.js' {
      * 如果 `data` 是 `string` 类型，则必须提供 `selector` 参数；`selector` 参数可以是 `null`
      */
     one<TEvent extends Event>(
-      events: PlainObject<EventCallback<TEvent> | false>,
+      events: PlainObject<EventCallback<TEvent, T> | false>,
       selector: string | null | undefined,
       data?: unknown,
     ): this;
@@ -41,7 +41,7 @@ declare module '../shared/core.js' {
      * 如果 `data` 是 `string` 类型，则必须提供 `selector` 参数；`selector` 参数可以是 `null`
      */
     one<TEvent extends Event>(
-      events: PlainObject<EventCallback<TEvent> | false>,
+      events: PlainObject<EventCallback<TEvent, T> | false>,
       data?: unknown,
     ): this;
 
@@ -62,7 +62,7 @@ declare module '../shared/core.js' {
       eventName: string,
       selector: string | null | undefined,
       data: unknown,
-      callback: EventCallback<TEvent> | false,
+      callback: EventCallback<TEvent, T> | false,
     ): this;
 
     /**
@@ -77,7 +77,7 @@ declare module '../shared/core.js' {
     one<TEvent extends Event>(
       eventName: string,
       selector: string,
-      callback: EventCallback<TEvent> | false,
+      callback: EventCallback<TEvent, T> | false,
     ): this;
 
     /**
@@ -92,7 +92,7 @@ declare module '../shared/core.js' {
     one<TEvent extends Event>(
       eventName: string,
       data: unknown,
-      callback: EventCallback<TEvent> | false,
+      callback: EventCallback<TEvent, T> | false,
     ): this;
 
     /**
@@ -105,7 +105,7 @@ declare module '../shared/core.js' {
      */
     one<TEvent extends Event>(
       eventName: string,
-      callback: EventCallback<TEvent> | false,
+      callback: EventCallback<TEvent, T> | false,
     ): this;
   }
 }

@@ -4,8 +4,11 @@ import '../methods/find.js';
 import '../methods/get.js';
 import { isObjectLike } from './helper.js';
 
-export type EventCallback<TEvent = Event> = (
-  this: Element | Document | Window,
+export type EventCallback<
+  TEvent = Event,
+  TThis = Element | Document | Window,
+> = (
+  this: TThis,
   event: TEvent,
   // eslint-disable-next-line
   data?: any,

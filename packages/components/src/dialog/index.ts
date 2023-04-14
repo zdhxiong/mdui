@@ -31,20 +31,20 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event closed - 在对话框关闭之后触发
  * @event overlay-click - 点击遮罩层时触发
  *
- * @slot header - 顶部元素，默认包含 icon slot 和 primary slot
+ * @slot header - 顶部元素，默认包含 icon slot 和 headline slot
  * @slot icon - 顶部图标
- * @slot primary - 顶部标题
- * @slot secondary - 标题下方的文本
+ * @slot headline - 顶部标题
+ * @slot description - 标题下方的文本
  * @slot - 对话框主体内容
  * @slot action - 底部操作栏中的元素
  *
  * @csspart overlay - 遮罩层
  * @csspart panel - 对话框容器
- * @csspart header - 对话框 header 部分，其中包含了 icon 和 primary
+ * @csspart header - 对话框 header 部分，其中包含了 icon 和 headline
  * @csspart icon - 顶部的图标
- * @csspart primary - 顶部的标题
+ * @csspart headline - 顶部的标题
  * @csspart body - 对话框的 body 部分
- * @csspart secondary - 副文本部分，位于 body 中
+ * @csspart description - 副文本部分，位于 body 中
  * @csspart actions - 底部操作栏容器
  */
 @customElement('mdui-dialog')
@@ -61,13 +61,13 @@ export class Dialog extends LitElement {
    * 标题
    */
   @property({ reflect: true })
-  public primary?: string;
+  public headline?: string;
 
   /**
    * 标题下方的文本
    */
   @property({ reflect: true })
-  public secondary?: string;
+  public description?: string;
 
   /**
    * 是否打开对话框
@@ -165,8 +165,8 @@ export class Dialog extends LitElement {
     this,
     'header',
     'icon',
-    'primary',
-    'secondary',
+    'headline',
+    'description',
     'action',
     '[default]',
   );
@@ -372,14 +372,14 @@ export class Dialog extends LitElement {
   protected override render(): TemplateResult {
     const hasHeaderSlot = this.hasSlotController.test('header');
     const hasIconSlot = this.hasSlotController.test('icon');
-    const hasPrimarySlot = this.hasSlotController.test('primary');
-    const hasSecondarySlot = this.hasSlotController.test('secondary');
+    const hasHeadlineSlot = this.hasSlotController.test('headline');
+    const hasDescriptionSlot = this.hasSlotController.test('description');
     const hasActionSlot = this.hasSlotController.test('action');
     const hasDefaultSlot = this.hasSlotController.test('[default]');
 
     const hasIcon = hasIconSlot || !!this.icon;
-    const hasPrimary = hasPrimarySlot || !!this.primary;
-    const hasSecondary = hasSecondarySlot || !!this.secondary;
+    const hasHeadline = hasHeadlineSlot || !!this.headline;
+    const hasDescription = hasDescriptionSlot || !!this.description;
 
     return html`<div
         ${ref(this.overlayRef)}
@@ -390,21 +390,21 @@ export class Dialog extends LitElement {
       ></div>
       <div ${ref(this.panelRef)} part="panel" class="panel" tabindex="0">
         ${when(
-          hasHeaderSlot || hasIcon || hasPrimary,
+          hasHeaderSlot || hasIcon || hasHeadline,
           () => html`<div
             part="header"
             class="header ${classMap({ 'has-icon': hasIcon })}"
           >
             <slot name="header">
               ${when(hasIcon, () => this.renderIcon())}
-              ${when(hasPrimary, () => this.renderPrimary())}
+              ${when(hasHeadline, () => this.renderHeadline())}
             </slot>
           </div>`,
         )}
         ${when(
-          hasDefaultSlot || hasSecondary,
+          hasDefaultSlot || hasDescription,
           () => html`<div ${ref(this.bodyRef)} part="body" class="body">
-            ${when(hasSecondary, () => this.renderSecondary())}
+            ${when(hasDescription, () => this.renderDescription())}
             <slot></slot>
           </div>`,
         )}
@@ -437,15 +437,15 @@ export class Dialog extends LitElement {
     </div>`;
   }
 
-  private renderPrimary(): TemplateResult {
-    return html`<div part="primary" class="primary">
-      <slot name="primary">${this.primary}</slot>
+  private renderHeadline(): TemplateResult {
+    return html`<div part="headline" class="headline">
+      <slot name="headline">${this.headline}</slot>
     </div>`;
   }
 
-  private renderSecondary(): TemplateResult {
-    return html`<div part="secondary" class="secondary">
-      <slot name="secondary">${this.secondary}</slot>
+  private renderDescription(): TemplateResult {
+    return html`<div part="description" class="description">
+      <slot name="description">${this.description}</slot>
     </div>`;
   }
 }

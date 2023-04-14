@@ -115,6 +115,7 @@ importers:
       '@mdui/icons': workspace:*
       '@mdui/jq': workspace:*
       '@mdui/shared': workspace:*
+      is-promise: ^4.0.0
       lit: ^2.6.1
       ssr-window: ^4.0.2
       tslib: ^2.5.0
@@ -124,6 +125,7 @@ importers:
       '@mdui/icons': link:../icons
       '@mdui/jq': link:../jq
       '@mdui/shared': link:../shared
+      is-promise: 4.0.0
       lit: 2.6.1
       ssr-window: 4.0.2
       tslib: 2.5.0
@@ -3311,6 +3313,10 @@ packages:
     resolution: {integrity: sha512-VRSzKkbMm5jMDoKLbltAkFQ5Qr7VDiTFGXxYFXXowVj387GeGNOCsOH6Msy00SGZ3Fp84b1Naa1psqgcCIEP5Q==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /is-promise/4.0.0:
+    resolution: {integrity: sha512-hvpoI6korhJMnej285dSg6nu1+e6uxs7zG3BYAm5byqDsgJNWwxzM6z6iZiAgQR4TJ30JmBTOwqZUw3WlyH3AQ==}
+    dev: false
 
   /is-reference/1.2.1:
     resolution: {integrity: sha512-U82MsXXiFIrjCK4otLT+o2NA2Cd2g5MLoOVXUZjIOhLurrRxpEXzI8O0KZHr3IjLvlAH1kTPYSuqer5T9ZVBKQ==}

@@ -1,6 +1,5 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';

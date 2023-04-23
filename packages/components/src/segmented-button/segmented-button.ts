@@ -1,7 +1,6 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';

@@ -2,25 +2,53 @@
 
 :host {
   --z-index: 2500;
+  --shape-corner-plain: var(--mdui-shape-corner-extra-small);
+  --shape-corner-rich: var(--mdui-shape-corner-medium);
 
   display: contents;
 }
 
-.tooltip {
+.popup {
   position: fixed;
+  display: flex;
+  flex-direction: column;
   z-index: var(--z-index);
+  border-radius: var(--shape-corner-plain);
+  .backgroundColor(inverse-surface);
+  .padding(0, 8);
+  .minWidth(28);
+  .maxWidth(320);
+
+  :host([variant="rich"]) & {
+    border-radius: var(--shape-corner-rich);
+    .backgroundColor(surface-container);
+    .elevationInit(2);
+    .padding(12, 16, 8, 16);
+  }
+}
+
+.headline {
+  .color(on-surface-variant);
+  .typescale(title-small);
 }
 
 .content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .minWidth(28);
-  .maxWidth(320);
-  .minHeight(28);
-  .padding(6, 8);
-  .borderRadius(14);
-  .backgroundColor(secondary);
-  .color(on-secondary);
+  .padding(4, 0);
+  .color(inverse-on-surface);
   .typescale(body-small);
+
+  :host([variant="rich"]) & {
+    .color(on-surface-variant);
+    .typescale(body-medium);
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-start;
+  .paddingTop(8);
+
+  ::slotted(:not(:last-child)) {
+    .marginRight(8);
+  }
 }

@@ -231,52 +231,9 @@
   .px(margin-left, @value);
 }
 
-// 设置 box-shadow，同时通过 :before 添加对应的背景色
-// 元素上使用 .elevationInit(1)，hover 等状态上使用 .elevation(2)
-._elevation(@value) {
-  & when (@value =0) {
-    background-color: transparent;
-  }
-
-  & when (@value =1) {
-    .backgroundColor(primary, 5%);
-  }
-
-  & when (@value =2) {
-    .backgroundColor(primary, 8%);
-  }
-
-  & when (@value =3) {
-    .backgroundColor(primary, 11%);
-  }
-
-  & when (@value =4) {
-    .backgroundColor(primary, 12%);
-  }
-
-  & when (@value =5) {
-    .backgroundColor(primary, 14%);
-  }
-}
-.elevationInit(@value) {
-  .sys(box-shadow, ~"elevation-level@{value}");
-
-  &::before {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    content: " ";
-    pointer-events: none;
-    .transition(background-color, short4, linear);
-    ._elevation(@value);
-  }
-}
+// 设置 box-shadow，使用该 mixin 时，需要自行在元素上添加 transition-property: box-shadow
 .elevation(@value) {
   .sys(box-shadow, ~"elevation-level@{value}");
-
-  &::before {
-    ._elevation(@value);
-  }
 }
 
 .stateLayerColor(@rgb) {

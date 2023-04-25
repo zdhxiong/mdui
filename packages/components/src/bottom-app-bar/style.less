@@ -17,8 +17,8 @@
   .transition(bottom, long2, emphasized);
   .padding(0, 16);
   .height(80);
-  .backgroundColor(surface);
-  .elevationInit(2);
+  .backgroundColor(surface-container);
+  .elevation(2);
 }
 
 :host([scroll-target]:not([scroll-target=""])) {
@@ -35,7 +35,7 @@
 }
 
 ::slotted(mdui-fab) {
-  .elevationInit(0);
+  .elevation(0);
 }
 
 // 含 fab-detach 属性时，fab 脱离 bottom-app-bar

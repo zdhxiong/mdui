@@ -44,7 +44,7 @@ input[type="range"] {
   .left(-2); // 为了使标记点位于轨道内，所以往左右侧各移动 2px
   .right(-2);
   .shapeCorner(full);
-  .backgroundColor(surface-variant);
+  .backgroundColor(surface-container-highest);
 
   :host([invalid]) & {
     .backgroundColor(error, 0.12);
@@ -96,7 +96,7 @@ input[type="range"] {
 
   .elevation {
     .backgroundColor(primary);
-    .elevationInit(1);
+    .elevation(1);
 
     :host([invalid]) & {
       .backgroundColor(error);

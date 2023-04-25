@@ -15,13 +15,14 @@
   border-radius: var(--shape-corner-normal);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  // 先不启用动画，等首次渲染完后再设置 transitionProperty: box-shadow, width
+  // 先不启用动画，等首次渲染完后再设置 transitionProperty: width
+  // todo box-shadow 需要使用 short4 linear
   transition-property: box-shadow;
   .transitionTimingFunction(emphasized);
   .transitionDuration(medium4);
   .width(56);
   .height(56);
-  .elevationInit(3);
+  .elevation(3);
   .typescale(label-large);
 }
 
@@ -73,8 +74,12 @@
 
 :host([variant="surface"]) {
   .color(primary);
-  .backgroundColor(surface);
+  .backgroundColor(surface-container-high);
   .stateLayerColor(primary);
+}
+
+:host([variant="surface"][lowered]) {
+  .backgroundColor(surface-container-low);
 }
 
 :host([variant="secondary"]) {
@@ -101,17 +106,16 @@
   .height(96);
 }
 
-:host([disabled]) {
-  cursor: default;
-  pointer-events: none;
-  .color(on-surface, 38%);
-  .backgroundColor(on-surface, 12%);
-  .elevation(0);
-}
-
+:host([disabled]),
 :host([loading]) {
   cursor: default;
   pointer-events: none;
+}
+
+:host([disabled]) {
+  .color(on-surface, 38%);
+  .backgroundColor(on-surface, 12%);
+  .elevation(0);
 }
 
 :host([extended]) {
@@ -171,6 +175,6 @@ mdui-circular-progress {
   }
 
   :host([disabled]) & {
-    opacity: 0.38;
+    .stroke(on-surface, 38%)
   }
 }

@@ -14,10 +14,12 @@
 }
 
 ::slotted(mdui-top-app-bar[slot="header"]) {
+  position: absolute;
   // 这里如果使用 --shape-corner，则用的是在 mdui-top-app-bar 组件内定义的 --shape-corner
   // 期望使用 dialog 的 --shape-corner
   border-top-left-radius: var(--mdui-shape-corner-extra-large);
   border-top-right-radius: var(--mdui-shape-corner-extra-large);
+  .backgroundColor(surface-container-high);
 }
 
 :host([fullscreen]) {
@@ -34,7 +36,7 @@
 .overlay {
   position: fixed;
   inset: 0;
-  .backgroundColor(on-surface-variant, 0.4);
+  .backgroundColor(scrim, 0.4);
 }
 
 .panel {
@@ -48,8 +50,8 @@
   .minWidth(280);
   .maxWidth(560);
   .padding(24);
-  .backgroundColor(surface);
-  .elevationInit(3);
+  .backgroundColor(surface-container-high);
+  .elevation(3);
 
   :host([fullscreen]) & {
     width: 100%;

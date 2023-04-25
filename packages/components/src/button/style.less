@@ -30,20 +30,18 @@
 }
 
 :host([variant="elevated"]) {
-  .elevationInit(1);
-  .backgroundColor(surface);
+  .elevation(1);
+  .backgroundColor(surface-container-low);
   .stateLayerColor(primary);
 }
 
 :host([variant="filled"]) {
-  .elevationInit(0);
   .color(on-primary);
   .backgroundColor(primary);
   .stateLayerColor(on-primary);
 }
 
 :host([variant="tonal"]) {
-  .elevationInit(0);
   .color(on-secondary-container);
   .backgroundColor(secondary-container);
   .stateLayerColor(on-secondary-container);
@@ -58,26 +56,8 @@
   .stateLayerColor(primary);
 }
 
-:host([variant="elevated"][focus-visible]) {
-  .elevation(1);
-}
-
-:host([variant="filled"][focus-visible]),
-:host([variant="tonal"][focus-visible]) {
-  .elevation(0);
-}
-
 :host([variant="outlined"][focus-visible]) {
   .borderColor(primary);
-}
-
-:host([variant="elevated"][pressed]) {
-  .elevation(1);
-}
-
-:host([variant="filled"][pressed]),
-:host([variant="tonal"][pressed]) {
-  .elevation(0);
 }
 
 :host([variant="elevated"][hover]) {
@@ -89,29 +69,24 @@
   .elevation(1);
 }
 
-:host([disabled]) {
-  cursor: default;
-  pointer-events: none;
-  .color(on-surface, 38%);
-  .elevation(0);
-}
-
+:host([disabled]),
 :host([loading]) {
   cursor: default;
   pointer-events: none;
 }
 
+:host([disabled]) {
+  .color(on-surface, 38%);
+  .elevation(0);
+}
+
 :host([variant="elevated"][disabled]),
 :host([variant="filled"][disabled]),
-:host([variant="tonal"][disabled]),
-:host([variant="elevated"][loading]),
-:host([variant="filled"][loading]),
-:host([variant="tonal"][loading]) {
+:host([variant="tonal"][disabled]) {
   .backgroundColor(on-surface, 12%);
 }
 
-:host([variant="outlined"][disabled]),
-:host([variant="outlined"][loading]) {
+:host([variant="outlined"][disabled]) {
   .borderColor(on-surface, 12%);
 }
 
@@ -134,6 +109,6 @@ mdui-circular-progress {
   .height(18);
 
   :host([disabled]) & {
-    opacity: 0.38;
+    .stroke(on-surface, 38%)
   }
 }

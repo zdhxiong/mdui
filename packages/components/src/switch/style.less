@@ -41,7 +41,7 @@ label {
   .height(32);
   .width(52);
   .border(2, solid, outline);
-  .backgroundColor(surface-variant);
+  .backgroundColor(surface-container-highest);
 
   :host([checked]) & {
     .backgroundColor(primary);
@@ -54,7 +54,7 @@ label {
   }
 
   :host([disabled]) & {
-    .backgroundColor(surface-variant, 0.12);
+    .backgroundColor(surface-container-highest, 0.12);
     .borderColor(on-surface, 0.12);
   }
 
@@ -190,7 +190,7 @@ mdui-ripple {
   .transitionDelay(short1);
   .transitionDuration(short3);
   .transitionTimingFunction(linear);
-  .color(surface-variant);
+  .color(surface-container-highest);
 
   :host([checked]) & {
     opacity: 0;
@@ -200,7 +200,7 @@ mdui-ripple {
   }
 
   :host([disabled]) & {
-    .color(surface-variant, 0.38);
+    .color(surface-container-highest, 0.38);
   }
 }
 

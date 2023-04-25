@@ -15,13 +15,13 @@
   border-bottom-left-radius: var(--shape-corner);
   border-bottom-right-radius: var(--shape-corner);
   z-index: var(--z-index);
-  transition-property: top, height;
-  .transitionDuration(long2);
-  .transitionTimingFunction(standard);
+  transition: top var(--mdui-motion-duration-long2) var(--mdui-motion-easing-standard),
+              height var(--mdui-motion-duration-long2) var(--mdui-motion-easing-standard),
+              box-shadow var(--mdui-motion-duration-short4) var(--mdui-motion-easing-linear),
+              background-color var(--mdui-motion-duration-short4) var(--mdui-motion-easing-linear);
   .padding(12, 8);
   .height(64);
   .backgroundColor(surface);
-  .elevationInit(0);
 }
 
 :host([scroll-target]:not([scroll-target=""])) {
@@ -33,6 +33,7 @@
 }
 
 :host([scrolling]) {
+  .backgroundColor(surface-container);
   .elevation(2);
 }
 

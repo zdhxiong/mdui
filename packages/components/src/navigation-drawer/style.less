@@ -40,7 +40,7 @@
   position: absolute;
   inset: 0;
   z-index: inherit;
-  .backgroundColor(on-surface-variant, 0.4);
+  .backgroundColor(scrim, 0.4);
 }
 
 .panel {
@@ -52,12 +52,13 @@
   overflow: auto;
   z-index: inherit;
   .backgroundColor(surface);
-  .elevationInit(0);
+  .elevation(0);
 
   :host([modal]) &,
   :host([handset]) & {
     border-radius: 0 var(--shape-corner) var(--shape-corner) 0;
     .width(360);
+    .backgroundColor(surface-container-low);
     .elevation(1);
   }
 

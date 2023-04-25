@@ -23,13 +23,13 @@
 
 :host([variant="filled"]) {
   .color(primary);
-  .backgroundColor(surface-variant);
+  .backgroundColor(surface-container-highest);
   .stateLayerColor(primary);
 }
 
 :host([variant="tonal"]) {
   .color(on-surface-variant);
-  .backgroundColor(surface-variant);
+  .backgroundColor(surface-container-highest);
   .stateLayerColor(on-surface-variant);
 }
 
@@ -71,18 +71,19 @@
 }
 
 :host([variant="filled"][disabled]),
-:host([variant="filled"][loading]),
 :host([variant="tonal"][disabled]),
-:host([variant="tonal"][loading]),
-:host([variant="outlined"][disabled]),
-:host([variant="outlined"][loading]) {
+:host([variant="outlined"][disabled]) {
   .backgroundColor(on-surface, 0.12);
   .borderColor(on-surface, 0.12);
 }
 
 :host([disabled]),
 :host([loading]) {
+  cursor: default;
   pointer-events: none;
+}
+
+:host([disabled]) {
   .color(on-surface, 0.38) !important;
 }
 
@@ -90,14 +91,6 @@
   mdui-ripple,
   .button {
     opacity: 0;
-  }
-
-  mdui-circular-progress {
-    position: absolute;
-    top: calc(50% - unit((24 / @root-font-size), rem) / 2);
-    left: calc(50% - unit((24 / @root-font-size), rem) / 2);
-    .width(24);
-    .height(24);
   }
 }
 
@@ -109,4 +102,21 @@
 .icon,
 ::slotted(*) {
   font-size: inherit;
+}
+
+mdui-circular-progress {
+  position: absolute;
+  top: calc(50% - unit((24 / @root-font-size), rem) / 2);
+  left: calc(50% - unit((24 / @root-font-size), rem) / 2);
+  .width(24);
+  .height(24);
+
+  // filled 背景色和 loading 颜色冲突，需要特殊处理
+  :host([variant="filled"]:not([disabled])) & {
+    .stroke(on-primary);
+  }
+
+  :host([disabled]) & {
+    .stroke(on-surface, 38%)
+  }
 }

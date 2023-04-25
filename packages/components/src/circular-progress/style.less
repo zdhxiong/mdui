@@ -5,6 +5,7 @@
   display: inline-block;
   .width(40);
   .height(40);
+  .stroke(primary);
 }
 
 .progress {
@@ -27,7 +28,7 @@
   }
 
   .circle {
-    .stroke(primary);
+    stroke: inherit;
     .transition(stroke-dashoffset, long2, standard);
   }
 }
@@ -51,7 +52,7 @@
 
   .circle {
     fill: transparent;
-    .stroke(primary);
+    stroke: inherit;
   }
 
   .gap-patch {

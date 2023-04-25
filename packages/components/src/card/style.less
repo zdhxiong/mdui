@@ -20,12 +20,12 @@
 }
 
 :host([variant="elevated"]) {
-  .backgroundColor(surface);
-  .elevationInit(1);
+  .backgroundColor(surface-container-low);
+  .elevation(1);
 }
 
 :host([variant="filled"]) {
-  .backgroundColor(surface-variant);
+  .backgroundColor(surface-container-highest);
 }
 
 :host([variant="outlined"]) {

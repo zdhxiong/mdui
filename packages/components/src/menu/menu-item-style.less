@@ -95,13 +95,17 @@
   .marginLeft(12);
 }
 
+.arrow-right {
+  .color(on-surface);
+}
+
 .submenu {
   --shape-corner: var(--mdui-shape-corner-extra-small);
 
   position: absolute;
   border-radius: var(--shape-corner);
-  .backgroundColor(surface);
-  .elevationInit(2);
+  .backgroundColor(surface-container);
+  .elevation(2);
   .minWidth(112);
   .maxWidth(280);
   .paddingTop(8);

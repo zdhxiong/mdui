@@ -521,7 +521,9 @@ export class MenuItem extends AnchorMixin(
         })}"
       >
         ${hasSubmenu && !hasEndSlot && !this.endIcon
-          ? html`<mdui-icon-arrow-right></mdui-icon-arrow-right>`
+          ? html`<mdui-icon-arrow-right
+              class="arrow-right"
+            ></mdui-icon-arrow-right>`
           : html`<slot name="end">
               <mdui-icon name=${this.endIcon!}></mdui-icon>
             </slot>`}

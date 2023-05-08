@@ -110,7 +110,10 @@ export class SegmentedButton extends ButtonBase {
       'has-end': this.endIcon || hasEndSlot,
     });
 
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
+    return html`<mdui-ripple
+        ${ref(this.rippleRef)}
+        .noRipple=${this.noRipple}
+      ></mdui-ripple>
       ${this.isButton()
         ? this.renderButton({
             className,

@@ -121,8 +121,9 @@ export class NavigationRailItem extends AnchorMixin(
           })
         : html`<span class=${className}>
             ${this.renderInner(hasDefaultSlot)}
-          </span>`}<mdui-ripple
-        .noRipple=${!this.active}
+          </span>`}
+      <mdui-ripple
+        .noRipple=${!this.active || this.noRipple}
         ${ref(this.rippleRef)}
       ></mdui-ripple>`;
   }

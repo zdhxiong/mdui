@@ -108,7 +108,10 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
       preset: !hasCustomSlot,
     });
 
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
+    return html`<mdui-ripple
+        ${ref(this.rippleRef)}
+        .noRipple=${this.noRipple}
+      ></mdui-ripple>
       <div part="tab" class="${className}">
         <slot name="custom">
           <div part="icon" class="icon">

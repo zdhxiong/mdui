@@ -77,7 +77,10 @@ export class Button extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
+    return html`<mdui-ripple
+        ${ref(this.rippleRef)}
+        .noRipple=${this.noRipple}
+      ></mdui-ripple>
       ${this.isButton()
         ? this.renderButton({
             className: 'button',

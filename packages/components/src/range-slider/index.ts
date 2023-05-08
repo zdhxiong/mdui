@@ -188,7 +188,10 @@ export class RangeSlider extends SliderBase implements FormControl {
         })}
       >
         <div class="elevation"></div>
-        <mdui-ripple ${ref(this.rippleStartRef)}></mdui-ripple>
+        <mdui-ripple
+          ${ref(this.rippleStartRef)}
+          .noRipple=${this.noRipple}
+        ></mdui-ripple>
         ${this.renderLabel(this.value[0])}
       </div>
       <div
@@ -200,7 +203,10 @@ export class RangeSlider extends SliderBase implements FormControl {
         })}
       >
         <div class="elevation"></div>
-        <mdui-ripple ${ref(this.rippleEndRef)}></mdui-ripple>
+        <mdui-ripple
+          ${ref(this.rippleEndRef)}
+          .noRipple=${this.noRipple}
+        ></mdui-ripple>
         ${this.renderLabel(this.value[1])}
       </div>
       ${when(this.tickmarks, () =>

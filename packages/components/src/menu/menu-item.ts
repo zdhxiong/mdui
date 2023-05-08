@@ -312,8 +312,11 @@ export class MenuItem extends AnchorMixin(
       dense: this.dense,
     });
 
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href &&
-      !this.disabled
+    return html`<mdui-ripple
+        ${ref(this.rippleRef)}
+        .noRipple=${this.noRipple}
+      ></mdui-ripple>
+      ${this.href && !this.disabled
         ? this.renderAnchor({
             className,
             content: this.renderInner(this.hasSubmenu),

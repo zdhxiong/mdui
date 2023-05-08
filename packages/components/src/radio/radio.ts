@@ -114,7 +114,10 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
 
   protected override render(): TemplateResult {
     return html`<i part="control">
-        <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
+        <mdui-ripple
+          ${ref(this.rippleRef)}
+          .noRipple=${this.noRipple}
+        ></mdui-ripple>
         <mdui-icon-radio-button-unchecked
           part="unchecked-icon"
           class="unchecked-icon"

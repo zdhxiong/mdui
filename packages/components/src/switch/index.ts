@@ -260,7 +260,10 @@ export class Switch
             'has-icon': this.icon || this.hasSlotController.test('icon'),
           })}"
         >
-          <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
+          <mdui-ripple
+            ${ref(this.rippleRef)}
+            .noRipple=${this.noRipple}
+          ></mdui-ripple>
           <slot name="checked-icon">
             ${this.checkedIcon
               ? html`<mdui-icon

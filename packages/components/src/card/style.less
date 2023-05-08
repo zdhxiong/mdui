@@ -48,6 +48,27 @@
   .elevation(3);
 }
 
+:host([disabled]) {
+  opacity: 0.38;
+  cursor: default;
+  user-select: none;
+}
+
+:host([variant="elevated"][disabled]) {
+  .backgroundColor(surface-variant);
+  .elevation(0);
+}
+
+:host([variant="filled"][disabled]) {
+  .backgroundColor(surface);
+  .elevation(1);
+}
+
+:host([variant="outlined"][disabled]) {
+  .elevation(0);
+  .borderColor(outline, 0.32);
+}
+
 .link {
   position: relative;
   display: inline-block;

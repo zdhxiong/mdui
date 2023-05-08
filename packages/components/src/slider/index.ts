@@ -131,7 +131,10 @@ export class Slider extends SliderBase implements FormControl {
       ></div>
       <div ${ref(this.handleRef)} part="handle" class="handle">
         <div class="elevation"></div>
-        <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
+        <mdui-ripple
+          ${ref(this.rippleRef)}
+          .noRipple=${this.noRipple}
+        ></mdui-ripple>
         ${this.renderLabel(this.value)}
       </div>
       ${when(this.tickmarks, () =>

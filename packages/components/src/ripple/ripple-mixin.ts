@@ -1,12 +1,15 @@
+import { property } from 'lit/decorators.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/index.js';
 import { isArrayLike } from '@mdui/jq/shared/helper.js';
+import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import './index.js';
 import type { Ripple } from './index.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
 import type { PropertyValues, LitElement } from 'lit';
 
 export declare class RippleMixinInterface extends LitElement {
+  public noRipple: boolean;
   protected getRippleIndex: () => number | undefined;
   protected get rippleElement(): Ripple | Ripple[] | NodeListOf<Ripple>;
   protected get rippleDisabled(): boolean | boolean[];
@@ -35,6 +38,17 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
   superclass: T,
 ): Constructor<RippleMixinInterface> & T => {
   class Mixin extends superclass {
+    /**
+     * 是否禁用涟漪动画
+     */
+    @property({
+      type: Boolean,
+      reflect: true,
+      converter: booleanConverter,
+      attribute: 'no-ripple',
+    })
+    public noRipple = false;
+
     /**
      * 当前激活的是第几个 <mdui-ripple>。仅一个组件中有多个 <mdui-ripple> 时可以使用该属性
      * 若值为 undefined，则组件中所有 <mdui-ripple> 都激活

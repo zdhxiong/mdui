@@ -171,8 +171,11 @@ export class ListItem extends AnchorMixin(
       'has-description': this.description || hasDescriptionSlot,
     });
 
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href &&
-      !this.disabled
+    return html`<mdui-ripple
+        ${ref(this.rippleRef)}
+        .noRipple=${this.noRipple}
+      ></mdui-ripple>
+      ${this.href && !this.disabled
         ? this.renderAnchor({
             className,
             content: this.renderInner(),

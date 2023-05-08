@@ -117,7 +117,10 @@ export class Fab extends ButtonBase {
       'has-icon': this.icon || hasIconSlot,
     });
 
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
+    return html`<mdui-ripple
+        ${ref(this.rippleRef)}
+        .noRipple=${this.noRipple}
+      ></mdui-ripple>
       ${this.isButton()
         ? this.renderButton({
             className,

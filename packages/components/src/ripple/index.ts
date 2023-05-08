@@ -32,7 +32,7 @@ export class Ripple extends LitElement {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * 是否在点击时不产生涟漪动画
+   * 是否禁用涟漪动画
    */
   @property({
     type: Boolean,

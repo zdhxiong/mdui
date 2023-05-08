@@ -245,7 +245,10 @@ export class Checkbox
         @change=${this.onChange}
       />
       <i part="control">
-        <mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>
+        <mdui-ripple
+          ${ref(this.rippleRef)}
+          .noRipple=${this.noRipple}
+        ></mdui-ripple>
         <mdui-icon-check-box-outline-blank
           part="unchecked-icon"
           class="icon unchecked-icon"

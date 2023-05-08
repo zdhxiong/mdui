@@ -44,6 +44,16 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
   })
   public clickable = false;
 
+  /**
+   * 是否禁用
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: booleanConverter,
+  })
+  public disabled = false;
+
   private readonly rippleRef: Ref<Ripple> = createRef();
 
   protected override get rippleElement() {
@@ -51,7 +61,7 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
   }
 
   protected override get rippleDisabled(): boolean {
-    return this.disabled;
+    return this.disabled || (!this.href && !this.clickable);
   }
 
   protected override get focusElement(): HTMLElement {
@@ -62,12 +72,12 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
     return this.disabled;
   }
 
-  private get disabled() {
-    return !this.href && !this.clickable;
-  }
-
   protected override render(): TemplateResult {
-    return html`<mdui-ripple ${ref(this.rippleRef)}></mdui-ripple>${this.href
+    return html`<mdui-ripple
+        ${ref(this.rippleRef)}
+        .noRipple=${this.noRipple}
+      ></mdui-ripple
+      >${this.href && !this.disabled
         ? this.renderAnchor({
             className: 'link',
             content: html`<slot></slot>`,

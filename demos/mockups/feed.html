@@ -2,7 +2,7 @@
 <html lang="zh">
 
 <head>
-  <title>List</title>
+  <title>Feed</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
   <link
@@ -28,15 +28,20 @@
       border-radius: 24px;
     }
 
-    .demo+.demo {
-      margin-left: 32px;
+    .settings {
+      padding-left: 32px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .settings-item {
+      margin-top: 16px;
     }
 
     .fab {
       position: absolute;
       right: 24px;
       bottom: 104px;
-      z-index: 100;
     }
 
     .header {
@@ -77,8 +82,35 @@
       height: 100px;
     }
 
-    .custom-color-cards mdui-card+mdui-card {
+    .custom-color-cards mdui-card + mdui-card {
       margin-left: 16px;
+    }
+
+    .custom-color-yellow {
+      background-color: rgb(var(--mdui-color-yellow-container));
+      color: rgb(var(--mdui-color-on-yellow-container));
+    }
+    .custom-color-yellow mdui-button {
+      background-color: rgb(var(--mdui-color-yellow));
+      color: rgb(var(--mdui-color-on-yellow));
+    }
+
+    .custom-color-orange {
+      background-color: rgb(var(--mdui-color-orange-container));
+      color: rgb(var(--mdui-color-on-orange-container));
+    }
+    .custom-color-orange mdui-button {
+      background-color: rgb(var(--mdui-color-orange));
+      color: rgb(var(--mdui-color-on-orange));
+    }
+
+    .custom-color-green {
+      background-color: rgb(var(--mdui-color-green-container));
+      color: rgb(var(--mdui-color-on-green-container));
+    }
+    .custom-color-green mdui-button {
+      background-color: rgb(var(--mdui-color-green));
+      color: rgb(var(--mdui-color-on-green));
     }
 
     .item {
@@ -86,9 +118,9 @@
       width: 100%;
     }
 
-    .item+.item,
-    .card-wrapper+.item,
-    .card-wrapper+.card-wrapper {
+    .item + .item,
+    .card-wrapper + .item,
+    .card-wrapper + .card-wrapper {
       margin-top: 8px;
     }
 
@@ -114,7 +146,7 @@
       flex: 1;
     }
 
-    .actions mdui-button+mdui-button {
+    .actions mdui-button + mdui-button {
       margin-left: 16px;
     }
   </style>
@@ -128,12 +160,9 @@
     import '../../packages/components/navigation-bar.js';
     import '../../packages/components/navigation-bar-item.js';
     import '../../packages/components/switch.js';
-    import { $ } from '../../packages/jq/$.js';
+    import { $ } from '../../packages/jq/index.js';
     import { setTheme } from '../../packages/functions/setTheme.js'
-    import { getThemeFromImage } from '../../packages/functions/getThemeFromImage.js';
-    import '../../packages/jq/methods/on.js';
-    import '../../packages/jq/methods/addClass.js';
-    import '../../packages/jq/methods/removeClass.js';
+    import { getColorFromImage } from '../../packages/functions/getColorFromImage.js';
 
     $(() => {
       const customColors = [
@@ -171,7 +200,7 @@
           })
           const image = new Image();
           image.src = evt.target.result;
-          getThemeFromImage(image).then(setTheme);
+          getColorFromImage(image).then(color => setTheme(color, { customColors }));
         }
         reader.readAsDataURL(file);
       })
@@ -185,17 +214,17 @@
     <div class="demo">
       <div class="feed">
         <div class="custom-color-cards">
-          <mdui-card class="mdui-custom-color-yellow-container">
+          <mdui-card class="custom-color-yellow">
             Yellow
-            <mdui-button class="mdui-custom-color-yellow-content">Button</mdui-button>
+            <mdui-button>Button</mdui-button>
           </mdui-card>
-          <mdui-card class="mdui-custom-color-orange-container">
+          <mdui-card class="custom-color-orange">
             Orange
-            <mdui-button class="mdui-custom-color-orange-content">Button</mdui-button>
+            <mdui-button>Button</mdui-button>
           </mdui-card>
-          <mdui-card class="mdui-custom-color-green-container">
+          <mdui-card class="custom-color-green">
             Green
-            <mdui-button class="mdui-custom-color-green-content">Button</mdui-button>
+            <mdui-button>Button</mdui-button>
           </mdui-card>
         </div>
         <div class="card-wrapper card1">
@@ -249,7 +278,7 @@
 
       <mdui-fab icon="edit--outlined" size="large" class="fab"></mdui-fab>
 
-      <mdui-navigation-bar style="position: absolute;bottom: 0;z-index: 99">
+      <mdui-navigation-bar style="position: absolute;">
         <mdui-navigation-bar-item icon="inbox--outlined" activeicon="inbox--filled" badge="4">Inbox
         </mdui-navigation-bar-item>
         <mdui-navigation-bar-item icon="subject--outlined" activeicon="subject--filled">Articles
@@ -261,12 +290,12 @@
       </mdui-navigation-bar>
     </div>
 
-    <div style="padding-left: 32px;display: flex;flex-direction: column">
-      <mdui-switch id="change-dark-mode">暗色模式</mdui-switch>
-      <label style="margin-top: 32px;">全局主题：<input type="color" id="change-theme-global" /></label>
-      <label style="margin-top: 32px;">demo主题：<input type="color" id="change-theme-demo" /></label>
-      <label style="margin-top: 32px;">第一张卡片主题：<input type="color" id="change-theme-card" /></label>
-      <input type="file" accept="image/png, image/jpeg" id="change-theme-from-image" style="margin-top: 32px;" />
+    <div class="settings">
+      <mdui-switch class="settings-item" id="change-dark-mode"></mdui-switch>
+      <label class="settings-item">全局主题：<input type="color" id="change-theme-global" /></label>
+      <label class="settings-item">demo主题：<input type="color" id="change-theme-demo" /></label>
+      <label class="settings-item">第一张卡片主题：<input type="color" id="change-theme-card" /></label>
+      <input class="settings-item" type="file" accept="image/png, image/jpeg" id="change-theme-from-image" />
     </div>
   </div>
 

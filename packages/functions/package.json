@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/zdhxiong/mdui",
   "dependencies": {
-    "@importantimport/material-color-utilities": "^0.2.0",
+    "@material/material-color-utilities": "^0.2.6",
     "@mdui/components": "workspace:*",
     "@mdui/icons": "workspace:*",
     "@mdui/jq": "workspace:*",

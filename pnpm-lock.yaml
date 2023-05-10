@@ -110,7 +110,7 @@ importers:
 
   packages/functions:
     specifiers:
-      '@importantimport/material-color-utilities': ^0.2.0
+      '@material/material-color-utilities': ^0.2.6
       '@mdui/components': workspace:*
       '@mdui/icons': workspace:*
       '@mdui/jq': workspace:*
@@ -120,7 +120,7 @@ importers:
       ssr-window: ^4.0.2
       tslib: ^2.5.0
     dependencies:
-      '@importantimport/material-color-utilities': 0.2.0
+      '@material/material-color-utilities': 0.2.6
       '@mdui/components': link:../components
       '@mdui/icons': link:../icons
       '@mdui/jq': link:../jq
@@ -504,11 +504,6 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@importantimport/material-color-utilities/0.2.0:
-    resolution: {integrity: sha512-3zv/dChKxOENtmYxzN564+bK3rpXh+rrRHZ6bzO4A19LG9qdVekvMmxYEPjlPkmA+ATBazkbm4yYmL8SivCxEg==}
-    requiresBuild: true
-    dev: false
-
   /@jridgewell/gen-mapping/0.3.2:
     resolution: {integrity: sha512-mh65xKQAzI6iBcFzwv28KVWSmCkdRBWoOh+bYQGW3+6OZvbbN3TqMGo5hqYxQniRcH9F2VZIoJCm4pa3BPDK/A==}
     engines: {node: '>=6.0.0'}
@@ -563,6 +558,10 @@ packages:
   /@material-design-icons/svg/0.14.2:
     resolution: {integrity: sha512-QjAzZmqV+7VI8+0eONVYBvSSlytpR+QQ/elT+YADoYq7R5Tc7kU1PaR0xOrEhwMR9MYK2yhUXqXymP8QY01ehg==}
     dev: true
+
+  /@material/material-color-utilities/0.2.6:
+    resolution: {integrity: sha512-pMdkH7PvuJQS1q9igiPFfrS04Zu1feDXOVV69uWe2kr+RcK+7v3OylIYMwJDIwip1pFdGyTY4KkMy6vPIA/uSw==}
+    dev: false
 
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}

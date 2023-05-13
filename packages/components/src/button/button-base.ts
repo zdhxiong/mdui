@@ -210,7 +210,7 @@ export class ButtonBase extends AnchorMixin(
   /**
    * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
    */
-  public checkValidity() {
+  public checkValidity(): boolean {
     if (this.isButton()) {
       const valid = (this.focusElement as HTMLButtonElement).checkValidity();
 
@@ -233,7 +233,7 @@ export class ButtonBase extends AnchorMixin(
    *
    * 验证未通过时，还将在组件上显示未通过的提示。
    */
-  public reportValidity() {
+  public reportValidity(): boolean {
     if (this.isButton()) {
       const invalid = !(
         this.focusElement as HTMLButtonElement
@@ -260,7 +260,7 @@ export class ButtonBase extends AnchorMixin(
    *
    * @param message 自定义的提示文本
    */
-  public setCustomValidity(message: string) {
+  public setCustomValidity(message: string): void {
     if (this.isButton()) {
       (this.focusElement as HTMLButtonElement).setCustomValidity(message);
     }

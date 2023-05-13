@@ -21,8 +21,7 @@
     import '../../packages/components/slider.js';
     import '../../packages/components/range-slider.js';
     import '../../packages/components/button.js';
-    import { $ } from '../../packages/jq/$.js';
-    import '../../packages/jq/methods/each.js';
+    import { $ } from '../../packages/jq/index.js';
 
     await Promise.allSettled([
       customElements.whenDefined('mdui-slider'),

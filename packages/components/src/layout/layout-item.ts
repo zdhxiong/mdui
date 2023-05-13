@@ -7,6 +7,9 @@ import { layoutItemStyle } from './layout-item-style.js';
 import type { LayoutPlacement } from './helper.js';
 import type { TemplateResult } from 'lit';
 
+/**
+ * @slot - 可以是任意内容
+ */
 @customElement('mdui-layout-item')
 export class LayoutItem extends LayoutItemBase {
   public static override styles: CSSResultGroup = [

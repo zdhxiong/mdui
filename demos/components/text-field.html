@@ -32,8 +32,7 @@
     import '../../packages/components/button.js';
     import '../../packages/components/button-icon.js';
     import '../../packages/components/chip.js';
-    import { $ } from '../../packages/jq/$.js';
-    import '../../packages/jq/methods/on.js';
+    import { $ } from '../../packages/jq/index.js';
 
     $('.invalid').on('input', function () {
       if (this.value !== 'success') {

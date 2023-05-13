@@ -91,7 +91,7 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
     reflect: true,
     converter: booleanConverter,
   })
-  public invalid = false;
+  protected invalid = false;
 
   // 按下时，label 可见
   @state()

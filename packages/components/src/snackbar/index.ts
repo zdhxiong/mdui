@@ -351,7 +351,8 @@ export class Snackbar extends LitElement {
     }
   }
 
-  private onActionClick() {
+  private onActionClick(event: MouseEvent) {
+    event.stopPropagation();
     emit(this, 'action-click');
   }
 

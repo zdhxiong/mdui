@@ -94,10 +94,7 @@ export class Menu extends LitElement {
     | 'hover' /*鼠标悬浮时触发*/
     | 'focus' /*聚焦时触发*/
     | 'manual' /*通过编程方式触发*/
-    | 'click hover' /*点击、或鼠标悬浮时触发*/
-    | 'click focus' /*点击、或聚焦时触发*/
-    | 'hover focus' /*鼠标悬浮、或聚焦时触发*/
-    | 'click hover focus' /*点击、或鼠标悬浮、或聚焦时触发*/ = 'click hover';
+    | string = 'click hover';
 
   /**
    * 通过 hover 触发子菜单打开时的延时，单位为毫秒
@@ -203,11 +200,23 @@ export class Menu extends LitElement {
   }
 
   @watch('selectedKeys', true)
-  private onSelectedKeysChange() {
-    // 根据 selectedKeys 读取出对应 menu-item 的 value
+  private onSelectedKeysChange(oldSelectedKeys?: number[]) {
+    // 根据 selectedKeys 读取出对应 menu-item 的 value。页面首次渲染时，values 始终为空数组
     const values = this.itemsEnabled
       .filter((item) => this.selectedKeys.includes(item.key))
       .map((item) => item.value!);
+
+    // 如果是多选，且每一项值都不变，则视为未变更，不触发 change 事件
+    if (
+      this.isMultiple &&
+      oldSelectedKeys &&
+      oldSelectedKeys.length === this.selectedKeys.length &&
+      oldSelectedKeys.every((v, i) => v === this.selectedKeys[i])
+    ) {
+      this.hasSetDefaultValue = true;
+      return;
+    }
+
     this.value = this.isMultiple ? values : values[0] || undefined;
 
     if (this.hasSetDefaultValue) {

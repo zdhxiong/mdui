@@ -18,12 +18,10 @@
   </style>
   <script type="module">
     import '../../packages/mdui/mdui.css';
-    import { $ } from '../../packages/jq/$.js';
-    import '../../packages/jq/methods/on.js';
-    import '../../packages/jq/methods/find.js';
     import '../../packages/components/radio-group.js';
     import '../../packages/components/radio.js';
     import '../../packages/components/button.js';
+    import { $ } from '../../packages/jq/index.js';
 
     $('#set-checked').on('change', function () {
       $('mdui-radio-group[name="radio4"]')

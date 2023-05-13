@@ -48,7 +48,6 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot show-password-icon
  * @slot hide-password-icon
  * @slot helper
- * @slot input
  *
  * @csspart text-field
  * @csspart prefix-icon
@@ -428,7 +427,7 @@ export class TextField
     this,
     'prefix-icon',
     'suffix-icon',
-    'input',
+    'input', // input 仅供 <mdui-select> 使用，文档中不写该 slot
   );
 
   /**
@@ -451,7 +450,11 @@ export class TextField
     return this.inputRef.value!.validationMessage;
   }
 
-  public get valueAsNumber() {
+  /**
+   * 获取当前值，并转换为 `number` 类型；或设置一个 `number` 类型的值。
+   * 如果值无法被转换为 `number` 类型，则会返回 `NaN`。
+   */
+  public get valueAsNumber(): number {
     return (
       (this.inputRef.value as HTMLInputElement)?.valueAsNumber ??
       parseFloat(this.value)
@@ -872,7 +875,7 @@ export class TextField
 
   private renderTogglePasswordButton(): TemplateResult {
     return when(
-      this.togglePassword && !this.disabled,
+      this.type === 'password' && this.togglePassword && !this.disabled,
       () =>
         html`<span class="suffix-icon has-suffix-icon">
           <mdui-button-icon

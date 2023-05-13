@@ -119,7 +119,9 @@ export class ButtonIcon extends ButtonBase {
             content: this.renderIcon(),
           })
         : this.disabled || this.loading
-        ? html`<span part="button" class="button">${this.renderIcon()}</span>`
+        ? html`<span part="button" class="button _a">
+            ${this.renderIcon()}
+          </span>`
         : this.renderAnchor({
             className: 'button',
             part: 'button',

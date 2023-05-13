@@ -6,7 +6,6 @@ import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
 import '@mdui/jq/methods/innerWidth.js';
-import { isNodeName } from '@mdui/jq/shared/helper.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';

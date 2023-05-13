@@ -106,7 +106,7 @@ export class SegmentedButton extends ButtonBase {
     const hasEndSlot = this.hasSlotController.test('end');
     const className = cc({
       button: true,
-      'has-start': (this.icon || hasStartSlot) || this.selected || this.loading,
+      'has-start': this.icon || hasStartSlot || this.selected || this.loading,
       'has-end': this.endIcon || hasEndSlot,
     });
 
@@ -121,7 +121,7 @@ export class SegmentedButton extends ButtonBase {
             content: this.renderInner(),
           })
         : this.isDisabled() || this.loading
-        ? html`<span part="button" class=${className}>
+        ? html`<span part="button" class="_a ${className}">
             ${this.renderInner()}
           </span>`
         : this.renderAnchor({

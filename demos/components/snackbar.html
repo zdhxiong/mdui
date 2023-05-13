@@ -20,9 +20,7 @@
     import '../../packages/mdui/mdui.css';
     import '../../packages/components/snackbar.js';
     import '../../packages/components/button.js';
-    import { $ } from '../../packages/jq/$.js';
-    import '../../packages/jq/methods/on.js';
-    import '../../packages/jq/methods/next.js';
+    import { $ } from '../../packages/jq/index.js';
 
     $('.open').on('click', function() {
       $(this).next()[0].open = true;

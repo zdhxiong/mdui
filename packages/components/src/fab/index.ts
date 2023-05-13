@@ -128,7 +128,7 @@ export class Fab extends ButtonBase {
             content: this.renderInner(),
           })
         : this.disabled || this.loading
-        ? html`<span part="button" class=${className}>
+        ? html`<span part="button" class="_a ${className}">
             ${this.renderInner()}
           </span>`
         : this.renderAnchor({

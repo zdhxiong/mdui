@@ -78,11 +78,15 @@ export class CollapseItem extends LitElement {
   protected readonly key = uniqueId();
   private readonly bodyRef: Ref<HTMLElement> = createRef();
 
-  @watch('active', true)
+  @watch('active')
   private onActiveChange() {
-    this.state = this.active ? 'open' : 'close';
-    emit(this, this.state);
-    this.updateBodyHeight();
+    if (this.hasUpdated) {
+      this.state = this.active ? 'open' : 'close';
+      emit(this, this.state);
+      this.updateBodyHeight();
+    } else {
+      this.state = this.active ? 'opened' : 'closed';
+    }
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
@@ -96,7 +100,6 @@ export class CollapseItem extends LitElement {
       }
     });
 
-    this.state = this.active ? 'opened' : 'closed';
     this.updateBodyHeight();
   }
 

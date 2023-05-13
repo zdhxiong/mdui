@@ -7,6 +7,9 @@ import { layoutMainStyle } from './layout-main-style.js';
 import type { Layout } from './layout.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
+/**
+ * @slot - 可以是任意内容
+ */
 @customElement('mdui-layout-main')
 export class LayoutMain extends LitElement {
   public static override styles: CSSResultGroup = [

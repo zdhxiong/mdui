@@ -129,10 +129,7 @@ export class Tooltip extends LitElement {
     | 'hover' /*鼠标悬浮触发*/
     | 'focus' /*聚焦时触发*/
     | 'manual' /*通过编程方式触发*/
-    | 'click hover'
-    | 'click focus'
-    | 'hover focus'
-    | 'click hover focus' = 'hover focus';
+    | string = 'hover focus';
 
   /**
    * 是否禁用 tooltip

@@ -29,7 +29,7 @@ const materialDesignIconsVersion = packageJson.devDependencies[
 const folders = ['filled', 'outlined', 'round', 'sharp', 'two-tone'];
 const dirMap = new Map(
   folders.map((folder) => [
-    folder,
+    folder === 'round' ? 'rounded' : folder,
     `./node_modules/@material-design-icons/svg/${folder}`,
   ]),
 );

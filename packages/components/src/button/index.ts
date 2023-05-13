@@ -88,7 +88,7 @@ export class Button extends ButtonBase {
             content: this.renderInner(),
           })
         : this.disabled || this.loading
-        ? html`<span part="button" class="button">
+        ? html`<span part="button" class="button _a">
             ${this.renderInner()}
           </span>`
         : this.renderAnchor({

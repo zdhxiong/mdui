@@ -27,6 +27,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot end - 右侧 slot
  * @slot custom - 任意自定义内容
  *
+ * @csspart item - 容器
  * @csspart start - 左侧 slot
  * @csspart end - 右侧 slot
  * @csspart body - 中间部分
@@ -179,9 +180,10 @@ export class ListItem extends AnchorMixin(
         ? this.renderAnchor({
             className,
             content: this.renderInner(),
+            part: 'item',
             refDirective: ref(this.itemRef),
           })
-        : html`<div class="${className}" ${ref(this.itemRef)}>
+        : html`<div part="item" class="${className}" ${ref(this.itemRef)}>
             ${this.renderInner()}
           </div>`}`;
   }

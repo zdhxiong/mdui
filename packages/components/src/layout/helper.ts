@@ -108,10 +108,13 @@ export class LayoutManager {
 
     // 按 order 排序，order 相同时，按在 DOM 中的顺序排序
     this.states.sort((a, b) => {
-      if (a.element.order > b.element.order) {
+      const aOrder = a.element.order ?? 0;
+      const bOrder = b.element.order ?? 0;
+
+      if (aOrder > bOrder) {
         return 1;
       }
-      if (a.element.order < b.element.order) {
+      if (aOrder < bOrder) {
         return -1;
       }
       if (items.indexOf(a.element) > items.indexOf(b.element)) {

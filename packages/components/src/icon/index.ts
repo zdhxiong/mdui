@@ -13,6 +13,8 @@ export type MaterialIconsName = string;
 
 /**
  * @event click - 点击时触发
+ *
+ * @slot - `svg` 图标、或其他图标库图标
  */
 @customElement('mdui-icon')
 export class Icon extends LitElement {
@@ -39,7 +41,7 @@ export class Icon extends LitElement {
         const familyMap = new Map([
           ['outlined', 'Material Icons Outlined'],
           ['filled', 'Material Icons'],
-          ['round', 'Material Icons Round'],
+          ['rounded', 'Material Icons Round'],
           ['sharp', 'Material Icons Sharp'],
           ['two-tone', 'Material Icons Two Tone'],
         ]);

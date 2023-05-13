@@ -90,6 +90,8 @@ body {
 
 // 强制使用亮色模式的颜色
 .theme-light() {
+  color-scheme: light;
+
   --mdui-color-primary: var(--mdui-color-primary-light);
   --mdui-color-primary-container: var(--mdui-color-primary-container-light);
   --mdui-color-on-primary: var(--mdui-color-on-primary-light);
@@ -127,10 +129,15 @@ body {
   --mdui-color-shadow: var(--mdui-color-shadow-light);
   --mdui-color-surface-tint-color: var(--mdui-color-surface-tint-color-light);
   --mdui-color-scrim: var(--mdui-color-scrim-light);
+
+  .color(on-background);
+  .backgroundColor(background);
 }
 
 // 强制使用暗色模式、或设置成自动适配且处于暗色模式的颜色
 .theme-dark() {
+  color-scheme: dark;
+
   --mdui-color-primary: var(--mdui-color-primary-dark);
   --mdui-color-primary-container: var(--mdui-color-primary-container-dark);
   --mdui-color-on-primary: var(--mdui-color-on-primary-dark);
@@ -173,11 +180,11 @@ body {
   .backgroundColor(background);
 }
 
-:root {
+:root,
+.mdui-theme-light {
   .theme-light();
 }
 
-/* mdui-theme-dark 和 mdui-theme-auto 只能加在 body 元素上 */
 .mdui-theme-dark {
   .theme-dark();
 }

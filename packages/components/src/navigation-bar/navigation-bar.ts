@@ -120,6 +120,22 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
     this.updateActive();
   }
 
+  @watch('labelVisibility', true)
+  private onLabelVisibilityChange() {
+    const items = this.items;
+    // 为 navigation-bar-item 设置 labelVisibility 属性
+    const labelVisibility =
+      this.labelVisibility === 'auto'
+        ? items.length <= 3
+          ? 'labeled'
+          : 'selected'
+        : this.labelVisibility;
+
+    items.forEach((item) => {
+      item.labelVisibility = labelVisibility;
+    });
+  }
+
   public override connectedCallback(): void {
     super.connectedCallback();
 
@@ -179,18 +195,7 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
   }
 
   private onSlotChange() {
-    const items = this.items;
-    // 为 navigation-bar-item 设置 labelVisibility 属性
-    const labelVisibility =
-      this.labelVisibility === 'auto'
-        ? items.length <= 3
-          ? 'labeled'
-          : 'selected'
-        : this.labelVisibility;
-
-    items.forEach((item) => {
-      item.labelVisibility = labelVisibility;
-    });
+    this.onLabelVisibilityChange();
   }
 }
 

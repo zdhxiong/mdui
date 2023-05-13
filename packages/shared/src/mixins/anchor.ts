@@ -74,7 +74,7 @@ export const AnchorMixin = <T extends Constructor<LitElement>>(
       refDirective,
     }: RenderAnchorOptions): TemplateResult {
       return html`<a
-        ${refDirective}
+        ${refDirective!}
         id=${ifDefined(id)}
         class="_a ${className ? className : ''}"
         part=${ifDefined(part)}

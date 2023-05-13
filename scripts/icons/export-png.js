@@ -1,6 +1,6 @@
+const child_process = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
-const child_process = require('node:child_process');
 const svgexport = require('svgexport');
 
 /**
@@ -11,7 +11,7 @@ const svgexport = require('svgexport');
 const folders = ['filled', 'outlined', 'round', 'sharp', 'two-tone'];
 const dirMap = new Map(
   folders.map((folder) => [
-    folder,
+    folder === 'round' ? 'rounded' : folder,
     path.resolve(`./node_modules/@material-design-icons/svg/${folder}`),
   ]),
 );

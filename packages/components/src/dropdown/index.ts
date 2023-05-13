@@ -73,17 +73,7 @@ export class Dropdown extends LitElement {
     | 'focus' /*聚焦时触发*/
     | 'contextmenu' /*鼠标右键点击、或触摸长按时触发*/
     | 'manual' /*通过编程方式触发*/
-    | 'click hover'
-    | 'click focus'
-    | 'click contextmenu'
-    | 'hover focus'
-    | 'hover contextmenu'
-    | 'focus contextmenu'
-    | 'click hover focus'
-    | 'click hover contextmenu'
-    | 'click focus contextmenu'
-    | 'hover focus contextmenu'
-    | 'click hover focus contextmenu' = 'click';
+    | string = 'click';
 
   /**
    * dropdown 内容的位置。可选值为：

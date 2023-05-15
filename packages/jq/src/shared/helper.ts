@@ -75,9 +75,7 @@ export const isArrayLike = (target: unknown): target is ArrayLike<unknown> => {
   );
 };
 
-export const isObjectLike = (
-  target: unknown,
-): target is Record<string, unknown> => {
+export const isObjectLike = (target: unknown): target is PlainObject => {
   return typeof target === 'object' && target !== null;
 };
 

@@ -32,7 +32,7 @@
     "@mdui/jq": "workspace:*",
     "@mdui/shared": "workspace:*",
     "is-promise": "^4.0.0",
-    "lit": "^2.6.1",
+    "lit": "^2.7.4",
     "ssr-window": "^4.0.2",
     "tslib": "^2.5.0"
   }

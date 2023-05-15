@@ -4,7 +4,6 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "importHelpers": true,
-    "importsNotUsedAsValues": "error",
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": false,
     "module": "es2015",

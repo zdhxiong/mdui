@@ -69,7 +69,7 @@
     "@mdui/shared": "workspace:*",
     "@mdui/icons": "workspace:*",
     "classcat": "^5.0.4",
-    "lit": "^2.6.1",
+    "lit": "^2.7.4",
     "@lit-labs/motion": "^1.0.3",
     "tslib": "^2.5.0"
   }

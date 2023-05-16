@@ -37,7 +37,6 @@ export * from './segmented-button-group.js';
 export * from './select.js';
 export * from './slider.js';
 export * from './snackbar.js';
-export * from './spacer.js';
 export * from './switch.js';
 export * from './tab.js';
 export * from './tab-panel.js';

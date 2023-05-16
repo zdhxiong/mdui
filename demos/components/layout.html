@@ -41,7 +41,6 @@
     import '../../packages/components/icon.js';
     import '../../packages/components/divider.js';
     import '../../packages/components/button-icon.js';
-    import '../../packages/components/spacer.js';
     import '../../packages/components/dropdown.js';
     import '../../packages/components/menu.js';
     import '../../packages/components/menu-item.js';
@@ -56,7 +55,7 @@
 
     $('mdui-top-app-bar').html(`<mdui-button-icon icon="menu" class="toggle-drawer"></mdui-button-icon>
         <mdui-top-app-bar-title>Title Large</mdui-top-app-bar-title>
-        <mdui-spacer></mdui-spacer>
+        <div style="flex-grow: 1"></div>
         <mdui-button-icon icon="attach_file"></mdui-button-icon>
         <mdui-button-icon icon="today"></mdui-button-icon>
         <mdui-dropdown>

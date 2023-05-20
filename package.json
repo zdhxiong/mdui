@@ -1,15 +1,16 @@
 {
   "private": true,
+  "type": "module",
   "workspaces": [
     "packages/**"
   ],
   "scripts": {
     "preinstall": "npx -y only-allow pnpm",
-    "clean:shared": "rimraf --glob packages/shared/{variables,controllers,decorators,directives,helpers,mixins} packages/shared/*.{js,js.map,d.ts,d.ts.map} packages/shared/variables.less",
+    "clean:shared": "rimraf --glob packages/shared/{controllers,decorators,helpers,lit-styles,mixins} packages/shared/*.{js,js.map,d.ts,d.ts.map} packages/shared/mixin.less",
     "clean:jq": "rimraf --glob packages/jq/{functions,methods,shared,static} packages/jq/*.{js,js.map,d.ts,d.ts.map}",
     "clean:icons": "rimraf --glob packages/icons/src/*.ts packages/icons/src/shared/style.ts packages/icons/*.{js,d.ts}",
-    "clean:components": "rimraf --glob packages/components/{button,checkbox,icon} packages/components/*.{js,js.map,d.ts,d.ts.map} packages/components/src/**/*style.ts",
-    "clean:functions": "rimraf --glob packages/functions/*.{js,js.map,d.ts,d.ts.map}",
+    "clean:components": "rimraf --glob packages/components/{avatar,badge,bottom-app-bar,button,button-icon,card,checkbox,chip,circular-progress,collapse,dialog,divider,dropdown,fab,icon,layout,linear-progress,list,menu,navigation-bar,navigation-drawer,navigation-rail,radio,range-slider,ripple,segmented-button,select,slider,snackbar,switch,table,tabs,text-field,tooltip,top-app-bar} packages/components/*.{js,js.map,d.ts,d.ts.map} packages/components/src/**/*style.ts",
+    "clean:functions": "rimraf --glob packages/functions/utils packages/functions/*.{js,js.map,d.ts,d.ts.map}",
     "clean:mdui": "rimraf --glob packages/mdui/{components,functions} packages/mdui/*.{js,js.map,d.ts,d.ts.map} packages/mdui/mdui.css",
     "clean": "run-p clean:*",
     "lint:shared": "stylelint --fix packages/shared/src/**/*.less && eslint --fix packages/shared/src/**/*.ts",
@@ -47,7 +48,7 @@
     "dev:mdui": "node scripts/mdui/dev.js --dev",
     "dev-only": "concurrently -k -r \"npm:watch:*\" \"npm:dev:*\" \"vite --config scripts/vite.config.js --host\"",
     "dev": "run-s build-dev dev-only",
-    "pack": "npm run build && npm pack --workspaces",
+    "publish": "npm run bundle && pnpm publish --recursive",
     "export-png-icons": "node scripts/icons/export-png.js"
   },
   "devDependencies": {

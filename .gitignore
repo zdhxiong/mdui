@@ -5,12 +5,11 @@
 node_modules
 coverage
 packages/**/*.js
-packages/**/*.js.map
 packages/**/*.d.ts
-packages/**/*.d.ts.map
 .pnpm-debug.log
 stats.html
 icons-png
+*.tgz
 
 # See: https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider

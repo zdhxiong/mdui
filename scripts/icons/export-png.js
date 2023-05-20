@@ -1,7 +1,7 @@
-const child_process = require('node:child_process');
-const fs = require('node:fs');
-const path = require('node:path');
-const svgexport = require('svgexport');
+import child_process from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+import svgexport from 'svgexport';
 
 /**
  * 根据 @material-design-icons/svg 项目中的 svg 图标，生成对应的 png 图片

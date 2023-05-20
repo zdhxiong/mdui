@@ -1,6 +1,10 @@
+import fs from 'node:fs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
-import pkg from '../../packages/components/package.json';
+
+const pkg = JSON.parse(
+  fs.readFileSync('./packages/components/package.json', 'utf-8'),
+);
 
 const banner = `
 /*!

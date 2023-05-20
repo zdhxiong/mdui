@@ -1,5 +1,5 @@
-const fs = require('node:fs');
-const watch = require('node-watch');
+import fs from 'node:fs';
+import watch from 'node-watch';
 
 const watchOptions = {
   recursive: true,

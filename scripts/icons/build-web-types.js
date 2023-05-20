@@ -1,3 +1,3 @@
-const { buildWebTypes } = require('../utils.js');
+import { buildWebTypes } from '../utils.js';
 
 buildWebTypes('./packages/icons/custom-elements.json');

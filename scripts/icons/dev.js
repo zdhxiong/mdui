@@ -1,5 +1,5 @@
-const watch = require('node-watch');
-const { buildLitStyleFile } = require('../utils.js');
+import watch from 'node-watch';
+import { buildLitStyleFile } from '../utils.js';
 
 const watchOptions = {
   recursive: true,

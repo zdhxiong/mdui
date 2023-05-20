@@ -1,18 +1,15 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const autoprefixer = require('autoprefixer');
-const CleanCSS = require('clean-css');
-const { ESLint } = require('eslint');
-const less = require('less');
-const NpmImportPlugin = require('less-plugin-npm-import');
-const {
-  minifyHTMLLiterals,
-  defaultMinifyOptions,
-} = require('minify-html-literals');
-const postcss = require('postcss');
+import fs from 'node:fs';
+import path from 'node:path';
+import autoprefixer from 'autoprefixer';
+import CleanCSS from 'clean-css';
+import { ESLint } from 'eslint';
+import less from 'less';
+import NpmImportPlugin from 'less-plugin-npm-import';
+import { minifyHTMLLiterals, defaultMinifyOptions } from 'minify-html-literals';
+import postcss from 'postcss';
 
 // 是否是开发模式
-const isDev = process.argv.slice(2)[0] === '--dev';
+export const isDev = process.argv.slice(2)[0] === '--dev';
 
 /**
  * 遍历文件夹中的文件
@@ -20,7 +17,7 @@ const isDev = process.argv.slice(2)[0] === '--dev';
  * @param suffix 文件后缀
  * @param callback 回调函数，参数为文件路径
  */
-function traverseDirectory(dir, suffix, callback) {
+export const traverseDirectory = (dir, suffix, callback) => {
   const arr = fs.readdirSync(dir);
 
   arr.forEach((item) => {
@@ -32,13 +29,13 @@ function traverseDirectory(dir, suffix, callback) {
       callback(filePath);
     }
   });
-}
+};
 
 /**
  * lit 的 style.less 文件构建成 style.ts 文件
  * @param filePath less 文件路径
  */
-function buildLitStyleFile(filePath) {
+export const buildLitStyleFile = (filePath) => {
   const lessInput = fs.readFileSync(filePath).toString();
   const lessOptions = {
     filename: path.resolve(filePath),
@@ -72,23 +69,23 @@ function buildLitStyleFile(filePath) {
     .catch((err) => {
       console.log(err);
     });
-}
+};
 
 /**
  * 把目录中所有的 lit 的 style.less 文件，构建成 style.ts 文件
  * @param path 目录
  */
-function buildLitStyleFiles(path) {
+export const buildLitStyleFiles = (path) => {
   traverseDirectory(path, 'less', (filePath) => {
     buildLitStyleFile(filePath);
   });
-}
+};
 
 /**
  * lit 组件生成 js 文件后，进行构建
  * @param filePath js 文件路径
  */
-function buildJsFile(filePath) {
+export const buildJsFile = (filePath) => {
   if (isDev) {
     return;
   }
@@ -107,13 +104,13 @@ function buildJsFile(filePath) {
   if (result) {
     fs.writeFileSync(outputName, result.code);
   }
-}
+};
 
 /**
  * 构建目录中所有 lit 组件生成的 js 文件
  * @param path 目录
  */
-function buildJsFiles(path) {
+export const buildJsFiles = (path) => {
   traverseDirectory(path, 'ts', (srcFilePath) => {
     const filePath = srcFilePath
       .replace('/src/', '/')
@@ -122,14 +119,14 @@ function buildJsFiles(path) {
 
     buildJsFile(filePath);
   });
-}
+};
 
 /**
  * less 文件构建
  * @param filePath less 文件路径
  * @param outputPath 输出的 css 文件路径
  */
-function buildLessFile(filePath, outputPath) {
+export const buildLessFile = (filePath, outputPath) => {
   const lessInput = fs.readFileSync(filePath).toString();
   const lessOptions = {
     filename: path.resolve(filePath),
@@ -153,14 +150,14 @@ function buildLessFile(filePath, outputPath) {
     .catch((err) => {
       console.log(err);
     });
-}
+};
 
 /**
  * 从 custom-elements.json 文件中提取出组件信息
  * @param metadataPath custom-elements.json 文件的路径
  * @returns {*[]}
  */
-function getAllComponents(metadataPath) {
+export const getAllComponents = (metadataPath) => {
   const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
   const allComponents = [];
 
@@ -180,14 +177,14 @@ function getAllComponents(metadataPath) {
   });
 
   return allComponents;
-}
+};
 
 /**
  * 生成 vscode.html-custom-data.json 文件，供 VSCode 使用
  * VSCode Custom Data 规范：https://github.com/microsoft/vscode-html-languageservice/blob/main/docs/customData.schema.json
  * @param metadataPath custom-elements.json 文件的路径
  */
-function buildVSCodeData(metadataPath) {
+export const buildVSCodeData = (metadataPath) => {
   const dir = path.dirname(metadataPath);
   const isComponentsPackage = dir.endsWith('components');
   const components = getAllComponents(metadataPath);
@@ -306,14 +303,14 @@ function buildVSCodeData(metadataPath) {
     JSON.stringify(vscode, null, 2),
     'utf8',
   );
-}
+};
 
 /**
  * 生成 web-types.json 文件，供 jetbrains IDE 使用
  * web-types 规范：http://json.schemastore.org/web-types
  * @param metadataPath custom-elements.json 文件的路径
  */
-function buildWebTypes(metadataPath) {
+export const buildWebTypes = (metadataPath) => {
   const dir = path.dirname(metadataPath);
   const isComponentsPackage = dir.endsWith('components');
   const packagePath = path.join(dir, 'package.json');
@@ -620,15 +617,4 @@ function buildWebTypes(metadataPath) {
     JSON.stringify(webTypes, null, 2),
     'utf8',
   );
-}
-
-exports.traverseDirectory = traverseDirectory;
-exports.buildLitStyleFile = buildLitStyleFile;
-exports.buildLitStyleFiles = buildLitStyleFiles;
-exports.buildJsFile = buildJsFile;
-exports.buildJsFiles = buildJsFiles;
-exports.buildLessFile = buildLessFile;
-exports.getAllComponents = getAllComponents;
-exports.buildVSCodeData = buildVSCodeData;
-exports.buildWebTypes = buildWebTypes;
-exports.isDev = isDev;
+};

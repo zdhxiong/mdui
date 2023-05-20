@@ -1,4 +1,4 @@
-const fs = require('node:fs');
+import fs from 'node:fs';
 
 fs.copyFileSync(
   './packages/shared/src/mixin.less',

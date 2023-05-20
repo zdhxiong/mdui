@@ -14,9 +14,7 @@
     "packages/mdui/{components,functions}": true,
     "packages/shared/{controllers,decorators,helpers,lit-styles,mixins}": true,
     "packages/**/*.d.ts": true,
-    "packages/**/*.d.ts.map": true,
     "packages/**/*.js": true,
-    "packages/**/*.js.map": true,
     "packages/**/*style.ts": true
   }
 }

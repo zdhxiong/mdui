@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "mdui 函数库",
   "type": "module",
+  "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
   "files": [
     "utils",
-    "*.{js,js.map,d.ts,d.ts.map}",
+    "*.{js,d.ts}",
     "LICENSE",
     "package.json",
     "README.md"

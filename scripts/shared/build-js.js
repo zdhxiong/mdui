@@ -1,3 +1,3 @@
-const { buildJsFiles } = require('../utils.js');
+import { buildJsFiles } from '../utils.js';
 
 buildJsFiles('./packages/shared/src');

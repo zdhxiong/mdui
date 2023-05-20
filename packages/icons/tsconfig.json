@@ -4,9 +4,6 @@
   "exclude": [],
   "compilerOptions": {
     "declarationDir": "./",
-    "outDir": "./",
-    "sourceMap": false,
-    "inlineSources": false,
-    "declarationMap": false
+    "outDir": "./"
   }
 }

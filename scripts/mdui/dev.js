@@ -1,5 +1,5 @@
-const watch = require('node-watch');
-const { buildLessFile } = require('../utils.js');
+import watch from 'node-watch';
+import { buildLessFile } from '../utils.js';
 
 const watchOptions = {
   recursive: true,

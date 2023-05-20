@@ -11,7 +11,7 @@
     "methods",
     "shared",
     "static",
-    "*.{js,js.map,d.ts,d.ts.map}",
+    "*.{js,d.ts}",
     "LICENSE",
     "package.json",
     "README.md"

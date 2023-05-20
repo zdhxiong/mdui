@@ -1,7 +1,11 @@
+import fs from 'node:fs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import { visualizer } from 'rollup-plugin-visualizer';
-import pkg from '../../packages/mdui/package.json';
+
+const pkg = JSON.parse(
+  fs.readFileSync('./packages/mdui/package.json', 'utf-8'),
+);
 
 const banner = `
 /*!
@@ -14,14 +18,28 @@ const banner = `
 // eslint-disable-next-line import/no-default-export
 export default [
   {
-    input: './packages/mdui/index.js',
+    input: './packages/mdui/mdui.js',
     plugins: [nodeResolve(), visualizer()],
     output: [
       {
         banner,
         format: 'es',
         sourcemap: true,
-        file: './packages/mdui/mdui.js',
+        file: './packages/mdui/mdui.esm.js',
+        plugins: [
+          terser({
+            format: {
+              comments: /zdhxiong/,
+            },
+          }),
+        ],
+      },
+      {
+        name: 'mdui',
+        banner,
+        format: 'umd',
+        sourcemap: true,
+        file: './packages/mdui/mdui.global.js',
         plugins: [
           terser({
             format: {

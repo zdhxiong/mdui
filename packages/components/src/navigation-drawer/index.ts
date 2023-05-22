@@ -53,7 +53,7 @@ export class NavigationDrawer extends LayoutItemBase {
 
   /**
    * 打开时，是否显示遮罩层
-   * 在断点为 `handset` 时，会无视该参数，始终显示遮罩层
+   * 较窄的设备上（屏幕宽度小于 `--mdui-breakpoint-mobile` 时），会无视该参数，始终显示遮罩层
    */
   @property({
     type: Boolean,
@@ -105,13 +105,13 @@ export class NavigationDrawer extends LayoutItemBase {
   })
   public contained = false;
 
-  // 断点是否为手机，为 `true` 时，强制使用遮罩层
+  // 断点为 mobile 时为 `true` 时，强制使用遮罩层
   @property({
     type: Boolean,
     reflect: true,
     converter: booleanConverter,
   })
-  private handset = false;
+  private mobile = false;
 
   // 用于在打开抽屉导航前，记录当前聚焦的元素；在关闭抽屉导航后，把焦点还原到该元素上
   private originalTrigger!: HTMLElement;
@@ -132,7 +132,7 @@ export class NavigationDrawer extends LayoutItemBase {
   }
 
   private get isModal() {
-    return this.handset || this.modal;
+    return this.mobile || this.modal;
   }
 
   // contained 变更后，修改监听尺寸变化的元素。为 true 时，监听父元素；为 false 时，监听 body
@@ -146,7 +146,7 @@ export class NavigationDrawer extends LayoutItemBase {
       this.contained ? this.parentElement! : document.body,
       () => {
         const target = this.contained ? this.parentElement! : undefined;
-        this.handset = getBreakpoint(target) === 'handset';
+        this.mobile = getBreakpoint(target) === 'mobile';
 
         // 若位于 layout 中，且为模态化，则重新布局时，占据的宽度为 0
         if (this.isParentLayout) {

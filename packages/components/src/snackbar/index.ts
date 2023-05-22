@@ -128,7 +128,7 @@ export class Snackbar extends LitElement {
 
   @watch('open')
   private async onOpenChange() {
-    const isHandset = getBreakpoint() === 'handset';
+    const isMobile = getBreakpoint() === 'mobile';
     const isCenteredHorizontally = ['top', 'bottom'].includes(this.placement);
 
     const easingLinear = getEasing(this, 'linear');
@@ -139,7 +139,7 @@ export class Snackbar extends LitElement {
     );
 
     // 手机上始终使用全宽的样式，但 @media 选择器中无法使用 CSS 变量，所以使用 js 来设置样式
-    const commonStyle = isHandset
+    const commonStyle = isMobile
       ? { left: '1rem', right: '1rem', minWidth: 0 }
       : isCenteredHorizontally
       ? { left: '50%' }
@@ -178,7 +178,7 @@ export class Snackbar extends LitElement {
       const getOpenStyle = (ident: 'start' | 'end') => {
         const scaleY = `scaleY(${ident === 'start' ? 0 : 1})`;
 
-        if (isHandset) {
+        if (isMobile) {
           return { transform: scaleY };
         } else {
           return {
@@ -258,7 +258,7 @@ export class Snackbar extends LitElement {
         const opacity = ident === 'start' ? 1 : 0;
         const styles = { opacity };
 
-        if (!isHandset && isCenteredHorizontally) {
+        if (!isMobile && isCenteredHorizontally) {
           Object.assign(styles, { transform: 'translateX(-50%)' });
         }
 

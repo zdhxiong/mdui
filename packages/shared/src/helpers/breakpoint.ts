@@ -4,15 +4,10 @@
  */
 import { getDocument, getWindow } from 'ssr-window';
 import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/innerWidth.js';
 import { isElement, isNumber } from '@mdui/jq/shared/helper.js';
 
-export type Breakpoint =
-  | 'handset'
-  | 'small-tablet'
-  | 'large-tablet'
-  | 'desktop';
+export type Breakpoint = 'mobile' | 'tablet' | 'laptop' | 'desktop';
 
 /**
  * 获取断点
@@ -22,17 +17,15 @@ export type Breakpoint =
  * * 若传入 HTML 元素，则获取的是该元素的宽度对应的断点
  *
  * 返回值的取值为：
- * * `handset`：手机
- * * `small-tablet`：小平板
- * * `large-tablet`：大平板
+ * * `mobile`：手机
+ * * `tablet`：小平板
+ * * `laptop`：笔记本电脑
  * * `desktop`：桌面电脑
  */
 export const getBreakpoint = (width?: number | HTMLElement): Breakpoint => {
   const window = getWindow();
   const document = getDocument();
-
-  // 根元素参考值
-  const baseFontSize = parseFloat($('html').css('font-size'));
+  const computedStyle = window.getComputedStyle(document.documentElement);
 
   // 容器的宽度
   const containerWidth = isElement(width)
@@ -42,25 +35,24 @@ export const getBreakpoint = (width?: number | HTMLElement): Breakpoint => {
     : $(window).innerWidth();
 
   // 断点对应的宽度值
-  const getBreakpointValue = (breakpoint: Breakpoint): number => {
-    const width = window
-      .getComputedStyle(document.documentElement)
+  const getBreakpointValue = (
+    breakpoint: Exclude<Breakpoint, 'desktop'>,
+  ): number => {
+    const width = computedStyle
       .getPropertyValue(`--mdui-breakpoint-${breakpoint}`)
       .toLowerCase();
 
-    return width.endsWith('rem')
-      ? parseFloat(width) * baseFontSize
-      : parseFloat(width);
+    return parseFloat(width);
   };
 
-  if (containerWidth < getBreakpointValue('handset')) {
-    return 'handset';
+  if (containerWidth < getBreakpointValue('mobile')) {
+    return 'mobile';
   }
-  if (containerWidth < getBreakpointValue('small-tablet')) {
-    return 'small-tablet';
+  if (containerWidth < getBreakpointValue('tablet')) {
+    return 'tablet';
   }
-  if (containerWidth < getBreakpointValue('large-tablet')) {
-    return 'large-tablet';
+  if (containerWidth < getBreakpointValue('laptop')) {
+    return 'laptop';
   }
   return 'desktop';
 };

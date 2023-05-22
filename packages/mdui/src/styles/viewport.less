@@ -1,0 +1,20 @@
+/**
+ * 在草案（https://www.w3.org/TR/mediaqueries-5/#custom-mq）中很多年了，然而浏览器还不支持，等浏览器支持后再启用该功能
+ * 在媒体查询中，rem 始终基于初始 font-size 值，而不是当前 font-size 值，所以媒体查询中使用 px 作为单位
+ * 目前 JavaScript 代码中需要用到断点查询时，从 breakpoint.less 中的 CSS 自定义属性值读取
+ *
+ * 手机: <600px
+ * 平板：>=600px & <840px
+ * 笔记本：>=840px & <1240px
+ * 桌面：>=1240px
+ */
+@custom-media --viewport-mobile (max-width: 599.98px);
+@custom-media --viewport-mobile-up (min-width: 600px);
+@custom-media --viewport-tablet-down (max-width: 599.98px);
+@custom-media --viewport-tablet (min-width: 600px) and (max-width: 839.98px);
+@custom-media --viewport-tablet-up (min-width: 840px);
+@custom-media --viewport-laptop-down (max-width: 839.98px);
+@custom-media --viewport-laptop (min-width: 840px) and (max-width: 1239.98px);
+@custom-media --viewport-laptop-up (min-width: 1240px);
+@custom-media --viewport-desktop-down (max-width: 1239.98px);
+@custom-media --viewport-desktop (min-width: 1240px);

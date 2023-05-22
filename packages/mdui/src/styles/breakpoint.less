@@ -1,13 +1,14 @@
 :root {
   /**
    * 断点：https://m3.material.io/foundations/adaptive-design/large-screens/overview
+   * 该自定义属性值仅供 JavaScript 读取，请始终以 px 作为单位。CSS 媒体查询不支持使用 CSS 自定义属性。
+
    * 手机: <600px
    * 小平板：>=600px & <840px
-   * 大平板：>=840px & <1240px
-   * PC：>=1240px
+   * 笔记本电脑：>=840px & <1240px
+   * 桌面电脑：>=1240px
    */
-
-  .px(--mdui-breakpoint-handset, 600);
-  .px(--mdui-breakpoint-small-tablet, 840);
-  .px(--mdui-breakpoint-large-tablet, 1240);
+  --mdui-breakpoint-mobile: 600px;
+  --mdui-breakpoint-tablet: 840px;
+  --mdui-breakpoint-laptop: 1240px;
 }

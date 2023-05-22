@@ -4,7 +4,9 @@
   ],
   "overrides": [
     {
-      "files": ["packages/**/*.less"],
+      "files": [
+        "packages/**/*.less"
+      ],
       "customSyntax": "postcss-less"
     }
   ],
@@ -13,6 +15,7 @@
     "font-family-no-missing-generic-family-keyword": null,
     "color-function-notation": null,
     "no-descending-specificity": null,
-    "function-no-unknown": null
+    "function-no-unknown": null,
+    "media-feature-range-notation": "prefix"
   }
 }

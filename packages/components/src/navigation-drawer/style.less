@@ -19,7 +19,7 @@
 }
 
 :host([modal]),
-:host([handset]) {
+:host([mobile]) {
   top: 0 !important;
   right: 0;
   bottom: 0 !important;
@@ -28,7 +28,7 @@
 }
 
 :host([placement="right"][modal]),
-:host([placement="right"][handset]) {
+:host([placement="right"][mobile]) {
   left: 0;
 }
 
@@ -55,7 +55,7 @@
   .elevation(0);
 
   :host([modal]) &,
-  :host([handset]) & {
+  :host([mobile]) & {
     border-radius: 0 var(--shape-corner) var(--shape-corner) 0;
     .width(360);
     .backgroundColor(surface-container-low);
@@ -68,7 +68,7 @@
   }
 
   :host([placement="right"][modal]) &,
-  :host([placement="right"][handset]) & {
+  :host([placement="right"][mobile]) & {
     border-radius: var(--shape-corner) 0 0 var(--shape-corner);
   }
 }

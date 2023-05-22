@@ -416,9 +416,9 @@ function buildWebTypes(metadataPath) {
     webTypes.contributions.css = {
       properties: [
         // 断点
-        { name: '--mdui-breakpoint-handset', description: '手机的断点' },
-        { name: '--mdui-breakpoint-small-tablet', description: '' },
-        { name: '--mdui-breakpoint-small-tablet', description: '' },
+        { name: '--mdui-breakpoint-mobile', description: '手机的断点' },
+        { name: '--mdui-breakpoint-tablet', description: '' },
+        { name: '--mdui-breakpoint-laptop', description: '' },
         // 亮色主题颜色
         { name: '--mdui-color-primary-light', description: '' },
         { name: '--mdui-color-primary-container-light', description: '' },

@@ -10,7 +10,6 @@ import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
 import { style } from './style.js';
-import type { MaterialIconsName } from '../icon.js';
 import type { Ripple } from '../ripple/index.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
@@ -64,7 +63,7 @@ export class Fab extends ButtonBase {
    * Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon?: MaterialIconsName;
+  public icon?: string;
 
   /**
    * 是否为展开状态

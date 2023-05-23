@@ -11,7 +11,6 @@ import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { listItemStyle } from './list-item-style.js';
-import type { MaterialIconsName } from '../icon/index.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
@@ -74,13 +73,13 @@ export class ListItem extends AnchorMixin(
    * 左侧的 Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon?: MaterialIconsName;
+  public icon?: string;
 
   /**
    * 右侧的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'end-icon' })
-  public endIcon?: MaterialIconsName;
+  public endIcon?: string;
 
   /**
    * 是否禁用该列表项，列表项将置灰，且其中的 checkbox、radio、switch 等都将禁用

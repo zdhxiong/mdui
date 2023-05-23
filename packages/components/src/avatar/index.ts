@@ -6,7 +6,6 @@ import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import '../icon.js';
 import { style } from './style.js';
-import type { MaterialIconsName } from '../icon.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
@@ -47,7 +46,7 @@ export class Avatar extends LitElement {
    * 头像的 Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon?: MaterialIconsName;
+  public icon?: string;
 
   /**
    * 描述头像的替换文本

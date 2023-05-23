@@ -1,5 +1,2 @@
 src/shared/style.ts
 src/*.ts
-custom-elements.json
-vscode.html-custom-data.json
-web-types.json

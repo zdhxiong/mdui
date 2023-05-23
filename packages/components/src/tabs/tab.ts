@@ -12,7 +12,6 @@ import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { tabStyle } from './tab-style.js';
-import type { MaterialIconsName } from '../icon/index.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
@@ -45,7 +44,7 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
    * Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon?: MaterialIconsName;
+  public icon?: string;
 
   /**
    * 是否把图标和文本水平排列

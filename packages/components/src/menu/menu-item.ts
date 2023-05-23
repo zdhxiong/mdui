@@ -28,7 +28,6 @@ import '@mdui/icons/arrow-right.js';
 import '@mdui/icons/check.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { menuItemStyle } from './menu-item-style.js';
-import type { MaterialIconsName } from '../icon.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
@@ -83,13 +82,13 @@ export class MenuItem extends AnchorMixin(
    * 如果需要在左侧留出一个图标的位置，可以传入空字符串进行占位
    */
   @property({ reflect: true })
-  public icon?: MaterialIconsName;
+  public icon?: string;
 
   /**
    * 右侧的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'end-icon' })
-  public endIcon?: MaterialIconsName;
+  public endIcon?: string;
 
   /**
    * 右侧的文本

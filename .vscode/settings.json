@@ -1,8 +1,6 @@
 {
-  "html.customData": [
-    "./packages/components/vscode.html-custom-data.json",
-    "./packages/icons/vscode.html-custom-data.json"
-  ],
+  "html.customData": ["./packages/mdui/vscode.html-custom-data.json"],
+  "css.customData": ["./packages/mdui/vscode.css-custom-data.json"],
   "eslint.packageManager": "pnpm",
   "eslint.format.enable": true,
   "editor.formatOnSave": true,

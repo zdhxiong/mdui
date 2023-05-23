@@ -6,7 +6,6 @@ import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import '../icon.js';
 import { ButtonBase } from './button-base.js';
 import { style } from './style.js';
-import type { MaterialIconsName } from '../icon.js';
 import type { Ripple } from '../ripple/index.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
@@ -62,13 +61,13 @@ export class Button extends ButtonBase {
    * 左侧的 Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon?: MaterialIconsName;
+  public icon?: string;
 
   /**
    * 右侧的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'end-icon' })
-  public endIcon?: MaterialIconsName;
+  public endIcon?: string;
 
   private readonly rippleRef: Ref<Ripple> = createRef();
 

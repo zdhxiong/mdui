@@ -4,7 +4,6 @@ import '@mdui/jq/methods/on.js';
 import { isUndefined, returnTrue } from '@mdui/jq/shared/helper.js';
 import { dialog as openDialog } from './dialog.js';
 import type { Dialog } from '@mdui/components/dialog.js';
-import type { MaterialIconsName } from '@mdui/components/icon.js';
 
 interface Options {
   /**
@@ -20,7 +19,7 @@ interface Options {
   /**
    * confirm 顶部的 Material Icons 图标名
    */
-  icon?: MaterialIconsName;
+  icon?: string;
 
   /**
    * 是否在按下 ESC 键时，关闭 confirm

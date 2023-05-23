@@ -11,6 +11,437 @@ import postcss from 'postcss';
 // 是否是开发模式
 export const isDev = process.argv.slice(2)[0] === '--dev';
 
+// 文档页面前缀
+const docPathPrefix = 'https://www.mdui.org/docs/2';
+
+// 文档页面 及 页面中包含的组件
+const docComponents = {
+  button: ['mdui-button'],
+  'button-icon': ['mdui-button-icon'],
+  fab: ['mdui-fab'],
+  'segmented-button': ['mdui-segmented-button-group', 'mdui-segmented-button'],
+  chip: ['mdui-chip'],
+  card: ['mdui-card'],
+  checkbox: ['mdui-checkbox'],
+  radio: ['mdui-radio-group', 'mdui-radio'],
+  switch: ['mdui-switch'],
+  slider: ['mdui-slider'],
+  'range-slider': ['mdui-range-slider'],
+  list: ['mdui-list', 'mdui-list-item', 'mdui-list-subheader'],
+  collapse: ['mdui-collapse', 'mdui-collapse-item'],
+  tabs: ['mdui-tabs', 'mdui-tab', 'mdui-tab-panel'],
+  dropdown: ['mdui-dropdown'],
+  menu: ['mdui-menu', 'mdui-menu-item'],
+  select: ['mdui-select'],
+  'text-field': ['mdui-text-field'],
+  'linear-progress': ['mdui-linear-progress'],
+  'circular-progress': ['mdui-circular-progress'],
+  dialog: ['mdui-dialog'],
+  divider: ['mdui-divider'],
+  avatar: ['mdui-avatar'],
+  badge: ['mdui-badge'],
+  icon: ['mdui-icon'],
+  tooltip: ['mdui-tooltip'],
+  snackbar: ['mdui-snackbar'],
+  'navigation-bar': ['mdui-navigation-bar', 'mdui-navigation-bar-item'],
+  'navigation-drawer': ['mdui-navigation-drawer'],
+  'navigation-rail': ['mdui-navigation-rail', 'mdui-navigation-rail-item'],
+  'bottom-app-bar': ['mdui-bottom-app-bar'],
+  'top-app-bar': ['mdui-top-app-bar'],
+  layout: ['mdui-layout', 'mdui-layout-item', 'mdui-layout-main'],
+};
+
+// 根据组件名（如 mdui-button）获取文档页面url
+const getDocUrlByTagName = (tagName) => {
+  const pageName = Object.keys(docComponents).find((name) =>
+    docComponents[name].includes(tagName),
+  );
+
+  if (!pageName) {
+    return '';
+  }
+
+  return `${docPathPrefix}/components/${pageName}`;
+};
+
+// 判断文档页面是否含有多个组件（如 radio 文档页有 mdui-radio 和 mdui-radio-group 两个组件）
+const isDocHasMultipleComponents = (tagName) => {
+  const pageName = Object.keys(docComponents).find((name) =>
+    docComponents[name].includes(tagName),
+  );
+
+  if (!pageName) {
+    return false;
+  }
+
+  return docComponents[pageName].length > 1;
+};
+
+// CSS 自定义属性，写入到 vscode.css-custom-data.json 及 web-types.json 中
+const cssProperties = [
+  // 断点
+  ...['mobile', 'tablet', 'desktop'].map((device) => {
+    const isMobile = device === 'mobile';
+    const isTablet = device === 'tablet';
+    const name = `--mdui-breakpoint-${device}`;
+
+    const width = isMobile ? 600 : isTablet ? 840 : 1240;
+    const desc = isMobile
+      ? '小于该值时表示是手机设备，大于等于该值则为平板设备。'
+      : isTablet
+      ? '大于该值时表示是笔记本电脑设备。'
+      : '大于该值时表示是大屏幕桌面设备。';
+
+    return {
+      name,
+      description: `断点值。${desc}默认为 \`${width}px\`
+
+**注意**：该属性仅供 mdui 内部 JavaScript 读取，可通过修改该属性来调整 mdui 内部组件的断点值。但不支持在 CSS 媒体查询中使用。
+
+**示例**：
+\`\`\`css
+/* 修改断点值 */
+:root {
+  ${name}: ${width + 20}px;
+}
+\`\`\`
+`,
+    };
+  }),
+
+  // 亮色、暗色、及自动适配 颜色值
+  ...['light', 'dark', '']
+    .map((mode) => {
+      return [
+        'primary',
+        'primary-container',
+        'on-primary',
+        'on-primary-container',
+        'inverse-primary',
+        'secondary',
+        'secondary-container',
+        'on-secondary',
+        'on-secondary-container',
+        'tertiary',
+        'tertiary-container',
+        'on-tertiary',
+        'on-tertiary-container',
+        'surface',
+        'surface-dim',
+        'surface-bright',
+        'surface-container-lowest',
+        'surface-container-low',
+        'surface-container',
+        'surface-container-high',
+        'surface-container-highest',
+        'surface-variant',
+        'on-surface',
+        'on-surface-variant',
+        'inverse-surface',
+        'inverse-on-surface',
+        'background',
+        'on-background',
+        'error',
+        'error-container',
+        'on-error',
+        'on-error-container',
+        'outline',
+        'outline-variant',
+        'shadow',
+        'surface-tint-color',
+        'scrim',
+      ].map((color) => {
+        const name = `--mdui-color-${color}${mode ? `-${mode}` : ''}`;
+        const nameAuto = `--mdui-color-${color}`;
+        const nameLight = `--mdui-color-${color}-light`;
+        const nameDark = `--mdui-color-${color}-dark`;
+        const colorName = color
+          .split('-')
+          .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
+          .join(' ');
+
+        if (mode) {
+          // 亮色、或暗色
+          const isDark = mode === 'dark';
+          const modeName = isDark ? '暗色模式' : '亮色模式';
+          return {
+            name,
+            description: `**${colorName}**
+
+${modeName}的 RGB 颜色值，RGB 三色用 \`,\` 分隔。
+
+通过修改该属性，可以修改${modeName}下的颜色值。
+
+**示例**：
+\`\`\`css
+/* 设置${modeName}颜色值 */
+:root {
+  ${name}: 255, 0, 0;
+}
+
+/* 读取${modeName}颜色值 */
+.element {
+  color: rgb(var(${name}));
+}
+
+/* 读取自动适配的颜色值 */
+.element {
+  color: rgb(var(${nameAuto}));
+}
+
+/* 读取自动适配的颜色值，并添加不透明度 */
+.element {
+  color: rgba(var(${nameAuto}), 0.5);
+}
+\`\`\`
+`,
+          };
+        } else {
+          // 自动适配
+          return {
+            name,
+            description: `**${colorName}**
+
+自动适配亮色模式和暗色模式的 RGB 颜色值，RGB 三色用 \`,\` 分隔。
+
+若要设置该颜色值，建议分别设置 \`${nameLight}\` 和 \`${nameDark}\`。
+
+**示例**：
+\`\`\`css
+/* 读取自动适配的颜色值 */
+.element {
+  color: rgb(var(${name}));
+}
+
+/* 读取自动适配的颜色值，并添加不透明度 */
+.element {
+  color: rgba(var(${name}), 0.5);
+}
+
+/* 分别设置亮色模式、暗色模式的颜色值 */
+:root {
+  ${nameLight}: 255, 0, 0;
+  ${nameDark}: 255, 0, 0;
+}
+\`\`\`
+`,
+          };
+        }
+      });
+    })
+    .flat(),
+
+  // 阴影值
+  ...[0, 1, 2, 3, 4, 5].map((value) => {
+    const name = `--mdui-elevation-level${value}`;
+
+    return {
+      name,
+      description: `Level ${value} 级别的高度对应的阴影值。
+
+**示例**：
+\`\`\`css
+/* 设置 level${value} 级别的高度对应的阴影值 */
+:root {
+  ${name}: 0 0.5px 1.5px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* 读取 level${value} 级别的高度对应的阴影值 */
+.element {
+  box-shadow: var(${name});
+}
+\`\`\`
+`,
+    };
+  }),
+
+  // 动画（缓动曲线）
+  ...[
+    'linear',
+    'standard',
+    'standard-accelerate',
+    'standard-decelerate',
+    'emphasized',
+    'emphasized-accelerate',
+    'emphasized-decelerate',
+  ].map((value) => {
+    const name = `--mdui-motion-easing-${value}`;
+    const easingName =
+      value === 'linear'
+        ? '线性动画'
+        : value === 'standard'
+        ? '标准动画'
+        : value === 'standard-accelerate'
+        ? '标准加速动画'
+        : value === 'standard-decelerate'
+        ? '标准减速动画'
+        : value === 'emphasized'
+        ? '强调动画'
+        : value === 'emphasized-accelerate'
+        ? '强调加速动画'
+        : value === 'emphasized-decelerate'
+        ? '强调减速动画'
+        : '';
+
+    return {
+      name,
+      description: `${easingName}的缓动曲线。
+
+**示例**：
+\`\`\`css
+/* 设置${easingName}的缓动曲线 */
+:root {
+  ${name}: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 读取${easingName}的缓动曲线 */
+.element {
+  transition-timing-function: var(${name});
+}
+\`\`\`
+`,
+    };
+  }),
+
+  // 动画（持续时间）
+  ...['short', 'medium', 'long', 'extra-long']
+    .map((value) => {
+      return [1, 2, 3, 4].map((level) => {
+        const name = `--mdui-motion-duration-${value}${level}`;
+
+        return {
+          name,
+          description: `${value}${level} 级别的动画持续时间。
+
+**示例**：
+\`\`\`css
+/* 设置 ${value}${level} 级别的动画持续时间 */
+:root {
+  ${name}: 0.3s;
+}
+
+/* 读取 ${value}${level} 级别的动画持续时间 */
+.element {
+  transition-duration: var(${name});
+}
+\`\`\`
+`,
+        };
+      });
+    })
+    .flat(),
+
+  // 圆角值
+  ...[
+    'none',
+    'extra-small',
+    'small',
+    'medium',
+    'large',
+    'extra-large',
+    'full',
+  ].map((value) => {
+    const name = `--mdui-shape-corner-${value}`;
+
+    return {
+      name,
+      description: `${value} 级别的圆角值。
+
+**示例**：
+\`\`\`css
+/* 设置 ${value} 级别的圆角值 */
+:root {
+  ${name}: 4px;
+}
+
+/* 读取 ${value} 级别的圆角值 */
+.element {
+  border-radius: var(${name});
+}
+\`\`\`
+`,
+    };
+  }),
+
+  // 状态层透明度
+  ...['hover', 'focus', 'pressed', 'dragged'].map((state) => {
+    const name = `--mdui-state-layer-${state}`;
+
+    return {
+      name,
+      description: `\`${state}\` 状态的状态层不透明度。
+
+**示例**：
+\`\`\`css
+/* 设置 ${state} 状态的状态层不透明度 */
+:root {
+  ${name}: 0.1;
+}
+\`\`\`
+`,
+    };
+  }),
+
+  // 排版样式
+  ...['display', 'headline', 'title', 'label', 'body']
+    .map((style) => {
+      return ['large', 'medium', 'small'].map((size) => {
+        return ['weight', 'line-height', 'size', 'tracking'].map((property) => {
+          const name = `--mdui-typescale-${style}-${size}-${property}`;
+          const sizeName =
+            size === 'large' ? '大型' : size === 'medium' ? '中等' : '小型';
+          const propertyName =
+            property === 'weight'
+              ? '字重'
+              : property === 'line-height'
+              ? '行高'
+              : property === 'size'
+              ? '字体大小'
+              : property === 'tracking'
+              ? '字间距'
+              : '';
+          const styleName = `${sizeName} ${style} 类型字体的${propertyName}`;
+
+          return {
+            name,
+            description: `${styleName}。
+
+**示例**：
+\`\`\`css
+/* 设置${styleName} */
+:root {
+  ${name}: ${
+              property === 'weight'
+                ? 500
+                : property === 'line-height'
+                ? 1.5
+                : property === 'size'
+                ? '16px'
+                : 0.1
+            };
+}
+
+/* 读取${styleName} */
+.element {
+  ${
+    property === 'weight'
+      ? 'font-weight'
+      : property === 'size'
+      ? 'font-size'
+      : property === 'tracking'
+      ? 'letter-spacing'
+      : property
+  }: var(${name});
+}
+\`\`\`
+`,
+          };
+        });
+      });
+    })
+    .flat(2),
+];
+
 /**
  * 遍历文件夹中的文件
  * @param dir 文件夹路径
@@ -181,41 +612,30 @@ export const getAllComponents = (metadataPath) => {
 
 /**
  * 生成 vscode.html-custom-data.json 文件，供 VSCode 使用
+ * 官方文档：https://github.com/microsoft/vscode-custom-data
  * VSCode Custom Data 规范：https://github.com/microsoft/vscode-html-languageservice/blob/main/docs/customData.schema.json
+ *                          https://github.com/microsoft/vscode-CSS-languageservice/blob/main/docs/customData.schema.json
+ *
+ * 需要生成 vscode.html-custom-data.json 的包：mdui（包含 @mdui/components）
+ *
  * @param metadataPath custom-elements.json 文件的路径
+ * @param packageFolder 包在 packages 目录中的文件夹名
  */
-export const buildVSCodeData = (metadataPath) => {
-  const dir = path.dirname(metadataPath);
-  const isComponentsPackage = dir.endsWith('components');
-  const components = getAllComponents(metadataPath);
+export const buildVSCodeData = (metadataPath, packageFolder) => {
   const vscode = {
     version: 1.1,
     tags: [],
   };
 
-  // components 子包添加 icon valueSets
-  if (isComponentsPackage) {
-    const iconVscodeJson = JSON.parse(
-      fs.readFileSync(
-        path.resolve('./packages/icons/vscode.html-custom-data.json'),
-        'utf8',
-      ),
-    );
-    vscode.valueSets = [
-      {
-        name: 'icon',
-        values: iconVscodeJson.tags.map((tag) => ({
-          name: tag.name.split('mdui-icon-')[1],
-          description: tag.description,
-        })),
-      },
-    ];
-  }
-
+  // web components 组件
+  const components = getAllComponents(metadataPath);
   components.map((component) => {
     if (!component.tagName) {
       return;
     }
+
+    const docUrl = getDocUrlByTagName(component.tagName);
+    const hasMultipleComponents = isDocHasMultipleComponents(component.tagName);
 
     const attributes = component.attributes?.map((attr) => {
       // 可选属性的值可能为 string | undefined，这里移除 undefined
@@ -226,7 +646,6 @@ export const buildVSCodeData = (metadataPath) => {
         .join(' | ');
 
       let values = [];
-      let valueSet = undefined;
 
       if (type) {
         // 枚举类型，每个枚举项都可以带有注释
@@ -256,9 +675,6 @@ export const buildVSCodeData = (metadataPath) => {
           } else if (isNumber || isString) {
             // string 和 number
             values.push({ name: val });
-          } else if (val === 'MaterialIconsName') {
-            // MaterialIconsName valueSets
-            valueSet = 'icon';
           }
         });
       }
@@ -267,66 +683,86 @@ export const buildVSCodeData = (metadataPath) => {
         name: attr.name,
         description: attr.description,
         values: values.length ? values : undefined,
-        valueSet,
+        references: [
+          {
+            name: '开发文档',
+            url: `${docUrl}#${
+              hasMultipleComponents ? component.tagName.slice(5) + '-' : ''
+            }attributes-${attr.name}`,
+          },
+        ],
       };
     });
 
-    const componentsReferences = [
-      {
-        name: '开发文档',
-        url: `https://www.mdui.org/docs/${component.tagName
-          .split('-')
-          .slice(1)
-          .join('-')}`,
-      },
-      { name: '设计规范', url: `https://www.mdui.org/design~3/` },
-      {
-        name: 'Github',
-        url: `https://github.com/zdhxiong/mdui/${component.modulePath}`,
-      },
-    ];
-
-    vscode.tags.push(
-      Object.assign(
+    vscode.tags.push({
+      name: component.tagName,
+      description: component.summary,
+      attributes,
+      references: [
         {
-          name: component.tagName,
-          description: component.summary,
-          attributes,
+          name: '开发文档',
+          url: docUrl,
         },
-        isComponentsPackage ? { references: componentsReferences } : {},
-      ),
-    );
+        { name: '设计规范', url: `https://www.mdui.org/design~3/` },
+        {
+          name: 'Github',
+          url: `https://github.com/zdhxiong/mdui/${component.modulePath}`,
+        },
+      ],
+    });
   });
 
   fs.writeFileSync(
-    path.join(path.dirname(metadataPath), 'vscode.html-custom-data.json'),
+    `./packages/${packageFolder}/vscode.html-custom-data.json`,
     JSON.stringify(vscode, null, 2),
     'utf8',
   );
+
+  // 如果是 mdui 包，额外生成 vscode.css-custom-data.json 文件
+  if (packageFolder === 'mdui') {
+    const vscodeCSS = {
+      version: 1.1,
+      properties: cssProperties.map((property) => ({
+        name: property.name,
+        description: {
+          kind: 'markdown',
+          value: property.description,
+        },
+      })),
+    };
+
+    fs.writeFileSync(
+      `./packages/${packageFolder}/vscode.css-custom-data.json`,
+      JSON.stringify(vscodeCSS, null, 2),
+      'utf8',
+    );
+  }
 };
 
 /**
  * 生成 web-types.json 文件，供 jetbrains IDE 使用
+ * 官方文档：https://plugins.jetbrains.com/docs/intellij/websymbols-web-types.html#web-components
  * web-types 规范：http://json.schemastore.org/web-types
+ *
+ * 需要生成 web-types.json 的包：mdui（包含 @mdui/components）
+ *
  * @param metadataPath custom-elements.json 文件的路径
+ * @param packageFolder 包在 packages 目录中的的文件夹名
  */
-export const buildWebTypes = (metadataPath) => {
-  const dir = path.dirname(metadataPath);
-  const isComponentsPackage = dir.endsWith('components');
-  const packagePath = path.join(dir, 'package.json');
+export const buildWebTypes = (metadataPath, packageFolder) => {
+  const packagePath = `./packages/${packageFolder}/package.json`;
   const packageInfo = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
-  const components = getAllComponents(metadataPath);
   const webTypes = {
     $schema: 'http://json.schemastore.org/web-types',
     name: packageInfo.name,
     version: packageInfo.version,
+    'js-types-syntax': 'typescript',
     'description-markup': 'markdown',
     'framework-config': {
       'enable-when': {
         'node-packages': [packageInfo.name],
       },
     },
-    'js-types-syntax': 'typescript',
     contributions: {
       html: {
         elements: [],
@@ -334,12 +770,17 @@ export const buildWebTypes = (metadataPath) => {
     },
   };
 
+  // web components 组件
+  const components = getAllComponents(metadataPath);
   components.map((component) => {
     if (!component.tagName) {
       return;
     }
 
-    const transform = (items) => {
+    const docUrl = getDocUrlByTagName(component.tagName);
+    const hasMultipleComponents = isDocHasMultipleComponents(component.tagName);
+
+    const transform = (items, hasDocUrl) => {
       if (!items || !items.length) {
         return;
       }
@@ -373,11 +814,16 @@ export const buildWebTypes = (metadataPath) => {
                 type: values.length === 1 ? values[0] : values,
               }
             : undefined,
+          'doc-url': hasDocUrl
+            ? `${docUrl}#${
+                hasMultipleComponents ? component.tagName.slice(5) + '-' : ''
+              }attributes-${item.name}`
+            : undefined,
         };
       });
     };
 
-    const attributes = transform(component.attributes);
+    const attributes = transform(component.attributes, true);
     const properties = transform(
       component.members?.filter(
         (member) => member.privacy === 'public' && member.kind === 'field',
@@ -385,6 +831,8 @@ export const buildWebTypes = (metadataPath) => {
     );
     const events = transform(component.events);
     const cssProperties = transform(component.cssProperties);
+    const cssParts = transform(component.cssParts);
+    const slots = transform(component.slots);
 
     webTypes.contributions.html.elements.push(
       Object.assign(
@@ -392,228 +840,77 @@ export const buildWebTypes = (metadataPath) => {
           name: component.tagName,
           description: component.summary,
           attributes,
+          priority: 'highest',
+          'doc-url': docUrl,
         },
+        slots ? { slots } : {},
         properties || events ? { js: { properties, events } } : {},
-        cssProperties ? { css: { properties: cssProperties } } : {},
-        isComponentsPackage
-          ? {
-              priority: 'highest',
-              'doc-url': `https://www.mdui.org/docs/${component.tagName
-                .split('-')
-                .slice(1)
-                .join('-')}`,
-            }
+        cssProperties || cssParts
+          ? { css: { properties: cssProperties, parts: cssParts } }
           : {},
       ),
     );
   });
 
   // 全局 CSS 类、CSS 变量（当前手动维护）
-  if (isComponentsPackage) {
+  if (packageFolder === 'mdui') {
     webTypes.contributions.css = {
-      properties: [
-        // 断点
-        { name: '--mdui-breakpoint-mobile', description: '手机的断点' },
-        { name: '--mdui-breakpoint-tablet', description: '' },
-        { name: '--mdui-breakpoint-laptop', description: '' },
-        // 亮色主题颜色
-        { name: '--mdui-color-primary-light', description: '' },
-        { name: '--mdui-color-primary-container-light', description: '' },
-        { name: '--mdui-color-secondary-light', description: '' },
-        { name: '--mdui-color-secondary-container-light', description: '' },
-        { name: '--mdui-color-tertiary-light', description: '' },
-        { name: '--mdui-color-tertiary-container-light', description: '' },
-        { name: '--mdui-color-surface-light', description: '' },
-        { name: '--mdui-color-surface-variant-light', description: '' },
-        { name: '--mdui-color-background-light', description: '' },
-        { name: '--mdui-color-error-light', description: '' },
-        { name: '--mdui-color-error-container-light', description: '' },
-        { name: '--mdui-color-on-primary-light', description: '' },
-        { name: '--mdui-color-on-primary-container-light', description: '' },
-        { name: '--mdui-color-on-secondary-light', description: '' },
-        {
-          name: '--mdui-color-on-secondary-container-light',
-          description: '',
-        },
-        { name: '--mdui-color-on-tertiary-light', description: '' },
-        { name: '--mdui-color-on-tertiary-container-light', description: '' },
-        { name: '--mdui-color-on-surface-light', description: '' },
-        { name: '--mdui-color-on-surface-variant-light', description: '' },
-        { name: '--mdui-color-on-error-light', description: '' },
-        { name: '--mdui-color-on-error-container-light', description: '' },
-        { name: '--mdui-color-on-background-light', description: '' },
-        { name: '--mdui-color-outline-light', description: '' },
-        { name: '--mdui-color-shadow-light', description: '' },
-        { name: '--mdui-color-inverse-surface-light', description: '' },
-        { name: '--mdui-color-inverse-on-surface-light', description: '' },
-        { name: '--mdui-color-inverse-primary-light', description: '' },
-        // 暗色主题颜色
-        { name: '--mdui-color-primary-dark', description: '' },
-        { name: '--mdui-color-primary-container-dark', description: '' },
-        { name: '--mdui-color-secondary-dark', description: '' },
-        { name: '--mdui-color-secondary-container-dark', description: '' },
-        { name: '--mdui-color-tertiary-dark', description: '' },
-        { name: '--mdui-color-tertiary-container-dark', description: '' },
-        { name: '--mdui-color-surface-dark', description: '' },
-        { name: '--mdui-color-surface-variant-dark', description: '' },
-        { name: '--mdui-color-background-dark', description: '' },
-        { name: '--mdui-color-error-dark', description: '' },
-        { name: '--mdui-color-error-container-dark', description: '' },
-        { name: '--mdui-color-on-primary-dark', description: '' },
-        { name: '--mdui-color-on-primary-container-dark', description: '' },
-        { name: '--mdui-color-on-secondary-dark', description: '' },
-        { name: '--mdui-color-on-secondary-container-dark', description: '' },
-        { name: '--mdui-color-on-tertiary-dark', description: '' },
-        { name: '--mdui-color-on-tertiary-container-dark', description: '' },
-        { name: '--mdui-color-on-surface-dark', description: '' },
-        { name: '--mdui-color-on-surface-variant-dark', description: '' },
-        { name: '--mdui-color-on-error-dark', description: '' },
-        { name: '--mdui-color-on-error-container-dark', description: '' },
-        { name: '--mdui-color-on-background-dark', description: '' },
-        { name: '--mdui-color-outline-dark', description: '' },
-        { name: '--mdui-color-shadow-dark', description: '' },
-        { name: '--mdui-color-inverse-surface-dark', description: '' },
-        { name: '--mdui-color-inverse-on-surface-dark', description: '' },
-        { name: '--mdui-color-inverse-primary-dark', description: '' },
-        // 高程
-        { name: '--mdui-elevation-level0', description: '' },
-        { name: '--mdui-elevation-level1', description: '' },
-        { name: '--mdui-elevation-level2', description: '' },
-        { name: '--mdui-elevation-level3', description: '' },
-        { name: '--mdui-elevation-level4', description: '' },
-        { name: '--mdui-elevation-level5', description: '' },
-        // 动画
-        { name: '--mdui-motion-easing-standard', description: '' },
-        { name: '--mdui-motion-easing-accelerate', description: '' },
-        { name: '--mdui-motion-easing-decelerate', description: '' },
-        { name: '--mdui-motion-easing-linear', description: '' },
-        // 圆角值
-        { name: '--mdui-shape-corner-none', description: '' },
-        { name: '--mdui-shape-corner-extra-small', description: '' },
-        { name: '--mdui-shape-corner-small', description: '' },
-        { name: '--mdui-shape-corner-medium', description: '' },
-        { name: '--mdui-shape-corner-large', description: '' },
-        { name: '--mdui-shape-corner-extra-large', description: '' },
-        { name: '--mdui-shape-corner-full', description: '' },
-        // 状态层
-        { name: '--mdui-state-hover-state-layer-opacity', description: '' },
-        { name: '--mdui-state-focus-state-layer-opacity', description: '' },
-        { name: '--mdui-state-pressed-state-layer-opacity', description: '' },
-        { name: '--mdui-state-dragged-state-layer-opacity', description: '' },
-        // 排版（display）
-        { name: '--mdui-typescale-display-large-weight', description: '' },
-        { name: '--mdui-typescale-display-medium-weight', description: '' },
-        { name: '--mdui-typescale-display-small-weight', description: '' },
-        {
-          name: '--mdui-typescale-display-large-line-height',
-          description: '',
-        },
-        {
-          name: '--mdui-typescale-display-medium-line-height',
-          description: '',
-        },
-        {
-          name: '--mdui-typescale-display-small-line-height',
-          description: '',
-        },
-        { name: '--mdui-typescale-display-large-size', description: '' },
-        { name: '--mdui-typescale-display-medium-size', description: '' },
-        { name: '--mdui-typescale-display-small-size', description: '' },
-        { name: '--mdui-typescale-display-large-tracking', description: '' },
-        { name: '--mdui-typescale-display-medium-tracking', description: '' },
-        { name: '--mdui-typescale-display-small-tracking', description: '' },
-        // 排版（headline）
-        { name: '--mdui-typescale-headline-large-weight', description: '' },
-        { name: '--mdui-typescale-headline-medium-weight', description: '' },
-        { name: '--mdui-typescale-headline-small-weight', description: '' },
-        {
-          name: '--mdui-typescale-headline-large-line-height',
-          description: '',
-        },
-        {
-          name: '--mdui-typescale-headline-medium-line-height',
-          description: '',
-        },
-        {
-          name: '--mdui-typescale-headline-small-line-height',
-          description: '',
-        },
-        { name: '--mdui-typescale-headline-large-size', description: '' },
-        { name: '--mdui-typescale-headline-medium-size', description: '' },
-        { name: '--mdui-typescale-headline-small-size', description: '' },
-        { name: '--mdui-typescale-headline-large-tracking', description: '' },
-        {
-          name: '--mdui-typescale-headline-medium-tracking',
-          description: '',
-        },
-        { name: '--mdui-typescale-headline-small-tracking', description: '' },
-        // 排版（title）
-        { name: '--mdui-typescale-title-large-weight', description: '' },
-        { name: '--mdui-typescale-title-medium-weight', description: '' },
-        { name: '--mdui-typescale-title-small-weight', description: '' },
-        { name: '--mdui-typescale-title-large-line-height', description: '' },
-        {
-          name: '--mdui-typescale-title-medium-line-height',
-          description: '',
-        },
-        { name: '--mdui-typescale-title-small-line-height', description: '' },
-        { name: '--mdui-typescale-title-large-size', description: '' },
-        { name: '--mdui-typescale-title-medium-size', description: '' },
-        { name: '--mdui-typescale-title-small-size', description: '' },
-        { name: '--mdui-typescale-title-large-tracking', description: '' },
-        { name: '--mdui-typescale-title-medium-tracking', description: '' },
-        { name: '--mdui-typescale-title-small-tracking', description: '' },
-        // 排版（label）
-        { name: '--mdui-typescale-label-large-weight', description: '' },
-        { name: '--mdui-typescale-label-medium-weight', description: '' },
-        { name: '--mdui-typescale-label-small-weight', description: '' },
-        { name: '--mdui-typescale-label-large-line-height', description: '' },
-        {
-          name: '--mdui-typescale-label-medium-line-height',
-          description: '',
-        },
-        { name: '--mdui-typescale-label-small-line-height', description: '' },
-        { name: '--mdui-typescale-label-large-size', description: '' },
-        { name: '--mdui-typescale-label-medium-size', description: '' },
-        { name: '--mdui-typescale-label-small-size', description: '' },
-        { name: '--mdui-typescale-label-large-tracking', description: '' },
-        { name: '--mdui-typescale-label-medium-tracking', description: '' },
-        { name: '--mdui-typescale-label-small-tracking', description: '' },
-        // 排版（body）
-        { name: '--mdui-typescale-body-large-weight', description: '' },
-        { name: '--mdui-typescale-body-medium-weight', description: '' },
-        { name: '--mdui-typescale-body-small-weight', description: '' },
-        { name: '--mdui-typescale-body-large-line-height', description: '' },
-        { name: '--mdui-typescale-body-medium-line-height', description: '' },
-        { name: '--mdui-typescale-body-small-line-height', description: '' },
-        { name: '--mdui-typescale-body-large-size', description: '' },
-        { name: '--mdui-typescale-body-medium-size', description: '' },
-        { name: '--mdui-typescale-body-small-size', description: '' },
-        { name: '--mdui-typescale-body-large-tracking', description: '' },
-        { name: '--mdui-typescale-body-medium-tracking', description: '' },
-        { name: '--mdui-typescale-body-small-tracking', description: '' },
-      ],
+      properties: cssProperties,
       classes: [
         {
           name: 'mdui-theme-dark',
           description:
-            '把该 class 添加到 `<body>` 元素上，整个页面将显示成暗色模式',
+            '把该 class 添加到 `<body>` 元素上，整个页面将显示成暗色模式。',
+          'description-sections': {
+            示例: `\`\`\`html
+<body class="mdui-theme-dark"></body>
+\`\`\``,
+          },
         },
         {
           name: 'mdui-theme-auto',
           description:
-            '把该 class 添加到 `<body>` 上，整个页面将根据操作系统的设置，自动切换亮色模式和暗色模式',
+            '把该 class 添加到 `<body>` 上，整个页面将根据操作系统的设置，自动切换亮色模式和暗色模式。',
+          'description-sections': {
+            示例: `\`\`\`html
+<body class="mdui-theme-auto"></body>
+\`\`\``,
+          },
         },
         {
           name: 'mdui-prose',
-          description: '文章排版样式',
+          description: '添加该 class，将为文章优化排版样式。',
+          'description-sections': {
+            示例: `\`\`\`html
+<div class="mdui-prose">
+  <h1>文章标题</h2>
+  <p>文章正文</p>
+</div>
+\`\`\``,
+          },
+        },
+        {
+          name: 'mdui-table',
+          description: `在 \`<table>\` 元素上添加该 class，可以优化表格的显示样式。
+
+也可以添加在 \`<table>\` 的父元素上，除了优化表格显示样式外，还支持表格横向滚动`,
+          'description-sections': {
+            示例1: `\`\`\`html
+<table class="mdui-table"></table>
+\`\`\``,
+            示例2: `\`\`\`html
+<div class="mdui-table">
+  <table></table>
+</div>
+\`\`\``,
+          },
         },
       ],
     };
   }
 
   fs.writeFileSync(
-    path.join(path.dirname(metadataPath), 'web-types.json'),
+    `./packages/${packageFolder}/web-types.json`,
     JSON.stringify(webTypes, null, 2),
     'utf8',
   );

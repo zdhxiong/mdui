@@ -19,7 +19,6 @@ import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import '../icon.js';
 import { style } from './style.js';
-import type { MaterialIconsName } from '../icon.js';
 import type { TopAppBar } from '../top-app-bar/top-app-bar.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
@@ -55,7 +54,7 @@ export class Dialog extends LitElement {
    * 顶部的 Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon?: MaterialIconsName;
+  public icon?: string;
 
   /**
    * 标题

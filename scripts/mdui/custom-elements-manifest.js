@@ -6,7 +6,7 @@ export default {
     'packages/components/src/ripple/*.ts',
     'packages/components/src/**/*style.ts',
   ],
-  outdir: 'packages/components',
+  outdir: 'packages/mdui',
   dev: true,
   litelement: true,
 };

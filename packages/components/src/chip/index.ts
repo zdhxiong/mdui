@@ -12,7 +12,6 @@ import '@mdui/icons/clear.js';
 import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
 import { style } from './style.js';
-import type { MaterialIconsName } from '../icon.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
@@ -103,25 +102,25 @@ export class Chip extends ButtonBase {
    * 左侧的 Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon?: MaterialIconsName;
+  public icon?: string;
 
   /**
    * 选中状态，左侧的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'selected-icon' })
-  public selectedIcon?: MaterialIconsName;
+  public selectedIcon?: string;
 
   /**
    * 右侧的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'end-icon' })
-  public endIcon?: MaterialIconsName;
+  public endIcon?: string;
 
   /**
    * 右侧的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'delete-icon' })
-  public deleteIcon?: MaterialIconsName;
+  public deleteIcon?: string;
 
   private readonly rippleRef: Ref<Ripple> = createRef();
   private readonly hasSlotController = new HasSlotController(this, 'end-icon');

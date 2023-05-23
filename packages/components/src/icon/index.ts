@@ -9,8 +9,6 @@ import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
 
-export type MaterialIconsName = string;
-
 /**
  * @event click - 点击时触发
  *
@@ -24,7 +22,7 @@ export class Icon extends LitElement {
    * Material Icons 图标名
    */
   @property({ reflect: true })
-  public name?: MaterialIconsName;
+  public name?: string;
 
   /**
    * svg 图标的路径

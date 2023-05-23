@@ -10,7 +10,6 @@ import '@mdui/icons/check.js';
 import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
 import { segmentedButtonStyle } from './segmented-button-style.js';
-import type { MaterialIconsName } from '../icon.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
@@ -41,13 +40,13 @@ export class SegmentedButton extends ButtonBase {
    * 左侧的 Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon?: MaterialIconsName;
+  public icon?: string;
 
   /**
    * 右侧的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'end-icon' })
-  public endIcon?: MaterialIconsName;
+  public endIcon?: string;
 
   /**
    * 是否选中该分段按钮项，由 mdui-segmented-button-group 组件控制该参数

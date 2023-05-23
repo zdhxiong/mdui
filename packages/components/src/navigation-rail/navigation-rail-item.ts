@@ -13,7 +13,6 @@ import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { navigationRailItemStyle } from './navigation-rail-item-style.js';
-import type { MaterialIconsName } from '../icon.js';
 import type { Ripple } from '../ripple/index.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
@@ -47,13 +46,13 @@ export class NavigationRailItem extends AnchorMixin(
    * 未激活状态的 Material Icons 图标名
    */
   @property({ reflect: true })
-  public icon?: MaterialIconsName;
+  public icon?: string;
 
   /**
    * 激活状态的 Material Icons 图标名
    */
   @property({ reflect: true, attribute: 'active-icon' })
-  public activeIcon?: MaterialIconsName;
+  public activeIcon?: string;
 
   /**
    * 导航项的值

@@ -7,6 +7,8 @@
   "module": "mdui.js",
   "types": "mdui.d.ts",
   "style": "mdui.css",
+  "customElements": "custom-elements.json",
+  "web-types": "web-types.json",
   "files": [
     "components",
     "functions",
@@ -16,7 +18,11 @@
     "mdui.css",
     "LICENSE",
     "package.json",
-    "README.md"
+    "README.md",
+    "custom-elements.json",
+    "web-types.json",
+    "vscode.html-custom-data.json",
+    "vscode.css-custom-data.json"
   ],
   "repository": {
     "type": "git",

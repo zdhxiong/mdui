@@ -9,7 +9,6 @@ import { dequeue, queue } from '@mdui/shared/helpers/queue.js';
 import '@mdui/components/button.js';
 import { Dialog } from '@mdui/components/dialog.js';
 import type { Button } from '@mdui/components/button.js';
-import type { MaterialIconsName } from '@mdui/components/icon.js';
 import type { JQ } from '@mdui/jq/shared/core.js';
 
 interface Action {
@@ -46,7 +45,7 @@ interface Options {
   /**
    * dialog 顶部的 Material Icons 图标名
    */
-  icon?: MaterialIconsName;
+  icon?: string;
 
   /**
    * 是否在按下 ESC 键时，关闭 dialog

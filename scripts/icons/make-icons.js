@@ -19,12 +19,6 @@ const toKebabCase = (string) => {
   return string.replace(/_/g, '-');
 };
 
-// 读取 package.json 中的 @material-design-icons/svg 版本号
-const packageJson = JSON.parse(fs.readFileSync(path.resolve('./package.json')));
-const materialDesignIconsVersion = packageJson.devDependencies[
-  '@material-design-icons/svg'
-].replace('^', '');
-
 // 原始 svg 文件（目录名 => 路径）的映射
 const folders = ['filled', 'outlined', 'round', 'sharp', 'two-tone'];
 const dirMap = new Map(
@@ -42,9 +36,6 @@ import { style } from './shared/style.js';
 import { svgTag } from './shared/svg-tag.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
 
-/**
- * @summary ![](TemplatePreviewPng)
- */
 @customElement('TemplateTagName')
 export class TemplateClassName extends LitElement {
   static override styles: CSSResultGroup = style;
@@ -82,9 +73,6 @@ dirMap.forEach((dir, folder) => {
       folder === 'filled' ? '' : `--${toKebabCase(folder)}`
     }`;
 
-    // 用于预览的 png 图片路径
-    const TemplatePreviewPng = `https://cdn.w3cbus.com/mdui/icons/${materialDesignIconsVersion}/${folder}/${filenamePrefix}.png`;
-
     // 读取 svg 文件中的 path 部分
     const [, svgContent] = fs
       .readFileSync(filePath)
@@ -95,7 +83,6 @@ dirMap.forEach((dir, folder) => {
     const componentContent = template
       .replace(/TemplateClassName/g, TemplateClassName)
       .replace(/TemplateTagName/g, `mdui-icon-${componentFilename}`)
-      .replace(/TemplatePreviewPng/g, TemplatePreviewPng)
       .replace(/TemplateSvgContent/g, svgContent);
 
     fs.writeFileSync(

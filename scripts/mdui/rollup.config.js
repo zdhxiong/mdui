@@ -24,7 +24,6 @@ export default [
       {
         banner,
         format: 'es',
-        sourcemap: true,
         file: './packages/mdui/mdui.esm.js',
         plugins: [
           terser({
@@ -38,7 +37,6 @@ export default [
         name: 'mdui',
         banner,
         format: 'umd',
-        sourcemap: true,
         file: './packages/mdui/mdui.global.js',
         plugins: [
           terser({

@@ -1,1 +1,1 @@
-export * from '@mdui/components/snackbar.js';
+export * from './snackbar/index.js';

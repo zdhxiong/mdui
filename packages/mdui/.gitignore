@@ -1,4 +1,6 @@
+src/components/**/*style.ts
 src/icons/*.ts
+src/icons/shared/style.ts
 mdui.css
 custom-elements.json
 vscode.html-custom-data.json

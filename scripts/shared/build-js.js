@@ -1,3 +1,3 @@
-import { buildJsFiles } from '../utils.js';
+import { buildLitJsFiles } from '../utils.js';
 
-buildJsFiles('./packages/shared/src');
+buildLitJsFiles('./packages/shared/src');

@@ -1,1 +1,1 @@
-export * from '@mdui/components/text-field.js';
+export * from './text-field/index.js';

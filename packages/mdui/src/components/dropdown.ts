@@ -1,1 +1,1 @@
-export * from '@mdui/components/dropdown.js';
+export * from './dropdown/index.js';

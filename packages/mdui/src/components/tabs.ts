@@ -1,1 +1,1 @@
-export * from '@mdui/components/tabs.js';
+export * from './tabs/tabs.js';

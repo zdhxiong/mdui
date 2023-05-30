@@ -1,1 +1,1 @@
-export * from '@mdui/components/chip.js';
+export * from './chip/index.js';

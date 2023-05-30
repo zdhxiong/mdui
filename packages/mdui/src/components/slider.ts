@@ -1,1 +1,1 @@
-export * from '@mdui/components/slider.js';
+export * from './slider/index.js';

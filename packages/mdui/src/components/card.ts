@@ -1,1 +1,1 @@
-export * from '@mdui/components/card.js';
+export * from './card/index.js';

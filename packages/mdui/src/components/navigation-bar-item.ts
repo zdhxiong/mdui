@@ -1,1 +1,1 @@
-export * from '@mdui/components/navigation-bar-item.js';
+export * from './navigation-bar/navigation-bar-item.js';

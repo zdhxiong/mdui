@@ -1,1 +1,1 @@
-export * from '@mdui/components/range-slider.js';
+export * from './range-slider/index.js';

@@ -1,1 +1,1 @@
-export * from '@mdui/components/avatar.js';
+export * from './avatar/index.js';

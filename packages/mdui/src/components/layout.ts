@@ -1,1 +1,1 @@
-export * from '@mdui/components/layout.js';
+export * from './layout/layout.js';

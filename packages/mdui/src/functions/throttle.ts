@@ -1,1 +1,1 @@
-export * from '@mdui/functions/throttle.js';
+export { throttle } from '@mdui/shared/helpers/throttle.js';

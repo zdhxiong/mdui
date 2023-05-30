@@ -1,1 +1,1 @@
-export * from '@mdui/functions/getBreakpoint.js';
+export { getBreakpoint } from '@mdui/shared/helpers/breakpoint.js';

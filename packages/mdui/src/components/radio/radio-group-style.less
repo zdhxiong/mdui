@@ -1,0 +1,22 @@
+@import url("~@mdui/shared/mixin.less");
+
+:host {
+  display: inline-block;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+input {
+  position: absolute;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  .width(20);
+  .height(20);
+  .margin(0, 0, 0, 10);
+}

@@ -1,1 +1,1 @@
-export * from '@mdui/components/tooltip.js';
+export * from './tooltip/index.js';

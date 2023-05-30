@@ -1,10 +1,13 @@
 // eslint-disable-next-line import/no-default-export
 export default {
-  globs: ['packages/components/src/**/*.ts', 'packages/shared/src/mixins/*.ts'],
+  globs: [
+    'packages/mdui/src/components/**/*.ts',
+    'packages/shared/src/mixins/*.ts',
+  ],
   exclude: [
-    'packages/components/src/*.ts',
-    'packages/components/src/ripple/*.ts',
-    'packages/components/src/**/*style.ts',
+    'packages/mdui/src/components/*.ts',
+    'packages/mdui/src/components/ripple/*.ts',
+    'packages/mdui/src/components/**/*style.ts',
   ],
   outdir: 'packages/mdui',
   dev: true,

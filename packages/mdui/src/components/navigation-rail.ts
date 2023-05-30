@@ -1,1 +1,1 @@
-export * from '@mdui/components/navigation-rail.js';
+export * from './navigation-rail/navigation-rail.js';

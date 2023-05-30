@@ -1,1 +1,1 @@
-export * from '@mdui/components/dialog.js';
+export * from './dialog/index.js';

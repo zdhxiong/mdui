@@ -1,1 +1,1 @@
-export * from '@mdui/components/collapse-item.js';
+export * from './collapse/collapse-item.js';

@@ -1,1 +1,1 @@
-export * from '@mdui/components/fab.js';
+export * from './fab/index.js';

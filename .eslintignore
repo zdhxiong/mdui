@@ -6,4 +6,3 @@
 node_modules
 packages/**/*.js
 packages/**/*.d.ts
-packages/icons/src/index.ts

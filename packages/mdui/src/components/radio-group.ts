@@ -1,1 +1,1 @@
-export * from '@mdui/components/radio-group.js';
+export * from './radio/radio-group.js';

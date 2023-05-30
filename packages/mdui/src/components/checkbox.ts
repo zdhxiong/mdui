@@ -1,1 +1,1 @@
-export * from '@mdui/components/checkbox.js';
+export * from './checkbox/index.js';

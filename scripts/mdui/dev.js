@@ -1,5 +1,5 @@
 import watch from 'node-watch';
-import { buildLessFile } from '../utils.js';
+import { buildLessFile, buildLitStyleFile } from '../utils.js';
 
 const watchOptions = {
   recursive: true,
@@ -10,17 +10,33 @@ const watchOptions = {
 
 let updating = false;
 
-watch('./packages/mdui/src/styles', watchOptions, () => {
-  if (updating) {
-    return;
-  }
+watch(
+  [
+    './packages/mdui/src/components',
+    './packages/mdui/src/icons/shared',
+    './packages/mdui/src/styles',
+  ],
+  watchOptions,
+  (_, filePath) => {
+    if (updating) {
+      return;
+    }
 
-  updating = true;
+    updating = true;
 
-  buildLessFile(
-    './packages/mdui/src/styles/index.less',
-    './packages/mdui/mdui.css',
-  ).finally(() => {
-    updating = false;
-  });
-});
+    let updatePromise;
+
+    if (filePath.replace(/\\/g, '/').includes('packages/mdui/src/styles')) {
+      updatePromise = buildLessFile(
+        './packages/mdui/src/styles/index.less',
+        './packages/mdui/mdui.css',
+      );
+    } else {
+      updatePromise = buildLitStyleFile(filePath);
+    }
+
+    updatePromise.finally(() => {
+      updating = false;
+    });
+  },
+);

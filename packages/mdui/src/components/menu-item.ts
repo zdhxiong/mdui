@@ -1,1 +1,1 @@
-export * from '@mdui/components/menu-item.js';
+export * from './menu/menu-item.js';

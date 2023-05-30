@@ -1,0 +1,24 @@
+@import url("~@mdui/shared/mixin.less");
+
+:host {
+  --shape-corner: var(--mdui-shape-corner-full);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--shape-corner);
+  .paddingLeft(4);
+  .paddingRight(4);
+  .color(on-error);
+  .backgroundColor(error);
+  .height(16);
+  .minWidth(16);
+  .typescale(label-small);
+}
+
+:host([variant="small"]) {
+  min-width: 0;
+  padding: 0;
+  .width(6);
+  .height(6);
+}

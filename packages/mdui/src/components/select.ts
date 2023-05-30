@@ -1,1 +1,1 @@
-export * from '@mdui/components/select.js';
+export * from './select/index.js';

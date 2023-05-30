@@ -516,7 +516,7 @@ export const buildLitStyleFiles = (path) => {
  * lit 组件生成 js 文件后，进行构建
  * @param filePath js 文件路径
  */
-export const buildJsFile = (filePath) => {
+export const buildLitJsFile = (filePath) => {
   if (isDev) {
     return;
   }
@@ -541,14 +541,14 @@ export const buildJsFile = (filePath) => {
  * 构建目录中所有 lit 组件生成的 js 文件
  * @param path 目录
  */
-export const buildJsFiles = (path) => {
+export const buildLitJsFiles = (path) => {
   traverseDirectory(path, 'ts', (srcFilePath) => {
     const filePath = srcFilePath
       .replace('/src/', '/')
       .replace('\\src\\', '\\')
       .replace('.ts', '.js');
 
-    buildJsFile(filePath);
+    buildLitJsFile(filePath);
   });
 };
 
@@ -616,7 +616,7 @@ export const getAllComponents = (metadataPath) => {
  * VSCode Custom Data 规范：https://github.com/microsoft/vscode-html-languageservice/blob/main/docs/customData.schema.json
  *                          https://github.com/microsoft/vscode-CSS-languageservice/blob/main/docs/customData.schema.json
  *
- * 需要生成 vscode.html-custom-data.json 的包：mdui（包含 @mdui/components）
+ * 需要生成 vscode.html-custom-data.json 的包：mdui
  *
  * @param metadataPath custom-elements.json 文件的路径
  * @param packageFolder 包在 packages 目录中的文件夹名
@@ -744,7 +744,7 @@ export const buildVSCodeData = (metadataPath, packageFolder) => {
  * 官方文档：https://plugins.jetbrains.com/docs/intellij/websymbols-web-types.html#web-components
  * web-types 规范：http://json.schemastore.org/web-types
  *
- * 需要生成 web-types.json 的包：mdui（包含 @mdui/components）
+ * 需要生成 web-types.json 的包：mdui
  *
  * @param metadataPath custom-elements.json 文件的路径
  * @param packageFolder 包在 packages 目录中的的文件夹名

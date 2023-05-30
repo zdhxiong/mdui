@@ -1,1 +1,1 @@
-export * from '@mdui/components/top-app-bar.js';
+export * from './top-app-bar/top-app-bar.js';

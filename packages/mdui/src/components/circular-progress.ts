@@ -1,1 +1,1 @@
-export * from '@mdui/components/circular-progress.js';
+export * from './circular-progress/index.js';

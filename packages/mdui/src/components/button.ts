@@ -1,1 +1,1 @@
-export * from '@mdui/components/button.js';
+export * from './button/index.js';

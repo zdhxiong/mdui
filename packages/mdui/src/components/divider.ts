@@ -1,1 +1,1 @@
-export * from '@mdui/components/divider.js';
+export * from './divider/index.js';

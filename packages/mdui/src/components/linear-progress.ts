@@ -1,1 +1,1 @@
-export * from '@mdui/components/linear-progress.js';
+export * from './linear-progress/index.js';

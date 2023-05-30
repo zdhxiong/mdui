@@ -1,1 +1,1 @@
-export * from '@mdui/components/switch.js';
+export * from './switch/index.js';

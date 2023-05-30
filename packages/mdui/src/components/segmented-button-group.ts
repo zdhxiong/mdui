@@ -1,1 +1,1 @@
-export * from '@mdui/components/segmented-button-group.js';
+export * from './segmented-button/segmented-button-group.js';

@@ -5,11 +5,8 @@
   "eslint.format.enable": true,
   "editor.formatOnSave": true,
   "files.exclude": {
-    "packages/components/{avatar,badge,bottom-app-bar,button,button-icon,card,checkbox,chip,circular-progress,collapse,dialog,divider,dropdown,fab,icon,layout,linear-progress,list,menu,navigation-bar,navigation-drawer,navigation-rail,radio,range-slider,ripple,segmented-button,select,slider,snackbar,switch,tab,table,tabs,text-field,tooltip,top-app-bar}": true,
-    "packages/functions/utils": true,
-    "packages/icons/shared": true,
     "packages/jq/{functions,methods,shared,static}": true,
-    "packages/mdui/{components,functions}": true,
+    "packages/mdui/{components,functions,icons}": true,
     "packages/shared/{controllers,decorators,helpers,lit-styles,mixins}": true,
     "packages/**/*.d.ts": true,
     "packages/**/*.js": true,

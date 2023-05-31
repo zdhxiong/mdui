@@ -147,12 +147,7 @@ export class Tabs extends LitElement {
   }
 
   protected override render(): TemplateResult {
-    return html`<div
-        ${ref(this.navRef)}
-        part="nav"
-        class="nav"
-        no-scrollbar-beauty
-      >
+    return html`<div ${ref(this.navRef)} part="nav" class="nav">
         <slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>
         <div ${ref(this.indicatorRef)} part="indicator" class="indicator"></div>
       </div>

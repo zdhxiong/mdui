@@ -89,3 +89,4 @@ import './static/removeData.js';
 import './static/unique.js';
 
 export { $ };
+export type { JQ } from './shared/core.js';

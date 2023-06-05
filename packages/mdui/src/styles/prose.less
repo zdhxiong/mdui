@@ -88,7 +88,7 @@
   h4,
   h5,
   h6 {
-    font-weight: 300;
+    font-weight: 400;
 
     small {
       font-weight: inherit;
@@ -102,7 +102,7 @@
   }
 
   h1 {
-    font-size: 2.25em;
+    font-size: 2.5em;
     margin-top: 0;
     margin-bottom: 0.88em;
     line-height: 1.1111;
@@ -116,16 +116,16 @@
   }
 
   h3 {
-    font-size: 1.5em;
-    margin-top: 1.6em;
-    margin-bottom: 0.6em;
+    font-size: 1.4em;
+    margin-top: 1.7em;
+    margin-bottom: 0.64em;
     line-height: 1.6;
   }
 
   h4 {
-    font-size: 1.25em;
-    margin-top: 1.5em;
-    margin-bottom: 0.5em;
+    font-size: 1.2em;
+    margin-top: 1.56em;
+    margin-bottom: 0.52em;
     line-height: 1.5;
   }
 
@@ -138,7 +138,8 @@
 
   code,
   kbd {
-    .color(on-surface-variant);
+    font-size: 0.875em;
+    .color(on-surface-container);
     .backgroundColor(surface-variant, 0.28);
     .padding(2, 6);
     .shapeCorner(extra-small);
@@ -172,21 +173,16 @@
   }
 
   pre {
-    line-height: 1.7143;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     margin-top: 1.7143em;
     margin-bottom: 1.7143em;
-    padding: 0.8571em 1.1429em;
-    .shapeCorner(small);
-    .border(1, solid, surface-variant);
 
     code {
-      padding: 0;
-      color: inherit;
-      font-size: inherit;
-      background-color: transparent;
-      border-radius: 0;
+      padding: 0.8571em 1.1429em;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      .backgroundColor(surface-container);
+      .color(on-surface-container);
+      .shapeCorner(extra-small);
     }
   }
 
@@ -331,12 +327,14 @@
   th,
   td {
     .borderTop(1, solid, surface-variant);
-    .borderLeft(1, solid, surface-variant);
-  }
 
-  th:first-child,
-  td:first-child {
-    border-left: 0;
+    &:not(:first-child) {
+      .borderLeft(1, solid, surface-variant);
+    }
+
+    &:not(:last-child) {
+      .borderRight(1, solid, surface-variant);
+    }
   }
 
   thead:first-child tr:first-child th,
@@ -361,7 +359,15 @@
 
   tbody th,
   tbody td {
-    vertical-align: baseline;
     .padding(14, 16);
+  }
+
+  tbody th {
+    vertical-align: middle;
+    font-weight: inherit;
+  }
+
+  tbody td {
+    vertical-align: baseline;
   }
 }

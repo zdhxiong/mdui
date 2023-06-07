@@ -4,8 +4,23 @@ import path from 'node:path';
 /**
  * 从 @material-design-icons/svg 项目中生成图标的 Web Components 文件
  *
- * 生成的文件位于 packages/mdui/src/icons 目录中，每个图标一个文件
+ * 生成的文件位于 packages/icons/src 目录中，每个图标一个文件
  */
+
+// 组件内部用到的图标，统一写入 @mdui/shared/src/icons 中
+const toSharedIcons = [
+  'check-box-outline-blank',
+  'check-box',
+  'indeterminate-check-box',
+  'check',
+  'clear',
+  'arrow-right',
+  'radio-button-unchecked',
+  'error',
+  'cancel--outlined',
+  'visibility-off',
+  'visibility',
+];
 
 // 字符串转驼峰，且首字母大写
 const toCamelCase = (string) => {
@@ -32,13 +47,13 @@ const dirMap = new Map(
 // language=TypeScript
 const template = `import { LitElement } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
-import { style } from './shared/style.js';
-import { svgTag } from './shared/svg-tag.js';
+import { style } from '@mdui/shared/icons/shared/style.js';
+import { svgTag } from '@mdui/shared/icons/shared/svg-tag.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
 
 @customElement('TemplateTagName')
 export class TemplateClassName extends LitElement {
-  static override styles: CSSResultGroup = style;
+  public static override styles: CSSResultGroup = style;
 
   protected override render(): TemplateResult {
     return svgTag(
@@ -52,6 +67,11 @@ declare global {
     'TemplateTagName': TemplateClassName;
   }
 }
+`;
+
+// 用于在 @mdui/icons 包中引用 @mdui/shared 中的图标
+// language=TypeScript
+const templateRef = `export * from '@mdui/shared/icons/TemplateFilename.js';
 `;
 
 dirMap.forEach((dir, folder) => {
@@ -68,7 +88,7 @@ dirMap.forEach((dir, folder) => {
       folder === 'filled' ? '' : `_${toCamelCase(folder)}`
     }`;
 
-    // 组件文件名: 文件名(下划线) + --目录名(下划线；如果是 filled，则不含目录名)
+    // 组件文件名: 文件名(-) + --目录名(下划线；如果是 filled，则不含目录名)
     const componentFilename = `${toKebabCase(filenamePrefix)}${
       folder === 'filled' ? '' : `--${toKebabCase(folder)}`
     }`;
@@ -79,15 +99,29 @@ dirMap.forEach((dir, folder) => {
       .toString()
       .match(/<svg.*?>([\s\S]*?)<\/svg>/);
 
-    // 写入 packages/mdui/src/icons 中的文件
+    // 写入 packages/icons/src 中的文件
     const componentContent = template
       .replace(/TemplateClassName/g, TemplateClassName)
       .replace(/TemplateTagName/g, `mdui-icon-${componentFilename}`)
       .replace(/TemplateSvgContent/g, svgContent);
 
-    fs.writeFileSync(
-      `./packages/mdui/src/icons/${componentFilename}.ts`,
-      componentContent,
-    );
+    // 公共图标，写到 @mdui/shared 中
+    if (toSharedIcons.includes(componentFilename)) {
+      fs.writeFileSync(
+        `./packages/shared/src/icons/${componentFilename}.ts`,
+        componentContent.replace(/\@mdui\/shared\/icons\//g, './'),
+      );
+      fs.writeFileSync(
+        `./packages/icons/src/${componentFilename}.ts`,
+        templateRef.replace(/TemplateFilename/g, componentFilename),
+      );
+    }
+    // 非公共图标，写道 @mdui/icons 中
+    else {
+      fs.writeFileSync(
+        `./packages/icons/src/${componentFilename}.ts`,
+        componentContent,
+      );
+    }
   });
 });

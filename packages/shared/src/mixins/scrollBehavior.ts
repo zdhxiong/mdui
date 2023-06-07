@@ -69,6 +69,7 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
      */
     private isParentLayout = false;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public constructor(...args: any[]) {
       super(...args);
 
@@ -164,6 +165,7 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
      * @param isScrollingUp 是否向上滚动
      * @param scrollTop 距离 scrollTarget 顶部的距离
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected runScrollThreshold(isScrollingUp: boolean, scrollTop: number) {
       return;
     }
@@ -173,6 +175,7 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
      * @param isScrollingUp 是否向上滚动
      * @param scrollTop 距离 scrollTarget 顶部的距离
      */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected runScrollNoThreshold(isScrollingUp: boolean, scrollTop: number) {
       return;
     }

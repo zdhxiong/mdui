@@ -8,7 +8,6 @@ packages/**/*.js
 packages/**/*.d.ts
 .pnpm-debug.log
 stats.html
-icons-png
 *.tgz
 
 # See: https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore

@@ -11,11 +11,7 @@ const watchOptions = {
 let updating = false;
 
 watch(
-  [
-    './packages/mdui/src/components',
-    './packages/mdui/src/icons/shared',
-    './packages/mdui/src/styles',
-  ],
+  ['./packages/mdui/src/components', './packages/mdui/src/styles'],
   watchOptions,
   (_, filePath) => {
     if (updating) {

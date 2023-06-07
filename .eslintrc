@@ -121,6 +121,11 @@
             "pattern": "@mdui/shared/**",
             "group": "internal",
             "position": "before"
+          },
+          {
+            "pattern": "@mdui/icons/**",
+            "group": "internal",
+            "position": "before"
           }
         ],
         "alphabetize": {

@@ -1,16 +1,11 @@
 {
-  "name": "@mdui/shared",
+  "name": "@mdui/icons",
   "version": "1.0.0",
-  "description": "mdui 项目的公共部分",
+  "description": "Material Icons 的 Web Components 图标组件库",
   "type": "module",
   "files": [
-    "controllers",
-    "decorators",
-    "helpers",
-    "icons",
-    "lit-styles",
-    "mixins",
-    "mixin.less",
+    "shared",
+    "*.{js,d.ts}",
     "LICENSE",
     "package.json",
     "README.md"
@@ -19,17 +14,22 @@
     "type": "git",
     "url": "git+https://github.com/zdhxiong/mdui.git"
   },
+  "keywords": [
+    "Material Design",
+    "Material Icons",
+    "mdui",
+    "icon",
+    "web components"
+  ],
   "author": "zdhxiong <zdhxiong@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/zdhxiong/mdui/issues"
   },
-  "homepage": "https://github.com/zdhxiong/mdui#readme",
+  "homepage": "https://github.com/zdhxiong/mdui",
   "dependencies": {
-    "@mdui/jq": "workspace:*",
-    "@open-wc/dedupe-mixin": "^1.3.1",
+    "@mdui/shared": "workspace:*",
     "lit": "^2.7.4",
-    "ssr-window": "^4.0.2",
     "tslib": "^2.5.0"
   }
 }

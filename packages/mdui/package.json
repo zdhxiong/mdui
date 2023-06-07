@@ -29,12 +29,15 @@
     "url": "https://github.com/zdhxiong/mdui.git"
   },
   "keywords": [
-    "material design",
+    "Material Design",
+    "material you",
+    "Web Components",
     "responsive",
     "framework",
     "front-end",
     "mobile-first",
-    "web"
+    "web",
+    "mdui"
   ],
   "author": "zdhxiong <zdhxiong@gmail.com>",
   "license": "MIT",

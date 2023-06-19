@@ -3,18 +3,26 @@
  * 在媒体查询中，rem 始终基于初始 font-size 值，而不是当前 font-size 值，所以媒体查询中使用 px 作为单位
  * 目前 JavaScript 代码中需要用到断点查询时，从 breakpoint.less 中的 CSS 自定义属性值读取
  *
- * 手机: <600px
- * 平板：>=600px & <840px
- * 笔记本：>=840px & <1240px
- * 桌面：>=1240px
+ * xs：=0px
+ * sm: <600px
+ * md：>=600px & <840px
+ * lg：>=840px & <1080px
+ * xl：>=1080px & < 1920px
+ * xxl：>=1920px
  */
-@custom-media --viewport-mobile (max-width: 599.98px);
-@custom-media --viewport-mobile-up (min-width: 600px);
-@custom-media --viewport-tablet-down (max-width: 599.98px);
-@custom-media --viewport-tablet (min-width: 600px) and (max-width: 839.98px);
-@custom-media --viewport-tablet-up (min-width: 840px);
-@custom-media --viewport-laptop-down (max-width: 839.98px);
-@custom-media --viewport-laptop (min-width: 840px) and (max-width: 1239.98px);
-@custom-media --viewport-laptop-up (min-width: 1240px);
-@custom-media --viewport-desktop-down (max-width: 1239.98px);
-@custom-media --viewport-desktop (min-width: 1240px);
+@custom-media --mdui-viewport-xs (min-width: 0) and (max-width: 599.98px);
+@custom-media --mdui-viewport-sm-down (max-width: 599.98px);
+@custom-media --mdui-viewport-sm (min-width: 600px) and (max-width: 839.98px);
+@custom-media --mdui-viewport-sm-up (min-width: 600px);
+@custom-media --mdui-viewport-md-down (max-width: 839.98px);
+@custom-media --mdui-viewport-md (min-width: 840px) and (max-width: 1079.98px);
+@custom-media --mdui-viewport-md-up (min-width: 840px);
+@custom-media --mdui-viewport-lg-down (max-width: 1079.98px);
+@custom-media --mdui-viewport-lg (min-width: 1080px) and (max-width: 1439.98px);
+@custom-media --mdui-viewport-lg-up (min-width: 1080px);
+@custom-media --mdui-viewport-xl-down (max-width: 1439.98px);
+@custom-media --mdui-viewport-xl (min-width: 1440px) and (max-width: 1919.98px);
+@custom-media --mdui-viewport-xl-up (min-width: 1440px);
+@custom-media --mdui-viewport-xxl-down (max-width: 1919.98px);
+@custom-media --mdui-viewport-xxl (min-width: 1920px);
+@custom-media --mdui-viewport-xxl-up (min-width: 1920px);

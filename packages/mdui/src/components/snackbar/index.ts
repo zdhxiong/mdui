@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
-import { getBreakpoint } from '@mdui/shared/helpers/breakpoint.js';
+import { breakpoint } from '@mdui/shared/helpers/breakpoint.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
@@ -128,7 +128,7 @@ export class Snackbar extends LitElement {
 
   @watch('open')
   private async onOpenChange() {
-    const isMobile = getBreakpoint() === 'mobile';
+    const isMobile = breakpoint().down('sm');
     const isCenteredHorizontally = ['top', 'bottom'].includes(this.placement);
 
     const easingLinear = getEasing(this, 'linear');

@@ -8,7 +8,7 @@ import '@mdui/jq/methods/innerWidth.js';
 import { isNull } from '@mdui/jq/shared/helper.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
-import { getBreakpoint } from '@mdui/shared/helpers/breakpoint.js';
+import { breakpoint } from '@mdui/shared/helpers/breakpoint.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { Modal } from '@mdui/shared/helpers/modal.js';
@@ -53,7 +53,7 @@ export class NavigationDrawer extends LayoutItemBase {
 
   /**
    * 打开时，是否显示遮罩层
-   * 较窄的设备上（屏幕宽度小于 `--mdui-breakpoint-mobile` 时），会无视该参数，始终显示遮罩层
+   * 较窄的设备上（屏幕宽度小于 `--mdui-breakpoint-md` 时），会无视该参数，始终显示遮罩层
    */
   @property({
     type: Boolean,
@@ -146,7 +146,7 @@ export class NavigationDrawer extends LayoutItemBase {
       this.contained ? this.parentElement! : document.body,
       () => {
         const target = this.contained ? this.parentElement! : undefined;
-        this.mobile = getBreakpoint(target) === 'mobile';
+        this.mobile = breakpoint(target).down('md');
 
         // 若位于 layout 中，且为模态化，则重新布局时，占据的宽度为 0
         if (this.isParentLayout) {

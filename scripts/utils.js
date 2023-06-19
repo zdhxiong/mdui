@@ -80,29 +80,27 @@ const isDocHasMultipleComponents = (tagName) => {
 // CSS 自定义属性，写入到 vscode.css-custom-data.json 及 web-types.json 中
 const cssProperties = [
   // 断点
-  ...['mobile', 'tablet', 'desktop'].map((device) => {
-    const isMobile = device === 'mobile';
-    const isTablet = device === 'tablet';
+  ...[
+    ['xs', 0],
+    ['sm', 600],
+    ['md', 840],
+    ['lg', 1080],
+    ['xl', 1440],
+    ['xxl', 1920],
+  ].map(([device, width]) => {
     const name = `--mdui-breakpoint-${device}`;
-
-    const width = isMobile ? 600 : isTablet ? 840 : 1240;
-    const desc = isMobile
-      ? '小于该值时表示是手机设备，大于等于该值则为平板设备。'
-      : isTablet
-      ? '大于该值时表示是笔记本电脑设备。'
-      : '大于该值时表示是大屏幕桌面设备。';
 
     return {
       name,
-      description: `断点值。${desc}默认为 \`${width}px\`
+      description: `断点值。默认为 \`${width}px\`
 
-**注意**：该属性仅供 mdui 内部 JavaScript 读取，可通过修改该属性来调整 mdui 内部组件的断点值。但不支持在 CSS 媒体查询中使用。
+**注意**：该断点值不支持在 CSS 媒体查询中使用。
 
 **示例**：
 \`\`\`css
 /* 修改断点值 */
 :root {
-  ${name}: ${width + 20}px;
+  ${name}: ${device === 'xs' ? 0 : width + 20}px;
 }
 \`\`\`
 `,
@@ -858,22 +856,40 @@ export const buildWebTypes = (metadataPath, packageFolder) => {
       properties: cssProperties,
       classes: [
         {
-          name: 'mdui-theme-dark',
+          name: 'mdui-theme-light',
           description:
-            '把该 class 添加到 `<body>` 元素上，整个页面将显示成暗色模式。',
+            '把该 class 添加到某一元素上，该元素及其子元素将显示成亮色模式。',
           'description-sections': {
             示例: `\`\`\`html
-<body class="mdui-theme-dark"></body>
+<div class="mdui-theme-light"></div>
+\`\`\``,
+          },
+        },
+        {
+          name: 'mdui-theme-dark',
+          description:
+            '把该 class 添加到 `<html>` 元素上，整个页面将显示成暗色模式。也可以添加到其他元素上，只在该元素及其子元素上显示暗色模式。',
+          'description-sections': {
+            示例: `\`\`\`html
+<!-- 整个页面显示成暗色模式 -->
+<html class="mdui-theme-dark"></html>
+
+<!-- 只在该元素及其子元素上显示暗色模式 -->
+<div class="mdui-theme-dark"></div>
 \`\`\``,
           },
         },
         {
           name: 'mdui-theme-auto',
           description:
-            '把该 class 添加到 `<body>` 上，整个页面将根据操作系统的设置，自动切换亮色模式和暗色模式。',
+            '把该 class 添加到 `<html>` 上，整个页面将根据操作系统的设置，自动切换亮色模式和暗色模式。也可以添加到其他元素上，只在该元素及其子元素上自动切换亮色模式和暗色模式。',
           'description-sections': {
             示例: `\`\`\`html
-<body class="mdui-theme-auto"></body>
+<!-- 整个页面自动切换亮色模式和暗色模式 -->
+<html class="mdui-theme-auto"></html>
+
+<!-- 只在该元素及其子元素上自动切换亮色模式和暗色模式 -->
+<div class="mdui-theme-auto"></div>
 \`\`\``,
           },
         },

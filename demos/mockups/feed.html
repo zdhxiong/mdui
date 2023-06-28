@@ -161,7 +161,7 @@
     import '../../packages/mdui/components/navigation-bar-item.js';
     import '../../packages/mdui/components/switch.js';
     import { $ } from '../../packages/jq/index.js';
-    import { setTheme } from '../../packages/mdui/functions/setTheme.js'
+    import { setColorScheme } from '../../packages/mdui/functions/setColorScheme.js'
     import { getColorFromImage } from '../../packages/mdui/functions/getColorFromImage.js';
 
     $(() => {
@@ -174,17 +174,17 @@
         $('html')[e.target.checked ? 'addClass' : 'removeClass']('mdui-theme-dark');
       });
       $('#change-theme-global').on('input', (e) => {
-        setTheme(e.target.value, {
+        setColorScheme(e.target.value, {
           customColors,
         });
       });
       $('#change-theme-demo').on('input', (e) => {
-        setTheme(e.target.value, {
+        setColorScheme(e.target.value, {
           target: document.querySelector('.demo')
         });
       });
       $('#change-theme-card').on('input', (e) => {
-        setTheme(e.target.value, {
+        setColorScheme(e.target.value, {
           target: document.querySelector('.card1')
         });
       });
@@ -200,7 +200,7 @@
           })
           const image = new Image();
           image.src = evt.target.result;
-          getColorFromImage(image).then(color => setTheme(color, { customColors }));
+          getColorFromImage(image).then(color => setColorScheme(color, { customColors }));
         }
         reader.readAsDataURL(file);
       })

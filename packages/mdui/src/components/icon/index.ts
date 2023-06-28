@@ -12,7 +12,7 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
 /**
  * @event click - 点击时触发
  *
- * @slot - `svg` 图标、或其他图标库图标
+ * @slot - `svg` 图标的内容
  */
 @customElement('mdui-icon')
 export class Icon extends LitElement {

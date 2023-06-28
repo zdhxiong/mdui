@@ -14,21 +14,21 @@ export type LayoutPlacement = 'top' | 'left' | 'right' | 'bottom';
 
 interface LayoutItemState {
   /**
-   * 当前 layout-item 元素
+   * 当前 `<mdui-layout-item>` 元素
    */
   element: LayoutItemBase;
 
   /**
    * 注册元素时，无需传该参数
    * 更新布局时，若传入该参数，则直接使用该值，不再计算元素的宽度
-   * 布局更新一次后自动重置为 undefined
+   * 布局更新一次后自动重置为 `undefined`
    */
   width?: number;
 
   /**
    * 注册元素时，无需传该参数
    * 更新布局时，若传入该参数，则直接使用该值，不再计算元素的高度
-   * 布局更新一次后自动重置为 undefined
+   * 布局更新一次后自动重置为 `undefined`
    */
   height?: number;
 
@@ -69,21 +69,21 @@ export class LayoutManager {
   }
 
   /**
-   * 注册 layout-main
+   * 注册 `<mdui-layout-main>`
    */
   public registerMain(element: LayoutMain): void {
     this.$main = $(element);
   }
 
   /**
-   * 取消注册 layout-main
+   * 取消注册 `<mdui-layout-main>`
    */
   public unregisterMain(): void {
     this.$main = undefined;
   }
 
   /**
-   * 注册新的 layout-item
+   * 注册新的 `<mdui-layout-item>`
    */
   public registerItem(element: LayoutItemBase): void {
     const state: LayoutItemState = { element };
@@ -111,7 +111,7 @@ export class LayoutManager {
   }
 
   /**
-   * 取消注册 layout-item
+   * 取消注册 `<mdui-layout-item>`
    */
   public unregisterItem(element: LayoutItemBase): void {
     const index = this.states.findIndex((item) => item.element === element);
@@ -129,7 +129,7 @@ export class LayoutManager {
   }
 
   /**
-   * 获取所有 layout-item 元素（按在 DOM 中的顺序）
+   * 获取所有 `<mdui-layout-item>` 元素（按在 DOM 中的顺序）
    */
   public getItems(): LayoutItemBase[] {
     if (!this.items) {
@@ -151,28 +151,28 @@ export class LayoutManager {
   }
 
   /**
-   * 获取 layout-main 元素
+   * 获取 `<mdui-layout-main>` 元素
    */
   public getMain(): LayoutMain | undefined {
     return this.$main ? this.$main[0] : undefined;
   }
 
   /**
-   * 获取 layout-item 及 layout-main 元素
+   * 获取 `<mdui-layout-item>` 及 `<mdui-layout-main>` 元素
    */
   public getItemsAndMain(): (LayoutItemBase | LayoutMain)[] {
     return [...this.getItems(), this.getMain()!].filter((i) => i);
   }
 
   /**
-   * 检查指定 layout-item 元素是否已注册
+   * 检查指定 `<mdui-layout-item>` 元素是否已注册
    */
   public hasItem(element: LayoutItemBase): boolean {
     return this.getItems().includes(element);
   }
 
   /**
-   * 更新 order 值，更新完后重新计算布局
+   * 更新 `order` 值，更新完后重新计算布局
    */
   public updateOrder() {
     this.resort();

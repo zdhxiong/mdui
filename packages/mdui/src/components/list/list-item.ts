@@ -33,8 +33,8 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart headline - 主标题
  * @csspart description - 副标题
  *
- * @cssprop --shape-corner 列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
- * @cssprop --shape-corner-rounded 指定了 `rounded` 时，列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @cssprop --shape-corner 列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-rounded 指定了 `rounded` 时，列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-list-item')
 export class ListItem extends AnchorMixin(
@@ -46,7 +46,7 @@ export class ListItem extends AnchorMixin(
   ];
 
   /**
-   * 主文本
+   * 主文本。也可以通过 default slot 设置
    */
   @property({ reflect: true })
   public headline?: string;
@@ -58,7 +58,7 @@ export class ListItem extends AnchorMixin(
   public headlineLine?: 1 | 2 | 3;
 
   /**
-   * 副文本
+   * 副文本。也可以通过 `slot="description"` 设置
    */
   @property({ reflect: true })
   public description?: string;
@@ -70,19 +70,19 @@ export class ListItem extends AnchorMixin(
   public descriptionLine?: 1 | 2 | 3;
 
   /**
-   * 左侧的 Material Icons 图标名
+   * 左侧的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
    */
   @property({ reflect: true })
   public icon?: string;
 
   /**
-   * 右侧的 Material Icons 图标名
+   * 右侧的 Material Icons 图标名。也可以通过 `slot="end-icon"` 设置
    */
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon?: string;
 
   /**
-   * 是否禁用该列表项，列表项将置灰，且其中的 checkbox、radio、switch 等都将禁用
+   * 是否禁用该列表项，列表项将置灰，且其中的 [`<mdui-checkbox>`](/docs/2/components/checkbox)、[`<mdui-radio>`](/docs/2/components/radio)、[`<mdui-switch>`](/docs/2/components/switch) 等都将禁用
    */
   @property({
     type: Boolean,
@@ -102,7 +102,7 @@ export class ListItem extends AnchorMixin(
   public active = false;
 
   /**
-   * 是否使列表项不可点击，但其中的 checkbox、radio、switch 等仍可进行交互
+   * 是否使列表项不可点击，但其中的 [`<mdui-checkbox>`](/docs/2/components/checkbox)、[`<mdui-radio>`](/docs/2/components/radio)、[`<mdui-switch>`](/docs/2/components/switch) 等仍可进行交互
    */
   @property({
     type: Boolean,

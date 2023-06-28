@@ -31,7 +31,7 @@ type NavigationBarItem = NavigationBarItemOriginal & {
  *
  * @slot - `<mdui-navigation-bar-item>` 组件
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-navigation-bar')
 export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
@@ -52,10 +52,10 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
 
   /**
    * 文本的可视状态。可选值为：
-   * * `auto`
-   * * `selected`
-   * * `labeled`
-   * * `unlabeled`
+   * * `auto`：小于等于3个选项时，始终显示；大于3个选项时，仅显示选中状态的文本
+   * * `selected`：仅选中状态显示文本
+   * * `labeled`：始终显示文本
+   * * `unlabeled`：始终不显示文本
    */
   @property({ reflect: true, attribute: 'label-visibility' })
   public labelVisibility:

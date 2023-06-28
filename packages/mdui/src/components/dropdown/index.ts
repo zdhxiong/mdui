@@ -29,7 +29,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event closed - dropdown 关闭动画完成时，事件被触发
  *
  * @slot - dropdown 的内容
- * @slot trigger - 触发 dropdown 的元素，例如 `<mdui-button>` 元素
+ * @slot trigger - 触发 dropdown 的元素，例如 [`<mdui-button>`](/docs/2/components/button) 元素
  *
  * @csspart trigger - `trigger` slot 的容器
  * @csspart panel - dropdown 内容的容器
@@ -108,7 +108,7 @@ export class Dropdown extends LitElement {
     | 'right-end' /*位于右侧，且底部对齐*/ = 'auto';
 
   /**
-   * 在点击 `<mdui-menu-item>` 元素后，是否仍保持 dropdown 为打开状态
+   * 在点击 [`<mdui-menu-item>`](/docs/2/components/menu#menu-item-api) 元素后，是否仍保持 dropdown 为打开状态
    */
   @property({
     type: Boolean,

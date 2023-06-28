@@ -31,13 +31,13 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   public static override styles: CSSResultGroup = [componentStyle, radioStyle];
 
   /**
-   * 当前 radio 选项的值
+   * 当前单选项的值
    */
   @property({ reflect: true })
   public value = '';
 
   /**
-   * 是否禁用当前 radio 选项
+   * 是否禁用当前单选项
    */
   @property({
     type: Boolean,
@@ -47,7 +47,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   public disabled = false;
 
   /**
-   * 当前 radio 选项是否已选中
+   * 当前单选项是否已选中
    */
   @property({
     type: Boolean,

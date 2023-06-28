@@ -34,7 +34,7 @@ type SegmentedButton = SegmentedButtonOriginal & {
  *
  * @slot - `<mdui-segmented-button>` 组件
  *
- * @csspart --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @csspart --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-segmented-button-group')
 export class SegmentedButtonGroup extends LitElement implements FormControl {

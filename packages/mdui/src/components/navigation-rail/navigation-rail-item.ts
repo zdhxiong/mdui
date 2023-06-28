@@ -31,7 +31,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart icon - 图标
  * @csspart active-icon - 激活状态的图标
  *
- * @cssprop --shape-corner-indicator 指示器的圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @cssprop --shape-corner-indicator 指示器的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-navigation-rail-item')
 export class NavigationRailItem extends AnchorMixin(
@@ -43,13 +43,13 @@ export class NavigationRailItem extends AnchorMixin(
   ];
 
   /**
-   * 未激活状态的 Material Icons 图标名
+   * 未激活状态的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
    */
   @property({ reflect: true })
   public icon?: string;
 
   /**
-   * 激活状态的 Material Icons 图标名
+   * 激活状态的 Material Icons 图标名。也可以通过 `slot="active-icon"` 设置
    */
   @property({ reflect: true, attribute: 'active-icon' })
   public activeIcon?: string;

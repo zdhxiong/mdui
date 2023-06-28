@@ -37,13 +37,13 @@ export class SegmentedButton extends ButtonBase {
   ];
 
   /**
-   * 左侧的 Material Icons 图标名
+   * 左侧的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
    */
   @property({ reflect: true })
   public icon?: string;
 
   /**
-   * 右侧的 Material Icons 图标名
+   * 右侧的 Material Icons 图标名。也可以通过 `slot="end-icon"` 设置
    */
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon?: string;

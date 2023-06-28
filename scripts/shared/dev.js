@@ -22,8 +22,8 @@ watch('./packages/shared/src', watchOptions, (_, filePath) => {
   let updatePromise;
 
   if (
-    filepath.replace(/\\/g, '/').includes('packages/shared/src/icons') ||
-    filepath.replace(/\\/g, '/').includes('packages/shared/src/lit-styles')
+    filePath.replace(/\\/g, '/').includes('packages/shared/src/icons') ||
+    filePath.replace(/\\/g, '/').includes('packages/shared/src/lit-styles')
   ) {
     updatePromise = buildLitStyleFile(filePath);
   } else {

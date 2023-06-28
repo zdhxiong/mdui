@@ -78,20 +78,21 @@ export class MenuItem extends AnchorMixin(
   public disabled = false;
 
   /**
-   * 左侧的 Material Icons 图标名
+   * 左侧的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
+   *
    * 如果需要在左侧留出一个图标的位置，可以传入空字符串进行占位
    */
   @property({ reflect: true })
   public icon?: string;
 
   /**
-   * 右侧的 Material Icons 图标名
+   * 右侧的 Material Icons 图标名。也可以通过 `slot="end-icon"` 设置
    */
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon?: string;
 
   /**
-   * 右侧的文本
+   * 右侧的文本。也可以通过 `slot="end-text"` 设置
    */
   @property({ reflect: true, attribute: 'end-text' })
   public endText?: string;

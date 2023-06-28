@@ -19,13 +19,13 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot icon - 按钮左侧元素
  * @slot end-icon - 按钮右侧元素
  *
- * @csspart button - 内部的 button 或 a 元素
+ * @csspart button - 内部的 `button` 或 `a` 元素
  * @csspart label - 文本
  * @csspart icon - 左侧图标
  * @csspart end-icon - 右侧图标
  * @csspart loading - 加载中动画
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-button')
 export class Button extends ButtonBase {
@@ -58,13 +58,13 @@ export class Button extends ButtonBase {
   public fullwidth = false;
 
   /**
-   * 左侧的 Material Icons 图标名
+   * 左侧的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
    */
   @property({ reflect: true })
   public icon?: string;
 
   /**
-   * 右侧的 Material Icons 图标名
+   * 右侧的 Material Icons 图标名。也可以通过 `slot="end-icon"` 设置
    */
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon?: string;

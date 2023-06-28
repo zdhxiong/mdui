@@ -4,7 +4,7 @@ import {
 } from '@material/material-color-utilities';
 
 /**
- * 根据指定的图片，获取主题的十六进制颜色值
+ * 根据指定的图片，提取出主色调的十六进制颜色值
  * @param image `<img>` 元素
  * @return string 十六进制颜色值。例如：`#ff0000`
  */

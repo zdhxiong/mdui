@@ -18,7 +18,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @csspart image - 图片
  * @csspart icon - 图标
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-avatar')
 export class Avatar extends LitElement {
@@ -31,13 +31,13 @@ export class Avatar extends LitElement {
   public src?: string;
 
   /**
-   * 图片如何适应容器框，同原生的 object-fit。可选值为：
+   * 图片如何适应容器框，同原生的 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit" target="_blank">`object-fit`</a>。可选值为：
    *
    * * `contain`：保持原有尺寸比例。内容被缩放
    * * `cover`：保持原有尺寸比例。但部分内容可能被剪切
    * * `fill`：默认，不保证保持原有的比例，内容拉伸填充整个内容容器
    * * `none`：保留原有元素内容的长度和宽度，也就是说内容不会被重置
-   * * `scale-down`：保持原有尺寸比例。内容的尺寸与 none 或 contain 中的一个相同，取决于它们两个之间谁得到的对象尺寸会更小一些
+   * * `scale-down`：保持原有尺寸比例。内容的尺寸与 `none` 或 `contain` 中的一个相同，取决于它们两个之间谁得到的对象尺寸会更小一些
    */
   @property({ reflect: true })
   public fit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';

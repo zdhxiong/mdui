@@ -38,7 +38,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event change
  * @event input
  * @event invalid
- * @event clear - 在点击由 clearable 属性生成的清空按钮时触发。可以通过调用 `event.preventDefault()` 阻止清空文本框
+ * @event clear - 在点击由 `clearable` 属性生成的清空按钮时触发。可以通过调用 `event.preventDefault()` 阻止清空文本框
  *
  * @slot icon
  * @slot end-icon
@@ -141,7 +141,7 @@ export class TextField
   public placeholder?: string;
 
   /**
-   * 文本框底部的帮助文本
+   * 文本框底部的帮助文本。也可以通过 `slot="helper"` 设置
    */
   @property({ reflect: true })
   public helper?: string;
@@ -179,25 +179,25 @@ export class TextField
   public endAligned = false;
 
   /**
-   * 文本框的前缀文本。仅在聚焦状态，或文本框有值时才会显示
+   * 文本框的前缀文本。仅在聚焦状态，或文本框有值时才会显示。也可以通过 `slot="prefix"` 设置
    */
   @property({ reflect: true })
   public prefix!: string;
 
   /**
-   * 文本框的后缀文本。仅在聚焦状态，或文本框有值时才会显示
+   * 文本框的后缀文本。仅在聚焦状态，或文本框有值时才会显示。也可以通过 `slot="suffix"` 设置
    */
   @property({ reflect: true })
   public suffix?: string;
 
   /**
-   * 文本框的前缀图标
+   * 文本框的前缀图标的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
    */
   @property({ reflect: true })
   public icon?: string;
 
   /**
-   * 文本框的后缀图标
+   * 文本框的后缀图标的 Material Icons 图标名。也可以通过 `slot="end-icon"` 设置
    */
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon?: string;
@@ -257,13 +257,13 @@ export class TextField
   public autosize = false;
 
   /**
-   * autosize 为 true 时，可以通过该属性指定最小行数
+   * `autosize` 为 `true` 时，可以通过该属性指定最小行数
    */
   @property({ type: Number, reflect: true, attribute: 'min-rows' })
   public minRows?: number;
 
   /**
-   * autosize 为 true 时，可以通过该属性指定最大行数
+   * `autosize` 为 `true` 时，可以通过该属性指定最大行数
    */
   @property({ type: Number, reflect: true, attribute: 'max-rows' })
   public maxRows?: number;
@@ -281,7 +281,7 @@ export class TextField
   public maxlength?: number;
 
   /**
-   * 是否显示字数统计。必须指定了 maxlength 时，该参数才有效
+   * 是否显示字数统计。必须指定了 `maxlength` 时，该参数才有效
    */
   @property({
     type: Boolean,
@@ -291,19 +291,19 @@ export class TextField
   public counter = false;
 
   /**
-   * 当 type 为 number 时，允许输入的最小数值
+   * 当 `type` 为 `number` 时，允许输入的最小数值
    */
   @property({ type: Number, reflect: true })
   public min?: number;
 
   /**
-   * 当 type 为 number 时，允许输入的最大数值
+   * 当 `type` 为 `number` 时，允许输入的最大数值
    */
   @property({ type: Number, reflect: true })
   public max?: number;
 
   /**
-   * type 为 number 或 range 时，数值在增减过程固定改变的值
+   * `type` 为 `number` 或 `range` 时，数值在增减过程固定改变的值
    */
   @property({ type: Number, reflect: true })
   public step?: number;
@@ -315,7 +315,7 @@ export class TextField
   public pattern?: string;
 
   /**
-   * type 为 password 时，设置该属性会添加一个切换按钮，点击时可在密文和明文之间切换
+   * `type` 为 `password` 时，设置该属性会添加一个切换按钮，点击时可在密文和明文之间切换
    */
   @property({
     type: Boolean,
@@ -340,7 +340,7 @@ export class TextField
     | 'characters' /*全部字母大写*/;
 
   /**
-   * input 元素的 autocorrect 属性
+   * `input` 元素的 `autocorrect` 属性
    */
   @property({ reflect: true })
   public autocorrect?: string;
@@ -356,7 +356,7 @@ export class TextField
     | 'on' /*浏览器根据用户之前输入的内容或者习惯，在用户输入的时候给出相应输入提示*/;
 
   /**
-   * input 元素的 enterkeyhint 属性。可用于定制虚拟键盘上的 Enter 键的显示状态
+   * `input` 元素的 `enterkeyhint` 属性。可用于定制虚拟键盘上的 Enter 键的显示状态
    */
   @property({ reflect: true })
   public enterkeyhint?:
@@ -375,7 +375,7 @@ export class TextField
   public spellcheck = false;
 
   /**
-   * input 元素的 inputmode 属性。用于定制使用哪种虚拟键盘
+   * `input` 元素的 `inputmode` 属性。用于定制使用哪种虚拟键盘
    */
   @property({ reflect: true })
   public inputmode?:
@@ -602,8 +602,8 @@ export class TextField
 
   /**
    * 选中文本框中特定范围的内容
-   * @param selectionStart 被选中的第一个字符的位置索引，从0开始。如果这个值比元素的 value 长度还大，则会被看作 value 最后一个位置的索引
-   * @param selectionEnd 被选中的最后一个字符的*下一个*位置索引。如果这个值比元素的 value 长度还大，则会被看作 value 最后一个位置的索引
+   * @param selectionStart 被选中的第一个字符的位置索引，从 `0` 开始。如果这个值比元素的 `value` 长度还大，则会被看作 `value` 最后一个位置的索引
+   * @param selectionEnd 被选中的最后一个字符的*下一个*位置索引。如果这个值比元素的 `value` 长度还大，则会被看作 `value` 最后一个位置的索引
    * @param selectionDirection 一个表示选择方向的字符串，可能的值有：* `forward` * `backward` * `none`
    */
   public setSelectionRange(

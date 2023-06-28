@@ -30,7 +30,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event closed - 在对话框关闭之后触发
  * @event overlay-click - 点击遮罩层时触发
  *
- * @slot header - 顶部元素，默认包含 icon slot 和 headline slot
+ * @slot header - 顶部元素，默认包含 `icon` slot 和 `headline` slot
  * @slot icon - 顶部图标
  * @slot headline - 顶部标题
  * @slot description - 标题下方的文本
@@ -51,19 +51,19 @@ export class Dialog extends LitElement {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * 顶部的 Material Icons 图标名
+   * 顶部的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
    */
   @property({ reflect: true })
   public icon?: string;
 
   /**
-   * 标题
+   * 标题。也可以通过 `slot="headline"` 设置
    */
   @property({ reflect: true })
   public headline?: string;
 
   /**
-   * 标题下方的文本
+   * 标题下方的文本。也可以通过 `slot="description"` 设置
    */
   @property({ reflect: true })
   public description?: string;

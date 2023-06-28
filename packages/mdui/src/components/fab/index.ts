@@ -22,14 +22,14 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot - 文本
  * @slot icon - 图标
  *
- * @csspart button - 内部的 button 或 a 元素
+ * @csspart button - 内部的 `button` 或 `a` 元素
  * @csspart label - 文本
  * @csspart icon - 图标
  * @csspart loading - 加载中动画
  *
- * @cssprop --shape-corner-small `size="small"` 时的圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
- * @cssprop --shape-corner-normal `size="normal"` 时的圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
- * @cssprop --shape-corner-large `size="large"` 时的圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @cssprop --shape-corner-small `size="small"` 时的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-normal `size="normal"` 时的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-large `size="large"` 时的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-fab')
 export class Fab extends ButtonBase {
@@ -60,7 +60,7 @@ export class Fab extends ButtonBase {
     'normal';
 
   /**
-   * Material Icons 图标名
+   * Material Icons 图标名。也可以通过 `slot="icon"` 设置
    */
   @property({ reflect: true })
   public icon?: string;

@@ -32,7 +32,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @csspart action - 操作按钮
  * @csspart close - 关闭按钮
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-snackbar')
 export class Snackbar extends LitElement {
@@ -67,7 +67,7 @@ export class Snackbar extends LitElement {
     | 'bottom-end' /*位于底部，右对齐*/ = 'bottom';
 
   /**
-   * 操作按钮的文本
+   * 操作按钮的文本。也可以通过 `slot="action"` 设置操作按钮
    */
   @property({ reflect: true, attribute: 'action' })
   public action?: string;
@@ -102,7 +102,7 @@ export class Snackbar extends LitElement {
   public messageLine?: 1 | 2;
 
   /**
-   * 在多长时间后自动关闭（单位为毫秒）。设置为 0 时，不自动关闭
+   * 在多长时间后自动关闭（单位为毫秒）。设置为 `0` 时，不自动关闭
    */
   @property({ type: Number, reflect: true, attribute: 'auto-close-delay' })
   public autoCloseDelay = 5000;

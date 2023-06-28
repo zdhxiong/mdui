@@ -24,7 +24,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * 在手机端，modal 始终为 true；大于手机端时，modal 属性才开始生效
+ * 在手机端，`modal` 始终为 `true`；大于手机端时，`modal` 属性才开始生效
  *
  * @event open - 在抽屉导航打开之前触发。可以通过调用 `event.preventDefault()` 阻止抽屉导航打开
  * @event opened - 在抽屉导航打开之后触发
@@ -53,7 +53,7 @@ export class NavigationDrawer extends LayoutItemBase {
 
   /**
    * 打开时，是否显示遮罩层
-   * 较窄的设备上（屏幕宽度小于 `--mdui-breakpoint-md` 时），会无视该参数，始终显示遮罩层
+   * 较窄的设备上（屏幕宽度小于 [`--mdui-breakpoint-md`](/docs/2/styles/design-tokens#breakpoint) 时），会无视该参数，始终显示遮罩层
    */
   @property({
     type: Boolean,
@@ -93,10 +93,10 @@ export class NavigationDrawer extends LayoutItemBase {
   public placement: 'left' | 'right' = 'left';
 
   /**
-   * 默认抽屉导航相对于 body 元素显示，该参数设置为 true 时，抽屉导航将相对于它的父元素显示
+   * 默认抽屉导航相对于 `body` 元素显示，该参数设置为 `true` 时，抽屉导航将相对于它的父元素显示
    *
    * Note:
-   * 设置了该属性时，必须手动在父元素上设置样式 `position: relative; box-sizing: border-box;`
+   * 设置了该属性时，必须手动在父元素上设置样式 `position: relative; overflow: hidden;`
    */
   @property({
     type: Boolean,

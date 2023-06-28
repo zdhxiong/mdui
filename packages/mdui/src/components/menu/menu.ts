@@ -36,17 +36,17 @@ type MenuItem = MenuItemOriginal & {
 
 /**
  * 键盘快捷键：
- * * `Arrow Up` / `Arrow Down` - 使焦点在 `mdui-menu-item` 之间向上/向下切换
- * * `Home` / `End` - 使焦点跳转到第一个/最后一个 `mdui-menu-item` 元素上
+ * * `Arrow Up` / `Arrow Down` - 使焦点在 `<mdui-menu-item>` 之间向上/向下切换
+ * * `Home` / `End` - 使焦点跳转到第一个/最后一个 `<mdui-menu-item>` 元素上
  * * `Space` - 可选中时，选中/取消选中一项
  * * `Enter` - 包含子菜单时，打开子菜单；为链接时，跳转链接
  * * `Escape` - 子菜单已打开时，关闭子菜单
  *
  * @event change - 菜单项的选中状态变化时触发
  *
- * @slot - 子菜单项（`<mdui-menu-item>`）、分割线（`<mdui-divider>`）等元素
+ * @slot - 子菜单项（`<mdui-menu-item>`）、分割线（[`<mdui-divider>`](/docs/2/components/divider)）等元素
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-menu')
 export class Menu extends LitElement {

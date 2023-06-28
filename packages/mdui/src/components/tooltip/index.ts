@@ -28,9 +28,9 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event close - tooltip 开始隐藏时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 tooltip 关闭
  * @event closed - tooltip 隐藏动画完成时，事件被触发
  *
- * @slot - tooltip 触发的目标元素，仅 default slot 中的第一个元素会作为目标元素
+ * @slot - tooltip 触发的目标元素，仅 `default` slot 中的第一个元素会作为目标元素
  * @slot headline - tooltip 的标题，仅 `variant="rich"` 时该 slot 才有效
- * @slot content - tooltip 的内容，可以包含 HTML。若只包含纯文本，可以使用 content 属性代替
+ * @slot content - tooltip 的内容，可以包含 HTML。若只包含纯文本，可以使用 `content` 属性代替
  * @slot action - tooltip 底部的按钮，仅 `variant="rich"` 时该 slot 才有效
  *
  * @csspart popup - tooltip 的容器
@@ -105,13 +105,13 @@ export class Tooltip extends LitElement {
   public closeDelay = 150;
 
   /**
-   * tooltip 的标题。仅 variant="rich" 时可使用
+   * tooltip 的标题。仅 `variant="rich"` 时可使用。也可以通过 `slot="headline"` 设置
    */
   @property({ reflect: true })
   public headline?: string;
 
   /**
-   * tooltip 的内容
+   * tooltip 的内容。也可以通过 `slot="content"` 设置
    */
   @property({ reflect: true })
   public content?: string;

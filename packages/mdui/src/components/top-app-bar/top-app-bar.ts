@@ -28,10 +28,10 @@ type TopAppBarTitle = {
  *
  * @slot - 顶部应用栏内部的元素
  *
- * @csspart large-title - variant="medium" 和 variant="large" 时，展开的大标题
- * @csspart large-title-inner - variant="medium" 和 variant="large" 时，展开的大标题的内部元素
+ * @csspart large-title - `variant="medium"` 和 `variant="large"` 时，展开的大标题
+ * @csspart large-title-inner - `variant="medium"` 和 `variant="large"` 时，展开的大标题的内部元素
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-top-app-bar')
 export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
@@ -75,9 +75,10 @@ export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   public shrink = false;
 
   /**
-   * 滚动行为。可选值为：
+   * 滚动行为。可同时使用多个值，多个值之间用空格分割。可选值为：
    * * `hide`：滚动时隐藏
    * * `shrink`：滚动时缩小成 `variant="small"` 的样式
+   * * `elevate`：滚动时添加阴影
    */
   @property({ reflect: true, attribute: 'scroll-behavior' })
   public scrollBehavior?:

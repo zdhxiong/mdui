@@ -42,7 +42,7 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
   public value?: string;
 
   /**
-   * Material Icons 图标名
+   * Material Icons 图标名。也可以通过 `slot="icon"` 设置
    */
   @property({ reflect: true })
   public icon?: string;

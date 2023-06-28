@@ -36,7 +36,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event blur
  * @event change
  * @event invalid
- * @event clear - 在点击由 clearable 属性生成的清空按钮时触发。可以通过调用 `event.preventDefault()` 阻止清空下拉框
+ * @event clear - 在点击由 `clearable` 属性生成的清空按钮时触发。可以通过调用 `event.preventDefault()` 阻止清空下拉框
  *
  * @slot - `<mdui-menu-item>` 元素
  * @slot icon
@@ -46,8 +46,8 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot clear
  * @slot helper
  *
- * @csspart text-field 文本框，即 `<mdui-text-field>` 元素
- * @csspart menu 下拉菜单，即 `<mdui-menu>` 元素
+ * @csspart text-field 文本框，即 [`<mdui-text-field>`](/docs/2/components/text-field) 元素
+ * @csspart menu 下拉菜单，即 [`<mdui-menu>`](/docs/2/components/menu) 元素
  */
 @customElement('mdui-select')
 export class Select extends FocusableMixin(LitElement) implements FormControl {
@@ -107,7 +107,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   public placeholder?: string;
 
   /**
-   * 下拉框底部的帮助文本
+   * 下拉框底部的帮助文本。也可以通过 `slot="helper"` 设置
    */
   @property({ reflect: true })
   public helper?: string;
@@ -146,25 +146,25 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   public endAligned = false;
 
   /**
-   * 下拉框的前缀文本。仅在聚焦状态，或下拉框有值时才会显示
+   * 下拉框的前缀文本。仅在聚焦状态，或下拉框有值时才会显示。也可以通过 `slot="prefix"` 设置
    */
   @property({ reflect: true })
   public prefix!: string;
 
   /**
-   * 下拉框的后缀文本。仅在聚焦状态，或下拉框有值时才会显示
+   * 下拉框的后缀文本。仅在聚焦状态，或下拉框有值时才会显示。也可以通过 `slot="suffix"` 设置
    */
   @property({ reflect: true })
   public suffix?: string;
 
   /**
-   * 下拉框的前缀图标
+   * 下拉框的前缀图标的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
    */
   @property({ reflect: true })
   public icon?: string;
 
   /**
-   * 下拉框的后缀图标
+   * 下拉框的后缀图标的 Material Icons 图标名。也可以通过 `slot="end-icon"` 设置
    */
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon?: string;

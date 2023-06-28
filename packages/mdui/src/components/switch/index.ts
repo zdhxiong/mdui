@@ -72,15 +72,15 @@ export class Switch
   public defaultChecked = false;
 
   /**
-   * 未选中状态的图标
+   * 未选中状态的 Material Icons 图标名。也可以通过 `slot="unchecked-icon"` 设置
    */
   @property({ reflect: true, attribute: 'unchecked-icon' })
   public uncheckedIcon?: string;
 
   /**
-   * 选中状态的图标
+   * 选中状态的 Material Icons 图标名。也可以通过 `slot="checked-icon"` 设置
    *
-   * 默认为 check，可传入空字符串移除默认图标
+   * 默认为 check 图标，可传入空字符串移除默认图标
    */
   @property({ reflect: true, attribute: 'checked-icon' })
   public checkedIcon?: string;

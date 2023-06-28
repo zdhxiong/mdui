@@ -35,7 +35,7 @@ type NavigationRailItem = NavigationRailItemOriginal & {
  * @csspart bottom - 底部元素的容器
  * @csspart items - `<mdui-navigation-rail-item>` 组件的容器
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-navigation-rail')
 export class NavigationRail extends LayoutItemBase {
@@ -45,7 +45,7 @@ export class NavigationRail extends LayoutItemBase {
   ];
 
   /**
-   * 当前选中的 `<mdui-navigation-bar-item>` 的值
+   * 当前选中的 `<mdui-navigation-rail-item>` 的值
    */
   @property({ reflect: true })
   public value?: string;
@@ -68,10 +68,10 @@ export class NavigationRail extends LayoutItemBase {
   public alignment: 'start' | 'center' | 'end' = 'start';
 
   /**
-   * 默认导航栏相对于 body 元素显示，该参数设置为 true 时，导航栏将相对于它的父元素显示
+   * 默认导航栏相对于 `body` 元素显示，该参数设置为 `true` 时，导航栏将相对于它的父元素显示
    *
    * Note:
-   * 设置了该属性时，必须手动在父元素上设置样式 `position: relative; box-sizing: border-box;`
+   * 设置了该属性时，必须手动在父元素上设置样式 `position: relative;`
    */
   @property({
     type: Boolean,

@@ -18,7 +18,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  *
  * @slot - 底部应用栏内部的元素
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-bottom-app-bar')
 export class BottomAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
@@ -35,7 +35,7 @@ export class BottomAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   public hide = false;
 
   /**
-   * 是否使底部应用栏中的 `<mdui-fab>` 组件脱离应用栏。若为 `true`，则在应用栏隐藏后，`<mdui-fab>` 仍将停留在页面上
+   * 是否使底部应用栏中的 [`<mdui-fab>`](/docs/2/components/fab) 组件脱离应用栏。若为 `true`，则在应用栏隐藏后，[`<mdui-fab>`](/docs/2/components/fab) 仍将停留在页面上
    */
   @property({
     type: Boolean,

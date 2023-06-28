@@ -55,6 +55,6 @@ export * from './functions/breakpoint.js';
 export * from './functions/getColorFromImage.js';
 export * from './functions/observeResize.js';
 export * from './functions/prompt.js';
-export * from './functions/setTheme.js';
+export * from './functions/setColorScheme.js';
 export * from './functions/snackbar.js';
 export * from './functions/throttle.js';

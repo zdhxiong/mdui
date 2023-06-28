@@ -22,11 +22,11 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot - 图标组件
  * @slot selected-icon 选中状态显示的图标元素
  *
- * @csspart button - 内部的 button 或 a 元素
+ * @csspart button - 内部的 `button` 或 `a` 元素
  * @csspart icon - 图标组件
  * @csspart selected-icon 选中状态的图标
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
+ * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-button-icon')
 export class ButtonIcon extends ButtonBase {
@@ -47,13 +47,13 @@ export class ButtonIcon extends ButtonBase {
     | 'outlined' /*预览图*/ = 'standard';
 
   /**
-   * Material Icons 图标名
+   * Material Icons 图标名。也可以通过 default slot 设置
    */
   @property({ reflect: true })
   public icon?: string;
 
   /**
-   * 选中状态的 Material Icons 图标名
+   * 选中状态的 Material Icons 图标名。也可以通过 `slot="selected-icon"` 设置
    */
   @property({ reflect: true, attribute: 'selected-icon' })
   public selectedIcon?: string;

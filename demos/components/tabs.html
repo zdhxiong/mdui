@@ -13,7 +13,7 @@
     rel="stylesheet">
   <link
     rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+    href="https://www.unpkg.com/swiper@10.0.4/swiper-bundle.min.css"
   />
   <style>
     body {
@@ -48,7 +48,7 @@
       $('.update-placement')[0].placement = this.value;
     });
 
-    import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.esm.browser.min.js';
+    import Swiper from 'https://www.unpkg.com/swiper@10.0.4/swiper-bundle.min.mjs';
     const tabWithSwiper = document.querySelector('.with-swiper');
     const tabs = Array.from(document.querySelectorAll('.with-swiper mdui-tab'));
     const getCurrentTabIndex = () => tabs.findIndex(tab => tab.value === tabWithSwiper.value);

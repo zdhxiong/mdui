@@ -108,6 +108,14 @@ mdui-circular-progress {
   .width(18);
   .height(18);
 
+  :host([variant="filled"]) & {
+    .stroke(on-primary);
+  }
+
+  :host([variant="tonal"]) & {
+    .stroke(on-secondary-container);
+  }
+
   :host([disabled]) & {
     .stroke(on-surface, 38%)
   }

@@ -77,7 +77,9 @@
 }
 
 .action,
-.action mdui-button {
+.action mdui-button,
+::slotted(mdui-button[slot="action"][variant="text"]),
+::slotted(mdui-button[slot="action"][variant="outlined"]) {
   .color(inverse-primary);
   .typescale(label-large);
   .stateLayerColor(inverse-primary);
@@ -88,7 +90,9 @@
 }
 
 .close,
-.close mdui-button-icon {
+.close mdui-button-icon,
+::slotted(mdui-button-icon[slot="close"][variant="standard"]),
+::slotted(mdui-button-icon[slot="close"][variant="outlined"]) {
   .fontSize(24);
   .color(inverse-on-surface);
   .stateLayerColor(inverse-on-surface);

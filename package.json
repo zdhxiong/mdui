@@ -20,7 +20,7 @@
     "build:mdui": "node scripts/mdui/build-less.js && node scripts/mdui/build-lit-style.js && tsc -p packages/mdui/tsconfig.json && node scripts/mdui/build-lit-js.js && npm-run-all -s analyze:mdui -p vscode:mdui webtypes:mdui",
     "build:icons": "tsc -p packages/icons/tsconfig.json && node scripts/icons/build-lit-js.js",
     "build": "npm-run-all -s clean lint build:jq build:shared -p build:mdui build:icons",
-    "build-dev": "run-s clean lint build:jq build:shared \"build:mdui --dev\"",
+    "build-dev": "npm-run-all -s clean lint build:jq build:shared -p \"build:mdui --dev\" build:icons",
     "bundle": "npm run build && rollup -c scripts/mdui/rollup.config.js",
     "test:jq": "eslint --fix packages/jq/__test__/**/*.ts && tsc -p packages/jq/__test__/tsconfig.json && web-test-runner --config scripts/jq/web-test-runner.config.mjs",
     "test:mdui": "eslint --fix packages/mdui/src/**/*.test.ts && tsc -p packages/mdui/tsconfig.json && web-test-runner --config scripts/mdui/web-test-runner.config.mjs",
@@ -38,7 +38,7 @@
     "publish": "npm run bundle && pnpm publish --recursive"
   },
   "devDependencies": {
-    "@custom-elements-manifest/analyzer": "^0.8.2",
+    "@custom-elements-manifest/analyzer": "0.8.2",
     "@material-design-icons/svg": "^0.14.2",
     "@open-wc/testing": "^3.1.4",
     "@rollup/plugin-commonjs": "^25.0.0",

@@ -24,16 +24,16 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event delete - 点击删除图标时触发
  *
  * @slot - 文本
- * @slot icon - 左侧图标
+ * @slot start - 左侧元素
+ * @slot end - 右侧元素
  * @slot selected-icon - 选中状态的左侧图标
- * @slot end-icon - 右侧图标
  * @slot delete-icon - 删除图标
  *
  * @csspart button - 内部的 button 或 a 元素
  * @csspart label - 文本
- * @csspart icon - 左侧图标
+ * @csspart start - 左侧元素
+ * @csspart end - 右侧元素
  * @csspart selected-icon - 选中状态的左侧图标
- * @csspart end-icon - 右侧图标
  * @csspart delete-icon-wrapper - 删除图标的容器
  * @csspart delete-icon - 删除图标
  * @csspart loading - 加载中动画
@@ -213,12 +213,16 @@ export class Chip extends ButtonBase {
 
     return this.selected
       ? html`<slot name="selected-icon">${this.renderSelectedIcon()}</slot>`
-      : html`<slot name="icon">${this.renderIcon()}</slot>`;
+      : html`<slot name="start">${this.renderIcon()}</slot>`;
   }
 
   private renderIcon(): TemplateResult {
     return this.icon
-      ? html`<mdui-icon part="icon" class="icon" name=${this.icon}></mdui-icon>`
+      ? html`<mdui-icon
+          part="start"
+          class="start"
+          name=${this.icon}
+        ></mdui-icon>`
       : nothingTemplate;
   }
 
@@ -226,7 +230,7 @@ export class Chip extends ButtonBase {
     if (this.selectedIcon) {
       return html`<mdui-icon
         part="selected-icon"
-        class="icon"
+        class="start"
         name="${this.selectedIcon}"
       ></mdui-icon>`;
     }
@@ -234,7 +238,7 @@ export class Chip extends ButtonBase {
     if (this.variant === 'assist' || this.variant === 'filter') {
       return html`<mdui-icon-check
         part="selected-icon"
-        class="icon"
+        class="start"
       ></mdui-icon-check>`;
     }
 
@@ -246,11 +250,11 @@ export class Chip extends ButtonBase {
   }
 
   private renderEnd(): TemplateResult {
-    return html`<slot name="end-icon">
+    return html`<slot name="end">
       ${this.endIcon
         ? html`<mdui-icon
-            part="end-icon"
-            class="end-icon"
+            part="end"
+            class="end"
             name="${this.endIcon}"
           ></mdui-icon>`
         : nothingTemplate}

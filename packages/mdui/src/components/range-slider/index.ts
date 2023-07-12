@@ -63,7 +63,7 @@ export class RangeSlider extends SliderBase implements FormControl {
    * NOTE:
    * 该属性无法通过 HTML 属性设置初始值，如果要修改该值，只能通过修改 JavaScript 属性值实现。
    */
-  @property({ type: Array })
+  @property({ type: Array, attribute: false })
   public get value(): number[] {
     return this._value;
   }

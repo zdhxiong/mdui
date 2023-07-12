@@ -126,16 +126,17 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
     return this.disabled;
   }
 
+  /**
+   * 用于自定义标签的显示格式
+   */
+  @property({ attribute: false })
+  public labelFormatter: (value: number) => string = (value: number) =>
+    value.toString();
+
   @watch('disabled', true)
   private onDisabledChange() {
     this.invalid = !this.inputRef.value!.checkValidity();
   }
-
-  /**
-   * 用于自定义标签的显示格式
-   */
-  public labelFormatter: (value: number) => string = (value: number) =>
-    value.toString();
 
   /**
    * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`

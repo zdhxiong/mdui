@@ -9,8 +9,6 @@ import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/height.js';
 import '@mdui/jq/methods/innerHeight.js';
 import '@mdui/jq/methods/innerWidth.js';
-import '@mdui/jq/methods/is.js';
-import '@mdui/jq/methods/parent.js';
 import '@mdui/jq/methods/width.js';
 import { isUndefined } from '@mdui/jq/shared/helper.js';
 import '@mdui/jq/static/contains.js';
@@ -42,7 +40,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot start - 菜单项左侧元素
  * @slot end - 菜单项右侧元素
  * @slot end-text - 菜单右侧的文本
- * @slot submenu-item - 子菜单
+ * @slot submenu - 子菜单
  * @slot custom - 任意自定义内容
  *
  * @csspart start - 左侧的元素
@@ -153,7 +151,7 @@ export class MenuItem extends AnchorMixin(
     'start',
     'end',
     'end-text',
-    'submenu-item',
+    'submenu',
     'custom',
   );
 
@@ -186,7 +184,7 @@ export class MenuItem extends AnchorMixin(
   }
 
   private get hasSubmenu(): boolean {
-    return this.hasSlotController.test('submenu-item');
+    return this.hasSlotController.test('submenu');
   }
 
   @watch('submenuOpen')
@@ -278,11 +276,6 @@ export class MenuItem extends AnchorMixin(
     super.connectedCallback();
 
     document.addEventListener('pointerdown', this.onOuterClick);
-
-    // 如果该菜单项是子菜单项，添加 slot
-    if ($(this).parent().is('mdui-menu-item')) {
-      this.slot = 'submenu-item';
-    }
   }
 
   public override disconnectedCallback(): void {
@@ -333,7 +326,7 @@ export class MenuItem extends AnchorMixin(
             class="submenu"
             hidden
           >
-            <slot name="submenu-item"></slot>
+            <slot name="submenu"></slot>
           </div>`,
       )}`;
   }

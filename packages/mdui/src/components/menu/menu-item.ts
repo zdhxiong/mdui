@@ -399,6 +399,14 @@ export class MenuItem extends AnchorMixin(
       return;
     }
 
+    // 支持 hover 和 focus 触发时，点击菜单项不关闭子菜单
+    if (
+      this.submenuOpen &&
+      (this.hasTrigger('hover') || this.hasTrigger('focus'))
+    ) {
+      return;
+    }
+
     this.submenuOpen = !this.submenuOpen;
   }
 

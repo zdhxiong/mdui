@@ -430,6 +430,11 @@ export class Dropdown extends LitElement {
       return;
     }
 
+    // 支持 hover 或 focus 触发时，点击时，不关闭 dropdown
+    if (this.open && (this.hasTrigger('hover') || this.hasTrigger('focus'))) {
+      return;
+    }
+
     this.pointerOffsetX = e.offsetX;
     this.pointerOffsetY = e.offsetY;
 

@@ -379,6 +379,11 @@ export class Tooltip extends LitElement {
       return;
     }
 
+    // 支持 hover 和 focus 触发时，点击时，不关闭 tooltip
+    if (this.open && (this.hasTrigger('hover') || this.hasTrigger('focus'))) {
+      return;
+    }
+
     this.open = !this.open;
   }
 

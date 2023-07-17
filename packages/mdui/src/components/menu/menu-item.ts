@@ -37,16 +37,18 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event submenu-closed - 子菜单关闭动画完成时，事件被触发
  *
  * @slot - 菜单项的文本
- * @slot start - 菜单项左侧元素
- * @slot end - 菜单项右侧元素
+ * @slot icon - 菜单项左侧元素
+ * @slot end-icon - 菜单项右侧元素
  * @slot end-text - 菜单右侧的文本
  * @slot submenu - 子菜单
  * @slot custom - 任意自定义内容
  *
- * @csspart start - 左侧的元素
- * @csspart label - 文本内容的容器
- * @csspart label-text 文本内容
- * @csspart end - 右侧的元素
+ * @csspart label-container - 文本内容的容器
+ * @csspart label - 文本内容
+ * @csspart icon-container - 左侧的图标容器
+ * @csspart icon - 左侧的图标
+ * @csspart end-icon-container - 右侧的图标容器
+ * @csspart end-icon - 右侧的图标
  * @csspart end-text - 右侧的文本
  * @csspart submenu - 子菜单元素
  */
@@ -143,13 +145,13 @@ export class MenuItem extends AnchorMixin(
   private submenuOpenTimeout!: number;
   private submenuCloseTimeout!: number;
   private readonly rippleRef: Ref<Ripple> = createRef();
-  private readonly itemRef: Ref<HTMLElement> = createRef();
+  private readonly containerRef: Ref<HTMLElement> = createRef();
   private readonly submenuRef: Ref<HTMLElement> = createRef();
   private readonly hasSlotController = new HasSlotController(
     this,
     '[default]',
-    'start',
-    'end',
+    'icon',
+    'end-icon',
     'end-text',
     'submenu',
     'custom',
@@ -172,7 +174,7 @@ export class MenuItem extends AnchorMixin(
   }
 
   protected override get focusElement(): HTMLElement {
-    return this.href ? this.itemRef.value! : this;
+    return this.href ? this.containerRef.value! : this;
   }
 
   protected override get rippleDisabled(): boolean {
@@ -299,7 +301,7 @@ export class MenuItem extends AnchorMixin(
     const hasCustomSlot = this.hasSlotController.test('custom');
     const hasSubmenu = this.hasSubmenu;
     const className = cc({
-      item: true,
+      container: true,
       preset: !hasCustomSlot,
       dense: this.dense,
     });
@@ -311,10 +313,10 @@ export class MenuItem extends AnchorMixin(
       ${this.href && !this.disabled
         ? this.renderAnchor({
             className,
-            content: this.renderInner(this.hasSubmenu),
-            refDirective: ref(this.itemRef),
+            content: this.renderInner(hasSubmenu),
+            refDirective: ref(this.containerRef),
           })
-        : html`<div ${ref(this.itemRef)} class=${className}>
+        : html`<div ${ref(this.containerRef)} class=${className}>
             ${this.renderInner(hasSubmenu)}
           </div>`}
       ${when(
@@ -485,29 +487,29 @@ export class MenuItem extends AnchorMixin(
   }
 
   private renderInner(hasSubmenu: boolean): TemplateResult {
-    const hasStartSlot = this.hasSlotController.test('start');
-    const hasEndSlot = this.hasSlotController.test('end');
+    const hasIconSlot = this.hasSlotController.test('icon');
+    const hasEndIconSlot = this.hasSlotController.test('end-icon');
     const hasEndTextSlot = this.hasSlotController.test('end-text');
 
     return html`<slot name="custom">
       <div
-        part="start"
-        class="start-icon ${classMap({
-          'has-start':
-            hasStartSlot ||
+        part="icon-container"
+        class="icon-container ${classMap({
+          'has-icon':
+            hasIconSlot ||
             !isUndefined(this.icon) ||
             this.selects === 'single' ||
             this.selects === 'multiple',
         })}"
       >
         ${this.selected
-          ? html`<mdui-icon-check></mdui-icon-check>`
-          : html`<slot name="start">
-              <mdui-icon name=${this.icon}></mdui-icon>
+          ? html`<mdui-icon-check part="icon"></mdui-icon-check>`
+          : html`<slot name="icon">
+              <mdui-icon part="icon" name=${this.icon}></mdui-icon>
             </slot>`}
       </div>
-      <div part="label" class="label">
-        <div part="label-text" class="label-text"><slot></slot></div>
+      <div part="label-container" class="label-container">
+        <div part="label" class="label"><slot></slot></div>
       </div>
       <div
         part="end-text"
@@ -518,17 +520,18 @@ export class MenuItem extends AnchorMixin(
         <slot name="end-text">${this.endText}</slot>
       </div>
       <div
-        part="end"
-        class="end-icon ${classMap({
-          'has-end': hasEndSlot || this.endIcon || hasSubmenu,
+        part="end-icon-container"
+        class="end-icon-container ${classMap({
+          'has-end-icon': hasEndIconSlot || this.endIcon || hasSubmenu,
         })}"
       >
-        ${hasSubmenu && !hasEndSlot && !this.endIcon
+        ${hasSubmenu && !hasEndIconSlot && !this.endIcon
           ? html`<mdui-icon-arrow-right
+              part="end-icon"
               class="arrow-right"
             ></mdui-icon-arrow-right>`
-          : html`<slot name="end">
-              <mdui-icon name=${this.endIcon!}></mdui-icon>
+          : html`<slot name="end-icon">
+              <mdui-icon part="end-icon" name=${this.endIcon!}></mdui-icon>
             </slot>`}
       </div>
     </slot>`;

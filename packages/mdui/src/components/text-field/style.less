@@ -9,17 +9,17 @@
   pointer-events: none;
 }
 
-.text-field {
+.container {
   position: relative;
   display: flex;
   .transition(box-shadow, short4, standard);
   .padding(0, 16);
 
-  &.has-prefix-icon {
+  &.has-icon {
     .paddingLeft(12);
   }
 
-  &.has-suffix-icon {
+  &.has-end-icon {
     .paddingRight(12);
   }
 
@@ -88,8 +88,8 @@
   }
 }
 
-.prefix-icon,
-.suffix-icon,
+.icon-container,
+.end-icon-container,
 .prefix,
 .suffix {
   display: flex;
@@ -102,7 +102,7 @@
   }
 }
 
-.suffix-icon,
+.end-icon-container,
 .suffix {
   :host([invalid]) & {
     .color(error);
@@ -118,8 +118,8 @@
   }
 }
 
-.prefix-icon,
-.suffix-icon {
+.icon-container,
+.end-icon-container {
   .fontSize(24);
 
   mdui-button-icon,
@@ -129,14 +129,14 @@
   }
 }
 
-.prefix-icon {
-  .has-prefix-icon & {
+.icon-container {
+  .has-icon & {
     .marginRight(16);
   }
 }
 
-.suffix-icon {
-  .has-suffix-icon & {
+.end-icon-container {
+  .has-end-icon & {
     .marginLeft(16);
   }
 }

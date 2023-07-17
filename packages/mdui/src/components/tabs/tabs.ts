@@ -35,7 +35,7 @@ type TabPanel = TabPanelOriginal & {
  * @slot - `<mdui-tab>` 元素
  * @slot panel - `<mdui-tab-panel>` 元素
  *
- * @csspart nav - `<mdui-tab>` 元素的容器
+ * @csspart tab-container - `<mdui-tab>` 元素的容器
  * @csspart indicator - 激活状态指示器
  */
 @customElement('mdui-tabs')
@@ -104,7 +104,7 @@ export class Tabs extends LitElement {
   private observeResize?: ObserveResize;
   private tabs: Tab[] = [];
   private panels: TabPanel[] = [];
-  private readonly navRef: Ref<HTMLElement> = createRef();
+  private readonly tabContainerRef: Ref<HTMLElement> = createRef();
   private readonly indicatorRef: Ref<HTMLElement> = createRef();
 
   @watch('activeKey', true)
@@ -135,7 +135,7 @@ export class Tabs extends LitElement {
     this.syncTabsAndPanels();
 
     this.updateComplete.then(() => {
-      this.observeResize = observeResize(this.navRef.value!, () =>
+      this.observeResize = observeResize(this.tabContainerRef.value!, () =>
         this.updateIndicator(),
       );
     });
@@ -147,7 +147,11 @@ export class Tabs extends LitElement {
   }
 
   protected override render(): TemplateResult {
-    return html`<div ${ref(this.navRef)} part="nav" class="nav">
+    return html`<div
+        ${ref(this.tabContainerRef)}
+        part="tab-container"
+        class="tab-container"
+      >
         <slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>
         <div ${ref(this.indicatorRef)} part="indicator" class="indicator"></div>
       </div>

@@ -108,15 +108,15 @@
     <section>
       <h2>slot icon</h2>
       <mdui-button variant="elevated">
-        <mdui-icon name="settings" slot="start"></mdui-icon>
+        <mdui-icon name="settings" slot="icon"></mdui-icon>
         button
       </mdui-button>
       <mdui-button variant="elevated">
-        <mdui-icon name="settings--outlined" slot="end"></mdui-icon>
+        <mdui-icon name="settings--outlined" slot="end-icon"></mdui-icon>
         button
       </mdui-button>
       <mdui-button variant="elevated">
-        <mdui-icon-settings slot="start"></mdui-icon-settings>
+        <mdui-icon-settings slot="icon"></mdui-icon-settings>
         button
       </mdui-button>
     </section>
@@ -128,7 +128,7 @@
           color: red;
         }
 
-        #part1::part(start) {
+        #part1::part(icon) {
           color: green;
         }
       </style>
@@ -139,12 +139,13 @@
           color: red;
         }
 
-        #part2::part(end) {
+        /* 此处期望不生效 */
+        #part2::part(end-icon) {
           color: green;
         }
       </style>
       <mdui-button id="part2">
-        <mdui-icon name="settings" slot="end"></mdui-icon>
+        <mdui-icon name="settings" slot="end-icon"></mdui-icon>
         button
       </mdui-button>
     </section>

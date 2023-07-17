@@ -59,9 +59,9 @@
 }
 
 .icon,
-.check,
-::slotted([slot="start"]),
-::slotted([slot="end"]) {
+.checked-icon,
+::slotted([slot="icon"]),
+::slotted([slot="end-icon"]) {
   font-size: unit((18 / 14), em);
 }
 
@@ -74,10 +74,10 @@ mdui-circular-progress {
   }
 }
 
-.has-start .label {
+.has-icon .label {
   .paddingLeft(8);
 }
 
-.has-end .label {
+.has-end-icon .label {
   .paddingRight(8);
 }

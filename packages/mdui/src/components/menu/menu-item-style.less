@@ -13,7 +13,7 @@
   pointer-events: none;
 }
 
-.item {
+.container {
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -36,34 +36,34 @@
   }
 }
 
-.label {
+.label-container {
   flex: 1 1 100%;
   min-width: 0;
   .color(on-surface);
   .typescale(label-large);
 }
 
-.label-text {
+.label {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.start-icon,
-.end-icon,
+.icon-container,
+.end-icon-container,
 .end-text {
   display: none;
   .color(on-surface-variant);
 }
 
-.has-start,
-.has-end,
+.has-icon,
+.has-end-icon,
 .has-end-text {
   display: flex;
 }
 
-.start-icon,
-.end-icon {
+.icon-container,
+.end-icon-container {
   ::slotted(mdui-avatar) {
     .width(24);
     .height(24);
@@ -86,11 +86,11 @@
   .typescale(label-large);
 }
 
-.start-icon {
+.icon-container {
   .marginRight(12);
 }
 
-.end-icon,
+.end-icon-container,
 .end-text {
   .marginLeft(12);
 }

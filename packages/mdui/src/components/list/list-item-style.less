@@ -24,7 +24,7 @@
   pointer-events: none;
 }
 
-.item {
+.container {
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -119,10 +119,10 @@
   -webkit-line-clamp: 3;
 }
 
-.start,
-.end,
-::slotted([slot="start"]),
-::slotted([slot="end"]) {
+.icon,
+.end-icon,
+::slotted([slot="icon"]),
+::slotted([slot="end-icon"]) {
   display: flex;
   flex: 0 0 auto;
   .color(on-surface-variant);
@@ -139,38 +139,38 @@
   }
 }
 
-::slotted(:not(mdui-icon)[slot="start"]),
-::slotted(:not(mdui-icon)[slot="end"]) {
+::slotted(:not(mdui-icon)[slot="icon"]),
+::slotted(:not(mdui-icon)[slot="end-icon"]) {
   .typescale(label-small);
 }
 
-.start,
-.end,
-::slotted(mdui-icon[slot="start"]),
-::slotted(mdui-icon[slot="end"]) {
+.icon,
+.end-icon,
+::slotted(mdui-icon[slot="icon"]),
+::slotted(mdui-icon[slot="end-icon"]) {
   .fontSize(24);
 }
 
-.has-start {
-  .start,
-  ::slotted([slot="start"]) {
+.has-icon {
+  .icon,
+  ::slotted([slot="icon"]) {
     .marginRight(16);
   }
 
-  ::slotted(mdui-checkbox[slot="start"]),
-  ::slotted(mdui-radio[slot="start"]) {
+  ::slotted(mdui-checkbox[slot="icon"]),
+  ::slotted(mdui-radio[slot="icon"]) {
     .marginLeft(-8);
   }
 }
 
-.has-end {
-  .end,
-  ::slotted([slot="end"]) {
+.has-end-icon {
+  .end-icon,
+  ::slotted([slot="end-icon"]) {
     .marginLeft(16);
   }
 
-  ::slotted(mdui-checkbox[slot="end"]),
-  ::slotted(mdui-radio[slot="end"]) {
+  ::slotted(mdui-checkbox[slot="end-icon"]),
+  ::slotted(mdui-radio[slot="end-icon"]) {
     .marginRight(-8);
   }
 }

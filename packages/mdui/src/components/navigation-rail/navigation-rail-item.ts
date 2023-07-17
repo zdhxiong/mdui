@@ -20,7 +20,7 @@ import type { Ref } from 'lit/directives/ref.js';
 /**
  * @slot - 文本
  * @slot icon - 图标
- * @slot active-icon - 激活状态的图标
+ * @slot active-active - 激活状态的图标元素
  * @slot badge - 徽标
  *
  * @event click - 点击时触发

@@ -26,9 +26,10 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot badge - 徽标
  * @slot custom - 自定义整个选项卡导航项中的内容
  *
- * @csspart tab - 选项卡导航项容器
+ * @csspart container - 选项卡导航项容器
+ * @csspart icon-container - 选项卡导航项中的图标容器
  * @csspart icon - 选项卡导航项中的图标
- * @csspart label - 选项卡导航项的文本
+ * @csspart label-container - 选项卡导航项的文本
  */
 @customElement('mdui-tab')
 export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
@@ -102,35 +103,32 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
     const hasIconSlot = this.hasSlotController.test('icon');
     const hasCustomSlot = this.hasSlotController.test('custom');
 
-    const className = cc({
-      item: true,
-      preset: !hasCustomSlot,
-    });
+    const renderBadge = (): TemplateResult => html`<slot name="badge"></slot>`;
 
     return html`<mdui-ripple
         ${ref(this.rippleRef)}
         .noRipple=${this.noRipple}
       ></mdui-ripple>
-      <div part="tab" class="${className}">
+      <div part="container" class="container ${cc({ preset: !hasCustomSlot })}">
         <slot name="custom">
-          <div part="icon" class="icon">
-            ${when(hasIconSlot || this.icon, this.renderBadge)}
+          <div part="icon-container" class="icon-container">
+            ${when(hasIconSlot || this.icon, renderBadge)}
             <slot name="icon">
               ${this.icon
-                ? html`<mdui-icon name=${this.icon}></mdui-icon>`
+                ? html`<mdui-icon
+                    part="icon"
+                    class="icon"
+                    name=${this.icon}
+                  ></mdui-icon>`
                 : nothingTemplate}
             </slot>
           </div>
-          <div part="label" class="label">
-            ${when(!hasIconSlot && !this.icon, this.renderBadge)}
+          <div part="label-container" class="label-container">
+            ${when(!hasIconSlot && !this.icon, renderBadge)}
             <slot></slot>
           </div>
         </slot>
       </div>`;
-  }
-
-  private renderBadge(): TemplateResult {
-    return html`<slot name="badge"></slot>`;
   }
 }
 

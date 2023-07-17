@@ -71,13 +71,13 @@ mdui-ripple {
 .icon,
 .active-icon,
 ::slotted([slot="icon"]),
-::slotted([slot="active-icon"]) {
+::slotted([slot="active"]) {
   .color(on-surface-variant);
   .fontSize(24);
 }
 
 .active-icon,
-::slotted([slot="active-icon"]) {
+::slotted([slot="active"]) {
   display: none;
 }
 
@@ -107,13 +107,13 @@ mdui-ripple {
   .icon,
   .active-icon,
   ::slotted([slot="icon"]),
-  ::slotted([slot="active-icon"]) {
+  ::slotted([slot="active"]) {
     .color(on-secondary-container);
   }
 
   .has-active-icon {
     .active-icon,
-    ::slotted([slot="active-icon"]) {
+    ::slotted([slot="active"]) {
       display: inline-block;
     }
 

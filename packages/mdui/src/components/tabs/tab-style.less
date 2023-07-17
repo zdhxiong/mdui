@@ -9,7 +9,7 @@
   .stateLayerColor(primary);
 }
 
-.item {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,8 +29,8 @@
   }
 }
 
-.icon,
-.label {
+.icon-container,
+.label-container {
   position: relative;
   display: flex;
   align-items: center;
@@ -52,9 +52,7 @@
   }
 }
 
-.icon {
-  .fontSize(24);
-
+.icon-container {
   ::slotted([slot="badge"]) {
     position: absolute;
     transform: translate(50%, -50%); // 距离图标左侧和底部 12dp
@@ -65,7 +63,12 @@
   }
 }
 
-.label {
+.icon,
+::slotted([slot="icon"]) {
+  .fontSize(24);
+}
+
+.label-container {
   .typescale(title-small);
 
   ::slotted([slot="badge"]) {

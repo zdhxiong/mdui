@@ -16,13 +16,13 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event blur - 失去焦点时触发
  *
  * @slot - 按钮的文本
- * @slot start - 按钮左侧元素
- * @slot end - 按钮右侧元素
+ * @slot icon - 按钮左侧元素
+ * @slot end-icon - 按钮右侧元素
  *
  * @csspart button - 内部的 button 或 a 元素
  * @csspart label - 文本
- * @csspart start - 左侧的元素
- * @csspart end - 右侧的元素
+ * @csspart icon - 左侧图标
+ * @csspart end-icon - 右侧图标
  * @csspart loading - 加载中动画
  *
  * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
@@ -97,15 +97,15 @@ export class Button extends ButtonBase {
           })}`;
   }
 
-  private renderStart(): TemplateResult {
+  private renderIcon(): TemplateResult {
     if (this.loading) {
       return this.renderLoading();
     }
 
-    return html`<slot name="start">
+    return html`<slot name="icon">
       ${this.icon
         ? html`<mdui-icon
-            part="start"
+            part="icon"
             class="icon"
             name=${this.icon}
           ></mdui-icon>`
@@ -117,11 +117,11 @@ export class Button extends ButtonBase {
     return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
-  private renderEnd(): TemplateResult {
-    return html`<slot name="end">
+  private renderEndIcon(): TemplateResult {
+    return html`<slot name="end-icon">
       ${this.endIcon
         ? html`<mdui-icon
-            part="end"
+            part="end-icon"
             class="icon"
             name=${this.endIcon}
           ></mdui-icon>`
@@ -130,7 +130,7 @@ export class Button extends ButtonBase {
   }
 
   private renderInner(): TemplateResult[] {
-    return [this.renderStart(), this.renderLabel(), this.renderEnd()];
+    return [this.renderIcon(), this.renderLabel(), this.renderEndIcon()];
   }
 }
 

@@ -39,11 +39,11 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event clear - 在点击由 clearable 属性生成的清空按钮时触发。可以通过调用 `event.preventDefault()` 阻止清空下拉框
  *
  * @slot - `<mdui-menu-item>` 元素
- * @slot prefix-icon
+ * @slot icon
+ * @slot end-icon
  * @slot prefix
  * @slot suffix
- * @slot suffix-icon
- * @slot clear-icon
+ * @slot clear
  * @slot helper
  *
  * @csspart text-field 文本框，即 `<mdui-text-field>` 元素
@@ -160,14 +160,14 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   /**
    * 下拉框的前缀图标
    */
-  @property({ reflect: true, attribute: 'prefix-icon' })
-  public prefixIcon?: string;
+  @property({ reflect: true })
+  public icon?: string;
 
   /**
    * 下拉框的后缀图标
    */
-  @property({ reflect: true, attribute: 'suffix-icon' })
-  public suffixIcon?: string;
+  @property({ reflect: true, attribute: 'end-icon' })
+  public endIcon?: string;
 
   /**
    * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
@@ -229,11 +229,11 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   private readonly formController: FormController = new FormController(this);
   private readonly hasSlotController: HasSlotController = new HasSlotController(
     this,
-    'prefix-icon',
+    'icon',
+    'end-icon',
     'prefix',
     'suffix',
-    'suffix-icon',
-    'clear-icon',
+    'clear',
     'helper',
   );
 
@@ -382,6 +382,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
         <mdui-text-field
           ${ref(this.textFieldRef)}
           slot="trigger"
+          part="text-field"
           class="text-field"
           readonly
           .readonlyButClearable=${true}
@@ -400,8 +401,8 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
           .endAligned=${this.endAligned}
           .prefix=${this.prefix}
           .suffix=${this.suffix}
-          .prefixIcon=${this.prefixIcon}
-          .suffixIcon=${this.suffixIcon}
+          .icon=${this.icon}
+          .endIcon=${this.endIcon}
           .form=${this.form}
           .disabled=${this.disabled}
           .required=${this.required}
@@ -411,14 +412,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
           @keydown=${this.onTextFieldKeyDown}
         >
           ${map(
-            [
-              'prefix-icon',
-              'prefix',
-              'suffix',
-              'suffix-icon',
-              'clear-icon',
-              'helper',
-            ],
+            ['icon', 'end-icon', 'prefix', 'suffix', 'clear', 'helper'],
             (slotName) =>
               this.hasSlotController.test(slotName)
                 ? html`<slot name=${slotName} slot=${slotName}></slot>`

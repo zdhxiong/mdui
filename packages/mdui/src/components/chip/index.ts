@@ -24,18 +24,18 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event delete - 点击删除图标时触发
  *
  * @slot - 文本
- * @slot start - 左侧元素
- * @slot end - 右侧元素
- * @slot selected-icon - 选中状态的左侧图标
- * @slot delete-icon - 删除图标
+ * @slot icon - 左侧元素
+ * @slot end-icon - 右侧元素
+ * @slot selected-icon - 选中状态的左侧元素
+ * @slot delete-icon - 可删除时，右侧的删除元素
  *
  * @csspart button - 内部的 button 或 a 元素
  * @csspart label - 文本
- * @csspart start - 左侧元素
- * @csspart end - 右侧元素
+ * @csspart icon - 左侧图标
+ * @csspart end-icon - 右侧图标
  * @csspart selected-icon - 选中状态的左侧图标
- * @csspart delete-icon-wrapper - 删除图标的容器
- * @csspart delete-icon - 删除图标
+ * @csspart delete-icon-container - 可删除时，右侧删除图标的容器
+ * @csspart delete-icon - 可删除时，右侧的删除图标
  * @csspart loading - 加载中动画
  *
  * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用系统变量]()
@@ -89,7 +89,7 @@ export class Chip extends ButtonBase {
   public selected = false;
 
   /**
-   * 是否可删除。为 `true` 时，在右侧会显示删除图标
+   * 是否可删除。为 `true` 时，在右侧会显示删除图标图标
    */
   @property({
     type: Boolean,
@@ -206,55 +206,55 @@ export class Chip extends ButtonBase {
     emit(this, 'delete');
   }
 
-  private renderStart(): TemplateResult {
+  private renderIcon(): TemplateResult {
     if (this.loading) {
       return this.renderLoading();
     }
 
+    const icon = (): TemplateResult => {
+      return this.icon
+        ? html`<mdui-icon
+            part="icon"
+            class="icon"
+            name=${this.icon}
+          ></mdui-icon>`
+        : nothingTemplate;
+    };
+
+    const selectedIcon = (): TemplateResult => {
+      if (this.selectedIcon) {
+        return html`<mdui-icon
+          part="selected-icon"
+          class="icon"
+          name="${this.selectedIcon}"
+        ></mdui-icon>`;
+      }
+
+      if (this.variant === 'assist' || this.variant === 'filter') {
+        return html`<mdui-icon-check
+          part="selected-icon"
+          class="icon"
+        ></mdui-icon-check>`;
+      }
+
+      return icon();
+    };
+
     return this.selected
-      ? html`<slot name="selected-icon">${this.renderSelectedIcon()}</slot>`
-      : html`<slot name="start">${this.renderIcon()}</slot>`;
-  }
-
-  private renderIcon(): TemplateResult {
-    return this.icon
-      ? html`<mdui-icon
-          part="start"
-          class="start"
-          name=${this.icon}
-        ></mdui-icon>`
-      : nothingTemplate;
-  }
-
-  private renderSelectedIcon(): TemplateResult {
-    if (this.selectedIcon) {
-      return html`<mdui-icon
-        part="selected-icon"
-        class="start"
-        name="${this.selectedIcon}"
-      ></mdui-icon>`;
-    }
-
-    if (this.variant === 'assist' || this.variant === 'filter') {
-      return html`<mdui-icon-check
-        part="selected-icon"
-        class="start"
-      ></mdui-icon-check>`;
-    }
-
-    return this.renderIcon();
+      ? html`<slot name="selected-icon">${selectedIcon()}</slot>`
+      : html`<slot name="icon">${icon()}</slot>`;
   }
 
   private renderLabel(): TemplateResult {
     return html`<span part="label" class="label"><slot></slot></span>`;
   }
 
-  private renderEnd(): TemplateResult {
-    return html`<slot name="end">
+  private renderEndIcon(): TemplateResult {
+    return html`<slot name="end-icon">
       ${this.endIcon
         ? html`<mdui-icon
-            part="end"
-            class="end"
+            part="end-icon"
+            class="end-icon"
             name="${this.endIcon}"
           ></mdui-icon>`
         : nothingTemplate}
@@ -267,12 +267,13 @@ export class Chip extends ButtonBase {
     }
 
     return html`<span
-      part="delete-icon-wrapper"
-      class="delete-icon-wrapper ${classMap({
+      part="delete-icon-container"
+      class="delete-icon-container ${classMap({
         'has-end-icon': this.endIcon || this.hasSlotController.test('end-icon'),
       })}"
+      @click=${this.onDelete}
     >
-      <slot name="delete-icon" @click=${this.onDelete}>
+      <slot name="delete-icon">
         ${this.deleteIcon
           ? html`<mdui-icon
               part="delete-icon"
@@ -289,9 +290,9 @@ export class Chip extends ButtonBase {
 
   private renderInner(): TemplateResult[] {
     return [
-      this.renderStart(),
+      this.renderIcon(),
       this.renderLabel(),
-      this.renderEnd(),
+      this.renderEndIcon(),
       this.renderDeleteIcon(),
     ];
   }

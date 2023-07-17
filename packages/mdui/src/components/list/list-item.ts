@@ -22,13 +22,13 @@ import type { Ref } from 'lit/directives/ref.js';
  *
  * @slot - 主文本
  * @slot description - 副文本
- * @slot start - 左侧 slot
- * @slot end - 右侧 slot
+ * @slot icon - 列表项左侧的元素
+ * @slot end-icon - 列表项右侧的元素
  * @slot custom - 任意自定义内容
  *
- * @csspart item - 容器
- * @csspart start - 左侧 slot
- * @csspart end - 右侧 slot
+ * @csspart container - 容器
+ * @csspart icon - 左侧图标
+ * @csspart end-icon - 右侧图标
  * @csspart body - 中间部分
  * @csspart headline - 主标题
  * @csspart description - 副标题
@@ -136,8 +136,8 @@ export class ListItem extends AnchorMixin(
     this,
     '[default]',
     'description',
-    'start',
-    'end',
+    'icon',
+    'end-icon',
     'custom',
   );
 
@@ -159,15 +159,15 @@ export class ListItem extends AnchorMixin(
 
   protected override render(): TemplateResult {
     const hasCustomSlot = this.hasSlotController.test('custom');
-    const hasStartSlot = this.hasSlotController.test('start');
-    const hasEndSlot = this.hasSlotController.test('end');
+    const hasIconSlot = this.hasSlotController.test('icon');
+    const hasEndIconSlot = this.hasSlotController.test('end-icon');
     const hasDescriptionSlot = this.hasSlotController.test('description');
 
     const className = cc({
-      item: true,
+      container: true,
       preset: !hasCustomSlot,
-      'has-start': this.icon || hasStartSlot,
-      'has-end': this.endIcon || hasEndSlot,
+      'has-icon': this.icon || hasIconSlot,
+      'has-end-icon': this.endIcon || hasEndIconSlot,
       'has-description': this.description || hasDescriptionSlot,
     });
 
@@ -179,10 +179,10 @@ export class ListItem extends AnchorMixin(
         ? this.renderAnchor({
             className,
             content: this.renderInner(),
-            part: 'item',
+            part: 'container',
             refDirective: ref(this.itemRef),
           })
-        : html`<div part="item" class="${className}" ${ref(this.itemRef)}>
+        : html`<div part="container" class="${className}" ${ref(this.itemRef)}>
             ${this.renderInner()}
           </div>`}`;
   }
@@ -191,11 +191,11 @@ export class ListItem extends AnchorMixin(
     const hasDefaultSlot = this.hasSlotController.test('[default]');
 
     return html`<slot name="custom">
-      <slot name="start">
+      <slot name="icon">
         ${this.icon
           ? html`<mdui-icon
-              part="start"
-              class="start"
+              part="icon"
+              class="icon"
               name=${this.icon}
             ></mdui-icon>`
           : nothingTemplate}
@@ -208,11 +208,11 @@ export class ListItem extends AnchorMixin(
           <slot name="description">${this.description}</slot>
         </div>
       </div>
-      <slot name="end">
+      <slot name="end-icon">
         ${this.endIcon
           ? html`<mdui-icon
-              part="end"
-              class="end"
+              part="end-icon"
+              class="end-icon"
               name=${this.endIcon}
             ></mdui-icon>`
           : nothingTemplate}

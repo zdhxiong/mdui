@@ -30,12 +30,12 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event input - 选中状态变更时触发
  * @event invalid - 表单字段验证不通过时触发
  *
- * @slot icon - 未选中状态的图标
- * @slot checked-icon 选中状态的图标
+ * @slot unchecked-icon - 未选中状态的元素
+ * @slot checked-icon - 选中状态的元素
  *
  * @csspart track - 轨道
  * @csspart thumb - 图标容器
- * @csspart icon - 未选中状态的图标
+ * @csspart unchecked-icon - 未选中状态的图标
  * @csspart checked-icon 选中状态的图标
  */
 @customElement('mdui-switch')
@@ -74,8 +74,8 @@ export class Switch
   /**
    * 未选中状态的图标
    */
-  @property({ reflect: true })
-  public icon?: string;
+  @property({ reflect: true, attribute: 'unchecked-icon' })
+  public uncheckedIcon?: string;
 
   /**
    * 选中状态的图标
@@ -134,8 +134,7 @@ export class Switch
   });
   private readonly hasSlotController = new HasSlotController(
     this,
-    'icon',
-    'checked-icon',
+    'unchecked-icon',
   );
 
   /**
@@ -257,7 +256,9 @@ export class Switch
         <div
           part="thumb"
           class="thumb ${classMap({
-            'has-icon': this.icon || this.hasSlotController.test('icon'),
+            'has-unchecked-icon':
+              this.uncheckedIcon ||
+              this.hasSlotController.test('unchecked-icon'),
           })}"
         >
           <mdui-ripple
@@ -278,12 +279,12 @@ export class Switch
                   class="checked-icon"
                 ></mdui-icon-check>`}
           </slot>
-          <slot name="icon">
-            ${this.icon
+          <slot name="unchecked-icon">
+            ${this.uncheckedIcon
               ? html`<mdui-icon
-                  part="icon"
-                  class="icon"
-                  name=${this.icon}
+                  part="unchecked-icon"
+                  class="unchecked-icon"
+                  name=${this.uncheckedIcon}
                 ></mdui-icon>`
               : nothingTemplate}
           </slot>

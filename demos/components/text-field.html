@@ -140,27 +140,27 @@
     </section>
 
     <section>
-      <h2>prefixIcon attr & suffixIcon attr</h2>
-      <mdui-text-field label="prefixIcon" prefix-icon="search"></mdui-text-field>
-      <mdui-text-field label="prefixIcon" prefix-icon="search" variant="outlined"></mdui-text-field>
+      <h2>icon attr & endIcon attr</h2>
+      <mdui-text-field label="icon" icon="search"></mdui-text-field>
+      <mdui-text-field label="icon" icon="search" variant="outlined"></mdui-text-field>
       <br/>
-      <mdui-text-field label="prefixIcon" suffix-icon="mic"></mdui-text-field>
-      <mdui-text-field label="prefixIcon" suffix-icon="mic" variant="outlined"></mdui-text-field>
+      <mdui-text-field label="endIcon" end-icon="mic"></mdui-text-field>
+      <mdui-text-field label="endIcon" end-icon="mic" variant="outlined"></mdui-text-field>
       <br/>
-      <mdui-text-field label="prefixIcon" prefix-icon="search" suffix-icon="mic"></mdui-text-field>
-      <mdui-text-field label="prefixIcon" prefix-icon="search" suffix-icon="mic" variant="outlined"></mdui-text-field>
+      <mdui-text-field label="icon" icon="search" end-icon="mic"></mdui-text-field>
+      <mdui-text-field label="icon" icon="search" end-icon="mic" variant="outlined"></mdui-text-field>
     </section>
 
     <section>
-      <h2>prefix attr & prefixIcon attr | suffix attr & suffixIcon attr</h2>
-      <mdui-text-field label="prefix & prefixIcon" prefix="$" prefix-icon="search"></mdui-text-field>
-      <mdui-text-field label="prefix & prefixIcon" prefix="$" prefix-icon="search" variant="outlined"></mdui-text-field>
+      <h2>prefix attr & icon attr | suffix attr & endIcon attr</h2>
+      <mdui-text-field label="prefix & icon" prefix="$" icon="search"></mdui-text-field>
+      <mdui-text-field label="prefix & icon" prefix="$" icon="search" variant="outlined"></mdui-text-field>
       <br/>
-      <mdui-text-field label="suffix & suffixIcon" suffix="/100" suffix-icon="mic"></mdui-text-field>
-      <mdui-text-field label="suffix & suffixIcon" suffix="/100" suffix-icon="mic" variant="outlined"></mdui-text-field>
+      <mdui-text-field label="suffix & endIcon" suffix="/100" end-icon="mic"></mdui-text-field>
+      <mdui-text-field label="suffix & endIcon" suffix="/100" end-icon="mic" variant="outlined"></mdui-text-field>
       <br/>
-      <mdui-text-field label="prefix & prefixIcon | suffix & suffixIcon(long prefix & prefixIcon | suffix & suffixIcon)" prefix="$" prefix-icon="search" suffix="/100" suffix-icon="mic"></mdui-text-field>
-      <mdui-text-field label="prefix & prefixIcon | suffix & suffixIcon(long prefix & prefixIcon | suffix & suffixIcon)" prefix="$" prefix-icon="search" suffix="/100" suffix-icon="mic" variant="outlined"></mdui-text-field>
+      <mdui-text-field label="prefix & icon | suffix & endIcon(long prefix & icon | suffix & endIcon)" prefix="$" icon="search" suffix="/100" end-icon="mic"></mdui-text-field>
+      <mdui-text-field label="prefix & icon | suffix & endIcon(long prefix & icon | suffix & endIcon)" prefix="$" icon="search" suffix="/100" end-icon="mic" variant="outlined"></mdui-text-field>
     </section>
 
     <section>
@@ -181,34 +181,34 @@
     </section>
 
     <section>
-      <h2>prefix-icon slot & suffix-icon</h2>
+      <h2>start slot & end slot</h2>
       <mdui-text-field label="icon slot">
-        <mdui-icon slot="prefix-icon" name="search"></mdui-icon>
-        <mdui-icon slot="suffix-icon" name="mic"></mdui-icon>
+        <mdui-icon slot="icon" name="search"></mdui-icon>
+        <mdui-icon slot="end-icon" name="mic"></mdui-icon>
       </mdui-text-field>
       <mdui-text-field label="icon slot" variant="outlined">
-        <mdui-icon slot="prefix-icon" name="search"></mdui-icon>
-        <mdui-icon slot="suffix-icon" name="mic"></mdui-icon>
+        <mdui-icon slot="icon" name="search"></mdui-icon>
+        <mdui-icon slot="end-icon" name="mic"></mdui-icon>
       </mdui-text-field>
       <br/>
       <mdui-text-field label="icon-button slot">
-        <mdui-button-icon slot="prefix-icon" icon="search"></mdui-button-icon>
-        <mdui-button-icon slot="suffix-icon" icon="delete"></mdui-button-icon>
+        <mdui-button-icon slot="icon" icon="search"></mdui-button-icon>
+        <mdui-button-icon slot="end-icon" icon="delete"></mdui-button-icon>
       </mdui-text-field>
       <mdui-text-field label="icon-button slot" variant="outlined">
-        <mdui-button-icon slot="prefix-icon" icon="search"></mdui-button-icon>
-        <mdui-button-icon slot="suffix-icon" icon="delete"></mdui-button-icon>
+        <mdui-button-icon slot="icon" icon="search"></mdui-button-icon>
+        <mdui-button-icon slot="end-icon" icon="delete"></mdui-button-icon>
       </mdui-text-field>
     </section>
 
     <section>
       <h2>input slot</h2>
-      <mdui-text-field label="input slot" prefix-icon="search">
+      <mdui-text-field label="input slot" icon="search">
         <mdui-chip slot="input" variant="input" deletable>Chip1</mdui-chip>
         <mdui-chip slot="input" variant="input" deletable>Chip2</mdui-chip>
         <mdui-chip slot="input" variant="input" deletable>Chip3</mdui-chip>
         <mdui-chip slot="input" variant="input" deletable>Chip4</mdui-chip>
-        <mdui-button-icon slot="suffix-icon" icon="delete"></mdui-button-icon>
+        <mdui-button-icon slot="end-icon" icon="delete"></mdui-button-icon>
       </mdui-text-field>
     </section>
 
@@ -223,11 +223,11 @@
       <mdui-text-field label="disabled" helper="Example: Wo haha" prefix="$" suffix="/100" disabled></mdui-text-field>
       <mdui-text-field label="disabled" helper="Example: Wo haha" prefix="$" suffix="/100" disabled variant="outlined"></mdui-text-field>
       <br/>
-      <mdui-text-field label="disabled" prefix-icon="search" suffix-icon="mic" disabled></mdui-text-field>
-      <mdui-text-field label="disabled" prefix-icon="search" suffix-icon="mic" disabled variant="outlined"></mdui-text-field>
+      <mdui-text-field label="disabled" icon="search" end-icon="mic" disabled></mdui-text-field>
+      <mdui-text-field label="disabled" icon="search" end-icon="mic" disabled variant="outlined"></mdui-text-field>
       <br/>
-      <mdui-text-field label="disabled" prefix-icon="search" suffix-icon="mic" value="has value" disabled></mdui-text-field>
-      <mdui-text-field label="disabled" prefix-icon="search" suffix-icon="mic" value="has value" disabled variant="outlined"></mdui-text-field>
+      <mdui-text-field label="disabled" icon="search" end-icon="mic" value="has value" disabled></mdui-text-field>
+      <mdui-text-field label="disabled" icon="search" end-icon="mic" value="has value" disabled variant="outlined"></mdui-text-field>
     </section>
 
     <section>
@@ -278,8 +278,8 @@
     <section>
       <h2>required</h2>
       <form>
-        <mdui-text-field label="required" required prefix-icon="search" helper="required"></mdui-text-field>
-        <mdui-text-field label="required" required prefix-icon="search" helper="required" variant="outlined"></mdui-text-field>
+        <mdui-text-field label="required" required icon="search" helper="required"></mdui-text-field>
+        <mdui-text-field label="required" required icon="search" helper="required" variant="outlined"></mdui-text-field>
         <br/>
         <mdui-button type="submit">Submit</mdui-button>
       </form>
@@ -288,8 +288,8 @@
     <section>
       <h2>validation</h2>
       <form>
-        <mdui-text-field label="minlength:2, maxlength:10" minlength="2" maxlength="10" prefix-icon="search" suffix-icon="delete" helper="helper text" counter></mdui-text-field>
-        <mdui-text-field label="minlength:2, maxlength:10" minlength="2" maxlength="10" prefix-icon="search" suffix-icon="delete" helper="helper text" counter variant="outlined"></mdui-text-field>
+        <mdui-text-field label="minlength:2, maxlength:10" minlength="2" maxlength="10" icon="search" end-icon="delete" helper="helper text" counter></mdui-text-field>
+        <mdui-text-field label="minlength:2, maxlength:10" minlength="2" maxlength="10" icon="search" end-icon="delete" helper="helper text" counter variant="outlined"></mdui-text-field>
         <br/>
         <mdui-text-field label="min,max,step" type="number" min="2" max="10" step="2"></mdui-text-field>
         <mdui-text-field label="min,max,step" type="number" min="2" max="10" step="2" variant="outlined"></mdui-text-field>

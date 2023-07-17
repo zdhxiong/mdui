@@ -117,10 +117,10 @@
   .paddingLeft(8);
 }
 
-.start,
-.end,
-::slotted([slot="start"]),
-::slotted([slot="end"]),
+.icon,
+.end-icon,
+::slotted([slot="icon"]),
+::slotted([slot="end-icon"]),
 ::slotted([slot="selected-icon"]) {
   display: inline-flex;
   // 图标 font-size 为 18px，文案为 14px
@@ -141,9 +141,9 @@
   }
 }
 
-.start,
+.icon,
 mdui-circular-progress,
-::slotted([slot="start"]),
+::slotted([slot="icon"]),
 ::slotted([slot="selected-icon"]) {
   :host([variant="input"]) & {
     .marginLeft(4);
@@ -160,15 +160,15 @@ mdui-circular-progress {
   }
 }
 
-.end,
-::slotted([slot="end"]) {
+.end-icon,
+::slotted([slot="end-icon"]) {
   :host([variant="input"]) & {
     .marginRight(4);
   }
 }
 
-::slotted(mdui-avatar[slot="start"]),
-::slotted(mdui-avatar[slot="end"]),
+::slotted(mdui-avatar[slot="icon"]),
+::slotted(mdui-avatar[slot="end-icon"]),
 ::slotted(mdui-avatar[slot="selected-icon"]) {
   .width(24);
   .height(24);
@@ -178,7 +178,7 @@ mdui-circular-progress {
   }
 }
 
-.delete-icon-wrapper {
+.delete-icon-container {
   display: inline-flex;
   .transition(background-color, short4, linear);
   .shapeCorner(full);

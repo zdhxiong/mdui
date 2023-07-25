@@ -124,6 +124,12 @@ export class NavigationRail extends LayoutItemBase {
     return this.placement === 'right';
   }
 
+  private get paddingValue(): number | undefined {
+    return ['fixed', 'absolute'].includes($(this).css('position'))
+      ? this.offsetWidth
+      : undefined;
+  }
+
   @watch('activeKey')
   private onActiveKeyChange() {
     // 根据 activeKey 读取对应 navigation-rail-item 的值
@@ -153,12 +159,12 @@ export class NavigationRail extends LayoutItemBase {
     }
 
     $(document.body).css({
-      paddingLeft: this.contained || this.isRight ? null : this.offsetWidth,
-      paddingRight: this.contained || !this.isRight ? null : this.offsetWidth,
+      paddingLeft: this.contained || this.isRight ? null : this.paddingValue,
+      paddingRight: this.contained || !this.isRight ? null : this.paddingValue,
     });
     $(this.parentElement!).css({
-      paddingLeft: this.contained && !this.isRight ? this.offsetWidth : null,
-      paddingRight: this.contained && this.isRight ? this.offsetWidth : null,
+      paddingLeft: this.contained && !this.isRight ? this.paddingValue : null,
+      paddingRight: this.contained && this.isRight ? this.paddingValue : null,
     });
   }
 
@@ -175,8 +181,8 @@ export class NavigationRail extends LayoutItemBase {
     }
 
     $(this.parentTarget).css({
-      paddingLeft: this.isRight ? null : this.offsetWidth,
-      paddingRight: this.isRight ? this.offsetWidth : null,
+      paddingLeft: this.isRight ? null : this.paddingValue,
+      paddingRight: this.isRight ? this.paddingValue : null,
     });
   }
 
@@ -185,8 +191,8 @@ export class NavigationRail extends LayoutItemBase {
 
     if (!this.isParentLayout) {
       $(this.parentTarget).css({
-        paddingLeft: this.isRight ? null : this.offsetWidth,
-        paddingRight: this.isRight ? this.offsetWidth : null,
+        paddingLeft: this.isRight ? null : this.paddingValue,
+        paddingRight: this.isRight ? this.paddingValue : null,
       });
     }
   }

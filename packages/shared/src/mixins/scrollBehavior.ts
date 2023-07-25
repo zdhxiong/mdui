@@ -196,7 +196,6 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
 
       if (withPadding) {
         const propValue =
-          this.scrollBehavior &&
           this.getListening(this.scrollTarget) &&
           ['fixed', 'absolute'].includes($(this).css('position'))
             ? this.offsetHeight

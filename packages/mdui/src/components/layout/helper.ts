@@ -104,27 +104,7 @@ export class LayoutManager {
     });
 
     this.items = undefined;
-    const items = this.getItems();
-
-    // 按 order 排序，order 相同时，按在 DOM 中的顺序排序
-    this.states.sort((a, b) => {
-      const aOrder = a.element.order ?? 0;
-      const bOrder = b.element.order ?? 0;
-
-      if (aOrder > bOrder) {
-        return 1;
-      }
-      if (aOrder < bOrder) {
-        return -1;
-      }
-      if (items.indexOf(a.element) > items.indexOf(b.element)) {
-        return 1;
-      }
-      if (items.indexOf(a.element) < items.indexOf(b.element)) {
-        return -1;
-      }
-      return 0;
-    });
+    this.resort();
 
     // 从头更新布局
     this.updateLayout();
@@ -189,6 +169,14 @@ export class LayoutManager {
    */
   public hasItem(element: LayoutItemBase): boolean {
     return this.getItems().includes(element);
+  }
+
+  /**
+   * 更新 order 值，更新完后重新计算布局
+   */
+  public updateOrder() {
+    this.resort();
+    this.updateLayout();
   }
 
   /**
@@ -272,6 +260,32 @@ export class LayoutManager {
         paddingLeft: lastState.left,
       });
     }
+  }
+
+  /**
+   * 按 order 排序，order 相同时，按在 DOM 中的顺序排序
+   */
+  private resort() {
+    const items = this.getItems();
+
+    this.states.sort((a, b) => {
+      const aOrder = a.element.order ?? 0;
+      const bOrder = b.element.order ?? 0;
+
+      if (aOrder > bOrder) {
+        return 1;
+      }
+      if (aOrder < bOrder) {
+        return -1;
+      }
+      if (items.indexOf(a.element) > items.indexOf(b.element)) {
+        return 1;
+      }
+      if (items.indexOf(a.element) < items.indexOf(b.element)) {
+        return -1;
+      }
+      return 0;
+    });
   }
 }
 

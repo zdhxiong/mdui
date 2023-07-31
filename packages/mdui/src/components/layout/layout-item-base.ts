@@ -28,7 +28,7 @@ export class LayoutItemBase extends LitElement {
   // order 变更时，需要重新调整布局
   @watch('order', true)
   private onOrderChange() {
-    this.layoutManager?.updateLayout();
+    this.layoutManager?.updateOrder();
   }
 
   public override connectedCallback(): void {

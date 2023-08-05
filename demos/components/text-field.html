@@ -122,6 +122,12 @@
     </section>
 
     <section>
+      <h2>clear-icon</h2>
+      <mdui-text-field label="Text Field" value="Text Field" clearable clear-icon="delete"></mdui-text-field>
+      <mdui-text-field label="Text Field" value="Text Field" clearable clear-icon="delete" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
       <h2>endAligned</h2>
       <mdui-text-field label="end aligned" suffix="/100" end-aligned></mdui-text-field>
       <mdui-text-field label="end aligned" suffix="/100" end-aligned variant="outlined"></mdui-text-field>
@@ -267,6 +273,12 @@
     </section>
 
     <section>
+      <h2>show-password-icon & hide-password-icon</h2>
+      <mdui-text-field type="password" label="togglePassword" toggle-password show-password-icon="delete_forever" hide-password-icon="delete_outlined"></mdui-text-field>
+      <mdui-text-field type="password" label="togglePassword" toggle-password show-password-icon="delete_forever" hide-password-icon="delete_outlined" variant="outlined"></mdui-text-field>
+    </section>
+
+    <section>
       <h2>default value</h2>
       <mdui-text-field label="default value" value="has default value"></mdui-text-field>
       <mdui-text-field label="default value" value="has default value" variant="outlined"></mdui-text-field>
@@ -280,6 +292,16 @@
       <form>
         <mdui-text-field label="required" required icon="search" helper="required"></mdui-text-field>
         <mdui-text-field label="required" required icon="search" helper="required" variant="outlined"></mdui-text-field>
+        <br/>
+        <mdui-button type="submit">Submit</mdui-button>
+      </form>
+    </section>
+
+    <section>
+      <h2>required & error-icon</h2>
+      <form>
+        <mdui-text-field label="required" required icon="search" error-icon="delete" helper="required"></mdui-text-field>
+        <mdui-text-field label="required" required icon="search" error-icon="delete" helper="required" variant="outlined"></mdui-text-field>
         <br/>
         <mdui-button type="submit">Submit</mdui-button>
       </form>

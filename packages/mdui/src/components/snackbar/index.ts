@@ -12,6 +12,7 @@ import '@mdui/shared/icons/clear.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import '../button-icon.js';
 import '../button.js';
+import '../icon.js';
 import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
@@ -25,12 +26,13 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  *
  * @slot - Snackbar 中的消息文本内容
  * @slot action - 右侧的操作按钮
- * @slot close - 右侧的关闭按钮。必须设置 `closeable` 属性为 `true` 才会显示该按钮
+ * @slot close-button - 右侧的关闭按钮。必须设置 `closeable` 属性为 `true` 才会显示该按钮
+ * @slot close-icon - 右侧的关闭按钮中的图标
  *
  * @csspart message - 消息文本的容器
- * @csspart action-group - 右侧的操作按钮和关闭按钮的容器
  * @csspart action - 操作按钮
- * @csspart close - 关闭按钮
+ * @csspart close-button - 关闭按钮
+ * @csspart close-icon - 关闭按钮中的图标
  *
  * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
@@ -92,6 +94,12 @@ export class Snackbar extends LitElement {
     converter: booleanConverter,
   })
   public closeable = false;
+
+  /**
+   * 关闭按钮中的 Material Icons 图标名。也可以通过 `slot="close-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'close-icon' })
+  public closeIcon?: string;
 
   /**
    * 消息文本最多显示几行。默认不限制行数。可选值为
@@ -306,32 +314,39 @@ export class Snackbar extends LitElement {
   }
 
   protected override render(): TemplateResult {
-    return html`<div part="message" class="message">
-        <slot></slot>
-      </div>
-      <div part="action-group" class="action-group">
-        <div part="action" class="action" @click=${this.onActionClick}>
-          <slot name="action">
-            ${this.action
-              ? html`<mdui-button variant="text" loading=${this.actionLoading}>
-                  ${this.action}
-                </mdui-button>`
-              : nothingTemplate}
-          </slot>
-        </div>
+    return html`<slot part="message" class="message"></slot>
+      <div class="action-group">
+        <slot
+          name="action"
+          part="action"
+          class="action"
+          @click=${this.onActionClick}
+        >
+          ${this.action
+            ? html`<mdui-button variant="text" loading=${this.actionLoading}>
+                ${this.action}
+              </mdui-button>`
+            : nothingTemplate}
+        </slot>
         ${when(
           this.closeable,
-          () => html`<div
-            part="close"
-            class="close"
+          () => html`<slot
+            name="close-button"
+            part="close-button"
+            class="close-button"
             @click=${this.onCloseClick}
           >
-            <slot name="close">
-              <mdui-button-icon>
-                <mdui-icon-clear></mdui-icon-clear>
-              </mdui-button-icon>
-            </slot>
-          </div>`,
+            <mdui-button-icon>
+              <slot name="close-icon" part="close-icon">
+                ${this.closeIcon
+                  ? html`<mdui-icon
+                      name=${this.closeIcon}
+                      class="i"
+                    ></mdui-icon>`
+                  : html`<mdui-icon-clear class="i"></mdui-icon-clear>`}
+              </slot>
+            </mdui-button-icon>
+          </slot>`,
         )}
       </div>`;
   }

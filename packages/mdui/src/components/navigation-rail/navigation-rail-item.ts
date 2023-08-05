@@ -1,6 +1,5 @@
 import { html, LitElement, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
@@ -20,16 +19,19 @@ import type { Ref } from 'lit/directives/ref.js';
 /**
  * @slot - 文本
  * @slot icon - 图标
- * @slot active-active - 激活状态的图标元素
+ * @slot active-icon - 激活状态的图标元素
  * @slot badge - 徽标
  *
  * @event click - 点击时触发
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
  *
- * @csspart label - 文本
+ * @csspart container - 导航项容器
+ * @csspart indicator - 指示器
+ * @csspart badge - 徽标
  * @csspart icon - 图标
  * @csspart active-icon - 激活状态的图标
+ * @csspart label - 文本
  *
  * @cssprop --shape-corner-indicator 指示器的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
@@ -109,72 +111,44 @@ export class NavigationRailItem extends AnchorMixin(
   protected override render(): TemplateResult {
     const hasDefaultSlot = this.hasSlotController.test('[default]');
     const className = cc({
-      item: true,
+      container: true,
       'has-label': hasDefaultSlot,
+      'has-active-icon':
+        this.activeIcon || this.hasSlotController.test('active-icon'),
     });
 
     return html`${this.href
         ? this.renderAnchor({
+            part: 'container',
             className,
             content: this.renderInner(hasDefaultSlot),
           })
-        : html`<span class=${className}>
+        : html`<div part="container" class=${className}>
             ${this.renderInner(hasDefaultSlot)}
-          </span>`}
+          </div>`}
       <mdui-ripple
         .noRipple=${!this.active || this.noRipple}
         ${ref(this.rippleRef)}
       ></mdui-ripple>`;
   }
 
-  private renderBadge(): TemplateResult {
-    return html`<slot name="badge"></slot>`;
-  }
-
-  private renderActiveIcon(): TemplateResult {
-    return html`<slot name="active-icon">
-      ${this.activeIcon
-        ? html`<mdui-icon
-            part="active-icon"
-            class="active-icon"
-            name=${this.activeIcon}
-          ></mdui-icon>`
-        : nothingTemplate}
-    </slot>`;
-  }
-
-  private renderIcon(): TemplateResult {
-    return html`<slot name="icon">
-      ${this.icon
-        ? html`<mdui-icon
-            part="icon"
-            class="icon"
-            name=${this.icon}
-          ></mdui-icon>`
-        : nothingTemplate}
-    </slot>`;
-  }
-
-  private renderLabel(
-    hasDefaultSlot: boolean,
-  ): TemplateResult | typeof nothing {
-    if (!hasDefaultSlot) {
-      return nothing;
-    }
-
-    return html`<span part="label" class="label"><slot></slot></span>`;
-  }
-
   private renderInner(hasDefaultSlot: boolean): TemplateResult {
-    return html`<span
-        class="indicator ${classMap({
-          'has-active-icon':
-            this.activeIcon || this.hasSlotController.test('active-icon'),
-        })}"
-      >
-        ${this.renderBadge()}${this.renderActiveIcon()}${this.renderIcon()}
-      </span>
-      ${this.renderLabel(hasDefaultSlot)}`;
+    return html`<div part="indicator" class="indicator">
+        <slot name="badge" part="badge" class="badge"></slot>
+        <slot name="active-icon" part="active-icon" class="active-icon">
+          ${this.activeIcon
+            ? html`<mdui-icon name=${this.activeIcon}></mdui-icon>`
+            : nothingTemplate}
+        </slot>
+        <slot name="icon" part="icon" class="icon">
+          ${this.icon
+            ? html`<mdui-icon name=${this.icon}></mdui-icon>`
+            : nothingTemplate}
+        </slot>
+      </div>
+      ${hasDefaultSlot
+        ? html`<slot part="label" class="label"></slot>`
+        : nothing}`;
   }
 }
 

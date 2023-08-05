@@ -74,6 +74,34 @@
     </section>
 
     <section>
+      <h2>icon & icon slot</h2>
+      <mdui-checkbox
+        unchecked-icon="radio_button_unchecked"
+        checked-icon="check_circle"
+        indeterminate-icon="playlist_add_check_circle"
+      >Checkbox</mdui-checkbox>
+      <mdui-checkbox
+        indeterminate
+        unchecked-icon="radio_button_unchecked"
+        checked-icon="check_circle"
+        indeterminate-icon="playlist_add_check_circle"
+      >Checkbox</mdui-checkbox>
+      <br/>
+      <mdui-checkbox>
+        <mdui-icon slot="unchecked-icon" name="radio_button_unchecked"></mdui-icon>
+        <mdui-icon slot="checked-icon" name="check_circle"></mdui-icon>
+        <mdui-icon slot="indeterminate-icon" name="playlist_add_check_circle"></mdui-icon>
+        Checkbox
+      </mdui-checkbox>
+      <mdui-checkbox indeterminate>
+        <mdui-icon slot="unchecked-icon" name="radio_button_unchecked"></mdui-icon>
+        <mdui-icon slot="checked-icon" name="check_circle"></mdui-icon>
+        <mdui-icon slot="indeterminate-icon" name="playlist_add_check_circle"></mdui-icon>
+        Checkbox
+      </mdui-checkbox>
+    </section>
+
+    <section>
       <h2>Required</h2>
       <form>
         <mdui-checkbox name="checkbox[]" required></mdui-checkbox>

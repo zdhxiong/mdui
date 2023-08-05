@@ -20,11 +20,13 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event blur - 失去焦点时触发
  *
  * @slot - 分段按钮项的文本
- * @slot icon - 分段按钮项左侧的元素
- * @slot end-icon - 分段按钮项右侧的元素
+ * @slot icon - 分段按钮项的左侧图标
+ * @slot selected-icon - 选中状态的左侧图标
+ * @slot end-icon - 分段按钮项的右侧图标
  *
+ * @csspart button - 内部的 button 或 a 元素
  * @csspart icon - 左侧的图标
- * @csspart checked-icon - 选中状态的左侧图标
+ * @csspart selected-icon - 选中状态的左侧图标
  * @csspart end-icon - 右侧的图标
  * @csspart label - 文本内容的容器
  * @csspart loading - 加载状态图标
@@ -47,6 +49,12 @@ export class SegmentedButton extends ButtonBase {
    */
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon?: string;
+
+  /**
+   * 选中状态的 Material Icons 图标名。也可以通过 `slot="selected-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'selected-icon' })
+  public selectedIcon?: string;
 
   /**
    * 是否选中该分段按钮项，由 mdui-segmented-button-group 组件控制该参数
@@ -101,12 +109,14 @@ export class SegmentedButton extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    const hasIconSlot = this.hasSlotController.test('icon');
-    const hasEndIconSlot = this.hasSlotController.test('end-icon');
     const className = cc({
       button: true,
-      'has-icon': this.icon || hasIconSlot || this.selected || this.loading,
-      'has-end-icon': this.endIcon || hasEndIconSlot,
+      'has-icon':
+        this.icon ||
+        this.selected ||
+        this.loading ||
+        this.hasSlotController.test('icon'),
+      'has-end-icon': this.endIcon || this.hasSlotController.test('end-icon'),
     });
 
     return html`<mdui-ripple
@@ -140,19 +150,20 @@ export class SegmentedButton extends ButtonBase {
     }
 
     if (this.selected) {
-      return html`<mdui-icon-check
-        part="checked-icon"
-        class="checked-icon"
-      ></mdui-icon-check>`;
+      return html`<slot
+        name="selected-icon"
+        part="selected-icon"
+        class="selected-icon"
+      >
+        ${this.selectedIcon
+          ? html`<mdui-icon name=${this.selectedIcon} class="i"></mdui-icon>`
+          : html`<mdui-icon-check class="i"></mdui-icon-check>`}
+      </slot>`;
     }
 
-    return html`<slot name="icon">
+    return html`<slot name="icon" part="icon" class="icon">
       ${this.icon
-        ? html`<mdui-icon
-            part="icon"
-            class="icon"
-            name=${this.icon}
-          ></mdui-icon>`
+        ? html`<mdui-icon name=${this.icon} class="i"></mdui-icon>`
         : nothingTemplate}
     </slot>`;
   }
@@ -164,17 +175,13 @@ export class SegmentedButton extends ButtonBase {
       return nothingTemplate;
     }
 
-    return html`<span part="label" class="label"><slot></slot></span>`;
+    return html`<slot part="label" class="label"></slot>`;
   }
 
   private renderEndIcon(): TemplateResult {
-    return html`<slot name="end-icon">
+    return html`<slot name="end-icon" part="end-icon" class="end-icon">
       ${this.endIcon
-        ? html`<mdui-icon
-            part="end-icon"
-            class="icon"
-            name=${this.endIcon}
-          ></mdui-icon>`
+        ? html`<mdui-icon name=${this.endIcon} class="i"></mdui-icon>`
         : nothingTemplate}
     </slot>`;
   }

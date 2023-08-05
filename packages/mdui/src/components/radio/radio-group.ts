@@ -3,8 +3,10 @@ import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/closest.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
+import { isNodeName } from '@mdui/jq/shared/helper.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
@@ -240,15 +242,19 @@ export class RadioGroup extends LitElement implements FormControl {
   }
 
   private async onRadioClick(event: MouseEvent) {
-    const target = event.target as Radio;
-    if (target.disabled) {
+    const target = event.target as HTMLElement;
+    const radio = isNodeName(target, 'mdui-radio')
+      ? (target as Radio)
+      : ($(target).closest('mdui-radio')[0] as Radio);
+
+    if (radio.disabled) {
       return;
     }
 
-    this.value = target.value;
+    this.value = radio.value;
 
     await this.updateComplete;
-    target.focus();
+    radio.focus();
   }
 
   /**

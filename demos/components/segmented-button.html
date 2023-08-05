@@ -101,6 +101,18 @@
     </section>
 
     <section>
+      <h2>selected-icon & selected-icon slot</h2>
+      <mdui-segmented-button-group selects="multiple" value="medium">
+        <mdui-segmented-button value="small" selected-icon="cloud_done">Small</mdui-segmented-button>
+        <mdui-segmented-button value="medium">
+          <mdui-icon slot="selected-icon" name="cloud_done"></mdui-icon>
+          Medium
+        </mdui-segmented-button>
+        <mdui-segmented-button value="large">Large</mdui-segmented-button>
+      </mdui-segmented-button-group>
+    </section>
+
+    <section>
       <h2>href</h2>
       <mdui-segmented-button-group>
         <mdui-segmented-button href="https://www.mdui.org">Small</mdui-segmented-button>

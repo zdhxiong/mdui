@@ -104,16 +104,14 @@ export class CollapseItem extends LitElement {
   }
 
   protected override render(): TemplateResult {
-    return html`<div part="header" class="header">
-        <slot name="header">${this.header}</slot>
-      </div>
-      <div
+    return html`<slot name="header" part="header" class="header">
+        ${this.header}
+      </slot>
+      <slot
         part="body"
         class="body ${classMap({ opened: this.state === 'opened' })}"
         ${ref(this.bodyRef)}
-      >
-        <slot></slot>
-      </div>`;
+      ></slot>`;
   }
 
   private updateBodyHeight() {

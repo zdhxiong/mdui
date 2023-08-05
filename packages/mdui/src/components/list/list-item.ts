@@ -1,7 +1,12 @@
 import { html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import {
+  customElement,
+  property,
+  queryAssignedElements,
+} from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import cc from 'classcat';
+import { isNodeName, getNodeName } from '@mdui/jq/shared/helper.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
@@ -130,6 +135,12 @@ export class ListItem extends AnchorMixin(
   @property({ reflect: true })
   public alignment: 'start' | 'center' | 'end' = 'center';
 
+  @queryAssignedElements({ slot: 'icon', flatten: true })
+  private readonly iconElements!: HTMLElement[];
+
+  @queryAssignedElements({ slot: 'end-icon', flatten: true })
+  private readonly endIconElements!: HTMLElement[];
+
   private readonly rippleRef: Ref<Ripple> = createRef();
   private readonly itemRef: Ref<HTMLElement> = createRef();
   private readonly hasSlotController = new HasSlotController(
@@ -158,17 +169,24 @@ export class ListItem extends AnchorMixin(
   }
 
   protected override render(): TemplateResult {
-    const hasCustomSlot = this.hasSlotController.test('custom');
-    const hasIconSlot = this.hasSlotController.test('icon');
-    const hasEndIconSlot = this.hasSlotController.test('end-icon');
-    const hasDescriptionSlot = this.hasSlotController.test('description');
+    const preset = !this.hasSlotController.test('custom');
+    const hasIcon = this.icon || this.hasSlotController.test('icon');
+    const hasEndIcon = this.endIcon || this.hasSlotController.test('end-icon');
+    const hasDescription =
+      this.description || this.hasSlotController.test('description');
 
     const className = cc({
       container: true,
-      preset: !hasCustomSlot,
-      'has-icon': this.icon || hasIconSlot,
-      'has-end-icon': this.endIcon || hasEndIconSlot,
-      'has-description': this.description || hasDescriptionSlot,
+      preset,
+      'has-icon': hasIcon,
+      'has-end-icon': hasEndIcon,
+      'has-description': hasDescription,
+      // icon slot 中的元素是否为 mdui-icon 或 mdui-icon-* 组件
+      'is-icon': isNodeName(this.iconElements[0], 'mdui-icon'),
+      // end-icon slot 中的元素是否为 mdui-icon 或 mdui-icon-* 组件
+      'is-end-icon': getNodeName(this.endIconElements[0]).startsWith(
+        'mdui-icon-',
+      ),
     });
 
     return html`<mdui-ripple
@@ -191,30 +209,22 @@ export class ListItem extends AnchorMixin(
     const hasDefaultSlot = this.hasSlotController.test('[default]');
 
     return html`<slot name="custom">
-      <slot name="icon">
+      <slot name="icon" part="icon" class="icon">
         ${this.icon
-          ? html`<mdui-icon
-              part="icon"
-              class="icon"
-              name=${this.icon}
-            ></mdui-icon>`
+          ? html`<mdui-icon name=${this.icon}></mdui-icon>`
           : nothingTemplate}
       </slot>
       <div part="body" class="body">
-        <div part="headline" class="headline">
-          ${hasDefaultSlot ? html`<slot></slot>` : this.headline}
-        </div>
-        <div part="description" class="description">
-          <slot name="description">${this.description}</slot>
-        </div>
+        ${hasDefaultSlot
+          ? html`<slot part="headline" class="headline"></slot>`
+          : html`<div part="headline" class="headline">${this.headline}</div>`}
+        <slot name="description" part="description" class="description">
+          ${this.description}
+        </slot>
       </div>
-      <slot name="end-icon">
+      <slot name="end-icon" part="end-icon" class="end-icon">
         ${this.endIcon
-          ? html`<mdui-icon
-              part="end-icon"
-              class="end-icon"
-              name=${this.endIcon}
-            ></mdui-icon>`
+          ? html`<mdui-icon name=${this.endIcon}></mdui-icon>`
           : nothingTemplate}
       </slot>
     </slot>`;

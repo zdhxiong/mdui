@@ -13,6 +13,7 @@ import '@mdui/shared/icons/check-box.js';
 import '@mdui/shared/icons/indeterminate-check-box.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
+import '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { style } from './style.js';
 import type { Ripple } from '../ripple/index.js';
@@ -29,11 +30,14 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event invalid - 表单字段验证未通过时触发
  *
  * @slot - 文本
+ * @slot unchecked-icon - 未选中状态图标
+ * @slot checked-icon - 选中状态图标
+ * @slot indeterminate-icon - 未确定状态图标
  *
  * @csspart control - 选择框
- * @csspart unchecked-icon 未选中状态图标
- * @csspart checked-icon 选中状态图标
- * @csspart indeterminate-icon 未确定状态图标
+ * @csspart unchecked-icon - 未选中状态图标
+ * @csspart checked-icon - 选中状态图标
+ * @csspart indeterminate-icon - 未确定状态图标
  * @csspart label - 文本
  */
 @customElement('mdui-checkbox')
@@ -108,6 +112,24 @@ export class Checkbox
    */
   @property({ reflect: true })
   public value = 'on';
+
+  /**
+   * 未选中状态的 Material Icons 图标名。也可以通过 `slot="unchecked-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'unchecked-icon' })
+  public uncheckedIcon?: string;
+
+  /**
+   * 选中状态的 Material Icons 图标名。也可以通过 `slot="checked-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'checked-icon' })
+  public checkedIcon?: string;
+
+  /**
+   * 不确定状态的 Material Icons 图标名。也可以通过 `slot="indeterminate-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'indeterminate-icon' })
+  public indeterminateIcon?: string;
 
   /**
    * 是否验证未通过
@@ -249,20 +271,38 @@ export class Checkbox
           ${ref(this.rippleRef)}
           .noRipple=${this.noRipple}
         ></mdui-ripple>
-        <mdui-icon-check-box-outline-blank
+        <slot
+          name="unchecked-icon"
           part="unchecked-icon"
           class="icon unchecked-icon"
-        ></mdui-icon-check-box-outline-blank>
-        <mdui-icon-check-box
-          part="checked-icon"
-          class="icon checked-icon"
-        ></mdui-icon-check-box>
-        <mdui-icon-indeterminate-check-box
+        >
+          ${this.uncheckedIcon
+            ? html`<mdui-icon name=${this.uncheckedIcon} class="i"></mdui-icon>`
+            : html`<mdui-icon-check-box-outline-blank
+                class="i"
+              ></mdui-icon-check-box-outline-blank>`}
+        </slot>
+        <slot name="checked-icon" part="checked-icon" class="icon checked-icon">
+          ${this.checkedIcon
+            ? html`<mdui-icon name=${this.checkedIcon} class="i"></mdui-icon>`
+            : html`<mdui-icon-check-box class="i"></mdui-icon-check-box>`}
+        </slot>
+        <slot
+          name="indeterminate-icon"
           part="indeterminate-icon"
           class="icon indeterminate-icon"
-        ></mdui-icon-indeterminate-check-box>
+        >
+          ${this.indeterminateIcon
+            ? html`<mdui-icon
+                name=${this.indeterminateIcon}
+                class="i"
+              ></mdui-icon>`
+            : html`<mdui-icon-indeterminate-check-box
+                class="i"
+              ></mdui-icon-indeterminate-check-box>`}
+        </slot>
       </i>
-      <span part="label"><slot></slot></span>
+      <slot part="label" class="label"></slot>
     </label>`;
   }
 

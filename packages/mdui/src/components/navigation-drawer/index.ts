@@ -423,9 +423,12 @@ export class NavigationDrawer extends LayoutItemBase {
           @click=${this.onOverlayClick}
         ></div>`,
       )}
-      <div ${ref(this.panelRef)} part="panel" class="panel" tabindex="0">
-        <slot></slot>
-      </div>`;
+      <slot
+        ${ref(this.panelRef)}
+        part="panel"
+        class="panel"
+        tabindex="0"
+      ></slot>`;
   }
 
   private onOverlayClick() {

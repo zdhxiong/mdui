@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import '../icon.js';
 import { style } from './style.js';
@@ -68,7 +69,7 @@ export class Avatar extends LitElement {
         />`
       : this.icon
       ? html`<mdui-icon part="icon" name=${this.icon}></mdui-icon>`
-      : html``;
+      : nothingTemplate;
   }
 }
 

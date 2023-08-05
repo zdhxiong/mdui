@@ -6,9 +6,7 @@
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   .borderRadius(2);
-  .fontSize(label-large);
-  .fontWeight(label-large);
-  .letterSpacing(label-large);
+  .typescale(label-large);
 }
 
 label {
@@ -34,10 +32,12 @@ input {
 }
 
 .icon {
+  display: flex;
   position: absolute;
   opacity: 1;
   transform: scale(1);
   .color(on-surface);
+  .fontSize(24);
   .transition(color, short4, standard);
 }
 
@@ -48,6 +48,14 @@ input {
   transition-property: color, opacity, transform;
   .transitionDuration(short4);
   .transitionTimingFunction(standard);
+}
+
+.icon .i,
+::slotted([slot="unchecked-icon"]),
+::slotted([slot="checked-icon"]),
+::slotted([slot="indeterminate-icon"]) {
+  color: inherit;
+  font-size: inherit;
 }
 
 i {
@@ -63,7 +71,8 @@ i {
   .stateLayerColor(on-surface);
 }
 
-span {
+.label {
+  display: flex;
   width: 100%;
   .paddingTop(10);
   .paddingBottom(10);
@@ -123,7 +132,7 @@ span {
     .color(error);
   }
 
-  span {
+  .label {
     .color(error);
   }
 }
@@ -137,7 +146,7 @@ span {
     .color(on-surface, 38%);
   }
 
-  span {
+  .label {
     .color(on-surface, 38%);
   }
 }

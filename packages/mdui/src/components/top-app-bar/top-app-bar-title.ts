@@ -45,12 +45,12 @@ export class TopAppBarTitle extends LitElement {
   private readonly defaultSlotRef: Ref<HTMLSlotElement> = createRef();
 
   protected override render(): TemplateResult {
-    return html`<div part="label" class="label">
-        <slot
-          ${ref(this.defaultSlotRef)}
-          @slotchange="${this.onSlotChange}"
-        ></slot>
-      </div>
+    return html`<slot
+        part="label"
+        class="label"
+        ${ref(this.defaultSlotRef)}
+        @slotchange="${this.onSlotChange}"
+      ></slot>
       <div
         ${ref(this.labelLargeRef)}
         part="label-large"

@@ -337,12 +337,8 @@ export class Dropdown extends LitElement {
   }
 
   protected override render(): TemplateResult {
-    return html`<div part="trigger" class="trigger">
-        <slot name="trigger"></slot>
-      </div>
-      <div ${ref(this.panelRef)} part="panel" class="panel" hidden>
-        <slot></slot>
-      </div>`;
+    return html`<slot name="trigger" part="trigger" class="trigger"></slot>
+      <slot ${ref(this.panelRef)} part="panel" class="panel" hidden></slot>`;
   }
 
   /**

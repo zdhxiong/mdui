@@ -44,6 +44,7 @@
 }
 
 .panel {
+  display: block;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -71,9 +72,4 @@
   :host([placement="right"][mobile]) & {
     border-radius: var(--shape-corner) 0 0 var(--shape-corner);
   }
-}
-
-::slotted(mdui-list[rounded]) {
-  .marginLeft(12);
-  .marginRight(12);
 }

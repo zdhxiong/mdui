@@ -40,6 +40,7 @@
 }
 
 .message {
+  display: block;
   .margin(10, 16);
 
   :host([message-line="1"]) & {
@@ -65,23 +66,27 @@
   .paddingRight(8);
 }
 
-.close {
-  .margin(0, -4, 0, 4);
-}
-
 .action,
-.close {
+.close-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
-.action,
+.action {
+  .color(inverse-primary);
+  .fontSize(label-large);
+  .fontWeight(label-large);
+  .letterSpacing(label-large);
+}
+
 .action mdui-button,
 ::slotted(mdui-button[slot="action"][variant="text"]),
 ::slotted(mdui-button[slot="action"][variant="outlined"]) {
-  .color(inverse-primary);
-  .typescale(label-large);
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
   .stateLayerColor(inverse-primary);
 }
 
@@ -89,11 +94,21 @@
   .padding(0, 8);
 }
 
-.close,
-.close mdui-button-icon,
-::slotted(mdui-button-icon[slot="close"][variant="standard"]),
-::slotted(mdui-button-icon[slot="close"][variant="outlined"]) {
+.close-button {
+  .margin(0, -4, 0, 4);
   .fontSize(24);
   .color(inverse-on-surface);
+}
+
+.close-button mdui-button-icon,
+::slotted(mdui-button-icon[slot="close-button"][variant="standard"]),
+::slotted(mdui-button-icon[slot="close-button"][variant="outlined"]) {
+  font-size: inherit;
+  color: inherit;
   .stateLayerColor(inverse-on-surface);
+}
+
+.close-button .i,
+::slotted([slot="close-icon"]) {
+  font-size: inherit;
 }

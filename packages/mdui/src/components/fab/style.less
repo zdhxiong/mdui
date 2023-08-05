@@ -123,6 +123,7 @@
 }
 
 .label {
+  display: inline-flex;
   .transition(opacity, short2, linear, short2);
 
   .paddingLeft(4);
@@ -151,8 +152,7 @@
   }
 }
 
-.icon,
-::slotted([slot="icon"]) {
+.icon {
   display: inline-flex;
 
   // small、normal 为 24px，文案为 14px
@@ -162,6 +162,11 @@
   :host([size="large"]) & {
     font-size: unit((36 / 14), em);
   }
+}
+
+.icon mdui-icon,
+::slotted([slot="icon"]) {
+  font-size: inherit;
 }
 
 mdui-circular-progress {

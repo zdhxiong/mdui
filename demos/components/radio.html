@@ -92,6 +92,22 @@
     </section>
 
     <section>
+      <h2>icon & icon slot</h2>
+      <mdui-radio-group value="chinese">
+        <mdui-radio
+          unchecked-icon="check_box_outline_blank"
+          checked-icon="lock"
+          value="chinese"
+        >Chinese</mdui-radio>
+        <mdui-radio value="english">
+          <mdui-icon slot="unchecked-icon" name="check_box_outline_blank"></mdui-icon>
+          <mdui-icon slot="checked-icon" name="lock"></mdui-icon>
+          English
+        </mdui-radio>
+      </mdui-radio-group>
+    </section>
+
+    <section>
       <h2>Radio Group Required</h2>
       <form>
         <mdui-radio-group required name="radio3">

@@ -12,6 +12,7 @@
 .container {
   position: relative;
   display: flex;
+  align-items: center;
   .transition(box-shadow, short4, standard);
   .padding(0, 16);
 
@@ -19,7 +20,8 @@
     .paddingLeft(12);
   }
 
-  &.has-end-icon {
+  &.has-end-icon,
+  &.has-error-icon {
     .paddingRight(12);
   }
 
@@ -88,12 +90,11 @@
   }
 }
 
-.icon-container,
-.end-icon-container,
+.icon,
+.right-icon,
 .prefix,
 .suffix {
   display: flex;
-  align-items: center;
   user-select: none;
   .color(on-surface-variant);
 
@@ -102,7 +103,7 @@
   }
 }
 
-.end-icon-container,
+.right-icon,
 .suffix {
   :host([invalid]) & {
     .color(error);
@@ -118,27 +119,31 @@
   }
 }
 
-.icon-container,
-.end-icon-container {
+.icon,
+.right-icon {
   .fontSize(24);
-
-  mdui-button-icon,
-  ::slotted(mdui-button-icon) {
-    .marginLeft(-8);
-    .marginRight(-8);
-  }
 }
 
-.icon-container {
-  .has-icon & {
-    .marginRight(16);
-  }
+.icon mdui-button-icon,
+.right-icon mdui-button-icon,
+::slotted(mdui-button-icon[slot]) {
+  .marginLeft(-8);
+  .marginRight(-8);
 }
 
-.end-icon-container {
-  .has-end-icon & {
-    .marginLeft(16);
-  }
+.icon .i,
+.right-icon .i,
+::slotted([slot$="icon"]) {
+  font-size: inherit;
+}
+
+.has-icon .icon {
+  .marginRight(16);
+}
+
+.right-icon:not(.end-icon),
+.has-end-icon .end-icon {
+  .marginLeft(16);
 }
 
 .prefix,
@@ -262,6 +267,13 @@
   .color(on-surface);
   .caretColor(primary);
 
+  &.hide-input {
+    opacity: 0;
+    height: 0;
+    padding: 0 !important;
+    overflow: hidden;
+  }
+
   &::placeholder {
     .color(on-surface-variant);
   }
@@ -283,13 +295,6 @@
   .padding(24, 0, 8, 0);
 }
 
-.hide-input {
-  opacity: 0;
-  height: 0;
-  padding: 0 !important;
-  overflow: hidden;
-}
-
 .supporting {
   display: flex;
   justify-content: space-between;
@@ -302,6 +307,7 @@
 }
 
 .helper {
+  display: block;
   opacity: 1;
   .transition(opacity, short4, linear);
   .typescale(body-small);

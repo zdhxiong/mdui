@@ -44,7 +44,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart headline - 顶部的标题
  * @csspart body - 对话框的 body 部分
  * @csspart description - 副文本部分，位于 body 中
- * @csspart actions - 底部操作栏容器
+ * @csspart action - 底部操作栏容器
  */
 @customElement('mdui-dialog')
 export class Dialog extends LitElement {
@@ -369,16 +369,16 @@ export class Dialog extends LitElement {
   }
 
   protected override render(): TemplateResult {
-    const hasHeaderSlot = this.hasSlotController.test('header');
-    const hasIconSlot = this.hasSlotController.test('icon');
-    const hasHeadlineSlot = this.hasSlotController.test('headline');
-    const hasDescriptionSlot = this.hasSlotController.test('description');
     const hasActionSlot = this.hasSlotController.test('action');
-    const hasDefaultSlot = this.hasSlotController.test('[default]');
 
-    const hasIcon = hasIconSlot || !!this.icon;
-    const hasHeadline = hasHeadlineSlot || !!this.headline;
-    const hasDescription = hasDescriptionSlot || !!this.description;
+    const hasIcon = !!this.icon || this.hasSlotController.test('icon');
+    const hasHeadline =
+      !!this.headline || this.hasSlotController.test('headline');
+    const hasDescription =
+      !!this.description || this.hasSlotController.test('description');
+    const hasHeader =
+      hasIcon || hasHeadline || this.hasSlotController.test('header');
+    const hasBody = hasDescription || this.hasSlotController.test('[default]');
 
     return html`<div
         ${ref(this.overlayRef)}
@@ -387,21 +387,21 @@ export class Dialog extends LitElement {
         @click="${this.onOverlayClick}"
         tabindex="-1"
       ></div>
-      <div ${ref(this.panelRef)} part="panel" class="panel" tabindex="0">
+      <div
+        ${ref(this.panelRef)}
+        part="panel"
+        class="panel ${classMap({ 'has-icon': hasIcon })}"
+        tabindex="0"
+      >
         ${when(
-          hasHeaderSlot || hasIcon || hasHeadline,
-          () => html`<div
-            part="header"
-            class="header ${classMap({ 'has-icon': hasIcon })}"
-          >
-            <slot name="header">
-              ${when(hasIcon, () => this.renderIcon())}
-              ${when(hasHeadline, () => this.renderHeadline())}
-            </slot>
-          </div>`,
+          hasHeader,
+          () => html`<slot name="header" part="header" class="header">
+            ${when(hasIcon, () => this.renderIcon())}
+            ${when(hasHeadline, () => this.renderHeadline())}
+          </slot>`,
         )}
         ${when(
-          hasDefaultSlot || hasDescription,
+          hasBody,
           () => html`<div ${ref(this.bodyRef)} part="body" class="body">
             ${when(hasDescription, () => this.renderDescription())}
             <slot></slot>
@@ -409,10 +409,7 @@ export class Dialog extends LitElement {
         )}
         ${when(
           hasActionSlot,
-          () =>
-            html`<div part="actions" class="actions">
-              <slot name="action"></slot>
-            </div>`,
+          () => html`<slot name="action" part="action" class="action"></slot>`,
         )}
       </div>`;
   }
@@ -427,25 +424,23 @@ export class Dialog extends LitElement {
   }
 
   private renderIcon(): TemplateResult {
-    return html`<div part="icon" class="icon">
-      <slot name="icon">
-        ${this.icon
-          ? html`<mdui-icon name=${this.icon}></mdui-icon>`
-          : nothingTemplate}
-      </slot>
-    </div>`;
+    return html`<slot name="icon" part="icon" class="icon">
+      ${this.icon
+        ? html`<mdui-icon name=${this.icon}></mdui-icon>`
+        : nothingTemplate}
+    </slot>`;
   }
 
   private renderHeadline(): TemplateResult {
-    return html`<div part="headline" class="headline">
-      <slot name="headline">${this.headline}</slot>
-    </div>`;
+    return html`<slot name="headline" part="headline" class="headline">
+      ${this.headline}
+    </slot>`;
   }
 
   private renderDescription(): TemplateResult {
-    return html`<div part="description" class="description">
-      <slot name="description">${this.description}</slot>
-    </div>`;
+    return html`<slot name="description" part="description" class="description">
+      ${this.description}
+    </slot>`;
   }
 }
 

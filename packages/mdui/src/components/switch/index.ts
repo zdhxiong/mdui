@@ -241,7 +241,12 @@ export class Switch
   }
 
   protected override render(): TemplateResult {
-    return html`<label>
+    return html`<label
+      class=${classMap({
+        'has-unchecked-icon':
+          this.uncheckedIcon || this.hasSlotController.test('unchecked-icon'),
+      })}
+    >
       <input
         ${ref(this.inputRef)}
         type="checkbox"
@@ -253,38 +258,27 @@ export class Switch
         @change=${this.onChange}
       />
       <div part="track" class="track">
-        <div
-          part="thumb"
-          class="thumb ${classMap({
-            'has-unchecked-icon':
-              this.uncheckedIcon ||
-              this.hasSlotController.test('unchecked-icon'),
-          })}"
-        >
+        <div part="thumb" class="thumb">
           <mdui-ripple
             ${ref(this.rippleRef)}
             .noRipple=${this.noRipple}
           ></mdui-ripple>
-          <slot name="checked-icon">
+          <slot name="checked-icon" part="checked-icon" class="checked-icon">
             ${this.checkedIcon
-              ? html`<mdui-icon
-                  part="checked-icon"
-                  class="checked-icon"
-                  name=${this.checkedIcon}
-                ></mdui-icon>`
+              ? html`<mdui-icon name=${this.checkedIcon} class="i"></mdui-icon>`
               : this.checkedIcon === ''
               ? nothingTemplate
-              : html`<mdui-icon-check
-                  part="checked-icon"
-                  class="checked-icon"
-                ></mdui-icon-check>`}
+              : html`<mdui-icon-check class="i"></mdui-icon-check>`}
           </slot>
-          <slot name="unchecked-icon">
+          <slot
+            name="unchecked-icon"
+            part="unchecked-icon"
+            class="unchecked-icon"
+          >
             ${this.uncheckedIcon
               ? html`<mdui-icon
-                  part="unchecked-icon"
-                  class="unchecked-icon"
                   name=${this.uncheckedIcon}
+                  class="i"
                 ></mdui-icon>`
               : nothingTemplate}
           </slot>

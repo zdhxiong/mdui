@@ -42,29 +42,29 @@ import type { Ref } from 'lit/directives/ref.js';
  *
  * @slot icon
  * @slot end-icon
+ * @slot error-icon
  * @slot prefix
  * @slot suffix
- * @slot clear
- * @slot show-password
- * @slot hide-password
+ * @slot clear-button
+ * @slot clear-icon
+ * @slot toggle-password-button
+ * @slot show-password-icon
+ * @slot hide-password-icon
  * @slot helper
  *
  * @csspart container
- * @csspart icon-container
  * @csspart icon
- * @csspart end-icon-container
  * @csspart end-icon
+ * @csspart error-icon
  * @csspart prefix
  * @csspart suffix
- * @csspart input-container
  * @csspart label
  * @csspart input
- * @csspart clear-container
  * @csspart clear-button
- * @csspart clear
- * @csspart toggle-password-container
+ * @csspart clear-icon
  * @csspart toggle-password-button
- * @csspart toggle-password
+ * @csspart show-password-icon
+ * @csspart hide-password-icon
  * @csspart supporting
  * @csspart helper
  * @csspart error
@@ -168,6 +168,12 @@ export class TextField
   public clearable = false;
 
   /**
+   * 可清空文本框时，显示在文本框右侧的清空按钮的 Material Icons 图标名。也可以通过 `slot="clear-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'clear-icon' })
+  public clearIcon?: string;
+
+  /**
    * 文本是否右对齐
    */
   @property({
@@ -201,6 +207,12 @@ export class TextField
    */
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon?: string;
+
+  /**
+   * 表单字段验证失败时，显示在文本框右侧的 Material Icons 图标名。也可以通过 `slot="error-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'error-icon' })
+  public errorIcon?: string;
 
   /**
    * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
@@ -324,6 +336,18 @@ export class TextField
     attribute: 'toggle-password',
   })
   public togglePassword = false;
+
+  /**
+   * 含密码切换按钮时，明文密码状态下，按钮的 Material Icons 图标。也可以通过 `slot="show-password-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'show-password-icon' })
+  public showPasswordIcon?: string;
+
+  /**
+   * 含密码切换按钮时，密文密码状态下，按钮的 Material Icons 图标。也可以通过 `slot="hide-password-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'hide-password-icon' })
+  public hidePasswordIcon?: string;
 
   /**
    * iOS 的非标准属性（运行在 iOS 上的 Safari、Firefox、Chrome 都支持），文本是否自动首字母大写。在 iOS5 和之后的版本上有效。可选值为：
@@ -690,24 +714,30 @@ export class TextField
   }
 
   protected override render(): TemplateResult {
-    const hasIcon = this.hasSlotController.test('icon') || !!this.icon;
+    const hasIcon = !!this.icon || this.hasSlotController.test('icon');
     const hasEndIcon =
-      this.hasSlotController.test('end-icon') || !!this.endIcon;
-    const hasHelper = this.hasSlotController.test('helper') || !!this.helper;
+      !!this.endIcon || this.hasSlotController.test('end-icon');
+    const hasErrorIcon = this.invalid;
+    const hasHelper = !!this.helper || this.hasSlotController.test('helper');
+    const hasError =
+      this.invalid && !!(this.error || this.inputRef.value!.validationMessage);
+    const hasCounter = this.counter && !!this.maxlength;
+
     // 存在 input slot 时，隐藏组件内部的 .input 元素，使用 slot 代替
     const hasInputSlot = this.hasSlotController.test('input');
 
-    return html`<div
-        part="container"
-        class="container ${classMap({
-          'has-value': this.hasValue,
-          'has-icon': hasIcon,
-          'has-end-icon': hasEndIcon,
-          'is-firefox': navigator.userAgent.includes('Firefox'),
-        })}"
-      >
-        ${this.renderPrefix(hasIcon)}
-        <div part="input-container" class="input-container">
+    const className = classMap({
+      container: true,
+      'has-value': this.hasValue,
+      'has-icon': hasIcon,
+      'has-end-icon': hasEndIcon,
+      'has-error-icon': hasErrorIcon,
+      'is-firefox': navigator.userAgent.includes('Firefox'),
+    });
+
+    return html`<div part="container" class=${className}>
+        ${this.renderPrefix()}
+        <div class="input-container">
           ${this.renderLabel()}
           ${this.isTextarea
             ? this.renderTextArea(hasInputSlot)
@@ -718,15 +748,13 @@ export class TextField
           )}
         </div>
         ${this.renderClearButton()}${this.renderTogglePasswordButton()}
-        ${this.renderSuffix(hasEndIcon)}
+        ${this.renderSuffix(hasErrorIcon)}
       </div>
       ${when(
-        (this.invalid &&
-          (this.error || this.inputRef.value!.validationMessage)) ||
-          hasHelper ||
-          (this.counter && this.maxlength),
+        hasError || hasHelper || hasCounter,
         () => html`<div part="supporting" class="supporting">
-          ${this.renderHelper(hasHelper)}${this.renderCounter()}
+          ${this.renderHelper(hasError, hasHelper)}
+          ${this.renderCounter(hasCounter)}
         </div>`,
       )}`;
   }
@@ -817,48 +845,34 @@ export class TextField
       : nothingTemplate;
   }
 
-  private renderPrefix(hasIcon: boolean): TemplateResult {
-    return html`<span
-        part="icon-container"
-        class="icon-container ${classMap({ 'has-icon': hasIcon })}"
-      >
-        <slot name="icon">
-          ${this.icon
-            ? html`<mdui-icon part="icon" name=${this.icon}></mdui-icon>`
-            : nothingTemplate}
-        </slot>
-      </span>
-      <span part="prefix" class="prefix">
-        <slot name="prefix">${this.prefix}</slot>
-      </span>`;
+  private renderPrefix(): TemplateResult {
+    return html`<slot name="icon" part="icon" class="icon">
+        ${this.icon
+          ? html`<mdui-icon name=${this.icon} class="i"></mdui-icon>`
+          : nothingTemplate}
+      </slot>
+      <slot name="prefix" part="prefix" class="prefix">${this.prefix}</slot>`;
   }
 
-  private renderSuffix(hasEndIcon: boolean): TemplateResult {
-    return html`<span part="suffix" class="suffix">
-        <slot name="suffix">${this.suffix}</slot>
-      </span>
-      ${this.invalid
-        ? html`<span
-            part="end-icon-container"
-            class="end-icon-container has-end-icon"
+  private renderSuffix(hasErrorIcon: boolean): TemplateResult {
+    return html`<slot name="suffix" part="suffix" class="suffix">
+        ${this.suffix}
+      </slot>
+      ${hasErrorIcon
+        ? html`<slot name="error-icon" part="error-icon" class="right-icon">
+            ${this.errorIcon
+              ? html`<mdui-icon name=${this.errorIcon} class="i"></mdui-icon>`
+              : html`<mdui-icon-error class="i"></mdui-icon-error>`}
+          </slot>`
+        : html`<slot
+            name="end-icon"
+            part="end-icon"
+            class="end-icon right-icon"
           >
-            <mdui-icon-error part="end-icon"></mdui-icon-error>
-          </span>`
-        : html`<span
-            part="end-icon-container"
-            class="end-icon-container ${classMap({
-              'has-end-icon': hasEndIcon,
-            })}"
-          >
-            <slot name="end-icon">
-              ${this.endIcon
-                ? html`<mdui-icon
-                    part="end-icon"
-                    name=${this.endIcon}
-                  ></mdui-icon>`
-                : nothingTemplate}
-            </slot>
-          </span>`} `;
+            ${this.endIcon
+              ? html`<mdui-icon name=${this.endIcon} class="i"></mdui-icon>`
+              : nothingTemplate}
+          </slot>`}`;
   }
 
   private renderClearButton(): TemplateResult {
@@ -871,52 +885,62 @@ export class TextField
     return when(
       hasClearButton,
       () =>
-        html`<span
-          part="clear-container"
-          class="end-icon-container has-end-icon"
+        html`<slot
+          name="clear-button"
+          part="clear-button"
+          class="right-icon"
+          @click=${this.onClear}
         >
-          <mdui-button-icon
-            part="clear-button"
-            class="clear"
-            tabindex="-1"
-            @click=${this.onClear}
-          >
-            <slot name="clear">
-              <mdui-icon-cancel--outlined
-                part="clear"
-              ></mdui-icon-cancel--outlined>
+          <mdui-button-icon tabindex="-1">
+            <slot name="clear-icon" part="clear-icon">
+              ${this.clearIcon
+                ? html`<mdui-icon name=${this.clearIcon} class="i"></mdui-icon>`
+                : html`<mdui-icon-cancel--outlined
+                    class="i"
+                  ></mdui-icon-cancel--outlined>`}
             </slot>
           </mdui-button-icon>
-        </span>`,
+        </slot>`,
     );
   }
 
   private renderTogglePasswordButton(): TemplateResult {
+    const hasTogglePasswordButton =
+      this.type === 'password' && this.togglePassword && !this.disabled;
+
     return when(
-      this.type === 'password' && this.togglePassword && !this.disabled,
+      hasTogglePasswordButton,
       () =>
-        html`<span
-          part="toggle-password-container"
-          class="end-icon-container has-end-icon"
+        html`<slot
+          name="toggle-password-button"
+          part="toggle-password-button"
+          class="right-icon"
+          @click=${this.onTogglePassword}
         >
-          <mdui-button-icon
-            part="toggle-password-button"
-            class="toggle-password"
-            tabindex="-1"
-            @click=${this.onTogglePassword}
-          >
+          <mdui-button-icon tabindex="-1">
             ${this.isPasswordVisible
-              ? html`<slot name="show-password">
-                  <mdui-icon-visibility-off
-                    part="toggle-password"
-                  ></mdui-icon-visibility-off>
+              ? html`<slot name="show-password-icon" part="show-password-icon">
+                  ${this.showPasswordIcon
+                    ? html`<mdui-icon
+                        name=${this.showPasswordIcon}
+                        class="i"
+                      ></mdui-icon>`
+                    : html`<mdui-icon-visibility-off
+                        class="i"
+                      ></mdui-icon-visibility-off>`}
                 </slot>`
-              : html`<slot name="hide-password">
-                  <mdui-icon-visibility part="toggle-password">
-                  </mdui-icon-visibility>
+              : html`<slot name="hide-password-icon" part="hide-password-icon">
+                  ${this.hidePasswordIcon
+                    ? html`<mdui-icon
+                        name=${this.hidePasswordIcon}
+                        class="i"
+                      ></mdui-icon>`
+                    : html`<mdui-icon-visibility
+                        class="i"
+                      ></mdui-icon-visibility>`}
                 </slot>`}
           </mdui-button-icon>
-        </span>`,
+        </slot>`,
     );
   }
 
@@ -997,24 +1021,24 @@ export class TextField
   }
 
   /**
+   * @param hasError 是否包含错误提示
    * @param hasHelper 是否含 helper 属性或 helper slot
    */
-  private renderHelper(hasHelper: boolean): TemplateResult {
-    return this.invalid &&
-      (this.error || this.inputRef.value!.validationMessage)
+  private renderHelper(hasError: boolean, hasHelper: boolean): TemplateResult {
+    return hasError
       ? html`<div part="error" class="error">
           ${this.error || this.inputRef.value!.validationMessage}
         </div>`
       : hasHelper
-      ? html`<div part="helper" class="helper">
-          <slot name="helper">${this.helper}</slot>
-        </div>`
+      ? html`<slot name="helper" part="helper" class="helper">
+          ${this.helper}
+        </slot>`
       : // 右边有 counter，需要占位
         html`<span></span>`;
   }
 
-  private renderCounter(): TemplateResult {
-    return this.counter && this.maxlength
+  private renderCounter(hasCounter: boolean): TemplateResult {
+    return hasCounter
       ? html`<div part="counter" class="counter">
           ${this.value.length}/${this.maxlength}
         </div>`

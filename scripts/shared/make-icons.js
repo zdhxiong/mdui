@@ -16,6 +16,7 @@ const toSharedIcons = [
   'clear',
   'arrow-right',
   'radio-button-unchecked',
+  'circle',
   'error',
   'cancel--outlined',
   'visibility-off',

@@ -59,10 +59,19 @@
 }
 
 .icon,
-.checked-icon,
-::slotted([slot="icon"]),
-::slotted([slot="end-icon"]) {
+.end-icon,
+.selected-icon {
+  display: inline-flex;
   font-size: unit((18 / 14), em);
+}
+
+.icon .i,
+.end-icon .i,
+.selected-icon .i,
+::slotted([slot="icon"]),
+::slotted([slot="end-icon"]),
+::slotted([slot="selected-icon"]) {
+  font-size: inherit;
 }
 
 mdui-circular-progress {
@@ -74,10 +83,14 @@ mdui-circular-progress {
   }
 }
 
-.has-icon .label {
-  .paddingLeft(8);
-}
+.label {
+  display: inline-flex;
 
-.has-end-icon .label {
-  .paddingRight(8);
+  .has-icon & {
+    .paddingLeft(8);
+  }
+
+  .has-end-icon & {
+    .paddingRight(8);
+  }
 }

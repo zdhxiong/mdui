@@ -1,7 +1,7 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
@@ -34,7 +34,6 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart icon - 左侧图标
  * @csspart end-icon - 右侧图标
  * @csspart selected-icon - 选中状态的左侧图标
- * @csspart delete-icon-container - 可删除时，右侧删除图标的容器
  * @csspart delete-icon - 可删除时，右侧的删除图标
  * @csspart loading - 加载中动画
  *
@@ -123,7 +122,12 @@ export class Chip extends ButtonBase {
   public deleteIcon?: string;
 
   private readonly rippleRef: Ref<Ripple> = createRef();
-  private readonly hasSlotController = new HasSlotController(this, 'end-icon');
+  private readonly hasSlotController = new HasSlotController(
+    this,
+    'icon',
+    'selected-icon',
+    'end-icon',
+  );
 
   public constructor() {
     super();
@@ -149,22 +153,39 @@ export class Chip extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
+    const hasIcon = this.icon || this.hasSlotController.test('icon');
+    const hasEndIcon = this.endIcon || this.hasSlotController.test('end-icon');
+    const hasSelectedIcon =
+      this.selectedIcon ||
+      ['assist', 'filter'].includes(this.variant) ||
+      hasIcon ||
+      this.hasSlotController.test('selected-icon');
+
+    const className = cc({
+      button: true,
+      'has-icon':
+        this.loading ||
+        (!this.selected && hasIcon) ||
+        (this.selected && hasSelectedIcon),
+      'has-end-icon': hasEndIcon,
+    });
+
     return html`<mdui-ripple
         ${ref(this.rippleRef)}
         .noRipple=${this.noRipple}
       ></mdui-ripple>
       ${this.isButton()
         ? this.renderButton({
-            className: 'button',
+            className,
             part: 'button',
             content: this.renderInner(),
           })
         : this.disabled || this.loading
-        ? html`<span part="button" class="button _a">
+        ? html`<span part="button" class="${className} _a">
             ${this.renderInner()}
           </span>`
         : this.renderAnchor({
-            className: 'button',
+            className,
             part: 'button',
             content: this.renderInner(),
           })}`;
@@ -213,50 +234,44 @@ export class Chip extends ButtonBase {
 
     const icon = (): TemplateResult => {
       return this.icon
-        ? html`<mdui-icon
-            part="icon"
-            class="icon"
-            name=${this.icon}
-          ></mdui-icon>`
+        ? html`<mdui-icon name=${this.icon} class="i"></mdui-icon>`
         : nothingTemplate;
     };
 
     const selectedIcon = (): TemplateResult => {
       if (this.selectedIcon) {
         return html`<mdui-icon
-          part="selected-icon"
-          class="icon"
           name="${this.selectedIcon}"
+          class="i"
         ></mdui-icon>`;
       }
 
       if (this.variant === 'assist' || this.variant === 'filter') {
-        return html`<mdui-icon-check
-          part="selected-icon"
-          class="icon"
-        ></mdui-icon-check>`;
+        return html`<mdui-icon-check class="i"></mdui-icon-check>`;
       }
 
       return icon();
     };
 
-    return this.selected
-      ? html`<slot name="selected-icon">${selectedIcon()}</slot>`
-      : html`<slot name="icon">${icon()}</slot>`;
+    return !this.selected
+      ? html`<slot name="icon" part="icon" class="icon">${icon()}</slot>`
+      : html`<slot
+          name="selected-icon"
+          part="selected-icon"
+          class="selected-icon"
+        >
+          ${selectedIcon()}
+        </slot>`;
   }
 
   private renderLabel(): TemplateResult {
-    return html`<span part="label" class="label"><slot></slot></span>`;
+    return html`<slot part="label" class="label"></slot>`;
   }
 
   private renderEndIcon(): TemplateResult {
-    return html`<slot name="end-icon">
+    return html`<slot name="end-icon" part="end-icon" class="end-icon">
       ${this.endIcon
-        ? html`<mdui-icon
-            part="end-icon"
-            class="end-icon"
-            name="${this.endIcon}"
-          ></mdui-icon>`
+        ? html`<mdui-icon name="${this.endIcon}" class="i"></mdui-icon>`
         : nothingTemplate}
     </slot>`;
   }
@@ -266,26 +281,16 @@ export class Chip extends ButtonBase {
       return nothingTemplate;
     }
 
-    return html`<span
-      part="delete-icon-container"
-      class="delete-icon-container ${classMap({
-        'has-end-icon': this.endIcon || this.hasSlotController.test('end-icon'),
-      })}"
+    return html`<slot
+      name="delete-icon"
+      part="delete-icon"
+      class="delete-icon"
       @click=${this.onDelete}
     >
-      <slot name="delete-icon">
-        ${this.deleteIcon
-          ? html`<mdui-icon
-              part="delete-icon"
-              class="delete-icon"
-              name="${this.deleteIcon}"
-            ></mdui-icon>`
-          : html`<mdui-icon-clear
-              part="delete-icon"
-              class="delete-icon"
-            ></mdui-icon-clear>`}
-      </slot>
-    </span>`;
+      ${this.deleteIcon
+        ? html`<mdui-icon name="${this.deleteIcon}" class="i"></mdui-icon>`
+        : html`<mdui-icon-clear class="i"></mdui-icon-clear>`}
+    </slot>`;
   }
 
   private renderInner(): TemplateResult[] {

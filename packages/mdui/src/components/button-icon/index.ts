@@ -25,6 +25,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart button - 内部的 `button` 或 `a` 元素
  * @csspart icon - 图标组件
  * @csspart selected-icon 选中状态的图标
+ * @csspart loading - 加载中动画
  *
  * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
@@ -143,12 +144,12 @@ export class ButtonIcon extends ButtonBase {
 
     const selectedIcon = () =>
       this.hasSlotController.test('selected-icon') || this.selectedIcon
-        ? html`<slot name="selected-icon">
-            <mdui-icon
-              part="selected-icon"
-              class="icon"
-              name=${this.selectedIcon}
-            ></mdui-icon>
+        ? html`<slot
+            name="selected-icon"
+            part="selected-icon"
+            class="selected-icon"
+          >
+            <mdui-icon name=${this.selectedIcon}></mdui-icon>
           </slot>`
         : icon();
 

@@ -39,58 +39,76 @@
 .label-container {
   flex: 1 1 100%;
   min-width: 0;
-  .color(on-surface);
-  .typescale(label-large);
 }
 
 .label {
+  display: block;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  .color(on-surface);
+  .fontSize(label-large);
+  .fontWeight(label-large);
+  .letterSpacing(label-large);
 }
 
-.icon-container,
-.end-icon-container,
+.icon,
+.selected-icon,
+.end-icon,
 .end-text {
   display: none;
+  flex: 0 0 auto;
   .color(on-surface-variant);
 }
 
-.has-icon,
-.has-end-icon,
-.has-end-text {
+.has-icon .icon,
+.has-icon .selected-icon,
+.has-end-icon .end-icon,
+.has-end-text .end-text {
   display: flex;
 }
 
-.icon-container,
-.end-icon-container {
-  ::slotted(mdui-avatar) {
+.icon,
+.selected-icon,
+.end-icon {
+  .fontSize(24);
+
+  &::slotted(mdui-avatar) {
     .width(24);
     .height(24);
   }
+}
 
-  .dense & {
-    *,
-    ::slotted(*) {
-      .fontSize(18);
-    }
+.dense .icon,
+.dense .selected-icon,
+.dense .end-icon {
+  .fontSize(18);
 
-    ::slotted(mdui-avatar) {
-      .width(18);
-      .height(18);
-    }
+  &::slotted(mdui-avatar) {
+    .width(18);
+    .height(18);
   }
+}
+
+.icon .i,
+.selected-icon .i,
+.end-icon .i,
+::slotted([slot="icon"]),
+::slotted([slot="selected-icon"]),
+::slotted([slot="end-icon"]) {
+  font-size: inherit;
 }
 
 .end-text {
   .typescale(label-large);
 }
 
-.icon-container {
+.icon,
+.selected-icon {
   .marginRight(12);
 }
 
-.end-icon-container,
+.end-icon,
 .end-text {
   .marginLeft(12);
 }
@@ -102,6 +120,7 @@
 .submenu {
   --shape-corner: var(--mdui-shape-corner-extra-small);
 
+  display: block;
   position: absolute;
   z-index: 1;
   border-radius: var(--shape-corner);

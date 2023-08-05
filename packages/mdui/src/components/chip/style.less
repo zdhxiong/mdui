@@ -118,10 +118,8 @@
 }
 
 .icon,
-.end-icon,
-::slotted([slot="icon"]),
-::slotted([slot="end-icon"]),
-::slotted([slot="selected-icon"]) {
+.selected-icon,
+.end-icon {
   display: inline-flex;
   // 图标 font-size 为 18px，文案为 14px
   font-size: unit((18 / 14), em);
@@ -141,12 +139,28 @@
   }
 }
 
-.icon,
-mdui-circular-progress,
+.icon .i,
+.selected-icon .i,
+.end-icon .i,
 ::slotted([slot="icon"]),
-::slotted([slot="selected-icon"]) {
-  :host([variant="input"]) & {
-    .marginLeft(4);
+::slotted([slot="selected-icon"]),
+::slotted([slot="end-icon"]) {
+  font-size: inherit;
+}
+
+:host([variant="input"]) {
+  .has-icon {
+    .icon,
+    .selected-icon,
+    mdui-circular-progress {
+      .marginLeft(4);
+    }
+  }
+
+  .has-end-icon {
+    .end-icon {
+      .marginRight(4);
+    }
   }
 }
 
@@ -157,13 +171,6 @@ mdui-circular-progress {
 
   :host([disabled]) & {
     .stroke(on-surface, 38%)
-  }
-}
-
-.end-icon,
-::slotted([slot="end-icon"]) {
-  :host([variant="input"]) & {
-    .marginRight(4);
   }
 }
 
@@ -178,8 +185,21 @@ mdui-circular-progress {
   }
 }
 
-.delete-icon-container {
+::slotted(mdui-avatar[slot="icon"]),
+::slotted(mdui-avatar[slot="selected-icon"]) {
+  .marginLeft(-4);
+  .marginRight(-2);
+}
+
+::slotted(mdui-avatar[slot="end-icon"]) {
+  .marginRight(-4);
+  .marginLeft(-2);
+}
+
+.delete-icon {
   display: inline-flex;
+  // 图标 font-size 为 18px，文案为 14px
+  font-size: unit((18 / 14), em);
   .transition(background-color, short4, linear);
   .shapeCorner(full);
   .marginRight(-4);
@@ -189,6 +209,10 @@ mdui-circular-progress {
 
   &:hover {
     .backgroundColor(on-surface-variant, 12%);
+  }
+
+  .has-end-icon & {
+    .marginLeft(4);
   }
 
   :host([variant="assiat"]) & {
@@ -204,17 +228,12 @@ mdui-circular-progress {
   }
 }
 
-.delete-icon,
+.delete-icon .i,
 ::slotted([slot="delete-icon"]) {
-  // 图标 font-size 为 18px，文案为 14px
-  font-size: unit((18 / 14), em);
+  font-size: inherit;
 }
 
 ::slotted(mdui-avatar[slot="delete-icon"]) {
   .width(18);
   .height(18);
-}
-
-.has-end-icon {
-  .marginLeft(4);
 }

@@ -91,16 +91,23 @@
 }
 
 .label {
+  display: inline-flex;
   .paddingRight(8);
   .paddingLeft(8);
 }
 
 .icon,
-::slotted([slot="icon"]),
-::slotted([slot="end-icon"]) {
+.end-icon {
   display: inline-flex;
   // 图标 font-size 为 18px，文案为 14px
   font-size: unit((18 / 14), em);
+}
+
+.icon mdui-icon,
+.end-icon mdui-icon,
+::slotted([slot="icon"]),
+::slotted([slot="end-icon"]) {
+  font-size: inherit;
 }
 
 mdui-circular-progress {

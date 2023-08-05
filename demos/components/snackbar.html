@@ -46,6 +46,9 @@
 
       <mdui-button class="open">with action & close</mdui-button>
       <mdui-snackbar action="Undo" closeable>Your photo has been archived</mdui-snackbar>
+
+      <mdui-button class="open">close-icon</mdui-button>
+      <mdui-snackbar closeable close-icon="delete">close-icon</mdui-snackbar>
     </section>
 
     <section>
@@ -110,11 +113,14 @@
       <mdui-button class="open">action slot</mdui-button>
       <mdui-snackbar>Your photo has been archived<button slot="action">action</button></mdui-snackbar>
 
-      <mdui-button class="open">close slot</mdui-button>
-      <mdui-snackbar closeable>Your photo has been archived<button slot="close">X</button></mdui-snackbar>
+      <mdui-button class="open">close-button slot</mdui-button>
+      <mdui-snackbar closeable>Your photo has been archived<button slot="close-button">X</button></mdui-snackbar>
 
-      <mdui-button class="open">action & close slot</mdui-button>
-      <mdui-snackbar closeable>Your photo has been archived<button slot="action">action</button><button slot="close">X</button></mdui-snackbar>
+      <mdui-button class="open">close-icon slot</mdui-button>
+      <mdui-snackbar closeable>Your photo has been archived<mdui-icon slot="close-icon" name="delete"></mdui-icon></mdui-snackbar>
+
+      <mdui-button class="open">action & close-button slot</mdui-button>
+      <mdui-snackbar closeable>Your photo has been archived<button slot="action">action</button><button slot="close-button">X</button></mdui-snackbar>
     </section>
   </main>
 </body>

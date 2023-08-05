@@ -41,9 +41,11 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot - `<mdui-menu-item>` 元素
  * @slot icon
  * @slot end-icon
+ * @slot error-icon
  * @slot prefix
  * @slot suffix
- * @slot clear
+ * @slot clear-button
+ * @slot clear-icon
  * @slot helper
  *
  * @csspart text-field 文本框，即 [`<mdui-text-field>`](/docs/2/components/text-field) 元素
@@ -123,6 +125,12 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   public clearable = false;
 
   /**
+   * 可清空下拉框时，显示在下拉框右侧的清空按钮的 Material Icons 图标名。也可以通过 `slot="clear-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'clear-icon' })
+  public clearIcon?: string;
+
+  /**
    * 下拉框的方位。可选值为：
    * * `auto`：自动判断方位
    * * `bottom`：位于下方
@@ -168,6 +176,12 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
    */
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon?: string;
+
+  /**
+   * 表单字段验证失败时，显示在下拉框右侧的 Material Icons 图标名。也可以通过 `slot="error-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'error-icon' })
+  public errorIcon?: string;
 
   /**
    * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
@@ -231,9 +245,11 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
     this,
     'icon',
     'end-icon',
+    'error-icon',
     'prefix',
     'suffix',
-    'clear',
+    'clear-button',
+    'clear-icon',
     'helper',
   );
 
@@ -398,11 +414,13 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
           .helper=${this.helper}
           .error=${this.hiddenInputRef.value?.validationMessage}
           .clearable=${this.clearable}
+          .clearIcon=${this.clearIcon}
           .endAligned=${this.endAligned}
           .prefix=${this.prefix}
           .suffix=${this.suffix}
           .icon=${this.icon}
           .endIcon=${this.endIcon}
+          .errorIcon=${this.errorIcon}
           .form=${this.form}
           .disabled=${this.disabled}
           .required=${this.required}
@@ -412,7 +430,16 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
           @keydown=${this.onTextFieldKeyDown}
         >
           ${map(
-            ['icon', 'end-icon', 'prefix', 'suffix', 'clear', 'helper'],
+            [
+              'icon',
+              'end-icon',
+              'error-icon',
+              'prefix',
+              'suffix',
+              'clear-button',
+              'clear-icon',
+              'helper',
+            ],
             (slotName) =>
               this.hasSlotController.test(slotName)
                 ? html`<slot name=${slotName} slot=${slotName}></slot>`

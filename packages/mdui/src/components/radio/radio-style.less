@@ -11,15 +11,20 @@
   zoom: 1;
   -webkit-user-drag: none;
   .borderRadius(2);
-  .fontSize(label-large);
-  .fontWeight(label-large);
-  .letterSpacing(label-large);
+  .typescale(label-large);
+}
+
+.icon {
+  display: flex;
+  position: absolute;
+  .fontSize(24);
+  .transitionDuration(short4);
+  .transitionTimingFunction(standard);
 }
 
 .unchecked-icon {
-  position: absolute;
+  transition-property: color;
   .color(on-surface-variant);
-  .transition(color, short4, standard);
 
   :host([hover]) &,
   :host([focused]) &,
@@ -29,16 +34,17 @@
 }
 
 .checked-icon {
-  position: absolute;
   opacity: 0;
-  border-radius: 50%;
   transform: scale(0.2);
-  transition-property: background-color, opacity, transform;
-  .transitionDuration(short4);
-  .transitionTimingFunction(standard);
-  .width(10);
-  .height(10);
-  .backgroundColor(primary);
+  transition-property: color, opacity, transform;
+  .color(primary);
+}
+
+.icon .i,
+::slotted([slot="unchecked-icon"]),
+::slotted([slot="checked-icon"]) {
+  color: inherit;
+  font-size: inherit;
 }
 
 i {
@@ -54,7 +60,8 @@ i {
   .stateLayerColor(on-surface);
 }
 
-span {
+.label {
+  display: flex;
   width: 100%;
   .paddingTop(10);
   .paddingBottom(10);
@@ -68,29 +75,27 @@ span {
     .stateLayerColor(primary);
   }
 
-  .unchecked-icon {
+  .icon {
     .color(primary);
   }
 
   .checked-icon {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(0.5);
   }
 }
 
 /* 验证不通过状态 */
 :host([invalid]) {
-  .stateLayerColor(error);
+  i {
+    .stateLayerColor(error);
+  }
 
-  .unchecked-icon {
+  .icon {
     .color(error);
   }
 
-  .checked-icon {
-    .backgroundColor(error);
-  }
-
-  span {
+  .label {
     .color(error);
   }
 }
@@ -101,15 +106,11 @@ span {
   cursor: default;
   pointer-events: none;
 
-  .unchecked-icon {
+  .icon {
     .color(on-surface, 38%);
   }
 
-  .checked-icon {
-    .backgroundColor(on-surface, 38%);
-  }
-
-  span {
+  .label {
     .color(on-surface, 38%);
   }
 }

@@ -27,9 +27,8 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot custom - 自定义整个选项卡导航项中的内容
  *
  * @csspart container - 选项卡导航项容器
- * @csspart icon-container - 选项卡导航项中的图标容器
  * @csspart icon - 选项卡导航项中的图标
- * @csspart label-container - 选项卡导航项的文本
+ * @csspart label - 选项卡导航项的文本
  */
 @customElement('mdui-tab')
 export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
@@ -100,7 +99,7 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   protected override render(): TemplateResult {
-    const hasIconSlot = this.hasSlotController.test('icon');
+    const hasIcon = this.icon || this.hasSlotController.test('icon');
     const hasCustomSlot = this.hasSlotController.test('custom');
 
     const renderBadge = (): TemplateResult => html`<slot name="badge"></slot>`;
@@ -111,21 +110,17 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
       ></mdui-ripple>
       <div part="container" class="container ${cc({ preset: !hasCustomSlot })}">
         <slot name="custom">
-          <div part="icon-container" class="icon-container">
-            ${when(hasIconSlot || this.icon, renderBadge)}
-            <slot name="icon">
+          <div class="icon-container">
+            ${when(hasIcon || this.icon, renderBadge)}
+            <slot name="icon" part="icon" class="icon">
               ${this.icon
-                ? html`<mdui-icon
-                    part="icon"
-                    class="icon"
-                    name=${this.icon}
-                  ></mdui-icon>`
+                ? html`<mdui-icon name=${this.icon}></mdui-icon>`
                 : nothingTemplate}
             </slot>
           </div>
-          <div part="label-container" class="label-container">
-            ${when(!hasIconSlot && !this.icon, renderBadge)}
-            <slot></slot>
+          <div class="label-container">
+            ${when(!hasIcon, renderBadge)}
+            <slot part="label" class="label"></slot>
           </div>
         </slot>
       </div>`;

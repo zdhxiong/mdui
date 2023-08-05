@@ -205,12 +205,28 @@
     </section>
 
     <section>
-      <h2>clear slot</h2>
+      <h2>clear-icon</h2>
+      <mdui-select value="item-1" clearable clear-icon="delete"></mdui-select>
+      <mdui-select value="item-2" clearable clear-icon="delete" variant="outlined"></mdui-select>
+    </section>
+
+    <section>
+      <h2>clear-button slot</h2>
       <mdui-select value="item-1" clearable>
-        <mdui-icon slot="clear" name="delete"></mdui-icon>
+        <button slot="clear-button">x</button>
       </mdui-select>
       <mdui-select value="item-2" clearable variant="outlined">
-        <mdui-icon slot="clear" name="delete"></mdui-icon>
+        <button slot="clear-button">x</button>
+      </mdui-select>
+    </section>
+
+    <section>
+      <h2>clear-icon slot</h2>
+      <mdui-select value="item-1" clearable>
+        <mdui-icon slot="clear-icon" name="delete"></mdui-icon>
+      </mdui-select>
+      <mdui-select value="item-2" clearable variant="outlined">
+        <mdui-icon slot="clear-icon" name="delete"></mdui-icon>
       </mdui-select>
     </section>
 
@@ -257,9 +273,19 @@
     </section>
 
     <section>
+      <h2>required & error-icon</h2>
+      <form>
+        <mdui-select label="required" required icon="search" helper="required" name="required" error-icon="delete"></mdui-select>
+        <mdui-select label="required" required icon="search" helper="required" name="required" error-icon="delete" variant="outlined"></mdui-select>
+        <br/>
+        <mdui-button type="submit">Submit</mdui-button>
+      </form>
+    </section>
+
+    <section>
       <h2>invalid</h2>
       <form>
-        <mdui-select label="验证选择 item 3" required class="invalid"></mdui-select>
+        <mdui-select label="验证选择 item 3" required name="invalid" class="invalid"></mdui-select>
         <br/>
         <mdui-button type="submit">Submit</mdui-button>
       </form>

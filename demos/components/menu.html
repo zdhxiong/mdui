@@ -132,6 +132,18 @@
     </section>
 
     <section>
+      <h2>selected-icon & selected-icon slot</h2>
+      <mdui-menu selects="multiple" id="selected-icon" value="two">
+        <mdui-menu-item icon="visibility--outlined" selected-icon="cloud_done" value="one">Item 1</mdui-menu-item>
+        <mdui-menu-item value="two">
+          <mdui-icon slot="selected-icon" name="cloud_done"></mdui-icon>
+          Item 2
+        </mdui-menu-item>
+        <mdui-menu-item value="three">Item 3</mdui-menu-item>
+      </mdui-menu>
+    </section>
+
+    <section>
       <h2>Custom Item</h2>
       <mdui-menu>
         <mdui-menu-item>

@@ -36,7 +36,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart popup - tooltip 的容器
  * @csspart headline - tooltip 的标题
  * @csspart content - tooltip 的内容
- * @csspart actions - tooltip 的操作按钮的容器
+ * @csspart action - tooltip 的操作按钮的容器
  */
 @customElement('mdui-tooltip')
 export class Tooltip extends LitElement {
@@ -287,30 +287,26 @@ export class Tooltip extends LitElement {
   }
 
   protected override render(): TemplateResult {
-    const hasHeadlineSlot = this.hasSlotController.test('headline');
-    const hasActionSlot = this.hasSlotController.test('action');
-
-    const hasHeadline = this.isRich() && (this.headline || hasHeadlineSlot);
-    const hasAction = this.isRich() && hasActionSlot;
+    const hasHeadline =
+      this.isRich() &&
+      (this.headline || this.hasSlotController.test('headline'));
+    const hasAction = this.isRich() && this.hasSlotController.test('action');
 
     return html`<slot></slot>
       <div ${ref(this.popupRef)} part="popup" class="popup" hidden>
         ${when(
           hasHeadline,
           () =>
-            html`<div part="headline" class="headline">
-              <slot name="headline">${this.headline}</slot>
-            </div>`,
+            html`<slot name="headline" part="headline" class="headline">
+              ${this.headline}
+            </slot>`,
         )}
-        <div part="content" class="content">
-          <slot name="content">${this.content}</slot>
-        </div>
+        <slot name="content" part="content" class="content">
+          ${this.content}
+        </slot>
         ${when(
           hasAction,
-          () =>
-            html`<div part="actions" class="actions">
-              <slot name="action"></slot>
-            </div>`,
+          () => html`<slot name="action" part="action" class="action"></slot>`,
         )}
       </div>`;
   }

@@ -35,6 +35,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.icon-container {
+  ::slotted([slot="badge"]) {
+    position: absolute;
+    transform: translate(50%, -50%); // 距离图标左侧和底部 12dp
+  }
+
+  ::slotted([slot="badge"][variant="small"]) {
+    .translate(9, -9); // 位于图标右上角
+  }
+}
+
+.label-container {
+  ::slotted([slot="badge"]) {
+    position: absolute;
+    left: 100%;
+    bottom: 100%;
+    .translate(-12, 10); // 位于文本右上角，向左下方移动 12dp, 10dp
+  }
+
+  ::slotted([slot="badge"][variant="small"]) {
+    .translate(-6, 6); // 位于文本右上角
+  }
+}
+
+.icon,
+.label {
+  display: flex;
   .color(on-surface-variant);
 
   :host([hover]) &,
@@ -52,33 +81,16 @@
   }
 }
 
-.icon-container {
-  ::slotted([slot="badge"]) {
-    position: absolute;
-    transform: translate(50%, -50%); // 距离图标左侧和底部 12dp
-  }
-
-  ::slotted([slot="badge"][variant="small"]) {
-    .translate(9, -9); // 位于图标右上角
-  }
-}
-
-.icon,
-::slotted([slot="icon"]) {
+.icon {
   .fontSize(24);
 }
 
-.label-container {
+.label {
   .typescale(title-small);
+}
 
-  ::slotted([slot="badge"]) {
-    position: absolute;
-    left: 100%;
-    bottom: 100%;
-    .translate(-12, 10); // 位于文本右上角，向左下方移动 12dp, 10dp
-  }
-
-  ::slotted([slot="badge"][variant="small"]) {
-    .translate(-6, 6); // 位于文本右上角
-  }
+.icon mdui-icon,
+::slotted([slot="icon"]) {
+  font-size: inherit;
+  color: inherit;
 }

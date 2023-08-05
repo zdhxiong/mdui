@@ -102,29 +102,21 @@ export class Button extends ButtonBase {
       return this.renderLoading();
     }
 
-    return html`<slot name="icon">
+    return html`<slot name="icon" part="icon" class="icon">
       ${this.icon
-        ? html`<mdui-icon
-            part="icon"
-            class="icon"
-            name=${this.icon}
-          ></mdui-icon>`
+        ? html`<mdui-icon name=${this.icon}></mdui-icon>`
         : nothingTemplate}
     </slot>`;
   }
 
   private renderLabel(): TemplateResult {
-    return html`<span part="label" class="label"><slot></slot></span>`;
+    return html`<slot part="label" class="label"></slot>`;
   }
 
   private renderEndIcon(): TemplateResult {
-    return html`<slot name="end-icon">
+    return html`<slot name="end-icon" part="end-icon" class="end-icon">
       ${this.endIcon
-        ? html`<mdui-icon
-            part="end-icon"
-            class="icon"
-            name=${this.endIcon}
-          ></mdui-icon>`
+        ? html`<mdui-icon name=${this.endIcon}></mdui-icon>`
         : nothingTemplate}
     </slot>`;
   }

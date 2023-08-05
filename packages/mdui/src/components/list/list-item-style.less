@@ -120,11 +120,10 @@
 }
 
 .icon,
-.end-icon,
-::slotted([slot="icon"]),
-::slotted([slot="end-icon"]) {
+.end-icon {
   display: flex;
   flex: 0 0 auto;
+  .typescale(label-small);
   .color(on-surface-variant);
 
   :host([disabled]) &,
@@ -139,21 +138,15 @@
   }
 }
 
-::slotted(:not(mdui-icon)[slot="icon"]),
-::slotted(:not(mdui-icon)[slot="end-icon"]) {
-  .typescale(label-small);
-}
-
-.icon,
-.end-icon,
-::slotted(mdui-icon[slot="icon"]),
-::slotted(mdui-icon[slot="end-icon"]) {
+.icon mdui-icon,
+.end-icon mdui-icon,
+.is-icon ::slotted([slot="icon"]),
+.is-end-icon ::slotted([slot="end-icon"]) {
   .fontSize(24);
 }
 
 .has-icon {
-  .icon,
-  ::slotted([slot="icon"]) {
+  .icon {
     .marginRight(16);
   }
 
@@ -164,8 +157,7 @@
 }
 
 .has-end-icon {
-  .end-icon,
-  ::slotted([slot="end-icon"]) {
+  .end-icon {
     .marginLeft(16);
   }
 

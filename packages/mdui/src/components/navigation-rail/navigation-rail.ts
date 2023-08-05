@@ -33,7 +33,7 @@ type NavigationRailItem = NavigationRailItemOriginal & {
  *
  * @csspart top - 顶部元素的容器
  * @csspart bottom - 底部元素的容器
- * @csspart items - `<mdui-navigation-rail-item>` 组件的容器
+ * @csspart item-group - `<mdui-navigation-rail-item>` 组件的容器
  *
  * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
@@ -214,21 +214,19 @@ export class NavigationRail extends LayoutItemBase {
 
     return html`${when(
         hasTopSlot,
-        () =>
-          html`<span part="top" class="top">
-            <slot name="top"></slot>
-          </span>`,
+        () => html`<slot name="top" part="top" class="top"></slot>`,
       )}
       <span class="top-spacer"></span>
-      <span part="items" class="items">
-        <slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>
-      </span>
+      <slot
+        part="item-group"
+        class="item-group"
+        @slotchange=${this.onSlotChange}
+        @click=${this.onClick}
+      ></slot>
       <span class="bottom-spacer"></span>
       ${when(
         hasBottomSlot,
-        () => html`<span part="bottom" class="bottom">
-          <slot name="bottom"></slot>
-        </span>`,
+        () => html`<slot name="bottom" part="bottom" class="bottom"></slot>`,
       )}`;
   }
 

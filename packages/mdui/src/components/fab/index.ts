@@ -110,10 +110,9 @@ export class Fab extends ButtonBase {
   }
 
   protected override render(): TemplateResult {
-    const hasIconSlot = this.hasSlotController.test('icon');
     const className = cc({
       button: true,
-      'has-icon': this.icon || hasIconSlot,
+      'has-icon': this.icon || this.hasSlotController.test('icon'),
     });
 
     return html`<mdui-ripple
@@ -138,7 +137,7 @@ export class Fab extends ButtonBase {
   }
 
   private renderLabel(): TemplateResult {
-    return html`<span part="label" class="label"><slot></slot></span>`;
+    return html`<slot part="label" class="label"></slot>`;
   }
 
   private renderIcon(): TemplateResult {
@@ -146,13 +145,9 @@ export class Fab extends ButtonBase {
       return this.renderLoading();
     }
 
-    return html`<slot name="icon">
+    return html`<slot name="icon" part="icon" class="icon">
       ${this.icon
-        ? html`<mdui-icon
-            part="icon"
-            class="icon"
-            name=${this.icon}
-          ></mdui-icon>`
+        ? html`<mdui-icon name=${this.icon}></mdui-icon>`
         : nothingTemplate}
     </slot>`;
   }

@@ -103,7 +103,7 @@ mdui-ripple {
     .top(-12);
   }
 
-  &.has-unchecked-icon {
+  .has-unchecked-icon & {
     .height(24);
     .width(24);
     .left(2);
@@ -175,16 +175,14 @@ mdui-ripple {
 }
 
 .unchecked-icon,
-.checked-icon,
-::slotted([slot="unchecked-icon"]),
-::slotted([slot="checked-icon"]) {
+.checked-icon {
+  display: flex;
   position: absolute;
   transition-property: opacity, transform;
   .fontSize(16);
 }
 
-.unchecked-icon,
-::slotted([slot="unchecked-icon"]) {
+.unchecked-icon {
   opacity: 1;
   transform: scale(1);
   .transitionDelay(short1);
@@ -204,8 +202,7 @@ mdui-ripple {
   }
 }
 
-.checked-icon,
-::slotted([slot="checked-icon"]) {
+.checked-icon {
   opacity: 0;
   transform: scale(0.92);
   transition-delay: 0ms;
@@ -227,4 +224,12 @@ mdui-ripple {
   :host([disabled]) & {
     .color(on-surface, 0.38);
   }
+}
+
+.unchecked-icon .i,
+.checked-icon .i,
+::slotted([slot="unchecked-icon"]),
+::slotted([slot="checked-icon"]) {
+  font-size: inherit;
+  color: inherit;
 }

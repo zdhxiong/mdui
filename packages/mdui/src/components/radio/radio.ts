@@ -4,9 +4,11 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
+import '@mdui/shared/icons/circle.js';
 import '@mdui/shared/icons/radio-button-unchecked.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
+import '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { radioStyle } from './radio-style.js';
 import type { Ripple } from '../ripple/index.js';
@@ -20,6 +22,8 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event change - 选中该单选项时触发
  *
  * @slot - 文本
+ * @slot unchecked-icon - 未选中状态的图标
+ * @slot checked-icon - 选中状态的图标
  *
  * @csspart control - 选择框
  * @csspart unchecked-icon 未选中状态的图标
@@ -55,6 +59,18 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
     converter: booleanConverter,
   })
   public checked = false;
+
+  /**
+   * 未选中状态的 Material Icons 图标名。也可以通过 `slot="unchecked-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'unchecked-icon' })
+  public uncheckedIcon?: string;
+
+  /**
+   * 选中状态的 Material Icons 图标名。也可以通过 `slot="checked-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'checked-icon' })
+  public checkedIcon?: string;
 
   // 是否验证未通过。由 mdui-radio-group 控制该参数
   @property({
@@ -118,13 +134,24 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
           ${ref(this.rippleRef)}
           .noRipple=${this.noRipple}
         ></mdui-ripple>
-        <mdui-icon-radio-button-unchecked
+        <slot
+          name="unchecked-icon"
           part="unchecked-icon"
-          class="unchecked-icon"
-        ></mdui-icon-radio-button-unchecked>
-        <div part="checked-icon" class="checked-icon"></div>
+          class="icon unchecked-icon"
+        >
+          ${this.uncheckedIcon
+            ? html`<mdui-icon name=${this.uncheckedIcon} class="i"></mdui-icon>`
+            : html`<mdui-icon-radio-button-unchecked
+                class="i"
+              ></mdui-icon-radio-button-unchecked>`}
+        </slot>
+        <slot name="checked-icon" part="checked-icon" class="icon checked-icon">
+          ${this.checkedIcon
+            ? html`<mdui-icon name=${this.checkedIcon} class="i"></mdui-icon>`
+            : html`<mdui-icon-circle class="i"></mdui-icon-circle>`}
+        </slot>
       </i>
-      <span part="label"><slot></slot></span>`;
+      <slot part="label" class="label"></slot>`;
   }
 
   private isDisabled(): boolean {

@@ -1,6 +1,5 @@
 import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
@@ -18,12 +17,14 @@ import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
+import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import '@mdui/shared/icons/arrow-right.js';
 import '@mdui/shared/icons/check.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
+import '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { menuItemStyle } from './menu-item-style.js';
 import type { Ripple } from '../ripple/index.js';
@@ -37,19 +38,19 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event submenu-closed - 子菜单关闭动画完成时，事件被触发
  *
  * @slot - 菜单项的文本
- * @slot icon - 菜单项左侧元素
- * @slot end-icon - 菜单项右侧元素
+ * @slot icon - 菜单项左侧图标
+ * @slot end-icon - 菜单项右侧图标
  * @slot end-text - 菜单右侧的文本
+ * @slot selected-icon - 选中状态的图标
  * @slot submenu - 子菜单
  * @slot custom - 任意自定义内容
  *
- * @csspart label-container - 文本内容的容器
- * @csspart label - 文本内容
- * @csspart icon-container - 左侧的图标容器
+ * @csspart container - 菜单项的容器
  * @csspart icon - 左侧的图标
- * @csspart end-icon-container - 右侧的图标容器
+ * @csspart label - 文本内容
  * @csspart end-icon - 右侧的图标
  * @csspart end-text - 右侧的文本
+ * @csspart selected-icon - 选中状态的图标
  * @csspart submenu - 子菜单元素
  */
 @customElement('mdui-menu-item')
@@ -96,6 +97,12 @@ export class MenuItem extends AnchorMixin(
    */
   @property({ reflect: true, attribute: 'end-text' })
   public endText?: string;
+
+  /**
+   * 选中状态的 Material Icons 图标名。也可以通过 `slot="selected-icon"` 设置
+   */
+  @property({ reflect: true, attribute: 'selected-icon' })
+  public selectedIcon?: string;
 
   /**
    * 是否打开子菜单
@@ -299,12 +306,28 @@ export class MenuItem extends AnchorMixin(
   }
 
   protected override render(): TemplateResult {
-    const hasCustomSlot = this.hasSlotController.test('custom');
     const hasSubmenu = this.hasSubmenu;
+    const hasCustomSlot = this.hasSlotController.test('custom');
+    const hasEndIconSlot = this.hasSlotController.test('end-icon');
+    const useDefaultEndIcon = !this.endIcon && hasSubmenu && !hasEndIconSlot;
+    const hasEndIcon = this.endIcon || hasSubmenu || hasEndIconSlot;
+
+    const hasIcon =
+      !isUndefined(this.icon) ||
+      this.selects === 'single' ||
+      this.selects === 'multiple' ||
+      this.hasSlotController.test('icon');
+
+    const hasEndText =
+      !!this.endText || this.hasSlotController.test('end-text');
+
     const className = cc({
       container: true,
-      preset: !hasCustomSlot,
       dense: this.dense,
+      preset: !hasCustomSlot,
+      'has-icon': hasIcon,
+      'has-end-text': hasEndText,
+      'has-end-icon': hasEndIcon,
     });
 
     return html`<mdui-ripple
@@ -313,24 +336,28 @@ export class MenuItem extends AnchorMixin(
       ></mdui-ripple>
       ${this.href && !this.disabled
         ? this.renderAnchor({
+            part: 'container',
             className,
-            content: this.renderInner(hasSubmenu),
+            content: this.renderInner(useDefaultEndIcon, hasIcon),
             refDirective: ref(this.containerRef),
           })
-        : html`<div ${ref(this.containerRef)} class=${className}>
-            ${this.renderInner(hasSubmenu)}
+        : html`<div
+            part="container"
+            ${ref(this.containerRef)}
+            class=${className}
+          >
+            ${this.renderInner(useDefaultEndIcon, hasIcon)}
           </div>`}
       ${when(
         hasSubmenu,
         () =>
-          html`<div
+          html`<slot
+            name="submenu"
             ${ref(this.submenuRef)}
             part="submenu"
             class="submenu"
             hidden
-          >
-            <slot name="submenu"></slot>
-          </div>`,
+          ></slot>`,
       )}`;
   }
 
@@ -487,54 +514,45 @@ export class MenuItem extends AnchorMixin(
     });
   }
 
-  private renderInner(hasSubmenu: boolean): TemplateResult {
-    const hasIconSlot = this.hasSlotController.test('icon');
-    const hasEndIconSlot = this.hasSlotController.test('end-icon');
-    const hasEndTextSlot = this.hasSlotController.test('end-text');
-
+  private renderInner(
+    useDefaultEndIcon: boolean,
+    hasIcon: boolean,
+  ): TemplateResult {
     return html`<slot name="custom">
-      <div
-        part="icon-container"
-        class="icon-container ${classMap({
-          'has-icon':
-            hasIconSlot ||
-            !isUndefined(this.icon) ||
-            this.selects === 'single' ||
-            this.selects === 'multiple',
-        })}"
-      >
-        ${this.selected
-          ? html`<mdui-icon-check part="icon"></mdui-icon-check>`
-          : html`<slot name="icon">
-              <mdui-icon part="icon" name=${this.icon}></mdui-icon>
-            </slot>`}
+      ${this.selected
+        ? html`<slot
+            name="selected-icon"
+            part="selected-icon"
+            class="selected-icon"
+          >
+            ${this.selectedIcon
+              ? html`<mdui-icon
+                  name=${this.selectedIcon}
+                  class="i"
+                ></mdui-icon>`
+              : html`<mdui-icon-check class="i"></mdui-icon-check>`}
+          </slot>`
+        : html`<slot name="icon" part="icon" class="icon">
+            ${hasIcon
+              ? html`<mdui-icon name=${this.icon} class="i"></mdui-icon>`
+              : nothingTemplate}
+          </slot>`}
+      <div class="label-container">
+        <slot part="label" class="label"></slot>
       </div>
-      <div part="label-container" class="label-container">
-        <div part="label" class="label"><slot></slot></div>
-      </div>
-      <div
-        part="end-text"
-        class="end-text ${classMap({
-          'has-end-text': hasEndTextSlot || !!this.endText,
-        })}"
-      >
-        <slot name="end-text">${this.endText}</slot>
-      </div>
-      <div
-        part="end-icon-container"
-        class="end-icon-container ${classMap({
-          'has-end-icon': hasEndIconSlot || this.endIcon || hasSubmenu,
-        })}"
-      >
-        ${hasSubmenu && !hasEndIconSlot && !this.endIcon
-          ? html`<mdui-icon-arrow-right
-              part="end-icon"
-              class="arrow-right"
-            ></mdui-icon-arrow-right>`
-          : html`<slot name="end-icon">
-              <mdui-icon part="end-icon" name=${this.endIcon!}></mdui-icon>
-            </slot>`}
-      </div>
+      <slot name="end-text" part="end-text" class="end-text">
+        ${this.endText}
+      </slot>
+      ${useDefaultEndIcon
+        ? html`<mdui-icon-arrow-right
+            part="end-icon"
+            class="end-icon arrow-right"
+          ></mdui-icon-arrow-right>`
+        : html`<slot name="end-icon" part="end-icon" class="end-icon">
+            ${this.endIcon
+              ? html`<mdui-icon name=${this.endIcon}></mdui-icon>`
+              : nothingTemplate}
+          </slot>`}
     </slot>`;
   }
 }

@@ -19,6 +19,19 @@ export type Selector = string;
  */
 export type TypeOrArray<T> = T | ArrayLike<T>;
 
+/**
+ * 获取指定元素的标签名（小写），不存在元素的返回空字符串
+ * @param element
+ */
+export const getNodeName = (element: Element | null | undefined): string => {
+  return element?.nodeName.toLowerCase() ?? '';
+};
+
+/**
+ * 判断元素是否为指定的标签名（不区分大小写）
+ * @param element
+ * @param name
+ */
 export const isNodeName = (
   element: Element | null | undefined,
   name: string,

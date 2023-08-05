@@ -11,7 +11,7 @@
   .stateLayerColor(on-surface-variant);
 }
 
-.item {
+.container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,13 +44,9 @@ mdui-ripple {
   justify-content: center;
   background-color: transparent;
   border-radius: var(--shape-corner-indicator);
+  transition: background-color var(--mdui-motion-duration-short1) var(--mdui-motion-easing-standard), width var(--mdui-motion-duration-short4) var(--mdui-motion-easing-standard);
   .height(32);
   .width(32);
-}
-
-.indicator,
-:host([active]) .indicator {
-  transition: background-color var(--mdui-motion-duration-short1) var(--mdui-motion-easing-standard), width var(--mdui-motion-duration-short4) var(--mdui-motion-easing-standard);
 }
 
 ::slotted([slot="badge"]) {
@@ -63,15 +59,23 @@ mdui-ripple {
 }
 
 .icon,
-.active-icon,
-::slotted([slot="icon"]),
-::slotted([slot="active"]) {
+.active-icon {
   .color(on-surface-variant);
   .fontSize(24);
 }
 
-.active-icon,
+.icon mdui-icon,
+.active-icon mdui-icon,
+::slotted([slot="icon"]),
 ::slotted([slot="active"]) {
+  font-size: inherit;
+}
+
+.icon {
+  display: flex;
+}
+
+.active-icon {
   display: none;
 }
 
@@ -92,7 +96,7 @@ mdui-ripple {
     .marginTop(24);
   }
 
-  .item {
+  .container {
     .paddingTop(24);
     .paddingBottom(0);
   }
@@ -111,20 +115,16 @@ mdui-ripple {
   }
 
   .icon,
-  .active-icon,
-  ::slotted([slot="icon"]),
-  ::slotted([slot="active"]) {
+  .active-icon {
     .color(on-secondary-container);
   }
 
   .has-active-icon {
-    .active-icon,
-    ::slotted([slot="active"]) {
-      display: inline-block;
+    .active-icon {
+      display: flex;
     }
 
-    .icon,
-    ::slotted([slot="icon"]) {
+    .icon {
       display: none;
     }
   }

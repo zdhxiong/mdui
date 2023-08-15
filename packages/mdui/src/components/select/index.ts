@@ -424,7 +424,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
           .form=${this.form}
           .disabled=${this.disabled}
           .required=${this.required}
-          .invalid=${this.invalid}
+          .invalidStyle=${this.invalid}
           @clear=${this.onClear}
           @change=${(e: Event) => e.stopPropagation()}
           @keydown=${this.onTextFieldKeyDown}

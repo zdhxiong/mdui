@@ -31,7 +31,8 @@
     .shapeCorner(extra-small, top);
   }
 
-  :host([variant="filled"][invalid]) & {
+  :host([variant="filled"][invalid]) &,
+  :host([variant="filled"][invalid-style]) & {
     box-shadow: inset 0 unit((-1 / @root-font-size), rem) 0 0 rgb(var(--mdui-color-error));
   }
 
@@ -39,7 +40,8 @@
     box-shadow: inset 0 unit((-1 / @root-font-size), rem) 0 0 rgb(var(--mdui-color-on-surface));
   }
 
-  :host([variant="filled"][invalid]:hover) & {
+  :host([variant="filled"][invalid]:hover) &,
+  :host([variant="filled"][invalid-style]:hover) & {
     box-shadow: inset 0 unit((-1 / @root-font-size), rem) 0 0 rgb(var(--mdui-color-on-error-container));
   }
 
@@ -49,7 +51,9 @@
   }
 
   :host([variant="filled"][focused][invalid]) &,
-  :host([variant="filled"][focused-style][invalid]) & {
+  :host([variant="filled"][focused-style][invalid]) &,
+  :host([variant="filled"][focused][invalid-style]) &,
+  :host([variant="filled"][focused-style][invalid-style]) & {
     box-shadow: inset 0 unit((-2 / @root-font-size), rem) 0 0 rgb(var(--mdui-color-error));
   }
 
@@ -63,7 +67,8 @@
     .shapeCorner(extra-small);
   }
 
-  :host([variant="outlined"][invalid]) & {
+  :host([variant="outlined"][invalid]) &,
+  :host([variant="outlined"][invalid-style]) & {
     box-shadow: inset 0 0 0 unit((1 / @root-font-size), rem) rgb(var(--mdui-color-error));
   }
 
@@ -71,7 +76,8 @@
     box-shadow: inset 0 0 0 unit((1 / @root-font-size), rem) rgb(var(--mdui-color-on-surface));
   }
 
-  :host([variant="outlined"][invalid]:hover) & {
+  :host([variant="outlined"][invalid]:hover) &,
+  :host([variant="outlined"][invalid-style]:hover) & {
     box-shadow: inset 0 0 0 unit((1 / @root-font-size), rem) rgb(var(--mdui-color-on-error-container));
   }
 
@@ -81,7 +87,9 @@
   }
 
   :host([variant="outlined"][focused][invalid]) &,
-  :host([variant="outlined"][focused-style][invalid]) & {
+  :host([variant="outlined"][focused-style][invalid]) &,
+  :host([variant="outlined"][focused][invalid-style]) &,
+  :host([variant="outlined"][focused-style][invalid-style]) & {
     box-shadow: inset 0 0 0 unit((2 / @root-font-size), rem) rgb(var(--mdui-color-error));
   }
 
@@ -105,16 +113,20 @@
 
 .right-icon,
 .suffix {
-  :host([invalid]) & {
+  :host([invalid]) &,
+  :host([invalid-style]) & {
     .color(error);
   }
 
-  :host([invalid]:hover) & {
+  :host([invalid]:hover) &,
+  :host([invalid-style]:hover) & {
     .color(on-error-container);
   }
 
   :host([focused][invalid]) &,
-  :host([focused-style][invalid]) & {
+  :host([focused-style][invalid]) &,
+  :host([focused][invalid-style]) &,
+  :host([focused-style][invalid-style]) & {
     .color(error);
   }
 }
@@ -187,7 +199,8 @@
   .color(on-surface-variant);
   .typescale(body-large);
 
-  :host([invalid]) & {
+  :host([invalid]) &,
+  :host([invalid-style]) & {
     .color(error);
   }
 
@@ -201,7 +214,9 @@
   }
 
   :host([variant="filled"][invalid]:hover) &,
-  :host([variant="outlined"][invalid]:hover) & {
+  :host([variant="outlined"][invalid]:hover) &,
+  :host([variant="filled"][invalid-style]:hover) &,
+  :host([variant="outlined"][invalid-style]:hover) & {
     .color(on-error-container);
   }
 
@@ -241,7 +256,11 @@
   :host([variant="filled"][focused][invalid]) &,
   :host([variant="filled"][focused-style][invalid]) &,
   :host([variant="outlined"][focused][invalid]) &,
-  :host([variant="outlined"][focused-style][invalid]) & {
+  :host([variant="outlined"][focused-style][invalid]) &,
+  :host([variant="filled"][focused][invalid-style]) &,
+  :host([variant="filled"][focused-style][invalid-style]) &,
+  :host([variant="outlined"][focused][invalid-style]) &,
+  :host([variant="outlined"][focused-style][invalid-style]) & {
     .color(error);
   }
 
@@ -278,7 +297,8 @@
     .color(on-surface-variant);
   }
 
-  :host([invalid]) & {
+  :host([invalid]) &,
+  :host([invalid-style]) & {
     .caretColor(error);
   }
 
@@ -301,7 +321,8 @@
   .padding(4, 16);
   .color(on-surface-variant);
 
-  :host([invalid]) & {
+  :host([invalid]) &,
+  :host([invalid-style]) & {
     .color(error);
   }
 }

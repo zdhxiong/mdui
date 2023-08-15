@@ -425,6 +425,18 @@ export class TextField
   private invalid = false;
 
   /**
+   * 该属性设置为 true 时，则在样式上为 text-field 赋予 invalid 的状态。实际是否验证通过仍需根据 invalid 属性判断
+   * 该属性仅供 mdui 内部使用，当前 select 组件使用了该属性
+   */
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: booleanConverter,
+    attribute: 'invalid-style',
+  })
+  private invalidStyle = false;
+
+  /**
    * 该属性设置为 true 时，则在样式上为 text-field 赋予聚焦状态。实际是否聚焦仍然由 focusableMixin 控制
    * 该属性仅供 mdui 内部使用，当前 select 组件使用了该属性
    */
@@ -443,7 +455,7 @@ export class TextField
   private hasValue = false;
 
   /**
-   * 通过该属性传入了错误文案时，会优先显示该文案。需要配合 invalid=true 使用
+   * 通过该属性传入了错误文案时，会优先显示该文案。需要配合 invalid=true 或 invalidStyle=true 使用
    * 当前仅供 select 组件使用
    */
   @state()
@@ -717,10 +729,10 @@ export class TextField
     const hasIcon = !!this.icon || this.hasSlotController.test('icon');
     const hasEndIcon =
       !!this.endIcon || this.hasSlotController.test('end-icon');
-    const hasErrorIcon = this.invalid;
+    const hasErrorIcon = this.invalid || this.invalidStyle;
     const hasHelper = !!this.helper || this.hasSlotController.test('helper');
     const hasError =
-      this.invalid && !!(this.error || this.inputRef.value!.validationMessage);
+      hasErrorIcon && !!(this.error || this.inputRef.value!.validationMessage);
     const hasCounter = this.counter && !!this.maxlength;
 
     // 存在 input slot 时，隐藏组件内部的 .input 元素，使用 slot 代替

@@ -10,7 +10,7 @@ declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface JQ<T = HTMLElement> {
     /**
-     * 获取当前元素的直接子元素
+     * 在当前集合的所有元素中，获取直接子元素组成的集合。
      * @param selector CSS 选择器。若指定了该参数，则使用该参数对子元素进行过滤
      * @example
 ```js

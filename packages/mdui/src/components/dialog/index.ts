@@ -370,6 +370,7 @@ export class Dialog extends LitElement {
 
   protected override render(): TemplateResult {
     const hasActionSlot = this.hasSlotController.test('action');
+    const hasDefaultSlot = this.hasSlotController.test('[default]');
 
     const hasIcon = !!this.icon || this.hasSlotController.test('icon');
     const hasHeadline =
@@ -378,7 +379,7 @@ export class Dialog extends LitElement {
       !!this.description || this.hasSlotController.test('description');
     const hasHeader =
       hasIcon || hasHeadline || this.hasSlotController.test('header');
-    const hasBody = hasDescription || this.hasSlotController.test('[default]');
+    const hasBody = hasDescription || hasDefaultSlot;
 
     return html`<div
         ${ref(this.overlayRef)}
@@ -390,7 +391,11 @@ export class Dialog extends LitElement {
       <div
         ${ref(this.panelRef)}
         part="panel"
-        class="panel ${classMap({ 'has-icon': hasIcon })}"
+        class="panel ${classMap({
+          'has-icon': hasIcon,
+          'has-description': hasDescription,
+          'has-default': hasDefaultSlot,
+        })}"
         tabindex="0"
       >
         ${when(

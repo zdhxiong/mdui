@@ -51,7 +51,7 @@ export class Snackbar extends LitElement {
   public open = false;
 
   /**
-   * Snackbar 出现的位置。可选值为：
+   * Snackbar 出现的位置。默认为 `bottom`。可选值为：
    * * `top`：位于顶部，居中对齐
    * * `top-start`：位于顶部，左对齐
    * * `top-end`：位于顶部，右对齐
@@ -110,7 +110,7 @@ export class Snackbar extends LitElement {
   public messageLine?: 1 | 2;
 
   /**
-   * 在多长时间后自动关闭（单位为毫秒）。设置为 `0` 时，不自动关闭
+   * 在多长时间后自动关闭（单位为毫秒）。设置为 `0` 时，不自动关闭。默认为 5 秒后自动关闭。
    */
   @property({ type: Number, reflect: true, attribute: 'auto-close-delay' })
   public autoCloseDelay = 5000;

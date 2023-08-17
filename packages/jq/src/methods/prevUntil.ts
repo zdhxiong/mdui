@@ -5,7 +5,7 @@ declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface JQ<T = HTMLElement> {
     /**
-     * 获取当前集合中，每个元素前面所有的同辈元素，直到遇到匹配元素为止（不包含匹配元素）。
+     * 获取当前集合中，每个元素前面所有的同辈元素，直到遇到和第一个参数匹配的元素为止（不包含匹配元素）。
      * @param selector
      * 可以是 CSS 选择器、DOM 元素、或 JQ 对象
      *

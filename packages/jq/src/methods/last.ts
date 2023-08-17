@@ -6,7 +6,7 @@ declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface JQ<T = HTMLElement> {
     /**
-     * 返回当前集合中最后一个元素的 JQ 对象
+     * 返回当前集合中最后一个元素的集合。
      * @example
 ```js
 $('div').last()

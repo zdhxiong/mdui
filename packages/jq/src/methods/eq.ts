@@ -6,16 +6,16 @@ declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface JQ<T = HTMLElement> {
     /**
-     * 返回 JQ 对象中指定索引位置的元素的 JQ 对象
+     * 返回仅包含指定索引位置的元素的集合。
      * @param index 元素的索引位置
      * @example
 ```js
-// 返回第一个元素的 JQ 对象
+// 返回第一个元素的集合
 $('div').eq(0);
 ```
      * @example
 ```js
-// 返回最后一个元素的 JQ 对象
+// 返回最后一个元素的集合
 $('div').eq(-1);
 ```
      */

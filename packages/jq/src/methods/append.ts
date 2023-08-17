@@ -34,7 +34,7 @@ $('<p>I would like to say: </p>').append('<b>Hello</b>', '<b>World</b>');
      * @param callback
      * 一个返回 HTML 字符串、DOM 元素、DOM 元素数组、或 JQ 对象的回调函数
      *
-     * 函数的第一个参数为元素的索引位置，第二个参数为元素的旧的 HTML 值，`this` 指向当前元素
+     * 函数的第一个参数为元素的索引位置，第二个参数为元素的原始 HTML，`this` 指向当前元素
      * @returns 原始集合
      * @example
 ```js

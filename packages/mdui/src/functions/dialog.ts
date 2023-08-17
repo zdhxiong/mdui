@@ -9,7 +9,6 @@ import { dequeue, queue } from '@mdui/shared/helpers/queue.js';
 import '../components/button.js';
 import { Dialog } from '../components/dialog.js';
 import type { Button } from '../components/button.js';
-import type { JQ } from '@mdui/jq/shared/core.js';
 
 interface Action {
   /**
@@ -20,7 +19,7 @@ interface Action {
   /**
    * 点击按钮时的回调函数。
    * 函数参数为 dialog 实例，`this` 也指向 dialog 实例。
-   * 默认点击按钮后会关闭 dialog；若返回值为 false，则不关闭 dialog；若返回值为 promise，则将在 promise 被 resolve 后，关闭 dialog
+   * 默认点击按钮后会关闭 dialog；若返回值为 false，则不关闭 dialog；若返回值为 promise，则将在 promise 被 resolve 后，关闭 dialog。
    * @param dialog
    */
   onClick?: (dialog: Dialog) => void | boolean | Promise<void>;
@@ -40,7 +39,7 @@ interface Options {
   /**
    * dialog 中的 body 内容，可以是 HTML 字符串、或 DOM 元素
    */
-  body?: string | HTMLElement | JQ;
+  body?: string | HTMLElement;
 
   /**
    * dialog 顶部的 Material Icons 图标名
@@ -68,11 +67,12 @@ interface Options {
   stackedActions?: boolean;
 
   /**
-   * 是否启用队列。
-   * 默认不启用队列，在多次调用该函数时，将同时显示多个 dialog；启用队列后，将在上一个 dialog 关闭后才打开下一个 dialog。
-   * dialog()、alert()、confirm()、prompt() 函数共用同一个队列。
+   * 队列名称。
+   * 默认不启用队列，在多次调用该函数时，将同时显示多个 dialog。
+   * 可在该参数中传入一个队列名称，具有相同队列名称的 dialog 函数，将在上一个 dialog 关闭后才打开下一个 dialog。
+   * `dialog()`、`alert()`、`confirm()`、`prompt()` 这四个函数的队列名称若相同，则也将互相共用同一个队列。
    */
-  queue?: boolean;
+  queue?: string;
 
   /**
    * dialog 开始打开时的回调函数。
@@ -82,28 +82,28 @@ interface Options {
   onOpen?: (dialog: Dialog) => void;
 
   /**
-   * dialog 打开动画完成时的回调函数
+   * dialog 打开动画完成时的回调函数。
    * 函数参数为 dialog 实例，`this` 也指向 dialog 实例。
    * @param dialog
    */
   onOpened?: (dialog: Dialog) => void;
 
   /**
-   * dialog 开始关闭时的回调函数
+   * dialog 开始关闭时的回调函数。
    * 函数参数为 dialog 实例，`this` 也指向 dialog 实例。
    * @param dialog
    */
   onClose?: (dialog: Dialog) => void;
 
   /**
-   * dialog 关闭动画完成时的回调函数
+   * dialog 关闭动画完成时的回调函数。
    * 函数参数为 dialog 实例，`this` 也指向 dialog 实例。
    * @param dialog
    */
   onClosed?: (dialog: Dialog) => void;
 
   /**
-   * 点击遮罩层时的回调函数
+   * 点击遮罩层时的回调函数。
    * 函数参数为 dialog 实例，`this` 也指向 dialog 实例。
    * @param dialog
    */
@@ -113,7 +113,7 @@ interface Options {
 const defaultAction: Required<Pick<Action, 'onClick'>> = {
   onClick: returnTrue,
 };
-const queueName = 'mdui.functions.dialog';
+const queueName = 'mdui.functions.dialog.';
 let currentDialog: Dialog | undefined = undefined;
 
 /**
@@ -198,7 +198,7 @@ export const dialog = (options: Options): Dialog => {
 
     if (options.queue) {
       currentDialog = undefined;
-      dequeue(queueName);
+      dequeue(queueName + options.queue);
     }
   });
 
@@ -207,7 +207,7 @@ export const dialog = (options: Options): Dialog => {
       dialog.open = true;
     });
   } else if (currentDialog) {
-    queue(queueName, () => {
+    queue(queueName + options.queue, () => {
       dialog.open = true;
       currentDialog = dialog;
     });

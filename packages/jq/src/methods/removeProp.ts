@@ -6,7 +6,7 @@ declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface JQ<T = HTMLElement> {
     /**
-     * 删除集合中每个元素上的指定属性
+     * 删除集合中所有元素上指定的 JavaScript 属性值
      * @param name 属性名
      * @example
 ```js

@@ -7,11 +7,11 @@ import type { JQ } from '../shared/core.js';
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
-     * 在当前元素上添加 CSS 类
+     * 为集合中的每个元素添加 CSS 类
      * @param className
      * CSS 类名的字符串，多个类名可以用空格分隔
      *
-     * 也可以是一个返回 CSS 类名的回调函数。回调函数的第一个参数为元素的索引位置，第二个参数为旧的 CSS 类名，`this` 指向当前元素
+     * 也可以是一个返回 CSS 类名的回调函数。回调函数的第一个参数为元素的索引位置，第二个参数为该元素上原有的 CSS 类名，函数中的 `this` 指向当前元素。
      * @example
 ```js
 // 在 p 元素上加上 item 类

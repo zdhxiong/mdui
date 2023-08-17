@@ -14,7 +14,7 @@ interface Options {
   message: string;
 
   /**
-   * Snackbar 出现的位置。可选值为：
+   * Snackbar 出现的位置。默认为 `bottom`。可选值为：
    * * `top`：位于顶部，居中对齐
    * * `top-start`：位于顶部，左对齐
    * * `top-end`：位于顶部，右对齐
@@ -45,10 +45,10 @@ interface Options {
    * * `1`：消息文本最多显示一行
    * * `2`：消息文本最多显示两行
    */
-  messageLine?: number;
+  messageLine?: 1 | 2;
 
   /**
-   * 在多长时间后自动关闭（单位为毫秒）。设置为 0 时，不自动关闭
+   * 在多长时间后自动关闭（单位为毫秒）。设置为 0 时，不自动关闭。默认为 5 秒后自动关闭。
    */
   autoCloseDelay?: number;
 
@@ -58,10 +58,11 @@ interface Options {
   closeOnOutsideClick?: boolean;
 
   /**
-   * 是否启用队列。
-   * 默认不启用队列，在多次调用该函数时，将同时显示多个 snackbar；启用队列后，将在上一个 snackbar 关闭后才打开下一个 snackbar。
+   * 队列名称。
+   * 默认不启用队列，在多次调用该函数时，将同时显示多个 snackbar。
+   * 可在该参数中传入一个队列名称，具有相同队列名称的 snackbar 函数，将在上一个 snackbar 关闭后才打开下一个 snackbar。
    */
-  queue?: boolean;
+  queue?: string;
 
   /**
    * 点击 Snackbar 时的回调函数。
@@ -73,7 +74,7 @@ interface Options {
   /**
    * 点击操作按钮时的回调函数。
    * 函数参数为 snackbar 实例，`this` 也指向 snackbar 实例。
-   * 默认点击后会关闭 snackbar；若返回值为 false，则不关闭 snackbar；若返回值为 promise，则将在 promise 被 resolve 后，关闭 snackbar
+   * 默认点击后会关闭 snackbar；若返回值为 false，则不关闭 snackbar；若返回值为 promise，则将在 promise 被 resolve 后，关闭 snackbar。
    * @param snackbar
    */
   onActionClick?: (snackbar: Snackbar) => void | boolean | Promise<void>;
@@ -107,7 +108,7 @@ interface Options {
   onClosed?: (snackbar: Snackbar) => void;
 }
 
-const queueName = 'mdui.functions.snackbar';
+const queueName = 'mdui.functions.snackbar.';
 let currentSnackbar: Snackbar | undefined = undefined;
 
 /**
@@ -167,7 +168,7 @@ export const snackbar = (options: Options): Snackbar => {
 
     if (options.queue) {
       currentSnackbar = undefined;
-      dequeue(queueName);
+      dequeue(queueName + options.queue);
     }
   });
 
@@ -176,7 +177,7 @@ export const snackbar = (options: Options): Snackbar => {
       snackbar.open = true;
     });
   } else if (currentSnackbar) {
-    queue(queueName, () => {
+    queue(queueName + options.queue, () => {
       snackbar.open = true;
       currentSnackbar = snackbar;
     });

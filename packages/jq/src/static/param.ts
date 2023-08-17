@@ -14,9 +14,9 @@ type Value =
 declare module '../shared/core.js' {
   interface JQStatic {
     /**
-     * 将数组或对象序列化，序列化后的字符串可作为 URL 查询字符串使用
+     * 将数组或对象序列化，序列化后的字符串可作为 URL 查询字符串使用。
      *
-     * 若传入数组，则格式必须和 serializeArray 方法的返回值一样
+     * 若传入数组，则格式必须和 `.serializeArray()` 方法的返回值一致。
      * @param obj 对象或数组
      * @example
 ```js

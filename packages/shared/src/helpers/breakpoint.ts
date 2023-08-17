@@ -66,7 +66,7 @@ export const breakpoint = (width?: number | HTMLElement) => {
   return {
     /**
      * 当前宽度是否大于指定断点值
-     * @param Breakpoint
+     * @param breakpoint
      */
     up(breakpoint: Breakpoint): boolean {
       return containerWidth >= getBreakpointValue(breakpoint);
@@ -74,7 +74,7 @@ export const breakpoint = (width?: number | HTMLElement) => {
 
     /**
      * 当前宽度是否小于指定断点值
-     * @param Breakpoint
+     * @param breakpoint
      */
     down(breakpoint: Breakpoint): boolean {
       return containerWidth < getBreakpointValue(breakpoint);
@@ -82,7 +82,7 @@ export const breakpoint = (width?: number | HTMLElement) => {
 
     /**
      * 当前宽度是否在指定断点值内
-     * @param Breakpoint
+     * @param breakpoint
      */
     only(breakpoint: Breakpoint): boolean {
       if (breakpoint === 'xxl') {
@@ -94,7 +94,7 @@ export const breakpoint = (width?: number | HTMLElement) => {
 
     /**
      * 当前宽度是否不在指定断点值内
-     * @param Breakpoint
+     * @param breakpoint
      */
     not(breakpoint: Breakpoint): boolean {
       return !this.only(breakpoint);

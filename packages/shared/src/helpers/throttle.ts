@@ -6,20 +6,20 @@ type ThrottledFunc<T extends (...args: any) => any> = (
 ) => ReturnType<T>;
 
 /**
- * 函数节流
- * @param func 执行的函数
+ * 创建一个节流函数
+ * @param func 要执行的函数
  * @param wait 最多多少毫秒执行一次
  * @example
 ```js
-throttle(() => {
-  console.log('这个函数最多 100md 执行一次');
-}, 100)
+window.addEventListener('scroll', throttle(() => {
+  console.log('这个函数最多 100ms 执行一次');
+}, 100));
 ```
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const throttle = <T extends (...args: any) => any>(
   func: T,
-  wait = 16,
+  wait = 0,
 ): ThrottledFunc<T> => {
   const window = getWindow();
   let timer: number | undefined;

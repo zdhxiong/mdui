@@ -5,7 +5,7 @@ declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface JQ<T = HTMLElement> {
     /**
-     * 是否含有指定的 CSS 类
+     * 判断集合中的第一个元素是否含有指定 CSS 类。
      * @param className CSS 类名
      * @example
 ```js

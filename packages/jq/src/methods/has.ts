@@ -10,7 +10,7 @@ declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface JQ<T = HTMLElement> {
     /**
-     * 保留含有指定子元素的元素，去掉不含有指定子元素的元素
+     * 在当前集合的所有元素中，筛选出含有指定子元素的元素。
      * @param selector CSS 选择器或 DOM 元素
      * @example
 ```js

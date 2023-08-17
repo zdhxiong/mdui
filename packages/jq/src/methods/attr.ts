@@ -18,16 +18,16 @@ import type { PlainObject } from '../shared/helper.js';
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
-     * 设置元素的属性
+     * 设置集合中所有元素的 HTML 属性值
      * @param name 属性名
      * @param value
      * 属性值，可以为字符串或数值。
      *
-     * 也可以是一个返回字符串或数值的回调函数。函数的第一个参数为元素的索引位置，第二个参数为旧的属性值，`this` 指向当前元素
+     * 也可以是一个返回字符串或数值的回调函数。函数的第一个参数为元素的索引位置，第二个参数为该元素上原有的属性值，`this` 指向当前元素
      *
      * 若属性值或函数返回 `null`，则删除指定属性
      *
-     * 若属性值或函数返回 `void` 或 `undefined`，则不修改当前属性
+     * 若属性值或函数返回 `undefined`，则不修改当前属性
      * @example
 ```js
 $('div').attr('title', 'mdui');
@@ -54,15 +54,15 @@ $('img').attr('src', function() {
     ): this;
 
     /**
-     * 同时设置多个属性
+     * 设置集合中所有元素的多个 HTML 属性值
      * @param attributes
      * 键值对数据。键名为属性名，键值为属性值或回调函数。
      *
-     * 回调函数的第一个参数为元素的索引位置，第二个参数为旧的属性值，`this` 指向当前元素
+     * 回调函数的第一个参数为元素的索引位置，第二个参数为该元素上原有的属性值，`this` 指向当前元素
      *
      * 若属性值或函数返回 `null`，则删除指定属性
      *
-     * 若属性值或函数返回 `void` 或 `undefined`，则不修改对应属性
+     * 若属性值或函数返回 `undefined`，则不修改对应属性
      * @example
 ```js
 $('img').attr({
@@ -97,7 +97,7 @@ $('img').attr({
     ): this;
 
     /**
-     * 获取集合中第一个元素的属性值
+     * 获取集合中第一个元素的 HTML 属性值
      * @param name 属性名
      * @example
 ```js

@@ -5,7 +5,7 @@ import type { JQ } from '../shared/core.js';
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
-     * 遍历 JQ 对象，为每个元素执行一个函数
+     * 遍历当前集合，为集合中每一个元素执行一个函数。
      * @param callback
      * 执行的回调函数
      *

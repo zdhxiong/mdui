@@ -8,13 +8,13 @@ import type { Selector, TypeOrArray } from '../shared/helper.js';
 declare module '../shared/core.js' {
   interface JQ<T = HTMLElement> {
     /**
-     * 从当前对象中筛选出与指定表达式匹配的元素
+     * 从当前集合中筛选出与指定表达式匹配的元素
      * @param selector
      * 可以是 CSS 表达式、DOM 元素、DOM 元素数组、或回调函数
      *
-     * 回调函数的第一个参数为元素的索引位置，第二个参数为当前元素，`this` 指向当前元素
+     * 参数为回调函数时，回调函数的第一个参数为元素的索引位置，第二个参数为当前元素，`this` 指向当前元素
      *
-     * 回调函数返回 `true` 时，对应元素会被保留；返回 `false` 时，对应元素会被移除
+     * 回调函数返回 `true` 时，当前元素会被保留；返回 `false` 时，当前元素会被移除
      * @example
 ```js
 // 筛选出所有含 .box 的 div 元素

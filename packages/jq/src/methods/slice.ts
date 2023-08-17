@@ -5,9 +5,9 @@ declare module '../shared/core.js' {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface JQ<T = HTMLElement> {
     /**
-     * 返回一个当前集合的子集
+     * 返回当前集合的子集。
      *
-     * 子集为从 start 开始的元素。若指定了 end 参数，则提取从 start 到不包含 end 位置的元素
+     * 第一个参数为子集的起始位置，第二个参数为子集的结束位置（不包含结束位置的元素）；若未传入第二个参数，表示包含从起始位置到结尾的所有元素。
      * @param start 从该位置开始
      * @param end 到该位置结束（不包含该位置）
      * @example

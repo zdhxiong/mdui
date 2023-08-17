@@ -47,16 +47,17 @@ interface Options {
   stackedActions?: boolean;
 
   /**
-   * 是否启用队列。
-   * 默认不启用队列，在多次调用该函数时，将同时显示多个 confirm；启用队列后，将在上一个 confirm 关闭后才打开下一个 confirm。
-   * dialog()、alert()、confirm()、prompt() 函数共用同一个队列。
+   * 队列名称。
+   * 默认不启用队列，在多次调用该函数时，将同时显示多个 confirm。
+   * 可在该参数中传入一个队列名称，具有相同队列名称的 confirm 函数，将在上一个 confirm 关闭后才打开下一个 confirm。
+   * `dialog()`、`alert()`、`confirm()`、`prompt()` 这四个函数的队列名称若相同，则也将互相共用同一个队列。
    */
-  queue?: boolean;
+  queue?: string;
 
   /**
    * 点击确认按钮时的回调函数。
    * 函数参数为 dialog 实例，`this` 也指向 dialog 实例。
-   * 默认点击确认按钮后会关闭 confirm；若返回值为 false，则不关闭 confirm；若返回值为 promise，则将在 promise 被 resolve 后，关闭 confirm
+   * 默认点击确认按钮后会关闭 confirm；若返回值为 `false`，则不关闭 confirm；若返回值为 promise，则将在 promise 被 resolve 后，关闭 confirm。
    * @param dialog
    */
   onConfirm?: (dialog: Dialog) => void | boolean | Promise<void>;
@@ -64,7 +65,7 @@ interface Options {
   /**
    * 点击取消按钮时的回调函数。
    * 函数参数为 dialog 实例，`this` 也指向 dialog 实例。
-   * 默认点击确认按钮后会关闭 confirm；若返回值为 false，则不关闭 confirm；若返回值为 promise，则将在 promise 被 resolve 后，关闭 confirm
+   * 默认点击确认按钮后会关闭 confirm；若返回值为 `false`，则不关闭 confirm；若返回值为 promise，则将在 promise 被 resolve 后，关闭 confirm。
    * @param dialog
    */
   onCancel?: (dialog: Dialog) => void | boolean | Promise<void>;
@@ -77,28 +78,28 @@ interface Options {
   onOpen?: (dialog: Dialog) => void;
 
   /**
-   * confirm 打开动画完成时的回调函数
+   * confirm 打开动画完成时的回调函数。
    * 函数参数为 dialog 实例，`this` 也指向 dialog 实例。
    * @param dialog
    */
   onOpened?: (dialog: Dialog) => void;
 
   /**
-   * confirm 开始关闭时的回调函数
+   * confirm 开始关闭时的回调函数。
    * 函数参数为 dialog 实例，`this` 也指向 dialog 实例。
    * @param dialog
    */
   onClose?: (dialog: Dialog) => void;
 
   /**
-   * confirm 关闭动画完成时的回调函数
+   * confirm 关闭动画完成时的回调函数。
    * 函数参数为 dialog 实例，`this` 也指向 dialog 实例。
    * @param dialog
    */
   onClosed?: (dialog: Dialog) => void;
 
   /**
-   * 点击遮罩层时的回调函数
+   * 点击遮罩层时的回调函数。
    * 函数参数为 dialog 实例，`this` 也指向 dialog 实例。
    * @param dialog
    */

@@ -39,10 +39,10 @@ $(document).off('click', '.box');
 $(document).off('click dbclick', '.box');
 ```
      */
-    off<TEvent extends Event>(
+    off(
       eventName: string,
       selector: string,
-      callback?: EventCallback<TEvent, T> | false,
+      callback?: EventCallback<unknown, T> | false,
     ): this;
 
     /**
@@ -69,10 +69,7 @@ $('.box').off('click');
 $('.box').off('click dbclick');
 ```
      */
-    off<TEvent extends Event>(
-      eventName: string,
-      callback?: EventCallback<TEvent, T> | false,
-    ): this;
+    off(eventName: string, callback?: EventCallback<unknown, T> | false): this;
 
     /**
      * 同时移除多个事件处理函数
@@ -98,8 +95,8 @@ $('.wrapper').off({
 })
 ```
      */
-    off<TEvent extends Event>(
-      events: PlainObject<EventCallback<TEvent, T> | false>,
+    off(
+      events: PlainObject<EventCallback<unknown, T> | false>,
       selector?: string,
     ): this;
 

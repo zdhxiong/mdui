@@ -437,7 +437,8 @@ export class Dropdown extends LitElement {
     this.open = !this.open;
   }
 
-  private onPanelClick(event: MouseEvent) {
+  private onPanelClick(e: unknown) {
+    const event = e as MouseEvent;
     if (
       !this.disabled &&
       !this.stayOpenOnClick &&

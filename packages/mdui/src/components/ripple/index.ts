@@ -123,12 +123,10 @@ export class Ripple extends LitElement {
       .prependTo(this.surfaceRef.value!)
       .each((_, wave) => wave.clientLeft) // 重绘
       .css('transform', translate)
-      .on('animationend', function (event) {
-        if (
-          (event as AnimationEvent).animationName ===
-          'mdui-comp-ripple-radius-in'
-        ) {
-          $(this as HTMLElement).data('filled', true); // 扩散动画完成后，添加标记
+      .on('animationend', function (e: unknown) {
+        const event = e as AnimationEvent;
+        if (event.animationName === 'mdui-comp-ripple-radius-in') {
+          $(this).data('filled', true); // 扩散动画完成后，添加标记
         }
       });
   }
@@ -144,19 +142,17 @@ export class Ripple extends LitElement {
         .addClass('out')
         .each((_, wave) => wave.clientLeft) // 重绘
         .on('animationend', function () {
-          $(this as HTMLElement).remove();
+          $(this).remove();
         });
     };
 
     // 扩散动画未完成，先完成扩散，再隐藏并移除
     $waves
       .filter((_, wave) => !$(wave).data('filled'))
-      .on('animationend', function (event) {
-        if (
-          (event as AnimationEvent).animationName ===
-          'mdui-comp-ripple-radius-in'
-        ) {
-          hideAndRemove($(this as HTMLElement));
+      .on('animationend', function (e: unknown) {
+        const event = e as AnimationEvent;
+        if (event.animationName === 'mdui-comp-ripple-radius-in') {
+          hideAndRemove($(this));
         }
       });
 

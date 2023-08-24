@@ -68,7 +68,7 @@ $.contains($elements.get(0), $elements[0]);
 // data()
 $.data(document, 'key', undefined);
 $.data(window, 'type', 'image');
-$.data(getElementById as HTMLElement, 'type');
+$.data(getElementById, 'type');
 $.data($elements[0]);
 $.data($elements.get(0), { key1: 'value1', key2: 'value2' });
 
@@ -470,6 +470,24 @@ $elements.not(function () {
 });
 
 // .off()
+$(document).off('click', '.selector', function () {
+  console.log('');
+});
+$(document).off('click', function () {
+  console.log('');
+});
+$(document).off(
+  {
+    click: function () {
+      console.log('');
+    },
+    dbclick: function () {
+      console.log('');
+    },
+  },
+  '.selector',
+);
+$(document).off();
 
 // .offset()
 $elements.offset({
@@ -489,6 +507,41 @@ $elements.offset();
 $elements.offsetParent();
 
 // .on()
+$(document).on(
+  {
+    click: function (event) {
+      console.log(event.data.key1);
+    },
+    dbclick: function (event) {
+      console.log(event.data.key1);
+    },
+  },
+  '.selector',
+  { key1: 'value1' },
+);
+$(document).on(
+  {
+    click: function (event) {
+      console.log(event.data.key1);
+    },
+    dbclick: function (event) {
+      console.log(event.data.key1);
+    },
+  },
+  { key1: 'value1' },
+);
+$(document).on('click', '.selector', { key1: 'value1' }, function (event) {
+  console.log(event.data.key1);
+});
+$(document).on('click', '.selector', function (event) {
+  console.log(event.data);
+});
+$(document).on('click', { key1: 'value1' }, function (event) {
+  console.log(event.data.key1);
+});
+$(document).on('click', function (event) {
+  console.log(event.data);
+});
 
 // .one()
 
@@ -657,6 +710,13 @@ $elements.toggleClass(function (index, oldClassName) {
 });
 
 // .trigger()
+$(document).trigger('click');
+$(document).trigger('click', { key1: 'value1', key2: 'value2' });
+$(document).trigger('click', undefined, {
+  bubbles: true,
+  cancelable: true,
+  composed: true,
+});
 
 // .val()
 $elements.val('mdui');

@@ -1,49 +1,61 @@
+import { getWindow } from 'ssr-window';
 import { $ } from '../$.js';
 import { contains } from '../functions/contains.js';
 import '../methods/find.js';
 import '../methods/get.js';
 import { isObjectLike } from './helper.js';
 
-interface MduiCustomEventInit<T = any> extends CustomEventInit<T> {
-  // 事件监听参数
-  data?: any;
+// @ts-ignore 直接使用 CustomEvent 在 ssr 环境下会报错
+const CustomEvent = getWindow().CustomEvent as typeof CustomEvent;
 
-  // 命名空间
-  ns?: string;
+interface MduiCustomEventInit<TData> extends CustomEventInit {
+  /**
+   * 事件监听参数
+   */
+  data: TData;
+
+  /**
+   * 命名空间
+   */
+  namespace: string;
 }
 
 /**
- * 封装 CustomEvent，使之支持 data:事件监听参数，ns:命名空间
+ * 封装 CustomEvent，使之支持 data:事件监听参数，namespace:命名空间
  */
-export class MduiCustomEvent<T = any> extends CustomEvent<T> {
-  // 事件监听参数
-  public data;
+export class MduiCustomEvent<TData = unknown> extends CustomEvent<unknown> {
+  /**
+   * 事件监听参数
+   */
+  public data: TData;
 
-  // 命名空间
-  public ns;
+  /**
+   * 命名空间
+   */
+  public namespace: string;
 
-  public constructor(type: string, options?: MduiCustomEventInit<T>) {
+  public constructor(type: string, options: MduiCustomEventInit<TData>) {
     super(type, options);
-    this.data = options?.data;
-    this.ns = options?.ns;
+    this.data = options.data;
+    this.namespace = options.namespace;
   }
 }
 
 export type EventCallback<
-  TEvent = MduiCustomEvent,
-  TThis = Element | Document | Window,
+  TData = unknown,
+  TElement = Element | Document | Window,
 > = (
-  this: TThis,
-  event: TEvent,
-  // eslint-disable-next-line
+  this: TElement,
+  event: MduiCustomEvent<TData>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ...dataN: any[]
 ) => void | false;
 
 type Handler = {
   type: string; // 事件名
-  ns: string; // 命名空间
+  namespace: string; // 命名空间
   func: EventCallback; // 事件处理函数
   id: number; // 事件ID
   proxy: (e: MduiCustomEvent) => void;
@@ -80,20 +92,20 @@ const getHandlers = (element: ElementIdKey): Handler[] => {
 /**
  * 解析事件名中的命名空间
  */
-export const parse = (type: string): { type: string; ns: string } => {
+export const parse = (type: string): { type: string; namespace: string } => {
   const parts = type.split('.');
 
   return {
     type: parts[0],
-    ns: parts.slice(1).sort().join(' '),
+    namespace: parts.slice(1).sort().join(' '),
   };
 };
 
 /**
  * 命名空间匹配规则
  */
-const matcherFor = (ns: string): RegExp => {
-  return new RegExp('(?:^| )' + ns.replace(' ', ' .* ?') + '(?: |$)');
+const matcherFor = (namespace: string): RegExp => {
+  return new RegExp('(?:^| )' + namespace.replace(' ', ' .* ?') + '(?: |$)');
 };
 
 /**
@@ -115,7 +127,8 @@ const getMatchedHandlers = (
     return (
       handler &&
       (!event.type || handler.type === event.type) &&
-      (!event.ns || matcherFor(event.ns).test(handler.ns)) &&
+      (!event.namespace ||
+        matcherFor(event.namespace).test(handler.namespace)) &&
       (!func || getElementId(handler.func) === getElementId(func)) &&
       (!selector || handler.selector === selector)
     );
@@ -167,7 +180,7 @@ export const add = (
     };
 
     const proxyFn = (e: MduiCustomEvent): void => {
-      if (e.ns && !matcherFor(e.ns).test(event.ns)) {
+      if (e.namespace && !matcherFor(e.namespace).test(event.namespace)) {
         return;
       }
 
@@ -192,7 +205,7 @@ export const add = (
 
     const handler: Handler = {
       type: event.type,
-      ns: event.ns,
+      namespace: event.namespace,
       func,
       selector,
       id: getHandlers(element).length,

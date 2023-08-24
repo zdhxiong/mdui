@@ -24,25 +24,31 @@ $('.box').trigger('click', {key1: 'value1', key2: 'value2'});
     trigger(
       type: string,
       detail?: unknown[] | PlainObject | string | number | boolean,
-      options?: EventInit,
+      options?: CustomEventInit,
     ): this;
   }
 }
 
-// eslint-disable-next-line
-$.fn.trigger = function (this: JQ, name: string, detail: any = null, options?: CustomEventInit): JQ {
-  const { type, ns } = parse(name);
+$.fn.trigger = function (
+  this: JQ,
+  name: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  detail: any = null,
+  options?: CustomEventInit,
+): JQ {
+  const { type, namespace } = parse(name);
 
   const event = new MduiCustomEvent(type, {
     detail,
+    data: null,
+    namespace,
     bubbles: true,
     cancelable: false,
     composed: true,
-    ns,
     ...options,
   });
 
   return this.each((_, element) => {
-    element.dispatchEvent(event);
+    element.dispatchEvent(event as unknown as Event);
   });
 };

@@ -92,7 +92,8 @@ export class CollapseItem extends LitElement {
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
 
-    $(this.bodyRef.value!).on('transitionend', (event: TransitionEvent) => {
+    $(this.bodyRef.value!).on('transitionend', (e: unknown) => {
+      const event = e as TransitionEvent;
       if (event.target === this.bodyRef.value) {
         this.state = this.active ? 'opened' : 'closed';
         emit(this, this.state);

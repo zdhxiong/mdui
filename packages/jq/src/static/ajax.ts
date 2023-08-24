@@ -18,8 +18,8 @@ ajax({
 });
 ```
      */
-    // eslint-disable-next-line
-    ajax<T = any>(options: Options): Promise<T>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ajax<TResponse = any>(options: Options<TResponse>): Promise<TResponse>;
   }
 }
 

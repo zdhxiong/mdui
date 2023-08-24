@@ -17,7 +17,7 @@ export type Method =
   | 'UNLINK';
 
 // 回调函数名称
-export type CallbackName = 'beforeSend' | 'success' | 'error' | 'complete';
+export type CallbackName<TResponse> = keyof OptionsCallback<TResponse>;
 
 // 状态码
 export type SuccessTextStatus = 'success' | 'notmodified' | 'nocontent';
@@ -25,13 +25,12 @@ export type ErrorTextStatus = 'timeout' | 'error' | 'abort' | 'parsererror';
 export type TextStatus = SuccessTextStatus | ErrorTextStatus;
 
 // 回调函数
-export type BeforeSendCallback = (
+export type BeforeSendCallback<TResponse> = (
   xhr: XMLHttpRequest,
-  options: Required<OptionsParams> & Options,
+  options: Required<OptionsParams<TResponse>> & Options<TResponse>,
 ) => void | false;
-export type SuccessCallback = (
-  // eslint-disable-next-line
-  response: any,
+export type SuccessCallback<TResponse> = (
+  response: TResponse,
   textStatus: SuccessTextStatus,
   xhr: XMLHttpRequest,
 ) => void;
@@ -44,17 +43,17 @@ export type CompleteCallback = (
   textStatus: TextStatus,
 ) => void;
 
-export interface OptionsCallback extends PlainObject {
+export interface OptionsCallback<TResponse> extends PlainObject {
   /**
    * 在请求发送之前调用。返回 false 时将取消 AJAX 请求
    * @param xhr
    */
-  beforeSend?: BeforeSendCallback;
+  beforeSend?: BeforeSendCallback<TResponse>;
 
   /**
    * 请求成功之后调用
    */
-  success?: SuccessCallback;
+  success?: SuccessCallback<TResponse>;
 
   /**
    * 请求出错时调用
@@ -67,7 +66,7 @@ export interface OptionsCallback extends PlainObject {
   complete?: CompleteCallback;
 }
 
-export interface OptionsParams extends PlainObject {
+export interface OptionsParams<TResponse> extends PlainObject {
   /**
    * 请求的 URL 地址
    */
@@ -122,7 +121,7 @@ export interface OptionsParams extends PlainObject {
   /**
    * HTTP 状态码和函数组成的对象
    */
-  statusCode?: StatusCodeCallbacks;
+  statusCode?: StatusCodeCallbacks<TResponse>;
 
   /**
    * 服务器返回的数据类型，若为空字符串，则将根据响应的 Content-Type 解析
@@ -145,112 +144,114 @@ export interface OptionsParams extends PlainObject {
   global?: boolean;
 }
 
-export interface Options extends OptionsParams, OptionsCallback {}
+export interface Options<TResponse>
+  extends OptionsParams<TResponse>,
+    OptionsCallback<TResponse> {}
 
 // 状态码对应回调函数
-export type StatusCodeCallbacks = {
+export type StatusCodeCallbacks<TResponse> = {
   // 成功状态码：2xx 和 304 为成功
-  200?: SuccessCallback;
-  201?: SuccessCallback;
-  202?: SuccessCallback;
-  203?: SuccessCallback;
-  204?: SuccessCallback;
-  205?: SuccessCallback;
-  206?: SuccessCallback;
-  207?: SuccessCallback;
-  208?: SuccessCallback;
-  209?: SuccessCallback;
-  210?: SuccessCallback;
-  211?: SuccessCallback;
-  212?: SuccessCallback;
-  213?: SuccessCallback;
-  214?: SuccessCallback;
-  215?: SuccessCallback;
-  216?: SuccessCallback;
-  217?: SuccessCallback;
-  218?: SuccessCallback;
-  219?: SuccessCallback;
-  220?: SuccessCallback;
-  221?: SuccessCallback;
-  222?: SuccessCallback;
-  223?: SuccessCallback;
-  224?: SuccessCallback;
-  225?: SuccessCallback;
-  226?: SuccessCallback;
-  227?: SuccessCallback;
-  228?: SuccessCallback;
-  229?: SuccessCallback;
-  230?: SuccessCallback;
-  231?: SuccessCallback;
-  232?: SuccessCallback;
-  233?: SuccessCallback;
-  234?: SuccessCallback;
-  235?: SuccessCallback;
-  236?: SuccessCallback;
-  237?: SuccessCallback;
-  238?: SuccessCallback;
-  239?: SuccessCallback;
-  240?: SuccessCallback;
-  241?: SuccessCallback;
-  242?: SuccessCallback;
-  243?: SuccessCallback;
-  244?: SuccessCallback;
-  245?: SuccessCallback;
-  246?: SuccessCallback;
-  247?: SuccessCallback;
-  248?: SuccessCallback;
-  249?: SuccessCallback;
-  250?: SuccessCallback;
-  251?: SuccessCallback;
-  252?: SuccessCallback;
-  253?: SuccessCallback;
-  254?: SuccessCallback;
-  255?: SuccessCallback;
-  256?: SuccessCallback;
-  257?: SuccessCallback;
-  258?: SuccessCallback;
-  259?: SuccessCallback;
-  260?: SuccessCallback;
-  261?: SuccessCallback;
-  262?: SuccessCallback;
-  263?: SuccessCallback;
-  264?: SuccessCallback;
-  265?: SuccessCallback;
-  266?: SuccessCallback;
-  267?: SuccessCallback;
-  268?: SuccessCallback;
-  269?: SuccessCallback;
-  270?: SuccessCallback;
-  271?: SuccessCallback;
-  272?: SuccessCallback;
-  273?: SuccessCallback;
-  274?: SuccessCallback;
-  275?: SuccessCallback;
-  276?: SuccessCallback;
-  277?: SuccessCallback;
-  278?: SuccessCallback;
-  279?: SuccessCallback;
-  280?: SuccessCallback;
-  281?: SuccessCallback;
-  282?: SuccessCallback;
-  283?: SuccessCallback;
-  284?: SuccessCallback;
-  285?: SuccessCallback;
-  286?: SuccessCallback;
-  287?: SuccessCallback;
-  288?: SuccessCallback;
-  289?: SuccessCallback;
-  290?: SuccessCallback;
-  291?: SuccessCallback;
-  292?: SuccessCallback;
-  293?: SuccessCallback;
-  294?: SuccessCallback;
-  295?: SuccessCallback;
-  296?: SuccessCallback;
-  297?: SuccessCallback;
-  298?: SuccessCallback;
-  299?: SuccessCallback;
-  304?: SuccessCallback;
+  200?: SuccessCallback<TResponse>;
+  201?: SuccessCallback<TResponse>;
+  202?: SuccessCallback<TResponse>;
+  203?: SuccessCallback<TResponse>;
+  204?: SuccessCallback<TResponse>;
+  205?: SuccessCallback<TResponse>;
+  206?: SuccessCallback<TResponse>;
+  207?: SuccessCallback<TResponse>;
+  208?: SuccessCallback<TResponse>;
+  209?: SuccessCallback<TResponse>;
+  210?: SuccessCallback<TResponse>;
+  211?: SuccessCallback<TResponse>;
+  212?: SuccessCallback<TResponse>;
+  213?: SuccessCallback<TResponse>;
+  214?: SuccessCallback<TResponse>;
+  215?: SuccessCallback<TResponse>;
+  216?: SuccessCallback<TResponse>;
+  217?: SuccessCallback<TResponse>;
+  218?: SuccessCallback<TResponse>;
+  219?: SuccessCallback<TResponse>;
+  220?: SuccessCallback<TResponse>;
+  221?: SuccessCallback<TResponse>;
+  222?: SuccessCallback<TResponse>;
+  223?: SuccessCallback<TResponse>;
+  224?: SuccessCallback<TResponse>;
+  225?: SuccessCallback<TResponse>;
+  226?: SuccessCallback<TResponse>;
+  227?: SuccessCallback<TResponse>;
+  228?: SuccessCallback<TResponse>;
+  229?: SuccessCallback<TResponse>;
+  230?: SuccessCallback<TResponse>;
+  231?: SuccessCallback<TResponse>;
+  232?: SuccessCallback<TResponse>;
+  233?: SuccessCallback<TResponse>;
+  234?: SuccessCallback<TResponse>;
+  235?: SuccessCallback<TResponse>;
+  236?: SuccessCallback<TResponse>;
+  237?: SuccessCallback<TResponse>;
+  238?: SuccessCallback<TResponse>;
+  239?: SuccessCallback<TResponse>;
+  240?: SuccessCallback<TResponse>;
+  241?: SuccessCallback<TResponse>;
+  242?: SuccessCallback<TResponse>;
+  243?: SuccessCallback<TResponse>;
+  244?: SuccessCallback<TResponse>;
+  245?: SuccessCallback<TResponse>;
+  246?: SuccessCallback<TResponse>;
+  247?: SuccessCallback<TResponse>;
+  248?: SuccessCallback<TResponse>;
+  249?: SuccessCallback<TResponse>;
+  250?: SuccessCallback<TResponse>;
+  251?: SuccessCallback<TResponse>;
+  252?: SuccessCallback<TResponse>;
+  253?: SuccessCallback<TResponse>;
+  254?: SuccessCallback<TResponse>;
+  255?: SuccessCallback<TResponse>;
+  256?: SuccessCallback<TResponse>;
+  257?: SuccessCallback<TResponse>;
+  258?: SuccessCallback<TResponse>;
+  259?: SuccessCallback<TResponse>;
+  260?: SuccessCallback<TResponse>;
+  261?: SuccessCallback<TResponse>;
+  262?: SuccessCallback<TResponse>;
+  263?: SuccessCallback<TResponse>;
+  264?: SuccessCallback<TResponse>;
+  265?: SuccessCallback<TResponse>;
+  266?: SuccessCallback<TResponse>;
+  267?: SuccessCallback<TResponse>;
+  268?: SuccessCallback<TResponse>;
+  269?: SuccessCallback<TResponse>;
+  270?: SuccessCallback<TResponse>;
+  271?: SuccessCallback<TResponse>;
+  272?: SuccessCallback<TResponse>;
+  273?: SuccessCallback<TResponse>;
+  274?: SuccessCallback<TResponse>;
+  275?: SuccessCallback<TResponse>;
+  276?: SuccessCallback<TResponse>;
+  277?: SuccessCallback<TResponse>;
+  278?: SuccessCallback<TResponse>;
+  279?: SuccessCallback<TResponse>;
+  280?: SuccessCallback<TResponse>;
+  281?: SuccessCallback<TResponse>;
+  282?: SuccessCallback<TResponse>;
+  283?: SuccessCallback<TResponse>;
+  284?: SuccessCallback<TResponse>;
+  285?: SuccessCallback<TResponse>;
+  286?: SuccessCallback<TResponse>;
+  287?: SuccessCallback<TResponse>;
+  288?: SuccessCallback<TResponse>;
+  289?: SuccessCallback<TResponse>;
+  290?: SuccessCallback<TResponse>;
+  291?: SuccessCallback<TResponse>;
+  292?: SuccessCallback<TResponse>;
+  293?: SuccessCallback<TResponse>;
+  294?: SuccessCallback<TResponse>;
+  295?: SuccessCallback<TResponse>;
+  296?: SuccessCallback<TResponse>;
+  297?: SuccessCallback<TResponse>;
+  298?: SuccessCallback<TResponse>;
+  299?: SuccessCallback<TResponse>;
+  304?: SuccessCallback<TResponse>;
 
   // 错误状态码
   300?: ErrorCallback;
@@ -554,7 +555,7 @@ export type StatusCodeCallbacks = {
   599?: ErrorCallback;
 } & {
   // 其他状态码
-  [index: number]: SuccessCallback | ErrorCallback;
+  [index: number]: SuccessCallback<TResponse> | ErrorCallback;
 };
 
 export type XHRFields = Partial<
@@ -564,11 +565,17 @@ export type XHRFields = Partial<
   >
 >;
 
-// ajax 事件参数 (ajaxStart, ajaxError, ajaxComplete 不含 response，仅 ajaxSuccess 含 response)
-export interface EventParams extends PlainObject {
+// ajax 事件参数 (ajaxStart, ajaxError, ajaxComplete)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface EventParams<TResponse = any> extends PlainObject {
   xhr: XMLHttpRequest;
-  options: Required<OptionsParams> & Options;
-  response?: string;
+  options: Required<OptionsParams<TResponse>> & Options<TResponse>;
+}
+
+// ajax 事件参数 (ajaxSuccess)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface SuccessEventParams<TResponse = any> extends EventParams {
+  response: TResponse;
 }
 
 // 全局事件名
@@ -585,7 +592,8 @@ export type EventName =
   | typeof ajaxComplete;
 
 // 全局配置参数
-export const globalOptions: Options = {};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const globalOptions: Partial<Options<any>> = {};
 
 /**
  * 判断此请求方法是否通过查询字符串提交参数
@@ -629,11 +637,11 @@ export const isHttpStatusSuccess = (status: number): boolean => {
  * 合并请求参数，参数优先级：options > globalOptions > defaults
  * @param options
  */
-export const mergeOptions = (
-  options: Options,
-): Required<OptionsParams> & Options => {
+export const mergeOptions = <TResponse>(
+  options: Options<TResponse>,
+): Required<OptionsParams<TResponse>> & Options<TResponse> => {
   // 默认参数
-  const defaults: Required<OptionsParams> & Options = {
+  const defaults: Required<OptionsParams<TResponse>> & Options<TResponse> = {
     url: '',
     method: 'GET',
     data: '',
@@ -652,22 +660,22 @@ export const mergeOptions = (
   };
 
   // globalOptions 中的回调函数不合并
-  eachObject(globalOptions, (key: string, value) => {
-    const callbacks: Array<CallbackName | 'statusCode'> = [
-      'beforeSend',
-      'success',
-      'error',
-      'complete',
-      'statusCode',
-    ];
+  eachObject<Options<TResponse>, keyof Options<TResponse>>(
+    globalOptions,
+    (key, value) => {
+      const callbacks: Array<CallbackName<TResponse> | 'statusCode'> = [
+        'beforeSend',
+        'success',
+        'error',
+        'complete',
+        'statusCode',
+      ];
 
-    if (
-      !(callbacks as unknown as string).includes(key) &&
-      !isUndefined(value)
-    ) {
-      defaults[key] = value;
-    }
-  });
+      if (!callbacks.includes(key) && !isUndefined(value)) {
+        defaults[key] = value;
+      }
+    },
+  );
 
   return extend({}, defaults, options);
 };

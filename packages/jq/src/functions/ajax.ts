@@ -31,6 +31,7 @@ import type {
   TextStatus,
   Options,
   EventParams,
+  SuccessEventParams,
 } from '../shared/ajax.js';
 import type { PlainObject } from '../shared/helper.js';
 
@@ -48,19 +49,26 @@ ajax({
 });
 ```
  */
-// eslint-disable-next-line
-export const ajax = <T = any>(options: Options): Promise<T> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const ajax = <TResponse = any>(
+  options: Options<TResponse>,
+): Promise<TResponse> => {
   const document = getDocument();
   const window = getWindow();
 
   // 是否已取消请求
   let isCanceled = false;
 
-  // 事件参数
-  const eventParams: Partial<EventParams> = {};
+  // ajaxStart、ajaxError、ajaxComplete 事件参数
+  // @ts-ignore
+  const eventParams: EventParams<TResponse> = {};
+
+  // ajaxSuccess 事件参数
+  // @ts-ignore
+  const successEventParams: SuccessEventParams<TResponse> = {};
 
   // 参数合并
-  const mergedOptions = mergeOptions(options);
+  const mergedOptions = mergeOptions<TResponse>(options);
   const method = mergedOptions.method.toUpperCase() as Uppercase<Method>;
   let { data, url } = mergedOptions;
   url = url || window.location.toString();
@@ -109,17 +117,15 @@ export const ajax = <T = any>(options: Options): Promise<T> => {
    */
   const trigger = (
     event: EventName,
-    callback: CallbackName,
+    callback: CallbackName<TResponse>,
     ...args: unknown[]
   ): void => {
     // 触发全局事件
     if (global) {
-      // complete 回调 和 ajaxComplete 事件中，不存在 response
-      if (callback === 'complete') {
-        delete eventParams.response;
-      }
-
-      $(document).trigger(event, eventParams);
+      $(document).trigger(
+        event,
+        callback === 'success' ? successEventParams : eventParams,
+      );
     }
 
     // 触发 ajax 回调和事件
@@ -151,7 +157,7 @@ export const ajax = <T = any>(options: Options): Promise<T> => {
   const XHR = () => {
     let textStatus: TextStatus;
 
-    return new Promise<T>((resolve, reject) => {
+    return new Promise<TResponse>((resolve, reject) => {
       const doReject = (reason: string) => {
         return reject(new Error(reason));
       };
@@ -196,8 +202,8 @@ export const ajax = <T = any>(options: Options): Promise<T> => {
         xhr[key] = value as never;
       });
 
-      eventParams.xhr = xhr;
-      eventParams.options = mergedOptions;
+      eventParams.xhr = successEventParams.xhr = xhr;
+      eventParams.options = successEventParams.options = mergedOptions;
 
       let xhrTimeout: number;
 
@@ -209,7 +215,8 @@ export const ajax = <T = any>(options: Options): Promise<T> => {
         // AJAX 返回的 HTTP 响应码是否表示成功
         const isSuccess = isHttpStatusSuccess(xhr.status);
 
-        let responseData = '';
+        // @ts-ignore
+        let responseData: TResponse = undefined;
 
         if (isSuccess) {
           textStatus =
@@ -227,7 +234,7 @@ export const ajax = <T = any>(options: Options): Promise<T> => {
             try {
               responseData =
                 method === 'HEAD' ? undefined : JSON.parse(xhr.responseText);
-              eventParams.response = responseData;
+              successEventParams.response = responseData;
             } catch (err) {
               textStatus = 'parsererror';
 
@@ -237,7 +244,7 @@ export const ajax = <T = any>(options: Options): Promise<T> => {
 
             if (textStatus !== 'parsererror') {
               trigger(ajaxSuccess, 'success', responseData, textStatus, xhr);
-              resolve(responseData as unknown as T);
+              resolve(responseData as unknown as TResponse);
             }
           } else {
             responseData =
@@ -246,10 +253,10 @@ export const ajax = <T = any>(options: Options): Promise<T> => {
                 : xhr.responseType === 'text' || xhr.responseType === ''
                 ? xhr.responseText
                 : xhr.response;
-            eventParams.response = responseData;
+            successEventParams.response = responseData;
 
             trigger(ajaxSuccess, 'success', responseData, textStatus, xhr);
-            resolve(responseData as unknown as T);
+            resolve(responseData as unknown as TResponse);
           }
         } else {
           textStatus = 'error';
@@ -262,7 +269,7 @@ export const ajax = <T = any>(options: Options): Promise<T> => {
         eachArray([globalOptions.statusCode ?? {}, statusCode], (func) => {
           if (func[xhr.status]) {
             if (isSuccess) {
-              (func[xhr.status] as SuccessCallback)(
+              (func[xhr.status] as SuccessCallback<TResponse>)(
                 responseData,
                 textStatus as SuccessTextStatus,
                 xhr,

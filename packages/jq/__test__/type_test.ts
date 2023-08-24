@@ -42,8 +42,21 @@ test('.test');
  */
 
 // ajax()
+const ajaxPromise = $.ajax<{ code: 0; message: 'success' }>({
+  success(response) {
+    console.log(response.code);
+  },
+});
+ajaxPromise.then((response) => {
+  console.log(response.code);
+});
 
 // ajaxSetup()
+$.ajaxSetup<{ code: 0; message: 'success' }>({
+  success(response) {
+    console.log(response.code);
+  },
+});
 
 // contains()
 $.contains(document, document);

@@ -4,7 +4,7 @@ import '../../methods/on.js';
 import '../../static/ajax.js';
 import '../../static/ajaxSetup.js';
 import { assert, jq, JQStatic, jQuery } from '../utils.js';
-import type { EventParams } from '../../shared/ajax.js';
+import type { EventParams, SuccessEventParams } from '../../shared/ajax.js';
 
 // mock 服务，模拟 REST API
 const mockAPI = () => {
@@ -184,7 +184,7 @@ const test = ($: JQStatic, type: string): void => {
         assert.equal(eventComplete, 0);
       });
 
-      $(document).on('ajaxSuccess', (event, data: EventParams) => {
+      $(document).on('ajaxSuccess', (event, data: SuccessEventParams) => {
         if (!isJquery) {
           assert.instanceOf(data.xhr, XMLHttpRequest);
           assert.isObject(data.options);

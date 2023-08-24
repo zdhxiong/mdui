@@ -13,6 +13,9 @@ ajaxSetup({
 });
 ```
  */
-export const ajaxSetup = (options: Options): Options => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const ajaxSetup = <TResponse = any>(
+  options: Options<TResponse>,
+): Options<TResponse> => {
   return extend(globalOptions, options);
 };

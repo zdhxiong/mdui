@@ -31,7 +31,7 @@ $('<div>');
 function test<T = string>(selector: T): JQ<HTMLElement>;
 function test<T = HTMLElement>(selector: T): JQ<HTMLElement>;
 function test<T = ArrayLike<HTMLElement>>(selector: T): JQ<HTMLElement>;
-function test(selector: any): JQ<HTMLElement> {
+function test(selector: unknown): JQ<HTMLElement> {
   return $(selector).eq(0);
 }
 
@@ -188,14 +188,6 @@ $elements.after(function () {
 $elements.after(function () {
   return $('<p>new</p>')[0];
 });
-
-// .ajaxComplete()
-
-// .ajaxError()
-
-// .ajaxStart()
-
-// .ajaxSuccess()
 
 // .append()
 $elements.append('<p>new</p>');

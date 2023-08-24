@@ -50,7 +50,7 @@ export const getFormControlsValue = (
           'mdui-range-slider',
           'mdui-segmented-button-group',
         ].includes(nodeName) &&
-        !['button', 'image', 'reset', 'file'].includes(type) &&
+        !['submit', 'button', 'image', 'reset', 'file'].includes(type) &&
         (!['radio', 'checkbox'].includes(type) || element.checked) &&
         (!['mdui-checkbox', 'mdui-switch'].includes(nodeName) ||
           element.checked)

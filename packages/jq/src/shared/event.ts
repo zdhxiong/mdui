@@ -4,8 +4,33 @@ import '../methods/find.js';
 import '../methods/get.js';
 import { isObjectLike } from './helper.js';
 
+interface MduiCustomEventInit<T = any> extends CustomEventInit<T> {
+  // 事件监听参数
+  data?: any;
+
+  // 命名空间
+  ns?: string;
+}
+
+/**
+ * 封装 CustomEvent，使之支持 data:事件监听参数，ns:命名空间
+ */
+export class MduiCustomEvent<T = any> extends CustomEvent<T> {
+  // 事件监听参数
+  public data;
+
+  // 命名空间
+  public ns;
+
+  public constructor(type: string, options?: MduiCustomEventInit<T>) {
+    super(type, options);
+    this.data = options?.data;
+    this.ns = options?.ns;
+  }
+}
+
 export type EventCallback<
-  TEvent = Event,
+  TEvent = MduiCustomEvent,
   TThis = Element | Document | Window,
 > = (
   this: TThis,
@@ -21,7 +46,7 @@ type Handler = {
   ns: string; // 命名空间
   func: EventCallback; // 事件处理函数
   id: number; // 事件ID
-  proxy: (e: Event) => void;
+  proxy: (e: MduiCustomEvent) => void;
   selector?: string; // 选择器
 };
 
@@ -37,7 +62,6 @@ const getElementId = (element: ElementIdKey): number => {
     elementIdMap.set(element, ++elementId);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return elementIdMap.get(element)!;
 };
 
@@ -50,7 +74,6 @@ const handlersMap = new Map<number, Handler[]>();
  */
 const getHandlers = (element: ElementIdKey): Handler[] => {
   const id = getElementId(element);
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return handlersMap.get(id) || handlersMap.set(id, []).get(id)!;
 };
 
@@ -127,7 +150,10 @@ export const add = (
 
     const event = parse(type);
 
-    const callFn = (e: Event, elem: Element | Document | Window): void => {
+    const callFn = (
+      e: MduiCustomEvent,
+      elem: Element | Document | Window,
+    ): void => {
       const result = func.apply(
         elem,
         // @ts-ignore
@@ -140,14 +166,12 @@ export const add = (
       }
     };
 
-    const proxyFn = (e: Event): void => {
-      // @ts-ignore
-      if (e._ns && !matcherFor(e._ns).test(event.ns)) {
+    const proxyFn = (e: MduiCustomEvent): void => {
+      if (e.ns && !matcherFor(e.ns).test(event.ns)) {
         return;
       }
 
-      // @ts-ignore
-      e._data = data;
+      e.data = data;
 
       if (selector) {
         // 事件代理
@@ -177,6 +201,7 @@ export const add = (
 
     getHandlers(element).push(handler);
 
+    // @ts-ignore
     element.addEventListener(handler.type, proxyFn, useCapture);
   });
 };
@@ -197,6 +222,7 @@ export const remove = (
   const handlersInElement = getHandlers(element);
   const removeEvent = (handler: Handler): void => {
     delete handlersInElement[handler.id];
+    // @ts-ignore
     element.removeEventListener(handler.type, handler.proxy, false);
   };
 

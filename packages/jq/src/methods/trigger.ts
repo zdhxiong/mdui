@@ -1,5 +1,5 @@
 import { $ } from '../$.js';
-import { parse } from '../shared/event.js';
+import { parse, MduiCustomEvent } from '../shared/event.js';
 import './each.js';
 import type { JQ } from '../shared/core.js';
 import type { PlainObject } from '../shared/helper.js';
@@ -33,16 +33,14 @@ $('.box').trigger('click', {key1: 'value1', key2: 'value2'});
 $.fn.trigger = function (this: JQ, name: string, detail: any = null, options?: CustomEventInit): JQ {
   const { type, ns } = parse(name);
 
-  const event = new CustomEvent(type, {
+  const event = new MduiCustomEvent(type, {
     detail,
     bubbles: true,
     cancelable: false,
     composed: true,
+    ns,
     ...options,
   });
-
-  // @ts-ignore
-  event._ns = ns;
 
   return this.each((_, element) => {
     element.dispatchEvent(event);

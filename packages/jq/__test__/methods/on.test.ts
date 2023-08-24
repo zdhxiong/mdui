@@ -140,13 +140,13 @@ const test = ($: JQStatic, type: string): void => {
       $inner.on('input', true, function (event) {
         eventCount++;
         // @ts-ignore
-        assert.isTrue(isJquery ? event.data : event._data);
+        assert.isTrue(event.data);
       });
 
       $inner.on('change', { key: 'val' }, function (event) {
         eventCount++;
         // @ts-ignore
-        assert.deepEqual(isJquery ? event.data : event._data, {
+        assert.deepEqual(event.data, {
           key: 'val',
         });
       });
@@ -155,13 +155,13 @@ const test = ($: JQStatic, type: string): void => {
       $inner.on('click', undefined, 'test-val', function (event) {
         eventCount++;
         // @ts-ignore
-        assert.equal(isJquery ? event.data : event._data, 'test-val');
+        assert.equal(event.data, 'test-val');
       });
 
       $inner.on('dbclick', null, 'test-val', function (event) {
         eventCount++;
         // @ts-ignore
-        assert.equal(isJquery ? event.data : event._data, 'test-val');
+        assert.equal(event.data, 'test-val');
       });
 
       $inner.trigger('input');
@@ -200,14 +200,14 @@ const test = ($: JQStatic, type: string): void => {
         eventCount++;
         assert.deepEqual(event.target, $button[0]);
         // @ts-ignore
-        assert.equal(isJquery ? event.data : event._data, 'test-data');
+        assert.equal(event.data, 'test-data');
       });
 
       $inner.on('click', '#button', 33, function (event) {
         eventCount++;
         assert.deepEqual(event.target, $button[0]);
         // @ts-ignore
-        assert.deepEqual(isJquery ? event.data : event._data, 33);
+        assert.deepEqual(event.data, 33);
       });
 
       $button.trigger('click');
@@ -247,7 +247,7 @@ const test = ($: JQStatic, type: string): void => {
             assert.equal(data, 'data');
             assert.equal(event.type, 'click');
             // @ts-ignore
-            assert.equal(isJquery ? event.data : event._data, 'test-data');
+            assert.equal(event.data, 'test-data');
           },
           input: function (event, data1, data2) {
             eventCount++;
@@ -255,7 +255,7 @@ const test = ($: JQStatic, type: string): void => {
             assert.equal(data2, 'data2');
             assert.equal(event.type, 'input');
             // @ts-ignore
-            assert.equal(isJquery ? event.data : event._data, 'test-data');
+            assert.equal(event.data, 'test-data');
           },
         },
         null,
@@ -293,7 +293,7 @@ const test = ($: JQStatic, type: string): void => {
             assert.isUndefined(data);
             assert.equal(event.type, 'click');
             // @ts-ignore
-            assert.isUndefined(isJquery ? event.data : event._data);
+            assert.isUndefined(event.data);
             // @ts-ignore
             !isJquery && assert.isNull(event.detail);
           },
@@ -303,7 +303,7 @@ const test = ($: JQStatic, type: string): void => {
             assert.equal(data, 'val');
             assert.equal(event.type, 'change');
             // @ts-ignore
-            assert.isUndefined(isJquery ? event.data : event._data);
+            assert.isUndefined(event.data);
             // @ts-ignore
             !isJquery && assert.equal(event.detail, 'val');
           },
@@ -343,7 +343,7 @@ const test = ($: JQStatic, type: string): void => {
             eventCount++;
             assert.isUndefined(data);
             // @ts-ignore
-            assert.equal(isJquery ? event.data : event._data, 'test-data');
+            assert.equal(event.data, 'test-data');
             // @ts-ignore
             !isJquery && assert.isNull(event.detail);
           },
@@ -352,7 +352,7 @@ const test = ($: JQStatic, type: string): void => {
             assert.equal(data1, 'data1');
             assert.equal(data2, 'data2');
             // @ts-ignore
-            assert.equal(isJquery ? event.data : event._data, 'test-data');
+            assert.equal(event.data, 'test-data');
             if (!isJquery) {
               // @ts-ignore
               assert.sameOrderedMembers(event.detail, ['data1', 'data2']);

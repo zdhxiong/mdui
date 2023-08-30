@@ -1,6 +1,7 @@
 import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { getInnerHtmlFromSlot } from '@mdui/shared/helpers/slot.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -10,6 +11,7 @@ import type { Ref } from 'lit/directives/ref.js';
 
 /**
  * @slot - 顶部应用栏的标题文本
+ * @slot label-large - 展开状态的标题文本
  *
  * @csspart label 文本内容
  * @csspart label-large 展开状态的文本内容
@@ -41,27 +43,46 @@ export class TopAppBarTitle extends LitElement {
   })
   private shrink = false;
 
+  private readonly hasSlotController = new HasSlotController(
+    this,
+    'label-large',
+  );
   private readonly labelLargeRef: Ref<HTMLElement> = createRef();
   private readonly defaultSlotRef: Ref<HTMLSlotElement> = createRef();
 
   protected override render(): TemplateResult {
+    const hasLabelLargeSlot = this.hasSlotController.test('label-large');
+
     return html`<slot
         part="label"
         class="label"
         ${ref(this.defaultSlotRef)}
-        @slotchange="${this.onSlotChange}"
+        @slotchange="${() => this.onSlotChange(hasLabelLargeSlot)}"
       ></slot>
-      <div
-        ${ref(this.labelLargeRef)}
-        part="label-large"
-        class="label-large"
-      ></div>`;
+      ${hasLabelLargeSlot
+        ? html`<slot
+            name="label-large"
+            part="label-large"
+            class="label-large"
+          ></slot>`
+        : html`<div
+            ${ref(this.labelLargeRef)}
+            part="label-large"
+            class="label-large"
+          ></div>`}`;
   }
 
-  private onSlotChange() {
-    this.labelLargeRef.value!.innerHTML = getInnerHtmlFromSlot(
-      this.defaultSlotRef.value!,
-    );
+  /**
+   * default slot 变化时，同步到 label-large 中
+   * @param hasLabelLargeSlot
+   * @private
+   */
+  private onSlotChange(hasLabelLargeSlot: boolean) {
+    if (!hasLabelLargeSlot) {
+      this.labelLargeRef.value!.innerHTML = getInnerHtmlFromSlot(
+        this.defaultSlotRef.value!,
+      );
+    }
   }
 }
 

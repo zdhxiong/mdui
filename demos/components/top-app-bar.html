@@ -263,6 +263,28 @@
       <div class="fill-variant-change-button"></div>
     </section>
 
+    <section>
+      <h2>label-large slot</h2>
+      <div class="container">
+        <mdui-top-app-bar scroll-target="#label-large" scroll-behavior="shrink elevate">
+          <mdui-button-icon icon="menu"></mdui-button-icon>
+          <mdui-top-app-bar-title>
+            Title
+            <span slot="label-large">Hiking Trips with Elie in Santa Monica and Joshua Tree!</span>
+          </mdui-top-app-bar-title>
+          <div style="flex-grow: 1"></div>
+          <mdui-button-icon icon="attach_file"></mdui-button-icon>
+          <mdui-button-icon icon="today"></mdui-button-icon>
+          <mdui-button-icon icon="more_vert"></mdui-button-icon>
+        </mdui-top-app-bar>
+        <div style="max-height: 100%; overflow: auto; box-sizing: border-box" id="label-large">
+          <div class="fill-placeholder"></div>
+        </div>
+      </div>
+      <br/>
+      <div class="fill-variant-change-button"></div>
+    </section>
+
   </main>
 </body>
 

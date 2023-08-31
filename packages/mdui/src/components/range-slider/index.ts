@@ -11,7 +11,6 @@ import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { SliderBase } from '../slider/slider-base.js';
-import { style } from './style.js';
 import type { Ripple } from '../ripple/index.js';
 import type { FormControl } from '@mdui/jq/shared/form.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
@@ -33,7 +32,7 @@ import type { Ref } from 'lit/directives/ref.js';
  */
 @customElement('mdui-range-slider')
 export class RangeSlider extends SliderBase implements FormControl {
-  public static override styles: CSSResultGroup = [SliderBase.styles, style];
+  public static override styles: CSSResultGroup = [SliderBase.styles];
 
   /**
    * 默认值。在重置表单时，将重置为该默认值。该属性只能通过 JavaScript 属性设置

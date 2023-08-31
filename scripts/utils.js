@@ -14,6 +14,19 @@ export const isDev = process.argv.slice(2)[0] === '--dev';
 // 文档页面前缀
 const docPathPrefix = 'https://www.mdui.org/docs/2';
 
+let globalLessMixin = '';
+
+// 获取全局 mixin.less 文件内容
+const getGlobalLessMixin = () => {
+  if (!globalLessMixin) {
+    globalLessMixin = fs
+      .readFileSync('./packages/shared/src/mixin.less')
+      .toString();
+  }
+
+  return globalLessMixin;
+};
+
 // 文档页面 及 页面中包含的组件
 const docComponents = {
   button: ['mdui-button'],
@@ -465,7 +478,7 @@ export const traverseDirectory = (dir, suffix, callback) => {
  * @param filePath less 文件路径
  */
 export const buildLitStyleFile = (filePath) => {
-  const lessInput = fs.readFileSync(filePath).toString();
+  const lessInput = getGlobalLessMixin() + fs.readFileSync(filePath).toString();
   const lessOptions = {
     filename: path.resolve(filePath),
     plugins: [new NpmImportPlugin({ prefix: '~' })],
@@ -556,7 +569,7 @@ export const buildLitJsFiles = (path) => {
  * @param outputPath 输出的 css 文件路径
  */
 export const buildLessFile = (filePath, outputPath) => {
-  const lessInput = fs.readFileSync(filePath).toString();
+  const lessInput = getGlobalLessMixin() + fs.readFileSync(filePath).toString();
   const lessOptions = {
     filename: path.resolve(filePath),
     plugins: [new NpmImportPlugin({ prefix: '~' })],

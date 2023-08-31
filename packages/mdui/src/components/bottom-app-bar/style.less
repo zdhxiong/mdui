@@ -63,7 +63,7 @@
 // 显示 bottom-app-bar 时，子元素依次进入
 :host([hide]) ::slotted(:not(mdui-fab)),
 :host([hide]:not([fab-detach])) ::slotted(mdui-fab) {
-  transform: translateY(unit((140px / @root-font-size), rem));
+  transform: translateY(unit((140px / @mdui-root-font-size), rem));
   .transition(transform, 0, emphasized-accelerate, short4);
 }
 

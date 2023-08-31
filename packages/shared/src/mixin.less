@@ -1,11 +1,18 @@
-@root-font-size: 16;
+@mdui-root-font-size: 16;
+
+@mdui-breakpoint-xs: 0px;
+@mdui-breakpoint-sm: 600px;
+@mdui-breakpoint-md: 840px;
+@mdui-breakpoint-lg: 1080px;
+@mdui-breakpoint-xl: 1440px;
+@mdui-breakpoint-xxl: 1920px;
 
 // px 值转 rem
 //
 // 输入: .px(font-size: 24)
 // 输出: font-size: 1.5rem
 .px(@name, @px) {
-  @{name}: unit((@px / @root-font-size), rem);
+  @{name}: unit((@px / @mdui-root-font-size), rem);
 }
 
 // 系统变量
@@ -60,7 +67,7 @@
 
   & when (@opacity =1) {
     & when (isnumber(@width)) {
-      @widthRem: unit((@width / @root-font-size), rem);
+      @widthRem: unit((@width / @mdui-root-font-size), rem);
 
       @{name}: ~"@{widthRem} @{style} rgb(var(@{cssVariable}))";
     }
@@ -72,7 +79,7 @@
 
   & when not (@opacity =1) {
     & when (isnumber(@width)) {
-      @widthRem: unit((@width / @root-font-size), rem);
+      @widthRem: unit((@width / @mdui-root-font-size), rem);
 
       @{name}: ~"@{widthRem} @{style} rgba(var(@{cssVariable}), @{opacity})";
     }
@@ -179,19 +186,19 @@
 // 输出: padding: 1.5rem
 .padding(@top, @right: null, @bottom: null, @left: null, @name: padding) {
   & when (@right =null) and (@bottom =null) and (@left =null) {
-    @{name}: unit((@top / @root-font-size), rem);
+    @{name}: unit((@top / @mdui-root-font-size), rem);
   }
 
   & when (not(@right =null)) and (@bottom =null) and (@left =null) {
-    @{name}: unit((@top / @root-font-size), rem) unit((@right / @root-font-size), rem);
+    @{name}: unit((@top / @mdui-root-font-size), rem) unit((@right / @mdui-root-font-size), rem);
   }
 
   & when (not(@right =null)) and (not(@bottom =null)) and (@left =null) {
-    @{name}: unit((@top / @root-font-size), rem) unit((@right / @root-font-size), rem) unit((@bottom / @root-font-size), rem);
+    @{name}: unit((@top / @mdui-root-font-size), rem) unit((@right / @mdui-root-font-size), rem) unit((@bottom / @mdui-root-font-size), rem);
   }
 
   & when (not(@right =null)) and (not(@bottom =null)) and (not(@left =null)) {
-    @{name}: unit((@top / @root-font-size), rem) unit((@right / @root-font-size), rem) unit((@bottom / @root-font-size), rem) unit((@left / @root-font-size), rem);
+    @{name}: unit((@top / @mdui-root-font-size), rem) unit((@right / @mdui-root-font-size), rem) unit((@bottom / @mdui-root-font-size), rem) unit((@left / @mdui-root-font-size), rem);
   }
 }
 
@@ -241,15 +248,15 @@
 }
 
 .translate(@x, @y) {
-  transform: translate(unit((@x / @root-font-size), rem), unit((@y / @root-font-size), rem));
+  transform: translate(unit((@x / @mdui-root-font-size), rem), unit((@y / @mdui-root-font-size), rem));
 }
 
 .translateX(@x) {
-  transform: translateX(unit((@x / @root-font-size), rem));
+  transform: translateX(unit((@x / @mdui-root-font-size), rem));
 }
 
 .translateY(@y) {
-  transform: translateY(unit((@y / @root-font-size), rem));
+  transform: translateY(unit((@y / @mdui-root-font-size), rem));
 }
 
 .fontSize(@value) {

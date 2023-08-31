@@ -1,2 +1,5 @@
 packages:
-  - 'packages/*'
+  - 'packages/icons'
+  - 'packages/jq'
+  - 'packages/mdui'
+  - 'packages/shared'

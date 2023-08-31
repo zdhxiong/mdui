@@ -1,0 +1,46 @@
+{
+  "name": "mdui",
+  "displayName": "mdui",
+  "description": "为 mdui 组件库提供自动完成、悬停提示等功能",
+  "keywords": [
+    "mdui",
+    "web components",
+    "material design",
+    "material you"
+  ],
+  "version": "2.0.0",
+  "publisher": "zdhxiong",
+  "author": {
+    "name": "zdhxiong",
+    "email": "zdhxiong@gmail.com"
+  },
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#fefbff",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zdhxiong/mdui/packages/vscode-extension"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "categories": [
+    "Snippets"
+  ],
+  "contributes": {
+    "html": {
+      "customData": ["./mdui.html-data.zh-cn.json"]
+    },
+    "css": {
+      "customData": ["./mdui.css-data.zh-cn.json"]
+    }
+  },
+  "scripts": {
+    "package": "vsce package",
+    "publish-pre-release": "vsce publish --pre-release",
+    "publish": "vsce publish"
+  }
+}

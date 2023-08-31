@@ -1,6 +1,6 @@
 {
-  "html.customData": ["./packages/mdui/vscode.html-custom-data.json"],
-  "css.customData": ["./packages/mdui/vscode.css-custom-data.json"],
+  "html.customData": ["./packages/mdui/html-data.zh-cn.json"],
+  "css.customData": ["./packages/mdui/css-data.zh-cn.json"],
   "eslint.packageManager": "pnpm",
   "eslint.format.enable": true,
   "editor.formatOnSave": true,

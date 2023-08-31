@@ -1,6 +1,6 @@
 src/components/**/*style.ts
 mdui.css
 custom-elements.json
-vscode.html-custom-data.json
-vscode.css-custom-data.json
-web-types.json
+html-data.zh-cn.json
+css-data.zh-cn.json
+web-types.zh-cn.json

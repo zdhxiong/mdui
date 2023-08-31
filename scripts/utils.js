@@ -98,7 +98,7 @@ const isDocHasMultipleComponents = (tagName) => {
   return docComponents[pageName].length > 1;
 };
 
-// CSS 自定义属性，写入到 vscode.css-custom-data.json 及 web-types.json 中
+// CSS 自定义属性，写入到 css-data.zh-cn.json 及 web-types.zh-cn.json 中
 const cssProperties = [
   // 断点
   ...[
@@ -651,12 +651,12 @@ export const getAllComponents = (metadataPath) => {
 };
 
 /**
- * 生成 vscode.html-custom-data.json 文件，供 VSCode 使用
+ * 生成 html-data.zh-cn.json 文件，供 VSCode 使用
  * 官方文档：https://github.com/microsoft/vscode-custom-data
  * VSCode Custom Data 规范：https://github.com/microsoft/vscode-html-languageservice/blob/main/docs/customData.schema.json
  *                          https://github.com/microsoft/vscode-CSS-languageservice/blob/main/docs/customData.schema.json
  *
- * 需要生成 vscode.html-custom-data.json 的包：mdui
+ * 需要生成 html-data.zh-cn.json 的包：mdui
  *
  * @param metadataPath custom-elements.json 文件的路径
  * @param packageFolder 包在 packages 目录中的文件夹名
@@ -756,12 +756,17 @@ export const buildVSCodeData = (metadataPath, packageFolder) => {
   });
 
   fs.writeFileSync(
-    `./packages/${packageFolder}/vscode.html-custom-data.json`,
+    `./packages/${packageFolder}/html-data.zh-cn.json`,
+    JSON.stringify(vscode, null, 2),
+    'utf8',
+  );
+  fs.writeFileSync(
+    `./packages/vscode-extension/${packageFolder}.html-data.zh-cn.json`,
     JSON.stringify(vscode, null, 2),
     'utf8',
   );
 
-  // 如果是 mdui 包，额外生成 vscode.css-custom-data.json 文件
+  // 如果是 mdui 包，额外生成 css-data.zh-cn.json 文件
   if (packageFolder === 'mdui') {
     const vscodeCSS = {
       version: 1.1,
@@ -776,7 +781,12 @@ export const buildVSCodeData = (metadataPath, packageFolder) => {
     };
 
     fs.writeFileSync(
-      `./packages/${packageFolder}/vscode.css-custom-data.json`,
+      `./packages/${packageFolder}/css-data.zh-cn.json`,
+      JSON.stringify(vscodeCSS, null, 2),
+      'utf8',
+    );
+    fs.writeFileSync(
+      `./packages/vscode-extension/${packageFolder}.css-data.zh-cn.json`,
       JSON.stringify(vscodeCSS, null, 2),
       'utf8',
     );
@@ -784,11 +794,11 @@ export const buildVSCodeData = (metadataPath, packageFolder) => {
 };
 
 /**
- * 生成 web-types.json 文件，供 jetbrains IDE 使用
+ * 生成 web-types.zh-cn.json 文件，供 jetbrains IDE 使用
  * 官方文档：https://plugins.jetbrains.com/docs/intellij/websymbols-web-types.html#web-components
  * web-types 规范：http://json.schemastore.org/web-types
  *
- * 需要生成 web-types.json 的包：mdui
+ * 需要生成 web-types.zh-cn.json 的包：mdui
  *
  * @param metadataPath custom-elements.json 文件的路径
  * @param packageFolder 包在 packages 目录中的的文件夹名
@@ -993,7 +1003,7 @@ export const buildWebTypes = (metadataPath, packageFolder) => {
   }
 
   fs.writeFileSync(
-    `./packages/${packageFolder}/web-types.json`,
+    `./packages/${packageFolder}/web-types.zh-cn.json`,
     JSON.stringify(webTypes, null, 2),
     'utf8',
   );

@@ -9,11 +9,17 @@ import {
 } from '@material/material-color-utilities';
 import { getDocument } from 'ssr-window';
 import { $ } from '@mdui/jq/$.js';
+import { unique } from '@mdui/jq/functions/unique.js';
 import '@mdui/jq/methods/addClass.js';
 import '@mdui/jq/methods/append.js';
+import '@mdui/jq/methods/get.js';
 import '@mdui/jq/methods/remove.js';
 import '@mdui/jq/methods/removeClass.js';
 import { toKebabCase } from '@mdui/jq/shared/helper.js';
+import type { Theme } from './theme.js';
+import type { JQ } from '@mdui/jq/shared/core.js';
+
+type TheTheme = Exclude<Theme, 'auto'>;
 
 export interface CustomColor {
   /**
@@ -27,9 +33,8 @@ export interface CustomColor {
   value: string;
 }
 
-type Theme = 'light' | 'dark';
-
-const themeArr: Theme[] = ['light', 'dark'];
+const themeArr: TheTheme[] = ['light', 'dark'];
+const prefix = 'mdui-custom-color-scheme-'; // 类名前缀
 let themeIndex = 0;
 
 const rgbFromArgb = (source: number): string => {
@@ -41,9 +46,39 @@ const rgbFromArgb = (source: number): string => {
 };
 
 /**
- * 设置主题
- * 在 head 中插入一个 <style id="mdui-custom-theme-${source}-${index}"> 元素，
- * 并在 target 元素上添加 class="mdui-custom-theme-${source}-${index}"
+ * 移除指定元素上的配色方案
+ * @param target
+ */
+export const remove = (
+  target: string | HTMLElement | JQ<HTMLElement>,
+): void => {
+  const $target = $(target);
+
+  // 找出指定元素上所有的配色方案 CSS class
+  let classNames = $target
+    .get()
+    .map((element) => Array.from(element.classList))
+    .flat();
+  classNames = unique(classNames).filter((className) =>
+    className.startsWith(prefix),
+  );
+
+  // 移除 CSS class
+  $target.removeClass(classNames.join(' '));
+
+  // 找出没有被其他元素使用的 CSS class
+  const unusedClassNames = classNames.filter(
+    (className) => $(`.${className}`).length === 0,
+  );
+
+  // 移除对应的 <style> 元素
+  $(unusedClassNames.map((i) => `#${i}`).join(',')).remove();
+};
+
+/**
+ * 设置配色方案
+ * 在 head 中插入一个 <style id="mdui-custom-color-scheme-${source}"> 元素，
+ * 并在 target 元素上添加 class="mdui-custom-color-scheme-${source}"
  *
  * 自定义颜色的 css 变量
  * --mdui-color-red
@@ -54,19 +89,18 @@ const rgbFromArgb = (source: number): string => {
  * @param source
  * @param options
  */
-export const setThemeFromSource = (
+export const setFromSource = (
   source: number,
   options?: {
-    target?: HTMLElement;
+    target?: string | HTMLElement | JQ<HTMLElement>;
     customColors?: CustomColor[];
   },
 ): void => {
   const document = getDocument();
-  const target = options?.target || document.body;
-  const $target = $(target);
+  const $target = $(options?.target || document.documentElement);
 
   // 生成配色方案
-  const schemes: Record<Theme, Record<string, number>> = {
+  const schemes: Record<TheTheme, Record<string, number>> = {
     light: Scheme.light(source).toJSON(),
     dark: Scheme.dark(source).toJSON(),
   };
@@ -114,7 +148,7 @@ export const setThemeFromSource = (
 
   // 根据配色方案生成 css 变量
   const colorVar = (
-    theme: Theme,
+    theme: TheTheme,
     callback: (token: string, rgb: string) => string,
   ) => {
     return Object.entries(schemes[theme])
@@ -122,7 +156,7 @@ export const setThemeFromSource = (
       .join('');
   };
 
-  const className = `mdui-custom-theme-${source}-${themeIndex++}`;
+  const className = prefix + `${source}-${themeIndex++}`;
 
   // CSS 文本
   const cssText = `.${className} {
@@ -155,17 +189,12 @@ export const setThemeFromSource = (
   }
 }`;
 
+  // 移除旧的配色方案
+  remove($target);
+
   // 创建 <style> 元素，添加到 head 中
   $(document.head).append(`<style id="${className}">${cssText}</style>`);
 
-  // 移除旧的主题
-  Array.from(target.classList)
-    .filter((name) => name.startsWith('mdui-custom-theme-'))
-    .forEach((name) => {
-      $target.removeClass(name);
-      $(`#${name}`).remove();
-    });
-
-  // 添加新主题
+  // 添加新配色方案
   $target.addClass(className);
 };

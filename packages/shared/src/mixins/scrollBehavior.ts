@@ -3,6 +3,7 @@ import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
 import { isNodeName } from '@mdui/jq/shared/helper.js';
 import { watch } from '../decorators/watch.js';
+import type { JQ } from '@mdui/jq/shared/core.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
 import type { LitElement } from 'lit';
 
@@ -11,7 +12,7 @@ type ScrollBehavior = 'hide' | 'shrink' | 'elevate';
 export type ScrollPaddingPosition = 'top' | 'bottom';
 
 export declare class ScrollBehaviorMixinInterface extends LitElement {
-  public scrollTarget?: HTMLElement | string;
+  public scrollTarget?: string | HTMLElement | JQ<HTMLElement>;
   public scrollBehavior?: ScrollBehavior;
   public scrollThreshold?: number;
   protected updateContainerPadding(): void;
@@ -34,10 +35,10 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
 ): Constructor<ScrollBehaviorMixinInterface> & T => {
   class ScrollBehaviorMixinClass extends superclass {
     /**
-     * 需要监听其滚动事件的元素，值可以是 DOM 元素或 CSS 选择器。默认为监听 `window`
+     * 需要监听其滚动事件的元素，值可以是 CSS 选择器、DOM 元素、或 [JQ 对象](/docs/2/functions/jq)。默认为监听 `window`
      */
     @property({ attribute: 'scroll-target' })
-    public scrollTarget?: HTMLElement | string;
+    public scrollTarget?: string | HTMLElement | JQ<HTMLElement>;
 
     /**
      * 滚动行为。可选值为：
@@ -255,7 +256,7 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
      * 获取组件需要监听哪个元素的滚动状态
      */
     private getListening(
-      target?: HTMLElement | string,
+      target?: string | HTMLElement | JQ<HTMLElement>,
     ): HTMLElement | Window | undefined {
       return target ? $(target)[0] : window;
     }
@@ -264,7 +265,7 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
      * 获取组件在哪个容器内滚动
      */
     private getContainer(
-      target?: HTMLElement | string,
+      target?: string | HTMLElement | JQ<HTMLElement>,
     ): HTMLElement | undefined {
       return target ? $(target)[0] : document.body;
     }

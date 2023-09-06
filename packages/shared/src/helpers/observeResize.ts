@@ -1,4 +1,7 @@
+import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/each.js';
 import { uniqueId } from './uniqueId.js';
+import type { JQ } from '@mdui/jq/shared/core.js';
 
 export interface ObserveResize {
   /**
@@ -37,27 +40,30 @@ let observer: ResizeObserver;
  * @param callback 尺寸变化时执行的回调函数，`this` 指向监听的元素
  */
 export const observeResize = (
-  target: HTMLElement,
+  target: string | HTMLElement | JQ<HTMLElement>,
   callback: Callback,
 ): ObserveResize => {
+  const $target = $(target);
   const key = uniqueId();
 
   // 取消监听函数
   const result: ObserveResize = {
     unobserve: () => {
-      const coArr = weakMap.get(target) ?? [];
+      $target.each((_, target) => {
+        const coArr = weakMap.get(target) ?? [];
 
-      const index = coArr.findIndex((co) => co.key === key);
-      if (index !== -1) {
-        coArr.splice(index, 1);
-      }
+        const index = coArr.findIndex((co) => co.key === key);
+        if (index !== -1) {
+          coArr.splice(index, 1);
+        }
 
-      if (!coArr.length) {
-        observer.unobserve(target);
-        weakMap.delete(target);
-      } else {
-        weakMap.set(target, coArr);
-      }
+        if (!coArr.length) {
+          observer.unobserve(target);
+          weakMap.delete(target);
+        } else {
+          weakMap.set(target, coArr);
+        }
+      });
     },
   };
 
@@ -76,10 +82,12 @@ export const observeResize = (
   }
 
   // 添加监听
-  observer.observe(target);
-  const coArr = weakMap.get(target) ?? [];
-  coArr.push({ callback, key });
-  weakMap.set(target, coArr);
+  $target.each((_, target) => {
+    observer.observe(target);
+    const coArr = weakMap.get(target) ?? [];
+    coArr.push({ callback, key });
+    weakMap.set(target, coArr);
+  });
 
   return result;
 };

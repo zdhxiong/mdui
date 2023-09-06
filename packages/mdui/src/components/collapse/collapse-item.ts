@@ -11,6 +11,7 @@ import { emit } from '@mdui/shared/helpers/event.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { collapseItemStyle } from './collapse-item-style.js';
+import type { JQ } from '@mdui/jq/shared/core.js';
 import type { CSSResultGroup, TemplateResult, PropertyValues } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
@@ -56,10 +57,10 @@ export class CollapseItem extends LitElement {
   public disabled = false;
 
   /**
-   * 点击该元素时触发折叠，值可以是 DOM 元素或 CSS 选择器。默认为点击整个 header 区域触发
+   * 点击该元素时触发折叠，值可以是 CSS 选择器、DOM 元素、或 [JQ 对象](/docs/2/functions/jq)。默认为点击整个 header 区域触发
    */
   @property()
-  public trigger?: HTMLElement | string;
+  public trigger?: string | HTMLElement | JQ<HTMLElement>;
 
   /**
    * 是否为激活状态，由 `collapse` 组件控制该参数

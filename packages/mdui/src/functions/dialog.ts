@@ -9,6 +9,7 @@ import { dequeue, queue } from '@mdui/shared/helpers/queue.js';
 import '../components/button.js';
 import { Dialog } from '../components/dialog.js';
 import type { Button } from '../components/button.js';
+import type { JQ } from '@mdui/jq/shared/core.js';
 
 interface Action {
   /**
@@ -37,9 +38,9 @@ interface Options {
   description?: string;
 
   /**
-   * dialog 中的 body 内容，可以是 HTML 字符串、或 DOM 元素
+   * dialog 中的 body 内容，可以是 HTML 字符串、DOM 元素、或 JQ 对象
    */
-  body?: string | HTMLElement;
+  body?: string | HTMLElement | JQ<HTMLElement>;
 
   /**
    * dialog 顶部的 Material Icons 图标名

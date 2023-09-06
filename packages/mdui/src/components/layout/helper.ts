@@ -115,15 +115,19 @@ export class LayoutManager {
    */
   public unregisterItem(element: LayoutItemBase): void {
     const index = this.states.findIndex((item) => item.element === element);
-    if (index !== -1) {
-      // 取消监听尺寸变化
-      const item = this.states[index];
-      item.observeResize?.unobserve();
+    if (index < 0) {
+      return;
+    }
 
-      this.items = undefined;
+    // 取消监听尺寸变化
+    const item = this.states[index];
+    item.observeResize?.unobserve();
 
-      // 移除一个元素，并从下一个元素开始更新
-      this.states.splice(index, 1);
+    this.items = undefined;
+
+    // 移除一个元素，并从下一个元素开始更新
+    this.states.splice(index, 1);
+    if (this.states[index]) {
       this.updateLayout(this.states[index].element);
     }
   }

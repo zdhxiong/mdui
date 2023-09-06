@@ -1,24 +1,39 @@
+import { isNumber } from '@mdui/jq/shared/helper.js';
+
 export function animateTo(
-  el: HTMLElement,
+  el: HTMLElement | undefined,
   keyframes: Keyframe[],
-  options?: KeyframeAnimationOptions,
+  options: KeyframeAnimationOptions,
 ): Promise<unknown> {
+  if (!el) {
+    return Promise.resolve();
+  }
+
   return new Promise((resolve) => {
-    if (options?.duration === Infinity) {
+    if (options.duration === Infinity) {
       throw new Error('Promise-based animations must be finite.');
     }
 
-    const animation = el.animate(keyframes, {
-      ...options,
-      duration: options!.duration,
-    });
+    if (isNumber(options.duration) && isNaN(options.duration)) {
+      options.duration = 0;
+    }
+
+    if (options.easing === '') {
+      options.easing = 'linear';
+    }
+
+    const animation = el.animate(keyframes, options);
 
     animation.addEventListener('cancel', resolve, { once: true });
     animation.addEventListener('finish', resolve, { once: true });
   });
 }
 
-export function stopAnimations(el: HTMLElement): Promise<unknown> {
+export function stopAnimations(el?: HTMLElement): Promise<unknown> {
+  if (!el) {
+    return Promise.resolve();
+  }
+
   return Promise.all(
     el.getAnimations().map((animation) => {
       return new Promise((resolve) => {

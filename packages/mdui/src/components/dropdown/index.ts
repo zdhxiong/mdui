@@ -276,10 +276,10 @@ export class Dropdown extends LitElement {
 
       const duration = getDuration(this, 'short4');
 
-      await stopAnimations(this.panelRef.value!);
+      await stopAnimations(this.panelRef.value);
       await Promise.all([
         animateTo(
-          this.panelRef.value!,
+          this.panelRef.value,
           [
             { transform: `${this.getCssScaleName()}(1)` },
             { transform: `${this.getCssScaleName()}(0.45)` },
@@ -287,13 +287,16 @@ export class Dropdown extends LitElement {
           { duration, easing: easingEmphasizedAccelerate },
         ),
         animateTo(
-          this.panelRef.value!,
+          this.panelRef.value,
           [{ opacity: 1 }, { opacity: 1, offset: 0.875 }, { opacity: 0 }],
           { duration, easing: easingLinear },
         ),
       ]);
 
-      this.panelRef.value!.hidden = true;
+      // 可能关闭 dropdown 时该元素已经不存在了（比如页面直接跳转了）
+      if (this.panelRef.value) {
+        this.panelRef.value.hidden = true;
+      }
 
       emit(this, 'closed');
     }

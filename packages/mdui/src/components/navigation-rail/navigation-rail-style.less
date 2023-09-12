@@ -12,7 +12,7 @@
   border-radius: 0 var(--shape-corner) var(--shape-corner) 0;
   z-index: var(--z-index);
   .width(80);
-  .backgroundColor(surface);
+  .background-color(surface);
   .padding(6, 12);
 }
 
@@ -21,7 +21,7 @@
 }
 
 :host([divider]) {
-  .borderRight(1, solid, surface-variant);
+  .border-right(1, solid, surface-variant);
   .width(81); // 加了一像素边框后，需保持除分割线外的宽度不变
 }
 
@@ -33,7 +33,7 @@
 
 :host([placement="right"][divider]) {
   border-right: none;
-  .borderLeft(1, solid, surface-variant);
+  .border-left(1, solid, surface-variant);
 }
 
 .top,
@@ -46,18 +46,18 @@
 }
 
 .top {
-  .marginBottom(28);
+  .margin-bottom(28);
 }
 
 .bottom {
-  .marginTop(28);
+  .margin-top(28);
 }
 
 ::slotted(mdui-navigation-rail-item),
 ::slotted([slot="top"]),
 ::slotted([slot="bottom"]) {
-  .marginTop(6);
-  .marginBottom(6);
+  .margin-top(6);
+  .margin-bottom(6);
 }
 
 :host([alignment="start"]) {

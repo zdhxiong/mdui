@@ -5,7 +5,7 @@
   position: relative;
   display: block;
   border-radius: var(--shape-corner);
-  .stateLayerColor(on-surface);
+  .state-layer-color(on-surface);
 }
 
 :host([rounded]),
@@ -14,8 +14,8 @@
 }
 
 :host([active]) {
-  .backgroundColor(secondary-container);
-  .stateLayerColor(on-secondary-container);
+  .background-color(secondary-container);
+  .state-layer-color(on-secondary-container);
 }
 
 :host([disabled]) {
@@ -43,7 +43,7 @@
   align-items: center;
   text-decoration: none;
   .padding(8, 24, 8, 16);
-  .minHeight(56);
+  .min-height(56);
 
   :host([alignment="start"]) & {
     align-items: flex-start;
@@ -140,27 +140,27 @@
 .end-icon mdui-icon,
 .is-icon ::slotted([slot="icon"]),
 .is-end-icon ::slotted([slot="end-icon"]) {
-  .fontSize(24);
+  .font-size(24);
 }
 
 .has-icon {
   .icon {
-    .marginRight(16);
+    .margin-right(16);
   }
 
   ::slotted(mdui-checkbox[slot="icon"]),
   ::slotted(mdui-radio[slot="icon"]) {
-    .marginLeft(-8);
+    .margin-left(-8);
   }
 }
 
 .has-end-icon {
   .end-icon {
-    .marginLeft(16);
+    .margin-left(16);
   }
 
   ::slotted(mdui-checkbox[slot="end-icon"]),
   ::slotted(mdui-radio[slot="end-icon"]) {
-    .marginRight(-8);
+    .margin-right(-8);
   }
 }

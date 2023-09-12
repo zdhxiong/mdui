@@ -12,7 +12,7 @@
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   .transition(box-shadow, short4, linear);
-  .minWidth(48);
+  .min-width(48);
   .height(40);
   .color(primary);
   .typescale(label-large);
@@ -29,33 +29,33 @@
 
 :host([variant="elevated"]) {
   .elevation(1);
-  .backgroundColor(surface-container-low);
-  .stateLayerColor(primary);
+  .background-color(surface-container-low);
+  .state-layer-color(primary);
 }
 
 :host([variant="filled"]) {
   .color(on-primary);
-  .backgroundColor(primary);
-  .stateLayerColor(on-primary);
+  .background-color(primary);
+  .state-layer-color(on-primary);
 }
 
 :host([variant="tonal"]) {
   .color(on-secondary-container);
-  .backgroundColor(secondary-container);
-  .stateLayerColor(on-secondary-container);
+  .background-color(secondary-container);
+  .state-layer-color(on-secondary-container);
 }
 
 :host([variant="outlined"]) {
   .border(1px, solid, outline);
-  .stateLayerColor(primary);
+  .state-layer-color(primary);
 }
 
 :host([variant="text"]) {
-  .stateLayerColor(primary);
+  .state-layer-color(primary);
 }
 
 :host([variant="outlined"][focus-visible]) {
-  .borderColor(primary);
+  .border-color(primary);
 }
 
 :host([variant="elevated"][hover]) {
@@ -81,17 +81,17 @@
 :host([variant="elevated"][disabled]),
 :host([variant="filled"][disabled]),
 :host([variant="tonal"][disabled]) {
-  .backgroundColor(on-surface, 12%);
+  .background-color(on-surface, 12%);
 }
 
 :host([variant="outlined"][disabled]) {
-  .borderColor(on-surface, 12%);
+  .border-color(on-surface, 12%);
 }
 
 .label {
   display: inline-flex;
-  .paddingRight(8);
-  .paddingLeft(8);
+  .padding-right(8);
+  .padding-left(8);
 }
 
 .icon,

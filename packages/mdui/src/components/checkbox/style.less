@@ -3,7 +3,7 @@
   display: inline-flex;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  .borderRadius(2);
+  .border-radius(2);
   .typescale(label-large);
 }
 
@@ -35,7 +35,7 @@ input {
   opacity: 1;
   transform: scale(1);
   .color(on-surface);
-  .fontSize(24);
+  .font-size(24);
   .transition(color, short4, standard);
 }
 
@@ -44,8 +44,8 @@ input {
   opacity: 0;
   transform: scale(0.5);
   transition-property: color, opacity, transform;
-  .transitionDuration(short4);
-  .transitionTimingFunction(standard);
+  .transition-duration(short4);
+  .transition-timing-function(standard);
 }
 
 .icon .i,
@@ -64,16 +64,16 @@ i {
   overflow: hidden;
   border-radius: 50%;
   .width(40);
-  .minWidth(40);
+  .min-width(40);
   .height(40);
-  .stateLayerColor(on-surface);
+  .state-layer-color(on-surface);
 }
 
 .label {
   display: flex;
   width: 100%;
-  .paddingTop(10);
-  .paddingBottom(10);
+  .padding-top(10);
+  .padding-bottom(10);
   .color(on-surface);
   .transition(color, short4, standard);
 }
@@ -81,7 +81,7 @@ i {
 // 选中状态的图标
 :host([checked]) {
   i {
-    .stateLayerColor(primary);
+    .state-layer-color(primary);
   }
 
   .icon {
@@ -102,7 +102,7 @@ i {
 // 不确定状态的图标
 :host([indeterminate]) {
   i {
-    .stateLayerColor(primary);
+    .state-layer-color(primary);
   }
 
   .icon {
@@ -123,7 +123,7 @@ i {
 // 验证不通过状态的图标
 :host([invalid]) {
   i {
-    .stateLayerColor(error);
+    .state-layer-color(error);
   }
 
   .icon {

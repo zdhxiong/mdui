@@ -6,7 +6,7 @@
 
   .color(on-surface);
   .typescale(title-large);
-  .lineHeight(40);
+  .line-height(40);
 }
 
 .label {
@@ -28,7 +28,7 @@
 
   :host([variant="medium"][shrink]) &,
   :host([variant="large"][shrink]) & {
-    .transitionDelay(short2);
+    .transition-delay(short2);
   }
 }
 
@@ -69,7 +69,7 @@
   :host([variant="medium"]:not([shrink])) &,
   :host([variant="large"]:not([shrink])) & {
     opacity: 1;
-    .transitionDelay(short2);
+    .transition-delay(short2);
   }
 
   :host([variant="medium"][shrink]) &,

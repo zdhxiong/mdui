@@ -17,7 +17,7 @@
   // 期望使用 dialog 的 --shape-corner
   border-top-left-radius: var(--mdui-shape-corner-extra-large);
   border-top-right-radius: var(--mdui-shape-corner-extra-large);
-  .backgroundColor(surface-container-high);
+  .background-color(surface-container-high);
 }
 
 :host([fullscreen]) {
@@ -34,7 +34,7 @@
 .overlay {
   position: fixed;
   inset: 0;
-  .backgroundColor(scrim, 0.4);
+  .background-color(scrim, 0.4);
 }
 
 .panel {
@@ -45,10 +45,10 @@
   border-radius: var(--shape-corner);
   outline: none;
   transform-origin: top;
-  .minWidth(280);
-  .maxWidth(560);
+  .min-width(280);
+  .max-width(560);
   .padding(24);
-  .backgroundColor(surface-container-high);
+  .background-color(surface-container-high);
   .elevation(3);
 
   :host([fullscreen]) & {
@@ -72,7 +72,7 @@
 .icon {
   display: flex;
   .color(secondary);
-  .fontSize(24);
+  .font-size(24);
 }
 
 .icon mdui-icon,
@@ -86,7 +86,7 @@
   .typescale(headline-small);
 
   .icon + & {
-    .paddingTop(16);
+    .padding-top(16);
   }
 }
 
@@ -94,7 +94,7 @@
   overflow: auto;
 
   .header + & {
-    .marginTop(16);
+    .margin-top(16);
   }
 }
 
@@ -108,17 +108,17 @@
   }
 
   .has-description.has-default & {
-    .marginBottom(16);
+    .margin-bottom(16);
   }
 }
 
 .action {
   display: flex;
   justify-content: flex-end;
-  .paddingTop(24);
+  .padding-top(24);
 
   &::slotted(:not(:first-child)) {
-    .marginLeft(8);
+    .margin-left(8);
   }
 
   :host([stacked-actions]) & {
@@ -126,8 +126,8 @@
     align-items: end;
 
     &::slotted(:not(:first-child)) {
-      .marginLeft(0);
-      .marginTop(8);
+      .margin-left(0);
+      .margin-top(8);
     }
   }
 }

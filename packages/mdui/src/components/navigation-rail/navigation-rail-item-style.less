@@ -4,7 +4,7 @@
   position: relative;
   z-index: 0;
   width: 100%;
-  .stateLayerColor(on-surface-variant);
+  .state-layer-color(on-surface-variant);
 }
 
 .container {
@@ -24,7 +24,7 @@ mdui-ripple {
   z-index: 1;
   .width(56);
   .height(32);
-  .shapeCorner(full);
+  .shape-corner(full);
 }
 
 .container:not(.has-label) {
@@ -65,7 +65,7 @@ mdui-ripple {
 .icon,
 .active-icon {
   .color(on-surface-variant);
-  .fontSize(24);
+  .font-size(24);
 }
 
 .icon mdui-icon,
@@ -89,17 +89,17 @@ mdui-ripple {
   .transition(opacity, short4, linear);
   .height(16);
   .color(on-surface-variant);
-  .marginTop(4);
-  .marginBottom(4);
+  .margin-top(4);
+  .margin-bottom(4);
   .typescale(label-medium);
 }
 
 :host([active]) {
-  .stateLayerColor(on-surface);
+  .state-layer-color(on-surface);
 
   .indicator {
     .width(56);
-    .backgroundColor(secondary-container);
+    .background-color(secondary-container);
   }
 
   :not(.has-label) .indicator {

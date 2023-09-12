@@ -18,17 +18,17 @@
 
 :host([invalid]) {
   .color(error);
-  .borderColor(error);
+  .border-color(error);
 
   .button {
-    .backgroundColor(error-container);
+    .background-color(error-container);
   }
 }
 
 :host([selected]) {
   .color(on-secondary-container);
-  .backgroundColor(secondary-container);
-  .stateLayerColor(on-secondary-container);
+  .background-color(secondary-container);
+  .state-layer-color(on-secondary-container);
 }
 
 :host([disabled]),
@@ -36,7 +36,7 @@
   cursor: default;
   pointer-events: none;
   .color(on-surface, 38%);
-  .borderColor(on-surface, 12%);
+  .border-color(on-surface, 12%);
 }
 
 :host([loading]) {
@@ -45,7 +45,7 @@
 }
 
 :host(:not(.mdui-segmented-button-first)) {
-  .marginLeft(-1);
+  .margin-left(-1);
 }
 
 :host(.mdui-segmented-button-first) {
@@ -85,10 +85,10 @@ mdui-circular-progress {
   display: inline-flex;
 
   .has-icon & {
-    .paddingLeft(8);
+    .padding-left(8);
   }
 
   .has-end-icon & {
-    .paddingRight(8);
+    .padding-right(8);
   }
 }

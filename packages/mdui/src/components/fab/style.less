@@ -16,8 +16,8 @@
   // 先不启用动画，等首次渲染完后再设置 transitionProperty: width
   // todo box-shadow 需要使用 short4 linear
   transition-property: box-shadow;
-  .transitionTimingFunction(emphasized);
-  .transitionDuration(medium4);
+  .transition-timing-function(emphasized);
+  .transition-duration(medium4);
   .width(56);
   .height(56);
   .elevation(3);
@@ -66,30 +66,30 @@
 
 :host([variant="primary"]) {
   .color(on-primary-container);
-  .backgroundColor(primary-container);
-  .stateLayerColor(on-primary-container);
+  .background-color(primary-container);
+  .state-layer-color(on-primary-container);
 }
 
 :host([variant="surface"]) {
   .color(primary);
-  .backgroundColor(surface-container-high);
-  .stateLayerColor(primary);
+  .background-color(surface-container-high);
+  .state-layer-color(primary);
 }
 
 :host([variant="surface"][lowered]) {
-  .backgroundColor(surface-container-low);
+  .background-color(surface-container-low);
 }
 
 :host([variant="secondary"]) {
   .color(on-secondary-container);
-  .backgroundColor(secondary-container);
-  .stateLayerColor(on-secondary-container);
+  .background-color(secondary-container);
+  .state-layer-color(on-secondary-container);
 }
 
 :host([variant="tertiary"]) {
   .color(on-tertiary-container);
-  .backgroundColor(tertiary-container);
-  .stateLayerColor(on-tertiary-container);
+  .background-color(tertiary-container);
+  .state-layer-color(on-tertiary-container);
 }
 
 :host([size="small"]) {
@@ -112,7 +112,7 @@
 
 :host([disabled]) {
   .color(on-surface, 38%);
-  .backgroundColor(on-surface, 12%);
+  .background-color(on-surface, 12%);
   .elevation(0);
 }
 
@@ -124,25 +124,25 @@
   display: inline-flex;
   .transition(opacity, short2, linear, short2);
 
-  .paddingLeft(4);
-  .paddingRight(4);
+  .padding-left(4);
+  .padding-right(4);
 
   .has-icon & {
-    .marginLeft(8);
+    .margin-left(8);
 
     :host([size="small"]) & {
-      .marginLeft(4);
+      .margin-left(4);
     }
 
     :host([size="large"]) & {
-      .marginLeft(16);
+      .margin-left(16);
     }
   }
 
   :host(:not([extended])) & {
     opacity: 0;
     transition-delay: 0ms;
-    .transitionDuration(short1);
+    .transition-duration(short1);
   }
 
   :host([size="large"]) & {

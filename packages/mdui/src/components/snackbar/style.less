@@ -8,11 +8,11 @@
   align-items: center;
   flex-wrap: wrap;
   border-radius: var(--shape-corner);
-  .minWidth(320);
-  .maxWidth(576);
+  .min-width(320);
+  .max-width(576);
   .padding(4, 0);
   .elevation(3);
-  .backgroundColor(inverse-surface);
+  .background-color(inverse-surface);
   .color(inverse-on-surface);
   .typescale(body-medium);
 }
@@ -61,7 +61,7 @@
   display: flex;
   align-items: center;
   margin-left: auto;
-  .paddingRight(8);
+  .padding-right(8);
 }
 
 .action,
@@ -73,9 +73,9 @@
 
 .action {
   .color(inverse-primary);
-  .fontSize(label-large);
-  .fontWeight(label-large);
-  .letterSpacing(label-large);
+  .font-size(label-large);
+  .font-weight(label-large);
+  .letter-spacing(label-large);
 }
 
 .action mdui-button,
@@ -85,7 +85,7 @@
   font-size: inherit;
   font-weight: inherit;
   letter-spacing: inherit;
-  .stateLayerColor(inverse-primary);
+  .state-layer-color(inverse-primary);
 }
 
 .action mdui-button::part(button) {
@@ -94,7 +94,7 @@
 
 .close-button {
   .margin(0, -4, 0, 4);
-  .fontSize(24);
+  .font-size(24);
   .color(inverse-on-surface);
 }
 
@@ -103,7 +103,7 @@
 ::slotted(mdui-button-icon[slot="close-button"][variant="outlined"]) {
   font-size: inherit;
   color: inherit;
-  .stateLayerColor(inverse-on-surface);
+  .state-layer-color(inverse-on-surface);
 }
 
 .close-button .i,

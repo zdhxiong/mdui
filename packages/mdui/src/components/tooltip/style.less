@@ -12,14 +12,14 @@
   flex-direction: column;
   z-index: var(--z-index);
   border-radius: var(--shape-corner-plain);
-  .backgroundColor(inverse-surface);
+  .background-color(inverse-surface);
   .padding(0, 8);
-  .minWidth(28);
-  .maxWidth(320);
+  .min-width(28);
+  .max-width(320);
 
   :host([variant="rich"]) & {
     border-radius: var(--shape-corner-rich);
-    .backgroundColor(surface-container);
+    .background-color(surface-container);
     .elevation(2);
     .padding(12, 16, 8, 16);
   }
@@ -46,9 +46,9 @@
 .action {
   display: flex;
   justify-content: flex-start;
-  .paddingTop(8);
+  .padding-top(8);
 
   ::slotted(:not(:last-child)) {
-    .marginRight(8);
+    .margin-right(8);
   }
 }

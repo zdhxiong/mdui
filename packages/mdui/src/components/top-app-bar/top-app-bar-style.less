@@ -19,7 +19,7 @@
               background-color var(--mdui-motion-duration-short4) var(--mdui-motion-easing-linear);
   .padding(12, 8);
   .height(64);
-  .backgroundColor(surface);
+  .background-color(surface);
 }
 
 :host([scroll-target]:not([scroll-target=""])) {
@@ -27,17 +27,17 @@
 }
 
 :host([scroll-behavior~="shrink"]) {
-  .transitionDuration(short4);
+  .transition-duration(short4);
 }
 
 :host([scrolling]) {
-  .backgroundColor(surface-container);
+  .background-color(surface-container);
   .elevation(2);
 }
 
 ::slotted(mdui-button-icon) {
   .color(on-surface-variant);
-  .fontSize(24);
+  .font-size(24);
 }
 
 ::slotted(mdui-button-icon:first-child) {
@@ -47,8 +47,8 @@
 ::slotted(mdui-avatar) {
   .width(30);
   .height(30);
-  .marginTop(5);
-  .marginBottom(5);
+  .margin-top(5);
+  .margin-bottom(5);
 }
 
 ::slotted(*) {
@@ -56,7 +56,7 @@
 }
 
 ::slotted(:not(:last-child)) {
-  .marginRight(8);
+  .margin-right(8);
 }
 
 :host([variant="medium"]) {
@@ -68,7 +68,7 @@
 }
 
 :host([hide]) {
-  .transitionDuration(short4);
+  .transition-duration(short4);
   .top(-64 - 10);
 }
 
@@ -82,6 +82,6 @@
 
 :host([shrink][variant="medium"]),
 :host([shrink][variant="large"]) {
-  .transitionDuration(short4);
+  .transition-duration(short4);
   .height(64);
 }

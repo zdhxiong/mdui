@@ -5,8 +5,8 @@
   z-index: 0;
   flex: 1;
   overflow: hidden;
-  .minWidth(48);
-  .stateLayerColor(on-surface-variant);
+  .min-width(48);
+  .state-layer-color(on-surface-variant);
 }
 
 .container {
@@ -20,8 +20,8 @@
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   .transition(padding, short4, standard);
-  .paddingTop(12);
-  .paddingBottom(12);
+  .padding-top(12);
+  .padding-bottom(12);
 }
 
 mdui-ripple {
@@ -31,8 +31,8 @@ mdui-ripple {
   .transition(margin-top, short4, standard);
   .width(64);
   .height(32);
-  .marginTop(12);
-  .shapeCorner(full);
+  .margin-top(12);
+  .shape-corner(full);
 }
 
 .indicator {
@@ -59,7 +59,7 @@ mdui-ripple {
 .icon,
 .active-icon {
   .color(on-surface-variant);
-  .fontSize(24);
+  .font-size(24);
 }
 
 .icon mdui-icon,
@@ -83,20 +83,20 @@ mdui-ripple {
   .transition(opacity, short4, linear);
   .height(16);
   .color(on-surface-variant);
-  .marginTop(4);
-  .marginBottom(4);
+  .margin-top(4);
+  .margin-bottom(4);
   .typescale(label-medium);
 }
 
 :host([label-visibility="unlabeled"]),
 :host([label-visibility="selected"]:not([active])) {
   mdui-ripple {
-    .marginTop(24);
+    .margin-top(24);
   }
 
   .container {
-    .paddingTop(24);
-    .paddingBottom(0);
+    .padding-top(24);
+    .padding-bottom(0);
   }
 
   .label {
@@ -105,11 +105,11 @@ mdui-ripple {
 }
 
 :host([active]) {
-  .stateLayerColor(on-surface);
+  .state-layer-color(on-surface);
 
   .indicator {
     .width(64);
-    .backgroundColor(secondary-container);
+    .background-color(secondary-container);
   }
 
   .icon,

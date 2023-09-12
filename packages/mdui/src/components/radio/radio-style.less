@@ -8,16 +8,16 @@
   touch-action: manipulation;
   zoom: 1;
   -webkit-user-drag: none;
-  .borderRadius(2);
+  .border-radius(2);
   .typescale(label-large);
 }
 
 .icon {
   display: flex;
   position: absolute;
-  .fontSize(24);
-  .transitionDuration(short4);
-  .transitionTimingFunction(standard);
+  .font-size(24);
+  .transition-duration(short4);
+  .transition-timing-function(standard);
 }
 
 .unchecked-icon {
@@ -53,16 +53,16 @@ i {
   overflow: hidden;
   border-radius: 50%;
   .width(40);
-  .minWidth(40);
+  .min-width(40);
   .height(40);
-  .stateLayerColor(on-surface);
+  .state-layer-color(on-surface);
 }
 
 .label {
   display: flex;
   width: 100%;
-  .paddingTop(10);
-  .paddingBottom(10);
+  .padding-top(10);
+  .padding-bottom(10);
   .color(on-surface);
   .transition(color, short4, standard);
 }
@@ -70,7 +70,7 @@ i {
 /* 选中状态的图标 */
 :host([checked]) {
   i {
-    .stateLayerColor(primary);
+    .state-layer-color(primary);
   }
 
   .icon {
@@ -86,7 +86,7 @@ i {
 /* 验证不通过状态 */
 :host([invalid]) {
   i {
-    .stateLayerColor(error);
+    .state-layer-color(error);
   }
 
   .icon {

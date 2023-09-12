@@ -12,54 +12,54 @@
   -webkit-tap-highlight-color: transparent;
   .transition(box-shadow, short4, linear);
   .height(32);
-  .backgroundColor(surface);
+  .background-color(surface);
   .border(1px, solid, outline);
   .color(on-surface-variant);
   .typescale(label-large);
-  .stateLayerColor(on-surface-variant);
+  .state-layer-color(on-surface-variant);
 }
 
 .button {
-  .paddingRight(7);
-  .paddingLeft(7);
+  .padding-right(7);
+  .padding-left(7);
 
   :host([variant="input"]) & {
-    .paddingRight(3);
-    .paddingLeft(3);
+    .padding-right(3);
+    .padding-left(3);
   }
 
   :host([selected]) & {
-    .paddingRight(8);
-    .paddingLeft(8);
+    .padding-right(8);
+    .padding-left(8);
   }
 
   :host([selected][variant="input"]) & {
-    .paddingRight(4);
-    .paddingLeft(4);
+    .padding-right(4);
+    .padding-left(4);
   }
 
   :host([elevated]) & {
-    .paddingRight(8);
-    .paddingLeft(8);
+    .padding-right(8);
+    .padding-left(8);
   }
 }
 
 :host([variant="assist"]) {
   .color(on-surface);
-  .stateLayerColor(on-surface);
+  .state-layer-color(on-surface);
 }
 
 :host([elevated]) {
   border-width: 0;
-  .backgroundColor(surface-container-low);
+  .background-color(surface-container-low);
   .elevation(1);
 }
 
 :host([selected]) {
   .color(on-secondary-container);
-  .backgroundColor(secondary-container);
-  .borderWidth(0);
-  .stateLayerColor(on-secondary-container);
+  .background-color(secondary-container);
+  .border-width(0);
+  .state-layer-color(on-secondary-container);
 }
 
 :host([disabled]),
@@ -69,14 +69,14 @@
 }
 
 :host([disabled]) {
-  .borderColor(on-surface, 12%);
+  .border-color(on-surface, 12%);
   .color(on-surface, 38%);
   .elevation(0);
 }
 
 :host([disabled][elevated]),
 :host([disabled][selected]) {
-  .backgroundColor(on-surface, 12%);
+  .background-color(on-surface, 12%);
 }
 
 :host([selected][hover]) {
@@ -97,7 +97,7 @@
 :host([variant="filter"][focus-visible]),
 :host([variant="input"][focus-visible]),
 :host([variant="suggestion"][focus-visible]) {
-  .borderColor(on-surface-variant);
+  .border-color(on-surface-variant);
 }
 
 :host([dragged]),
@@ -111,8 +111,8 @@
 
 .label {
   display: inline-flex;
-  .paddingRight(8);
-  .paddingLeft(8);
+  .padding-right(8);
+  .padding-left(8);
 }
 
 .icon,
@@ -151,13 +151,13 @@
     .icon,
     .selected-icon,
     mdui-circular-progress {
-      .marginLeft(4);
+      .margin-left(4);
     }
   }
 
   .has-end-icon {
     .end-icon {
-      .marginRight(4);
+      .margin-right(4);
     }
   }
 }
@@ -185,13 +185,13 @@ mdui-circular-progress {
 
 ::slotted(mdui-avatar[slot="icon"]),
 ::slotted(mdui-avatar[slot="selected-icon"]) {
-  .marginLeft(-4);
-  .marginRight(-2);
+  .margin-left(-4);
+  .margin-right(-2);
 }
 
 ::slotted(mdui-avatar[slot="end-icon"]) {
-  .marginRight(-4);
-  .marginLeft(-2);
+  .margin-right(-4);
+  .margin-left(-2);
 }
 
 .delete-icon {
@@ -199,18 +199,18 @@ mdui-circular-progress {
   // 图标 font-size 为 18px，文案为 14px
   font-size: unit((18 / 14), em);
   .transition(background-color, short4, linear);
-  .shapeCorner(full);
-  .marginRight(-4);
-  .marginLeft(-4);
+  .shape-corner(full);
+  .margin-right(-4);
+  .margin-left(-4);
   .padding(4);
   .color(on-surface-variant);
 
   &:hover {
-    .backgroundColor(on-surface-variant, 12%);
+    .background-color(on-surface-variant, 12%);
   }
 
   .has-end-icon & {
-    .marginLeft(4);
+    .margin-left(4);
   }
 
   :host([variant="assiat"]) & {
@@ -218,7 +218,7 @@ mdui-circular-progress {
   }
 
   :host([variant="input"]) & {
-    .marginRight(1);
+    .margin-right(1);
   }
 
   :host([disabled]) & {

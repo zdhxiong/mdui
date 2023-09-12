@@ -15,18 +15,18 @@
   .padding(0, 16);
 
   &.has-icon {
-    .paddingLeft(12);
+    .padding-left(12);
   }
 
   &.has-end-icon,
   &.has-error-icon {
-    .paddingRight(12);
+    .padding-right(12);
   }
 
   :host([variant="filled"]) & {
     box-shadow: inset 0 unit((-1 / @mdui-root-font-size), rem) 0 0 rgb(var(--mdui-color-on-surface-variant));
-    .backgroundColor(surface-container-highest);
-    .shapeCorner(extra-small, top);
+    .background-color(surface-container-highest);
+    .shape-corner(extra-small, top);
   }
 
   :host([variant="filled"][invalid]) &,
@@ -57,12 +57,12 @@
 
   :host([variant="filled"][disabled]) & {
     box-shadow: inset 0 unit((-1 / @mdui-root-font-size), rem) 0 0 rgba(var(--mdui-color-on-surface), 38%);
-    .backgroundColor(on-surface, 4%);
+    .background-color(on-surface, 4%);
   }
 
   :host([variant="outlined"]) & {
     box-shadow: inset 0 0 0 unit((1 / @mdui-root-font-size), rem) rgb(var(--mdui-color-outline));
-    .shapeCorner(extra-small);
+    .shape-corner(extra-small);
   }
 
   :host([variant="outlined"][invalid]) &,
@@ -131,14 +131,14 @@
 
 .icon,
 .right-icon {
-  .fontSize(24);
+  .font-size(24);
 }
 
 .icon mdui-button-icon,
 .right-icon mdui-button-icon,
 ::slotted(mdui-button-icon[slot]) {
-  .marginLeft(-8);
-  .marginRight(-8);
+  .margin-left(-8);
+  .margin-right(-8);
 }
 
 .icon .i,
@@ -148,12 +148,12 @@
 }
 
 .has-icon .icon {
-  .marginRight(16);
+  .margin-right(16);
 }
 
 .right-icon:not(.end-icon),
 .has-end-icon .end-icon {
-  .marginLeft(16);
+  .margin-left(16);
 }
 
 .prefix,
@@ -162,7 +162,7 @@
   .typescale(body-large);
 
   :host([variant="filled"][label]) & {
-    .paddingTop(16);
+    .padding-top(16);
   }
 
   :host([focused]) &,
@@ -173,11 +173,11 @@
 }
 
 .prefix {
-  .paddingRight(2);
+  .padding-right(2);
 }
 
 .suffix {
-  .paddingLeft(2);
+  .padding-left(2);
 }
 
 .input-container {
@@ -248,7 +248,7 @@
     .typescale(body-small);
     .top(-8);
     .left(12);
-    .backgroundColor(background);
+    .background-color(background);
   }
 
   :host([variant="filled"][focused][invalid]) &,
@@ -282,7 +282,7 @@
   .padding(16, 0);
   .typescale(body-large);
   .color(on-surface);
-  .caretColor(primary);
+  .caret-color(primary);
 
   &.hide-input {
     opacity: 0;
@@ -297,7 +297,7 @@
 
   :host([invalid]) &,
   :host([invalid-style]) & {
-    .caretColor(error);
+    .caret-color(error);
   }
 
   :host([disabled]) & {
@@ -351,7 +351,7 @@
 
 .counter {
   flex-wrap: nowrap;
-  .paddingLeft(16);
+  .padding-left(16);
   .typescale(body-small);
 }
 

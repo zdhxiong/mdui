@@ -24,7 +24,7 @@
   display: flex;
   flex: 0 0 auto;
   overflow-x: auto;
-  .backgroundColor(surface);
+  .background-color(surface);
 
   :host([placement^="top"]) &,
   :host([placement^="bottom"]) & {
@@ -54,7 +54,7 @@
   &::after {
     content: " ";
     position: absolute;
-    .backgroundColor(surface-variant);
+    .background-color(surface-variant);
 
     :host([placement^="top"]) &,
     :host([placement^="bottom"]) & {
@@ -91,9 +91,9 @@
 .indicator {
   position: absolute;
   z-index: 1;
-  .transitionDuration(medium2);
-  .transitionTimingFunction(standard-decelerate);
-  .backgroundColor(primary);
+  .transition-duration(medium2);
+  .transition-timing-function(standard-decelerate);
+  .background-color(primary);
 
   :host([placement^="top"]) &,
   :host([placement^="bottom"]) & {
@@ -142,19 +142,19 @@
   }
 
   :host([placement^="top"][variant="primary"]) & {
-    .borderRadius(3, top);
+    .border-radius(3, top);
   }
 
   :host([placement^="bottom"][variant="primary"]) & {
-    .borderRadius(3, bottom);
+    .border-radius(3, bottom);
   }
 
   :host([placement^="left"][variant="primary"]) & {
-    .borderRadius(3, start);
+    .border-radius(3, start);
   }
 
   :host([placement^="right"][variant="primary"]) & {
-    .borderRadius(3, end);
+    .border-radius(3, end);
   }
 }
 

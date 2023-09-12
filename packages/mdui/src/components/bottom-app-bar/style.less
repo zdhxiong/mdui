@@ -15,7 +15,7 @@
   .transition(bottom, long2, emphasized);
   .padding(0, 16);
   .height(80);
-  .backgroundColor(surface-container);
+  .background-color(surface-container);
   .elevation(2);
 }
 
@@ -24,12 +24,12 @@
 }
 
 :host([hide]) {
-  .transitionDuration(short4);
+  .transition-duration(short4);
   .bottom(-80 - 10);
 }
 
 ::slotted(:not(:first-child)) {
-  .marginLeft(8);
+  .margin-left(8);
 }
 
 ::slotted(mdui-fab) {
@@ -48,7 +48,7 @@
 
 :host([fab-detach][hide][scroll-behavior~="hide"]) {
   ::slotted(mdui-fab) {
-    .transitionDuration(short4);
+    .transition-duration(short4);
     .bottom(16);
     .elevation(2);
   }

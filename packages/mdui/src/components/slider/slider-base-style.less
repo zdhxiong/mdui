@@ -35,33 +35,33 @@ input[type="range"] {
   position: absolute;
   top: 50%;
   .height(4);
-  .marginTop(-2);
+  .margin-top(-2);
 }
 
 .track-inactive {
   .left(-2); // 为了使标记点位于轨道内，所以往左右侧各移动 2px
   .right(-2);
-  .shapeCorner(full);
-  .backgroundColor(surface-container-highest);
+  .shape-corner(full);
+  .background-color(surface-container-highest);
 
   :host([invalid]) & {
-    .backgroundColor(error, 0.12);
+    .background-color(error, 0.12);
   }
 
   :host([disabled]) & {
-    .backgroundColor(on-surface, 0.12);
+    .background-color(on-surface, 0.12);
   }
 }
 
 .track-active {
-  .backgroundColor(primary);
+  .background-color(primary);
 
   :host([invalid]) & {
-    .backgroundColor(error);
+    .background-color(error);
   }
 
   :host([disabled]) & {
-    .backgroundColor(on-surface, 0.38);
+    .background-color(on-surface, 0.38);
   }
 }
 
@@ -73,11 +73,11 @@ input[type="range"] {
   z-index: 2;
   .width(40);
   .height(40);
-  .marginTop(-20);
-  .stateLayerColor(primary);
+  .margin-top(-20);
+  .state-layer-color(primary);
 
   :host([invalid]) & {
-    .stateLayerColor(error);
+    .state-layer-color(error);
   }
 
   &::before,
@@ -89,30 +89,30 @@ input[type="range"] {
     .top(10);
     .width(20);
     .height(20);
-    .shapeCorner(full);
+    .shape-corner(full);
   }
 
   .elevation {
-    .backgroundColor(primary);
+    .background-color(primary);
     .elevation(1);
 
     :host([invalid]) & {
-      .backgroundColor(error);
+      .background-color(error);
     }
 
     :host([disabled]) & {
-      .backgroundColor(on-surface, 0.38);
+      .background-color(on-surface, 0.38);
       .elevation(0);
     }
   }
 
   // 使用背景色作为底色，防止半透明的颜色显示出背后的元素
   &::before {
-    .backgroundColor(background);
+    .background-color(background);
   }
 
   mdui-ripple {
-    .shapeCorner(full);
+    .shape-corner(full);
   }
 }
 
@@ -130,17 +130,17 @@ input[type="range"] {
   pointer-events: none;
   .transition(transform, short2, standard);
   .bottom(40);
-  .minWidth(28);
+  .min-width(28);
   .height(28);
   .padding(6, 8);
-  .shapeCorner(full);
+  .shape-corner(full);
   .color(on-primary);
   .typescale(label-medium);
-  .backgroundColor(primary);
+  .background-color(primary);
 
   :host([invalid]) & {
     .color(on-error);
-    .backgroundColor(error);
+    .background-color(error);
   }
 
   &::after {
@@ -151,10 +151,10 @@ input[type="range"] {
     .width(14);
     .height(14);
     .bottom(-2);
-    .backgroundColor(primary);
+    .background-color(primary);
 
     :host([invalid]) & {
-      .backgroundColor(error);
+      .background-color(error);
     }
   }
 }
@@ -170,23 +170,23 @@ input[type="range"] {
   transform: translate(-50%);
   .width(2);
   .height(2);
-  .marginTop(-1);
-  .shapeCorner(full);
-  .backgroundColor(on-surface-variant, 0.38);
+  .margin-top(-1);
+  .shape-corner(full);
+  .background-color(on-surface-variant, 0.38);
 
   :host([invalid]) & {
-    .backgroundColor(error, 0.38);
+    .background-color(error, 0.38);
   }
 
   &.active {
-    .backgroundColor(on-primary, 0.38);
+    .background-color(on-primary, 0.38);
 
     :host([invalid]) & {
-      .backgroundColor(on-error, 0.38);
+      .background-color(on-error, 0.38);
     }
   }
 
   :host([disabled]) & {
-    .backgroundColor(on-surface, 0.38);
+    .background-color(on-surface, 0.38);
   }
 }

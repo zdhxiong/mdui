@@ -8,71 +8,71 @@
   border-radius: var(--shape-corner);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  .fontSize(24);
+  .font-size(24);
   .width(40);
-  .minWidth(40);
+  .min-width(40);
   .height(40);
 }
 
 :host([variant="standard"]) {
   .color(on-surface-variant);
-  .stateLayerColor(on-surface-variant);
+  .state-layer-color(on-surface-variant);
 }
 
 :host([variant="filled"]) {
   .color(primary);
-  .backgroundColor(surface-container-highest);
-  .stateLayerColor(primary);
+  .background-color(surface-container-highest);
+  .state-layer-color(primary);
 }
 
 :host([variant="tonal"]) {
   .color(on-surface-variant);
-  .backgroundColor(surface-container-highest);
-  .stateLayerColor(on-surface-variant);
+  .background-color(surface-container-highest);
+  .state-layer-color(on-surface-variant);
 }
 
 :host([variant="outlined"]) {
   .border(1, solid, outline);
   .color(on-surface-variant);
-  .stateLayerColor(on-surface-variant);
+  .state-layer-color(on-surface-variant);
 }
 
 :host([variant="outlined"][pressed]) {
   .color(on-surface);
-  .stateLayerColor(on-surface);
+  .state-layer-color(on-surface);
 }
 
 :host([variant="standard"][selected]) {
   .color(primary);
-  .stateLayerColor(primary);
+  .state-layer-color(primary);
 }
 
 :host([variant="filled"][selected]),
 :host([variant="filled"]:not([selectable])) {
   .color(on-primary);
-  .backgroundColor(primary);
-  .stateLayerColor(on-primary);
+  .background-color(primary);
+  .state-layer-color(on-primary);
 }
 
 :host([variant="tonal"][selected]),
 :host([variant="tonal"]:not([selectable])) {
   .color(on-secondary-container);
-  .backgroundColor(secondary-container);
-  .stateLayerColor(on-secondary-container);
+  .background-color(secondary-container);
+  .state-layer-color(on-secondary-container);
 }
 
 :host([variant="outlined"][selected]) {
   border: none;
   .color(inverse-on-surface);
-  .backgroundColor(inverse-surface);
-  .stateLayerColor(inverse-on-surface);
+  .background-color(inverse-surface);
+  .state-layer-color(inverse-on-surface);
 }
 
 :host([variant="filled"][disabled]),
 :host([variant="tonal"][disabled]),
 :host([variant="outlined"][disabled]) {
-  .backgroundColor(on-surface, 0.12);
-  .borderColor(on-surface, 0.12);
+  .background-color(on-surface, 0.12);
+  .border-color(on-surface, 0.12);
 }
 
 :host([disabled]),

@@ -10,7 +10,7 @@
   border-radius: var(--shape-corner);
   -webkit-tap-highlight-color: transparent;
   .transition(box-shadow, short4, linear);
-  .stateLayerColor(on-surface);
+  .state-layer-color(on-surface);
 }
 
 :host([clickable]) {
@@ -18,16 +18,16 @@
 }
 
 :host([variant="elevated"]) {
-  .backgroundColor(surface-container-low);
+  .background-color(surface-container-low);
   .elevation(1);
 }
 
 :host([variant="filled"]) {
-  .backgroundColor(surface-container-highest);
+  .background-color(surface-container-highest);
 }
 
 :host([variant="outlined"]) {
-  .backgroundColor(surface);
+  .background-color(surface);
   .border(1px, solid, outline);
 }
 
@@ -53,18 +53,18 @@
 }
 
 :host([variant="elevated"][disabled]) {
-  .backgroundColor(surface-variant);
+  .background-color(surface-variant);
   .elevation(0);
 }
 
 :host([variant="filled"][disabled]) {
-  .backgroundColor(surface);
+  .background-color(surface);
   .elevation(1);
 }
 
 :host([variant="outlined"][disabled]) {
   .elevation(0);
-  .borderColor(outline, 0.32);
+  .border-color(outline, 0.32);
 }
 
 .link {

@@ -47,7 +47,7 @@
 
     &:hover,
     &:focus {
-      .borderBottom(1, solid, primary);
+      .border-bottom(1, solid, primary);
     }
   }
 
@@ -62,9 +62,9 @@
   blockquote {
     margin: 1.6em 2em;
     padding-left: 1em;
-    .borderLeft(4, solid, surface-variant);
+    .border-left(4, solid, surface-variant);
 
-    @media only screen and (max-width: 599.98px) {
+    @media only screen and (max-width: @mdui-breakpoint-xs-max) {
       margin: 1.6em 0;
     }
 
@@ -76,8 +76,8 @@
 
   mark {
     color: inherit;
-    .backgroundColor(secondary-container);
-    .borderBottom(1, solid, secondary);
+    .background-color(secondary-container);
+    .border-bottom(1, solid, secondary);
     .margin(0, 6);
     .padding(2);
   }
@@ -140,9 +140,9 @@
   kbd {
     font-size: 0.875em;
     .color(on-surface-container);
-    .backgroundColor(surface-variant, 0.28);
+    .background-color(surface-variant, 0.28);
     .padding(2, 6);
-    .shapeCorner(extra-small);
+    .shape-corner(extra-small);
   }
 
   kbd {
@@ -152,13 +152,13 @@
   abbr[title] {
     text-decoration: none;
     cursor: help;
-    .borderBottom(1, dotted, on-surface-variant);
+    .border-bottom(1, dotted, on-surface-variant);
   }
 
   ins,
   u {
     text-decoration: none;
-    .borderBottom(1, solid, on-surface-variant);
+    .border-bottom(1, solid, on-surface-variant);
   }
 
   del {
@@ -169,7 +169,7 @@
     margin-top: 3em;
     margin-bottom: 3em;
     border: none;
-    .borderBottom(1, solid, surface-variant);
+    .border-bottom(1, solid, surface-variant);
   }
 
   pre {
@@ -180,9 +180,9 @@
       padding: 0.8571em 1.1429em;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      .backgroundColor(surface-container);
+      .background-color(surface-container);
       .color(on-surface-container);
-      .shapeCorner(extra-small);
+      .shape-corner(extra-small);
     }
   }
 
@@ -295,7 +295,7 @@
     margin-top: 2em;
     margin-bottom: 2em;
     .border(1, solid, surface-variant);
-    .shapeCorner(large);
+    .shape-corner(large);
   }
 }
 
@@ -305,7 +305,7 @@
   margin-top: 2em;
   margin-bottom: 2em;
   .border(1, solid, surface-variant);
-  .shapeCorner(large);
+  .shape-corner(large);
 
   table {
     margin-top: 0;
@@ -326,14 +326,14 @@
 
   th,
   td {
-    .borderTop(1, solid, surface-variant);
+    .border-top(1, solid, surface-variant);
 
     &:not(:first-child) {
-      .borderLeft(1, solid, surface-variant);
+      .border-left(1, solid, surface-variant);
     }
 
     &:not(:last-child) {
-      .borderRight(1, solid, surface-variant);
+      .border-right(1, solid, surface-variant);
     }
   }
 
@@ -349,9 +349,9 @@
       position: relative;
       vertical-align: middle;
       .padding(18, 16);
-      .fontWeight(title-medium);
-      .letterSpacing(title-medium);
-      .lineHeight(title-medium);
+      .font-weight(title-medium);
+      .letter-spacing(title-medium);
+      .line-height(title-medium);
       .color(on-surface-variant);
       .elevation(1);
     }

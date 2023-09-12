@@ -12,10 +12,10 @@
   border-radius: var(--shape-corner) var(--shape-corner) 0 0;
   z-index: var(--z-index);
   transition-property: transform;
-  .transitionDuration(long2);
-  .transitionTimingFunction(emphasized);
+  .transition-duration(long2);
+  .transition-timing-function(emphasized);
   .height(80);
-  .backgroundColor(surface);
+  .background-color(surface);
   .elevation(2);
 }
 
@@ -24,6 +24,6 @@
 }
 
 :host([hide]) {
-  .translateY(80 + 10);
-  .transitionDuration(short4);
+  .translate-y(80 + 10);
+  .transition-duration(short4);
 }

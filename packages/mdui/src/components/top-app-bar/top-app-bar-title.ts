@@ -10,6 +10,17 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
+ * @summary 顶部应用栏标题组件。需与 `<mdui-top-app-bar>` 组件配合使用
+ *
+ * ```html
+ * <mdui-top-app-bar>
+ * ..<mdui-button-icon icon="menu"></mdui-button-icon>
+ * ..<mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
+ * ..<div style="flex-grow: 1"></div>
+ * ..<mdui-button-icon icon="more_vert"></mdui-button-icon>
+ * </mdui-top-app-bar>
+ * ```
+ *
  * @slot - 顶部应用栏的标题文本
  * @slot label-large - 展开状态的标题文本
  *

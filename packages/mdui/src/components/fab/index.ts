@@ -15,49 +15,58 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click - 点击时触发
+ * @summary 浮动操作按钮组件
+ *
+ * ```html
+ * <mdui-fab icon="edit"></mdui-fab>
+ * ```
+ *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
+ * @event invalid - 表单字段验证未通过时触发
  *
  * @slot - 文本
  * @slot icon - 图标
  *
  * @csspart button - 内部的 `button` 或 `a` 元素
- * @csspart label - 文本
- * @csspart icon - 图标
- * @csspart loading - 加载中动画
+ * @csspart label - 右侧的文本
+ * @csspart icon - 左侧的图标
+ * @csspart loading - 加载中状态的 `<mdui-circular-progress>` 元素
  *
- * @cssprop --shape-corner-small `size="small"` 时的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --shape-corner-normal `size="normal"` 时的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --shape-corner-large `size="large"` 时的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-small - `size="small"` 时，组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-normal - `size="normal"` 时，组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-large - `size="large"` 时，组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-fab')
 export class Fab extends ButtonBase {
   public static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   /**
-   * fab 形状。可选值为：
-   * * `primary`
-   * * `surface`
-   * * `secondary`
-   * * `tertiary`
+   * FAB 形状，此组件的不同形状之间只有颜色不一样。可选值为：
+   *
+   * * `primary`：使用 Primary container 背景色
+   * * `surface`：使用 Surface container high 背景色
+   * * `secondary`：使用 Secondary container 背景色
+   * * `tertiary`：使用 Tertiary container 背景色
    */
   @property({ reflect: true })
   public variant:
-    | 'primary' /*预览图*/
-    | 'surface' /*预览图*/
-    | 'secondary' /*预览图*/
-    | 'tertiary' /*预览图*/ = 'primary';
+    | /*使用 Primary container 背景色*/ 'primary'
+    | /*使用 Surface container high 背景色*/ 'surface'
+    | /*使用 Secondary container 背景色*/ 'secondary'
+    | /*使用 Tertiary container 背景色*/ 'tertiary' = 'primary';
 
   /**
-   * fab 大小。可选值为：
-   * * `normal`
-   * * `small`
-   * * `large`
+   * FAB 大小。可选值为：
+   * * `normal`：普通大小 FAB
+   * * `small`：小型 FAB
+   * * `large`：大型 FAB
    */
   @property({ reflect: true })
-  public size: 'normal' /*普通大小*/ | 'small' /*小型*/ | 'large' /*大型*/ =
-    'normal';
+  public size:
+    | /*普通大小 FAB*/ 'normal'
+    | /*小型 FAB*/ 'small'
+    | /*大型 FAB*/ 'large' = 'normal';
 
   /**
    * Material Icons 图标名。也可以通过 `slot="icon"` 设置

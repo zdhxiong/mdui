@@ -6,12 +6,19 @@ import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
+/**
+ * @summary 圆形进度指示器组件
+ *
+ * ```html
+ * <mdui-circular-progress></mdui-circular-progress>
+ * ```
+ */
 @customElement('mdui-circular-progress')
 export class CircularProgress extends LitElement {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * 进度指示器的最大值
+   * 进度指示器的最大值，默认为 1
    */
   @property({ type: Number, reflect: true })
   public max = 1;

@@ -15,9 +15,19 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click - 点击时触发
+ * @summary 分段按钮项组件。需与 `<mdui-segmented-button-group>` 组件配合使用
+ *
+ * ```html
+ * <mdui-segmented-button-group>
+ * ..<mdui-segmented-button>Day</mdui-segmented-button>
+ * ..<mdui-segmented-button>Week</mdui-segmented-button>
+ * ..<mdui-segmented-button>Month</mdui-segmented-button>
+ * </mdui-segmented-button-group>
+ * ```
+ *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
+ * @event invalid - 表单字段验证未通过时触发
  *
  * @slot - 分段按钮项的文本
  * @slot icon - 分段按钮项的左侧图标
@@ -28,8 +38,8 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart icon - 左侧的图标
  * @csspart selected-icon - 选中状态的左侧图标
  * @csspart end-icon - 右侧的图标
- * @csspart label - 文本内容的容器
- * @csspart loading - 加载状态图标
+ * @csspart label - 文本内容
+ * @csspart loading - 加载中状态的 `<mdui-circular-progress>` 元素
  */
 @customElement('mdui-segmented-button')
 export class SegmentedButton extends ButtonBase {

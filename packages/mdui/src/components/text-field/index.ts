@@ -32,43 +32,48 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click
- * @event focus
- * @event blur
- * @event change
- * @event input
- * @event invalid
+ * @summary 文本框组件
+ *
+ * ```html
+ * <mdui-text-field label="Text Field"></mdui-text-field>
+ * ```
+ *
+ * @event focus - 获得焦点时触发
+ * @event blur - 失去焦点时触发
+ * @event change - 在文本框的值变更，且失去焦点时触发
+ * @event input - 在文本框的值变更时触发
+ * @event invalid - 表单字段验证不通过时触发
  * @event clear - 在点击由 `clearable` 属性生成的清空按钮时触发。可以通过调用 `event.preventDefault()` 阻止清空文本框
  *
- * @slot icon
- * @slot end-icon
- * @slot error-icon
- * @slot prefix
- * @slot suffix
- * @slot clear-button
- * @slot clear-icon
- * @slot toggle-password-button
- * @slot show-password-icon
- * @slot hide-password-icon
- * @slot helper
+ * @slot icon - 左侧图标
+ * @slot end-icon - 右侧图标
+ * @slot error-icon - 验证失败状态的右侧图标
+ * @slot prefix - 左侧文本
+ * @slot suffix - 右侧文本
+ * @slot clear-button - 清空按钮
+ * @slot clear-icon - 清空按钮中的图标
+ * @slot toggle-password-button - 显示密码状态下，密码显示切换按钮中的图标
+ * @slot show-password-icon - 显示密码状态下，密码显示切换按钮中的图标
+ * @slot hide-password-icon - 隐藏密码状态下，密码显示切换按钮中的图标
+ * @slot helper - 底部的帮助文本
  *
- * @csspart container
- * @csspart icon
- * @csspart end-icon
- * @csspart error-icon
- * @csspart prefix
- * @csspart suffix
- * @csspart label
- * @csspart input
- * @csspart clear-button
- * @csspart clear-icon
- * @csspart toggle-password-button
- * @csspart show-password-icon
- * @csspart hide-password-icon
- * @csspart supporting
- * @csspart helper
- * @csspart error
- * @csspart counter
+ * @csspart container - 文本框容器
+ * @csspart icon - 左侧图标
+ * @csspart end-icon - 右侧图标
+ * @csspart error-icon - 验证失败状态的右侧图标
+ * @csspart prefix - 左侧文本
+ * @csspart suffix - 右侧文本
+ * @csspart label - 上方的标签文本
+ * @csspart input - 内部的 `<input>` 或 `<textarea>` 元素
+ * @csspart clear-button - 清空按钮
+ * @csspart clear-icon - 清空按钮中的图标
+ * @csspart toggle-password-button - 密码显示切换按钮
+ * @csspart show-password-icon - 显示密码状态下，密码显示切换按钮中的图标
+ * @csspart hide-password-icon - 隐藏密码状态下，密码显示切换按钮中的图标
+ * @csspart supporting - 底部辅助信息容器，包括 helper、error、counter
+ * @csspart helper - 底部的帮助文本
+ * @csspart error - 底部的错误描述文本
+ * @csspart counter - 底部右侧的字数统计
  */
 @customElement('mdui-text-field')
 export class TextField
@@ -78,37 +83,48 @@ export class TextField
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * 文本框形状。可选值为：
-   * * `filled`
-   * * `outlined`
+   * 文本框形状。默认为 `filled`。可选值为：
+   *
+   * * `filled`：带背景色的文本框，视觉效果较强
+   * * `outlined`：带边框的文本框，视觉效果较弱
    */
   @property({ reflect: true })
-  public variant: 'filled' /*预览图*/ | 'outlined' /*预览图*/ = 'filled';
+  public variant:
+    | /*带背景色的文本框，视觉效果较强*/ 'filled'
+    | /*带边框的文本框，视觉效果较弱*/ 'outlined' = 'filled';
 
   /**
-   * 文本框输入类型。可选值为：
-   * * `email`：
-   * * `number`：
-   * * `password`：
-   * * `search`：
-   * * `tel`：
-   * * `text`：
-   * * `url`：
+   * 文本框输入类型。默认为 `text`。可选值为：
+   *
+   * * `text`：默认值。文本字段
+   * * `number`：只能输入数字。拥有动态键盘的设备上会显示数字键盘
+   * * `password`：用于输入密码，其值会被遮盖
+   * * `url`：用于输入 URL，会验证 URL 格式。在支持动态键盘的设备上有相应的键盘
+   * * `email`：用于输入邮箱地址，会验证邮箱格式。在支持动态键盘的设备上有相应的键盘
+   * * `search`：用于搜索框。拥有动态键盘的设备上的回车图标会变成搜索图标
+   * * `tel`：用于输入电话号码。拥有动态键盘的设备上会显示电话数字键盘
+   * * `hidden`：隐藏该控件，但其值仍会提交到服务器
+   * * `date`：输入日期的控件（年、月、日，不包括时间）。在支持的浏览器激活时打开日期选择器或年月日的数字滚轮
+   * * `datetime-local`：输入日期和时间的控件，不包括时区。在支持的浏览器激活时打开日期选择器或年月日的数字滚轮
+   * * `month`：输入年和月的控件，没有时区
+   * * `time`：用于输入时间的控件，不包括时区
+   * * `week`：用于输入以年和周数组成的日期，不带时区
    */
   @property({ reflect: true })
   public type:
-    | 'email'
-    | 'number'
-    | 'password'
-    | 'search'
-    | 'tel'
-    | 'text'
-    | 'url'
-    | 'date'
-    | 'datetime-local'
-    | 'month'
-    | 'time'
-    | 'week' = 'text';
+    | /*默认值。文本字段*/ 'text'
+    | /*只能输入数字。拥有动态键盘的设备上会显示数字键盘*/ 'number'
+    | /*用于输入密码，其值会被遮盖*/ 'password'
+    | /*用于输入 URL，会验证 URL 格式。在支持动态键盘的设备上有相应的键盘*/ 'url'
+    | /*用于输入邮箱地址，会验证邮箱格式。在支持动态键盘的设备上有相应的键盘*/ 'email'
+    | /*用于搜索框。拥有动态键盘的设备上的回车图标会变成搜索图标*/ 'search'
+    | /*用于输入电话号码。拥有动态键盘的设备上会显示电话数字键盘*/ 'tel'
+    | /*隐藏该控件，但其值仍会提交到服务器*/ 'hidden'
+    | /*输入日期的控件（年、月、日，不包括时间）。在支持的浏览器激活时打开日期选择器或年月日的数字滚轮*/ 'date'
+    | /*输入日期和时间的控件，不包括时区。在支持的浏览器激活时打开日期选择器或年月日的数字滚轮*/ 'datetime-local'
+    | /*输入年和月的控件，没有时区*/ 'month'
+    | /*用于输入时间的控件，不包括时区*/ 'time'
+    | /*用于输入以年和周数组成的日期，不带时区*/ 'week' = 'text';
 
   /**
    * 文本框名称，将与表单数据一起提交
@@ -315,13 +331,13 @@ export class TextField
   public max?: number;
 
   /**
-   * `type` 为 `number` 或 `range` 时，数值在增减过程固定改变的值
+   * `type` 为 `number` 时，数值在增减过程固定改变的值
    */
   @property({ type: Number, reflect: true })
   public step?: number;
 
   /**
-   * 表单验证的正则表达式
+   * 用于表单验证的正则表达式
    */
   @property({ reflect: true })
   public pattern?: string;
@@ -351,6 +367,7 @@ export class TextField
 
   /**
    * iOS 的非标准属性（运行在 iOS 上的 Safari、Firefox、Chrome 都支持），文本是否自动首字母大写。在 iOS5 和之后的版本上有效。可选值为：
+   *
    * * `none`：禁用首字母大写
    * * `sentences`：句子的首字母大写
    * * `words`：单词或字母的首字母大写
@@ -358,10 +375,10 @@ export class TextField
    */
   @property({ reflect: true })
   public autocapitalize!:
-    | 'none' /*禁用首字母大写*/
-    | 'sentences' /*句子的首字母大写*/
-    | 'words' /*单词或字母的首字母大写*/
-    | 'characters' /*全部字母大写*/;
+    | /*禁用首字母大写*/ 'none'
+    | /*句子的首字母大写*/ 'sentences'
+    | /*单词或字母的首字母大写*/ 'words'
+    | /*全部字母大写*/ 'characters';
 
   /**
    * `input` 元素的 `autocorrect` 属性
@@ -371,26 +388,35 @@ export class TextField
 
   /**
    * 是否使用浏览器的记忆功能自动填充文本。可选值为：
+   *
    * * `off`：不使用浏览器的记忆自动填充，使用者必须输入他们想要输入的所有内容。或者网页提供了自己的自动填充方法
    * * `on`：浏览器根据用户之前输入的内容或者习惯，在用户输入的时候给出相应输入提示
    */
   @property({ reflect: true })
   public autocomplete?:
-    | 'off' /*不使用浏览器的记忆自动填充，使用者必须输入他们想要输入的所有内容。或者网页提供了自己的自动填充方法*/
-    | 'on' /*浏览器根据用户之前输入的内容或者习惯，在用户输入的时候给出相应输入提示*/;
+    | /*不使用浏览器的记忆自动填充，使用者必须输入他们想要输入的所有内容。或者网页提供了自己的自动填充方法*/ 'off'
+    | /*浏览器根据用户之前输入的内容或者习惯，在用户输入的时候给出相应输入提示*/ 'on';
 
   /**
-   * `input` 元素的 `enterkeyhint` 属性。可用于定制虚拟键盘上的 Enter 键的显示状态
+   * `input` 元素的 `enterkeyhint` 属性。可用于定制虚拟键盘上的 Enter 键的显示文本或图标。具体显示效果取决于用户使用的设备和语言。可选值为：
+   *
+   * * `enter`：插入新行，多出现在多行文本框等需要输入多行的场景中
+   * * `done`：输入完成，虚拟键盘将关闭
+   * * `go`：把用户带到他们输入的文本的目标处
+   * * `next`：移动到下一个输入项
+   * * `previous`：移动到上一个输入项
+   * * `search`：把用户带到搜索结果
+   * * `send`：发送文本信息
    */
   @property({ reflect: true })
   public enterkeyhint?:
-    | 'enter'
-    | 'done'
-    | 'go'
-    | 'next'
-    | 'previous'
-    | 'search'
-    | 'send';
+    | /*插入新行，多出现在多行文本框等需要输入多行的场景中*/ 'enter'
+    | /*输入完成，虚拟键盘将关闭*/ 'done'
+    | /*把用户带到他们输入的文本的目标处*/ 'go'
+    | /*移动到下一个输入项*/ 'next'
+    | /*移动到上一个输入项*/ 'previous'
+    | /*把用户带到搜索结果*/ 'search'
+    | /*发送文本信息*/ 'send';
 
   /**
    * 启用拼写检查
@@ -399,18 +425,27 @@ export class TextField
   public spellcheck = false;
 
   /**
-   * `input` 元素的 `inputmode` 属性。用于定制使用哪种虚拟键盘
+   * `input` 元素的 `inputmode` 属性。用于定制使用哪种虚拟键盘。可选值为：
+   *
+   * * `none`：无虚拟键盘。在需要实现自己的键盘输入控件时很有用
+   * * `text`：标准文本输入键盘
+   * * `decimal`：小数输入键盘，除了数字之外可能会有小数点 `.` 或者千分符逗号 `,`
+   * * `numeric`：显示 0-9 的数字键盘
+   * * `tel`：手机数字键盘，包含 0-9 数字、星号 `*` 或者井号 `#` 键
+   * * `search`：为搜索输入优化的虚拟键盘，提交按钮通常会显示 `search` 或者 “搜索”
+   * * `email`：为邮件地址输入优化的虚拟键盘，通常会有 `@ .` 等键
+   * * `url`：为 URL 输入优化的虚拟键盘，通常会有 `. / #` 等键
    */
   @property({ reflect: true })
   public inputmode?:
-    | 'none'
-    | 'text'
-    | 'decimal'
-    | 'numeric'
-    | 'tel'
-    | 'search'
-    | 'email'
-    | 'url';
+    | /*无虚拟键盘。在需要实现自己的键盘输入控件时很有用*/ 'none'
+    | /*标准文本输入键盘*/ 'text'
+    | /*小数输入键盘，除了数字之外可能会有小数点 `.` 或者千分符逗号 `,`*/ 'decimal'
+    | /*显示 0-9 的数字键盘*/ 'numeric'
+    | /*手机数字键盘，包含 0-9 数字、星号 `*` 或者井号 `#` 键*/ 'tel'
+    | /*为搜索输入优化的虚拟键盘，提交按钮通常会显示 `search` 或者 “搜索”*/ 'search'
+    | /*为邮件地址输入优化的虚拟键盘，通常会有 `@ .` 等键*/ 'email'
+    | /*为 URL 输入优化的虚拟键盘，通常会有 `. / #` 等键*/ 'url';
 
   /**
    * 是否验证未通过
@@ -638,28 +673,29 @@ export class TextField
 
   /**
    * 选中文本框中特定范围的内容
-   * @param selectionStart 被选中的第一个字符的位置索引，从 `0` 开始。如果这个值比元素的 `value` 长度还大，则会被看作 `value` 最后一个位置的索引
-   * @param selectionEnd 被选中的最后一个字符的*下一个*位置索引。如果这个值比元素的 `value` 长度还大，则会被看作 `value` 最后一个位置的索引
-   * @param selectionDirection 一个表示选择方向的字符串，可能的值有：* `forward` * `backward` * `none`
+   *
+   * @param start 被选中的第一个字符的位置索引，从 `0` 开始。如果这个值比元素的 `value` 长度还大，则会被看作 `value` 最后一个位置的索引
+   * @param end 被选中的最后一个字符的*下一个*位置索引。如果这个值比元素的 `value` 长度还大，则会被看作 `value` 最后一个位置的索引
+   * @param direction 一个表示选择方向的字符串，可能的值有：`forward`、`backward`、`none`
    */
   public setSelectionRange(
-    selectionStart: number,
-    selectionEnd: number,
-    selectionDirection: 'forward' | 'backward' | 'none' = 'none',
+    start: number,
+    end: number,
+    direction: 'forward' | 'backward' | 'none' = 'none',
   ): void {
-    this.inputRef.value!.setSelectionRange(
-      selectionStart,
-      selectionEnd,
-      selectionDirection,
-    );
+    this.inputRef.value!.setSelectionRange(start, end, direction);
   }
 
   /**
    * 把文本框中特定范围的文本替换成一个新的文本
-   * @param replacement
-   * @param start
-   * @param end
-   * @param selectMode
+   * @param replacement 要插入的字符串
+   * @param start 要替换的字符的起止位置的索引。默认为当前用户选中的字符的起始位置的索引
+   * @param end 要替换的字符的结束位置的索引。默认为当前用户选中的字符的结束位置的索引
+   * @param selectMode 文本被替换后，选取的状态。可选值为：
+   * * `select`：选择新插入的文本
+   * * `start`：将光标移动到新插入的文本的起始位置
+   * * `end`：将光标移动到新插入的文本的结束位置
+   * * `preserve`：默认值。尝试保留选取
    */
   public setRangeText(
     replacement: string,

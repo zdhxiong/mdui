@@ -17,9 +17,15 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click - 点击时触发
+ * @summary 纸片组件
+ *
+ * ```html
+ * <mdui-chip>Chip</mdui-chip>
+ * ```
+ *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
+ * @event invalid - 表单字段验证未通过时触发
  * @event change - 选中状态变更时触发
  * @event delete - 点击删除图标时触发
  *
@@ -35,9 +41,9 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart end-icon - 右侧图标
  * @csspart selected-icon - 选中状态的左侧图标
  * @csspart delete-icon - 可删除时，右侧的删除图标
- * @csspart loading - 加载中动画
+ * @csspart loading - 加载中状态的 `<mdui-circular-progress>` 元素
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-chip')
 export class Chip extends ButtonBase {
@@ -45,17 +51,19 @@ export class Chip extends ButtonBase {
 
   /**
    * 纸片形状。可选值为：
-   * * `assist`
-   * * `filter`
-   * * `input`
-   * * `suggestion`
+   *
+   * * `assist`：用于显示和当前上下文相关的辅助操作。例如在点餐页面，提供分享，收藏等功能
+   * * `filter`：用于对内容进行筛选。例如在搜索结果页，对搜索结果进行过滤
+   * * `input`：用于表示用户输入的信息片段。例如 Gmail 中“收件人”字段中的联系人
+   * * `suggestion`：用于提供动态生成的推荐信息，以简化用户操作。例如在聊天应用中猜测用户可能想发送的信息，供用户选择
    */
   @property({ reflect: true })
   public variant:
-    | 'assist' /*预览图*/
-    | 'filter' /*预览图*/
-    | 'input' /*预览图*/
-    | 'suggestion' = 'assist';
+    | /*用于显示和当前上下文相关的辅助操作。例如在点餐页面，提供分享，收藏等功能*/ 'assist'
+    | /*用于对内容进行筛选。例如在搜索结果页，对搜索结果进行过滤*/ 'filter'
+    | /*用于表示用户输入的信息片段。例如 Gmail 中“收件人”字段中的联系人*/ 'input'
+    | /*用于提供动态生成的推荐信息，以简化用户操作。例如在聊天应用中猜测用户可能想发送的信息，供用户选择*/ 'suggestion' =
+    'assist';
 
   /**
    * 是否包含阴影

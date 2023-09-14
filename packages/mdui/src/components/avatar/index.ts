@@ -12,14 +12,16 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 /**
  * @summary 头像组件
  *
- * @event click - 点击时触发
+ * ```html
+ * <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
+ * ```
  *
  * @slot - 自定义头像中的内容，可以为字母、汉字、`<img>` 元素、图标等
  *
- * @csspart image - 图片
- * @csspart icon - 图标
+ * @csspart image - 使用图片头像时，组件内部的 `<img>` 元素
+ * @csspart icon - 使用图标头像时，组件内部的 `<mdui-icon>` 元素
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-avatar')
 export class Avatar extends LitElement {
@@ -41,7 +43,12 @@ export class Avatar extends LitElement {
    * * `scale-down`：保持原有尺寸比例。内容的尺寸与 `none` 或 `contain` 中的一个相同，取决于它们两个之间谁得到的对象尺寸会更小一些
    */
   @property({ reflect: true })
-  public fit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
+  public fit?:
+    | /*保持原有尺寸比例。内容被缩放*/ 'contain'
+    | /*保持原有尺寸比例。但部分内容可能被剪切*/ 'cover'
+    | /*默认，不保证保持原有的比例，内容拉伸填充整个内容容器*/ 'fill'
+    | /*保留原有元素内容的长度和宽度，也就是说内容不会被重置*/ 'none'
+    | /*保持原有尺寸比例。内容的尺寸与 `none` 或 `contain` 中的一个相同，取决于它们两个之间谁得到的对象尺寸会更小一些*/ 'scale-down';
 
   /**
    * 头像的 Material Icons 图标名

@@ -7,16 +7,22 @@ import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
+ * @summary 线性进度指示器组件
+ *
+ * ```html
+ * <mdui-linear-progress></mdui-linear-progress>
+ * ```
+ *
  * @csspart indicator - 指示器
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-linear-progress')
 export class LinearProgress extends LitElement {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * 进度指示器的最大值
+   * 进度指示器的最大值，默认为 1
    */
   @property({ type: Number, reflect: true })
   public max = 1;

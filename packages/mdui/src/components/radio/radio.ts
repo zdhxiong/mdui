@@ -16,7 +16,15 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click - 点击时触发
+ * @summary 单选框组件。需与 `<mdui-radio-group>` 组件配合使用
+ *
+ * ```html
+ * <mdui-radio-group value="chinese">
+ * ..<mdui-radio value="chinese">Chinese</mdui-radio>
+ * ..<mdui-radio value="english">English</mdui-radio>
+ * </mdui-radio-group>
+ * ```
+ *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
  * @event change - 选中该单选项时触发
@@ -25,7 +33,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot unchecked-icon - 未选中状态的图标
  * @slot checked-icon - 选中状态的图标
  *
- * @csspart control - 选择框
+ * @csspart control - 左侧图标容器
  * @csspart unchecked-icon 未选中状态的图标
  * @csspart checked-icon 选中状态的图标
  * @csspart label - 文本

@@ -11,21 +11,27 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click - 点击时触发
+ * @summary 按钮组件
+ *
+ * ```html
+ * <mdui-button>Button</mdui-button>
+ * ```
+ *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
+ * @event invalid - 表单字段验证未通过时触发
  *
  * @slot - 按钮的文本
  * @slot icon - 按钮左侧元素
  * @slot end-icon - 按钮右侧元素
  *
- * @csspart button - 内部的 `button` 或 `a` 元素
- * @csspart label - 文本
- * @csspart icon - 左侧图标
- * @csspart end-icon - 右侧图标
- * @csspart loading - 加载中动画
+ * @csspart button - 内部的 `<button>` 或 `<a>` 元素
+ * @csspart label - 按钮文本
+ * @csspart icon - 按钮左侧图标
+ * @csspart end-icon - 按钮右侧图标
+ * @csspart loading - 加载中状态的 `<mdui-circular-progress>` 元素
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-button')
 export class Button extends ButtonBase {
@@ -33,19 +39,20 @@ export class Button extends ButtonBase {
 
   /**
    * 按钮形状。可选值为：
-   * * `elevated`
-   * * `filled`
-   * * `tonal`
-   * * `outlined`
-   * * `text`
+   *
+   * * `elevated`：带阴影的按钮，在需要把按钮和背景进行视觉分离时使用
+   * * `filled`：视觉效果仅次于 FAB，用于重要流程的最终操作，如“保存”、“确认”等
+   * * `tonal`：视觉效果介于 `filled` 和 `outlined` 之间，用于中高优先级的操作，如流程中的“下一步”
+   * * `outlined`：带边框的按钮，用于中等优先级，且次要的操作，如“返回”
+   * * `text`：文本按钮，用于最低优先级的操作
    */
   @property({ reflect: true })
   public variant:
-    | 'elevated' /*预览图*/
-    | 'filled' /*预览图*/
-    | 'tonal' /*预览图*/
-    | 'outlined' /*预览图*/
-    | 'text' /*预览图*/ = 'filled';
+    | /*带阴影的按钮，在需要把按钮和背景进行视觉分离时使用*/ 'elevated'
+    | /*视觉效果仅次于 FAB，用于重要流程的最终操作，如“保存”、“确认”等*/ 'filled'
+    | /*视觉效果介于 `filled` 和 `outlined` 之间，用于中等偏高优先级的场景，如流程中的“下一步”*/ 'tonal'
+    | /*带边框的按钮，用于中等优先级，且次要操作的场景，如“返回”*/ 'outlined'
+    | /*文本按钮，用于最低优先级的操作*/ 'text' = 'filled';
 
   /**
    * 是否填满父元素宽度
@@ -54,8 +61,9 @@ export class Button extends ButtonBase {
     type: Boolean,
     reflect: true,
     converter: booleanConverter,
+    attribute: 'full-width',
   })
-  public fullwidth = false;
+  public fullWidth = false;
 
   /**
    * 左侧的 Material Icons 图标名。也可以通过 `slot="icon"` 设置

@@ -5,6 +5,16 @@ import { listStyle } from './list-style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
+ * @summary 列表组件。需与 `<mdui-list-item>` 组件配合使用
+ *
+ * ```html
+ * <mdui-list>
+ * ..<mdui-list-subheader>Subheader</mdui-list-subheader>
+ * ..<mdui-list-item>Item 1</mdui-list-item>
+ * ..<mdui-list-item>Item 2</mdui-list-item>
+ * </mdui-list>
+ * ```
+ *
  * @slot - `<mdui-list-item>` 元素
  */
 @customElement('mdui-list')

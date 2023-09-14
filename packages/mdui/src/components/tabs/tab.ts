@@ -17,7 +17,20 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click - 点击时触发
+ * @summary 选项卡项组件。需与 `<mdui-tabs>` 和 `<mdui-tab-panel>` 组件配合使用
+ *
+ * ```html
+ * <mdui-tabs value="tab-1">
+ * ..<mdui-tab value="tab-1">Tab 1</mdui-tab>
+ * ..<mdui-tab value="tab-2">Tab 2</mdui-tab>
+ * ..<mdui-tab value="tab-3">Tab 3</mdui-tab>
+ *
+ * ..<mdui-tab-panel slot="panel" value="tab-1">Panel 1</mdui-tab-panel>
+ * ..<mdui-tab-panel slot="panel" value="tab-2">Panel 2</mdui-tab-panel>
+ * ..<mdui-tab-panel slot="panel" value="tab-3">Panel 3</mdui-tab-panel>
+ * </mdui-tabs>
+ * ```
+ *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
  *
@@ -26,9 +39,9 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot badge - 徽标
  * @slot custom - 自定义整个选项卡导航项中的内容
  *
- * @csspart container - 选项卡导航项容器
- * @csspart icon - 选项卡导航项中的图标
- * @csspart label - 选项卡导航项的文本
+ * @csspart container - 导航项容器
+ * @csspart icon - 导航项中的图标
+ * @csspart label - 导航项的文本
  */
 @customElement('mdui-tab')
 export class Tab extends RippleMixin(FocusableMixin(LitElement)) {

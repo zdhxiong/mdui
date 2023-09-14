@@ -12,13 +12,18 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click - 点击时触发
+ * @summary 卡片组件
+ *
+ * ```html
+ * <mdui-card>card content</mdui-card>
+ * ```
+ *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
  *
  * @slot - 卡片内容
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-card')
 export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
@@ -26,15 +31,16 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
 
   /**
    * 卡片形状。可选值为：
-   * * `elevated`
-   * * `filled`
-   * * `outlined`
+   *
+   * * `elevated`：具有阴影，与背景的分离度比 `filled` 更高，但小于 `outlined`
+   * * `filled`：与背景的分离度最小
+   * * `outlined`：具有边框，与背景的分离度最大
    */
   @property({ reflect: true })
   public variant:
-    | 'elevated' /*预览图*/
-    | 'filled' /*预览图*/
-    | 'outlined' /*预览图*/ = 'elevated';
+    | /*具有阴影，与背景的分离度比 `filled` 更高，但小于 `outlined`*/ 'elevated'
+    | /*与背景的分离度最小*/ 'filled'
+    | /*具有边框，与背景的分离度最大*/ 'outlined' = 'elevated';
 
   /**
    * 是否可点击。为 `true` 时，会添加鼠标悬浮效果、及点击涟漪效果

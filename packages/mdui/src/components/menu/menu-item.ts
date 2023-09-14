@@ -32,6 +32,17 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
+ * @summary 菜单项组件
+ *
+ * ```html
+ * <mdui-menu>
+ * ..<mdui-menu-item>Item 1</mdui-menu-item>
+ * ..<mdui-menu-item>Item 2</mdui-menu-item>
+ * </mdui-menu>
+ * ```
+ *
+ * @event focus - 获得焦点时触发
+ * @event blur - 失去焦点时触发
  * @event submenu-open - 子菜单开始打开时，事件被触发。可以通过调用 `event.preventDefault()` 阻止子菜单打开
  * @event submenu-opened - 子菜单打开动画完成时，事件被触发
  * @event submenu-close - 子菜单开始关闭时，事件被触发。可以通过调用 `event.preventDefault()` 阻止子菜单关闭

@@ -23,6 +23,18 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
+ * @summary 下拉组件
+ *
+ * ```html
+ * <mdui-dropdown>
+ * ..<mdui-button slot="trigger">open dropdown</mdui-button>
+ * ..<mdui-menu>
+ * ....<mdui-menu-item>Item 1</mdui-menu-item>
+ * ....<mdui-menu-item>Item 2</mdui-menu-item>
+ * ..</mdui-menu>
+ * </mdui-dropdown>
+ * ```
+ *
  * @event open - dropdown 开始打开时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 dropdown 打开
  * @event opened - dropdown 打开动画完成时，事件被触发
  * @event close - dropdown 开始关闭时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 dropdown 关闭
@@ -31,8 +43,10 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot - dropdown 的内容
  * @slot trigger - 触发 dropdown 的元素，例如 [`<mdui-button>`](/docs/2/components/button) 元素
  *
- * @csspart trigger - `trigger` slot 的容器
+ * @csspart trigger - 触发 dropdown 的元素的容器，即 `trigger` slot 的容器
  * @csspart panel - dropdown 内容的容器
+ *
+ * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-dropdown')
 export class Dropdown extends LitElement {
@@ -60,6 +74,7 @@ export class Dropdown extends LitElement {
 
   /**
    * dropdown 的触发方式，支持传入多个值，用空格分隔。可选值为：
+   *
    * * `click`：点击时触发
    * * `hover`：鼠标悬浮触发
    * * `focus`：聚焦时触发
@@ -68,15 +83,16 @@ export class Dropdown extends LitElement {
    */
   @property({ reflect: true })
   public trigger:
-    | 'click' /*点击时触发*/
-    | 'hover' /*鼠标悬浮触发*/
-    | 'focus' /*聚焦时触发*/
-    | 'contextmenu' /*鼠标右键点击、或触摸长按时触发*/
-    | 'manual' /*通过编程方式触发*/
+    | /*点击时触发*/ 'click'
+    | /*鼠标悬浮触发*/ 'hover'
+    | /*聚焦时触发*/ 'focus'
+    | /*鼠标右键点击、或触摸长按时触发*/ 'contextmenu'
+    | /*使用了该值时，只能使用编程方式打开和关闭 dropdown，且不能再指定其他触发方式*/ 'manual'
     | string = 'click';
 
   /**
    * dropdown 内容的位置。可选值为：
+   *
    * * `auto`：自动判断位置
    * * `top-start`：位于上方，且左对齐
    * * `top`：位于上方，且居中对齐
@@ -93,19 +109,19 @@ export class Dropdown extends LitElement {
    */
   @property({ reflect: true })
   public placement:
-    | 'auto' /*自动判断位置*/
-    | 'top-start' /*位于上方，且左对齐*/
-    | 'top' /*位于上方，且居中对齐*/
-    | 'top-end' /*位于上方，且右对齐*/
-    | 'bottom-start' /*位于下方，且左对齐*/
-    | 'bottom' /*位于下方，且居中对齐*/
-    | 'bottom-end' /*位于下方，且右对齐*/
-    | 'left-start' /*位于左侧，且顶部对齐*/
-    | 'left' /*位于左侧，且居中对齐*/
-    | 'left-end' /*位于左侧，且底部对齐*/
-    | 'right-start' /*位于右侧，且顶部对齐*/
-    | 'right' /*位于右侧，且居中对齐*/
-    | 'right-end' /*位于右侧，且底部对齐*/ = 'auto';
+    | /*自动判断位置*/ 'auto'
+    | /*位于上方，且左对齐*/ 'top-start'
+    | /*位于上方，且居中对齐*/ 'top'
+    | /*位于上方，且右对齐*/ 'top-end'
+    | /*位于下方，且左对齐*/ 'bottom-start'
+    | /*位于下方，且居中对齐*/ 'bottom'
+    | /*位于下方，且右对齐*/ 'bottom-end'
+    | /*位于左侧，且顶部对齐*/ 'left-start'
+    | /*位于左侧，且居中对齐*/ 'left'
+    | /*位于左侧，且底部对齐*/ 'left-end'
+    | /*位于右侧，且顶部对齐*/ 'right-start'
+    | /*位于右侧，且居中对齐*/ 'right'
+    | /*位于右侧，且底部对齐*/ 'right-end' = 'auto';
 
   /**
    * 在点击 [`<mdui-menu-item>`](/docs/2/components/menu#menu-item-api) 元素后，是否仍保持 dropdown 为打开状态

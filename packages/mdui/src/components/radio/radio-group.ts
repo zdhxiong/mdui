@@ -26,6 +26,15 @@ type Radio = RadioOriginal & {
 };
 
 /**
+ * @summary 单选框组组件。需与 `<mdui-radio>` 组件配合使用
+ *
+ * ```html
+ * <mdui-radio-group value="chinese">
+ * ..<mdui-radio value="chinese">Chinese</mdui-radio>
+ * ..<mdui-radio value="english">English</mdui-radio>
+ * </mdui-radio-group>
+ * ```
+ *
  * @event change - 选中值变化时触发
  * @event input - 选中值变化时触发
  * @event invalid - 表单字段验证未通过时触发

@@ -6,6 +6,20 @@ import { tabPanelStyle } from './tab-panel-style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
+ * @summary 选项卡面板项组件。需与 `<mdui-tabs>` 和 `<mdui-tab>` 组件配合使用
+ *
+ * ```html
+ * <mdui-tabs value="tab-1">
+ * ..<mdui-tab value="tab-1">Tab 1</mdui-tab>
+ * ..<mdui-tab value="tab-2">Tab 2</mdui-tab>
+ * ..<mdui-tab value="tab-3">Tab 3</mdui-tab>
+ *
+ * ..<mdui-tab-panel slot="panel" value="tab-1">Panel 1</mdui-tab-panel>
+ * ..<mdui-tab-panel slot="panel" value="tab-2">Panel 2</mdui-tab-panel>
+ * ..<mdui-tab-panel slot="panel" value="tab-3">Panel 3</mdui-tab-panel>
+ * </mdui-tabs>
+ * ```
+ *
  * @slot - 选项卡面板内容
  */
 @customElement('mdui-tab-panel')

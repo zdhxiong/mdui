@@ -14,6 +14,14 @@ export const isDev = process.argv.slice(2)[0] === '--dev';
 // 文档页面前缀
 const docPathPrefix = 'https://www.mdui.org/docs/2';
 
+// vscode 和 webstorm 中的 description 如果包含链接，默认是不包含域名的，这里手动添加域名
+const handleIdeDescription = (description) => {
+  if (!description) {
+    return '';
+  }
+  return description.replace('(/docs/2', '(' + docPathPrefix);
+};
+
 let globalLessMixin = '';
 
 // 获取全局 mixin.less 文件内容
@@ -60,7 +68,7 @@ const docComponents = {
   'navigation-drawer': ['mdui-navigation-drawer'],
   'navigation-rail': ['mdui-navigation-rail', 'mdui-navigation-rail-item'],
   'bottom-app-bar': ['mdui-bottom-app-bar'],
-  'top-app-bar': ['mdui-top-app-bar'],
+  'top-app-bar': ['mdui-top-app-bar', 'mdui-top-app-bar-title'],
   layout: ['mdui-layout', 'mdui-layout-item', 'mdui-layout-main'],
 };
 
@@ -117,6 +125,7 @@ const cssProperties = [
 }
 \`\`\`
 `,
+      docUrl: `${docPathPrefix}/styles/design-tokens#breakpoint`,
     };
   }),
 
@@ -206,6 +215,7 @@ ${modeName}的 RGB 颜色值，RGB 三色用 \`,\` 分隔。
 }
 \`\`\`
 `,
+            docUrl: `${docPathPrefix}/styles/design-tokens#color`,
           };
         } else {
           // 自动适配
@@ -236,6 +246,7 @@ ${modeName}的 RGB 颜色值，RGB 三色用 \`,\` 分隔。
 }
 \`\`\`
 `,
+            docUrl: `${docPathPrefix}/styles/design-tokens#color`,
           };
         }
       });
@@ -263,6 +274,7 @@ ${modeName}的 RGB 颜色值，RGB 三色用 \`,\` 分隔。
 }
 \`\`\`
 `,
+      docUrl: `${docPathPrefix}/styles/design-tokens#elevation`,
     };
   }),
 
@@ -337,6 +349,7 @@ ${modeName}的 RGB 颜色值，RGB 三色用 \`,\` 分隔。
 }
 \`\`\`
 `,
+          docUrl: `${docPathPrefix}/styles/design-tokens#motion`,
         };
       });
     })
@@ -371,10 +384,11 @@ ${modeName}的 RGB 颜色值，RGB 三色用 \`,\` 分隔。
 }
 \`\`\`
 `,
+      docUrl: `${docPathPrefix}/styles/design-tokens#shape-corner`,
     };
   }),
 
-  // 状态层透明度
+  // 状态层不透明度
   ...['hover', 'focus', 'pressed', 'dragged'].map((state) => {
     const name = `--mdui-state-layer-${state}`;
 
@@ -390,6 +404,7 @@ ${modeName}的 RGB 颜色值，RGB 三色用 \`,\` 分隔。
 }
 \`\`\`
 `,
+      docUrl: `${docPathPrefix}/styles/design-tokens#state-layer`,
     };
   }),
 
@@ -446,6 +461,7 @@ ${modeName}的 RGB 颜色值，RGB 三色用 \`,\` 分隔。
 }
 \`\`\`
 `,
+            docUrl: `${docPathPrefix}/styles/design-tokens#typescale`,
           };
         });
       });
@@ -605,7 +621,8 @@ export const getAllComponents = (metadataPath) => {
 
   metadata.modules.map((module) => {
     module.declarations?.map((declaration) => {
-      if (!declaration.customElement) {
+      // 不是自定义元素时，不处理
+      if (!declaration.customElement || !declaration.tagName) {
         return;
       }
 
@@ -613,6 +630,18 @@ export const getAllComponents = (metadataPath) => {
       const modulePath = module.path;
 
       if (component) {
+        // 仅从 member 中仅提取 public、且排除部分 lit 内置的属性、且仅提取 field 部分
+        // 这里包含了 attribute 和 property 属性，在使用时可通过 attribute 属性是否存在判断是否存在 attribute 属性
+        component.members = (component.members ?? []).filter((member) => {
+          return (
+            member.privacy === 'public' &&
+            !['enabledWarnings', 'properties', 'styles'].includes(
+              member.name,
+            ) &&
+            member.kind === 'field'
+          );
+        });
+
         allComponents.push(Object.assign(component, { modulePath }));
       }
     });
@@ -641,80 +670,83 @@ export const buildVSCodeData = (metadataPath, packageFolder) => {
   // web components 组件
   const components = getAllComponents(metadataPath);
   components.map((component) => {
-    if (!component.tagName) {
-      return;
-    }
-
     const docUrl = getDocUrlByTagName(component.tagName);
     const hasMultipleComponents = isDocHasMultipleComponents(component.tagName);
 
-    const attributes = component.attributes?.map((attr) => {
-      // 可选属性的值可能为 string | undefined，这里移除 undefined
-      const type = (attr.type?.text ?? '')
-        .split('|')
-        .map((v) => v.trim())
-        .filter((v) => v && v !== 'undefined')
-        .join(' | ');
+    const attributes = component.members
+      .filter((member) => member.attribute)
+      .map((attr) => {
+        // 可选属性的值可能为 string | undefined，这里移除 undefined
+        const type = (attr.type?.text ?? '')
+          .split('|')
+          .map((v) => v.trim())
+          .filter((v) => v && v !== 'undefined')
+          .join(' | ');
 
-      let values = [];
+        let values = [];
 
-      if (type) {
-        // 枚举类型，每个枚举项都可以带有注释
-        const isEnum = type.includes('|');
+        if (type) {
+          // 枚举类型，每个枚举项都可以带有注释
+          const isEnum = type.includes('|');
 
-        // 可能是枚举类型、带''的字符串、数值
-        type.split('|').map((val) => {
-          val = val.trim();
+          // 可能是枚举类型、带''的字符串、数值
+          type.split('|').map((val) => {
+            val = val.trim();
 
-          // 枚举类型含有注释时
-          const enumCommentReg = /\/\*([\s\S]*?)\*\//;
-          const enumComment = isEnum && val.match(enumCommentReg);
-          if (enumComment) {
-            val = val.replace(enumCommentReg, '').trim();
-          }
+            // 枚举类型含有注释时
+            const enumCommentReg = /\/\*([\s\S]*?)\*\//;
+            const enumComment = isEnum && val.match(enumCommentReg);
+            if (enumComment) {
+              val = val.replace(enumCommentReg, '').trim();
+            }
 
-          const isString = val.startsWith(`'`) && val.endsWith(`'`);
-          const isNumber = Number(val).toString() === val;
+            const isString = val.startsWith(`'`) && val.endsWith(`'`);
+            const isNumber = Number(val).toString() === val;
 
-          if (isString) {
-            val = val.replace(/^'/, '').replace(/'$/, '');
-          }
+            if (isString) {
+              val = val.replace(/^'/, '').replace(/'$/, '');
+            }
 
-          if (enumComment) {
-            // 枚举类型
-            values.push({ name: val, description: enumComment[1] });
-          } else if (isNumber || isString) {
-            // string 和 number
-            values.push({ name: val });
-          }
-        });
-      }
+            if (enumComment) {
+              // 枚举类型
+              values.push({
+                name: val,
+                description: handleIdeDescription(enumComment[1]),
+              });
+            } else if (isNumber || isString) {
+              // string 和 number
+              values.push({ name: val });
+            }
+          });
+        }
 
-      return {
-        name: attr.name,
-        description: attr.description,
-        values: values.length ? values : undefined,
-        references: [
-          {
-            name: '开发文档',
-            url: `${docUrl}#${
-              hasMultipleComponents ? component.tagName.slice(5) + '-' : ''
-            }attributes-${attr.name}`,
-          },
-        ],
-      };
-    });
+        return {
+          name: attr.attribute,
+          description: handleIdeDescription(attr.description),
+          values: values.length ? values : undefined,
+          references: [
+            {
+              name: '开发文档',
+              url: `${docUrl}#${
+                hasMultipleComponents ? component.tagName.slice(5) + '-' : ''
+              }attributes-${attr.attribute}`,
+            },
+          ],
+        };
+      });
 
     vscode.tags.push({
       name: component.tagName,
-      description: component.summary,
-      attributes,
+      // summary 注释生成 custom-elements.json 时，空格消失了，所以用 . 代替空格，这里替换回来
+      // todo node 升级到 v16 后，替换为 replaceAll
+      description: handleIdeDescription(component.summary).replace(/\./g, ' '),
+      attributes: attributes.length ? attributes : undefined,
       references: [
         {
           name: '开发文档',
           url: docUrl,
         },
-        { name: '设计规范', url: `https://www.mdui.org/design~3/` },
+        // { name: '设计规范', url: `https://www.mdui.org/design~3/` },
         {
           name: 'Github',
           url: `https://github.com/zdhxiong/mdui/${component.modulePath}`,
@@ -737,8 +769,9 @@ export const buildVSCodeData = (metadataPath, packageFolder) => {
         name: property.name,
         description: {
           kind: 'markdown',
-          value: property.description,
+          value: handleIdeDescription(property.description),
         },
+        references: [{ name: '开发文档', url: property.docUrl }],
       })),
     };
 
@@ -784,19 +817,22 @@ export const buildWebTypes = (metadataPath, packageFolder) => {
   // web components 组件
   const components = getAllComponents(metadataPath);
   components.map((component) => {
-    if (!component.tagName) {
-      return;
-    }
-
     const docUrl = getDocUrlByTagName(component.tagName);
     const hasMultipleComponents = isDocHasMultipleComponents(component.tagName);
 
-    const transform = (items, hasDocUrl) => {
+    const transform = (items, sectionPrefix, nameField = 'name') => {
       if (!items || !items.length) {
         return;
       }
 
-      return items.map((item) => {
+      // event 只使用通过 @event 注释声明的事件，代码中使用 this.dispatchEvent 触发的事件不放到文档中
+      // 这里存在 description 时认为是通过 @event 声明的事件
+      const itemsFiltered =
+        sectionPrefix === 'event'
+          ? items.filter((item) => item.description)
+          : items;
+
+      return itemsFiltered.map((item) => {
         // 可选属性的值可能为 string | undefined，这里移除 undefined
         const type = (item.type?.text ?? '')
           .split('|')
@@ -818,38 +854,47 @@ export const buildWebTypes = (metadataPath, packageFolder) => {
         }
 
         return {
-          name: item.name,
-          description: item.description,
+          name: item[nameField],
+          description: handleIdeDescription(item.description),
           value: values.length
             ? {
                 type: values.length === 1 ? values[0] : values,
               }
             : undefined,
-          'doc-url': hasDocUrl
+          'doc-url': sectionPrefix
             ? `${docUrl}#${
                 hasMultipleComponents ? component.tagName.slice(5) + '-' : ''
-              }attributes-${item.name}`
+              }${sectionPrefix}-${
+                sectionPrefix === 'css-properties'
+                  ? item[nameField].slice(2)
+                  : item[nameField]
+              }`
             : undefined,
         };
       });
     };
 
-    const attributes = transform(component.attributes, true);
-    const properties = transform(
-      component.members?.filter(
-        (member) => member.privacy === 'public' && member.kind === 'field',
-      ),
+    const attributes = transform(
+      component.members.filter((member) => member.attribute),
+      'attributes',
+      'attribute', // 使用 attribute 属性作为属性名
     );
-    const events = transform(component.events);
-    const cssProperties = transform(component.cssProperties);
-    const cssParts = transform(component.cssParts);
-    const slots = transform(component.slots);
+    const properties = transform(component.members, 'attributes');
+    const events = transform(component.events, 'event');
+    const cssProperties = transform(component.cssProperties, 'css-properties');
+    const cssParts = transform(component.cssParts, 'css-parts');
+    const slots = transform(component.slots, 'slot');
 
     webTypes.contributions.html.elements.push(
       Object.assign(
         {
           name: component.tagName,
-          description: component.summary,
+          // summary 注释生成 custom-elements.json 时，空格消失了，所以用 . 代替空格，这里替换回来
+          // todo node 升级到 v16 后，替换为 replaceAll
+          description: handleIdeDescription(component.summary).replace(
+            /\./g,
+            ' ',
+          ),
           attributes,
           priority: 'highest',
           'doc-url': docUrl,
@@ -866,7 +911,11 @@ export const buildWebTypes = (metadataPath, packageFolder) => {
   // 全局 CSS 类、CSS 变量（当前手动维护）
   if (packageFolder === 'mdui') {
     webTypes.contributions.css = {
-      properties: cssProperties,
+      properties: cssProperties.map((property) => ({
+        name: property.name,
+        description: handleIdeDescription(property.description),
+        'doc-url': property.docUrl,
+      })),
       classes: [
         {
           name: 'mdui-theme-light',
@@ -877,6 +926,7 @@ export const buildWebTypes = (metadataPath, packageFolder) => {
 <div class="mdui-theme-light"></div>
 \`\`\``,
           },
+          'doc-url': `${docPathPrefix}/styles/dark-mode`,
         },
         {
           name: 'mdui-theme-dark',
@@ -891,6 +941,7 @@ export const buildWebTypes = (metadataPath, packageFolder) => {
 <div class="mdui-theme-dark"></div>
 \`\`\``,
           },
+          'doc-url': `${docPathPrefix}/styles/dark-mode`,
         },
         {
           name: 'mdui-theme-auto',
@@ -905,6 +956,7 @@ export const buildWebTypes = (metadataPath, packageFolder) => {
 <div class="mdui-theme-auto"></div>
 \`\`\``,
           },
+          'doc-url': `${docPathPrefix}/styles/dark-mode`,
         },
         {
           name: 'mdui-prose',
@@ -917,6 +969,7 @@ export const buildWebTypes = (metadataPath, packageFolder) => {
 </div>
 \`\`\``,
           },
+          'doc-url': `${docPathPrefix}/styles/prose`,
         },
         {
           name: 'mdui-table',
@@ -933,6 +986,7 @@ export const buildWebTypes = (metadataPath, packageFolder) => {
 </div>
 \`\`\``,
           },
+          'doc-url': `${docPathPrefix}/styles/prose`,
         },
       ],
     };

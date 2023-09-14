@@ -17,12 +17,21 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
+ * @summary 侧边导航栏项组件。需与 `<mdui-navigation-rail>` 组件配合使用
+ *
+ * ```html
+ * <mdui-navigation-rail>
+ * ..<mdui-navigation-rail-item icon="watch_later">Recent</mdui-navigation-rail-item>
+ * ..<mdui-navigation-rail-item icon="image">Images</mdui-navigation-rail-item>
+ * ..<mdui-navigation-rail-item icon="library_music">Library</mdui-navigation-rail-item>
+ * </mdui-navigation-rail>
+ * ```
+ *
  * @slot - 文本
  * @slot icon - 图标
- * @slot active-icon - 激活状态的图标元素
+ * @slot active-icon - 激活状态的图标
  * @slot badge - 徽标
  *
- * @event click - 点击时触发
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
  *
@@ -33,7 +42,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart active-icon - 激活状态的图标
  * @csspart label - 文本
  *
- * @cssprop --shape-corner-indicator 指示器的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-indicator - 指示器的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-navigation-rail-item')
 export class NavigationRailItem extends AnchorMixin(

@@ -24,6 +24,12 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
+ * @summary 对话框组件
+ *
+ * ```html
+ * <mdui-dialog>content</mdui-dialog>
+ * ```
+ *
  * @event open - 在对话框打开之前触发。可以通过调用 `event.preventDefault()` 阻止对话框打开
  * @event opened - 在对话框打开之后触发
  * @event close - 在对话框关闭之前触发。可以通过调用 `event.preventDefault()` 阻止对话框关闭
@@ -40,11 +46,14 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart overlay - 遮罩层
  * @csspart panel - 对话框容器
  * @csspart header - 对话框 header 部分，其中包含了 icon 和 headline
- * @csspart icon - 顶部的图标
- * @csspart headline - 顶部的标题
+ * @csspart icon - 顶部的图标，位于 header 中
+ * @csspart headline - 顶部的标题，位于 header 中
  * @csspart body - 对话框的 body 部分
  * @csspart description - 副文本部分，位于 body 中
- * @csspart action - 底部操作栏容器
+ * @csspart action - 底部操作按钮
+ *
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-dialog')
 export class Dialog extends LitElement {

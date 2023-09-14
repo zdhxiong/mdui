@@ -24,7 +24,16 @@ type NavigationRailItem = NavigationRailItemOriginal & {
 };
 
 /**
- * @event click - 点击时触发
+ * @summary 侧边导航栏组件。需与 `<mdui-navigation-rail-item>` 组件配合使用
+ *
+ * ```html
+ * <mdui-navigation-rail>
+ * ..<mdui-navigation-rail-item icon="watch_later">Recent</mdui-navigation-rail-item>
+ * ..<mdui-navigation-rail-item icon="image">Images</mdui-navigation-rail-item>
+ * ..<mdui-navigation-rail-item icon="library_music">Library</mdui-navigation-rail-item>
+ * </mdui-navigation-rail>
+ * ```
+ *
  * @event change - 值变化时触发
  *
  * @slot - `<mdui-navigation-rail-item>` 组件
@@ -33,9 +42,10 @@ type NavigationRailItem = NavigationRailItemOriginal & {
  *
  * @csspart top - 顶部元素的容器
  * @csspart bottom - 底部元素的容器
- * @csspart item-group - `<mdui-navigation-rail-item>` 组件的容器
+ * @csspart items - `<mdui-navigation-rail-item>` 组件的容器
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-navigation-rail')
 export class NavigationRail extends LayoutItemBase {
@@ -52,20 +62,28 @@ export class NavigationRail extends LayoutItemBase {
 
   /**
    * 导航栏的位置。可选值为：
-   * * `left`
-   * * `right`
+   *
+   * * `left`：显示在左侧
+   * * `right`：显示在右侧
    */
   @property({ reflect: true })
-  public placement: 'left' | 'right' = 'left';
+  // eslint-disable-next-line prettier/prettier
+  public placement:
+    | /*显示在左侧*/ 'left'
+    | /*显示在右侧*/ 'right' = 'left';
 
   /**
    * 导航栏中的 `<mdui-navigation-rail-item>` 元素的对齐方式。可选值为：
+   *
    * * `start`：顶部对齐
    * * `center`：居中对齐
    * * `end`：底部对齐
    */
   @property({ reflect: true })
-  public alignment: 'start' | 'center' | 'end' = 'start';
+  public alignment:
+    | /*顶部对齐*/ 'start'
+    | /*居中对齐*/ 'center'
+    | /*底部对齐*/ 'end' = 'start';
 
   /**
    * 默认导航栏相对于 `body` 元素显示，该参数设置为 `true` 时，导航栏将相对于它的父元素显示
@@ -218,8 +236,8 @@ export class NavigationRail extends LayoutItemBase {
       )}
       <span class="top-spacer"></span>
       <slot
-        part="item-group"
-        class="item-group"
+        part="items"
+        class="items"
         @slotchange=${this.onSlotChange}
         @click=${this.onClick}
       ></slot>

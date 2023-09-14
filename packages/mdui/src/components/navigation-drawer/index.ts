@@ -26,6 +26,12 @@ import type { Ref } from 'lit/directives/ref.js';
 /**
  * 在手机端，`modal` 始终为 `true`；大于手机端时，`modal` 属性才开始生效
  *
+ * @summary 侧边抽屉栏组件
+ *
+ * ```html
+ * <mdui-navigation-drawer>content</mdui-navigation-drawer>
+ * ```
+ *
  * @event open - 在抽屉导航打开之前触发。可以通过调用 `event.preventDefault()` 阻止抽屉导航打开
  * @event opened - 在抽屉导航打开之后触发
  * @event close - 在抽屉导航关闭之前触发。可以通过调用 `event.preventDefault()` 阻止抽屉导航关闭
@@ -36,6 +42,9 @@ import type { Ref } from 'lit/directives/ref.js';
  *
  * @csspart overlay - 遮罩层
  * @csspart panel - 抽屉导航容器
+ *
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-navigation-drawer')
 export class NavigationDrawer extends LayoutItemBase {
@@ -53,6 +62,7 @@ export class NavigationDrawer extends LayoutItemBase {
 
   /**
    * 打开时，是否显示遮罩层
+   *
    * 较窄的设备上（屏幕宽度小于 [`--mdui-breakpoint-md`](/docs/2/styles/design-tokens#breakpoint) 时），会无视该参数，始终显示遮罩层
    */
   @property({
@@ -86,11 +96,15 @@ export class NavigationDrawer extends LayoutItemBase {
 
   /**
    * 抽屉导航的显示位置。可选值为：
-   * * `left`
-   * * `right`
+   *
+   * * `left`：显示在左侧
+   * * `right`：显示在右侧
    */
   @property({ reflect: true })
-  public placement: 'left' | 'right' = 'left';
+  // eslint-disable-next-line prettier/prettier
+  public placement:
+    | /*显示在左侧*/ 'left'
+    | /*显示在右侧*/ 'right' = 'left';
 
   /**
    * 默认抽屉导航相对于 `body` 元素显示，该参数设置为 `true` 时，抽屉导航将相对于它的父元素显示

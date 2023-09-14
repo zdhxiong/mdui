@@ -19,6 +19,15 @@ type CollapseItem = CollapseItemOriginal & {
 };
 
 /**
+ * @summary 折叠面板组件。需与 `<mdui-collapse-item>` 组件配合使用
+ *
+ * ```html
+ * <mdui-collapse>
+ * ..<mdui-collapse-item header="header-1">content-1</mdui-collapse-item>
+ * ..<mdui-collapse-item header="header-2">content-2</mdui-collapse-item>
+ * </mdui-collapse>
+ * ```
+ *
  * @event change - 当前打开的折叠面板项改变时触发
  *
  * @slot - `<mdui-collapse-item>` 组件

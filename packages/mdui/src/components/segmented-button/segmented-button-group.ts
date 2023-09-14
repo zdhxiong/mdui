@@ -28,13 +28,22 @@ type SegmentedButton = SegmentedButtonOriginal & {
 };
 
 /**
- * @event click - 点击时触发
+ * @summary 分段按钮组件。需与 `<mdui-segmented-button>` 组件配合使用
+ *
+ * ```html
+ * <mdui-segmented-button-group>
+ * ..<mdui-segmented-button>Day</mdui-segmented-button>
+ * ..<mdui-segmented-button>Week</mdui-segmented-button>
+ * ..<mdui-segmented-button>Month</mdui-segmented-button>
+ * </mdui-segmented-button-group>
+ * ```
+ *
  * @event change - 选中的值变更时触发
  * @event invalid - 表单字段验证未通过时触发
  *
  * @slot - `<mdui-segmented-button>` 组件
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-segmented-button-group')
 export class SegmentedButtonGroup extends LitElement implements FormControl {
@@ -50,18 +59,21 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
     type: Boolean,
     reflect: true,
     converter: booleanConverter,
+    attribute: 'full-width',
   })
-  public fullwidth = false;
+  public fullWidth = false;
 
   /**
-   * 分段按钮的可选中黄台。默认为不可选中。可选值为：
+   * 分段按钮的可选中状态。默认为不可选中。可选值为：
+   *
    * * `single`：最多只能选中一个
    * * `multiple`：可以选中多个
    */
   @property({ reflect: true })
+  // eslint-disable-next-line prettier/prettier
   public selects?:
-    | 'single' /*分段按钮项为单选*/
-    | 'multiple' /*分段按钮项为多选*/;
+    | /*最多只能选中一个*/ 'single'
+    | /*可以选中多个*/ 'multiple';
 
   /**
    * 是否为禁用状态

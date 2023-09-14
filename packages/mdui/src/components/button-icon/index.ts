@@ -14,20 +14,26 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click - 点击时触发
+ * @summary 图标按钮组件
+ *
+ * ```html
+ * <mdui-button-icon icon="search"></mdui-button-icon>
+ * ```
+ *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
  * @event change - 选中状态变更时触发
+ * @event invalid - 表单字段验证未通过时触发
  *
  * @slot - 图标组件
  * @slot selected-icon 选中状态显示的图标元素
  *
- * @csspart button - 内部的 `button` 或 `a` 元素
- * @csspart icon - 图标组件
+ * @csspart button - 内部的 `<button>` 或 `<a>` 元素
+ * @csspart icon - 未选中状态的图标
  * @csspart selected-icon 选中状态的图标
- * @csspart loading - 加载中动画
+ * @csspart loading - 加载中状态的 `<mdui-circular-progress>` 元素
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-button-icon')
 export class ButtonIcon extends ButtonBase {
@@ -35,17 +41,18 @@ export class ButtonIcon extends ButtonBase {
 
   /**
    * 图标按钮的形状。可选值为：
-   * * `standard`
-   * * `filled`
-   * * `tonal`
-   * * `outlined`
+   *
+   * * `standard`：用于最低优先级的操作
+   * * `filled`：具有最强视觉效果，用于高优先级的操作
+   * * `tonal`：视觉效果介于 `filled` 和 `outlined` 之间，用于中高优先级的操作
+   * * `outlined`：用于中等优先级的操作
    */
   @property({ reflect: true })
   public variant:
-    | 'standard' /*预览图*/
-    | 'filled' /*预览图*/
-    | 'tonal' /*预览图*/
-    | 'outlined' /*预览图*/ = 'standard';
+    | /*用于最低优先级的操作*/ 'standard'
+    | /*具有最强视觉效果，用于高优先级的操作*/ 'filled'
+    | /*视觉效果介于 `filled` 和 `outlined` 之间，用于中高优先级的操作*/ 'tonal'
+    | /*用于中等优先级的操作*/ 'outlined' = 'standard';
 
   /**
    * Material Icons 图标名。也可以通过 default slot 设置

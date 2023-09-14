@@ -17,11 +17,16 @@ import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
+ * @summary 消息条组件
+ *
+ * ```html
+ * <mdui-snackbar>message</mdui-snackbar>
+ * ```
+ *
  * @event open - Snackbar 开始显示时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 Snackbar 显示
  * @event opened - Snackbar 显示动画完成时，事件被触发
  * @event close - Snackbar 开始隐藏时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 Snackbar 关闭
  * @event closed - Snackbar 隐藏动画完成时，事件被触发
- * @event click - 点击 Snackbar 时触发
  * @event action-click - 点击操作按钮时触发
  *
  * @slot - Snackbar 中的消息文本内容
@@ -29,12 +34,13 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @slot close-button - 右侧的关闭按钮。必须设置 `closeable` 属性为 `true` 才会显示该按钮
  * @slot close-icon - 右侧的关闭按钮中的图标
  *
- * @csspart message - 消息文本的容器
+ * @csspart message - 消息文本
  * @csspart action - 操作按钮
  * @csspart close-button - 关闭按钮
  * @csspart close-icon - 关闭按钮中的图标
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-snackbar')
 export class Snackbar extends LitElement {
@@ -52,6 +58,7 @@ export class Snackbar extends LitElement {
 
   /**
    * Snackbar 出现的位置。默认为 `bottom`。可选值为：
+   *
    * * `top`：位于顶部，居中对齐
    * * `top-start`：位于顶部，左对齐
    * * `top-end`：位于顶部，右对齐
@@ -61,12 +68,12 @@ export class Snackbar extends LitElement {
    */
   @property({ reflect: true })
   public placement:
-    | 'top' /*位于顶部，居中对齐*/
-    | 'top-start' /*位于顶部，左对齐*/
-    | 'top-end' /*位于顶部，右对齐*/
-    | 'bottom' /*位于底部，居中对齐*/
-    | 'bottom-start' /*位于底部，左对齐*/
-    | 'bottom-end' /*位于底部，右对齐*/ = 'bottom';
+    | /*位于顶部，居中对齐*/ 'top'
+    | /*位于顶部，左对齐*/ 'top-start'
+    | /*位于顶部，右对齐*/ 'top-end'
+    | /*位于底部，居中对齐*/ 'bottom'
+    | /*位于底部，左对齐*/ 'bottom-start'
+    | /*位于底部，右对齐*/ 'bottom-end' = 'bottom';
 
   /**
    * 操作按钮的文本。也可以通过 `slot="action"` 设置操作按钮
@@ -102,12 +109,16 @@ export class Snackbar extends LitElement {
   public closeIcon?: string;
 
   /**
-   * 消息文本最多显示几行。默认不限制行数。可选值为
+   * 消息文本最多显示几行。默认不限制行数。可选值为：
+   *
    * * `1`：消息文本最多显示一行
    * * `2`：消息文本最多显示两行
    */
   @property({ type: Number, reflect: true, attribute: 'message-line' })
-  public messageLine?: 1 | 2;
+  // eslint-disable-next-line prettier/prettier
+  public messageLine?:
+    | /*消息文本最多显示一行*/ 1
+    | /*消息文本最多显示两行*/ 2;
 
   /**
    * 在多长时间后自动关闭（单位为毫秒）。设置为 `0` 时，不自动关闭。默认为 5 秒后自动关闭。

@@ -8,6 +8,16 @@ import type { LayoutPlacement } from './helper.js';
 import type { TemplateResult } from 'lit';
 
 /**
+ * @summary 布局项组件
+ *
+ * ```html
+ * <mdui-layout>
+ * ..<mdui-layout-item></mdui-layout-item>
+ * ..<mdui-layout-item></mdui-layout-item>
+ * ..<mdui-layout-main></mdui-layout-main>
+ * </mdui-layout>
+ * ```
+ *
  * @slot - 可以是任意内容
  */
 @customElement('mdui-layout-item')
@@ -19,6 +29,7 @@ export class LayoutItem extends LayoutItemBase {
 
   /**
    * 该组件所处位置。可选值为：
+   *
    * * `top`：位于上方
    * * `bottom`：位于下方
    * * `left`：位于左侧
@@ -26,10 +37,10 @@ export class LayoutItem extends LayoutItemBase {
    */
   @property({ reflect: true })
   public placement:
-    | 'top' /*位于上方*/
-    | 'bottom' /*位于下方*/
-    | 'left' /*位于左侧*/
-    | 'right' /*位于右侧*/ = 'top';
+    | /*位于上方*/ 'top'
+    | /*位于下方*/ 'bottom'
+    | /*位于左侧*/ 'left'
+    | /*位于右侧*/ 'right' = 'top';
 
   protected override get layoutPlacement(): LayoutPlacement {
     return this.placement;

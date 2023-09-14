@@ -10,7 +10,11 @@ import { style } from './style.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
 
 /**
- * @event click - 点击时触发
+ * @summary 图标组件
+ *
+ * ```html
+ * <mdui-icon name="search"></mdui-icon>
+ * ```
  *
  * @slot - `svg` 图标的内容
  */

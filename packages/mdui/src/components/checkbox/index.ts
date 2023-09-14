@@ -22,7 +22,12 @@ import type { TemplateResult, CSSResultGroup } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click - 点击时触发
+ * @summary 复选框组件
+ *
+ * ```html
+ * <mdui-checkbox>Checkbox</mdui-checkbox>
+ * ```
+ *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
  * @event change - 选中状态变更时触发
@@ -32,12 +37,12 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot - 文本
  * @slot unchecked-icon - 未选中状态图标
  * @slot checked-icon - 选中状态图标
- * @slot indeterminate-icon - 未确定状态图标
+ * @slot indeterminate-icon - 不确定状态图标
  *
- * @csspart control - 选择框
+ * @csspart control - 左侧图标容器
  * @csspart unchecked-icon - 未选中状态图标
  * @csspart checked-icon - 选中状态图标
- * @csspart indeterminate-icon - 未确定状态图标
+ * @csspart indeterminate-icon - 不确定状态图标
  * @csspart label - 文本
  */
 @customElement('mdui-checkbox')

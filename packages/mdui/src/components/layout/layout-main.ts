@@ -8,6 +8,16 @@ import type { Layout } from './layout.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
+ * @summary 布局主内容组件
+ *
+ * ```html
+ * <mdui-layout>
+ * ..<mdui-layout-item></mdui-layout-item>
+ * ..<mdui-layout-item></mdui-layout-item>
+ * ..<mdui-layout-main></mdui-layout-main>
+ * </mdui-layout>
+ * ```
+ *
  * @slot - 可以是任意内容
  */
 @customElement('mdui-layout-main')

@@ -5,6 +5,13 @@ import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
+/**
+ * @summary 分割线组件
+ *
+ * ```html
+ * <mdui-divider></mdui-divider>
+ * ```
+ */
 @customElement('mdui-divider')
 export class Divider extends LitElement {
   public static override styles: CSSResultGroup = [componentStyle, style];

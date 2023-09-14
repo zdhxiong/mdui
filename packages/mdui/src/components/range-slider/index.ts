@@ -17,17 +17,22 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click - 点击时触发
+ * @summary 范围滑块组件
+ *
+ * ```html
+ * <mdui-range-slider></mdui-range-slider>
+ * ```
+ *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
  * @event change - 在值发生了变更，且失去了焦点时，将触发该事件
  * @event input - 值变更时触发
  * @event invalid - 表单字段验证未通过时触发
  *
- * @csspart track-inactive - 底部未激活状态的轨道
+ * @csspart track-inactive - 未激活状态的轨道
  * @csspart track-active - 已激活状态的轨道
  * @csspart handle - 操作杆
- * @csspart label 提示文本
+ * @csspart label - 提示文本
  * @csspart tickmark - 刻度标记
  */
 @customElement('mdui-range-slider')

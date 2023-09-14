@@ -16,6 +16,15 @@ import type { CSSResultGroup, TemplateResult, PropertyValues } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
+ * @summary 折叠面板项组件。需与 `<mdui-collapse>` 组件配合使用
+ *
+ * ```html
+ * <mdui-collapse>
+ * ..<mdui-collapse-item header="header-1">content-1</mdui-collapse-item>
+ * ..<mdui-collapse-item header="header-2">content-2</mdui-collapse-item>
+ * </mdui-collapse>
+ * ```
+ *
  * @event open - 开始打开时，事件被触发
  * @event opened - 打开动画完成时，事件被触发
  * @event close - 开始关闭时，事件被触发

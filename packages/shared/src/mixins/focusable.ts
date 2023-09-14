@@ -37,7 +37,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
 ): Constructor<FocusableMixinInterface> & T => {
   class FocusableMixinClass extends superclass {
     /**
-     * 是否在页面加载时自动获得焦点
+     * 是否在页面加载完成后自动获得焦点
      */
     @property({
       type: Boolean,
@@ -189,7 +189,11 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     }
 
     /**
-     * 将焦点设置在当前元素上
+     * 将焦点设置在当前元素。
+     *
+     * 可传入一个对象作为参数。对象属性为：
+     *
+     * * `preventScroll`：默认情况下，在聚焦后会滚动页面，以将聚焦的元素滚动到视图中。可将该属性设为 `true` 以阻止页面滚动。
      */
     public override focus(options?: FocusOptions): void {
       if (this.focusDisabled || !this.focusElement) {

@@ -42,11 +42,20 @@ type MenuItem = MenuItemOriginal & {
  * * `Enter` - 包含子菜单时，打开子菜单；为链接时，跳转链接
  * * `Escape` - 子菜单已打开时，关闭子菜单
  *
+ * @summary 菜单组件。需与 `<mdui-menu-item>` 组件配合使用
+ *
+ * ```html
+ * <mdui-menu>
+ * ..<mdui-menu-item>Item 1</mdui-menu-item>
+ * ..<mdui-menu-item>Item 2</mdui-menu-item>
+ * </mdui-menu>
+ * ```
+ *
  * @event change - 菜单项的选中状态变化时触发
  *
  * @slot - 子菜单项（`<mdui-menu-item>`）、分割线（[`<mdui-divider>`](/docs/2/components/divider)）等元素
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-menu')
 export class Menu extends LitElement {
@@ -54,11 +63,15 @@ export class Menu extends LitElement {
 
   /**
    * 菜单项的可选中状态。默认为不可选中。可选值为：
+   *
    * * `single`：最多只能选中一个
    * * `multiple`：可以选中多个
    */
   @property({ reflect: true })
-  public selects?: 'single' /*菜单项为单选*/ | 'multiple' /*菜单项为多选*/;
+  // eslint-disable-next-line prettier/prettier
+  public selects?:
+    | /*最多只能选中一个*/ 'single'
+    | /*可以选中多个*/ 'multiple' ;
 
   /**
    * 当前选中的 `<mdui-menu-item>` 的值
@@ -83,17 +96,18 @@ export class Menu extends LitElement {
 
   /**
    * 子菜单的触发方式，支持传入多个值，用空格分隔。可选值为：
-   * * `click`
-   * * `hover`
-   * * `focus`
+   *
+   * * `click`：点击菜单项时打开子菜单
+   * * `hover`：鼠标悬浮到菜单项上时打开子菜单
+   * * `focus`：聚焦到菜单项上时打开子菜单
    * * `manual`：使用了该值时，只能使用编程方式打开和关闭子菜单，且不能再指定其他触发方式
    */
   @property({ reflect: true, attribute: 'submenu-trigger' })
   public submenuTrigger:
-    | 'click' /*点击时触发*/
-    | 'hover' /*鼠标悬浮时触发*/
-    | 'focus' /*聚焦时触发*/
-    | 'manual' /*通过编程方式触发*/
+    | /*点击菜单项时打开子菜单*/ 'click'
+    | /*鼠标悬浮到菜单项上时打开子菜单*/ 'hover'
+    | /*聚焦到菜单项上时打开子菜单*/ 'focus'
+    | /*使用了该值时，只能使用编程方式打开和关闭子菜单，且不能再指定其他触发方式*/ 'manual'
     | string = 'click hover';
 
   /**

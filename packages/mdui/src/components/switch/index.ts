@@ -23,7 +23,12 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click - 点击时触发
+ * @summary 开关切换组件
+ *
+ * ```html
+ * <mdui-switch></mdui-switch>
+ * ```
+ *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
  * @event change - 选中状态变更时触发
@@ -37,6 +42,9 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart thumb - 图标容器
  * @csspart unchecked-icon - 未选中状态的图标
  * @csspart checked-icon 选中状态的图标
+ *
+ * @cssprop --shape-corner - 组件的轨道的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-thumb - 组件的图标容器的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-switch')
 export class Switch

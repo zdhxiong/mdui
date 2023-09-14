@@ -22,7 +22,16 @@ type NavigationBarItem = NavigationBarItemOriginal & {
 };
 
 /**
- * @event click - 点击时触发
+ * @summary 底部导航栏组件。需与 `<mdui-navigation-bar-item>` 组件配合使用
+ *
+ * ```html
+ * <mdui-navigation-bar>
+ * ..<mdui-navigation-bar-item icon="place">Item 1</mdui-navigation-bar-item>
+ * ..<mdui-navigation-bar-item icon="commute">Item 2</mdui-navigation-bar-item>
+ * ..<mdui-navigation-bar-item icon="people">Item 3</mdui-navigation-bar-item>
+ * </mdui-navigation-bar>
+ * ```
+ *
  * @event change - 值变化时触发
  * @event show - 开始显示时，事件被触发。可以通过调用 `event.preventDefault()` 阻止显示
  * @event shown - 显示动画完成时，事件被触发
@@ -31,7 +40,8 @@ type NavigationBarItem = NavigationBarItemOriginal & {
  *
  * @slot - `<mdui-navigation-bar-item>` 组件
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-navigation-bar')
 export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
@@ -52,6 +62,7 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
 
   /**
    * 文本的可视状态。可选值为：
+   *
    * * `auto`：小于等于3个选项时，始终显示；大于3个选项时，仅显示选中状态的文本
    * * `selected`：仅选中状态显示文本
    * * `labeled`：始终显示文本
@@ -59,10 +70,10 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
    */
   @property({ reflect: true, attribute: 'label-visibility' })
   public labelVisibility:
-    | 'auto' /*小于等于3个选项时，始终显示；大于3个选项时，仅显示选中状态的文本*/
-    | 'selected' /*仅选中状态显示文本*/
-    | 'labeled' /*始终显示文本*/
-    | 'unlabeled' /*始终不显示文本*/ = 'auto';
+    | /*小于等于3个选项时，始终显示；大于3个选项时，仅显示选中状态的文本*/ 'auto'
+    | /*仅选中状态显示文本*/ 'selected'
+    | /*始终显示文本*/ 'labeled'
+    | /*始终不显示文本*/ 'unlabeled' = 'auto';
 
   /**
    * 当前选中的 `<mdui-navigation-bar-item>` 的值

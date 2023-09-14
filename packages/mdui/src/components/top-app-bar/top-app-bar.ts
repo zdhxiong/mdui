@@ -21,6 +21,17 @@ type TopAppBarTitle = {
 };
 
 /**
+ * @summary 顶部应用栏组件
+ *
+ * ```html
+ * <mdui-top-app-bar>
+ * ..<mdui-button-icon icon="menu"></mdui-button-icon>
+ * ..<mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
+ * ..<div style="flex-grow: 1"></div>
+ * ..<mdui-button-icon icon="more_vert"></mdui-button-icon>
+ * </mdui-top-app-bar>
+ * ```
+ *
  * @event show - 开始显示时，事件被触发。可以通过调用 `event.preventDefault()` 阻止显示
  * @event shown - 显示动画完成时，事件被触发
  * @event hide - 开始隐藏时，事件被触发。可以通过调用 `event.preventDefault()` 阻止隐藏
@@ -28,7 +39,8 @@ type TopAppBarTitle = {
  *
  * @slot - 顶部应用栏内部的元素
  *
- * @cssprop --shape-corner 圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-top-app-bar')
 export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
@@ -38,18 +50,19 @@ export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   ];
 
   /**
-   * 顶部应用栏形状。可选值为：
-   * * `center-aligned`
-   * * `small`
-   * * `medium`
-   * * `large`
+   * 顶部应用栏形状。默认为 `small`。可选值为：
+   *
+   * * `center-aligned`：小型应用栏，标题居中
+   * * `small`：小型应用栏
+   * * `medium`：中型应用栏
+   * * `large`：大型应用栏
    */
   @property({ reflect: true })
   public variant:
-    | 'center-aligned' /*预览图*/
-    | 'small' /*预览图*/
-    | 'medium' /*预览图*/
-    | 'large' /*预览图*/ = 'small';
+    | /*小型应用栏，标题居中*/ 'center-aligned'
+    | /*小型应用栏*/ 'small'
+    | /*中型应用栏*/ 'medium'
+    | /*大型应用栏*/ 'large' = 'small';
 
   /**
    * 是否隐藏
@@ -73,15 +86,16 @@ export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
 
   /**
    * 滚动行为。可同时使用多个值，多个值之间用空格分割。可选值为：
+   *
    * * `hide`：滚动时隐藏
-   * * `shrink`：滚动时缩小成 `variant="small"` 的样式
+   * * `shrink`：在中型、大型应用栏中可使用，滚动时缩小成小型应用栏的样式
    * * `elevate`：滚动时添加阴影
    */
   @property({ reflect: true, attribute: 'scroll-behavior' })
   public scrollBehavior?:
-    | 'hide' /*滚动时隐藏*/
-    | 'shrink' /*滚动时缩小成 `variant="small"` 的样式*/
-    | 'elevate' /*滚动时添加阴影*/;
+    | /*滚动时隐藏*/ 'hide'
+    | /*在中型、大型应用栏中可使用，滚动时缩小成小型应用栏的样式*/ 'shrink'
+    | /*滚动时添加阴影*/ 'elevate';
 
   /**
    * 滚动条是否不位于顶部

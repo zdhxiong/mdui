@@ -21,7 +21,16 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click - 点击时触发
+ * @summary 列表项组件。需与 `<mdui-list>` 组件配合使用
+ *
+ * ```html
+ * <mdui-list>
+ * ..<mdui-list-subheader>Subheader</mdui-list-subheader>
+ * ..<mdui-list-item>Item 1</mdui-list-item>
+ * ..<mdui-list-item>Item 2</mdui-list-item>
+ * </mdui-list>
+ * ```
+ *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
  *
@@ -31,15 +40,15 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot end-icon - 列表项右侧的元素
  * @slot custom - 任意自定义内容
  *
- * @csspart container - 容器
+ * @csspart container - 列表项容器
  * @csspart icon - 左侧图标
  * @csspart end-icon - 右侧图标
  * @csspart body - 中间部分
  * @csspart headline - 主标题
  * @csspart description - 副标题
  *
- * @cssprop --shape-corner 列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --shape-corner-rounded 指定了 `rounded` 时，列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-rounded - 指定了 `rounded` 时，列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-list-item')
 export class ListItem extends AnchorMixin(
@@ -57,10 +66,17 @@ export class ListItem extends AnchorMixin(
   public headline?: string;
 
   /**
-   * 主文本行数，超过行数限制后会截断显示。默认为没有行数限制
+   * 主文本行数，超过行数限制后会截断显示。默认为没有行数限制。可选值为：
+   *
+   * * `1`：显示单行文本，超出后截断显示
+   * * `2`：显示两行文本，超出后截断显示
+   * * `3`：显示三行文本，超出后截断显示
    */
   @property({ type: Number, reflect: true, attribute: 'headline-line' })
-  public headlineLine?: 1 | 2 | 3;
+  public headlineLine?:
+    | /*显示单行文本，超出后截断显示*/ 1
+    | /*显示两行文本，超出后截断显示*/ 2
+    | /*显示三行文本，超出后截断显示*/ 3;
 
   /**
    * 副文本。也可以通过 `slot="description"` 设置
@@ -69,7 +85,11 @@ export class ListItem extends AnchorMixin(
   public description?: string;
 
   /**
-   * 副文本行数，超过行数限制后会截断显示。默认为没有行数限制
+   * 副文本行数，超过行数限制后会截断显示。默认为没有行数限制。可选值为：
+   *
+   * * `1`：显示单行文本，超出后截断显示
+   * * `2`：显示两行文本，超出后截断显示
+   * * `3`：显示三行文本，超出后截断显示
    */
   @property({ type: Number, reflect: true, attribute: 'description-line' })
   public descriptionLine?: 1 | 2 | 3;
@@ -128,12 +148,16 @@ export class ListItem extends AnchorMixin(
 
   /**
    * 列表项的垂直对齐方式。可选值为：
+   *
    * * `start`：顶部对齐
    * * `center`：居中对齐
    * * `end`：底部对齐
    */
   @property({ reflect: true })
-  public alignment: 'start' | 'center' | 'end' = 'center';
+  public alignment:
+    | /*顶部对齐*/ 'start'
+    | /*居中对齐*/ 'center'
+    | /*底部对齐*/ 'end' = 'center';
 
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private readonly iconElements!: HTMLElement[];

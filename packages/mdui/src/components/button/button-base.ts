@@ -51,16 +51,6 @@ export class ButtonBase extends AnchorMixin(
   public loading = false;
 
   /**
-   * 是否在页面加载时自动获得焦点
-   */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: booleanConverter,
-  })
-  public override autofocus = false;
-
-  /**
    * 按钮的名称，将与表单数据一起提交
    *
    * **Note**：仅在未指定 `href` 属性时可用
@@ -78,6 +68,7 @@ export class ButtonBase extends AnchorMixin(
 
   /**
    * 按钮的类型。默认值为 `button`。可选值为：
+   *
    * * `submit`：点击按钮将表单数据提交给服务器
    * * `reset`：点击按钮将表单中所有组件重置为初始值
    * * `button`：按钮没有默认行为
@@ -86,9 +77,9 @@ export class ButtonBase extends AnchorMixin(
    */
   @property({ reflect: true })
   public type:
-    | 'submit' /*此按钮将表单数据提交给服务器*/
-    | 'reset' /*此按钮重置所有组件为初始值*/
-    | 'button' /*此按钮没有默认行为*/ = 'button';
+    | /*此按钮将表单数据提交给服务器*/ 'submit'
+    | /*此按钮重置所有组件为初始值*/ 'reset'
+    | /*此按钮没有默认行为*/ 'button' = 'button';
 
   /**
    * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
@@ -102,42 +93,53 @@ export class ButtonBase extends AnchorMixin(
 
   /**
    *
-   * 覆盖 `form` 元素的 `action` 属性。
+   * 指定提交表单的 URL。
    *
-   * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
+   * 指定了该属性时，将覆盖 `form` 元素的 `action` 属性。
+   *
+   * **Note**：仅在未指定 `href` 属性、且 `type="submit"` 时可用。
    */
   @property({ reflect: true, attribute: 'formaction' })
   public formAction?: string;
 
   /**
-   * 覆盖 `form` 元素的 `enctype` 属性。可选值为：
-   * * `application/x-www-form-urlencoded`：未指定时的默认值
-   * * `multipart/form-data`
-   * * `text/plain`
+   * 指定提交表单到服务器的内容类型。可选值为：
    *
-   * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
+   * * `application/x-www-form-urlencoded`：未指定属性时的默认值
+   * * `multipart/form-data`：当表单包含 `<input type="file">` 元素时使用此值
+   * * `text/plain`：出现于 HTML5，用于调试
+   *
+   * 指定了该属性时，将覆盖 `form` 元素的 `enctype` 属性。
+   *
+   * **Note**：仅在未指定 `href` 属性、且 `type="submit"` 时可用
    */
   @property({ reflect: true, attribute: 'formenctype' })
   public formEnctype?:
-    | 'application/x-www-form-urlencoded'
-    | 'multipart/form-data'
-    | 'text/plain';
+    | /*未指定属性时的默认值*/ 'application/x-www-form-urlencoded'
+    | /*当表单包含 `<input type="file">` 元素时使用此值*/ 'multipart/form-data'
+    | /*出现于 HTML5，用于调试*/ 'text/plain';
 
   /**
-   * 覆盖 `form` 元素的 `method` 属性。可选值为：
-   * * `post`
-   * * `get`
+   * 指定提交表单使用的 HTTP 方法。可选值为：
    *
-   * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
+   * * `post`：来自表单的数据被包含在表单内容中，被发送到服务器
+   * * `get`：来自表单的数据以 `?` 作为分隔符被附加到 form 的 URI 属性中，得到的 URI 被发送到服务器。当表单没有副作用，且仅包含 ASCII 字符时使用这种方法
+   *
+   * 指定了该属性时，将覆盖 `form` 元素的 `method` 属性。
+   *
+   * **Note**：仅在未指定 `href` 属性、且 `type="submit"` 时可用。
    */
   @property({ reflect: true, attribute: 'formmethod' })
-  public formMethod?: 'post' | 'get';
+  public formMethod?:
+    | /*来自表单的数据被包含在表单内容中，被发送到服务器*/ 'post'
+    | /*来自表单的数据以 `?` 作为分隔符被附加到 form 的 URI 属性中，得到的 URI 被发送到服务器。当表单没有副作用，且仅包含 ASCII 字符时使用这种方法*/ 'get';
 
   /**
+   * 指定了该属性时，表示当表单被提交时不需要验证。
    *
-   * 覆盖 `form` 元素的 `novalidate` 属性。
+   * 指定了该属性时，将覆盖 `form` 元素的 `novalidate` 属性。
    *
-   * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
+   * **Note**：仅在未指定 `href` 属性、且 `type="submit"` 时可用。
    */
   @property({
     type: Boolean,
@@ -145,19 +147,26 @@ export class ButtonBase extends AnchorMixin(
     converter: booleanConverter,
     attribute: 'formnovalidate',
   })
-  public formNovalidate = false;
+  public formNoValidate = false;
 
   /**
-   * 覆盖 `form` 元素的 `target` 属性。可选值为：
-   * * `_self`
-   * * `_blank`
-   * * `_parent`
-   * * `_top`
+   * 在何处显示提交表单后接收到的响应。可选值为：
    *
-   * **Note**：仅在未指定 `href` 属性、且 type="submit" 时可用
+   * * `_self`：默认。在同一框架中打开
+   * * `_blank`：在新窗口中打开
+   * * `_parent`：在父框架中打开
+   * * `_top`：在整个窗口中打开
+   *
+   * 指定了该属性时，将覆盖 `form` 元素的 `target` 属性。
+   *
+   * **Note**：仅在未指定 `href` 属性、且 `type="submit"` 时可用
    */
   @property({ reflect: true, attribute: 'formtarget' })
-  public formTarget?: '_self' | '_blank' | '_parent' | '_top';
+  public formTarget?:
+    | /*默认。在同一框架中打开*/ '_self'
+    | /*在新窗口中打开*/ '_blank'
+    | /*在父框架中打开*/ '_parent'
+    | /*在整个窗口中打开*/ '_top';
 
   private readonly formController: FormController = new FormController(this);
 

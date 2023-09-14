@@ -6,18 +6,32 @@ import { layoutStyle } from './layout-style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
+ * @summary 布局组件
+ *
+ * ```html
+ * <mdui-layout>
+ * ..<mdui-layout-item></mdui-layout-item>
+ * ..<mdui-layout-item></mdui-layout-item>
+ * ..<mdui-layout-main></mdui-layout-main>
+ * </mdui-layout>
+ * ```
+ *
  * @slot - 可以是 [`<mdui-top-app-bar>`](/docs/2/components/top-app-bar)、[`<mdui-bottom-app-bar>`](/docs/2/components/bottom-app-bar)、[`<mdui-navigation-bar>`](/docs/2/components/navigation-bar)、[`<mdui-navigation-drawer>`](/docs/2/components/navigation-drawer)、[`<mdui-navigation-rail>`](/docs/2/components/navigation-rail)、`<mdui-layout-item>`、`<mdui-layout-main>` 元素
  */
 @customElement('mdui-layout')
 export class Layout extends LitElement {
   public static override styles: CSSResultGroup = [componentStyle, layoutStyle];
 
+  /**
+   * 把当前布局的高度设为 100%
+   */
   @property({
     type: Boolean,
     reflect: true,
     converter: booleanConverter,
+    attribute: 'full-height',
   })
-  public fullheight = false;
+  public fullHeight = false;
 
   protected override render(): TemplateResult {
     return html`<slot></slot>`;

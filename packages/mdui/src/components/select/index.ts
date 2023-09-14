@@ -31,25 +31,33 @@ import type { CSSResultGroup, TemplateResult, WarningKind } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @event click
- * @event focus
- * @event blur
- * @event change
- * @event invalid
+ * @summary 选择框组件。需与 `<mdui-menu-item>` 组件配合使用
+ *
+ * ```html
+ * <mdui-select>
+ * ..<mdui-menu-item value="item-1">Item 1</mdui-menu-item>
+ * ..<mdui-menu-item value="item-2">Item 2</mdui-menu-item>
+ * </mdui-select>
+ * ```
+ *
+ * @event focus - 获得焦点时触发
+ * @event blur - 失去焦点时触发
+ * @event change - 选中的值变更时触发
+ * @event invalid - 表单字段验证未通过时触发
  * @event clear - 在点击由 `clearable` 属性生成的清空按钮时触发。可以通过调用 `event.preventDefault()` 阻止清空下拉框
  *
  * @slot - `<mdui-menu-item>` 元素
- * @slot icon
- * @slot end-icon
- * @slot error-icon
- * @slot prefix
- * @slot suffix
- * @slot clear-button
- * @slot clear-icon
- * @slot helper
+ * @slot icon - 左侧图标
+ * @slot end-icon - 右侧图标
+ * @slot error-icon - 验证失败状态的右侧图标
+ * @slot prefix - 左侧文本
+ * @slot suffix - 右侧文本
+ * @slot clear-button - 清空按钮
+ * @slot clear-icon - 清空按钮中的图标
+ * @slot helper - 底部的帮助文本
  *
- * @csspart text-field 文本框，即 [`<mdui-text-field>`](/docs/2/components/text-field) 元素
- * @csspart menu 下拉菜单，即 [`<mdui-menu>`](/docs/2/components/menu) 元素
+ * @csspart text-field - 文本框，即 [`<mdui-text-field>`](/docs/2/components/text-field) 元素
+ * @csspart menu - 下拉菜单，即 [`<mdui-menu>`](/docs/2/components/menu) 元素
  */
 @customElement('mdui-select')
 export class Select extends FocusableMixin(LitElement) implements FormControl {
@@ -59,11 +67,14 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
 
   /**
    * 下拉框形状。可选值为：
-   * * `filled`
-   * * `outlined`
+   *
+   * * `filled`：带背景色的下拉框，视觉效果较强
+   * * `outlined`：带边框的下拉框，视觉效果较弱
    */
   @property({ reflect: true })
-  public variant: 'filled' /*预览图*/ | 'outlined' /*预览图*/ = 'filled';
+  public variant:
+    | /*带背景色的下拉框，视觉效果较强*/ 'filled'
+    | /*带边框的下拉框，视觉效果较弱*/ 'outlined' = 'filled';
 
   /**
    * 是否支持多选
@@ -132,15 +143,16 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
 
   /**
    * 下拉框的方位。可选值为：
+   *
    * * `auto`：自动判断方位
    * * `bottom`：位于下方
    * * `top`：位于上方
    */
   @property({ reflect: true })
   public placement:
-    | 'auto' /*自动判断方位*/
-    | 'bottom' /*位于下方*/
-    | 'top' /*位于上方*/ = 'auto';
+    | /*自动判断方位*/ 'auto'
+    | /*位于下方*/ 'bottom'
+    | /*位于上方*/ 'top' = 'auto';
 
   /**
    * 文本是否右对齐

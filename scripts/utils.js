@@ -1007,4 +1007,9 @@ export const buildWebTypes = (metadataPath, packageFolder) => {
     JSON.stringify(webTypes, null, 2),
     'utf8',
   );
+  fs.writeFileSync(
+    `./packages/jetbrains-plugin/src/main/resources/web-types/${packageFolder}.web-types.zh-cn.json`,
+    JSON.stringify(webTypes, null, 2),
+    'utf8',
+  );
 };

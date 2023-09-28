@@ -1,0 +1,40 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+  <id>org.mdui.plugin</id>
+  <name>mdui</name>
+  <version>2.0.0</version>
+  <idea-version since-build="223"/>
+  <vendor email="zdhxiong@gmail.com" url="https://www.mdui.org">zdhxiong</vendor>
+  <description><![CDATA[
+    为 mdui 框架提供自动完成、悬停提示等功能的 JetBrains IDE 插件。
+    支持以下 JetBrains IDE：
+    <ul>
+      <li>IntelliJ IDEA</li>
+      <li>PyCharm</li>
+      <li>WebStorm</li>
+      <li>PhpStorm</li>
+      <li>Rider</li>
+      <li>CLion</li>
+      <li>RubyMine</li>
+      <li>GoLand</li>
+    </ul>
+    支持在以下场景中提供自动完成及悬浮提示：
+    <ul>
+      <li>HTML 标签名</li>
+      <li>HTML 标签属性名</li>
+      <li>HTML 标签属性枚举值</li>
+      <li>HTML 标签中的事件名</li>
+      <li>CSS 中的 ::part() 选择器的 part 属性名</li>
+      <li>CSS 中组件内的 CSS 自定义属性名</li>
+      <li>CSS 中的全局 CSS 自定义属性名</li>
+      <li>CSS 中的全局 class 名</li>
+    </ul>
+    <img src="https://user-images.githubusercontent.com/3030330/274850317-97f2d074-d210-4319-8baf-7ccaa18976b5.gif"/>
+  ]]></description>
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.xml</depends>
+  <depends>JavaScript</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <webSymbols.webTypes source="web-types/mdui.web-types.zh-cn.json" enableByDefault="true"/>
+  </extensions>
+</idea-plugin>

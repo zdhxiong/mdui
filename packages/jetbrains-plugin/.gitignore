@@ -1,0 +1,8 @@
+.gradle
+.idea
+.run
+build/
+/src/main/resources/web-types/*.json
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/

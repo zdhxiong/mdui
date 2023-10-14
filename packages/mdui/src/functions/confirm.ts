@@ -109,8 +109,8 @@ interface Options {
 const defaultOptions: Required<
   Pick<Options, 'confirmText' | 'cancelText' | 'onConfirm' | 'onCancel'>
 > = {
-  confirmText: 'OK',
-  cancelText: 'Cancel',
+  confirmText: '确定',
+  cancelText: '取消',
   onConfirm: returnTrue,
   onCancel: returnTrue,
 };

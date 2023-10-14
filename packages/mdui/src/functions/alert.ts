@@ -89,7 +89,7 @@ interface Options {
 }
 
 const defaultOptions: Required<Pick<Options, 'confirmText' | 'onConfirm'>> = {
-  confirmText: 'OK',
+  confirmText: '确定',
   onConfirm: returnTrue,
 };
 

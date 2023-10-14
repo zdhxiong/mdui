@@ -139,8 +139,8 @@ const defaultOptions: Required<
     | 'textFieldOptions'
   >
 > = {
-  confirmText: 'OK',
-  cancelText: 'Cancel',
+  confirmText: '确定',
+  cancelText: '取消',
   onConfirm: returnTrue,
   onCancel: returnTrue,
   validator: returnTrue,

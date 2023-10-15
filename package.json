@@ -35,7 +35,7 @@
     "analyze:mdui": "cem analyze --config \"scripts/mdui/custom-elements-manifest.js\"",
     "vscode:mdui": "node scripts/mdui/build-vscode-data.js",
     "webtypes:mdui": "node scripts/mdui/build-web-types.js",
-    "publish": "npm run bundle && pnpm publish --recursive"
+    "publish": "npm run bundle && pnpm publish --recursive --access public"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "0.8.2",

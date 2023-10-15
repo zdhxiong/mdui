@@ -10,8 +10,8 @@
     "icons",
     "lit-styles",
     "mixins",
-    "mixin.less",
     "LICENSE",
+    "mixin.less",
     "package.json",
     "README.md"
   ],

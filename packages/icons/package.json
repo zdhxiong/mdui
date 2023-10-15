@@ -4,7 +4,6 @@
   "description": "Material Icons 的 Web Components 图标组件库",
   "type": "module",
   "files": [
-    "shared",
     "*.{js,d.ts}",
     "LICENSE",
     "package.json",

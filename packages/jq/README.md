@@ -1,43 +1,24 @@
 # @mdui/jq
 
-[![GitHub version](https://badge.fury.io/gh/zdhxiong%2F@mdui/jq.svg)](https://badge.fury.io/gh/zdhxiong%2F@mdui/jq)
-![Bower version](https://img.shields.io/bower/v/@mdui/jq.svg)
-[![npm version](https://img.shields.io/npm/v/@mdui/jq.svg)](https://www.npmjs.com/package/@mdui/jq)
-[![dependencies Status](https://david-dm.org/zdhxiong/@mdui/jq/status.svg)](https://david-dm.org/zdhxiong/@mdui/jq)
-[![devDependencies Status](https://david-dm.org/zdhxiong/@mdui/jq/dev-status.svg)](https://david-dm.org/zdhxiong/@mdui/jq?type=dev)
-[![CodeFactor](https://www.codefactor.io/repository/github/zdhxiong/@mdui/jq/badge)](https://www.codefactor.io/repository/github/zdhxiong/@mdui/jq)
-
-Note: 当前为 3.0 版本，正在开发中，将移除对 IE 浏览器的兼容
-
-3.0更新：
-* 移除对 IE 的兼容
-* data 方法的 data-* 属性改为从 dataset 中读取
-* ajax 全局事件名改为 ajaxStart、ajaxSuccess、ajaxError、ajaxComplete
-* 废弃 ajaxStart、ajaxSuccess、ajaxError、ajaxComplete 方法，现在统一通过 $(document).on() 监听 ajax 事件
-  其中 ajaxStart、ajaxError、ajaxComplete 事件的回调函数第二个参数为 { xhr, options }，
-  ajaxSuccess 事件的回调函数第二个参数为 { xhr, options, response }
-
-拥有和 jQuery 相似 API 的轻量级 JavaScript 工具库。已作为 [MDUI](https://github.com/zdhxiong/mdui) 内置工具库使用。
+拥有和 jQuery 相似 API 的轻量级 JavaScript 工具库。已作为 [mdui](https://github.com/zdhxiong/mdui) 内置工具库使用。
 
 @mdui/jq 全部使用 typescript 开发，可获得完美的类型提示。
 
-文档：https://www.mdui.org/docs/jq
+文档：https://www.mdui.org/docs/2/functions/jq
 
-## 在 ES6 模块化环境中使用
-
-通过 `npm` 安装 `@mdui/jq`：
+## 安装
 
 ```
 npm install @mdui/jq --save
 ```
 
-在 `js` 文件中导入 `@mdui/jq`：
+### 全量导入 `@mdui/jq`：
 
 ```js
-import $ from '@mdui/jq';
+import { $ } from '@mdui/jq';
 ```
 
-## 在 ES6 环境中按需导入所需模块
+## 按需导入所需模块
 
 因为 `@mdui/jq` 的大部分方法都是 `$` 的原型链方法，导致构建工具的 Tree shaking 无法自动移除没有用到的方法。
 
@@ -45,7 +26,7 @@ import $ from '@mdui/jq';
 
 ```js
 // 导入 $ 函数
-import $ from '@mdui/jq/$.js';
+import { $ } from '@mdui/jq/$.js';
 
 // 按需导入下面的原型链方法。导入对应的方法后，就能以这样的形式调用：$(document).method()
 // 注意：这些方法都依赖 $，因此导入这些方法前需要先导入 @mdui/jq/$.js
@@ -112,6 +93,7 @@ import '@mdui/jq/methods/replaceAll.js';
 import '@mdui/jq/methods/replaceWith.js';
 import '@mdui/jq/methods/serialize.js';
 import '@mdui/jq/methods/serializeArray.js';
+import '@mdui/jq/methods/serializeObject.js';
 import '@mdui/jq/methods/show.js';
 import '@mdui/jq/methods/siblings.js';
 import '@mdui/jq/methods/slice.js';
@@ -129,6 +111,7 @@ import '@mdui/jq/static/ajaxSetup.js';
 import '@mdui/jq/static/contains.js';
 import '@mdui/jq/static/data.js';
 import '@mdui/jq/static/each.js';
+import '@mdui/jq/static/extend.js';
 import '@mdui/jq/static/map.js';
 import '@mdui/jq/static/merge.js';
 import '@mdui/jq/static/param.js';
@@ -136,5 +119,5 @@ import '@mdui/jq/static/removeData.js';
 import '@mdui/jq/static/unique.js';
 
 // 上面提到的静态方法，也可以作为独立的函数使用。作为独立函数使用时，不需要依赖 $。
-import { ajax, ajaxSetup, contains, data, each, map, merge, param, removeData, unique } from '@mdui/jq/functions.js';
+import { ajax, ajaxSetup, contains, data, each, extend, map, merge, param, removeData, unique } from '@mdui/jq/functions.js';
 ```

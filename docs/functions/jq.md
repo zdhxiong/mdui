@@ -1835,10 +1835,10 @@ $(document).on('ajaxComplete', function (e, { xhr, options }) {
       <td colspan="3">
         <p>设置在 XMLHttpRequest 对象上的数据。</p>
 <pre><code class="language-js">$.ajax({
-url: '一个跨域 URL',
-xhrFields: {
-  withCredentials: true
-}
+  url: '一个跨域 URL',
+  xhrFields: {
+    withCredentials: true
+  }
 });</code></pre>
       </td>
     </tr>
@@ -1851,14 +1851,14 @@ xhrFields: {
       <td colspan="3">
         <p>HTTP 状态码和函数组成的对象。</p>
 <pre><code class="language-js">$.ajax({
-statusCode: {
-  404: function (xhr, textStatus) {
-    alert('返回状态码为 404 时被调用');
-  },
-  200: function (data, textStatus, xhr) {
-    alert('返回状态码为 200 时被调用');
+  statusCode: {
+    404: function (xhr, textStatus) {
+      alert('返回状态码为 404 时被调用');
+    },
+    200: function (data, textStatus, xhr) {
+      alert('返回状态码为 200 时被调用');
+    }
   }
-}
 });</code></pre>
         <p>状态码在 200 - 299 之间、或状态码为 304 时，表示请求成功，函数参数和 <code>success</code> 回调的参数相同；否则表示请求失败，函数参数和 <code>error</code> 回调的参数相同。</p>
       </td>
@@ -1907,9 +1907,9 @@ statusCode: {
       <td colspan="3">
         <p>在请求发送之前调用。返回 <code>false</code> 时将取消 AJAX 请求。</p>
 <pre><code class="language-js">$.ajax({
-beforeSend: function (xhr) {
-  // xhr 为 XMLHttpRequest 对象
-}
+  beforeSend: function (xhr) {
+    // xhr 为 XMLHttpRequest 对象
+  }
 });</code></pre>
       </td>
     </tr>
@@ -1922,11 +1922,11 @@ beforeSend: function (xhr) {
       <td colspan="3">
         <p>请求成功之后调用。</p>
 <pre><code class="language-js">$.ajax({
-success: function (data, textStatus, xhr) {
-  // data 为 AJAX 请求返回的数据
-  // textStatus 为包含成功代码的字符串
-  // xhr 为 XMLHttpRequest 对象
-}
+  success: function (data, textStatus, xhr) {
+    // data 为 AJAX 请求返回的数据
+    // textStatus 为包含成功代码的字符串
+    // xhr 为 XMLHttpRequest 对象
+  }
 });</code></pre>
       </td>
     </tr>
@@ -1939,10 +1939,10 @@ success: function (data, textStatus, xhr) {
       <td colspan="3">
         <p>请求出错时调用。</p>
 <pre><code class="language-js">$.ajax({
-error: function (xhr, textStatus) {
-  // xhr 为 XMLHttpRequest 对象
-  // textStatus 为包含错误代码的字符串
-}
+  error: function (xhr, textStatus) {
+    // xhr 为 XMLHttpRequest 对象
+    // textStatus 为包含错误代码的字符串
+  }
 });</code></pre>
       </td>
     </tr>
@@ -1955,10 +1955,10 @@ error: function (xhr, textStatus) {
       <td colspan="3">
         <p>请求完成时调用，无论请求成功或失败。</p>
 <pre><code class="language-js">$.ajax({
-complete: function (xhr, textStatus) {
-  // xhr 为 XMLHttpRequest 对象
-  // textStatus 为一个包含成功或错误代码的字符串
-}
+  complete: function (xhr, textStatus) {
+    // xhr 为 XMLHttpRequest 对象
+    // textStatus 为一个包含成功或错误代码的字符串
+  }
 });</code></pre>
       </td>
     </tr>

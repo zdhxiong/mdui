@@ -172,7 +172,7 @@ import type { CollapseItem } from 'mdui/components/collapse-item.js';
     <mdui-collapse-item trigger=".example-trigger">
       <mdui-list-item slot="header" icon="near_me">
         Item 1
-        <mdui-icon slot="end" class="example-trigger" name="keyboard_arrow_down"></mdui-icon>
+        <mdui-icon slot="end-icon" class="example-trigger" name="keyboard_arrow_down"></mdui-icon>
       </mdui-list-item>
       <div style="margin-left: 2.5rem">
         <mdui-list-item>Item 1 - subitem</mdui-list-item>

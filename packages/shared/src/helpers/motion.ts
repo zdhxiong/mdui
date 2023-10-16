@@ -48,6 +48,11 @@ export const getDuration = (
     | 'extra-long4', // 1000ms
 ): number => {
   const cssVariableName = `--mdui-motion-duration-${name}`;
+  const cssValue = $(element).css(cssVariableName).trim().toLowerCase();
 
-  return parseFloat($(element).css(cssVariableName).trim());
+  if (cssValue.endsWith('ms')) {
+    return parseFloat(cssValue);
+  } else {
+    return parseFloat(cssValue) * 1000;
+  }
 };

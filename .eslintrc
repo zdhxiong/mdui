@@ -85,6 +85,7 @@
       }
     ],
     "prettier/prettier": "error",
+    "grouped-accessor-pairs": ["error", "getBeforeSet"],
     "import/no-unresolved": "off",
     "import/extensions": ["error", "always", { "ignorePackages": true }],
     "import/no-default-export": "error",

@@ -80,19 +80,17 @@ export class CircularProgress extends LitElement {
     const circumference = 2 * π * circleRadius;
     const halfCircumference = 0.5 * circumference;
 
-    const circle = (thisStrokeWidth: number) => html`<svg
-      class="circle"
-      viewBox="0 0 ${center * 2} ${center * 2}"
-    >
-      <circle
-        cx="${center}"
-        cy="${center}"
-        r="${circleRadius}"
-        stroke-dasharray="${circumference}"
-        stroke-dashoffset="${halfCircumference}"
-        stroke-width="${thisStrokeWidth}"
-      ></circle>
-    </svg>`;
+    const circle = (thisStrokeWidth: number) =>
+      html`<svg class="circle" viewBox="0 0 ${center * 2} ${center * 2}">
+        <circle
+          cx="${center}"
+          cy="${center}"
+          r="${circleRadius}"
+          stroke-dasharray="${circumference}"
+          stroke-dashoffset="${halfCircumference}"
+          stroke-width="${thisStrokeWidth}"
+        ></circle>
+      </svg>`;
 
     return html`<div class="layer">
       <div class="clipper left">${circle(strokeWidth)}</div>

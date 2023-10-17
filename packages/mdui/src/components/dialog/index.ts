@@ -409,17 +409,19 @@ export class Dialog extends LitElement {
       >
         ${when(
           hasHeader,
-          () => html`<slot name="header" part="header" class="header">
-            ${when(hasIcon, () => this.renderIcon())}
-            ${when(hasHeadline, () => this.renderHeadline())}
-          </slot>`,
+          () =>
+            html`<slot name="header" part="header" class="header">
+              ${when(hasIcon, () => this.renderIcon())}
+              ${when(hasHeadline, () => this.renderHeadline())}
+            </slot>`,
         )}
         ${when(
           hasBody,
-          () => html`<div ${ref(this.bodyRef)} part="body" class="body">
-            ${when(hasDescription, () => this.renderDescription())}
-            <slot></slot>
-          </div>`,
+          () =>
+            html`<div ${ref(this.bodyRef)} part="body" class="body">
+              ${when(hasDescription, () => this.renderDescription())}
+              <slot></slot>
+            </div>`,
         )}
         ${when(
           hasActionSlot,

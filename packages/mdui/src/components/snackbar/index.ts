@@ -341,23 +341,24 @@ export class Snackbar extends LitElement {
         </slot>
         ${when(
           this.closeable,
-          () => html`<slot
-            name="close-button"
-            part="close-button"
-            class="close-button"
-            @click=${this.onCloseClick}
-          >
-            <mdui-button-icon>
-              <slot name="close-icon" part="close-icon">
-                ${this.closeIcon
-                  ? html`<mdui-icon
-                      name=${this.closeIcon}
-                      class="i"
-                    ></mdui-icon>`
-                  : html`<mdui-icon-clear class="i"></mdui-icon-clear>`}
-              </slot>
-            </mdui-button-icon>
-          </slot>`,
+          () =>
+            html`<slot
+              name="close-button"
+              part="close-button"
+              class="close-button"
+              @click=${this.onCloseClick}
+            >
+              <mdui-button-icon>
+                <slot name="close-icon" part="close-icon">
+                  ${this.closeIcon
+                    ? html`<mdui-icon
+                        name=${this.closeIcon}
+                        class="i"
+                      ></mdui-icon>`
+                    : html`<mdui-icon-clear class="i"></mdui-icon-clear>`}
+                </slot>
+              </mdui-button-icon>
+            </slot>`,
         )}
       </div>`;
   }

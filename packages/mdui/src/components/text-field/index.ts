@@ -800,10 +800,11 @@ export class TextField
       </div>
       ${when(
         hasError || hasHelper || hasCounter,
-        () => html`<div part="supporting" class="supporting">
-          ${this.renderHelper(hasError, hasHelper)}
-          ${this.renderCounter(hasCounter)}
-        </div>`,
+        () =>
+          html`<div part="supporting" class="supporting">
+            ${this.renderHelper(hasError, hasHelper)}
+            ${this.renderCounter(hasCounter)}
+          </div>`,
       )}`;
   }
 

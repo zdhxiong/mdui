@@ -430,12 +430,13 @@ export class NavigationDrawer extends LayoutItemBase {
   protected override render(): TemplateResult {
     return html`${when(
         this.isModal,
-        () => html`<div
-          ${ref(this.overlayRef)}
-          part="overlay"
-          class="overlay"
-          @click=${this.onOverlayClick}
-        ></div>`,
+        () =>
+          html`<div
+            ${ref(this.overlayRef)}
+            part="overlay"
+            class="overlay"
+            @click=${this.onOverlayClick}
+          ></div>`,
       )}
       <slot
         ${ref(this.panelRef)}

@@ -16,6 +16,7 @@
     "color-function-notation": null,
     "no-descending-specificity": null,
     "function-no-unknown": null,
+    "media-query-no-invalid": null,
     "media-feature-range-notation": "prefix"
   }
 }

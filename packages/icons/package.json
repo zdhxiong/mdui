@@ -28,7 +28,7 @@
   "homepage": "https://github.com/zdhxiong/mdui",
   "dependencies": {
     "@mdui/shared": "workspace:^",
-    "lit": "^2.7.5",
-    "tslib": "^2.6.0"
+    "lit": "^3.0.0",
+    "tslib": "^2.6.2"
   }
 }

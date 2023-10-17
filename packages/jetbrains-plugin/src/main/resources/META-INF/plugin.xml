@@ -6,6 +6,30 @@
   <idea-version since-build="223"/>
   <vendor email="zdhxiong@gmail.com" url="https://www.mdui.org">zdhxiong</vendor>
   <description><![CDATA[
+    A JetBrains IDE plugin that provides auto-completion, hover tips, and other features for the mdui framework.
+    Supports the following JetBrains IDEs:
+    <ul>
+      <li>IntelliJ IDEA</li>
+      <li>PyCharm</li>
+      <li>WebStorm</li>
+      <li>PhpStorm</li>
+      <li>Rider</li>
+      <li>CLion</li>
+      <li>RubyMine</li>
+      <li>GoLand</li>
+    </ul>
+    Support auto-completion and hover tips in the following scenarios:
+    <ul>
+      <li>HTML tag name</li>
+      <li>HTML tag attribute name</li>
+      <li>HTML tag attribute enumeration value</li>
+      <li>Event name in HTML tag</li>
+      <li>The part attribute name of the ::part() selector in CSS</li>
+      <li>The CSS custom property name inside a component in CSS</li>
+      <li>The global CSS custom property name in CSS</li>
+      <li>The global class name in CSS</li>
+    </ul>
+
     为 mdui 框架提供自动完成、悬停提示等功能的 JetBrains IDE 插件。
     支持以下 JetBrains IDE：
     <ul>
@@ -31,6 +55,9 @@
     </ul>
     <img src="https://user-images.githubusercontent.com/3030330/274850317-97f2d074-d210-4319-8baf-7ccaa18976b5.gif"/>
   ]]></description>
+  <change-notes><![CDATA[
+  Initial version
+  ]]></change-notes>
   <depends>com.intellij.modules.platform</depends>
   <depends>com.intellij.modules.xml</depends>
   <depends>JavaScript</depends>

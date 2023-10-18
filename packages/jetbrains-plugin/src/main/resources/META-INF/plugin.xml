@@ -6,8 +6,8 @@
   <idea-version since-build="223"/>
   <vendor email="zdhxiong@gmail.com" url="https://www.mdui.org">zdhxiong</vendor>
   <description><![CDATA[
-    A JetBrains IDE plugin that provides auto-completion, hover tips, and other features for the mdui framework.
-    Supports the following JetBrains IDEs:
+    A IntelliJ-based plugin that provides auto-completion, hover tips, and other features for the mdui framework.
+    Supports the following IntelliJ-based IDEs:
     <ul>
       <li>IntelliJ IDEA</li>
       <li>PyCharm</li>
@@ -30,8 +30,8 @@
       <li>The global class name in CSS</li>
     </ul>
 
-    为 mdui 框架提供自动完成、悬停提示等功能的 JetBrains IDE 插件。
-    支持以下 JetBrains IDE：
+    为 mdui 框架提供自动完成、悬停提示等功能的 IntelliJ IDE 插件。
+    支持以下基于 IntelliJ 的 IDE：
     <ul>
       <li>IntelliJ IDEA</li>
       <li>PyCharm</li>
@@ -53,7 +53,6 @@
       <li>CSS 中的全局 CSS 自定义属性名</li>
       <li>CSS 中的全局 class 名</li>
     </ul>
-    <img src="https://user-images.githubusercontent.com/3030330/274850317-97f2d074-d210-4319-8baf-7ccaa18976b5.gif"/>
   ]]></description>
   <change-notes><![CDATA[
   Initial version

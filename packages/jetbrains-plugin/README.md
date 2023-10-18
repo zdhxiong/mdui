@@ -1,8 +1,8 @@
 # mdui
 
-为 mdui 框架提供自动完成、悬停提示等功能的 JetBrains IDE 插件。
+为 mdui 框架提供自动完成、悬停提示等功能的 IntelliJ IDE 插件。
 
-支持以下 JetBrains IDE：
+支持以下基于 IntelliJ 的 IDE：
 
 * IntelliJ IDEA
 * PyCharm

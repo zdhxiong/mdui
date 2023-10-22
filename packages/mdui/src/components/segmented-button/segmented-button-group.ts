@@ -8,9 +8,11 @@ import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
 import { isString } from '@mdui/jq/shared/helper.js';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
+import { arraysEqualIgnoreOrder } from '@mdui/shared/helpers/array.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -136,11 +138,14 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
   @state()
   private invalid = false;
 
-  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
-  private hasSetDefaultValue = false;
+  // 是否为初始状态，初始状态不触发 change 事件
+  private isInitial = true;
 
   private readonly inputRef: Ref<HTMLSelectElement> = createRef();
-  private readonly formController: FormController = new FormController(this);
+  private readonly formController = new FormController(this);
+  private readonly definedController = new DefinedController(this, {
+    relatedElements: ['mdui-segmented-button'],
+  });
 
   /**
    * 表单验证状态对象
@@ -156,7 +161,7 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
     return this.inputRef.value!.validationMessage;
   }
 
-  // 所有的子项元素
+  // 为了使 <mdui-segmented-button> 可以不是该组件的直接子元素，这里不用 @queryAssignedElements()
   private get items() {
     return $(this)
       .find('mdui-segmented-button')
@@ -185,47 +190,44 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
     return this.isSingle || this.isMultiple;
   }
 
-  @watch('selects')
-  private onSelectsChange() {
-    if (!this.isSelectable && this.selectedKeys.length) {
-      this.selectedKeys = [];
-      this.onSelectedKeysChange();
-      this.onValueChange();
+  @watch('selects', true)
+  private async onSelectsChange() {
+    if (!this.isSelectable) {
+      // 不可选中，清空选中值
+      this.setSelectedKeys([]);
+    } else if (this.isSingle) {
+      // 单选，只保留第一个选中的值
+      this.setSelectedKeys(this.selectedKeys.slice(0, 1));
     }
 
-    if (this.isSingle && this.selectedKeys.length > 1) {
-      this.selectedKeys = this.selectedKeys.slice(0, 1);
-      this.onSelectedKeysChange();
-      this.onValueChange();
-    }
+    await this.onSelectedKeysChange();
   }
 
   @watch('selectedKeys', true)
-  private onSelectedKeysChange() {
+  private async onSelectedKeysChange() {
+    await this.definedController.whenDefined();
+
     // 根据 selectedKeys 读取出对应 segmented-button 的 value
     const values = this.itemsEnabled
       .filter((item) => this.selectedKeys.includes(item.key))
       .map((item) => item.value);
-    this.value = this.isMultiple ? values : values[0] || '';
+    const value = this.isMultiple ? values : values[0] || '';
 
-    if (this.hasSetDefaultValue) {
+    this.setValue(value);
+
+    if (!this.isInitial) {
       emit(this, 'change');
-    } else {
-      this.hasSetDefaultValue = true;
     }
   }
 
   @watch('value')
   private async onValueChange() {
-    const hasUpdated = this.hasUpdated;
-
-    if (!hasUpdated) {
-      await this.updateComplete;
-    }
+    this.isInitial = !this.hasUpdated;
+    await this.definedController.whenDefined();
 
     // 根据 value 找出对应的 segmented-button，并把这些元素的 key 赋值给 selectedKeys
     if (!this.isSelectable) {
-      this.updateSelected(hasUpdated);
+      this.updateItems();
       return;
     }
 
@@ -239,29 +241,40 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
     ).filter((i) => i);
 
     if (!values.length) {
-      this.selectedKeys = [];
+      this.setSelectedKeys([]);
     } else if (this.isSingle) {
       const firstItem = this.itemsEnabled.find(
         (item) => item.value === values[0],
       );
-      this.selectedKeys = firstItem ? [firstItem.key] : [];
+      this.setSelectedKeys(firstItem ? [firstItem.key] : []);
     } else if (this.isMultiple) {
-      this.selectedKeys = this.itemsEnabled
-        .filter((item) => values.includes(item.value))
-        .map((item) => item.key);
+      this.setSelectedKeys(
+        this.itemsEnabled
+          .filter((item) => values.includes(item.value))
+          .map((item) => item.key),
+      );
     }
 
-    this.updateSelected(hasUpdated);
+    this.updateItems();
+
+    // reset 引起的值变更，不执行验证；直接修改值引起的变更，需要进行验证
+    if (!this.isInitial) {
+      const form = this.formController.getForm();
+      if (form && formResets.get(form)?.has(this)) {
+        this.invalid = false;
+        formResets.get(form)!.delete(this);
+      } else {
+        this.invalid = !this.inputRef.value!.checkValidity();
+      }
+    }
   }
 
-  @watch('invalid')
-  private onInvalidChange() {
-    this.itemsEnabled.forEach((item) => (item.invalid = this.invalid));
-  }
-
+  @watch('invalid', true)
   @watch('disabled')
-  private onDisabledChange() {
-    this.items.forEach((item) => (item.groupDisabled = this.disabled));
+  private async onInvalidChange() {
+    await this.definedController.whenDefined();
+
+    this.updateItems();
   }
 
   public override connectedCallback() {
@@ -363,25 +376,6 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
       )}<slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>`;
   }
 
-  private async updateSelected(hasUpdated: boolean) {
-    this.items.forEach(
-      (item) => (item.selected = this.selectedKeys.includes(item.key)),
-    );
-
-    if (hasUpdated) {
-      await this.updateComplete;
-
-      // reset 引起的值变更，不执行验证；直接修改值引起的变更，需要进行验证
-      const form = this.formController.getForm();
-      if (form && formResets.get(form)?.has(this)) {
-        this.invalid = false;
-        formResets.get(form)!.delete(this);
-      } else {
-        this.invalid = !this.inputRef.value!.checkValidity();
-      }
-    }
-  }
-
   // 切换一个元素的选中状态
   private selectOne(item: SegmentedButton) {
     if (this.isMultiple) {
@@ -392,25 +386,28 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
       } else {
         selectedKeys.push(item.key);
       }
-      this.selectedKeys = selectedKeys;
+      this.setSelectedKeys(selectedKeys);
     }
 
     if (this.isSingle) {
       if (this.selectedKeys.includes(item.key)) {
-        this.selectedKeys = [];
+        this.setSelectedKeys([]);
       } else {
-        this.selectedKeys = [item.key];
+        this.setSelectedKeys([item.key]);
       }
     }
 
-    this.updateSelected(this.hasUpdated);
+    this.isInitial = false;
+    this.updateItems();
   }
 
-  private onClick(event: MouseEvent) {
+  private async onClick(event: MouseEvent) {
     // event.button 为 0 时，为鼠标左键点击。忽略鼠标中间和右键
     if (event.button) {
       return;
     }
+
+    await this.definedController.whenDefined();
 
     const target = event.target as HTMLElement;
     const item = target.closest('mdui-segmented-button') as SegmentedButton;
@@ -426,13 +423,16 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
 
   /**
    * 在隐藏的 `<input>` 或 `<select>` 上按下按键时，切换选中状态
+   * 通常为验证不通过时，默认聚焦到 `<input>` 或 `<select>` 上，此时按下按键，切换第一个元素的选中状态
    */
-  private onInputKeyDown(event: KeyboardEvent) {
+  private async onInputKeyDown(event: KeyboardEvent) {
     if (!['Enter', ' '].includes(event.key)) {
       return;
     }
 
     event.preventDefault();
+
+    await this.definedController.whenDefined();
 
     if (this.isSingle) {
       const input = event.target as HTMLInputElement;
@@ -447,15 +447,43 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
     }
   }
 
-  private onSlotChange() {
+  private async onSlotChange() {
+    await this.definedController.whenDefined();
+
+    this.updateItems(true);
+  }
+
+  private setSelectedKeys(selectedKeys: number[]): void {
+    if (!arraysEqualIgnoreOrder(this.selectedKeys, selectedKeys)) {
+      this.selectedKeys = selectedKeys;
+    }
+  }
+
+  private setValue(value: string | string[]): void {
+    if (this.isSingle) {
+      this.value = value;
+    } else if (
+      !arraysEqualIgnoreOrder(this.value as string[], value as string[])
+    ) {
+      this.value = value;
+    }
+  }
+
+  private updateItems(slotChange: boolean = false) {
     const items = this.items;
 
     items.forEach((item, index) => {
-      item.classList.toggle('mdui-segmented-button-first', index === 0);
-      item.classList.toggle(
-        'mdui-segmented-button-last',
-        index === items.length - 1,
-      );
+      item.invalid = this.invalid;
+      item.groupDisabled = this.disabled;
+      item.selected = this.selectedKeys.includes(item.key);
+
+      if (slotChange) {
+        item.classList.toggle('mdui-segmented-button-first', index === 0);
+        item.classList.toggle(
+          'mdui-segmented-button-last',
+          index === items.length - 1,
+        );
+      }
     });
   }
 }

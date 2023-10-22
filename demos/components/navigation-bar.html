@@ -42,7 +42,17 @@
     import '../../packages/icons/place--outlined.js';
     import { $ } from '../../packages/jq/index.js';
 
-    $('.fill-placeholder').append(...Array.from({length: 100}, (_, index) => index + 1).map(item => `<p>${item}</p>`));
+    $(() => {
+      $('.fill-placeholder').append(...Array.from({length: 100}, (_, index) => index + 1).map(item => `<p>${item}</p>`));
+
+      $('#default-value').on({
+        change: (e) => { console.log('change event: ', e.target); },
+        show: (e) => { console.log('show event: ', e.target); },
+        shown: (e) => { console.log('shown event: ', e.target); },
+        hide: (e) => { console.log('hide event: ', e.target); },
+        hidden: (e) => { console.log('hidden event: ', e.target); },
+      });
+    });
   </script>
 </head>
 
@@ -132,7 +142,7 @@
 
     <section>
       <h2>scroll-behavior="hide" & default position:fixed</h2>
-      <mdui-navigation-bar scroll-behavior="hide">
+      <mdui-navigation-bar scroll-behavior="hide" value="commute" id="default-value">
         <mdui-navigation-bar-item icon="place" value="place">Label</mdui-navigation-bar-item>
         <mdui-navigation-bar-item icon="commute" value="commute">Label</mdui-navigation-bar-item>
         <mdui-navigation-bar-item icon="bookmark_border" value="bookmark">Label</mdui-navigation-bar-item>

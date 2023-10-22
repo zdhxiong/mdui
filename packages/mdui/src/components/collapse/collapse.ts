@@ -1,11 +1,16 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import {
+  customElement,
+  property,
+  queryAssignedElements,
+  state,
+} from 'lit/decorators.js';
 import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/find.js';
-import '@mdui/jq/methods/get.js';
 import '@mdui/jq/methods/is.js';
-import { isElement } from '@mdui/jq/shared/helper.js';
+import { isElement, isUndefined } from '@mdui/jq/shared/helper.js';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
+import { arraysEqualIgnoreOrder } from '@mdui/shared/helpers/array.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -15,6 +20,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 
 type CollapseItem = CollapseItemOriginal & {
   active: boolean;
+  isInitial: boolean;
   readonly key: number;
 };
 
@@ -74,47 +80,60 @@ export class Collapse extends LitElement {
   @state()
   private activeKeys: number[] = [];
 
-  private items: CollapseItem[] = [];
+  // 子元素 <mdui-collapse-item> 的集合
+  @queryAssignedElements({ selector: 'mdui-collapse-item', flatten: true })
+  private readonly items!: CollapseItem[];
+
+  // 是否是初始状态，初始状态不触发 change 事件，没有动画
+  private isInitial = true;
+
+  private definedController = new DefinedController(this, {
+    relatedElements: ['mdui-collapse-item'],
+  });
 
   @watch('activeKeys', true)
-  private onActiveKeysChange() {
+  private async onActiveKeysChange() {
+    await this.definedController.whenDefined();
+
     // 根据 activeKeys 读取对应 collapse-item 的值
-    this.value = this.accordion
+    const value = this.accordion
       ? this.items.find((item) => this.activeKeys.includes(item.key))?.value
       : this.items
           .filter((item) => this.activeKeys.includes(item.key))
           .map((item) => item.value!);
+    this.setValue(value);
 
-    emit(this, 'change');
+    if (!this.isInitial) {
+      emit(this, 'change');
+    }
   }
 
   @watch('value')
-  private onValueChange() {
+  private async onValueChange() {
+    this.isInitial = !this.hasUpdated;
+    await this.definedController.whenDefined();
+
     if (this.accordion) {
       const value = this.value as string | undefined;
       if (!value) {
-        this.activeKeys = [];
+        this.setActiveKeys([]);
       } else {
         const item = this.items.find((item) => item.value === value);
-        this.activeKeys = item ? [item.key] : [];
+        this.setActiveKeys(item ? [item.key] : []);
       }
     } else {
       const value = this.value as string[];
       if (!value.length) {
-        this.activeKeys = [];
+        this.setActiveKeys([]);
       } else {
-        this.activeKeys = this.items
+        const activeKeys = this.items
           .filter((item) => value.includes(item.value!))
           .map((item) => item.key);
+        this.setActiveKeys(activeKeys);
       }
     }
 
-    this.updateActive();
-  }
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.syncItems();
+    this.updateItems();
   }
 
   protected override render(): TemplateResult {
@@ -124,10 +143,20 @@ export class Collapse extends LitElement {
     ></slot>`;
   }
 
-  private syncItems() {
-    this.items = $(this)
-      .find('mdui-collapse-item')
-      .get() as unknown as CollapseItem[];
+  private setActiveKeys(activeKeys: number[]): void {
+    if (!arraysEqualIgnoreOrder(this.activeKeys, activeKeys)) {
+      this.activeKeys = activeKeys;
+    }
+  }
+
+  private setValue(value: string | string[] | undefined): void {
+    if (this.accordion || isUndefined(this.value) || isUndefined(value)) {
+      this.value = value;
+    } else if (
+      !arraysEqualIgnoreOrder(this.value as string[], value as string[])
+    ) {
+      this.value = value;
+    }
   }
 
   private onClick(event: MouseEvent) {
@@ -171,9 +200,9 @@ export class Collapse extends LitElement {
 
     if (this.accordion) {
       if (this.activeKeys.includes(item.key)) {
-        this.activeKeys = [];
+        this.setActiveKeys([]);
       } else {
-        this.activeKeys = [item.key];
+        this.setActiveKeys([item.key]);
       }
     } else {
       // 直接修改 this.activeKeys 无法被 watch 监听到，需要先克隆一份 this.activeKeys
@@ -183,20 +212,24 @@ export class Collapse extends LitElement {
       } else {
         activeKeys.push(item.key);
       }
-      this.activeKeys = activeKeys;
+      this.setActiveKeys(activeKeys);
     }
 
-    this.updateActive();
+    this.isInitial = false;
+
+    this.updateItems();
   }
 
-  private onSlotChange() {
-    this.syncItems();
-    this.updateActive();
+  private async onSlotChange() {
+    await this.definedController.whenDefined();
+    this.updateItems();
   }
 
-  private updateActive() {
-    this.items.forEach(
-      (item) => (item.active = this.activeKeys.includes(item.key)),
-    );
+  // 更新 <mdui-collapse-item> 的状态
+  private updateItems() {
+    this.items.forEach((item) => {
+      item.active = this.activeKeys.includes(item.key);
+      item.isInitial = this.isInitial;
+    });
   }
 }

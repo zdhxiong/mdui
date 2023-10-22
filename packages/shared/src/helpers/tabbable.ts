@@ -4,7 +4,7 @@ import { getWindow } from 'ssr-window';
 /** Determines if the specified element is tabbable using heuristics inspired by https://github.com/focus-trap/tabbable */
 function isTabbable(el: HTMLElement): boolean {
   const window = getWindow();
-  const tag = el.tagName.toLowerCase();
+  const localName = el.localName;
 
   // Elements with a -1 tab index are not tabbable
   if (el.getAttribute('tabindex') === '-1') {
@@ -26,7 +26,7 @@ function isTabbable(el: HTMLElement): boolean {
 
   // Radios without a checked attribute are not tabbable
   if (
-    tag === 'input' &&
+    localName === 'input' &&
     el.getAttribute('type') === 'radio' &&
     !el.hasAttribute('checked')
   ) {
@@ -44,7 +44,10 @@ function isTabbable(el: HTMLElement): boolean {
   }
 
   // Audio and video elements with the controls attribute are tabbable
-  if ((tag === 'audio' || tag === 'video') && el.hasAttribute('controls')) {
+  if (
+    (localName === 'audio' || localName === 'video') &&
+    el.hasAttribute('controls')
+  ) {
     return true;
   }
 
@@ -71,7 +74,7 @@ function isTabbable(el: HTMLElement): boolean {
     'audio',
     'video',
     'summary',
-  ].includes(tag);
+  ].includes(localName);
 }
 
 /**

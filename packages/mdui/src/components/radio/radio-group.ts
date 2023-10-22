@@ -7,6 +7,7 @@ import '@mdui/jq/methods/closest.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
 import { isNodeName } from '@mdui/jq/shared/helper.js';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
@@ -23,6 +24,7 @@ type Radio = RadioOriginal & {
   invalid: boolean;
   focusable: boolean;
   groupDisabled: boolean;
+  isInitial: boolean;
 };
 
 /**
@@ -100,8 +102,14 @@ export class RadioGroup extends LitElement implements FormControl {
   @state()
   private invalid = false;
 
+  // 是否是初始状态，初始状态不显示动画
+  private isInitial = true;
+
   private readonly inputRef: Ref<HTMLInputElement> = createRef();
-  private readonly formController: FormController = new FormController(this);
+  private readonly formController = new FormController(this);
+  private readonly definedController = new DefinedController(this, {
+    relatedElements: ['mdui-radio'],
+  });
 
   /**
    * 表单验证状态对象
@@ -117,11 +125,12 @@ export class RadioGroup extends LitElement implements FormControl {
     return this.inputRef.value!.validationMessage;
   }
 
-  private get radios() {
+  // 为了使 <mdui-radio> 可以不是该组件的直接子元素，这里不用 @queryAssignedElements()
+  private get items() {
     return $(this).find('mdui-radio').get() as unknown as Radio[];
   }
 
-  private get radiosEnabled() {
+  private get itemsEnabled() {
     return $(this)
       .find('mdui-radio:not([disabled])')
       .get() as unknown as Radio[];
@@ -129,11 +138,12 @@ export class RadioGroup extends LitElement implements FormControl {
 
   @watch('value', true)
   private async onValueChange() {
+    this.isInitial = false;
+    await this.definedController.whenDefined();
+
     emit(this, 'input');
     emit(this, 'change');
-    this.radios.forEach(
-      (radio) => (radio.checked = radio.value === this.value),
-    );
+    this.updateItems();
     this.updateRadioFocusable();
 
     await this.updateComplete;
@@ -148,14 +158,12 @@ export class RadioGroup extends LitElement implements FormControl {
     }
   }
 
-  @watch('invalid')
-  private onInvalidChange() {
-    this.radiosEnabled.forEach((radio) => (radio.invalid = this.invalid));
-  }
-
+  @watch('invalid', true)
   @watch('disabled')
-  private onDisabledChange() {
-    this.radios.forEach((radio) => (radio.groupDisabled = this.disabled));
+  private async onInvalidChange() {
+    await this.definedController.whenDefined();
+
+    this.updateItems();
   }
 
   /**
@@ -224,7 +232,7 @@ export class RadioGroup extends LitElement implements FormControl {
         @keydown=${this.onKeyDown}
       />
       <slot
-        @click=${this.onRadioClick}
+        @click=${this.onClick}
         @keydown=${this.onKeyDown}
         @slotchange=${this.onSlotChange}
         @change=${this.onCheckedChange}
@@ -236,36 +244,42 @@ export class RadioGroup extends LitElement implements FormControl {
   // 同一个 mdui-radio-group 中的多个 mdui-radio，仅有一个可聚焦
   // 若有已选中的，则已选中的可聚焦；若没有已选中的，则第一个可聚焦
   private updateRadioFocusable() {
-    const radios = this.radios;
-    const radioChecked = radios.find((radio) => radio.checked);
+    const items = this.items;
+    const itemChecked = items.find((item) => item.checked);
 
-    if (radioChecked) {
-      radios.forEach((radio) => (radio.focusable = radio === radioChecked));
+    if (itemChecked) {
+      items.forEach((item) => {
+        item.focusable = item === itemChecked;
+      });
     } else {
-      this.radiosEnabled.forEach((radio, index) => (radio.focusable = !index));
+      this.itemsEnabled.forEach((item, index) => {
+        item.focusable = !index;
+      });
     }
   }
 
-  private async onRadioClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    const radio = isNodeName(target, 'mdui-radio')
-      ? (target as Radio)
-      : ($(target).closest('mdui-radio')[0] as Radio);
+  private async onClick(event: MouseEvent) {
+    await this.definedController.whenDefined();
 
-    if (radio.disabled) {
+    const target = event.target as HTMLElement;
+    const item = isNodeName(target, 'mdui-radio')
+      ? (target as Radio)
+      : ($(target).closest('mdui-radio')[0] as Radio | undefined);
+
+    if (!item || item.disabled) {
       return;
     }
 
-    this.value = radio.value;
+    this.value = item.value;
 
     await this.updateComplete;
-    radio.focus();
+    item.focus();
   }
 
   /**
    * 在内部的 `<mdui-radio>` 上按下按键时，在 `<mdui-radio>` 之间切换焦点
    */
-  private onKeyDown(event: KeyboardEvent) {
+  private async onKeyDown(event: KeyboardEvent) {
     if (
       !['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(
         event.key,
@@ -274,35 +288,36 @@ export class RadioGroup extends LitElement implements FormControl {
       return;
     }
 
-    const radios = this.radiosEnabled;
-    const radioChecked = radios.find((radio) => radio.checked) ?? radios[0];
+    event.preventDefault();
+
+    await this.definedController.whenDefined();
+
+    const items = this.itemsEnabled;
+    const itemChecked = items.find((item) => item.checked) ?? items[0];
     const incr =
       event.key === ' '
         ? 0
         : ['ArrowUp', 'ArrowLeft'].includes(event.key)
         ? -1
         : 1;
-    let index = radios.indexOf(radioChecked) + incr;
+    let index = items.indexOf(itemChecked) + incr;
     if (index < 0) {
-      index = radios.length - 1;
+      index = items.length - 1;
     }
-    if (index > radios.length - 1) {
+    if (index > items.length - 1) {
       index = 0;
     }
 
-    this.value = radios[index].value;
+    this.value = items[index].value;
 
-    this.updateComplete.then(() => {
-      radios[index].focus();
-    });
-
-    event.preventDefault();
+    await this.updateComplete;
+    items[index].focus();
   }
 
-  private onSlotChange() {
-    this.radios.forEach(
-      (radio) => (radio.checked = radio.value === this.value),
-    );
+  private async onSlotChange() {
+    await this.definedController.whenDefined();
+
+    this.updateItems();
     this.updateRadioFocusable();
   }
 
@@ -311,8 +326,16 @@ export class RadioGroup extends LitElement implements FormControl {
    */
   private onCheckedChange(event: Event) {
     event.stopPropagation();
-    const target = event.target as Radio;
-    this.value = target.value;
+  }
+
+  // 更新 <mdui-radio> 的状态
+  private updateItems() {
+    this.items.forEach((item) => {
+      item.checked = item.value === this.value;
+      item.invalid = this.invalid;
+      item.groupDisabled = this.disabled;
+      item.isInitial = this.isInitial;
+    });
   }
 }
 

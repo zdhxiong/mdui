@@ -22,32 +22,42 @@ export class HoverController implements ReactiveController {
   private mouseEnterItems: { callback: () => void; one: boolean }[] = [];
   private mouseLeaveItems: { callback: () => void; one: boolean }[] = [];
 
+  /**
+   * @param host
+   * @param elementRef 检查鼠标是否放在该元素上
+   */
   public constructor(
     host: ReactiveControllerHost & Element,
     elementRef: Ref<HTMLElement>,
   ) {
     (this.host = host).addController(this);
     this.elementRef = elementRef;
+  }
 
+  public hostConnected(): void {
     this.host.updateComplete.then(() => {
       $(this.elementRef.value)
         .on(this.enterEventName, () => {
           this.isHover = true;
-          this.mouseEnterItems.forEach((item, index, items) => {
+
+          for (let i = this.mouseEnterItems.length - 1; i >= 0; i--) {
+            const item = this.mouseEnterItems[i];
             item.callback();
             if (item.one) {
-              items.splice(index, 1);
+              this.mouseEnterItems.splice(i, 1);
             }
-          });
+          }
         })
         .on(this.leaveEventName, () => {
           this.isHover = false;
-          this.mouseLeaveItems.forEach((item, index, items) => {
+
+          for (let i = this.mouseLeaveItems.length - 1; i >= 0; i--) {
+            const item = this.mouseLeaveItems[i];
             item.callback();
             if (item.one) {
-              items.splice(index, 1);
+              this.mouseLeaveItems.splice(i, 1);
             }
-          });
+          }
         });
     });
   }
@@ -58,7 +68,7 @@ export class HoverController implements ReactiveController {
 
   /**
    * 指定鼠标移入时的回调函数
-   * @param callback
+   * @param callback 要执行的回调函数
    * @param one 是否仅执行一次
    */
   public onMouseEnter(callback: () => void, one = false): void {
@@ -67,7 +77,7 @@ export class HoverController implements ReactiveController {
 
   /**
    * 指定鼠标移出时的回调函数
-   * @param callback
+   * @param callback 要执行的回调函数
    * @param one 是否仅执行一次
    */
   public onMouseLeave(callback: () => void, one = false): void {

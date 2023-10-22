@@ -19,20 +19,26 @@
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  .transition(padding, short4, standard);
   .padding-top(12);
   .padding-bottom(12);
+
+  &:not(.initial) {
+    .transition(padding, short4, standard);
+  }
 }
 
 mdui-ripple {
   z-index: 1;
   left: 50%;
   transform: translateX(-50%);
-  .transition(margin-top, short4, standard);
   .width(64);
   .height(32);
   .margin-top(12);
   .shape-corner(full);
+
+  &:not(.initial) {
+    .transition(margin-top, short4, standard);
+  }
 }
 
 .indicator {
@@ -42,9 +48,12 @@ mdui-ripple {
   justify-content: center;
   background-color: transparent;
   border-radius: var(--shape-corner-indicator);
-  transition: background-color var(--mdui-motion-duration-short1) var(--mdui-motion-easing-standard), width var(--mdui-motion-duration-short4) var(--mdui-motion-easing-standard);
   .height(32);
   .width(32);
+
+  :not(.initial) & {
+    transition: background-color var(--mdui-motion-duration-short1) var(--mdui-motion-easing-standard), width var(--mdui-motion-duration-short4) var(--mdui-motion-easing-standard);
+  }
 }
 
 ::slotted([slot="badge"]) {
@@ -80,12 +89,15 @@ mdui-ripple {
 .label {
   display: flex;
   align-items: center;
-  .transition(opacity, short4, linear);
   .height(16);
   .color(on-surface-variant);
   .margin-top(4);
   .margin-bottom(4);
   .typescale(label-medium);
+
+  :not(.initial) & {
+    .transition(opacity, short4, linear);
+  }
 }
 
 mdui-ripple.label-visibility-unlabeled,

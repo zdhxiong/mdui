@@ -22,8 +22,17 @@
     import '../../packages/mdui/components/button.js';
     import { $ } from '../../packages/jq/index.js';
 
-    $('.open').on('click', function() {
-      $(this).next()[0].open = true;
+    $(() => {
+      $('.open').on('click', function() {
+        $(this).next()[0].open = true;
+      });
+
+      $('#default-open').on({
+        open: (e) => { console.log('open event: ', e.target); },
+        opened: (e) => { console.log('opened event: ', e.target); },
+        close: (e) => { console.log('close event: ', e.target); },
+        closed: (e) => { console.log('closed event: ', e.target); },
+      });
     });
   </script>
 </head>
@@ -33,7 +42,7 @@
     <section>
       <h2>actions</h2>
       <mdui-button class="open">no action</mdui-button>
-      <mdui-snackbar>Your photo has been archived</mdui-snackbar>
+      <mdui-snackbar open id="default-open">Your photo has been archived</mdui-snackbar>
 
       <mdui-button class="open">with action</mdui-button>
       <mdui-snackbar action="Undo">Your photo has been archived</mdui-snackbar>

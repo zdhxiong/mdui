@@ -72,13 +72,19 @@ export class NavigationBarItem extends AnchorMixin(
   public value?: string;
 
   /**
-   * 文本的可视状态，由 `navigation-bar` 调用
+   * 文本的可视状态，由 `<mdui-navigation-bar>` 组件控制该参数
    */
   @state()
   protected labelVisibility?: 'selected' | 'labeled' | 'unlabeled';
 
   /**
-   * 是否为激活状态，由 `navigation-bar` 组件控制该参数
+   * 是否是初始状态，不显示动画。由 `<mdui-navigation-bar>` 组件控制该参数
+   */
+  @state()
+  protected isInitial = true;
+
+  /**
+   * 是否为激活状态，由 `<mdui-navigation-bar>` 组件控制该参数
    */
   @property({
     type: Boolean,
@@ -91,7 +97,7 @@ export class NavigationBarItem extends AnchorMixin(
   @state()
   private disabled = false;
 
-  // 每一个 `navigation-bar-item` 元素都添加一个唯一的 key
+  // 每一个 `<navigation-bar-item>` 元素都添加一个唯一的 key
   protected readonly key = uniqueId();
 
   private readonly rippleRef: Ref<Ripple> = createRef();
@@ -121,6 +127,7 @@ export class NavigationBarItem extends AnchorMixin(
       'label-visibility-selected': this.labelVisibility === 'selected',
       'label-visibility-labeled': this.labelVisibility === 'labeled',
       'label-visibility-unlabeled': this.labelVisibility === 'unlabeled',
+      initial: this.isInitial,
     });
 
     const className = cc([

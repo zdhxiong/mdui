@@ -17,7 +17,7 @@
     }
     .container {
       position: relative;
-      width: 800px;
+      width: 850px;
       height: 375px;
       box-sizing: border-box;
       overflow: auto;
@@ -38,26 +38,35 @@
     import '../../packages/mdui/components/icon.js';
     import { $ } from '../../packages/jq/index.js';
 
-    $('.open').on('click', function() {
-      if ($(this).prev().is('mdui-navigation-drawer')) {
-        $(this).prev()[0].open = true;
-      } else {
-        $(this).parent().prev()[0].open = true;
-      }
-    });
+    $(() => {
+      $('.open').on('click', function() {
+        if ($(this).prev().is('mdui-navigation-drawer')) {
+          $(this).prev()[0].open = true;
+        } else {
+          $(this).parent().prev()[0].open = true;
+        }
+      });
 
-    $('.close').on('click', function () {
-      $(this).parent()[0].open = false;
-    });
+      $('.close').on('click', function () {
+        $(this).parent()[0].open = false;
+      });
 
-    $('.fill-placeholder').append(...Array.from({length: 100}, (_, index) => index + 1).map(item => `<p>${item}</p>`));
+      $('.fill-placeholder').append(...Array.from({length: 100}, (_, index) => index + 1).map(item => `<p>${item}</p>`));
+
+      $('#default-open').on({
+        open: (e) => { console.log('open event: ', e.target); },
+        opened: (e) => { console.log('opened event: ', e.target); },
+        close: (e) => { console.log('close event: ', e.target); },
+        closed: (e) => { console.log('closed event: ', e.target); },
+      });
+    });
   </script>
 </head>
 <body>
 <main>
   <section>
     <h2>normal</h2>
-    <mdui-navigation-drawer close-on-esc close-on-overlay-click>
+    <mdui-navigation-drawer open close-on-esc close-on-overlay-click id="default-open">
       <mdui-button class="close">close</mdui-button>
       <mdui-list>
         <mdui-list-subheader>Mail</mdui-list-subheader>

@@ -9,7 +9,6 @@ import { when } from 'lit/directives/when.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { SliderBase } from './slider-base.js';
 import { style } from './style.js';
 import type { Ripple } from '../ripple/index.js';
@@ -54,7 +53,7 @@ export class Slider extends SliderBase implements FormControl {
 
   private readonly rippleRef: Ref<Ripple> = createRef();
   private readonly handleRef: Ref<HTMLElement> = createRef();
-  private readonly formController: FormController = new FormController(this);
+  private readonly formController = new FormController(this);
 
   protected override get rippleElement() {
     return this.rippleRef.value!;
@@ -86,6 +85,10 @@ export class Slider extends SliderBase implements FormControl {
     if (this.value > this.max) {
       this.value = this.max;
     }
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
 
     const onTouchStart = () => {
       if (!this.disabled) {
@@ -103,10 +106,6 @@ export class Slider extends SliderBase implements FormControl {
     this.addEventListener('mousedown', onTouchStart);
     this.addEventListener('touchend', onTouchEnd);
     this.addEventListener('mouseup', onTouchEnd);
-  }
-
-  protected override firstUpdated(changedProperties: PropertyValues): void {
-    super.firstUpdated(changedProperties);
 
     this.updateStyle();
   }
@@ -168,7 +167,6 @@ export class Slider extends SliderBase implements FormControl {
 
   private onInput() {
     this.value = parseFloat(this.inputRef.value!.value);
-    emit(this, 'input');
 
     this.updateStyle();
   }

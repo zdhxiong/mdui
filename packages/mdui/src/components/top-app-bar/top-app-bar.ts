@@ -13,7 +13,7 @@ import { LayoutItemBase } from '../layout/layout-item-base.js';
 import { topAppBarStyle } from './top-app-bar-style.js';
 import type { LayoutPlacement } from '../layout/helper.js';
 import type { ScrollPaddingPosition } from '@mdui/shared/mixins/scrollBehavior.js';
-import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 
 type TopAppBarTitle = {
   variant: 'center-aligned' | 'small' | 'medium' | 'large';
@@ -124,7 +124,8 @@ export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
       // variant 变更时，重新为 scrollTargetContainer 元素添加 padding-top。避免 top-app-bar 覆盖内容
       this.addEventListener(
         'transitionend',
-        () => {
+        async () => {
+          await this.scrollBehaviorDefinedController.whenDefined();
           this.updateContainerPadding();
         },
         { once: true },
@@ -148,8 +149,8 @@ export class TopAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
     });
   }
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
+  protected firstUpdated(_changedProperties: PropertyValues) {
+    super.firstUpdated(_changedProperties);
 
     this.addEventListener('transitionend', (e: TransitionEvent) => {
       if (e.target === this) {

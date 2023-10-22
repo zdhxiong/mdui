@@ -12,7 +12,7 @@ import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '../circular-progress.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { buttonBaseStyle } from './button-base-style.js';
-import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 
 type RenderButtonOptions = {
   id?: string;
@@ -168,7 +168,7 @@ export class ButtonBase extends AnchorMixin(
     | /*在父框架中打开*/ '_parent'
     | /*在整个窗口中打开*/ '_top';
 
-  private readonly formController: FormController = new FormController(this);
+  private readonly formController = new FormController(this);
 
   /**
    * 表单验证状态对象
@@ -202,20 +202,6 @@ export class ButtonBase extends AnchorMixin(
 
   protected override get focusDisabled(): boolean {
     return this.disabled || this.loading;
-  }
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-
-    this.addEventListener('click', () => {
-      if (this.type === 'submit') {
-        this.formController.submit(this);
-      }
-
-      if (this.type === 'reset') {
-        this.formController.reset(this);
-      }
-    });
   }
 
   /**
@@ -275,6 +261,20 @@ export class ButtonBase extends AnchorMixin(
     if (this.isButton()) {
       (this.focusElement as HTMLButtonElement).setCustomValidity(message);
     }
+  }
+
+  protected override firstUpdated(_changedProperties: PropertyValues) {
+    super.firstUpdated(_changedProperties);
+
+    this.addEventListener('click', () => {
+      if (this.type === 'submit') {
+        this.formController.submit(this);
+      }
+
+      if (this.type === 'reset') {
+        this.formController.reset(this);
+      }
+    });
   }
 
   protected renderLoading(): TemplateResult {

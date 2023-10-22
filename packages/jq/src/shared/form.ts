@@ -41,24 +41,14 @@ export const formCollections: WeakMap<
 export const getFormControls = (
   form: HTMLFormElement,
 ): Array<Element | FormControl> => {
-  const rootNode = form.getRootNode() as Document | ShadowRoot;
-  const allNodes = [...rootNode.querySelectorAll('*')];
   const nativeFormControls = [...form.elements];
-  const collection = formCollections.get(form);
-  const formControls = collection ? Array.from(collection) : [];
+  const formControls = formCollections.get(form) || [];
+
+  const comparePosition = (a: Element, b: Element) => {
+    const position = a.compareDocumentPosition(b);
+    return position & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+  };
 
   // 按 DOM 元素的顺序排序
-  return [...nativeFormControls, ...formControls].sort(
-    (a: Element, b: Element) => {
-      if (allNodes.indexOf(a) < allNodes.indexOf(b)) {
-        return -1;
-      }
-
-      if (allNodes.indexOf(a) > allNodes.indexOf(b)) {
-        return 1;
-      }
-
-      return 0;
-    },
-  );
+  return [...nativeFormControls, ...formControls].sort(comparePosition);
 };

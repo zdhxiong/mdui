@@ -43,39 +43,36 @@
       this.value = [2, 6];
     });
 
-    // 表单验证及 invalid 事件
-    const validateSlider = slider => {
-      if (slider.value <= 50) {
-        slider.setCustomValidity('值必须大于50');
+    // 验证
+    $('.invalid').on('change', function () {
+      if (this.value <= 50) {
+        this.setCustomValidity('值必须大于50');
       } else {
-        slider.setCustomValidity('');
+        this.setCustomValidity('');
       }
-    }
-    const validateRangeSlider = rangeSlider => {
-      if (rangeSlider.value[0] <= 20 || rangeSlider.value[1] >= 80) {
-        rangeSlider.setCustomValidity('值必须大于20，且小于80');
+    });
+
+    // 范围验证
+    $('.invalid-range').on('change', function () {
+      if (this.value[0] <= 20 || this.value[1] >= 80) {
+        this.setCustomValidity('值必须大于20，且小于80');
       } else {
-        rangeSlider.setCustomValidity('');
+        this.setCustomValidity('');
       }
-    }
+    });
 
-    $('.invalid')
-      .each(function () {
-        validateSlider(this);
-      })
-      .on('change', function () {
-        validateSlider(this);
-      });
-    $('.invalid-range')
-      .each(function () {
-        validateRangeSlider(this);
-      })
-      .on('change', function () {
-        validateRangeSlider(this);
-      });
-
+    // 阻止错误提示
     $('.invalid-prevent').on('invalid', (e) => {
       e.preventDefault();
+    });
+
+    $('#default-value').on({
+      input: (e) => { console.log('slider input event: ', e.target); },
+      change: (e) => { console.log('slider change event: ', e.target); },
+    });
+    $('#default-value-range').on({
+      input: (e) => { console.log('range-slider input event: ', e.target); },
+      change: (e) => { console.log('range-slider change event: ', e.target); },
     });
   </script>
 </head>
@@ -134,9 +131,9 @@
 
     <section>
       <h2>default value</h2>
-      <mdui-slider min="0" max="10" value="2"></mdui-slider>
+      <mdui-slider min="0" max="10" value="2" id="default-value"></mdui-slider>
       <mdui-slider min="0" max="10" tickmarks value="2"></mdui-slider>
-      <mdui-range-slider min="0" max="10" class="range-slider-default-value"></mdui-range-slider>
+      <mdui-range-slider min="0" max="10" class="range-slider-default-value" id="default-value-range"></mdui-range-slider>
       <mdui-range-slider min="0" max="10" tickmarks class="range-slider-default-value"></mdui-range-slider>
       <div class="mdui-theme-dark">
         <mdui-slider min="0" max="10" value="2"></mdui-slider>

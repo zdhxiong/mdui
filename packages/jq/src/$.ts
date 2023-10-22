@@ -1,6 +1,6 @@
 import { getDocument } from 'ssr-window';
 import { JQ } from './shared/core.js';
-import { getChildNodesArray } from './shared/dom.js';
+import { getChildNodesArray, isDomReady } from './shared/dom.js';
 import {
   isFunction,
   isNode,
@@ -12,8 +12,6 @@ import type { JQStatic } from './shared/core.js';
 
 const get$ = (): JQStatic => {
   const $ = function (selector?: unknown) {
-    const document = getDocument();
-
     if (!selector) {
       return new JQ();
     }
@@ -25,16 +23,15 @@ const get$ = (): JQStatic => {
 
     // function
     if (isFunction(selector)) {
-      if (
-        /complete|loaded|interactive/.test(document.readyState) &&
-        document.body
-      ) {
+      const document = getDocument();
+
+      if (isDomReady(document)) {
         selector.call(document, $);
       } else {
         document.addEventListener(
           'DOMContentLoaded',
           () => selector.call(document, $),
-          false,
+          { once: true },
         );
       }
 
@@ -69,6 +66,8 @@ const get$ = (): JQStatic => {
 
         return new JQ(getChildNodesArray(html, toCreate));
       }
+
+      const document = getDocument();
 
       // 根据 CSS 选择器创建 JQ 对象
       return new JQ(document.querySelectorAll(selector));

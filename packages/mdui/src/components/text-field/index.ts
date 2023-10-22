@@ -28,7 +28,7 @@ import '../icon.js';
 import { style } from './style.js';
 import type { FormControl } from '@mdui/jq/shared/form.js';
 import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
-import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
@@ -490,7 +490,7 @@ export class TextField
   private observeResize?: ObserveResize;
   private readonly inputRef: Ref<HTMLInputElement | HTMLTextAreaElement> =
     createRef();
-  private readonly formController: FormController = new FormController(this);
+  private readonly formController = new FormController(this);
   private readonly hasSlotController = new HasSlotController(
     this,
     'icon',
@@ -595,23 +595,18 @@ export class TextField
       return;
     }
 
-    // 设置最大高度，为 line-height * maxRows + padding-top + padding-bottom
-    const setMaxHeight = () => {
-      const $input = $(this.inputRef.value!);
-      $input.css(
-        'max-height',
-        parseFloat($input.css('line-height')) * (this.maxRows ?? 1) +
-          parseFloat($input.css('padding-top')) +
-          parseFloat($input.css('padding-bottom')),
-      );
-    };
-
-    if (this.hasUpdated) {
-      setMaxHeight();
-    } else {
+    if (!this.hasUpdated) {
       await this.updateComplete;
-      setMaxHeight();
     }
+
+    // 设置最大高度，为 line-height * maxRows + padding-top + padding-bottom
+    const $input = $(this.inputRef.value!);
+    $input.css(
+      'max-height',
+      parseFloat($input.css('line-height')) * (this.maxRows ?? 1) +
+        parseFloat($input.css('padding-top')) +
+        parseFloat($input.css('padding-bottom')),
+    );
   }
 
   @watch('minRows')
@@ -620,34 +615,18 @@ export class TextField
       return;
     }
 
-    // 设置最小高度，为 line-height * minRows + padding-top + padding-bottom
-    const setMinHeight = () => {
-      const $input = $(this.inputRef.value!);
-      $input.css(
-        'min-height',
-        parseFloat($input.css('line-height')) * (this.minRows ?? 1) +
-          parseFloat($input.css('padding-top')) +
-          parseFloat($input.css('padding-bottom')),
-      );
-    };
-
-    if (this.hasUpdated) {
-      setMinHeight();
-    } else {
+    if (!this.hasUpdated) {
       await this.updateComplete;
-      setMinHeight();
     }
-  }
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
-
-    this.updateComplete.then(() => {
-      this.setTextareaHeight();
-      this.observeResize = observeResize(this.inputRef.value!, () =>
-        this.setTextareaHeight(),
-      );
-    });
+    // 设置最小高度，为 line-height * minRows + padding-top + padding-bottom
+    const $input = $(this.inputRef.value!);
+    $input.css(
+      'min-height',
+      parseFloat($input.css('line-height')) * (this.minRows ?? 1) +
+        parseFloat($input.css('padding-top')) +
+        parseFloat($input.css('padding-bottom')),
+    );
   }
 
   public override disconnectedCallback(): void {
@@ -750,6 +729,15 @@ export class TextField
   public setCustomValidity(message: string): void {
     this.inputRef.value!.setCustomValidity(message);
     this.invalid = !this.inputRef.value!.checkValidity();
+  }
+
+  protected firstUpdated(_changedProperties: PropertyValues) {
+    super.firstUpdated(_changedProperties);
+
+    this.setTextareaHeight();
+    this.observeResize = observeResize(this.inputRef.value!, () =>
+      this.setTextareaHeight(),
+    );
   }
 
   protected override render(): TemplateResult {

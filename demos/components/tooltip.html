@@ -39,6 +39,13 @@
           tooltip.open = false;
         });
       });
+
+      $('#default-open').on({
+        open: (e) => { console.log('open event: ', e.target); },
+        opened: (e) => { console.log('opened event: ', e.target); },
+        close: (e) => { console.log('close event: ', e.target); },
+        closed: (e) => { console.log('closed event: ', e.target); },
+      });
     });
   </script>
 </head>
@@ -229,7 +236,7 @@
 
     <section>
       <h2>default open</h2>
-      <mdui-tooltip content="default open" open>
+      <mdui-tooltip content="default open" open id="default-open">
         <mdui-button variant="elevated">default open</mdui-button>
       </mdui-tooltip>
     </section>

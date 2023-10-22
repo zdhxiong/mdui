@@ -8,7 +8,7 @@ import { LayoutItemBase } from '../layout/layout-item-base.js';
 import { style } from './style.js';
 import type { LayoutPlacement } from '../layout/helper.js';
 import type { ScrollPaddingPosition } from '@mdui/shared/mixins/scrollBehavior.js';
-import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 
 /**
  * @summary 底部应用栏组件
@@ -74,8 +74,8 @@ export class BottomAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
     return 'bottom';
   }
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
+  protected override firstUpdated(_changedProperties: PropertyValues) {
+    super.firstUpdated(_changedProperties);
 
     this.addEventListener('transitionend', (event: TransitionEvent) => {
       if (event.target === this) {

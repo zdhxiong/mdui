@@ -1,8 +1,11 @@
-import { html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
-import { $ } from '@mdui/jq/$.js';
-import '@mdui/jq/methods/find.js';
-import '@mdui/jq/methods/get.js';
+import { html, PropertyValues } from 'lit';
+import {
+  customElement,
+  property,
+  queryAssignedElements,
+  state,
+} from 'lit/decorators.js';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
@@ -17,6 +20,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 
 type NavigationBarItem = NavigationBarItemOriginal & {
   labelVisibility: 'selected' | 'labeled' | 'unlabeled';
+  isInitial: boolean;
   active: boolean;
   readonly key: number;
 };
@@ -92,8 +96,19 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
   @state()
   private activeKey = 0;
 
-  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
-  private hasSetDefaultValue = false;
+  // 子元素 <mdui-navigation-bar-item> 的集合
+  @queryAssignedElements({
+    selector: 'mdui-navigation-bar-item',
+    flatten: true,
+  })
+  private readonly items!: NavigationBarItem[];
+
+  // 是否是初始状态，初始状态不触发 change 事件，没有动画
+  private isInitial = true;
+
+  private definedController = new DefinedController(this, {
+    relatedElements: ['mdui-navigation-bar-item'],
+  });
 
   protected get scrollPaddingPosition(): ScrollPaddingPosition {
     return 'bottom';
@@ -103,52 +118,38 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
     return 'bottom';
   }
 
-  // 所有的子项元素
-  private get items() {
-    return $(this)
-      .find('mdui-navigation-bar-item')
-      .get() as unknown as NavigationBarItem[];
-  }
+  @watch('activeKey', true)
+  private async onActiveKeyChange() {
+    await this.definedController.whenDefined();
 
-  @watch('activeKey')
-  private onActiveKeyChange() {
     // 根据 activeKey 读取对应 navigation-bar-item 的值
     const item = this.items.find((item) => item.key === this.activeKey);
     this.value = item?.value;
 
-    if (this.hasSetDefaultValue) {
+    if (!this.isInitial) {
       emit(this, 'change');
-    } else {
-      this.hasSetDefaultValue = true;
     }
   }
 
   @watch('value')
-  private onValueChange() {
+  private async onValueChange() {
+    this.isInitial = !this.hasUpdated;
+    await this.definedController.whenDefined();
+
     const item = this.items.find((item) => item.value === this.value);
     this.activeKey = item?.key ?? 0;
 
-    this.updateActive();
+    this.updateItems();
   }
 
   @watch('labelVisibility', true)
-  private onLabelVisibilityChange() {
-    const items = this.items;
-    // 为 navigation-bar-item 设置 labelVisibility 属性
-    const labelVisibility =
-      this.labelVisibility === 'auto'
-        ? items.length <= 3
-          ? 'labeled'
-          : 'selected'
-        : this.labelVisibility;
-
-    items.forEach((item) => {
-      item.labelVisibility = labelVisibility;
-    });
+  private async onLabelVisibilityChange() {
+    await this.definedController.whenDefined();
+    this.updateItems();
   }
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
+  protected override firstUpdated(_changedProperties: PropertyValues) {
+    super.firstUpdated(_changedProperties);
 
     this.addEventListener('transitionend', (event: TransitionEvent) => {
       if (event.target === this) {
@@ -198,15 +199,33 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
     ) as NavigationBarItem;
 
     this.activeKey = item.key;
-    this.updateActive();
+    this.isInitial = false;
+
+    this.updateItems();
   }
 
-  private updateActive() {
-    this.items.forEach((item) => (item.active = this.activeKey === item.key));
+  // 更新 <mdui-navigation-bar-item> 的状态
+  private updateItems() {
+    const items = this.items;
+
+    // <mdui-navigation-bar-item> 的 labelVisibility 不含 auto
+    const labelVisibility =
+      this.labelVisibility === 'auto'
+        ? items.length <= 3
+          ? 'labeled'
+          : 'selected'
+        : this.labelVisibility;
+
+    items.forEach((item) => {
+      item.active = this.activeKey === item.key;
+      item.labelVisibility = labelVisibility;
+      item.isInitial = this.isInitial;
+    });
   }
 
-  private onSlotChange() {
-    this.onLabelVisibilityChange();
+  private async onSlotChange() {
+    await this.definedController.whenDefined();
+    this.updateItems();
   }
 }
 

@@ -48,6 +48,10 @@
       $('.update-placement')[0].placement = this.value;
     });
 
+    $('#default-value').on('change', (e) => {
+      console.log('change event: ', e.target, e.target.value);
+    });
+
     import Swiper from 'https://www.unpkg.com/swiper@10.0.4/swiper-bundle.min.mjs';
     const tabWithSwiper = document.querySelector('.with-swiper');
     const tabs = Array.from(document.querySelectorAll('.with-swiper mdui-tab'));
@@ -70,7 +74,7 @@
   <main>
     <section>
       <h2>Primary</h2>
-      <mdui-tabs value="trips">
+      <mdui-tabs value="trips" id="default-value">
         <mdui-tab value="flights">Flights</mdui-tab>
         <mdui-tab value="trips">Trips</mdui-tab>
         <mdui-tab value="explore" no-ripple>no-ripple</mdui-tab>

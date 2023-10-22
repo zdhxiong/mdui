@@ -59,14 +59,9 @@ interface LayoutItemState {
 }
 
 export class LayoutManager {
-  private $layout: JQ<Layout>;
   private $main?: JQ<LayoutMain>;
   private states: LayoutItemState[] = [];
   private items?: LayoutItemBase[];
-
-  public constructor(element: Layout) {
-    this.$layout = $(element);
-  }
 
   /**
    * 注册 `<mdui-layout-main>`
@@ -91,16 +86,9 @@ export class LayoutManager {
 
     // 监听元素尺寸变化
     state.observeResize = observeResize(state.element, () => {
-      // drawer 较特殊，在为模态化时，占据的宽度为 0
-      if (
-        isNodeName(state.element, 'mdui-navigation-drawer') &&
-        // @ts-ignore
-        state.element.isModal
-      ) {
-        this.updateLayout(state.element, { width: 0 });
-      } else {
-        this.updateLayout(state.element);
-      }
+      this.updateLayout(state.element, {
+        width: this.isNoWidth(state) ? 0 : undefined,
+      });
     });
 
     this.items = undefined;
@@ -137,18 +125,18 @@ export class LayoutManager {
    */
   public getItems(): LayoutItemBase[] {
     if (!this.items) {
-      this.items = this.$layout
-        .children(
-          [
-            'mdui-navigation-bar',
-            'mdui-navigation-drawer',
-            'mdui-navigation-rail',
-            'mdui-bottom-app-bar',
-            'mdui-top-app-bar',
-            'mdui-layout-item',
-          ].join(','),
-        )
-        .get() as unknown as LayoutItemBase[];
+      const items = this.states.map((state) => state.element);
+
+      this.items = items.sort((a, b) => {
+        const position = a.compareDocumentPosition(b);
+        if (position & Node.DOCUMENT_POSITION_FOLLOWING) {
+          return -1;
+        } else if (position & Node.DOCUMENT_POSITION_PRECEDING) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
     }
 
     return this.items;
@@ -166,13 +154,6 @@ export class LayoutManager {
    */
   public getItemsAndMain(): (LayoutItemBase | LayoutMain)[] {
     return [...this.getItems(), this.getMain()!].filter((i) => i);
-  }
-
-  /**
-   * 检查指定 `<mdui-layout-item>` 元素是否已注册
-   */
-  public hasItem(element: LayoutItemBase): boolean {
-    return this.getItems().includes(element);
   }
 
   /**
@@ -229,17 +210,15 @@ export class LayoutManager {
 
       switch (placement) {
         case 'top':
-          currState.top! += currState.height ?? currState.element.offsetHeight;
-          break;
-        case 'right':
-          currState.right! += currState.width ?? currState.element.offsetWidth;
-          break;
         case 'bottom':
-          currState.bottom! +=
+          currState[placement]! +=
             currState.height ?? currState.element.offsetHeight;
           break;
+        case 'right':
         case 'left':
-          currState.left! += currState.width ?? currState.element.offsetWidth;
+          currState[placement]! +=
+            (this.isNoWidth(currState) ? 0 : currState.width) ??
+            currState.element.offsetWidth;
           break;
       }
 
@@ -291,6 +270,18 @@ export class LayoutManager {
       return 0;
     });
   }
+
+  /**
+   * 组件宽度是否为 0
+   * mdui-navigation-drawer 较为特殊，在为模态化时，占据的宽度为 0
+   */
+  private isNoWidth(state: LayoutItemState) {
+    return (
+      isNodeName(state.element, 'mdui-navigation-drawer') &&
+      // @ts-ignore
+      state.element.isModal
+    );
+  }
 }
 
 const layoutManagerMap: WeakMap<Layout, LayoutManager> = new WeakMap();
@@ -300,7 +291,7 @@ const layoutManagerMap: WeakMap<Layout, LayoutManager> = new WeakMap();
  */
 export const getLayout = (element: Layout): LayoutManager => {
   if (!layoutManagerMap.has(element)) {
-    layoutManagerMap.set(element, new LayoutManager(element));
+    layoutManagerMap.set(element, new LayoutManager());
   }
 
   return layoutManagerMap.get(element)!;

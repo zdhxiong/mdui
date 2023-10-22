@@ -91,9 +91,12 @@
 .indicator {
   position: absolute;
   z-index: 1;
-  .transition-duration(medium2);
-  .transition-timing-function(standard-decelerate);
   .background-color(primary);
+
+  .container:not(.initial) & {
+    .transition-duration(medium2);
+    .transition-timing-function(standard-decelerate);
+  }
 
   :host([placement^="top"]) &,
   :host([placement^="bottom"]) & {

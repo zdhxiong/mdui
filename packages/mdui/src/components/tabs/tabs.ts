@@ -1,11 +1,18 @@
 import { html, LitElement } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import {
+  customElement,
+  property,
+  queryAssignedElements,
+  state,
+} from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/children.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
@@ -15,7 +22,7 @@ import { tabsStyle } from './tabs-style.js';
 import type { TabPanel as TabPanelOriginal } from './tab-panel.js';
 import type { Tab as TabOriginal } from './tab.js';
 import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
-import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 type Tab = TabOriginal & {
@@ -119,45 +126,57 @@ export class Tabs extends LitElement {
   @state()
   private activeKey = 0;
 
+  // 是否为初始状态，初始状态不触发 change 事件
+  @state()
+  private isInitial = true;
+
+  @queryAssignedElements({ selector: 'mdui-tab', flatten: true })
+  private readonly tabs!: Tab[];
+
+  @queryAssignedElements({
+    selector: 'mdui-tab-panel',
+    slot: 'panel',
+    flatten: true,
+  })
+  private readonly panels!: TabPanel[];
+
   private activeTab?: Tab;
   private observeResize?: ObserveResize;
-  private tabs: Tab[] = [];
-  private panels: TabPanel[] = [];
   private readonly containerRef: Ref<HTMLElement> = createRef();
   private readonly indicatorRef: Ref<HTMLElement> = createRef();
+  private readonly definedController = new DefinedController(this, {
+    relatedElements: ['mdui-tab', 'mdui-tab-panel'],
+  });
 
   @watch('activeKey', true)
-  private onActiveKeyChange() {
+  private async onActiveKeyChange() {
+    await this.definedController.whenDefined();
+
     // 根据 activeKey 读取对应 tab 的值
     this.value = this.tabs.find((tab) => tab.key === this.activeKey)?.value;
 
-    emit(this, 'change');
+    this.updateActive();
+
+    if (!this.isInitial) {
+      emit(this, 'change');
+    }
   }
 
   @watch('value')
-  private onValueChange() {
+  private async onValueChange() {
+    this.isInitial = !this.hasUpdated;
+    await this.definedController.whenDefined();
+
     const tab = this.tabs.find((tab) => tab.value === this.value);
     this.activeKey = tab?.key ?? 0;
-
-    this.updateActive();
   }
 
   @watch('variant', true)
   @watch('placement', true)
   @watch('fullWidth', true)
-  private onIndicatorChange() {
+  private async onIndicatorChange() {
+    await this.updateComplete;
     this.updateIndicator();
-  }
-
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this.syncTabsAndPanels();
-
-    this.updateComplete.then(() => {
-      this.observeResize = observeResize(this.containerRef.value!, () =>
-        this.updateIndicator(),
-      );
-    });
   }
 
   public override disconnectedCallback(): void {
@@ -165,11 +184,19 @@ export class Tabs extends LitElement {
     this.observeResize?.unobserve();
   }
 
+  protected override firstUpdated(_changedProperties: PropertyValues) {
+    super.firstUpdated(_changedProperties);
+
+    this.observeResize = observeResize(this.containerRef.value!, () =>
+      this.updateIndicator(),
+    );
+  }
+
   protected override render(): TemplateResult {
     return html`<div
         ${ref(this.containerRef)}
         part="container"
-        class="container"
+        class="container ${classMap({ initial: this.isInitial })}"
       >
         <slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>
         <div ${ref(this.indicatorRef)} part="indicator" class="indicator"></div>
@@ -177,28 +204,25 @@ export class Tabs extends LitElement {
       <slot name="panel" @slotchange=${this.onSlotChange}></slot>`;
   }
 
-  private syncTabsAndPanels() {
-    this.tabs = $(this).find('mdui-tab').get() as unknown as Tab[];
-    this.panels = $(this)
-      .find('mdui-tab-panel[slot="panel"]')
-      .get() as unknown as TabPanel[];
-  }
+  private async onSlotChange() {
+    await this.definedController.whenDefined();
 
-  private onSlotChange() {
-    this.syncTabsAndPanels();
     this.updateActive();
   }
 
-  private onClick(event: MouseEvent): void {
+  private async onClick(event: MouseEvent) {
     // event.button 为 0 时，为鼠标左键点击。忽略鼠标中键和右键
     if (event.button) {
       return;
     }
 
+    await this.definedController.whenDefined();
+
     const target = event.target as HTMLElement;
     const tab = target.closest('mdui-tab') as Tab;
 
     this.activeKey = tab.key;
+    this.isInitial = false;
     this.updateActive();
   }
 
@@ -217,9 +241,7 @@ export class Tabs extends LitElement {
     this.updateIndicator();
   }
 
-  private async updateIndicator() {
-    await this.updateComplete;
-
+  private updateIndicator() {
     const activeTab = this.activeTab;
     const $indicator = $(this.indicatorRef.value!);
     const isVertical =
@@ -242,9 +264,9 @@ export class Tabs extends LitElement {
     let shownStyle = {};
 
     if (this.variant === 'primary') {
-      const customSlots = $activeTab.find(':scope > [slot="custom"]').get();
-      const children = customSlots.length
-        ? customSlots
+      const $customSlots = $activeTab.find(':scope > [slot="custom"]');
+      const children = $customSlots.length
+        ? $customSlots.get()
         : $(activeTab.renderRoot as HTMLElement)
             .find('slot[name="custom"]')
             .children()

@@ -35,26 +35,35 @@
     import '../../packages/mdui/components/button-icon.js';
     import { $ } from '../../packages/jq/index.js';
 
-    // mdui-select 元素内不为空的（可包含 slot），填充 mdui-menu-item
-    $('mdui-select')
-      .filter((_, select) => !$(select).children().filter((_, child) => !child.slot).length)
-      .append(`<mdui-menu-item value="item-1">Item One</mdui-menu-item>
-        <mdui-menu-item value="item-2">Item Two</mdui-menu-item>
-        <mdui-menu-item value="item-3">Item Three</mdui-menu-item>
-        <mdui-menu-item value="item-4">Item Four</mdui-menu-item>
-        <mdui-menu-item value="item-5">Item Five</mdui-menu-item>`);
+    $(() => {
+      // mdui-select 元素内不为空的（可包含 slot），填充 mdui-menu-item
+      $('mdui-select')
+        .filter((_, select) => !$(select).children().filter((_, child) => !child.slot).length)
+        .append(`<mdui-menu-item value="item-1">Item One</mdui-menu-item>
+          <mdui-menu-item value="item-2">Item Two</mdui-menu-item>
+          <mdui-menu-item value="item-3">Item Three</mdui-menu-item>
+          <mdui-menu-item value="item-4">Item Four</mdui-menu-item>
+          <mdui-menu-item value="item-5">Item Five</mdui-menu-item>`);
 
-    // multiple select 只能通过 js 设置初始值
-    $('.multiple-value').map((_, select) => {
-      select.value = ['item-2', 'item-3'];
-    });
+      // multiple select 只能通过 js 设置初始值
+      $('.multiple-value').map((_, select) => {
+        select.value = ['item-2', 'item-3'];
+      });
 
-    $('.invalid').on('change', function () {
-      if (this.value !== 'item-3') {
-        this.setCustomValidity('请选择 item 3');
-      } else {
-        this.setCustomValidity('');
-      }
+      $('.invalid').on('change', function () {
+        if (this.value !== 'item-3') {
+          this.setCustomValidity('请选择 item 3');
+        } else {
+          this.setCustomValidity('');
+        }
+      });
+
+      $('#default-value').on('change', (e) => {
+        console.log('change event: ', e.target, e.target.value);
+      });
+      $('#default-value-multiple').on('change', (e) => {
+        console.log('multiple change event: ', e.target, e.target.value);
+      });
     });
   </script>
 </head>
@@ -93,10 +102,10 @@
 
     <section>
       <h2>default value</h2>
-      <mdui-select value="item-3" label="single"></mdui-select>
+      <mdui-select value="item-3" label="single" id="default-value"></mdui-select>
       <mdui-select value="item-3" label="single" variant="outlined"></mdui-select>
       <br />
-      <mdui-select label="multiple" multiple class="multiple-value"></mdui-select>
+      <mdui-select label="multiple" multiple class="multiple-value" id="default-value-multiple"></mdui-select>
       <mdui-select label="multiple" multiple class="multiple-value" variant="outlined"></mdui-select>
     </section>
 

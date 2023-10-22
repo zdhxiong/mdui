@@ -11,6 +11,7 @@ import '@mdui/jq/methods/innerWidth.js';
 import '@mdui/jq/methods/width.js';
 import { isUndefined } from '@mdui/jq/shared/helper.js';
 import '@mdui/jq/static/contains.js';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
@@ -126,7 +127,7 @@ export class MenuItem extends AnchorMixin(
   })
   public submenuOpen = false;
 
-  // 是否已选中该菜单项，由 mdui-menu 控制该参数
+  // 是否已选中该菜单项。由 <mdui-menu> 控制该参数
   @property({
     type: Boolean,
     reflect: true,
@@ -134,27 +135,27 @@ export class MenuItem extends AnchorMixin(
   })
   protected selected = false;
 
-  // 由 mdui-menu 控制该参数
+  // 是否使用更紧凑的布局。由 <mdui-menu> 控制该参数
   @state()
   protected dense = false;
 
-  // 由 mdui-menu 控制该参数
+  // 可选中状态。由 <mdui-menu> 控制该参数
   @state()
   protected selects?: 'single' | 'multiple';
 
-  // 由 mdui-menu 控制该参数
+  // 子菜单的触发方式。由 <mdui-menu> 控制该参数
   @state()
   protected submenuTrigger?: string;
 
-  // 由 mdui-menu 控制该参数
+  // 通过 hover 触发子菜单打开时的延时。由 <mdui-menu> 控制该参数
   @state()
   protected submenuOpenDelay?: number;
 
-  // 由 mdui-menu 控制该参数
+  // 通过 hover 触发子菜单关闭时的延时。由 <mdui-menu> 控制该参数
   @state()
   protected submenuCloseDelay?: number;
 
-  // 是否可聚焦。由 mdui-menu 控制该参数
+  // 是否可聚焦。由 <mdui-menu> 控制该参数
   @state()
   protected focusable = false;
 
@@ -175,6 +176,9 @@ export class MenuItem extends AnchorMixin(
     'submenu',
     'custom',
   );
+  private readonly definedController = new DefinedController(this, {
+    relatedElements: [''],
+  });
 
   public constructor() {
     super();
@@ -212,6 +216,17 @@ export class MenuItem extends AnchorMixin(
   private async onOpenChange() {
     const hasUpdated = this.hasUpdated;
 
+    // 默认为关闭状态。因此首次渲染时，且为关闭状态，不执行
+    if (!this.submenuOpen && !hasUpdated) {
+      return;
+    }
+
+    await this.definedController.whenDefined();
+
+    if (!hasUpdated) {
+      await this.updateComplete;
+    }
+
     const easingLinear = getEasing(this, 'linear');
     const easingEmphasizedDecelerate = getEasing(this, 'emphasized-decelerate');
     const easingEmphasizedAccelerate = getEasing(this, 'emphasized-accelerate');
@@ -219,10 +234,6 @@ export class MenuItem extends AnchorMixin(
     // 打开
     // 要区分是否首次渲染，首次渲染时不触发事件，不执行动画；非首次渲染，触发事件，执行动画
     if (this.submenuOpen) {
-      if (!hasUpdated) {
-        await this.updateComplete;
-      }
-
       if (hasUpdated) {
         const requestOpen = emit(this, 'submenu-open', {
           cancelable: true,
@@ -259,12 +270,7 @@ export class MenuItem extends AnchorMixin(
       if (hasUpdated) {
         emit(this, 'submenu-opened');
       }
-
-      return;
-    }
-
-    // 关闭
-    if (!this.submenuOpen && hasUpdated) {
+    } else {
       const requestClose = emit(this, 'submenu-close', {
         cancelable: true,
       });
@@ -288,7 +294,10 @@ export class MenuItem extends AnchorMixin(
         ),
       ]);
 
-      this.submenuRef.value!.hidden = true;
+      if (this.submenuRef.value) {
+        this.submenuRef.value.hidden = true;
+      }
+
       emit(this, 'submenu-closed');
     }
   }
@@ -296,7 +305,9 @@ export class MenuItem extends AnchorMixin(
   public override connectedCallback(): void {
     super.connectedCallback();
 
-    document.addEventListener('pointerdown', this.onOuterClick);
+    this.definedController.whenDefined().then(() => {
+      document.addEventListener('pointerdown', this.onOuterClick);
+    });
   }
 
   public override disconnectedCallback(): void {
@@ -308,12 +319,14 @@ export class MenuItem extends AnchorMixin(
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
 
-    this.addEventListener('focus', this.onFocus);
-    this.addEventListener('blur', this.onBlur);
-    this.addEventListener('click', this.onClick);
-    this.addEventListener('keydown', this.onKeydown);
-    this.addEventListener('mouseenter', this.onMouseEnter);
-    this.addEventListener('mouseleave', this.onMouseLeave);
+    this.definedController.whenDefined().then(() => {
+      this.addEventListener('focus', this.onFocus);
+      this.addEventListener('blur', this.onBlur);
+      this.addEventListener('click', this.onClick);
+      this.addEventListener('keydown', this.onKeydown);
+      this.addEventListener('mouseenter', this.onMouseEnter);
+      this.addEventListener('mouseleave', this.onMouseLeave);
+    });
   }
 
   protected override render(): TemplateResult {
@@ -447,16 +460,18 @@ export class MenuItem extends AnchorMixin(
 
   private onKeydown(event: KeyboardEvent) {
     // 切换子菜单打开状态
-    if (!this.disabled && this.hasSubmenu) {
-      if (!this.submenuOpen && event.key === 'Enter') {
-        event.stopPropagation();
-        this.submenuOpen = true;
-      }
+    if (this.disabled || !this.hasSubmenu) {
+      return;
+    }
 
-      if (this.submenuOpen && event.key === 'Escape') {
-        event.stopPropagation();
-        this.submenuOpen = false;
-      }
+    if (!this.submenuOpen && event.key === 'Enter') {
+      event.stopPropagation();
+      this.submenuOpen = true;
+    }
+
+    if (this.submenuOpen && event.key === 'Escape') {
+      event.stopPropagation();
+      this.submenuOpen = false;
     }
   }
 
@@ -488,6 +503,7 @@ export class MenuItem extends AnchorMixin(
     }, this.submenuCloseDelay || 50);
   }
 
+  // 更新子菜单的位置
   private updateSubmenuPositioner(): void {
     const $window = $(window);
     const $submenu = $(this.submenuRef.value!);

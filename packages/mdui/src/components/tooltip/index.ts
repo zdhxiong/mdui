@@ -8,6 +8,7 @@ import '@mdui/jq/methods/filter.js';
 import '@mdui/jq/methods/height.js';
 import '@mdui/jq/methods/prop.js';
 import '@mdui/jq/methods/width.js';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { HoverController } from '@mdui/shared/controllers/hover.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
@@ -167,7 +168,6 @@ export class Tooltip extends LitElement {
   public open = false;
 
   private observeResize?: ObserveResize;
-  private target!: HTMLElement;
   private hoverTimeout!: number;
   private readonly popupRef: Ref<HTMLElement> = createRef();
   private readonly hasSlotController = new HasSlotController(
@@ -176,6 +176,9 @@ export class Tooltip extends LitElement {
     'action',
   );
   private readonly hoverController = new HoverController(this, this.popupRef);
+  private readonly definedController = new DefinedController(this, {
+    needDomReady: true,
+  });
 
   public constructor() {
     super();
@@ -190,10 +193,22 @@ export class Tooltip extends LitElement {
     this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
+  /**
+   * 获取第一个非 <style> 和 content slot 的子元素，作为 tooltip 的目标元素
+   */
+  private get target(): HTMLElement {
+    return [...(this.children as unknown as HTMLElement[])].find(
+      (el) =>
+        el.tagName.toLowerCase() !== 'style' &&
+        el.getAttribute('slot') !== 'content',
+    )!;
+  }
+
   @watch('placement', true)
   @watch('content', true)
   private async onPositionChange() {
     if (this.open) {
+      await this.definedController.whenDefined();
       this.updatePositioner();
     }
   }
@@ -208,6 +223,8 @@ export class Tooltip extends LitElement {
     // 打开
     // 要区分是否首次渲染，首次渲染时不触发事件，不执行动画；非首次渲染，触发事件，执行动画
     if (this.open) {
+      await this.definedController.whenDefined();
+
       // 先关闭页面中所有其他相同 variant 的 tooltip
       $(`mdui-tooltip[variant="${this.variant}"]`)
         .filter((_, element) => element !== this)
@@ -262,7 +279,6 @@ export class Tooltip extends LitElement {
       );
       this.popupRef.value!.hidden = true;
       emit(this, 'closed');
-      return;
     }
   }
 
@@ -271,13 +287,6 @@ export class Tooltip extends LitElement {
 
     document.addEventListener('pointerdown', this.onDocumentClick);
     window.addEventListener('scroll', this.onWindowScroll);
-
-    // trigger 尺寸变化时，重新调整 tooltip 的位置
-    this.updateComplete.then(() => {
-      this.observeResize = observeResize(this.target, () => {
-        this.updatePositioner();
-      });
-    });
   }
 
   public override disconnectedCallback(): void {
@@ -291,14 +300,22 @@ export class Tooltip extends LitElement {
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
-    this.target = this.getTarget();
 
-    this.target.addEventListener('focus', this.onFocus);
-    this.target.addEventListener('blur', this.onBlur);
-    this.target.addEventListener('pointerdown', this.onClick);
-    this.target.addEventListener('keydown', this.onKeydown);
-    this.target.addEventListener('mouseenter', this.onMouseEnter);
-    this.target.addEventListener('mouseleave', this.onMouseLeave);
+    this.definedController.whenDefined().then(() => {
+      const target = this.target;
+
+      target.addEventListener('focus', this.onFocus);
+      target.addEventListener('blur', this.onBlur);
+      target.addEventListener('pointerdown', this.onClick);
+      target.addEventListener('keydown', this.onKeydown);
+      target.addEventListener('mouseenter', this.onMouseEnter);
+      target.addEventListener('mouseleave', this.onMouseLeave);
+
+      // trigger 尺寸变化时，重新调整 tooltip 的位置
+      this.observeResize = observeResize(target, () => {
+        this.updatePositioner();
+      });
+    });
   }
 
   protected override render(): TemplateResult {
@@ -333,7 +350,7 @@ export class Tooltip extends LitElement {
   /**
    * 请求关闭 tooltip。鼠标未悬浮在 tooltip 上时，直接关闭；否则等鼠标移走再关闭
    */
-  private async requestClose() {
+  private requestClose() {
     if (!this.hoverController.isHover) {
       this.open = false;
       return;
@@ -350,17 +367,6 @@ export class Tooltip extends LitElement {
         this.open = false;
       }
     }, true);
-  }
-
-  /**
-   * 获取第一个非 <style> 和 content slot 的子元素，作为 tooltip 的目标元素
-   */
-  private getTarget(): HTMLElement {
-    return [...(this.children as unknown as HTMLElement[])].find(
-      (el) =>
-        el.tagName.toLowerCase() !== 'style' &&
-        el.getAttribute('slot') !== 'content',
-    )!;
   }
 
   private hasTrigger(trigger: string): boolean {

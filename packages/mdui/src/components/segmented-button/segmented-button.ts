@@ -67,7 +67,7 @@ export class SegmentedButton extends ButtonBase {
   public selectedIcon?: string;
 
   /**
-   * 是否选中该分段按钮项，由 mdui-segmented-button-group 组件控制该参数
+   * 是否选中该分段按钮项，由 <mdui-segmented-button-group> 组件控制该参数
    */
   @property({
     type: Boolean,
@@ -77,7 +77,7 @@ export class SegmentedButton extends ButtonBase {
   protected selected = false;
 
   /**
-   * 是否验证未通过。由 mdui-segmented-button-group 控制该参数
+   * 是否验证未通过。由 <mdui-segmented-button-group> 控制该参数
    */
   @property({
     type: Boolean,
@@ -86,7 +86,7 @@ export class SegmentedButton extends ButtonBase {
   })
   protected invalid = false;
 
-  // 父组件中是否设置了禁用。由 mdui-radio-group 控制该参数
+  // 父组件中是否设置了禁用。由 <mdui-segmented-button-group> 控制该参数
   @property({
     type: Boolean,
     reflect: true,

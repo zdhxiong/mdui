@@ -145,7 +145,7 @@ export class Checkbox
 
   private readonly inputRef: Ref<HTMLInputElement> = createRef();
   private readonly rippleRef: Ref<Ripple> = createRef();
-  private readonly formController: FormController = new FormController(this, {
+  private readonly formController = new FormController(this, {
     value: (control) => (control.checked ? control.value : undefined),
     defaultValue: (control) => control.defaultChecked!,
     setValue: (control, checked) => (control.checked = checked as boolean),

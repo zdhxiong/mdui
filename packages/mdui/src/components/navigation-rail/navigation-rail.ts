@@ -1,11 +1,15 @@
 import { html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import {
+  customElement,
+  property,
+  queryAssignedElements,
+  state,
+} from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
-import '@mdui/jq/methods/find.js';
-import '@mdui/jq/methods/get.js';
 import '@mdui/jq/methods/innerWidth.js';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
@@ -20,6 +24,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 type NavigationRailItem = NavigationRailItemOriginal & {
   active: boolean;
   placement: 'left' | 'right';
+  isInitial: boolean;
   readonly key: number;
 };
 
@@ -112,24 +117,26 @@ export class NavigationRail extends LayoutItemBase {
   @state()
   private activeKey = 0;
 
+  @queryAssignedElements({
+    selector: 'mdui-navigation-rail-item',
+    flatten: true,
+  })
+  private readonly items!: NavigationRailItem[];
+
   private readonly hasSlotController = new HasSlotController(
     this,
     'top',
     'bottom',
   );
+  private readonly definedController = new DefinedController(this, {
+    relatedElements: ['mdui-navigation-rail-item'],
+  });
 
-  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
-  private hasSetDefaultValue = false;
+  // 是否是初始状态，初始状态不触发事件，不执行动画
+  private isInitial = true;
 
   protected override get layoutPlacement(): LayoutPlacement {
     return this.placement;
-  }
-
-  // 所有的子项元素
-  private get items() {
-    return $(this)
-      .find('mdui-navigation-rail-item')
-      .get() as unknown as NavigationRailItem[];
   }
 
   private get parentTarget() {
@@ -148,33 +155,37 @@ export class NavigationRail extends LayoutItemBase {
       : undefined;
   }
 
-  @watch('activeKey')
-  private onActiveKeyChange() {
+  @watch('activeKey', true)
+  private async onActiveKeyChange() {
+    await this.definedController.whenDefined();
+
     // 根据 activeKey 读取对应 navigation-rail-item 的值
     const item = this.items.find((item) => item.key === this.activeKey);
     this.value = item?.value;
 
-    if (this.hasSetDefaultValue) {
+    if (!this.isInitial) {
       emit(this, 'change');
-    } else {
-      this.hasSetDefaultValue = true;
     }
   }
 
   @watch('value')
-  private onValueChange() {
+  private async onValueChange() {
+    this.isInitial = !this.hasUpdated;
+    await this.definedController.whenDefined();
+
     const item = this.items.find((item) => item.value === this.value);
     this.activeKey = item?.key ?? 0;
 
-    this.updateActive();
+    this.updateItems();
   }
 
-  // 首次渲染在 @watch('placement') 中已经执行，这里跳过
   @watch('contained', true)
-  private onContainedChange() {
+  private async onContainedChange() {
     if (this.isParentLayout) {
       return;
     }
+
+    await this.definedController.whenDefined();
 
     $(document.body).css({
       paddingLeft: this.contained || this.isRight ? null : this.paddingValue,
@@ -186,26 +197,15 @@ export class NavigationRail extends LayoutItemBase {
     });
   }
 
-  @watch('placement')
-  private onPlacementChange() {
+  @watch('placement', true)
+  private async onPlacementChange() {
+    await this.definedController.whenDefined();
+
     this.layoutManager?.updateLayout(this);
 
     this.items.forEach((item) => {
       item.placement = this.placement;
     });
-
-    if (this.isParentLayout) {
-      return;
-    }
-
-    $(this.parentTarget).css({
-      paddingLeft: this.isRight ? null : this.paddingValue,
-      paddingRight: this.isRight ? this.paddingValue : null,
-    });
-  }
-
-  public override connectedCallback() {
-    super.connectedCallback();
 
     if (!this.isParentLayout) {
       $(this.parentTarget).css({
@@ -215,10 +215,23 @@ export class NavigationRail extends LayoutItemBase {
     }
   }
 
+  public override connectedCallback() {
+    super.connectedCallback();
+
+    if (!this.isParentLayout) {
+      this.definedController.whenDefined().then(() => {
+        $(this.parentTarget).css({
+          paddingLeft: this.isRight ? null : this.paddingValue,
+          paddingRight: this.isRight ? this.paddingValue : null,
+        });
+      });
+    }
+  }
+
   public override disconnectedCallback() {
     super.disconnectedCallback();
 
-    if (!this.isParentLayout) {
+    if (!this.isParentLayout && this.definedController.isDefined()) {
       $(this.parentTarget).css({
         paddingLeft: this.isRight ? undefined : null,
         paddingRight: this.isRight ? null : undefined,
@@ -260,17 +273,22 @@ export class NavigationRail extends LayoutItemBase {
     ) as NavigationRailItem;
 
     this.activeKey = item.key;
-    this.updateActive();
+    this.isInitial = false;
+
+    this.updateItems();
   }
 
-  private updateActive() {
-    this.items.forEach((item) => (item.active = this.activeKey === item.key));
-  }
-
-  private onSlotChange() {
+  private updateItems() {
     this.items.forEach((item) => {
+      item.active = this.activeKey === item.key;
       item.placement = this.placement;
+      item.isInitial = this.isInitial;
     });
+  }
+
+  private async onSlotChange() {
+    await this.definedController.whenDefined();
+    this.updateItems();
   }
 }
 

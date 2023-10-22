@@ -40,14 +40,20 @@
     import '../../packages/icons/image--outlined.js';
     import { $ } from '../../packages/jq/index.js';
 
-    $('.fill-placeholder').append(...Array.from({length: 100}, (_, index) => index + 1).map(item => `<p>${item}</p>`));
+    $(() => {
+      $('.fill-placeholder').append(...Array.from({length: 100}, (_, index) => index + 1).map(item => `<p>${item}</p>`));
 
-    $('.change-placement').on('change', function () {
-      $(this).next().find('mdui-navigation-rail')[0].placement = this.value;
-    });
+      $('.change-placement').on('change', function () {
+        $(this).next().find('mdui-navigation-rail')[0].placement = this.value;
+      });
 
-    $('.change-alignment').on('change', function () {
-      $(this).next().find('mdui-navigation-rail')[0].alignment = this.value;
+      $('.change-alignment').on('change', function () {
+        $(this).next().find('mdui-navigation-rail')[0].alignment = this.value;
+      });
+
+      $('#default-value').on('change', e => {
+        console.log('change event: ', e.target);
+      });
     });
   </script>
 </head>
@@ -103,7 +109,7 @@
     <section>
       <h2>value</h2>
       <div class="container" style="position: relative; overflow: hidden;">
-        <mdui-navigation-rail contained value="recent">
+        <mdui-navigation-rail contained value="recent" id="default-value">
           <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
           <mdui-fab lowered icon="edit--outlined" slot="top"></mdui-fab>
           <mdui-navigation-rail-item icon="folder_open--outlined" value="files">All Files</mdui-navigation-rail-item>

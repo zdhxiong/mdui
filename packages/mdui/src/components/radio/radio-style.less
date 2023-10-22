@@ -16,8 +16,11 @@
   display: flex;
   position: absolute;
   .font-size(24);
-  .transition-duration(short4);
-  .transition-timing-function(standard);
+
+  :not(.initial) & {
+    .transition-duration(short4);
+    .transition-timing-function(standard);
+  }
 }
 
 .unchecked-icon {
@@ -64,7 +67,10 @@ i {
   .padding-top(10);
   .padding-bottom(10);
   .color(on-surface);
-  .transition(color, short4, standard);
+
+  &:not(.initial) {
+    .transition(color, short4, standard);
+  }
 }
 
 /* 选中状态的图标 */

@@ -73,7 +73,7 @@ export class NavigationRailItem extends AnchorMixin(
   public value?: string;
 
   /**
-   * 是否为激活状态，由 `navigation-rail` 组件控制该参数
+   * 是否为激活状态，由 `<mdui-navigation-rail>` 组件控制该参数
    */
   @property({
     type: Boolean,
@@ -83,7 +83,13 @@ export class NavigationRailItem extends AnchorMixin(
   protected active = false;
 
   /**
-   * 导航栏的位置，由 `navigation-rail` 组件控制该参数
+   * 是否是初始状态，不显示动画。由 `<mdui-navigation-rail>` 组件控制该参数
+   */
+  @state()
+  protected isInitial = true;
+
+  /**
+   * 导航栏的位置，由 `<mdui-navigation-rail>` 组件控制该参数
    */
   @state()
   protected placement: 'left' | 'right' = 'left';
@@ -92,7 +98,7 @@ export class NavigationRailItem extends AnchorMixin(
   @state()
   private disabled = false;
 
-  // 每一个 `navigation-rail-item` 元素都添加一个唯一的 key
+  // 每一个 `<mdui-navigation-rail-item>` 元素都添加一个唯一的 key
   protected readonly key = uniqueId();
 
   private readonly rippleRef: Ref<Ripple> = createRef();
@@ -125,6 +131,7 @@ export class NavigationRailItem extends AnchorMixin(
       'has-label': hasDefaultSlot,
       'has-active-icon':
         this.activeIcon || this.hasSlotController.test('active-icon'),
+      initial: this.isInitial,
     });
 
     return html`${this.href

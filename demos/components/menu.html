@@ -56,6 +56,13 @@
       $('#selects-submenu').on('change', function () {
         $('#selects-submenu-value').text(this.value);
       });
+
+      $('#default-open').on({
+        'submenu-open': (e) => { console.log('submenu-open event: ', e.target) },
+        'submenu-opened': (e) => { console.log('submenu-opened event: ', e.target) },
+        'submenu-close': (e) => { console.log('submenu-close event: ', e.target) },
+        'submenu-closed': (e) => { console.log('submenu-closed event: ', e.target) },
+      });
     });
   </script>
 </head>
@@ -169,10 +176,10 @@
 
     <section>
       <h2>Sub Menu</h2>
-      <mdui-menu>
+      <mdui-menu id="default-open">
         <mdui-menu-item disabled>Item 2</mdui-menu-item>
         <mdui-divider></mdui-divider>
-        <mdui-menu-item>
+        <mdui-menu-item submenu-open>
           Nested submenu
           <mdui-menu-item slot="submenu">Item 1</mdui-menu-item>
           <mdui-menu-item slot="submenu">Item 2</mdui-menu-item>

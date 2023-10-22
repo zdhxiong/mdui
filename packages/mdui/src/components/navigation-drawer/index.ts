@@ -5,7 +5,8 @@ import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/innerWidth.js';
-import { isNull } from '@mdui/jq/shared/helper.js';
+import { isFunction, isNull } from '@mdui/jq/shared/helper.js';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { breakpoint } from '@mdui/shared/helpers/breakpoint.js';
@@ -20,7 +21,7 @@ import { LayoutItemBase } from '../layout/layout-item-base.js';
 import { style } from './style.js';
 import type { LayoutPlacement } from '../layout/helper.js';
 import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
-import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
@@ -134,6 +135,9 @@ export class NavigationDrawer extends LayoutItemBase {
   private modalHelper!: Modal;
   private readonly overlayRef: Ref<HTMLElement> = createRef();
   private readonly panelRef: Ref<HTMLElement> = createRef();
+  private readonly definedController = new DefinedController(this, {
+    needDomReady: true,
+  });
 
   protected override get layoutPlacement(): LayoutPlacement {
     return this.placement;
@@ -151,10 +155,10 @@ export class NavigationDrawer extends LayoutItemBase {
 
   // contained 变更后，修改监听尺寸变化的元素。为 true 时，监听父元素；为 false 时，监听 body
   @watch('contained')
-  private onContainedChange() {
-    if (this.hasUpdated) {
-      this.observeResize?.unobserve();
-    }
+  private async onContainedChange() {
+    await this.definedController.whenDefined();
+
+    this.observeResize?.unobserve();
 
     this.observeResize = observeResize(
       this.contained ? this.parentElement! : document.body,
@@ -172,10 +176,28 @@ export class NavigationDrawer extends LayoutItemBase {
     );
   }
 
-  @watch('placement')
+  @watch('placement', true)
   private onPlacementChange() {
     if (this.isParentLayout) {
       this.layoutManager!.updateLayout(this);
+    }
+  }
+
+  @watch('mobile', true)
+  @watch('modal', true)
+  private async onMobileChange() {
+    if (!this.open || this.isParentLayout || this.contained) {
+      return;
+    }
+
+    await this.definedController.whenDefined();
+
+    if (this.isModal) {
+      lockScreen(this, this.lockTarget);
+      await this.getLockTargetAnimate(false, 0);
+    } else {
+      unlockScreen(this, this.lockTarget);
+      await this.getLockTargetAnimate(true, 0);
     }
   }
 
@@ -184,7 +206,6 @@ export class NavigationDrawer extends LayoutItemBase {
     let panel = this.panelRef.value!;
     let overlay = this.overlayRef.value!;
     const isRight = this.placement === 'right';
-    const paddingPropName = isRight ? 'paddingRight' : 'paddingLeft';
     const easingLinear = getEasing(this, 'linear');
     const easingEmphasized = getEasing(this, 'emphasized');
 
@@ -225,11 +246,15 @@ export class NavigationDrawer extends LayoutItemBase {
         }
       }
 
+      await this.definedController.whenDefined();
+
       this.style.display = 'block';
       this.originalTrigger = document.activeElement as HTMLElement;
       if (this.isModal) {
         this.modalHelper.activate();
-        lockScreen(this, this.lockTarget);
+        if (!this.contained) {
+          lockScreen(this, this.lockTarget);
+        }
       }
 
       await stopOldAnimations();
@@ -265,18 +290,7 @@ export class NavigationDrawer extends LayoutItemBase {
       // 不位于 layout 中，父元素 padding 变化的动画
       else if (!this.isParentLayout) {
         animations.push(
-          animateTo(
-            this.lockTarget,
-            [
-              { [paddingPropName]: 0 },
-              { [paddingPropName]: $(panel).innerWidth() + 'px' },
-            ],
-            {
-              duration: hasUpdated ? duration : 0,
-              easing: easingEmphasized,
-              fill: 'forwards',
-            },
-          ),
+          this.getLockTargetAnimate(true, hasUpdated ? duration : 0),
         );
       }
 
@@ -311,16 +325,14 @@ export class NavigationDrawer extends LayoutItemBase {
       if (hasUpdated) {
         emit(this, 'opened');
       }
-
-      return;
-    }
-
-    // 关闭
-    if (!this.open && this.hasUpdated) {
+    } else if (this.hasUpdated) {
+      // 关闭
       const requestClose = emit(this, 'close', { cancelable: true });
       if (requestClose.defaultPrevented) {
         return;
       }
+
+      await this.definedController.whenDefined();
 
       if (this.isModal) {
         this.modalHelper.deactivate();
@@ -343,20 +355,7 @@ export class NavigationDrawer extends LayoutItemBase {
 
       // 不位于 layout 中，父元素 padding 变化的动画
       else if (!this.isParentLayout) {
-        animations.push(
-          animateTo(
-            this.lockTarget,
-            [
-              { [paddingPropName]: $(panel).innerWidth() + 'px' },
-              { [paddingPropName]: 0 },
-            ],
-            {
-              duration,
-              easing: easingEmphasized,
-              fill: 'forwards',
-            },
-          ),
-        );
+        animations.push(this.getLockTargetAnimate(false, duration));
       }
 
       // 若位于 layout 中，则 layout-main 的 padding 变化需要有和 drawer 相同的动画
@@ -389,24 +388,34 @@ export class NavigationDrawer extends LayoutItemBase {
 
       this.style.display = 'none';
 
-      if (this.isModal) {
+      if (this.isModal && !this.contained) {
         unlockScreen(this, this.lockTarget);
       }
 
       // 抽屉导航关闭后，恢复焦点到原有的元素上
       const trigger = this.originalTrigger;
-      if (typeof trigger?.focus === 'function') {
+      if (isFunction(trigger?.focus)) {
         setTimeout(() => trigger.focus());
       }
 
       emit(this, 'closed');
-      return;
     }
   }
 
   public override connectedCallback(): void {
     super.connectedCallback();
     this.modalHelper = new Modal(this);
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    unlockScreen(this, this.lockTarget);
+    this.observeResize?.unobserve();
+  }
+
+  protected firstUpdated(_changedProperties: PropertyValues) {
+    super.firstUpdated(_changedProperties);
 
     this.addEventListener('keydown', (event: KeyboardEvent) => {
       if (
@@ -419,12 +428,6 @@ export class NavigationDrawer extends LayoutItemBase {
         this.open = false;
       }
     });
-  }
-
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    unlockScreen(this, this.lockTarget);
-    this.observeResize?.unobserve();
   }
 
   protected override render(): TemplateResult {
@@ -448,11 +451,29 @@ export class NavigationDrawer extends LayoutItemBase {
 
   private onOverlayClick() {
     emit(this, 'overlay-click');
-    if (!this.closeOnOverlayClick) {
-      return;
-    }
 
-    this.open = false;
+    if (this.closeOnOverlayClick) {
+      this.open = false;
+    }
+  }
+
+  private getLockTargetAnimate(open: boolean, duration: number) {
+    const paddingName =
+      this.placement === 'right' ? 'paddingRight' : 'paddingLeft';
+    const panelWidth = $(this.panelRef.value!).innerWidth() + 'px';
+
+    return animateTo(
+      this.lockTarget,
+      [
+        { [paddingName]: open ? 0 : panelWidth },
+        { [paddingName]: open ? panelWidth : 0 },
+      ],
+      {
+        duration,
+        easing: getEasing(this, 'emphasized'),
+        fill: 'forwards',
+      },
+    );
   }
 }
 

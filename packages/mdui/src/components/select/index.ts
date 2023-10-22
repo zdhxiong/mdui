@@ -10,6 +10,7 @@ import { map } from 'lit/directives/map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { isString } from '@mdui/jq/shared/helper.js';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
@@ -28,7 +29,7 @@ import type { Menu } from '../menu/menu.js';
 import type { TextField } from '../text-field.js';
 import type { FormControl } from '@mdui/jq/shared/form.js';
 import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
-import type { CSSResultGroup, TemplateResult, WarningKind } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
@@ -62,8 +63,6 @@ import type { Ref } from 'lit/directives/ref.js';
  */
 @customElement('mdui-select')
 export class Select extends FocusableMixin(LitElement) implements FormControl {
-  // firstUpdated 中调用了 requestUpdate，会产生控制台警告，所以这里关闭 change-in-update 警告
-  public static override enabledWarnings: WarningKind[] = ['migration'];
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -249,8 +248,8 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   private readonly menuRef: Ref<Menu> = createRef();
   private readonly textFieldRef: Ref<TextField> = createRef();
   private readonly hiddenInputRef: Ref<HTMLInputElement> = createRef();
-  private readonly formController: FormController = new FormController(this);
-  private readonly hasSlotController: HasSlotController = new HasSlotController(
+  private readonly formController = new FormController(this);
+  private readonly hasSlotController = new HasSlotController(
     this,
     'icon',
     'end-icon',
@@ -261,6 +260,9 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
     'clear-icon',
     'helper',
   );
+  private readonly definedController = new DefinedController(this, {
+    relatedElements: ['mdui-menu-item'],
+  });
 
   /**
    * 表单验证状态对象
@@ -295,10 +297,10 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
         : this.value;
     this.defaultValue = this.multiple ? [] : '';
 
-    this.updateComplete.then(() => {
-      this.observeResize = observeResize(this.textFieldRef.value!, () =>
-        this.resizeMenu(),
-      );
+    // 首次渲染时，slot 中的 mdui-menu-item 还未渲染完成，无法读取到其中的文本值
+    // 所以需要在首次更新后，再次重新渲染，此时 mdui-menu-item 已渲染完成，可以读取到文本值
+    this.definedController.whenDefined().then(() => {
+      this.requestUpdate();
     });
   }
 
@@ -358,9 +360,9 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
 
-    // 首次渲染时，slot 中的 mdui-menu-item 还未渲染完成，无法读取到其中的文本值
-    // 所以需要在首次更新后，再次重新渲染，此时 mdui-menu-item 已渲染完成，可以读取到文本值
-    this.requestUpdate();
+    this.observeResize = observeResize(this.textFieldRef.value!, () =>
+      this.resizeMenu(),
+    );
   }
 
   protected override render(): TemplateResult {

@@ -71,6 +71,13 @@
     import '../../packages/mdui/components/list-item.js';
     import '../../packages/mdui/components/card.js';
     import '../../packages/mdui/components/button-icon.js';
+
+    import { $ } from '../../packages/jq/index.js';
+    $(() => {
+      $('#default-value').on('change', (e) => {
+        console.log('change event: ', e.target);
+      })
+    });
   </script>
 </head>
 
@@ -126,7 +133,7 @@
 
     <section>
       <h2>default value</h2>
-      <mdui-collapse value="two" class="preset">
+      <mdui-collapse value="two" class="preset" id="default-value">
         <mdui-collapse-item value="one" header="one header">
           one content<br/>
           one content<br/>

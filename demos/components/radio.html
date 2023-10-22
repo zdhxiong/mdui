@@ -23,14 +23,19 @@
     import '../../packages/mdui/components/button.js';
     import { $ } from '../../packages/jq/index.js';
 
-    $('#set-checked').on('change', function () {
-      $('mdui-radio-group[name="radio4"]')
-        .find(`mdui-radio[value="${this.value}"]`)[0]
-        .checked = true;
-    });
+    $(() => {
+      $('#set-checked').on('change', function () {
+        $('mdui-radio-group[name="radio4"]').val(this.value);
+      });
 
-    $('.prevent-default').on('invalid', (e) => {
-      e.preventDefault();
+      $('.prevent-default').on('invalid', (e) => {
+        e.preventDefault();
+      });
+
+      $('#default-value').on({
+        input: (e) => { console.log('input event: ', e.target); },
+        change: (e) => { console.log('change event: ', e.target); },
+      });
     });
   </script>
 </head>
@@ -57,7 +62,7 @@
 
     <section>
       <h2>Radio Group with default value</h2>
-      <mdui-radio-group name="radio2" value="two">
+      <mdui-radio-group name="radio2" value="two" id="default-value">
         <mdui-radio value="one"></mdui-radio>
         <mdui-radio value="two">Radio</mdui-radio>
         <mdui-radio value="three" disabled></mdui-radio>

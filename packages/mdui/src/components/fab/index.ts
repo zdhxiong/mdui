@@ -2,6 +2,7 @@ import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import cc from 'classcat';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
@@ -86,6 +87,9 @@ export class Fab extends ButtonBase {
 
   private readonly rippleRef: Ref<Ripple> = createRef();
   private readonly hasSlotController = new HasSlotController(this, 'icon');
+  private readonly definedController = new DefinedController(this, {
+    relatedElements: [''],
+  });
 
   protected override get rippleElement() {
     return this.rippleRef.value!;
@@ -98,16 +102,16 @@ export class Fab extends ButtonBase {
   private async onExtendedChange() {
     const hasUpdated = this.hasUpdated;
 
-    if (!this.extended) {
-      this.style.width = '';
-    } else {
+    if (this.extended) {
       this.style.width = `${this.scrollWidth}px`;
+    } else {
+      this.style.width = '';
     }
 
+    await this.definedController.whenDefined();
     await this.updateComplete;
 
     if (this.extended && !hasUpdated) {
-      await delay();
       this.style.width = `${this.scrollWidth}px`;
     }
 

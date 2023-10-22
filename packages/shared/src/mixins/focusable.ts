@@ -5,6 +5,7 @@ import '@mdui/jq/methods/attr.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/each.js';
 import '@mdui/jq/methods/removeAttr.js';
+import { DefinedController } from '../controllers/defined.js';
 import { booleanConverter } from '../helpers/decorator.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
 import type { PropertyValues, LitElement } from 'lit';
@@ -75,6 +76,9 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       attribute: 'focus-visible',
     })
     private focusVisible = false;
+
+    protected focusableDefinedController: DefinedController =
+      new DefinedController(this, { relatedElements: [''] });
 
     private _manipulatingTabindex = false;
     private _tabIndex = 0;
@@ -166,6 +170,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
 
     public override connectedCallback(): void {
       super.connectedCallback();
+
       this.updateComplete.then(() => {
         requestAnimationFrame(() => {
           this.manageAutoFocus();

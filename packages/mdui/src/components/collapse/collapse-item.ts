@@ -4,7 +4,6 @@ import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/height.js';
-import '@mdui/jq/methods/on.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { emit } from '@mdui/shared/helpers/event.js';
@@ -80,32 +79,29 @@ export class CollapseItem extends LitElement {
   @state()
   private state: 'open' | 'opened' | 'close' | 'closed' = 'closed';
 
+  // 是否是初始状态，不显示动画
+  protected isInitial = true;
+
   // 每一个 `collapse-item` 元素都添加一个唯一的 key
   protected readonly key = uniqueId();
   private readonly bodyRef: Ref<HTMLElement> = createRef();
 
   @watch('active')
   private onActiveChange() {
-    if (this.hasUpdated) {
+    if (this.isInitial) {
+      this.state = this.active ? 'opened' : 'closed';
+      if (this.hasUpdated) {
+        this.updateBodyHeight();
+      }
+    } else {
       this.state = this.active ? 'open' : 'close';
       emit(this, this.state);
       this.updateBodyHeight();
-    } else {
-      this.state = this.active ? 'opened' : 'closed';
     }
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
-
-    $(this.bodyRef.value!).on('transitionend', (e: unknown) => {
-      const event = e as TransitionEvent;
-      if (event.target === this.bodyRef.value) {
-        this.state = this.active ? 'opened' : 'closed';
-        emit(this, this.state);
-        this.updateBodyHeight();
-      }
-    });
 
     this.updateBodyHeight();
   }
@@ -121,7 +117,16 @@ export class CollapseItem extends LitElement {
           active: this.active,
         })}"
         ${ref(this.bodyRef)}
+        @transitionend=${this.onTransitionEnd}
       ></slot>`;
+  }
+
+  private onTransitionEnd(event: TransitionEvent) {
+    if (event.target === this.bodyRef.value) {
+      this.state = this.active ? 'opened' : 'closed';
+      emit(this, this.state);
+      this.updateBodyHeight();
+    }
   }
 
   private updateBodyHeight() {

@@ -2,6 +2,7 @@ import { property } from 'lit/decorators.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
 import { isNodeName } from '@mdui/jq/shared/helper.js';
+import { DefinedController } from '../controllers/defined.js';
 import { watch } from '../decorators/watch.js';
 import type { JQ } from '@mdui/jq/shared/core.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
@@ -15,6 +16,7 @@ export declare class ScrollBehaviorMixinInterface extends LitElement {
   public scrollTarget?: string | HTMLElement | JQ<HTMLElement>;
   public scrollBehavior?: ScrollBehavior;
   public scrollThreshold?: number;
+  protected scrollBehaviorDefinedController: DefinedController;
   protected updateContainerPadding(): void;
   protected hasScrollBehavior(
     behavior: ScrollBehavior | ScrollBehavior[],
@@ -60,6 +62,10 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
     @property({ type: Number, reflect: true, attribute: 'scroll-threshold' })
     public scrollThreshold?: number;
 
+    protected scrollBehaviorDefinedController = new DefinedController(this, {
+      needDomReady: true,
+    });
+
     /**
      * 上次滚动后，垂直方向的距离（滚动距离超过 scrollThreshold 才记录）
      */
@@ -90,7 +96,9 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
     }
 
     @watch('scrollTarget')
-    private onScrollTargetChange(oldValue: string, newValue: string) {
+    private async onScrollTargetChange(oldValue: string, newValue: string) {
+      await this.scrollBehaviorDefinedController.whenDefined();
+
       // 仅在有值切换到无值、或无值切换到有值时，更新
       if ((oldValue && !newValue) || (!oldValue && newValue)) {
         this.updateContainerPadding();
@@ -114,7 +122,9 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
     }
 
     @watch('scrollBehavior')
-    private onScrollBehaviorChange(oldValue: string, newValue: string) {
+    private async onScrollBehaviorChange(oldValue: string, newValue: string) {
+      await this.scrollBehaviorDefinedController.whenDefined();
+
       // 仅在有值切换到无值、或无值切换到有值时，更新
       if ((oldValue && !newValue) || (!oldValue && newValue)) {
         this.updateContainerPadding();
@@ -137,14 +147,18 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
     public override connectedCallback(): void {
       super.connectedCallback();
 
-      this.isParentLayout = isNodeName(this.parentElement, 'mdui-layout');
-      this.updateContainerPadding();
+      this.scrollBehaviorDefinedController.whenDefined().then(() => {
+        this.isParentLayout = isNodeName(this.parentElement, 'mdui-layout');
+        this.updateContainerPadding();
+      });
     }
 
     public override disconnectedCallback(): void {
       super.disconnectedCallback();
 
-      this.updateContainerPadding(false);
+      this.scrollBehaviorDefinedController.whenDefined().then(() => {
+        this.updateContainerPadding(false);
+      });
     }
 
     /**

@@ -9,7 +9,6 @@ import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { SliderBase } from '../slider/slider-base.js';
 import type { Ripple } from '../ripple/index.js';
 import type { FormControl } from '@mdui/jq/shared/form.js';
@@ -58,7 +57,7 @@ export class RangeSlider extends SliderBase implements FormControl {
   private readonly rippleEndRef: Ref<Ripple> = createRef();
   private readonly handleStartRef: Ref<HTMLElement> = createRef();
   private readonly handleEndRef: Ref<HTMLElement> = createRef();
-  private readonly formController: FormController = new FormController(this);
+  private readonly formController = new FormController(this);
   private _value: number[] = [];
 
   /**
@@ -102,6 +101,10 @@ export class RangeSlider extends SliderBase implements FormControl {
     if (!this.defaultValue.length) {
       this.defaultValue = [...this.value];
     }
+  }
+
+  protected override firstUpdated(changedProperties: PropertyValues): void {
+    super.firstUpdated(changedProperties);
 
     // 在轨道上点击时，计算出点击位置在 <input type="range"> 元素上的值
     // 若该值在 this.value 的两个值中间位置的左侧，则表示操作的是左侧的值，否则操作的是右侧的值
@@ -153,10 +156,6 @@ export class RangeSlider extends SliderBase implements FormControl {
         this.startHover(event);
       }
     });
-  }
-
-  protected override firstUpdated(changedProperties: PropertyValues): void {
-    super.firstUpdated(changedProperties);
 
     this.updateStyle();
   }
@@ -262,7 +261,6 @@ export class RangeSlider extends SliderBase implements FormControl {
     const endValue = this.value[1];
 
     const doInput = () => {
-      emit(this, 'input');
       this.updateStyle();
     };
 

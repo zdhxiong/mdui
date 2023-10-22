@@ -26,15 +26,24 @@
     import '../../packages/icons/refresh.js';
     import { $ } from '../../packages/jq/index.js';
 
-    $('.open').on('click', function() {
-      $(this).prev()[0].open = true;
-    });
+    $(() => {
+      $('.open').on('click', function() {
+        $(this).prev()[0].open = true;
+      });
 
-    $('.close').on('click', function() {
-      $(this).parents('mdui-dialog')[0].open = false;
-    });
+      $('.close').on('click', function() {
+        $(this).parents('mdui-dialog')[0].open = false;
+      });
 
-    $('.fill-placeholder').append(...Array.from({length: 100}, (_, index) => index + 1).map(item => `<p>${item}</p>`));
+      $('.fill-placeholder').append(...Array.from({length: 100}, (_, index) => index + 1).map(item => `<p>${item}</p>`));
+
+      $('#default-open').on({
+        open: (e) => { console.log('open event: ', e.target); },
+        opened: (e) => { console.log('opened event: ', e.target); },
+        close: (e) => { console.log('close event: ', e.target); },
+        closed: (e) => { console.log('closed event: ', e.target); },
+      });
+    });
   </script>
 </head>
 
@@ -160,9 +169,11 @@
     <section>
       <h2>header slot with top-app-bar</h2>
       <mdui-dialog
+        open
         close-on-esc
         close-on-overlay-click
         description="This will reset you app preferences back to their default settings, Them following accounts will also be signed out:"
+        id="default-open"
       >
         <!-- dialog 中的 mdui-top-app-bar 会自动设置 scroll-target 属性 -->
         <mdui-top-app-bar slot="header" variant="small" scroll-behavior="elevate">

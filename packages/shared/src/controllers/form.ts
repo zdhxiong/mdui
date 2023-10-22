@@ -4,8 +4,9 @@
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/attr.js';
 import '@mdui/jq/methods/css.js';
-import { formCollections } from '@mdui/jq/shared/form.js';
+import { formCollections, getFormControls } from '@mdui/jq/shared/form.js';
 import { isFunction, isString, isUndefined } from '@mdui/jq/shared/helper.js';
+import { DefinedController } from './defined.js';
 import type { FormControl, FormControlValue } from '@mdui/jq/shared/form.js';
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
@@ -45,12 +46,16 @@ export class FormController implements ReactiveController {
   private host: ReactiveControllerHost & FormControl;
   private form?: HTMLFormElement | null;
   private options: FormControllerOptions;
+  private definedController: DefinedController;
 
   public constructor(
     host: ReactiveControllerHost & FormControl,
     options?: Partial<FormControllerOptions>,
   ) {
     (this.host = host).addController(this);
+    this.definedController = new DefinedController(host, {
+      needDomReady: true,
+    });
     this.options = {
       form: (control) => {
         const formId = $(control).attr('form');
@@ -78,11 +83,13 @@ export class FormController implements ReactiveController {
   }
 
   public hostConnected(): void {
-    this.form = this.options.form(this.host);
+    this.definedController.whenDefined().then(() => {
+      this.form = this.options.form(this.host);
 
-    if (this.form) {
-      this.attachForm(this.form);
-    }
+      if (this.form) {
+        this.attachForm(this.form);
+      }
+    });
   }
 
   public hostDisconnected(): void {
@@ -90,16 +97,18 @@ export class FormController implements ReactiveController {
   }
 
   public hostUpdated(): void {
-    const form = this.options.form(this.host);
+    this.definedController.whenDefined().then(() => {
+      const form = this.options.form(this.host);
 
-    if (!form) {
-      this.detachForm();
-    }
+      if (!form) {
+        this.detachForm();
+      }
 
-    if (form && this.form !== form) {
-      this.detachForm();
-      this.attachForm(form);
-    }
+      if (form && this.form !== form) {
+        this.detachForm();
+        this.attachForm(form);
+      }
+    });
   }
 
   /**
@@ -234,6 +243,7 @@ export class FormController implements ReactiveController {
     }
   }
 
+  // todo: 当前组件进行验证的顺序，取决于组件的注册顺序，而不会按在 DOM 中的顺序从上到下验证。如何按 DOM 顺序验证？
   private onFormSubmit(event: Event): void {
     const disabled = this.options.disabled(this.host);
     const reportValidity = this.options.reportValidity;
@@ -268,7 +278,9 @@ export class FormController implements ReactiveController {
 
   private reportFormValidity(): boolean {
     if (this.form && !this.form.noValidate) {
-      for (const element of this.form.querySelectorAll<HTMLInputElement>('*')) {
+      const elements = getFormControls(this.form) as HTMLInputElement[];
+
+      for (const element of elements) {
         if (isFunction(element.reportValidity) && !element.reportValidity()) {
           return false;
         }

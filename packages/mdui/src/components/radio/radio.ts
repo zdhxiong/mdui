@@ -13,7 +13,7 @@ import '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { radioStyle } from './radio-style.js';
 import type { Ripple } from '../ripple/index.js';
-import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
@@ -81,11 +81,11 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   @property({ reflect: true, attribute: 'checked-icon' })
   public checkedIcon?: string;
 
-  // 是否验证未通过。由 mdui-radio-group 控制该参数
+  // 是否验证未通过。由 <mdui-radio-group> 控制该参数
   @state()
   protected invalid = false;
 
-  // 父组件中是否设置了禁用。由 mdui-radio-group 控制该参数
+  // 父组件中是否设置了禁用。由 <mdui-radio-group> 控制该参数
   @property({
     type: Boolean,
     reflect: true,
@@ -99,6 +99,10 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   // 如果放在 <mdui-radio-group> 组件中使用，则由 <mdui-radio-group> 控制该参数
   @state()
   protected focusable = true;
+
+  // 是否是初始状态，不显示动画。由 <mdui-radio-group> 组件控制该参数
+  @state()
+  protected isInitial = true;
 
   private readonly rippleRef: Ref<Ripple> = createRef();
 
@@ -120,13 +124,11 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
 
   @watch('checked', true)
   private onCheckedChange() {
-    if (this.checked) {
-      emit(this, 'change');
-    }
+    emit(this, 'change');
   }
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
+  protected override firstUpdated(_changedProperties: PropertyValues) {
+    super.firstUpdated(_changedProperties);
 
     this.addEventListener('click', () => {
       if (!this.isDisabled()) {
@@ -138,6 +140,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   protected override render(): TemplateResult {
     const className = classMap({
       invalid: this.invalid,
+      initial: this.isInitial,
     });
 
     return html`<i part="control" class=${className}>

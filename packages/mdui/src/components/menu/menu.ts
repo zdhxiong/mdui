@@ -13,8 +13,10 @@ import '@mdui/jq/methods/get.js';
 import '@mdui/jq/methods/is.js';
 import '@mdui/jq/methods/parent.js';
 import '@mdui/jq/methods/parents.js';
-import { isString } from '@mdui/jq/shared/helper.js';
+import { isString, isUndefined } from '@mdui/jq/shared/helper.js';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
+import { arraysEqualIgnoreOrder } from '@mdui/shared/helpers/array.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { delay } from '@mdui/shared/helpers/delay.js';
 import { emit } from '@mdui/shared/helpers/event.js';
@@ -130,11 +132,15 @@ export class Menu extends LitElement {
   @queryAssignedElements({ flatten: true, selector: 'mdui-menu-item' })
   private readonly childrenItems!: MenuItem[];
 
-  // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件
-  private hasSetDefaultValue = false;
+  // 是否是初始状态，初始状态不触发 change 事件
+  private isInitial = true;
 
   // 最后一次获得焦点的 menu-item 元素。为嵌套菜单时，把不同层级的 menu-item 放到对应索引位的位置
   private lastActiveItems: MenuItem[] = [];
+
+  private readonly definedController = new DefinedController(this, {
+    relatedElements: ['mdui-menu-item'],
+  });
 
   // 菜单项元素（包含子菜单中的菜单项）
   private get items(): MenuItem[] {
@@ -188,7 +194,9 @@ export class Menu extends LitElement {
   @watch('submenuTrigger')
   @watch('submenuOpenDelay')
   @watch('submenuCloseDelay')
-  private onSlotChange() {
+  private async onSlotChange() {
+    await this.definedController.whenDefined();
+
     this.items.forEach((item) => {
       item.dense = this.dense;
       item.selects = this.selects;
@@ -198,53 +206,40 @@ export class Menu extends LitElement {
     });
   }
 
-  @watch('selects')
-  private onSelectsChange() {
-    if (!this.isSelectable && this.selectedKeys.length) {
-      this.selectedKeys = [];
-      this.onSelectedKeysChange();
-      this.onValueChange();
+  @watch('selects', true)
+  private async onSelectsChange() {
+    if (!this.isSelectable) {
+      // 不可选中，清空选中值
+      this.setSelectedKeys([]);
+    } else if (this.isSingle) {
+      // 单选，只保留第一个选中的值
+      this.setSelectedKeys(this.selectedKeys.slice(0, 1));
     }
 
-    if (this.isSingle && this.selectedKeys.length > 1) {
-      this.selectedKeys = this.selectedKeys.slice(0, 1);
-      this.onSelectedKeysChange();
-      this.onValueChange();
-    }
+    await this.onSelectedKeysChange();
   }
 
   @watch('selectedKeys', true)
-  private onSelectedKeysChange(oldSelectedKeys?: number[]) {
-    // 根据 selectedKeys 读取出对应 menu-item 的 value。页面首次渲染时，values 始终为空数组
+  private async onSelectedKeysChange() {
+    await this.definedController.whenDefined();
+
+    // 根据 selectedKeys 读取出对应 menu-item 的 value
     const values = this.itemsEnabled
       .filter((item) => this.selectedKeys.includes(item.key))
       .map((item) => item.value!);
+    const value = this.isMultiple ? values : values[0] || undefined;
 
-    // 如果是多选，且每一项值都不变，则视为未变更，不触发 change 事件
-    if (
-      this.isMultiple &&
-      oldSelectedKeys &&
-      oldSelectedKeys.length === this.selectedKeys.length &&
-      oldSelectedKeys.every((v, i) => v === this.selectedKeys[i])
-    ) {
-      this.hasSetDefaultValue = true;
-      return;
-    }
+    this.setValue(value);
 
-    this.value = this.isMultiple ? values : values[0] || undefined;
-
-    if (this.hasSetDefaultValue) {
+    if (!this.isInitial) {
       emit(this, 'change');
-    } else {
-      this.hasSetDefaultValue = true;
     }
   }
 
   @watch('value')
   private async onValueChange() {
-    if (!this.hasUpdated) {
-      await this.updateComplete;
-    }
+    this.isInitial = !this.hasUpdated;
+    await this.definedController.whenDefined();
 
     // 根据 value 找出对应的 menu-item，并把这些 menu-item 的 key 赋值给 selectedKeys
     if (!this.isSelectable) {
@@ -262,16 +257,18 @@ export class Menu extends LitElement {
     ).filter((i) => i);
 
     if (!values.length) {
-      this.selectedKeys = [];
+      this.setSelectedKeys([]);
     } else if (this.isSingle) {
       const firstItem = this.itemsEnabled.find(
         (item) => item.value === values[0],
       );
-      this.selectedKeys = firstItem ? [firstItem.key] : [];
+      this.setSelectedKeys(firstItem ? [firstItem.key] : []);
     } else if (this.isMultiple) {
-      this.selectedKeys = this.itemsEnabled
-        .filter((item) => values.includes(item.value))
-        .map((item) => item.key);
+      this.setSelectedKeys(
+        this.itemsEnabled
+          .filter((item) => values.includes(item.value))
+          .map((item) => item.key),
+      );
     }
 
     this.updateSelected();
@@ -298,8 +295,11 @@ export class Menu extends LitElement {
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
     super.firstUpdated(changedProperties);
-    this.updateFocusable();
-    this.lastActiveItem = this.items.find((item) => item.focusable)!;
+
+    this.definedController.whenDefined().then(() => {
+      this.updateFocusable();
+      this.lastActiveItem = this.items.find((item) => item.focusable)!;
+    });
 
     // 子菜单打开时，把焦点放到新的子菜单上
     this.addEventListener('submenu-open', (e) => {
@@ -339,6 +339,22 @@ export class Menu extends LitElement {
     ></slot>`;
   }
 
+  private setSelectedKeys(selectedKeys: number[]): void {
+    if (!arraysEqualIgnoreOrder(this.selectedKeys, selectedKeys)) {
+      this.selectedKeys = selectedKeys;
+    }
+  }
+
+  private setValue(value: string | string[] | undefined): void {
+    if (this.isSingle || isUndefined(this.value) || isUndefined(value)) {
+      this.value = value;
+    } else if (
+      !arraysEqualIgnoreOrder(this.value as string[], value as string[])
+    ) {
+      this.value = value;
+    }
+  }
+
   // 获取和指定菜单项同级的所有菜单项
   private getSiblingsItems(item: MenuItem, onlyEnabled = false): MenuItem[] {
     return $(item)
@@ -351,23 +367,25 @@ export class Menu extends LitElement {
   private updateFocusable() {
     // 焦点优先放在之前焦点所在的元素上
     if (this.lastActiveItem) {
-      this.items.forEach(
-        (item) => (item.focusable = item.key === this.lastActiveItem.key),
-      );
+      this.items.forEach((item) => {
+        item.focusable = item.key === this.lastActiveItem.key;
+      });
       return;
     }
 
     // 没有选中任何一项，焦点放在第一个 menu-item 上
     if (!this.selectedKeys.length) {
-      this.itemsEnabled.forEach((item, index) => (item.focusable = !index));
+      this.itemsEnabled.forEach((item, index) => {
+        item.focusable = !index;
+      });
       return;
     }
 
     // 如果是单选，焦点放在当前选中的元素上
     if (this.isSingle) {
-      this.items.forEach(
-        (item) => (item.focusable = this.selectedKeys.includes(item.key)),
-      );
+      this.items.forEach((item) => {
+        item.focusable = this.selectedKeys.includes(item.key);
+      });
       return;
     }
 
@@ -387,9 +405,9 @@ export class Menu extends LitElement {
 
   private updateSelected() {
     // 选中 menu-item
-    this.items.forEach(
-      (item) => (item.selected = this.selectedKeys.includes(item.key)),
-    );
+    this.items.forEach((item) => {
+      item.selected = this.selectedKeys.includes(item.key);
+    });
   }
 
   // 切换一个菜单项的选中状态
@@ -402,32 +420,37 @@ export class Menu extends LitElement {
       } else {
         selectedKeys.push(item.key);
       }
-      this.selectedKeys = selectedKeys;
+      this.setSelectedKeys(selectedKeys);
     }
 
     if (this.isSingle) {
       if (this.selectedKeys.includes(item.key)) {
-        this.selectedKeys = [];
+        this.setSelectedKeys([]);
       } else {
-        this.selectedKeys = [item.key];
+        this.setSelectedKeys([item.key]);
       }
     }
 
+    this.isInitial = false;
     this.updateSelected();
   }
 
   // 使一个 menu-item 可聚焦
-  private focusableOne(item: MenuItem) {
+  private async focusableOne(item: MenuItem) {
     this.items.forEach((_item) => (_item.focusable = _item.key === item.key));
+    await delay(); // 等待 focusableMixin 更新完成
   }
 
   // 聚焦一个 menu-item
-  private async focusOne(item: MenuItem, options?: FocusOptions) {
-    await delay(); // 等待 focusableMixin 更新完成
+  private focusOne(item: MenuItem, options?: FocusOptions) {
     item.focus(options);
   }
 
-  private onClick(event: MouseEvent) {
+  private async onClick(event: MouseEvent) {
+    if (!this.definedController.isDefined()) {
+      return;
+    }
+
     if (this.isSubmenu) {
       return;
     }
@@ -450,11 +473,15 @@ export class Menu extends LitElement {
       this.selectOne(item);
     }
 
-    this.focusableOne(item);
+    await this.focusableOne(item);
     this.focusOne(item);
   }
 
-  private onKeyDown(event: KeyboardEvent) {
+  private async onKeyDown(event: KeyboardEvent) {
+    if (!this.definedController.isDefined()) {
+      return;
+    }
+
     if (this.isSubmenu) {
       return;
     }
@@ -473,7 +500,7 @@ export class Menu extends LitElement {
 
       if (this.isSelectable && item.value) {
         this.selectOne(item);
-        this.focusableOne(item);
+        await this.focusableOne(item);
         this.focusOne(item);
       }
     }
@@ -505,7 +532,7 @@ export class Menu extends LitElement {
         }
 
         this.lastActiveItem = items[index];
-        this.focusableOne(items[index]);
+        await this.focusableOne(items[index]);
         this.focusOne(items[index]);
         return;
       }

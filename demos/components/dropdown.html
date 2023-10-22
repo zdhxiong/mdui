@@ -31,15 +31,24 @@
 
     $(() => {
       const $dropdown = $('.manual-dropdown');
+
       $('#manual-open').on('click', () => {
         $dropdown.each((_, dropdown) => {
           dropdown.open = true;
         });
       });
+
       $('#manual-close').on('click', () => {
         $dropdown.each((_, dropdown) => {
           dropdown.open = false;
         });
+      });
+
+      $('#default-open').on({
+        open: (e) => { console.log('open event: ', e.target); },
+        opened: (e) => { console.log('opened event: ', e.target); },
+        close: (e) => { console.log('close event: ', e.target); },
+        closed: (e) => { console.log('closed event: ', e.target); },
       });
     });
   </script>
@@ -49,7 +58,7 @@
   <main>
     <section>
       <h2>default open</h2>
-      <mdui-dropdown open>
+      <mdui-dropdown open id="default-open">
         <mdui-button slot="trigger">Click</mdui-button>
         <mdui-menu>
           <mdui-menu-item>Item 1</mdui-menu-item>

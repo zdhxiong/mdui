@@ -7,6 +7,7 @@ import {
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
@@ -20,7 +21,7 @@ import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import '../icon.js';
 import { style } from './style.js';
 import type { TopAppBar } from '../top-app-bar/top-app-bar.js';
-import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
@@ -160,7 +161,7 @@ export class Dialog extends LitElement {
     selector: 'mdui-top-app-bar',
     flatten: true,
   })
-  private readonly topAppBarElements!: TopAppBar[] | null;
+  private readonly topAppBarElements!: TopAppBar[];
 
   // 用于在打开对话框前，记录当前聚焦的元素；在关闭对话框后，把焦点还原到该元素上
   private originalTrigger!: HTMLElement;
@@ -178,10 +179,20 @@ export class Dialog extends LitElement {
     'action',
     '[default]',
   );
+  private readonly definedController = new DefinedController(this, {
+    relatedElements: ['mdui-top-app-bar'],
+  });
 
   @watch('open')
   private async onOpenChange() {
     const hasUpdated = this.hasUpdated;
+
+    // 默认为关闭状态。因此首次渲染时，且为关闭状态，不执行
+    if (!this.open && !hasUpdated) {
+      return;
+    }
+
+    await this.definedController.whenDefined();
 
     if (!hasUpdated) {
       await this.updateComplete;
@@ -197,6 +208,13 @@ export class Dialog extends LitElement {
     const easingLinear = getEasing(this, 'linear');
     const easingEmphasizedDecelerate = getEasing(this, 'emphasized-decelerate');
     const easingEmphasizedAccelerate = getEasing(this, 'emphasized-accelerate');
+
+    const stopAnimation = () =>
+      Promise.all([
+        stopAnimations(this.overlayRef.value!),
+        stopAnimations(this.panelRef.value!),
+        ...children.map((child) => stopAnimations(child)),
+      ]);
 
     // 打开
     // 要区分是否首次渲染，首次渲染不触发事件，不执行动画；非首次渲染，触发事件，执行动画
@@ -230,11 +248,7 @@ export class Dialog extends LitElement {
       this.modalHelper.activate();
       lockScreen(this);
 
-      await Promise.all([
-        stopAnimations(this.overlayRef.value!),
-        stopAnimations(this.panelRef.value!),
-        ...children.map((child) => stopAnimations(child)),
-      ]);
+      await stopAnimation();
 
       // 设置聚焦
       requestAnimationFrame(() => {
@@ -298,11 +312,7 @@ export class Dialog extends LitElement {
       if (hasUpdated) {
         emit(this, 'opened');
       }
-
-      return;
-    }
-
-    if (!this.open && hasUpdated) {
+    } else {
       const requestClose = emit(this, 'close', {
         cancelable: true,
       });
@@ -311,11 +321,7 @@ export class Dialog extends LitElement {
       }
 
       this.modalHelper.deactivate();
-      await Promise.all([
-        stopAnimations(this.overlayRef.value!),
-        stopAnimations(this.panelRef.value!),
-        ...children.map((child) => stopAnimations(child)),
-      ]);
+      await stopAnimation();
 
       const duration = getDuration(this, 'short4');
 
@@ -356,12 +362,17 @@ export class Dialog extends LitElement {
       }
 
       emit(this, 'closed');
-      return;
     }
   }
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    unlockScreen(this);
+  }
+
+  protected override firstUpdated(_changedProperties: PropertyValues) {
+    super.firstUpdated(_changedProperties);
+
     this.modalHelper = new Modal(this);
 
     this.addEventListener('keydown', (event: KeyboardEvent) => {
@@ -370,11 +381,6 @@ export class Dialog extends LitElement {
         this.open = false;
       }
     });
-  }
-
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    unlockScreen(this);
   }
 
   protected override render(): TemplateResult {
@@ -394,7 +400,7 @@ export class Dialog extends LitElement {
         ${ref(this.overlayRef)}
         part="overlay"
         class="overlay"
-        @click="${this.onOverlayClick}"
+        @click=${this.onOverlayClick}
         tabindex="-1"
       ></div>
       <div

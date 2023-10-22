@@ -98,7 +98,11 @@ export const unlockScreen = (
 
   target ??= document.body;
 
-  const lock = lockMap.get(target)!;
+  const lock = lockMap.get(target);
+  if (!lock) {
+    return;
+  }
+
   lock.delete(source);
 
   if (lock.size === 0) {

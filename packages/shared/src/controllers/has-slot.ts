@@ -1,3 +1,5 @@
+import { $ } from '@mdui/jq/$.js';
+import { isDomReady } from '@mdui/jq/shared/dom.js';
 import type { ReactiveController, ReactiveControllerHost } from 'lit';
 
 type SlotName = '[default]' | string;
@@ -20,6 +22,12 @@ export class HasSlotController implements ReactiveController {
 
   public hostConnected(): void {
     this.host.shadowRoot!.addEventListener('slotchange', this.onSlotChange);
+
+    if (!isDomReady()) {
+      $(() => {
+        this.host.requestUpdate();
+      });
+    }
   }
 
   public hostDisconnected(): void {

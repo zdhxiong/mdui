@@ -452,23 +452,14 @@ export class TextField
    *
    * 该验证为浏览器原生验证 API，基于 `type`、`required`、`minlength`、`maxlength` 及 `pattern` 等属性的验证结果
    */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: booleanConverter,
-  })
+  @state()
   private invalid = false;
 
   /**
    * 该属性设置为 true 时，则在样式上为 text-field 赋予 invalid 的状态。实际是否验证通过仍需根据 invalid 属性判断
    * 该属性仅供 mdui 内部使用，当前 select 组件使用了该属性
    */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: booleanConverter,
-    attribute: 'invalid-style',
-  })
+  @state()
   private invalidStyle = false;
 
   /**
@@ -774,6 +765,10 @@ export class TextField
     // 存在 input slot 时，隐藏组件内部的 .input 元素，使用 slot 代替
     const hasInputSlot = this.hasSlotController.test('input');
 
+    const invalidClassNameObj = {
+      invalid: this.invalid,
+      'invalid-style': this.invalidStyle,
+    };
     const className = classMap({
       container: true,
       'has-value': this.hasValue,
@@ -781,6 +776,7 @@ export class TextField
       'has-end-icon': hasEndIcon,
       'has-error-icon': hasErrorIcon,
       'is-firefox': navigator.userAgent.includes('Firefox'),
+      ...invalidClassNameObj,
     });
 
     return html`<div part="container" class=${className}>
@@ -801,7 +797,10 @@ export class TextField
       ${when(
         hasError || hasHelper || hasCounter,
         () =>
-          html`<div part="supporting" class="supporting">
+          html`<div
+            part="supporting"
+            class=${classMap({ supporting: true, ...invalidClassNameObj })}
+          >
             ${this.renderHelper(hasError, hasHelper)}
             ${this.renderCounter(hasCounter)}
           </div>`,

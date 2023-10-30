@@ -46,7 +46,7 @@ label {
     .border-width(0);
   }
 
-  :host([invalid]) & {
+  .invalid & {
     .background-color(error-container);
     .border-color(error);
   }
@@ -152,14 +152,14 @@ mdui-ripple {
     .background-color(primary-container);
   }
 
-  :host([invalid]) & {
+  .invalid & {
     .background-color(error);
     .state-layer-color(error);
   }
 
-  :host([hover][invalid]) &,
-  :host([focus-visible][invalid]) &,
-  :host([pressed][invalid]) & {
+  :host([hover]) .invalid &,
+  :host([focus-visible]) .invalid &,
+  :host([pressed]) .invalid & {
     .background-color(error);
   }
 
@@ -215,7 +215,7 @@ mdui-ripple {
     .transition-duration(short3);
   }
 
-  :host([invalid]) & {
+  .invalid & {
     .color(error-container);
   }
 

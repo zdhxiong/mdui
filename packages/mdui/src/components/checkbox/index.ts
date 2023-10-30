@@ -1,5 +1,6 @@
 import { html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { createRef, ref } from 'lit/directives/ref.js';
@@ -139,11 +140,7 @@ export class Checkbox
   /**
    * 是否验证未通过
    */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: booleanConverter,
-  })
+  @state()
   private invalid = false;
 
   private readonly inputRef: Ref<HTMLInputElement> = createRef();
@@ -259,7 +256,7 @@ export class Checkbox
   }
 
   protected override render(): TemplateResult {
-    return html`<label>
+    return html`<label class="${classMap({ invalid: this.invalid })}">
       <input
         ${ref(this.inputRef)}
         type="checkbox"

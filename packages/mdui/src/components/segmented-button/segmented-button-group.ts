@@ -133,11 +133,7 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
   /**
    * 是否验证未通过
    */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: booleanConverter,
-  })
+  @state()
   private invalid = false;
 
   // 是否已完成初始 value 的设置。首次设置初始值时，不触发 change 事件

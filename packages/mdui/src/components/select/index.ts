@@ -3,6 +3,7 @@ import {
   customElement,
   property,
   queryAssignedElements,
+  state,
 } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { map } from 'lit/directives/map.js';
@@ -238,11 +239,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
    *
    * 该验证为浏览器原生验证 API，基于 `required` 属性的验证结果
    */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: booleanConverter,
-  })
+  @state()
   private invalid = false;
 
   @queryAssignedElements({ flatten: true, selector: 'mdui-menu-item' })

@@ -1,5 +1,6 @@
 import { html, LitElement, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
@@ -84,7 +85,7 @@ export class NavigationRailItem extends AnchorMixin(
   /**
    * 导航栏的位置，由 `navigation-rail` 组件控制该参数
    */
-  @property({ reflect: true })
+  @state()
   protected placement: 'left' | 'right' = 'left';
 
   // 是否禁用该元素，该组件没有禁用状态
@@ -143,7 +144,14 @@ export class NavigationRailItem extends AnchorMixin(
 
   private renderInner(hasDefaultSlot: boolean): TemplateResult {
     return html`<div part="indicator" class="indicator">
-        <slot name="badge" part="badge" class="badge"></slot>
+        <slot
+          name="badge"
+          part="badge"
+          class=${classMap({
+            badge: true,
+            'placement-right': this.placement === 'right',
+          })}
+        ></slot>
         <slot name="active-icon" part="active-icon" class="active-icon">
           ${this.activeIcon
             ? html`<mdui-icon name=${this.activeIcon}></mdui-icon>`

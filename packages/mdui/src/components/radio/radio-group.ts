@@ -1,5 +1,5 @@
 import { html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { $ } from '@mdui/jq/$.js';
@@ -97,11 +97,7 @@ export class RadioGroup extends LitElement implements FormControl {
   /**
    * 是否验证未通过
    */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: booleanConverter,
-  })
+  @state()
   private invalid = false;
 
   private readonly inputRef: Ref<HTMLInputElement> = createRef();

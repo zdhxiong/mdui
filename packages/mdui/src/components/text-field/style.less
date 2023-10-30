@@ -33,8 +33,8 @@
     .shape-corner(extra-small, top);
   }
 
-  :host([variant="filled"][invalid]) &,
-  :host([variant="filled"][invalid-style]) & {
+  :host([variant="filled"]) &.invalid,
+  :host([variant="filled"]) &.invalid-style {
     box-shadow: inset 0 unit((-1 / @mdui-root-font-size), rem) 0 0 rgb(var(--mdui-color-error));
   }
 
@@ -42,8 +42,8 @@
     box-shadow: inset 0 unit((-1 / @mdui-root-font-size), rem) 0 0 rgb(var(--mdui-color-on-surface));
   }
 
-  :host([variant="filled"][invalid]:hover) &,
-  :host([variant="filled"][invalid-style]:hover) & {
+  :host([variant="filled"]:hover) &.invalid,
+  :host([variant="filled"]:hover) &.invalid-style {
     box-shadow: inset 0 unit((-1 / @mdui-root-font-size), rem) 0 0 rgb(var(--mdui-color-on-error-container));
   }
 
@@ -52,10 +52,10 @@
     box-shadow: inset 0 unit((-2 / @mdui-root-font-size), rem) 0 0 rgb(var(--mdui-color-primary));
   }
 
-  :host([variant="filled"][focused][invalid]) &,
-  :host([variant="filled"][focused-style][invalid]) &,
-  :host([variant="filled"][focused][invalid-style]) &,
-  :host([variant="filled"][focused-style][invalid-style]) & {
+  :host([variant="filled"][focused]) &.invalid,
+  :host([variant="filled"][focused-style]) &.invalid,
+  :host([variant="filled"][focused]) &.invalid-style,
+  :host([variant="filled"][focused-style]) &.invalid-style {
     box-shadow: inset 0 unit((-2 / @mdui-root-font-size), rem) 0 0 rgb(var(--mdui-color-error));
   }
 
@@ -69,8 +69,8 @@
     .shape-corner(extra-small);
   }
 
-  :host([variant="outlined"][invalid]) &,
-  :host([variant="outlined"][invalid-style]) & {
+  :host([variant="outlined"]) &.invalid,
+  :host([variant="outlined"]) &.invalid-style {
     box-shadow: inset 0 0 0 unit((1 / @mdui-root-font-size), rem) rgb(var(--mdui-color-error));
   }
 
@@ -78,8 +78,8 @@
     box-shadow: inset 0 0 0 unit((1 / @mdui-root-font-size), rem) rgb(var(--mdui-color-on-surface));
   }
 
-  :host([variant="outlined"][invalid]:hover) &,
-  :host([variant="outlined"][invalid-style]:hover) & {
+  :host([variant="outlined"]:hover) &.invalid,
+  :host([variant="outlined"]:hover) &.invalid-style {
     box-shadow: inset 0 0 0 unit((1 / @mdui-root-font-size), rem) rgb(var(--mdui-color-on-error-container));
   }
 
@@ -88,10 +88,10 @@
     box-shadow: inset 0 0 0 unit((2 / @mdui-root-font-size), rem) rgb(var(--mdui-color-primary));
   }
 
-  :host([variant="outlined"][focused][invalid]) &,
-  :host([variant="outlined"][focused-style][invalid]) &,
-  :host([variant="outlined"][focused][invalid-style]) &,
-  :host([variant="outlined"][focused-style][invalid-style]) & {
+  :host([variant="outlined"][focused]) &.invalid,
+  :host([variant="outlined"][focused-style]) &.invalid,
+  :host([variant="outlined"][focused]) &.invalid-style,
+  :host([variant="outlined"][focused-style]) &.invalid-style {
     box-shadow: inset 0 0 0 unit((2 / @mdui-root-font-size), rem) rgb(var(--mdui-color-error));
   }
 
@@ -115,20 +115,20 @@
 
 .right-icon,
 .suffix {
-  :host([invalid]) &,
-  :host([invalid-style]) & {
+  .invalid &,
+  .invalid-style & {
     .color(error);
   }
 
-  :host([invalid]:hover) &,
-  :host([invalid-style]:hover) & {
+  :host(:hover) .invalid &,
+  :host(:hover) .invalid-style & {
     .color(on-error-container);
   }
 
-  :host([focused][invalid]) &,
-  :host([focused-style][invalid]) &,
-  :host([focused][invalid-style]) &,
-  :host([focused-style][invalid-style]) & {
+  :host([focused]) .invalid &,
+  :host([focused-style]) .invalid &,
+  :host([focused]) .invalid-style &,
+  :host([focused-style]) .invalid-style & {
     .color(error);
   }
 }
@@ -201,8 +201,8 @@
   .color(on-surface-variant);
   .typescale(body-large);
 
-  :host([invalid]) &,
-  :host([invalid-style]) & {
+  .invalid &,
+  .invalid-style & {
     .color(error);
   }
 
@@ -215,10 +215,10 @@
     .color(on-surface);
   }
 
-  :host([variant="filled"][invalid]:hover) &,
-  :host([variant="outlined"][invalid]:hover) &,
-  :host([variant="filled"][invalid-style]:hover) &,
-  :host([variant="outlined"][invalid-style]:hover) & {
+  :host([variant="filled"]:hover) .invalid &,
+  :host([variant="outlined"]:hover) .invalid &,
+  :host([variant="filled"]:hover) .invalid-style &,
+  :host([variant="outlined"]:hover) .invalid-style & {
     .color(on-error-container);
   }
 
@@ -255,14 +255,14 @@
     .background-color(background);
   }
 
-  :host([variant="filled"][focused][invalid]) &,
-  :host([variant="filled"][focused-style][invalid]) &,
-  :host([variant="outlined"][focused][invalid]) &,
-  :host([variant="outlined"][focused-style][invalid]) &,
-  :host([variant="filled"][focused][invalid-style]) &,
-  :host([variant="filled"][focused-style][invalid-style]) &,
-  :host([variant="outlined"][focused][invalid-style]) &,
-  :host([variant="outlined"][focused-style][invalid-style]) & {
+  :host([variant="filled"][focused]) .invalid &,
+  :host([variant="filled"][focused-style]) .invalid &,
+  :host([variant="outlined"][focused]) .invalid &,
+  :host([variant="outlined"][focused-style]) .invalid &,
+  :host([variant="filled"][focused]) .invalid-style &,
+  :host([variant="filled"][focused-style]) .invalid-style &,
+  :host([variant="outlined"][focused]) .invalid-style &,
+  :host([variant="outlined"][focused-style]) .invalid-style & {
     .color(error);
   }
 
@@ -299,8 +299,8 @@
     .color(on-surface-variant);
   }
 
-  :host([invalid]) &,
-  :host([invalid-style]) & {
+  .invalid &,
+  .invalid-style & {
     .caret-color(error);
   }
 
@@ -323,8 +323,8 @@
   .padding(4, 16);
   .color(on-surface-variant);
 
-  :host([invalid]) &,
-  :host([invalid-style]) & {
+  &.invalid,
+  &.invalid-style {
     .color(error);
   }
 }

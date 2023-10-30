@@ -84,18 +84,16 @@ i {
 }
 
 /* 验证不通过状态 */
-:host([invalid]) {
-  i {
-    .state-layer-color(error);
-  }
+i.invalid {
+  .state-layer-color(error);
 
   .icon {
     .color(error);
   }
+}
 
-  .label {
-    .color(error);
-  }
+.label.invalid {
+  .color(error);
 }
 
 /* 禁用状态的图标 */

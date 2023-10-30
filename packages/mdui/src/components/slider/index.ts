@@ -116,7 +116,7 @@ export class Slider extends SliderBase implements FormControl {
    * <input class="invalid" /> 用于提供 html5 自带的表单错误提示
    */
   protected override render(): TemplateResult {
-    return html`<label>
+    return html`<label class=${classMap({ invalid: this.invalid })}>
       <input
         ${ref(this.inputRef)}
         type="range"

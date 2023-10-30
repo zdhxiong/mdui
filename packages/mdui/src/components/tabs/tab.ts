@@ -1,8 +1,8 @@
 import { html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
-import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
@@ -82,7 +82,7 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
   /**
    * 选项卡形状。由 `<mdui-tabs>` 组件控制该参数
    */
-  @property({ reflect: true })
+  @state()
   protected variant: 'primary' | 'secondary' = 'primary';
 
   // 每一个 `<mdui-tab>` 元素都添加一个唯一的 key
@@ -121,7 +121,14 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
         ${ref(this.rippleRef)}
         .noRipple=${this.noRipple}
       ></mdui-ripple>
-      <div part="container" class="container ${cc({ preset: !hasCustomSlot })}">
+      <div
+        part="container"
+        class=${classMap({
+          container: true,
+          preset: !hasCustomSlot,
+          'variant-secondary': this.variant === 'secondary',
+        })}
+      >
         <slot name="custom">
           <div class="icon-container">
             ${when(hasIcon || this.icon, renderBadge)}

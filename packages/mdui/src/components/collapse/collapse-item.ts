@@ -74,11 +74,7 @@ export class CollapseItem extends LitElement {
   /**
    * 是否为激活状态，由 `collapse` 组件控制该参数
    */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: booleanConverter,
-  })
+  @state()
   protected active = false;
 
   @state()
@@ -120,7 +116,10 @@ export class CollapseItem extends LitElement {
       </slot>
       <slot
         part="body"
-        class="body ${classMap({ opened: this.state === 'opened' })}"
+        class="body ${classMap({
+          opened: this.state === 'opened',
+          active: this.active,
+        })}"
         ${ref(this.bodyRef)}
       ></slot>`;
   }

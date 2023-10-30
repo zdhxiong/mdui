@@ -1,5 +1,6 @@
 import { html, LitElement } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
@@ -81,11 +82,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   public checkedIcon?: string;
 
   // 是否验证未通过。由 mdui-radio-group 控制该参数
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: booleanConverter,
-  })
+  @state()
   protected invalid = false;
 
   // 父组件中是否设置了禁用。由 mdui-radio-group 控制该参数
@@ -137,7 +134,11 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   protected override render(): TemplateResult {
-    return html`<i part="control">
+    const className = classMap({
+      invalid: this.invalid,
+    });
+
+    return html`<i part="control" class=${className}>
         <mdui-ripple
           ${ref(this.rippleRef)}
           .noRipple=${this.noRipple}
@@ -159,7 +160,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
             : html`<mdui-icon-circle class="i"></mdui-icon-circle>`}
         </slot>
       </i>
-      <slot part="label" class="label"></slot>`;
+      <slot part="label" class="label ${className}"></slot>`;
   }
 
   private isDisabled(): boolean {

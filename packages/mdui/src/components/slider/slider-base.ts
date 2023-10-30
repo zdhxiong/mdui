@@ -86,11 +86,7 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
    *
    * 该验证为根据是否通过 `setCustomValidity` 方法设置了值，来判断是否验证通过
    */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: booleanConverter,
-  })
+  @state()
   protected invalid = false;
 
   // 按下时，label 可见

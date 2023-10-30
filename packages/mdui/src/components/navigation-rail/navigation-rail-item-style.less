@@ -48,18 +48,18 @@ mdui-ripple {
 ::slotted([slot="badge"]) {
   position: absolute;
   transform: translate(50%, -50%); // 距离图标左侧和底部 12dp
+}
 
-  :host([placement="right"]) & {
-    transform: translate(-50%, -50%); // 距离图标右侧和底部 12dp
-  }
+.placement-right::slotted([slot="badge"]) {
+  transform: translate(-50%, -50%); // 距离图标右侧和底部 12dp
 }
 
 ::slotted([slot="badge"][variant="small"]) {
   .translate(9, -9); // 位于图标右上角
+}
 
-  :host([placement="right"]) & {
-    .translate(-9, -9); // 位于图标左上角
-  }
+.placement-right::slotted([slot="badge"][variant="small"]) {
+  .translate(-9, -9); // 位于图标左上角
 }
 
 .icon,

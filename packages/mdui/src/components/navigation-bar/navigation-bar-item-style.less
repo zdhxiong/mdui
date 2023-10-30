@@ -88,16 +88,15 @@ mdui-ripple {
   .typescale(label-medium);
 }
 
-:host([label-visibility="unlabeled"]),
-:host([label-visibility="selected"]:not([active])) {
-  mdui-ripple {
-    .margin-top(24);
-  }
+mdui-ripple.label-visibility-unlabeled,
+:host(:not([active])) mdui-ripple.label-visibility-selected {
+  .margin-top(24);
+}
 
-  .container {
-    .padding-top(24);
-    .padding-bottom(0);
-  }
+.container.label-visibility-unlabeled,
+:host(:not([active])) .container.label-visibility-selected {
+  .padding-top(24);
+  .padding-bottom(0);
 
   .label {
     opacity: 0;

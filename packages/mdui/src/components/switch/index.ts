@@ -1,5 +1,5 @@
 import { html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
@@ -126,11 +126,7 @@ export class Switch
   /**
    * 是否验证未通过
    */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: booleanConverter,
-  })
+  @state()
   private invalid = false;
 
   private readonly rippleRef: Ref<Ripple> = createRef();
@@ -251,6 +247,7 @@ export class Switch
   protected override render(): TemplateResult {
     return html`<label
       class=${classMap({
+        invalid: this.invalid,
         'has-unchecked-icon':
           this.uncheckedIcon || this.hasSlotController.test('unchecked-icon'),
       })}

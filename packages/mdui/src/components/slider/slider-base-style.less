@@ -45,7 +45,7 @@ input[type="range"] {
   .shape-corner(full);
   .background-color(surface-container-highest);
 
-  :host([invalid]) & {
+  .invalid & {
     .background-color(error, 0.12);
   }
 
@@ -57,7 +57,7 @@ input[type="range"] {
 .track-active {
   .background-color(primary);
 
-  :host([invalid]) & {
+  .invalid & {
     .background-color(error);
   }
 
@@ -77,7 +77,7 @@ input[type="range"] {
   .margin-top(-20);
   .state-layer-color(primary);
 
-  :host([invalid]) & {
+  .invalid & {
     .state-layer-color(error);
   }
 
@@ -97,7 +97,7 @@ input[type="range"] {
     .background-color(primary);
     .elevation(1);
 
-    :host([invalid]) & {
+    .invalid & {
       .background-color(error);
     }
 
@@ -139,7 +139,7 @@ input[type="range"] {
   .typescale(label-medium);
   .background-color(primary);
 
-  :host([invalid]) & {
+  .invalid & {
     .color(on-error);
     .background-color(error);
   }
@@ -154,7 +154,7 @@ input[type="range"] {
     .bottom(-2);
     .background-color(primary);
 
-    :host([invalid]) & {
+    .invalid & {
       .background-color(error);
     }
   }
@@ -175,14 +175,14 @@ input[type="range"] {
   .shape-corner(full);
   .background-color(on-surface-variant, 0.38);
 
-  :host([invalid]) & {
+  .invalid & {
     .background-color(error, 0.38);
   }
 
   &.active {
     .background-color(on-primary, 0.38);
 
-    :host([invalid]) & {
+    .invalid & {
       .background-color(on-error, 0.38);
     }
   }

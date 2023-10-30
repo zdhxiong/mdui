@@ -1,8 +1,8 @@
 import { html, LitElement } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
-import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { getInnerHtmlFromSlot } from '@mdui/shared/helpers/slot.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { topAppBarTitleStyle } from './top-app-bar-title-style.js';
@@ -37,7 +37,7 @@ export class TopAppBarTitle extends LitElement {
   /**
    * 顶部应用栏形状。由 mdui-top-app-bar 组件控制该参数
    */
-  @property({ reflect: true })
+  @state()
   private variant:
     | 'center-aligned' /*预览图*/
     | 'small' /*预览图*/
@@ -47,11 +47,7 @@ export class TopAppBarTitle extends LitElement {
   /**
    * 是否缩小成 `variant="small"` 的样式，仅在 `variant="medium"` 或 `variant="large"` 时生效。由 mdui-top-app-bar 组件控制该参数
    */
-  @property({
-    type: Boolean,
-    reflect: true,
-    converter: booleanConverter,
-  })
+  @state()
   private shrink = false;
 
   private readonly hasSlotController = new HasSlotController(
@@ -64,9 +60,17 @@ export class TopAppBarTitle extends LitElement {
   protected override render(): TemplateResult {
     const hasLabelLargeSlot = this.hasSlotController.test('label-large');
 
+    const className = classMap({
+      shrink: this.shrink,
+      'variant-center-aligned': this.variant === 'center-aligned',
+      'variant-small': this.variant === 'small',
+      'variant-medium': this.variant === 'medium',
+      'variant-large': this.variant === 'large',
+    });
+
     return html`<slot
         part="label"
-        class="label"
+        class="label ${className}"
         ${ref(this.defaultSlotRef)}
         @slotchange="${() => this.onSlotChange(hasLabelLargeSlot)}"
       ></slot>
@@ -74,12 +78,12 @@ export class TopAppBarTitle extends LitElement {
         ? html`<slot
             name="label-large"
             part="label-large"
-            class="label-large"
+            class="label-large ${className}"
           ></slot>`
         : html`<div
             ${ref(this.labelLargeRef)}
             part="label-large"
-            class="label-large"
+            class="label-large ${className}"
           ></div>`}`;
   }
 

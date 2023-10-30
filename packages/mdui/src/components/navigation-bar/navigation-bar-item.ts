@@ -74,7 +74,7 @@ export class NavigationBarItem extends AnchorMixin(
   /**
    * 文本的可视状态，由 `navigation-bar` 调用
    */
-  @property({ reflect: true, attribute: 'label-visibility' })
+  @state()
   protected labelVisibility?: 'selected' | 'labeled' | 'unlabeled';
 
   /**
@@ -117,14 +117,24 @@ export class NavigationBarItem extends AnchorMixin(
   }
 
   protected override render(): TemplateResult {
-    const className = cc({
-      container: true,
-      'has-active-icon':
-        this.activeIcon || this.hasSlotController.test('active-icon'),
+    const labelVisibilityClassName = cc({
+      'label-visibility-selected': this.labelVisibility === 'selected',
+      'label-visibility-labeled': this.labelVisibility === 'labeled',
+      'label-visibility-unlabeled': this.labelVisibility === 'unlabeled',
     });
+
+    const className = cc([
+      {
+        container: true,
+        'has-active-icon':
+          this.activeIcon || this.hasSlotController.test('active-icon'),
+      },
+      labelVisibilityClassName,
+    ]);
 
     return html`<mdui-ripple
         .noRipple=${!this.active || this.noRipple}
+        class=${labelVisibilityClassName}
         ${ref(this.rippleRef)}
       ></mdui-ripple>
       ${this.href

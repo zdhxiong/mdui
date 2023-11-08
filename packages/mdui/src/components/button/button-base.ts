@@ -195,7 +195,9 @@ export class ButtonBase extends AnchorMixin(
   protected override get focusElement(): HTMLElement | null {
     return this.isButton()
       ? this.renderRoot?.querySelector('._button')
-      : this.renderRoot?.querySelector('._a');
+      : !this.focusDisabled
+      ? this.renderRoot?.querySelector('._a')
+      : this;
   }
 
   protected override get focusDisabled(): boolean {

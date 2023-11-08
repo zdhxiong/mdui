@@ -72,8 +72,10 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
     return this.disabled || (!this.href && !this.clickable);
   }
 
-  protected override get focusElement(): HTMLElement {
-    return this;
+  protected override get focusElement(): HTMLElement | null {
+    return this.href && !this.disabled
+      ? this.renderRoot.querySelector('._a')
+      : this;
   }
 
   protected override get focusDisabled(): boolean {

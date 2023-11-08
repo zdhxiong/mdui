@@ -193,7 +193,7 @@ export class MenuItem extends AnchorMixin(
   }
 
   protected override get focusElement(): HTMLElement {
-    return this.href ? this.containerRef.value! : this;
+    return this.href && !this.disabled ? this.containerRef.value! : this;
   }
 
   protected override get rippleDisabled(): boolean {
@@ -351,6 +351,7 @@ export class MenuItem extends AnchorMixin(
             className,
             content: this.renderInner(useDefaultEndIcon, hasIcon),
             refDirective: ref(this.containerRef),
+            tabIndex: this.focusable ? 0 : -1,
           })
         : html`<div
             part="container"

@@ -30,7 +30,7 @@ export declare class FocusableMixinInterface extends LitElement {
 }
 
 /**
- * 参考：https://github.com/adobe/spectrum-web-components/blob/main/packages/shared/src/focusable.ts
+ * 参考：https://github.com/adobe/spectrum-web-components/blob/main/tools/shared/src/focusable.ts
  */
 export const FocusableMixin = <T extends Constructor<LitElement>>(
   superclass: T,
@@ -83,7 +83,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     /**
      * 通过 Tab 键在元素之间切换焦点时，tabIndex 属性指定了元素获取焦点的顺序
      */
-    @property({ type: Number, reflect: true, attribute: 'tabindex' })
+    @property({ type: Number })
     public override get tabIndex(): number {
       const $this = $(this);
 

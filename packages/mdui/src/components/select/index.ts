@@ -511,6 +511,16 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
   private onDropdownClose() {
     // @ts-ignore
     this.textFieldRef.value!.focusedStyle = false;
+
+    // 如果焦点在 <mdui-select> 组件内的元素上，则焦点回到 <mdui-select> 上
+    if (
+      this.contains(document.activeElement) ||
+      this.contains(document.activeElement?.assignedSlot ?? null)
+    ) {
+      setTimeout(() => {
+        this.focus();
+      });
+    }
   }
 
   private async onValueChange(e: Event) {

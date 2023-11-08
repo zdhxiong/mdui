@@ -94,9 +94,11 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   })
   protected groupDisabled = false;
 
-  // 是否可聚焦。由 mdui-radio-group 控制该参数
+  // 是否可聚焦。
+  // 单独使用该组件时，默认可聚焦。
+  // 如果放在 <mdui-radio-group> 组件中使用，则由 <mdui-radio-group> 控制该参数
   @state()
-  protected focusable = false;
+  protected focusable = true;
 
   private readonly rippleRef: Ref<Ripple> = createRef();
 

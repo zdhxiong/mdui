@@ -14,7 +14,7 @@ type RenderAnchorOptions = {
     | TemplateResult
     | typeof nothing
     | (TemplateResult | typeof nothing)[];
-  tabindex?: number;
+  tabIndex?: number;
   refDirective?: DirectiveResult<typeof RefDirective>;
 };
 
@@ -120,6 +120,7 @@ export const AnchorMixin = <T extends Constructor<LitElement>>(
       part,
       content = html`<slot></slot>`,
       refDirective,
+      tabIndex,
     }: RenderAnchorOptions): TemplateResult {
       return html`<a
         ${refDirective!}
@@ -130,6 +131,7 @@ export const AnchorMixin = <T extends Constructor<LitElement>>(
         download=${ifDefined(this.download)}
         target=${ifDefined(this.target)}
         rel=${ifDefined(this.rel)}
+        tabindex=${ifDefined(tabIndex)}
       >
         ${content}
       </a>`;

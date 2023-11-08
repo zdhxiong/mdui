@@ -185,7 +185,7 @@ export class ListItem extends AnchorMixin(
   }
 
   protected override get focusElement(): HTMLElement {
-    return this.href ? this.itemRef.value! : this;
+    return this.href && !this.disabled ? this.itemRef.value! : this;
   }
 
   protected override get focusDisabled(): boolean {

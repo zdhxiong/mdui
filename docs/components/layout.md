@@ -46,7 +46,7 @@ import type { LayoutMain } from 'mdui/components/layout-main.js';
 
 布局系统遵循从外向内的原则建立，每个布局组件（`<mdui-layout-item>` 组件）都会在四个方向（上、下、左、右）之一的位置占据空间，随后的布局组件会在剩余空间中继续占据空间。
 
-这些组件直接继承了 `<mdui-layput-item>` 组件，因此也可以作为布局组件使用：
+这些组件直接继承了 `<mdui-layout-item>` 组件，因此也可以作为布局组件使用：
 
 * [`<mdui-navigation-bar>`](/docs/2/components/navigation-bar)
 * [`<mdui-navigation-drawer>`](/docs/2/components/navigation-drawer)

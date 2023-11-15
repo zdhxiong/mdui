@@ -133,8 +133,8 @@ import { throttle } from 'mdui/functions/throttle.js';</code></pre>
 这个例子使用全局构建版本的 mdui，所有函数都以属性的形式暴露在全局对象 `mdui` 上：
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/mdui@2.0.1/mdui.css">
-<script src="https://unpkg.com/mdui@2.0.1/mdui.global.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/mdui@2.0.2/mdui.css">
+<script src="https://unpkg.com/mdui@2.0.2/mdui.global.js"></script>
 
 <mdui-button class="btn">点我</mdui-button>
 
@@ -150,12 +150,12 @@ import { throttle } from 'mdui/functions/throttle.js';</code></pre>
 这个例子使用 ES 模块构建版本的 mdui，你可以使用 ES 模块语法从 CDN 导入：
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/mdui@2.0.1/mdui.css">
+<link rel="stylesheet" href="https://unpkg.com/mdui@2.0.2/mdui.css">
 
 <mdui-button class="btn">点我</mdui-button>
 
 <script>
-  import { snackbar } from 'https://unpkg.com/mdui@2.0.1/mdui.esm.js';
+  import { snackbar } from 'https://unpkg.com/mdui@2.0.2/mdui.esm.js';
 
   document.querySelector('.btn').addEventListener('click', () => {
     snackbar({ message: '点击了按钮' });

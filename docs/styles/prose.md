@@ -6,7 +6,7 @@ mdui 专门为优化文章样式提供了 `mdui-prose` CSS 类，为优化表格
 
 ```html
 <div class="mdui-prose">
-  <h1>标题</h2>
+  <h1>标题</h1>
   <p>正文</p>
   <table>
 

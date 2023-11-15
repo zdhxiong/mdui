@@ -1,4 +1,4 @@
-`removeColorScheme` 函数可移除在当前页面、或指定元素上设置的配色方案。参见 [动态配色](/docs/2/style/dynamic-color)。
+`removeColorScheme` 函数可移除在当前页面、或指定元素上设置的配色方案。参见 [动态配色](/docs/2/styles/dynamic-color)。
 
 ## 使用方法 {#usage}
 

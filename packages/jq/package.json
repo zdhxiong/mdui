@@ -1,6 +1,6 @@
 {
   "name": "@mdui/jq",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "拥有和 jQuery 相似 API 的轻量级 JavaScript 工具库",
   "type": "module",
   "main": "index.js",

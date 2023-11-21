@@ -96,7 +96,9 @@ export class RangeSlider extends SliderBase implements FormControl {
   public override connectedCallback(): void {
     super.connectedCallback();
 
-    this.value = [this.min, this.max];
+    if (!this.value.length) {
+      this.value = [this.min, this.max];
+    }
 
     if (!this.defaultValue.length) {
       this.defaultValue = [...this.value];

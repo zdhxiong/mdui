@@ -233,3 +233,9 @@ export class Collapse extends LitElement {
     });
   }
 }
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mdui-collapse': Collapse;
+  }
+}

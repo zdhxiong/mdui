@@ -1,4 +1,5 @@
 {
+  "name": "@mdui/monorepo",
   "private": true,
   "type": "module",
   "scripts": {

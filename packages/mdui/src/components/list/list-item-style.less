@@ -25,6 +25,8 @@
 .container {
   cursor: pointer;
   user-select: none;
+  text-decoration: none;
+  color: inherit;
   -webkit-tap-highlight-color: transparent;
 
   :host([disabled]) & {
@@ -41,7 +43,6 @@
 .preset {
   display: flex;
   align-items: center;
-  text-decoration: none;
   .padding(8, 24, 8, 16);
   .min-height(56);
 

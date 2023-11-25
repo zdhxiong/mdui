@@ -219,7 +219,11 @@ export class Tabs extends LitElement {
     await this.definedController.whenDefined();
 
     const target = event.target as HTMLElement;
-    const tab = target.closest('mdui-tab') as Tab;
+    const tab = target.closest('mdui-tab') as Tab | null;
+
+    if (!tab) {
+      return;
+    }
 
     this.activeKey = tab.key;
     this.isInitial = false;

@@ -196,7 +196,11 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
     const target = event.target as HTMLElement;
     const item = target.closest(
       'mdui-navigation-bar-item',
-    ) as NavigationBarItem;
+    ) as NavigationBarItem | null;
+
+    if (!item) {
+      return;
+    }
 
     this.activeKey = item.key;
     this.isInitial = false;

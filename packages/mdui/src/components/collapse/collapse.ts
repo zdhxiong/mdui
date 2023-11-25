@@ -170,10 +170,11 @@ export class Collapse extends LitElement {
       return;
     }
 
-    // collapse-item 被禁用，忽略
     const target = event.target as HTMLElement;
-    const item = target.closest('mdui-collapse-item') as CollapseItem;
-    if (item.disabled) {
+    const item = target.closest('mdui-collapse-item') as CollapseItem | null;
+
+    // collapse-item 被禁用，忽略
+    if (!item || item.disabled) {
       return;
     }
 

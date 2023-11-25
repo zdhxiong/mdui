@@ -410,9 +410,11 @@ export class SegmentedButtonGroup extends LitElement implements FormControl {
     await this.definedController.whenDefined();
 
     const target = event.target as HTMLElement;
-    const item = target.closest('mdui-segmented-button') as SegmentedButton;
+    const item = target.closest(
+      'mdui-segmented-button',
+    ) as SegmentedButton | null;
 
-    if (item.disabled) {
+    if (!item || item.disabled) {
       return;
     }
 

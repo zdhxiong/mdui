@@ -270,7 +270,11 @@ export class NavigationRail extends LayoutItemBase {
     const target = event.target as HTMLElement;
     const item = target.closest(
       'mdui-navigation-rail-item',
-    ) as NavigationRailItem;
+    ) as NavigationRailItem | null;
+
+    if (!item) {
+      return;
+    }
 
     this.activeKey = item.key;
     this.isInitial = false;

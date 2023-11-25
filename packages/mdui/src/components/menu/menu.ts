@@ -461,9 +461,9 @@ export class Menu extends LitElement {
     }
 
     const target = event.target as HTMLElement;
-    const item = target.closest('mdui-menu-item') as MenuItem;
+    const item = target.closest('mdui-menu-item') as MenuItem | null;
 
-    if (item?.disabled) {
+    if (!item || item.disabled) {
       return;
     }
 

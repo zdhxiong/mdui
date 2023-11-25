@@ -262,9 +262,7 @@ export class RadioGroup extends LitElement implements FormControl {
     await this.definedController.whenDefined();
 
     const target = event.target as HTMLElement;
-    const item = isNodeName(target, 'mdui-radio')
-      ? (target as Radio)
-      : ($(target).closest('mdui-radio')[0] as Radio | undefined);
+    const item = target.closest('mdui-radio') as Radio | null;
 
     if (!item || item.disabled) {
       return;

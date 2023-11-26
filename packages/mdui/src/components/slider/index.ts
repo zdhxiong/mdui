@@ -60,18 +60,18 @@ export class Slider extends SliderBase implements FormControl {
   }
 
   @watch('value', true)
-  private onValueChange() {
+  private async onValueChange() {
+    this.value = this.fixValue(this.value);
+
     // reset 引起的值变更，不执行验证；直接修改值引起的变更，需要进行验证
     const form = this.formController.getForm();
     if (form && formResets.get(form)?.has(this)) {
       this.invalid = false;
       formResets.get(form)!.delete(this);
     } else {
+      await this.updateComplete;
       this.invalid = !this.inputRef.value!.checkValidity();
     }
-
-    this.inputRef.value!.value = this.value.toString();
-    this.value = parseFloat(this.inputRef.value!.value);
 
     this.updateStyle();
   }
@@ -79,12 +79,7 @@ export class Slider extends SliderBase implements FormControl {
   public override connectedCallback(): void {
     super.connectedCallback();
 
-    if (this.value < this.min) {
-      this.value = this.min;
-    }
-    if (this.value > this.max) {
-      this.value = this.max;
-    }
+    this.value = this.fixValue(this.value);
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {

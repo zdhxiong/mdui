@@ -187,6 +187,27 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   /**
+   * value 不在 min、max 或 step 的限制范围内时，修正 value 的值
+   */
+  protected fixValue(value: number): number {
+    const { min, max, step } = this;
+
+    // 确保 value 在 min 和 max 范围内
+    value = Math.min(Math.max(value, min), max);
+
+    // 计算最接近 value 的 step 值
+    const steps = Math.round((value - min) / step);
+    let fixedValue = min + steps * step;
+
+    // 如果修正后的值超出最大值，则减去一个 step
+    if (fixedValue > max) {
+      fixedValue -= step;
+    }
+
+    return fixedValue;
+  }
+
+  /**
    * 获取候选值组成的数组
    */
   protected getCandidateValues() {

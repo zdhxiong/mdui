@@ -72,7 +72,7 @@ export class RangeSlider extends SliderBase implements FormControl {
   }
   public set value(_value: number[]) {
     const oldValue = [...this._value];
-    this._value = _value;
+    this._value = [this.fixValue(_value[0]), this.fixValue(_value[1])];
     this.requestUpdate('value', oldValue);
 
     this.updateComplete.then(() => {
@@ -99,6 +99,9 @@ export class RangeSlider extends SliderBase implements FormControl {
     if (!this.value.length) {
       this.value = [this.min, this.max];
     }
+
+    this.value[0] = this.fixValue(this.value[0]);
+    this.value[1] = this.fixValue(this.value[1]);
 
     if (!this.defaultValue.length) {
       this.defaultValue = [...this.value];

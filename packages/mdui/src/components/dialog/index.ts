@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import {
   customElement,
   property,
@@ -7,12 +7,12 @@ import {
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { Modal } from '@mdui/shared/helpers/modal.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
@@ -57,7 +57,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-dialog')
-export class Dialog extends LitElement {
+export class Dialog extends MduiElement<DialogEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -220,10 +220,8 @@ export class Dialog extends LitElement {
     // 要区分是否首次渲染，首次渲染不触发事件，不执行动画；非首次渲染，触发事件，执行动画
     if (this.open) {
       if (hasUpdated) {
-        const requestOpen = emit(this, 'open', {
-          cancelable: true,
-        });
-        if (requestOpen.defaultPrevented) {
+        const eventProceeded = this.emit('open', { cancelable: true });
+        if (!eventProceeded) {
           return;
         }
       }
@@ -310,13 +308,11 @@ export class Dialog extends LitElement {
       ]);
 
       if (hasUpdated) {
-        emit(this, 'opened');
+        this.emit('opened');
       }
     } else {
-      const requestClose = emit(this, 'close', {
-        cancelable: true,
-      });
-      if (requestClose.defaultPrevented) {
+      const eventProceeded = this.emit('close', { cancelable: true });
+      if (!eventProceeded) {
         return;
       }
 
@@ -361,7 +357,7 @@ export class Dialog extends LitElement {
         setTimeout(() => trigger.focus());
       }
 
-      emit(this, 'closed');
+      this.emit('closed');
     }
   }
 
@@ -437,7 +433,7 @@ export class Dialog extends LitElement {
   }
 
   private onOverlayClick() {
-    emit(this, 'overlay-click');
+    this.emit('overlay-click');
     if (!this.closeOnOverlayClick) {
       return;
     }
@@ -464,6 +460,14 @@ export class Dialog extends LitElement {
       ${this.description}
     </slot>`;
   }
+}
+
+export interface DialogEventMap {
+  open: CustomEvent<void>;
+  opened: CustomEvent<void>;
+  close: CustomEvent<void>;
+  closed: CustomEvent<void>;
+  'overlay-click': CustomEvent<void>;
 }
 
 declare global {

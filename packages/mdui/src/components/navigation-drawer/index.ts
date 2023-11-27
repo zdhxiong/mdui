@@ -11,7 +11,6 @@ import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { breakpoint } from '@mdui/shared/helpers/breakpoint.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { Modal } from '@mdui/shared/helpers/modal.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { observeResize } from '@mdui/shared/helpers/observeResize.js';
@@ -48,7 +47,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-navigation-drawer')
-export class NavigationDrawer extends LayoutItemBase {
+export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -240,8 +239,8 @@ export class NavigationDrawer extends LayoutItemBase {
       }
 
       if (hasUpdated) {
-        const requestOpen = emit(this, 'open', { cancelable: true });
-        if (requestOpen.defaultPrevented) {
+        const eventProceeded = this.emit('open', { cancelable: true });
+        if (!eventProceeded) {
           return;
         }
       }
@@ -323,12 +322,12 @@ export class NavigationDrawer extends LayoutItemBase {
       }
 
       if (hasUpdated) {
-        emit(this, 'opened');
+        this.emit('opened');
       }
     } else if (this.hasUpdated) {
       // 关闭
-      const requestClose = emit(this, 'close', { cancelable: true });
-      if (requestClose.defaultPrevented) {
+      const eventProceeded = this.emit('close', { cancelable: true });
+      if (!eventProceeded) {
         return;
       }
 
@@ -398,7 +397,7 @@ export class NavigationDrawer extends LayoutItemBase {
         setTimeout(() => trigger.focus());
       }
 
-      emit(this, 'closed');
+      this.emit('closed');
     }
   }
 
@@ -450,7 +449,7 @@ export class NavigationDrawer extends LayoutItemBase {
   }
 
   private onOverlayClick() {
-    emit(this, 'overlay-click');
+    this.emit('overlay-click');
 
     if (this.closeOnOverlayClick) {
       this.open = false;
@@ -475,6 +474,14 @@ export class NavigationDrawer extends LayoutItemBase {
       },
     );
   }
+}
+
+export interface NavigationDrawerEventMap {
+  open: CustomEvent<void>;
+  opened: CustomEvent<void>;
+  close: CustomEvent<void>;
+  closed: CustomEvent<void>;
+  'overlay-click': CustomEvent<void>;
 }
 
 declare global {

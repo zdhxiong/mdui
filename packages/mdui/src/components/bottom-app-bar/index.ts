@@ -1,7 +1,6 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { ScrollBehaviorMixin } from '@mdui/shared/mixins/scrollBehavior.js';
 import { LayoutItemBase } from '../layout/layout-item-base.js';
@@ -35,7 +34,9 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
  * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-bottom-app-bar')
-export class BottomAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
+export class BottomAppBar extends ScrollBehaviorMixin(
+  LayoutItemBase,
+)<BottomAppBarEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -79,7 +80,7 @@ export class BottomAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
 
     this.addEventListener('transitionend', (event: TransitionEvent) => {
       if (event.target === this) {
-        emit(this, this.hide ? 'hidden' : 'shown');
+        this.emit(this.hide ? 'hidden' : 'shown');
       }
     });
   }
@@ -95,20 +96,27 @@ export class BottomAppBar extends ScrollBehaviorMixin(LayoutItemBase) {
   protected runScrollThreshold(isScrollingUp: boolean) {
     // 向下滚动
     if (!isScrollingUp && !this.hide) {
-      const requestHide = emit(this, 'hide');
-      if (!requestHide.defaultPrevented) {
+      const eventProceeded = this.emit('hide', { cancelable: true });
+      if (eventProceeded) {
         this.hide = true;
       }
     }
 
     // 向上滚动
     if (isScrollingUp && this.hide) {
-      const requestShow = emit(this, 'show');
-      if (!requestShow.defaultPrevented) {
+      const eventProceeded = this.emit('show', { cancelable: true });
+      if (eventProceeded) {
         this.hide = false;
       }
     }
   }
+}
+
+export interface BottomAppBarEventMap {
+  show: CustomEvent<void>;
+  shown: CustomEvent<void>;
+  hide: CustomEvent<void>;
+  hidden: CustomEvent<void>;
 }
 
 declare global {

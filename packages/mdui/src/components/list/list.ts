@@ -1,5 +1,6 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { listStyle } from './list-style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
@@ -18,13 +19,15 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @slot - `<mdui-list-item>` 元素
  */
 @customElement('mdui-list')
-export class List extends LitElement {
+export class List extends MduiElement<ListEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, listStyle];
 
   protected override render(): TemplateResult {
     return html`<slot></slot>`;
   }
 }
+
+export interface ListEventMap {}
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import {
   customElement,
   property,
@@ -7,6 +7,7 @@ import {
 import { createRef, ref } from 'lit/directives/ref.js';
 import cc from 'classcat';
 import { isNodeName, getNodeName } from '@mdui/jq/shared/helper.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
@@ -52,8 +53,8 @@ import type { Ref } from 'lit/directives/ref.js';
  */
 @customElement('mdui-list-item')
 export class ListItem extends AnchorMixin(
-  RippleMixin(FocusableMixin(LitElement)),
-) {
+  RippleMixin(FocusableMixin(MduiElement)),
+)<ListItemEventMap> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     listItemStyle,
@@ -253,6 +254,11 @@ export class ListItem extends AnchorMixin(
       </slot>
     </slot>`;
   }
+}
+
+export interface ListItemEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
 }
 
 declare global {

@@ -1,11 +1,11 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
@@ -13,7 +13,7 @@ import { sliderBaseStyle } from './slider-base-style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
-export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
+export class SliderBase<E> extends RippleMixin(FocusableMixin(MduiElement))<E> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     sliderBaseStyle,
@@ -141,7 +141,8 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
     const valid = this.inputRef.value!.checkValidity();
 
     if (!valid) {
-      emit(this, 'invalid', {
+      // @ts-ignore
+      this.emit('invalid', {
         bubbles: false,
         cancelable: true,
         composed: false,
@@ -160,14 +161,15 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
     this.invalid = !this.inputRef.value!.reportValidity();
 
     if (this.invalid) {
-      const requestInvalid = emit(this, 'invalid', {
+      // @ts-ignore
+      const eventProceeded = this.emit('invalid', {
         bubbles: false,
         cancelable: true,
         composed: false,
       });
 
-      // 调用了 preventDefault() 时，隐藏默认的表单错误提示
-      if (requestInvalid.defaultPrevented) {
+      if (!eventProceeded) {
+        // 调用了 preventDefault() 时，隐藏默认的表单错误提示
         this.blur();
         this.focus();
       }
@@ -234,6 +236,7 @@ export class SliderBase extends RippleMixin(FocusableMixin(LitElement)) {
   }
 
   protected onChange() {
-    emit(this, 'change');
+    // @ts-ignore
+    this.emit('change');
   }
 }

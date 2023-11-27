@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
@@ -8,13 +8,13 @@ import '@mdui/jq/methods/filter.js';
 import '@mdui/jq/methods/height.js';
 import '@mdui/jq/methods/prop.js';
 import '@mdui/jq/methods/width.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { HoverController } from '@mdui/shared/controllers/hover.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -52,7 +52,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-tooltip')
-export class Tooltip extends LitElement {
+export class Tooltip extends MduiElement<TooltipEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -235,10 +235,8 @@ export class Tooltip extends LitElement {
       }
 
       if (hasUpdated) {
-        const requestOpen = emit(this, 'open', {
-          cancelable: true,
-        });
-        if (requestOpen.defaultPrevented) {
+        const eventProceeded = this.emit('open', { cancelable: true });
+        if (!eventProceeded) {
           return;
         }
       }
@@ -256,7 +254,7 @@ export class Tooltip extends LitElement {
       );
 
       if (hasUpdated) {
-        emit(this, 'opened');
+        this.emit('opened');
       }
 
       return;
@@ -264,10 +262,8 @@ export class Tooltip extends LitElement {
 
     // 关闭
     if (!this.open && hasUpdated) {
-      const requestClose = emit(this, 'close', {
-        cancelable: true,
-      });
-      if (requestClose.defaultPrevented) {
+      const eventProceeded = this.emit('close', { cancelable: true });
+      if (!eventProceeded) {
         return;
       }
 
@@ -278,7 +274,7 @@ export class Tooltip extends LitElement {
         { duration, easing },
       );
       this.popupRef.value!.hidden = true;
-      emit(this, 'closed');
+      this.emit('closed');
     }
   }
 
@@ -608,6 +604,13 @@ export class Tooltip extends LitElement {
       transformOrigin: [transformOriginX, transformOriginY].join(' '),
     });
   }
+}
+
+export interface TooltipEventMap {
+  open: CustomEvent<void>;
+  opened: CustomEvent<void>;
+  close: CustomEvent<void>;
+  closed: CustomEvent<void>;
 }
 
 declare global {

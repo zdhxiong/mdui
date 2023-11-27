@@ -18,7 +18,7 @@ type RenderAnchorOptions = {
   refDirective?: DirectiveResult<typeof RefDirective>;
 };
 
-export declare class AnchorMixinInterface extends LitElement {
+export declare class AnchorMixinInterface {
   public href?: string;
   public download?: string;
   public target?: '_blank' | '_parent' | '_self' | '_top';
@@ -138,6 +138,5 @@ export const AnchorMixin = <T extends Constructor<LitElement>>(
     }
   }
 
-  // @ts-ignore
-  return AnchorMixinClass;
+  return AnchorMixinClass as unknown as Constructor<AnchorMixinInterface> & T;
 };

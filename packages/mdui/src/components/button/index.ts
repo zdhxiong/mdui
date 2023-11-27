@@ -34,7 +34,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-button')
-export class Button extends ButtonBase {
+export class Button extends ButtonBase<ButtonEventMap> {
   public static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   /**
@@ -132,6 +132,12 @@ export class Button extends ButtonBase {
   private renderInner(): TemplateResult[] {
     return [this.renderIcon(), this.renderLabel(), this.renderEndIcon()];
   }
+}
+
+export interface ButtonEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
+  invalid: CustomEvent<void>;
 }
 
 declare global {

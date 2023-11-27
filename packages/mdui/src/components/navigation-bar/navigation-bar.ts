@@ -8,7 +8,6 @@ import {
 import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { ScrollBehaviorMixin } from '@mdui/shared/mixins/scrollBehavior.js';
 import { LayoutItemBase } from '../layout/layout-item-base.js';
@@ -48,7 +47,9 @@ type NavigationBarItem = NavigationBarItemOriginal & {
  * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-navigation-bar')
-export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
+export class NavigationBar extends ScrollBehaviorMixin(
+  LayoutItemBase,
+)<NavigationBarEventMap> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     navigationBarStyle,
@@ -127,7 +128,7 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
     this.value = item?.value;
 
     if (!this.isInitial) {
-      emit(this, 'change');
+      this.emit('change');
     }
   }
 
@@ -153,7 +154,7 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
 
     this.addEventListener('transitionend', (event: TransitionEvent) => {
       if (event.target === this) {
-        emit(this, this.hide ? 'hidden' : 'shown');
+        this.emit(this.hide ? 'hidden' : 'shown');
       }
     });
   }
@@ -172,16 +173,16 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
   protected runScrollThreshold(isScrollingUp: boolean) {
     // 向下滚动
     if (!isScrollingUp && !this.hide) {
-      const requestHide = emit(this, 'hide');
-      if (!requestHide.defaultPrevented) {
+      const eventProceeded = this.emit('hide', { cancelable: true });
+      if (eventProceeded) {
         this.hide = true;
       }
     }
 
     // 向上滚动
     if (isScrollingUp && this.hide) {
-      const requestShow = emit(this, 'show');
-      if (!requestShow.defaultPrevented) {
+      const eventProceeded = this.emit('show', { cancelable: true });
+      if (eventProceeded) {
         this.hide = false;
       }
     }
@@ -231,6 +232,14 @@ export class NavigationBar extends ScrollBehaviorMixin(LayoutItemBase) {
     await this.definedController.whenDefined();
     this.updateItems();
   }
+}
+
+export interface NavigationBarEventMap {
+  change: CustomEvent<void>;
+  show: CustomEvent<void>;
+  shown: CustomEvent<void>;
+  hide: CustomEvent<void>;
+  hidden: CustomEvent<void>;
 }
 
 declare global {

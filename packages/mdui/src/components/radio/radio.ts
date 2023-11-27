@@ -1,10 +1,10 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import '@mdui/shared/icons/circle.js';
 import '@mdui/shared/icons/radio-button-unchecked.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -40,7 +40,9 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart label - 文本
  */
 @customElement('mdui-radio')
-export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
+export class Radio extends RippleMixin(
+  FocusableMixin(MduiElement),
+)<RadioEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, radioStyle];
 
   /**
@@ -124,7 +126,7 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
 
   @watch('checked', true)
   private onCheckedChange() {
-    emit(this, 'change');
+    this.emit('change');
   }
 
   protected override firstUpdated(_changedProperties: PropertyValues) {
@@ -171,6 +173,12 @@ export class Radio extends RippleMixin(FocusableMixin(LitElement)) {
   private isDisabled(): boolean {
     return this.disabled || this.groupDisabled;
   }
+}
+
+export interface RadioEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
+  change: CustomEvent<void>;
 }
 
 declare global {

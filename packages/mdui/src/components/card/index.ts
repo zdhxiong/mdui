@@ -1,6 +1,7 @@
-import { LitElement, html } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
@@ -26,7 +27,9 @@ import type { Ref } from 'lit/directives/ref.js';
  * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-card')
-export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
+export class Card extends AnchorMixin(
+  RippleMixin(FocusableMixin(MduiElement)),
+)<CardEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -94,6 +97,11 @@ export class Card extends AnchorMixin(RippleMixin(FocusableMixin(LitElement))) {
           })
         : html`<slot></slot>`}`;
   }
+}
+
+export interface CardEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
 }
 
 declare global {

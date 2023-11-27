@@ -1,8 +1,9 @@
-import { html, LitElement, nothing } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import cc from 'classcat';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
@@ -47,8 +48,8 @@ import type { Ref } from 'lit/directives/ref.js';
  */
 @customElement('mdui-navigation-rail-item')
 export class NavigationRailItem extends AnchorMixin(
-  RippleMixin(FocusableMixin(LitElement)),
-) {
+  RippleMixin(FocusableMixin(MduiElement)),
+)<NavigationRailItemEventMap> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     navigationRailItemStyle,
@@ -174,6 +175,11 @@ export class NavigationRailItem extends AnchorMixin(
         ? html`<slot part="label" class="label"></slot>`
         : nothing}`;
   }
+}
+
+export interface NavigationRailItemEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
 }
 
 declare global {

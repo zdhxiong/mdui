@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import {
   customElement,
   property,
@@ -14,12 +14,12 @@ import '@mdui/jq/methods/is.js';
 import '@mdui/jq/methods/parent.js';
 import '@mdui/jq/methods/parents.js';
 import { isString, isUndefined } from '@mdui/jq/shared/helper.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { arraysEqualIgnoreOrder } from '@mdui/shared/helpers/array.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { delay } from '@mdui/shared/helpers/delay.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { menuStyle } from './menu-style.js';
 import type { MenuItem as MenuItemOriginal } from './menu-item.js';
@@ -60,7 +60,7 @@ type MenuItem = MenuItemOriginal & {
  * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-menu')
-export class Menu extends LitElement {
+export class Menu extends MduiElement<MenuEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, menuStyle];
 
   /**
@@ -232,7 +232,7 @@ export class Menu extends LitElement {
     this.setValue(value);
 
     if (!this.isInitial) {
-      emit(this, 'change');
+      this.emit('change');
     }
   }
 
@@ -538,6 +538,10 @@ export class Menu extends LitElement {
       }
     }
   }
+}
+
+export interface MenuEventMap {
+  change: CustomEvent<void>;
 }
 
 declare global {

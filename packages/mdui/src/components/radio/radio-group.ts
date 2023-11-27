@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { createRef, ref } from 'lit/directives/ref.js';
@@ -6,13 +6,12 @@ import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/closest.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
-import { isNodeName } from '@mdui/jq/shared/helper.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { radioGroupStyle } from './radio-group-style.js';
 import type { Radio as RadioOriginal } from './radio.js';
@@ -44,7 +43,10 @@ type Radio = RadioOriginal & {
  * @slot - `<mdui-radio>` 元素
  */
 @customElement('mdui-radio-group')
-export class RadioGroup extends LitElement implements FormControl {
+export class RadioGroup
+  extends MduiElement<RadioGroupEventMap>
+  implements FormControl
+{
   public static override styles: CSSResultGroup = [
     componentStyle,
     radioGroupStyle,
@@ -141,8 +143,8 @@ export class RadioGroup extends LitElement implements FormControl {
     this.isInitial = false;
     await this.definedController.whenDefined();
 
-    emit(this, 'input');
-    emit(this, 'change');
+    this.emit('input');
+    this.emit('change');
     this.updateItems();
     this.updateRadioFocusable();
 
@@ -173,7 +175,7 @@ export class RadioGroup extends LitElement implements FormControl {
     const valid = this.inputRef.value!.checkValidity();
 
     if (!valid) {
-      emit(this, 'invalid', {
+      this.emit('invalid', {
         bubbles: false,
         cancelable: true,
         composed: false,
@@ -192,14 +194,14 @@ export class RadioGroup extends LitElement implements FormControl {
     this.invalid = !this.inputRef.value!.reportValidity();
 
     if (this.invalid) {
-      const requestInvalid = emit(this, 'invalid', {
+      const eventProceeded = this.emit('invalid', {
         bubbles: false,
         cancelable: true,
         composed: false,
       });
 
-      // 调用了 preventDefault() 时，隐藏默认的表单错误提示
-      if (requestInvalid.defaultPrevented) {
+      if (!eventProceeded) {
+        // 调用了 preventDefault() 时，隐藏默认的表单错误提示
         this.inputRef.value!.blur();
         this.inputRef.value!.focus();
       }
@@ -335,6 +337,12 @@ export class RadioGroup extends LitElement implements FormControl {
       item.isInitial = this.isInitial;
     });
   }
+}
+
+export interface RadioGroupEventMap {
+  change: CustomEvent<void>;
+  input: CustomEvent<void>;
+  invalid: CustomEvent<void>;
 }
 
 declare global {

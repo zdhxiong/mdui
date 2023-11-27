@@ -4,7 +4,6 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
@@ -36,7 +35,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-button-icon')
-export class ButtonIcon extends ButtonBase {
+export class ButtonIcon extends ButtonBase<ButtonIconEventMap> {
   public static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   /**
@@ -99,7 +98,7 @@ export class ButtonIcon extends ButtonBase {
 
   @watch('selected', true)
   private onSelectedChange() {
-    emit(this, 'change');
+    this.emit('change');
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
@@ -162,6 +161,13 @@ export class ButtonIcon extends ButtonBase {
 
     return this.selected ? selectedIcon() : icon();
   }
+}
+
+export interface ButtonIconEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
+  change: CustomEvent<void>;
+  invalid: CustomEvent<void>;
 }
 
 declare global {

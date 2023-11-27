@@ -12,7 +12,7 @@ type ScrollBehavior = 'hide' | 'shrink' | 'elevate';
 
 export type ScrollPaddingPosition = 'top' | 'bottom';
 
-export declare class ScrollBehaviorMixinInterface extends LitElement {
+export declare class ScrollBehaviorMixinInterface {
   public scrollTarget?: string | HTMLElement | JQ<HTMLElement>;
   public scrollBehavior?: ScrollBehavior;
   public scrollThreshold?: number;
@@ -290,6 +290,6 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
     }
   }
 
-  // @ts-ignore
-  return ScrollBehaviorMixinClass;
+  return ScrollBehaviorMixinClass as unknown as Constructor<ScrollBehaviorMixinInterface> &
+    T;
 };

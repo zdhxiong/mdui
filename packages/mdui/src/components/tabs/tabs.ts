@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import {
   customElement,
   property,
@@ -12,10 +12,10 @@ import '@mdui/jq/methods/children.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { tabsStyle } from './tabs-style.js';
@@ -59,7 +59,7 @@ type TabPanel = TabPanelOriginal & {
  * @csspart indicator - 激活状态指示器
  */
 @customElement('mdui-tabs')
-export class Tabs extends LitElement {
+export class Tabs extends MduiElement<TabsEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, tabsStyle];
 
   /**
@@ -158,7 +158,7 @@ export class Tabs extends LitElement {
     this.updateActive();
 
     if (!this.isInitial) {
-      emit(this, 'change');
+      this.emit('change');
     }
   }
 
@@ -311,6 +311,10 @@ export class Tabs extends LitElement {
 
     $indicator.css({ ...commonStyle, ...shownStyle });
   }
+}
+
+export interface TabsEventMap {
+  change: CustomEvent<void>;
 }
 
 declare global {

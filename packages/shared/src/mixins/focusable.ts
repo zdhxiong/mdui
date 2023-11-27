@@ -20,14 +20,14 @@ document.addEventListener('keydown', () => {
   isClick = false;
 });
 
-export declare class FocusableMixinInterface extends LitElement {
-  public override autofocus: boolean;
-  public override tabIndex: number;
+export declare class FocusableMixinInterface {
+  public autofocus: boolean;
+  public tabIndex: number;
   protected get focusDisabled(): boolean;
   protected get focusElement(): HTMLElement | null | undefined;
-  public override focus(options?: FocusOptions): void;
-  public override blur(): void;
-  public override click(): void;
+  public focus(options?: FocusOptions): void;
+  public blur(): void;
+  public click(): void;
 }
 
 /**
@@ -292,6 +292,6 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     }
   }
 
-  // @ts-ignore
-  return FocusableMixinClass;
+  return FocusableMixinClass as unknown as Constructor<FocusableMixinInterface> &
+    T;
 };

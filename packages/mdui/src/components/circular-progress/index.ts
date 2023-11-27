@@ -1,7 +1,8 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { isUndefined } from '@mdui/jq/shared/helper.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
@@ -14,7 +15,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * ```
  */
 @customElement('mdui-circular-progress')
-export class CircularProgress extends LitElement {
+export class CircularProgress extends MduiElement<CircularProgressEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -99,6 +100,8 @@ export class CircularProgress extends LitElement {
     </div>`;
   }
 }
+
+export interface CircularProgressEventMap {}
 
 declare global {
   interface HTMLElementTagNameMap {

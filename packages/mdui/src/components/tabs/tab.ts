@@ -1,8 +1,9 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
@@ -44,7 +45,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart label - 导航项的文本
  */
 @customElement('mdui-tab')
-export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
+export class Tab extends RippleMixin(FocusableMixin(MduiElement))<TabEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, tabStyle];
 
   /**
@@ -145,6 +146,11 @@ export class Tab extends RippleMixin(FocusableMixin(LitElement)) {
         </slot>
       </div>`;
   }
+}
+
+export interface TabEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
 }
 
 declare global {

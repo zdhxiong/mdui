@@ -39,7 +39,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @cssprop --shape-corner-large - `size="large"` 时，组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-fab')
-export class Fab extends ButtonBase {
+export class Fab extends ButtonBase<FabEventMap> {
   public static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   /**
@@ -168,6 +168,12 @@ export class Fab extends ButtonBase {
   private renderInner(): TemplateResult[] {
     return [this.renderIcon(), this.renderLabel()];
   }
+}
+
+export interface FabEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
+  invalid: CustomEvent<void>;
 }
 
 declare global {

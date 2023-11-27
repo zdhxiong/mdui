@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import {
   customElement,
   property,
@@ -8,11 +8,11 @@ import {
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/is.js';
 import { isElement, isUndefined } from '@mdui/jq/shared/helper.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { arraysEqualIgnoreOrder } from '@mdui/shared/helpers/array.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { collapseStyle } from './collapse-style.js';
 import type { CollapseItem as CollapseItemOriginal } from './collapse-item.js';
@@ -39,7 +39,7 @@ type CollapseItem = CollapseItemOriginal & {
  * @slot - `<mdui-collapse-item>` 组件
  */
 @customElement('mdui-collapse')
-export class Collapse extends LitElement {
+export class Collapse extends MduiElement<CollapseEventMap> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     collapseStyle,
@@ -104,7 +104,7 @@ export class Collapse extends LitElement {
     this.setValue(value);
 
     if (!this.isInitial) {
-      emit(this, 'change');
+      this.emit('change');
     }
   }
 
@@ -233,6 +233,10 @@ export class Collapse extends LitElement {
       item.isInitial = this.isInitial;
     });
   }
+}
+
+export interface CollapseEventMap {
+  change: CustomEvent<void>;
 }
 
 declare global {

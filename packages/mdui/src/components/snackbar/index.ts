@@ -1,11 +1,11 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { breakpoint } from '@mdui/shared/helpers/breakpoint.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import '@mdui/shared/icons/clear.js';
@@ -43,7 +43,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-snackbar')
-export class Snackbar extends LitElement {
+export class Snackbar extends MduiElement<SnackbarEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -173,8 +173,8 @@ export class Snackbar extends LitElement {
       }
 
       if (hasUpdated) {
-        const requestOpen = emit(this, 'open', { cancelable: true });
-        if (requestOpen.defaultPrevented) {
+        const eventProceeded = this.emit('open', { cancelable: true });
+        if (!eventProceeded) {
           return;
         }
       }
@@ -251,7 +251,7 @@ export class Snackbar extends LitElement {
       ]);
 
       if (hasUpdated) {
-        emit(this, 'opened');
+        this.emit('opened');
       }
 
       return;
@@ -259,8 +259,8 @@ export class Snackbar extends LitElement {
 
     // 关闭
     if (!this.open && this.hasUpdated) {
-      const requestClose = emit(this, 'close', { cancelable: true });
-      if (requestClose.defaultPrevented) {
+      const eventProceeded = this.emit('close', { cancelable: true });
+      if (!eventProceeded) {
         return;
       }
 
@@ -307,7 +307,7 @@ export class Snackbar extends LitElement {
       ]);
 
       this.style.display = 'none';
-      emit(this, 'closed');
+      this.emit('closed');
       return;
     }
   }
@@ -380,12 +380,20 @@ export class Snackbar extends LitElement {
 
   private onActionClick(event: MouseEvent) {
     event.stopPropagation();
-    emit(this, 'action-click');
+    this.emit('action-click');
   }
 
   private onCloseClick() {
     this.open = false;
   }
+}
+
+export interface SnackbarEventMap {
+  open: CustomEvent<void>;
+  opened: CustomEvent<void>;
+  close: CustomEvent<void>;
+  closed: CustomEvent<void>;
+  'action-click': CustomEvent<void>;
 }
 
 declare global {

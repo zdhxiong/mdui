@@ -1,5 +1,6 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { tabPanelStyle } from './tab-panel-style.js';
@@ -23,7 +24,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @slot - 选项卡面板内容
  */
 @customElement('mdui-tab-panel')
-export class TabPanel extends LitElement {
+export class TabPanel extends MduiElement<TabPanelEventMap> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     tabPanelStyle,
@@ -49,6 +50,8 @@ export class TabPanel extends LitElement {
     return html`<slot></slot>`;
   }
 }
+
+export interface TabPanelEventMap {}
 
 declare global {
   interface HTMLElementTagNameMap {

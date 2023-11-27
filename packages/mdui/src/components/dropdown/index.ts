@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import {
   customElement,
   property,
@@ -10,11 +10,11 @@ import '@mdui/jq/methods/height.js';
 import '@mdui/jq/methods/is.js';
 import '@mdui/jq/methods/width.js';
 import { isFunction } from '@mdui/jq/shared/helper.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -50,7 +50,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-dropdown')
-export class Dropdown extends LitElement {
+export class Dropdown extends MduiElement<DropdownEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -234,10 +234,8 @@ export class Dropdown extends LitElement {
     // 要区分是否首次渲染，首次渲染时不触发事件，不执行动画；非首次渲染，触发事件，执行动画
     if (this.open) {
       if (hasUpdated) {
-        const requestOpen = emit(this, 'open', {
-          cancelable: true,
-        });
-        if (requestOpen.defaultPrevented) {
+        const eventProceeded = this.emit('open', { cancelable: true });
+        if (!eventProceeded) {
           return;
         }
       }
@@ -278,13 +276,11 @@ export class Dropdown extends LitElement {
       ]);
 
       if (hasUpdated) {
-        emit(this, 'opened');
+        this.emit('opened');
       }
     } else {
-      const requestClose = emit(this, 'close', {
-        cancelable: true,
-      });
-      if (requestClose.defaultPrevented) {
+      const eventProceeded = this.emit('close', { cancelable: true });
+      if (!eventProceeded) {
         return;
       }
 
@@ -322,7 +318,7 @@ export class Dropdown extends LitElement {
         this.panelRef.value.hidden = true;
       }
 
-      emit(this, 'closed');
+      this.emit('closed');
     }
   }
 
@@ -701,6 +697,13 @@ export class Dropdown extends LitElement {
       transformOrigin: [transformOriginX, transformOriginY].join(' '),
     });
   }
+}
+
+export interface DropdownEventMap {
+  open: CustomEvent<void>;
+  opened: CustomEvent<void>;
+  close: CustomEvent<void>;
+  closed: CustomEvent<void>;
 }
 
 declare global {

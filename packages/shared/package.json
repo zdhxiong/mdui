@@ -4,6 +4,7 @@
   "description": "mdui 项目的公共部分",
   "type": "module",
   "files": [
+    "base",
     "controllers",
     "decorators",
     "helpers",

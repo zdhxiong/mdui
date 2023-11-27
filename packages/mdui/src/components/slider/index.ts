@@ -36,7 +36,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart tickmark - 刻度标记
  */
 @customElement('mdui-slider')
-export class Slider extends SliderBase implements FormControl {
+export class Slider extends SliderBase<SliderEventMap> implements FormControl {
   public static override styles: CSSResultGroup = [SliderBase.styles, style];
 
   /**
@@ -165,6 +165,14 @@ export class Slider extends SliderBase implements FormControl {
 
     this.updateStyle();
   }
+}
+
+export interface SliderEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
+  change: CustomEvent<void>;
+  input: Event;
+  invalid: CustomEvent<void>;
 }
 
 declare global {

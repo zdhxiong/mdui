@@ -8,7 +8,7 @@ import type { Ripple } from './index.js';
 import type { Constructor } from '@open-wc/dedupe-mixin';
 import type { PropertyValues, LitElement } from 'lit';
 
-export declare class RippleMixinInterface extends LitElement {
+export declare class RippleMixinInterface {
   public noRipple: boolean;
   protected getRippleIndex: () => number | undefined;
   protected get rippleElement(): Ripple | Ripple[] | NodeListOf<Ripple>;
@@ -324,6 +324,5 @@ export const RippleMixin = <T extends Constructor<LitElement>>(
     }
   }
 
-  // @ts-ignore
-  return Mixin;
+  return Mixin as unknown as Constructor<RippleMixinInterface> & T;
 };

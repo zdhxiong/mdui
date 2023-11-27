@@ -1,11 +1,11 @@
-import { CSSResultGroup, html } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { LayoutItemBase } from './layout-item-base.js';
 import { layoutItemStyle } from './layout-item-style.js';
 import type { LayoutPlacement } from './helper.js';
-import type { TemplateResult } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
  * @summary 布局项组件
@@ -21,7 +21,7 @@ import type { TemplateResult } from 'lit';
  * @slot - 可以是任意内容
  */
 @customElement('mdui-layout-item')
-export class LayoutItem extends LayoutItemBase {
+export class LayoutItem extends LayoutItemBase<LayoutItemEventMap> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     layoutItemStyle,
@@ -56,6 +56,8 @@ export class LayoutItem extends LayoutItemBase {
     return html`<slot></slot>`;
   }
 }
+
+export interface LayoutItemEventMap {}
 
 declare global {
   interface HTMLElementTagNameMap {

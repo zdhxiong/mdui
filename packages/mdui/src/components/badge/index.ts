@@ -1,5 +1,6 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
@@ -17,7 +18,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-badge')
-export class Badge extends LitElement {
+export class Badge extends MduiElement<BadgeEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -38,6 +39,8 @@ export class Badge extends LitElement {
     return html`<slot></slot>`;
   }
 }
+
+export interface BadgeEventMap {}
 
 declare global {
   interface HTMLElementTagNameMap {

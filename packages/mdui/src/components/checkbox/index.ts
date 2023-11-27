@@ -1,14 +1,14 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import '@mdui/shared/icons/check-box-outline-blank.js';
 import '@mdui/shared/icons/check-box.js';
 import '@mdui/shared/icons/indeterminate-check-box.js';
@@ -48,7 +48,7 @@ import type { Ref } from 'lit/directives/ref.js';
  */
 @customElement('mdui-checkbox')
 export class Checkbox
-  extends RippleMixin(FocusableMixin(LitElement))
+  extends RippleMixin(FocusableMixin(MduiElement))<CheckboxEventMap>
   implements FormControl
 {
   public static override styles: CSSResultGroup = [componentStyle, style];
@@ -210,7 +210,7 @@ export class Checkbox
     const valid = this.inputRef.value!.checkValidity();
 
     if (!valid) {
-      emit(this, 'invalid', {
+      this.emit('invalid', {
         bubbles: false,
         cancelable: true,
         composed: false,
@@ -229,14 +229,14 @@ export class Checkbox
     this.invalid = !this.inputRef.value!.reportValidity();
 
     if (this.invalid) {
-      const requestInvalid = emit(this, 'invalid', {
+      const eventProceeded = this.emit('invalid', {
         bubbles: false,
         cancelable: true,
         composed: false,
       });
 
       // 调用了 preventDefault() 时，隐藏默认的表单错误提示
-      if (requestInvalid.defaultPrevented) {
+      if (!eventProceeded) {
         this.blur();
         this.focus();
       }
@@ -314,8 +314,16 @@ export class Checkbox
   private onChange() {
     this.checked = this.inputRef.value!.checked;
     this.indeterminate = false;
-    emit(this, 'change');
+    this.emit('change');
   }
+}
+
+export interface CheckboxEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
+  change: CustomEvent<void>;
+  input: Event;
+  invalid: CustomEvent<void>;
 }
 
 declare global {

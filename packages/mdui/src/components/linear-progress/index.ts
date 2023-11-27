@@ -1,7 +1,8 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { isUndefined } from '@mdui/jq/shared/helper.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
@@ -18,7 +19,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-linear-progress')
-export class LinearProgress extends LitElement {
+export class LinearProgress extends MduiElement<LinearProgressEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -51,6 +52,8 @@ export class LinearProgress extends LitElement {
     return html`<div part="indicator" class="indeterminate"></div>`;
   }
 }
+
+export interface LinearProgressEventMap {}
 
 declare global {
   interface HTMLElementTagNameMap {

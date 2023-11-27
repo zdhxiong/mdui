@@ -5,7 +5,6 @@ import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import '@mdui/shared/icons/check.js';
 import '@mdui/shared/icons/clear.js';
@@ -46,7 +45,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-chip')
-export class Chip extends ButtonBase {
+export class Chip extends ButtonBase<ChipEventMap> {
   public static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   /**
@@ -150,7 +149,7 @@ export class Chip extends ButtonBase {
 
   @watch('selected', true)
   private onSelectedChange() {
-    emit(this, 'change');
+    this.emit('change');
   }
 
   protected override firstUpdated(changedProperties: PropertyValues): void {
@@ -223,7 +222,7 @@ export class Chip extends ButtonBase {
 
     // 按下 Delete 或 BackSpace 键时，触发 delete 事件
     if (this.deletable && ['Delete', 'Backspace'].includes(event.key)) {
-      emit(this, 'delete');
+      this.emit('delete');
     }
   }
 
@@ -232,7 +231,7 @@ export class Chip extends ButtonBase {
    */
   private onDelete(event: MouseEvent) {
     event.stopPropagation();
-    emit(this, 'delete');
+    this.emit('delete');
   }
 
   private renderIcon(): TemplateResult {
@@ -309,6 +308,14 @@ export class Chip extends ButtonBase {
       this.renderDeleteIcon(),
     ];
   }
+}
+
+export interface ChipEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
+  invalid: CustomEvent<void>;
+  change: CustomEvent<void>;
+  delete: CustomEvent<void>;
 }
 
 declare global {

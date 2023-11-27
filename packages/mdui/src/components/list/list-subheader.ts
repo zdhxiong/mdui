@@ -1,5 +1,6 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { listSubheaderStyle } from './list-subheader-style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
@@ -18,7 +19,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @slot - 文本
  */
 @customElement('mdui-list-subheader')
-export class ListSubheader extends LitElement {
+export class ListSubheader extends MduiElement<ListSubheaderEventMap> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     listSubheaderStyle,
@@ -28,6 +29,8 @@ export class ListSubheader extends LitElement {
     return html`<slot></slot>`;
   }
 }
+
+export interface ListSubheaderEventMap {}
 
 declare global {
   interface HTMLElementTagNameMap {

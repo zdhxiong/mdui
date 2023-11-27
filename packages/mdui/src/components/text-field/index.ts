@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
@@ -8,12 +8,12 @@ import { when } from 'lit/directives/when.js';
 import { animate } from '@lit-labs/motion';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
@@ -77,7 +77,7 @@ import type { Ref } from 'lit/directives/ref.js';
  */
 @customElement('mdui-text-field')
 export class TextField
-  extends FocusableMixin(LitElement)
+  extends FocusableMixin(MduiElement)<TextFieldEventMap>
   implements FormControl
 {
   public static override styles: CSSResultGroup = [componentStyle, style];
@@ -678,8 +678,8 @@ export class TextField
     if (this.value !== this.inputRef.value!.value) {
       this.value = this.inputRef.value!.value;
       this.setTextareaHeight();
-      emit(this, 'input');
-      emit(this, 'change');
+      this.emit('input');
+      this.emit('change');
     }
   }
 
@@ -690,7 +690,7 @@ export class TextField
     const valid = this.inputRef.value!.checkValidity();
 
     if (!valid) {
-      emit(this, 'invalid', {
+      this.emit('invalid', {
         bubbles: false,
         cancelable: true,
         composed: false,
@@ -709,7 +709,7 @@ export class TextField
     this.invalid = !this.inputRef.value!.reportValidity();
 
     if (this.invalid) {
-      emit(this, 'invalid', {
+      this.emit('invalid', {
         bubbles: false,
         cancelable: true,
         composed: false,
@@ -800,14 +800,14 @@ export class TextField
     if (this.isTextarea) {
       this.setTextareaHeight();
     }
-    emit(this, 'change');
+    this.emit('change');
   }
 
   private onClear(event: MouseEvent) {
     this.value = '';
-    emit(this, 'clear');
-    emit(this, 'input');
-    emit(this, 'change');
+    this.emit('clear');
+    this.emit('input');
+    this.emit('change');
     this.focus();
     event.stopPropagation();
   }
@@ -817,7 +817,7 @@ export class TextField
     if (this.isTextarea) {
       this.setTextareaHeight();
     }
-    emit(this, 'input');
+    this.emit('input');
   }
 
   private onInvalid(event: Event) {
@@ -1080,6 +1080,15 @@ export class TextField
         </div>`
       : nothingTemplate;
   }
+}
+
+export interface TextFieldEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
+  change: CustomEvent<void>;
+  input: CustomEvent<void>;
+  invalid: CustomEvent<void>;
+  clear: CustomEvent<void>;
 }
 
 declare global {

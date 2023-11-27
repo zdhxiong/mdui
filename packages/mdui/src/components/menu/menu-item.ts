@@ -1,4 +1,4 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
@@ -11,12 +11,12 @@ import '@mdui/jq/methods/innerWidth.js';
 import '@mdui/jq/methods/width.js';
 import { isUndefined } from '@mdui/jq/shared/helper.js';
 import '@mdui/jq/static/contains.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
@@ -67,8 +67,8 @@ import type { Ref } from 'lit/directives/ref.js';
  */
 @customElement('mdui-menu-item')
 export class MenuItem extends AnchorMixin(
-  RippleMixin(FocusableMixin(LitElement)),
-) {
+  RippleMixin(FocusableMixin(MduiElement)),
+)<MenuItemEventMap> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     menuItemStyle,
@@ -235,10 +235,8 @@ export class MenuItem extends AnchorMixin(
     // 要区分是否首次渲染，首次渲染时不触发事件，不执行动画；非首次渲染，触发事件，执行动画
     if (this.submenuOpen) {
       if (hasUpdated) {
-        const requestOpen = emit(this, 'submenu-open', {
-          cancelable: true,
-        });
-        if (requestOpen.defaultPrevented) {
+        const eventProceeded = this.emit('submenu-open', { cancelable: true });
+        if (!eventProceeded) {
           return;
         }
       }
@@ -268,13 +266,11 @@ export class MenuItem extends AnchorMixin(
       ]);
 
       if (hasUpdated) {
-        emit(this, 'submenu-opened');
+        this.emit('submenu-opened');
       }
     } else {
-      const requestClose = emit(this, 'submenu-close', {
-        cancelable: true,
-      });
-      if (requestClose.defaultPrevented) {
+      const eventProceeded = this.emit('submenu-close', { cancelable: true });
+      if (!eventProceeded) {
         return;
       }
 
@@ -298,7 +294,7 @@ export class MenuItem extends AnchorMixin(
         this.submenuRef.value.hidden = true;
       }
 
-      emit(this, 'submenu-closed');
+      this.emit('submenu-closed');
     }
   }
 
@@ -583,6 +579,15 @@ export class MenuItem extends AnchorMixin(
           </slot>`}
     </slot>`;
   }
+}
+
+export interface MenuItemEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
+  'submenu-open': CustomEvent<void>;
+  'submenu-opened': CustomEvent<void>;
+  'submenu-close': CustomEvent<void>;
+  'submenu-closed': CustomEvent<void>;
 }
 
 declare global {

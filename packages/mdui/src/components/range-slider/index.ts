@@ -1,4 +1,4 @@
-import { html, PropertyValues } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { map } from 'lit/directives/map.js';
@@ -12,7 +12,7 @@ import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { SliderBase } from '../slider/slider-base.js';
 import type { Ripple } from '../ripple/index.js';
 import type { FormControl } from '@mdui/jq/shared/form.js';
-import type { CSSResultGroup, TemplateResult } from 'lit';
+import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
@@ -35,7 +35,10 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart tickmark - 刻度标记
  */
 @customElement('mdui-range-slider')
-export class RangeSlider extends SliderBase implements FormControl {
+export class RangeSlider
+  extends SliderBase<RangeSliderEventMap>
+  implements FormControl
+{
   public static override styles: CSSResultGroup = [SliderBase.styles];
 
   /**
@@ -287,6 +290,14 @@ export class RangeSlider extends SliderBase implements FormControl {
       }
     }
   }
+}
+
+export interface RangeSliderEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
+  change: CustomEvent<void>;
+  input: Event;
+  invalid: CustomEvent<void>;
 }
 
 declare global {

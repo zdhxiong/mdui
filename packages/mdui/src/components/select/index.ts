@@ -1,4 +1,4 @@
-import { html, LitElement, nothing, PropertyValues } from 'lit';
+import { html, nothing, PropertyValues } from 'lit';
 import {
   customElement,
   property,
@@ -10,12 +10,12 @@ import { map } from 'lit/directives/map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { isString } from '@mdui/jq/shared/helper.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -62,7 +62,10 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart menu - 下拉菜单，即 [`<mdui-menu>`](/docs/2/components/menu) 元素
  */
 @customElement('mdui-select')
-export class Select extends FocusableMixin(LitElement) implements FormControl {
+export class Select
+  extends FocusableMixin(MduiElement)<SelectEventMap>
+  implements FormControl
+{
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -316,7 +319,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
     const valid = this.hiddenInputRef.value!.checkValidity();
 
     if (!valid) {
-      emit(this, 'invalid', {
+      this.emit('invalid', {
         bubbles: false,
         cancelable: true,
         composed: false,
@@ -335,7 +338,7 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
     this.invalid = !this.hiddenInputRef.value!.reportValidity();
 
     if (this.invalid) {
-      emit(this, 'invalid', {
+      this.emit('invalid', {
         bubbles: false,
         cancelable: true,
         composed: false,
@@ -569,6 +572,14 @@ export class Select extends FocusableMixin(LitElement) implements FormControl {
       this.textFieldRef.value!.click();
     }
   }
+}
+
+export interface SelectEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
+  change: CustomEvent<void>;
+  invalid: CustomEvent<void>;
+  clear: CustomEvent<void>;
 }
 
 declare global {

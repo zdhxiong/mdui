@@ -13,7 +13,6 @@ import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { LayoutItemBase } from '../layout/layout-item-base.js';
 import { navigationRailStyle } from './navigation-rail-style.js';
@@ -53,7 +52,7 @@ type NavigationRailItem = NavigationRailItemOriginal & {
  * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
  */
 @customElement('mdui-navigation-rail')
-export class NavigationRail extends LayoutItemBase {
+export class NavigationRail extends LayoutItemBase<NavigationRailEventMap> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     navigationRailStyle,
@@ -164,7 +163,7 @@ export class NavigationRail extends LayoutItemBase {
     this.value = item?.value;
 
     if (!this.isInitial) {
-      emit(this, 'change');
+      this.emit('change');
     }
   }
 
@@ -294,6 +293,10 @@ export class NavigationRail extends LayoutItemBase {
     await this.definedController.whenDefined();
     this.updateItems();
   }
+}
+
+export interface NavigationRailEventMap {
+  change: CustomEvent<void>;
 }
 
 declare global {

@@ -1,12 +1,12 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/height.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { collapseItemStyle } from './collapse-item-style.js';
@@ -36,7 +36,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart body - 折叠面板的正文内容
  */
 @customElement('mdui-collapse-item')
-export class CollapseItem extends LitElement {
+export class CollapseItem extends MduiElement<CollapseItemEventMap> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     collapseItemStyle,
@@ -95,7 +95,7 @@ export class CollapseItem extends LitElement {
       }
     } else {
       this.state = this.active ? 'open' : 'close';
-      emit(this, this.state);
+      this.emit(this.state);
       this.updateBodyHeight();
     }
   }
@@ -124,7 +124,7 @@ export class CollapseItem extends LitElement {
   private onTransitionEnd(event: TransitionEvent) {
     if (event.target === this.bodyRef.value) {
       this.state = this.active ? 'opened' : 'closed';
-      emit(this, this.state);
+      this.emit(this.state);
       this.updateBodyHeight();
     }
   }
@@ -146,6 +146,13 @@ export class CollapseItem extends LitElement {
         : 0,
     );
   }
+}
+
+export interface CollapseItemEventMap {
+  open: CustomEvent<void>;
+  opened: CustomEvent<void>;
+  close: CustomEvent<void>;
+  closed: CustomEvent<void>;
 }
 
 declare global {

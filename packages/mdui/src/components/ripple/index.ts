@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
@@ -15,6 +15,7 @@ import '@mdui/jq/methods/offset.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/prependTo.js';
 import '@mdui/jq/methods/remove.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
@@ -28,7 +29,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * 阴影在 ripple-mixin 中处理，通过在 :host 元素上添加 attribute 供 CSS 选择器添加样式
  */
 @customElement('mdui-ripple')
-export class Ripple extends LitElement {
+export class Ripple extends MduiElement<RippleEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -195,6 +196,8 @@ export class Ripple extends LitElement {
     ></div>`;
   }
 }
+
+export interface RippleEventMap {}
 
 declare global {
   interface HTMLElementTagNameMap {

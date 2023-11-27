@@ -1,6 +1,7 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { isNodeName } from '@mdui/jq/shared/helper.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { getLayout, LayoutManager } from './helper.js';
 import { layoutMainStyle } from './layout-main-style.js';
@@ -21,7 +22,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @slot - 可以是任意内容
  */
 @customElement('mdui-layout-main')
-export class LayoutMain extends LitElement {
+export class LayoutMain extends MduiElement<LayoutMainEventMap> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     layoutMainStyle,
@@ -51,6 +52,8 @@ export class LayoutMain extends LitElement {
     return html`<slot></slot>`;
   }
 }
+
+export interface LayoutMainEventMap {}
 
 declare global {
   interface HTMLElementTagNameMap {

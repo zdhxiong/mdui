@@ -1,10 +1,10 @@
-import { LitElement, html } from 'lit';
+import { html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import cc from 'classcat';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { emit } from '@mdui/shared/helpers/event.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
@@ -22,9 +22,9 @@ type RenderButtonOptions = {
   tabindex?: number;
 };
 
-export class ButtonBase extends AnchorMixin(
-  RippleMixin(FocusableMixin(LitElement)),
-) {
+export class ButtonBase<E> extends AnchorMixin(
+  RippleMixin(FocusableMixin(MduiElement)),
+)<E> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     buttonBaseStyle,
@@ -212,7 +212,8 @@ export class ButtonBase extends AnchorMixin(
       const valid = (this.focusElement as HTMLButtonElement).checkValidity();
 
       if (!valid) {
-        emit(this, 'invalid', {
+        // @ts-ignore
+        this.emit('invalid', {
           bubbles: false,
           cancelable: true,
           composed: false,
@@ -237,7 +238,8 @@ export class ButtonBase extends AnchorMixin(
       ).reportValidity();
 
       if (invalid) {
-        emit(this, 'invalid', {
+        // @ts-ignore
+        this.emit('invalid', {
           bubbles: false,
           cancelable: true,
           composed: false,

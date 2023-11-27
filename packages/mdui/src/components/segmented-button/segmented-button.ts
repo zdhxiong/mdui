@@ -42,7 +42,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart loading - 加载中状态的 `<mdui-circular-progress>` 元素
  */
 @customElement('mdui-segmented-button')
-export class SegmentedButton extends ButtonBase {
+export class SegmentedButton extends ButtonBase<SegmentedButtonEventMap> {
   public static override styles: CSSResultGroup = [
     ButtonBase.styles,
     segmentedButtonStyle,
@@ -199,6 +199,12 @@ export class SegmentedButton extends ButtonBase {
   private renderInner(): TemplateResult[] {
     return [this.renderIcon(), this.renderLabel(), this.renderEndIcon()];
   }
+}
+
+export interface SegmentedButtonEventMap {
+  focus: FocusEvent;
+  blur: FocusEvent;
+  invalid: CustomEvent<void>;
 }
 
 declare global {

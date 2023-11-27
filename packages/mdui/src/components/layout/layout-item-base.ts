@@ -1,12 +1,13 @@
-import { LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
 import { isNodeName } from '@mdui/jq/shared/helper.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { getLayout } from './helper.js';
 import type { LayoutManager, LayoutPlacement } from './helper.js';
 import type { Layout } from './layout.js';
+import type { PlainObject } from '@mdui/jq/shared/helper.js';
 
-export class LayoutItemBase extends LitElement {
+export class LayoutItemBase<E = PlainObject> extends MduiElement<E> {
   /**
    * 该组件在 [`<mdui-layout>`](/docs/2/components/layout) 中的布局顺序，按从小到大排序。默认为 `0`
    */

@@ -1,5 +1,6 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { style } from './style.js';
@@ -13,7 +14,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * ```
  */
 @customElement('mdui-divider')
-export class Divider extends LitElement {
+export class Divider extends MduiElement<DividerEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -50,6 +51,8 @@ export class Divider extends LitElement {
     return html``;
   }
 }
+
+export interface DividerEventMap {}
 
 declare global {
   interface HTMLElementTagNameMap {

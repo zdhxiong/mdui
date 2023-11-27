@@ -1,7 +1,8 @@
-import { html, LitElement } from 'lit';
+import { html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { getInnerHtmlFromSlot } from '@mdui/shared/helpers/slot.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -28,7 +29,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart label-large 展开状态的文本内容
  */
 @customElement('mdui-top-app-bar-title')
-export class TopAppBarTitle extends LitElement {
+export class TopAppBarTitle extends MduiElement<TopAppBarTitleEventMap> {
   public static override styles: CSSResultGroup = [
     componentStyle,
     topAppBarTitleStyle,
@@ -100,6 +101,8 @@ export class TopAppBarTitle extends LitElement {
     }
   }
 }
+
+export interface TopAppBarTitleEventMap {}
 
 declare global {
   interface HTMLElementTagNameMap {

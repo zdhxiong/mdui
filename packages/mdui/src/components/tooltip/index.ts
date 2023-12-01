@@ -2,6 +2,7 @@ import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
+import { getOverflowAncestors } from '@floating-ui/utils/dom';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
 import '@mdui/jq/methods/filter.js';
@@ -168,6 +169,7 @@ export class Tooltip extends MduiElement<TooltipEventMap> {
   public open = false;
 
   private observeResize?: ObserveResize;
+  private overflowAncestors?: ReturnType<typeof getOverflowAncestors>; // todo 后续改用 floating-ui 实现
   private hoverTimeout!: number;
   private readonly popupRef: Ref<HTMLElement> = createRef();
   private readonly hasSlotController = new HasSlotController(
@@ -282,14 +284,21 @@ export class Tooltip extends MduiElement<TooltipEventMap> {
     super.connectedCallback();
 
     document.addEventListener('pointerdown', this.onDocumentClick);
-    window.addEventListener('scroll', this.onWindowScroll);
+
+    this.overflowAncestors = getOverflowAncestors(this.target);
+    this.overflowAncestors.forEach((ancestor) => {
+      ancestor.addEventListener('scroll', this.onWindowScroll);
+    });
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     document.removeEventListener('pointerdown', this.onDocumentClick);
-    window.removeEventListener('scroll', this.onWindowScroll);
+
+    this.overflowAncestors?.forEach((ancestor) => {
+      ancestor.removeEventListener('scroll', this.onWindowScroll);
+    });
 
     this.observeResize?.unobserve();
   }

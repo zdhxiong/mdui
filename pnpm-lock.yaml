@@ -155,6 +155,9 @@ importers:
 
   packages/mdui:
     dependencies:
+      '@floating-ui/utils':
+        specifier: ^0.1.6
+        version: 0.1.6
       '@lit-labs/motion':
         specifier: ^1.0.5
         version: 1.0.5
@@ -544,6 +547,10 @@ packages:
     dependencies:
       '@types/chai': 4.3.9
     dev: true
+
+  /@floating-ui/utils@0.1.6:
+    resolution: {integrity: sha512-OfX7E2oUDYxtBvsuS4e/jSn4Q9Qb6DzgeYtsAdkPZ47znpoNsMgZw0+tVijiv3uGNR6dgNlty6r9rzIzHjtd/A==}
+    dev: false
 
   /@github/catalyst@1.6.0:
     resolution: {integrity: sha512-u8A+DameixqpeyHzvnJWTGj+wfiskQOYHzSiJscCWVfMkIT3rxnbHMtGh3lMthaRY21nbUOK71WcsCnCrXhBJQ==}

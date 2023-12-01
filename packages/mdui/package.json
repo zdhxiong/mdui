@@ -51,6 +51,7 @@
     "@mdui/shared": "workspace:^",
     "@mdui/jq": "workspace:^",
     "@open-wc/dedupe-mixin": "^1.4.0",
+    "@floating-ui/utils": "^0.1.6",
     "classcat": "^5.0.4",
     "is-promise": "^4.0.0",
     "lit": "^3.0.0",

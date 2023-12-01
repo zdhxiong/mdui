@@ -5,6 +5,7 @@ import {
   queryAssignedElements,
 } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { getOverflowAncestors } from '@floating-ui/utils/dom';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/height.js';
 import '@mdui/jq/methods/is.js';
@@ -177,6 +178,7 @@ export class Dropdown extends MduiElement<DropdownEventMap> {
   private closeTimeout!: number;
 
   private observeResize?: ObserveResize;
+  private overflowAncestors?: ReturnType<typeof getOverflowAncestors>; // todo 后续改用 floating-ui 实现
   private readonly panelRef: Ref<HTMLElement> = createRef();
   private readonly definedController = new DefinedController(this, {
     relatedElements: [''],
@@ -328,7 +330,11 @@ export class Dropdown extends MduiElement<DropdownEventMap> {
     this.definedController.whenDefined().then(() => {
       document.addEventListener('pointerdown', this.onDocumentClick);
       document.addEventListener('keydown', this.onDocumentKeydown);
-      window.addEventListener('scroll', this.onWindowScroll);
+
+      this.overflowAncestors = getOverflowAncestors(this.triggerElement);
+      this.overflowAncestors.forEach((ancestor) => {
+        ancestor.addEventListener('scroll', this.onWindowScroll);
+      });
     });
   }
 
@@ -337,7 +343,10 @@ export class Dropdown extends MduiElement<DropdownEventMap> {
 
     document.removeEventListener('pointerdown', this.onDocumentClick);
     document.removeEventListener('keydown', this.onDocumentKeydown);
-    window.removeEventListener('scroll', this.onWindowScroll);
+
+    this.overflowAncestors?.forEach((ancestor) => {
+      ancestor.removeEventListener('scroll', this.onWindowScroll);
+    });
 
     this.observeResize?.unobserve();
   }

@@ -1,0 +1,18 @@
+{
+  "name": "create-mdui",
+  "version": "1.0.0",
+  "description": "npm init mdui",
+  "files": [
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zdhxiong/mdui.git"
+  },
+  "author": "zdhxiong <zdhxiong@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zdhxiong/mdui/issues"
+  },
+  "homepage": "https://www.mdui.org"
+}

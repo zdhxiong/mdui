@@ -15,8 +15,8 @@
 将下面代码添加到页面的 `<head>` 标签中：
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/mdui@2.0.2/mdui.css">
-<script src="https://unpkg.com/mdui@2.0.2/mdui.global.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/mdui@2.0.3/mdui.css">
+<script src="https://unpkg.com/mdui@2.0.3/mdui.global.js"></script>
 ```
 
 如果你还需要使用组件的图标属性（例如 `<mdui-button icon="search"></mdui-button>` 中的 `icon` 属性），则还需要引入图标的 CSS 文件，参见 [使用 Material Icons 图标](/docs/2/components/icon#usage-material-icons)。
@@ -36,8 +36,8 @@ mdui 不依赖任何第三方库，引入上述文件后，就能正常工作了
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
-    <link rel="stylesheet" href="https://unpkg.com/mdui@2.0.2/mdui.css">
-    <script src="https://unpkg.com/mdui@2.0.2/mdui.global.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/mdui@2.0.3/mdui.css">
+    <script src="https://unpkg.com/mdui@2.0.3/mdui.global.js"></script>
 
     <title>Hello, world!</title>
   </head>

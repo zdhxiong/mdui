@@ -437,14 +437,14 @@ ${modeName}的 RGB 颜色值，RGB 三色用 \`,\` 分隔。
 /* 设置${styleName} */
 :root {
   ${name}: ${
-              property === 'weight'
-                ? 500
-                : property === 'line-height'
-                ? 1.5
-                : property === 'size'
-                ? '16px'
-                : 0.1
-            };
+    property === 'weight'
+      ? 500
+      : property === 'line-height'
+      ? 1.5
+      : property === 'size'
+      ? '16px'
+      : 0.1
+  };
 }
 
 /* 读取${styleName} */
@@ -749,7 +749,7 @@ export const buildVSCodeData = (metadataPath, packageFolder) => {
         // { name: '设计规范', url: `https://www.mdui.org/design~3/` },
         {
           name: 'Github',
-          url: `https://github.com/zdhxiong/mdui/${component.modulePath}`,
+          url: `https://github.com/zdhxiong/mdui/blob/v2/${component.modulePath}`,
         },
       ],
     });

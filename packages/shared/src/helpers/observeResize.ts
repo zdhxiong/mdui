@@ -16,20 +16,27 @@ type Callback = (
   observer: ObserveResize,
 ) => void;
 
-interface CallbackOptions {
+interface Options {
   /**
-   * 执行的回调函数。`this` 指向监听的元素
+   * 元素最后一次触发回调函数时的 ResizeObserverEntry 对象
    */
-  callback: Callback;
+  entry?: ResizeObserverEntry;
 
-  /**
-   * 唯一ID
-   * 在同一个元素上绑定了多个监听器时，用于在取消监听时，判断取消哪一个回调函数
-   */
-  key: number;
+  coArr: {
+    /**
+     * 执行的回调函数。`this` 指向监听的元素
+     */
+    callback: Callback;
+
+    /**
+     * 唯一ID
+     * 在同一个元素上绑定了多个监听器时，用于在取消监听时，判断取消哪一个回调函数
+     */
+    key: number;
+  }[];
 }
 
-let weakMap: WeakMap<HTMLElement, CallbackOptions[]>;
+let weakMap: WeakMap<HTMLElement, Options>;
 
 // ResizeObserver 实例，所有 resizeObserver 函数内部共用一个 ResizeObserver 实例
 let observer: ResizeObserver;
@@ -50,18 +57,18 @@ export const observeResize = (
   const result: ObserveResize = {
     unobserve: () => {
       $target.each((_, target) => {
-        const coArr = weakMap.get(target) ?? [];
+        const options = weakMap.get(target)!;
 
-        const index = coArr.findIndex((co) => co.key === key);
+        const index = options.coArr.findIndex((co) => co.key === key);
         if (index !== -1) {
-          coArr.splice(index, 1);
+          options.coArr.splice(index, 1);
         }
 
-        if (!coArr.length) {
+        if (!options.coArr.length) {
           observer.unobserve(target);
           weakMap.delete(target);
         } else {
-          weakMap.set(target, coArr);
+          weakMap.set(target, options);
         }
       });
     },
@@ -73,8 +80,10 @@ export const observeResize = (
     observer = new ResizeObserver((entries) => {
       entries.forEach((entry) => {
         const target = entry.target as HTMLElement;
-        const coArr = weakMap.get(target)!;
-        coArr.forEach((co) => {
+        const options = weakMap.get(target)!;
+
+        options.entry = entry;
+        options.coArr.forEach((co) => {
           co.callback.call(result, entry, result);
         });
       });
@@ -83,10 +92,16 @@ export const observeResize = (
 
   // 添加监听
   $target.each((_, target) => {
+    const options = weakMap.get(target) ?? { coArr: [] };
+
+    // 同一个元素已添加过监听后，再次添加新的监听时，不会立即执行回调函数，所以这里手动调用一次回调函数
+    if (options.coArr.length && options.entry) {
+      callback.call(result, options.entry, result);
+    }
+
+    options.coArr.push({ callback, key });
+    weakMap.set(target, options);
     observer.observe(target);
-    const coArr = weakMap.get(target) ?? [];
-    coArr.push({ callback, key });
-    weakMap.set(target, coArr);
   });
 
   return result;

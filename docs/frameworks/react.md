@@ -30,3 +30,11 @@ class Home extends Component {
   }
 }
 ```
+
+### JSX TypeScript 类型定义
+
+可在项目中手动引入 JSX 扩展类型
+
+```ts
+/// <reference types="mdui/jsx.d.ts" />
+```

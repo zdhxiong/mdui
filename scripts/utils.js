@@ -1013,3 +1013,73 @@ export const buildWebTypes = (metadataPath, packageFolder) => {
     'utf8',
   );
 };
+
+/**
+ * 生成 jsx.d.ts 文件，供使用 React JSX 语法的人使用
+ * 官方文档：https://react.dev/learn#writing-markup-with-jsx
+ *
+ * 需要生成 jsx.d.ts 的包：mdui
+ *
+ * @param metadataPath custom-elements.json 文件的路径
+ * @param packageFolder 包在 packages 目录中的的文件夹名
+ */
+export const buildJSXTypes = (metadataPath, packageFolder) => {
+  const jsxElements = [];
+
+  // web components 组件
+  const components = getAllComponents(metadataPath);
+  components.map((component) => {
+    const docUrl = getDocUrlByTagName(component.tagName);
+    const hasMultipleComponents = isDocHasMultipleComponents(component.tagName);
+    const attributes = component.members.filter((member) => member.attribute);
+
+    jsxElements.push({
+      name: component.tagName,
+      docUrl,
+      // todo node 升级到 v16 后，替换为 replaceAll
+      description: handleIdeDescription(component.summary).replace(/\./g, ' '),
+      attributes: attributes.map(item => {
+        const types = item.type?.text?.split('|')
+          .map((v) => v.trim())
+          .filter(v => v && v !== 'undefined');
+        const componentName = `${hasMultipleComponents ? component.tagName.slice(5) + '-' : ''}`;
+        return {
+          name: item.attribute,
+          type: types.join(' | '),
+          docUrl: `${docUrl}#${componentName}attributes-${item.attribute}`,
+          description: handleIdeDescription(item.description),
+        };
+      }),
+    });
+  });
+
+  const jsxType = `import React from 'react';
+import { JQ } from '@mdui/jq';
+
+type HTMLElementProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      ${jsxElements.map(item => `/**
+       * ${item.description.split('\n').join('\n       * ')}
+       * @see ${item.docUrl}
+       */
+      '${item.name}': {
+        ${item.attributes.map(attribute => `/**
+         * ${attribute.description.split('\n').join('\n         * ')}
+         * @see ${attribute.docUrl}
+         */
+        '${attribute.name}'?: ${attribute.type};`).join('\n        ')}
+      } & HTMLElementProps;`).join('\n      ')}
+    }
+  }
+}
+`;
+
+  fs.writeFileSync(
+    `./packages/${packageFolder}/jsx.d.ts`,
+    jsxType,
+    'utf8',
+  );
+};

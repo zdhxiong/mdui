@@ -218,14 +218,25 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
 
     // 停止原有动画
     const stopOldAnimations = async () => {
-      await Promise.all([
-        this.isModal
-          ? stopAnimations(overlay)
-          : !this.isParentLayout
-          ? stopAnimations(this.lockTarget)
-          : Promise.resolve(),
-        this.isModal ? stopAnimations(panel) : stopAnimations(this),
-      ]);
+      const elements = [];
+
+      if (this.isModal) {
+        elements.push(overlay, panel);
+      } else if (!this.isParentLayout) {
+        elements.push(this.lockTarget);
+      }
+
+      if (this.isParentLayout) {
+        const layoutItems = this.layoutManager!.getItemsAndMain();
+        const layoutIndex = layoutItems.indexOf(this);
+        elements.push(...layoutItems.slice(layoutIndex));
+      }
+
+      if (!this.isModal && !elements.includes(this)) {
+        elements.push(this);
+      }
+
+      await Promise.all(elements.map((element) => stopAnimations(element)));
     };
 
     // 打开
@@ -297,6 +308,8 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
       // 但首次渲染不执行动画
       if (this.isParentLayout && hasUpdated) {
         setLayoutTransition(duration, easingEmphasized);
+
+        this.layoutManager!.updateLayout(this);
       }
 
       // drawer 显示动画
@@ -315,6 +328,10 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
       );
 
       await Promise.all(animations);
+
+      if (!this.open) {
+        return;
+      }
 
       // 若位于 layout 中，则 drawer 动画完成后，移除 layout-main 的动画
       if (this.isParentLayout && hasUpdated) {
@@ -379,6 +396,10 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
       );
 
       await Promise.all(animations);
+
+      if (this.open) {
+        return;
+      }
 
       // 若位于 layout 中，则 drawer 动画结束后，移除 layout-main 的动画
       if (this.isParentLayout) {

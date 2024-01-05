@@ -97,14 +97,14 @@ export class SliderBase<E> extends RippleMixin(FocusableMixin(MduiElement))<E> {
   protected readonly trackActiveRef: Ref<HTMLElement> = createRef();
 
   /**
-   * 表单验证状态对象
+   * 表单验证状态对象 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
    */
   public get validity(): ValidityState {
     return this.inputRef.value!.validity;
   }
 
   /**
-   * 表单验证的错误提示信息
+   * 表单验证未通过时的提示文案。验证通过时为空字符串
    */
   public get validationMessage(): string {
     return this.inputRef.value!.validationMessage;
@@ -123,7 +123,7 @@ export class SliderBase<E> extends RippleMixin(FocusableMixin(MduiElement))<E> {
   }
 
   /**
-   * 用于自定义标签的显示格式
+   * 用于自定义标签的显示格式的函数。函数参数为滑块的当前值，返回值为期望显示的文本。
    */
   @property({ attribute: false })
   public labelFormatter: (value: number) => string = (value: number) =>

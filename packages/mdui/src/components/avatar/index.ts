@@ -35,7 +35,7 @@ export class Avatar extends MduiElement<AvatarEventMap> {
   public src?: string;
 
   /**
-   * 图片如何适应容器框，同原生的 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit" target="_blank">`object-fit`</a>。可选值为：
+   * 图片如何适应容器框，同原生的 [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)。可选值为：
    *
    * * `contain`：保持原有尺寸比例。内容被缩放
    * * `cover`：保持原有尺寸比例。但部分内容可能被剪切

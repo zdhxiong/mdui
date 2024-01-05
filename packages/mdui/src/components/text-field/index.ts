@@ -52,9 +52,9 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot suffix - 右侧文本
  * @slot clear-button - 清空按钮
  * @slot clear-icon - 清空按钮中的图标
- * @slot toggle-password-button - 显示密码状态下，密码显示切换按钮中的图标
- * @slot show-password-icon - 显示密码状态下，密码显示切换按钮中的图标
- * @slot hide-password-icon - 隐藏密码状态下，密码显示切换按钮中的图标
+ * @slot toggle-password-button - 密码显示状态切换按钮
+ * @slot show-password-icon - 显示密码状态下，密码显示状态切换按钮中的图标
+ * @slot hide-password-icon - 隐藏密码状态下，密码显示状态切换按钮中的图标
  * @slot helper - 底部的帮助文本
  *
  * @csspart container - 文本框容器
@@ -67,9 +67,9 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart input - 内部的 `<input>` 或 `<textarea>` 元素
  * @csspart clear-button - 清空按钮
  * @csspart clear-icon - 清空按钮中的图标
- * @csspart toggle-password-button - 密码显示切换按钮
- * @csspart show-password-icon - 显示密码状态下，密码显示切换按钮中的图标
- * @csspart hide-password-icon - 隐藏密码状态下，密码显示切换按钮中的图标
+ * @csspart toggle-password-button - 密码显示状态切换按钮
+ * @csspart show-password-icon - 显示密码状态下，密码显示状态切换按钮中的图标
+ * @csspart hide-password-icon - 隐藏密码状态下，密码显示状态切换按钮中的图标
  * @csspart supporting - 底部辅助信息容器，包括 helper、error、counter
  * @csspart helper - 底部的帮助文本
  * @csspart error - 底部的错误描述文本
@@ -506,14 +506,14 @@ export class TextField
   private readonlyButClearable = false;
 
   /**
-   * 表单验证状态对象
+   * 表单验证状态对象 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
    */
   public get validity(): ValidityState {
     return this.inputRef.value!.validity;
   }
 
   /**
-   * 表单验证的错误提示信息
+   * 表单验证未通过时的提示文案。验证通过时为空字符串
    */
   public get validationMessage(): string {
     return this.inputRef.value!.validationMessage;

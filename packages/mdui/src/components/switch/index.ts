@@ -88,7 +88,7 @@ export class Switch
   /**
    * 选中状态的 Material Icons 图标名。也可以通过 `slot="checked-icon"` 设置
    *
-   * 默认为 check 图标，可传入空字符串移除默认图标
+   * 默认为 `check` 图标，可传入空字符串移除默认图标
    */
   @property({ reflect: true, attribute: 'checked-icon' })
   public checkedIcon?: string;
@@ -142,14 +142,14 @@ export class Switch
   );
 
   /**
-   * 表单验证状态对象
+   * 表单验证状态对象 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
    */
   public get validity(): ValidityState {
     return this.inputRef.value!.validity;
   }
 
   /**
-   * 表单验证的错误提示信息
+   * 表单验证未通过时的提示文案。验证通过时为空字符串
    */
   public get validationMessage(): string {
     return this.inputRef.value!.validationMessage;

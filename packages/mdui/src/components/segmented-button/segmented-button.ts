@@ -34,7 +34,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot selected-icon - 选中状态的左侧图标
  * @slot end-icon - 分段按钮项的右侧图标
  *
- * @csspart button - 内部的 button 或 a 元素
+ * @csspart button - 内部的 `<button>` 或 `<a>` 元素
  * @csspart icon - 左侧的图标
  * @csspart selected-icon - 选中状态的左侧图标
  * @csspart end-icon - 右侧的图标

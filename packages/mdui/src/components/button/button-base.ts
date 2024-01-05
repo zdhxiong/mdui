@@ -92,7 +92,6 @@ export class ButtonBase<E> extends AnchorMixin(
   public form?: string;
 
   /**
-   *
    * 指定提交表单的 URL。
    *
    * 指定了该属性时，将覆盖 `form` 元素的 `action` 属性。
@@ -171,7 +170,7 @@ export class ButtonBase<E> extends AnchorMixin(
   private readonly formController = new FormController(this);
 
   /**
-   * 表单验证状态对象
+   * 表单验证状态对象 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
    */
   public get validity(): ValidityState | undefined {
     if (this.isButton()) {
@@ -180,7 +179,7 @@ export class ButtonBase<E> extends AnchorMixin(
   }
 
   /**
-   * 表单验证的错误提示信息
+   * 表单验证未通过时的提示文案。验证通过时为空字符串
    */
   public get validationMessage(): string | undefined {
     if (this.isButton()) {

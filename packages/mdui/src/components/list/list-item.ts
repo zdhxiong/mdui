@@ -93,7 +93,10 @@ export class ListItem extends AnchorMixin(
    * * `3`：显示三行文本，超出后截断显示
    */
   @property({ type: Number, reflect: true, attribute: 'description-line' })
-  public descriptionLine?: 1 | 2 | 3;
+  public descriptionLine?:
+    | /*显示单行文本，超出后截断显示*/ 1
+    | /*显示两行文本，超出后截断显示*/ 2
+    | /*显示三行文本，超出后截断显示*/ 3;
 
   /**
    * 左侧的 Material Icons 图标名。也可以通过 `slot="icon"` 设置

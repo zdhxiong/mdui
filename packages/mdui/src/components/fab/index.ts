@@ -29,7 +29,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot - 文本
  * @slot icon - 图标
  *
- * @csspart button - 内部的 `button` 或 `a` 元素
+ * @csspart button - 内部的 `<button>` 或 `<a>` 元素
  * @csspart label - 右侧的文本
  * @csspart icon - 左侧的图标
  * @csspart loading - 加载中状态的 `<mdui-circular-progress>` 元素

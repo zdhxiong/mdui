@@ -11,10 +11,11 @@
   "files": [
     "components",
     "functions",
-    "css-data.zh-cn.json",
+    "css-data.{en,zh-cn}.json",
     "custom-elements.json",
-    "html-data.zh-cn.json",
+    "html-data.{en,zh-cn}.json",
     "jq.{js,d.ts}",
+    "jsx.{en,zh-cn}.d.ts",
     "LICENSE",
     "mdui.css",
     "mdui.{js,d.ts}",
@@ -22,7 +23,7 @@
     "mdui.global.{js,d.ts}",
     "package.json",
     "README.md",
-    "web-types.zh-cn.json"
+    "web-types.{en,zh-cn}.json"
   ],
   "repository": {
     "type": "git",

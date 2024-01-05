@@ -34,7 +34,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot selected-icon - 选中状态的左侧元素
  * @slot delete-icon - 可删除时，右侧的删除元素
  *
- * @csspart button - 内部的 `button` 或 `a` 元素
+ * @csspart button - 内部的 `<button>` 或 `<a>` 元素
  * @csspart label - 文本
  * @csspart icon - 左侧图标
  * @csspart end-icon - 右侧图标
@@ -95,7 +95,7 @@ export class Chip extends ButtonBase<ChipEventMap> {
   public selected = false;
 
   /**
-   * 是否可删除。为 `true` 时，在右侧会显示删除图标图标
+   * 是否可删除。为 `true` 时，在右侧会显示删除图标
    */
   @property({
     type: Boolean,
@@ -123,7 +123,7 @@ export class Chip extends ButtonBase<ChipEventMap> {
   public endIcon?: string;
 
   /**
-   * 右侧的 Material Icons 图标名。也可以通过 `slot="delete-icon"` 设置
+   * 可删除时，右侧的删除图标的 Material Icons 图标名。也可以通过 `slot="delete-icon"` 设置
    */
   @property({ reflect: true, attribute: 'delete-icon' })
   public deleteIcon?: string;

@@ -19,7 +19,7 @@ export class CircularProgress extends MduiElement<CircularProgressEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * 进度指示器的最大值，默认为 1
+   * 进度指示器的最大值，默认为 `1`
    */
   @property({ type: Number, reflect: true })
   public max = 1;

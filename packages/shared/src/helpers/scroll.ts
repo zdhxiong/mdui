@@ -57,6 +57,13 @@ export const getScrollBarSize = (fresh?: boolean): number => {
   return scrollBarSizeCached;
 };
 
+/**
+ * 判断指定元素当前是否有滚动条
+ */
+export const hasScrollbar = (target: HTMLElement): boolean => {
+  return target.scrollHeight > target.clientHeight;
+};
+
 const lockMap = new WeakMap<
   HTMLElement, // 被锁定的元素
   Set<HTMLElement> // 触发锁定的元素
@@ -66,12 +73,12 @@ const className = 'mdui-lock-screen';
 /**
  * 锁定指定元素，禁止滚动。对同一个元素多次调用此方法，只会锁定一次
  * @param source 由该元素触发锁定
- * @param target 锁定该元素的滚动状态，默认为 body
+ * @param target 锁定该元素的滚动状态，默认为 html
  */
 export const lockScreen = (source: HTMLElement, target?: HTMLElement): void => {
   const document = getDocument();
 
-  target ??= document.body;
+  target ??= document.documentElement;
 
   if (!lockMap.has(target)) {
     lockMap.set(target, new Set());
@@ -80,15 +87,17 @@ export const lockScreen = (source: HTMLElement, target?: HTMLElement): void => {
   const lock = lockMap.get(target)!;
   lock.add(source);
 
-  $(target)
-    .addClass(className)
-    .css('width', `calc(100% - ${getScrollBarSize()}px)`);
+  const $target = $(target);
+  if (hasScrollbar(target)) {
+    $target.css('width', `calc(100% - ${getScrollBarSize()}px)`);
+  }
+  $target.addClass(className);
 };
 
 /**
  * 解除指定元素的滚动状态锁定。
  * @param source 由该元素触发锁定
- * @param target 锁定该元素的滚动状态，默认为 body
+ * @param target 锁定该元素的滚动状态，默认为 html
  */
 export const unlockScreen = (
   source: HTMLElement,
@@ -96,7 +105,7 @@ export const unlockScreen = (
 ): void => {
   const document = getDocument();
 
-  target ??= document.body;
+  target ??= document.documentElement;
 
   const lock = lockMap.get(target);
   if (!lock) {

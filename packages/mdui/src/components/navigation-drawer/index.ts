@@ -145,7 +145,7 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
   private get lockTarget() {
     return this.contained || this.isParentLayout
       ? this.parentElement!
-      : document.body;
+      : document.documentElement;
   }
 
   private get isModal() {
@@ -160,7 +160,7 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
     this.observeResize?.unobserve();
 
     this.observeResize = observeResize(
-      this.contained ? this.parentElement! : document.body,
+      this.contained ? this.parentElement! : document.documentElement,
       () => {
         const target = this.contained ? this.parentElement! : undefined;
         this.mobile = breakpoint(target).down('md');

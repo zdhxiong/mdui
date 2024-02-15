@@ -41,7 +41,7 @@ export class ButtonBase<E> extends AnchorMixin(
   public disabled = false;
 
   /**
-   * 是否为加载中状态
+   * 是否处于加载中状态
    */
   @property({
     type: Boolean,
@@ -51,29 +51,29 @@ export class ButtonBase<E> extends AnchorMixin(
   public loading = false;
 
   /**
-   * 按钮的名称，将与表单数据一起提交
+   * 按钮的名称，将与表单数据一起提交。
    *
-   * **Note**：仅在未指定 `href` 属性时可用
+   * **Note**：仅在未设置 `href` 属性时，此属性才有效。
    */
   @property({ reflect: true })
   public name = '';
 
   /**
-   * 按钮的初始值，将与表单数据一起提交
+   * 按钮的初始值，将与表单数据一起提交。
    *
-   * **Note**：仅在未指定 `href` 属性时可用
+   * **Note**：仅在未设置 `href` 属性时，此属性才有效。
    */
   @property({ reflect: true })
   public value = '';
 
   /**
-   * 按钮的类型。默认值为 `button`。可选值为：
+   * 按钮的类型。默认类型为 `button`。可选类型包括：
    *
-   * * `submit`：点击按钮将表单数据提交给服务器
-   * * `reset`：点击按钮将表单中所有组件重置为初始值
-   * * `button`：按钮没有默认行为
+   * * `submit`：点击按钮会提交表单数据到服务器
+   * * `reset`：点击按钮会将表单中的所有字段重置为初始值
+   * * `button`：此类型的按钮没有默认行为
    *
-   * **Note**：仅在未指定 `href` 属性时可用
+   * **Note**：仅在未指定 `href` 属性时，此属性才有效。
    */
   @property({ reflect: true })
   public type:
@@ -82,11 +82,11 @@ export class ButtonBase<E> extends AnchorMixin(
     | /*此按钮没有默认行为*/ 'button' = 'button';
 
   /**
-   * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
+   * 关联的 `<form>` 元素。此属性值应为同一页面中的一个 `<form>` 元素的 `id`。
    *
-   * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
+   * 如果未指定此属性，则该元素必须是 `<form>` 元素的子元素。通过此属性，你可以将元素放置在页面的任何位置，而不仅仅是 `<form>` 元素的子元素。
    *
-   * **Note**：仅在未指定 `href` 属性时可用
+   * **Note**：仅在未指定 `href` 属性时，此属性才有效。
    */
   @property({ reflect: true })
   public form?: string;
@@ -94,51 +94,51 @@ export class ButtonBase<E> extends AnchorMixin(
   /**
    * 指定提交表单的 URL。
    *
-   * 指定了该属性时，将覆盖 `form` 元素的 `action` 属性。
+   * 如果指定了此属性，将覆盖 `<form>` 元素的 `action` 属性。
    *
-   * **Note**：仅在未指定 `href` 属性、且 `type="submit"` 时可用。
+   * **Note**：仅在未指定 `href` 属性且 `type="submit"` 时，此属性才有效。
    */
   @property({ reflect: true, attribute: 'formaction' })
   public formAction?: string;
 
   /**
-   * 指定提交表单到服务器的内容类型。可选值为：
+   * 指定提交表单到服务器的内容类型。可选值包括：
    *
-   * * `application/x-www-form-urlencoded`：未指定属性时的默认值
-   * * `multipart/form-data`：当表单包含 `<input type="file">` 元素时使用此值
-   * * `text/plain`：出现于 HTML5，用于调试
+   * * `application/x-www-form-urlencoded`：未指定该属性时的默认值
+   * * `multipart/form-data`：当表单包含 `<input type="file">` 元素时使用
+   * * `text/plain`：HTML5 新增，用于调试
    *
-   * 指定了该属性时，将覆盖 `form` 元素的 `enctype` 属性。
+   * 如果指定了此属性，将覆盖 `<form>` 元素的 `enctype` 属性。
    *
-   * **Note**：仅在未指定 `href` 属性、且 `type="submit"` 时可用
+   * **Note**：仅在未指定 `href` 属性且 `type="submit"` 时，此属性才有效。
    */
   @property({ reflect: true, attribute: 'formenctype' })
   public formEnctype?:
-    | /*未指定属性时的默认值*/ 'application/x-www-form-urlencoded'
-    | /*当表单包含 `<input type="file">` 元素时使用此值*/ 'multipart/form-data'
-    | /*出现于 HTML5，用于调试*/ 'text/plain';
+    | /*未指定该属性时的默认值*/ 'application/x-www-form-urlencoded'
+    | /*当表单包含 `<input type="file">` 元素时使用*/ 'multipart/form-data'
+    | /*HTML5 新增，用于调试*/ 'text/plain';
 
   /**
-   * 指定提交表单使用的 HTTP 方法。可选值为：
+   * 指定提交表单时使用的 HTTP 方法。可选值包括：
    *
-   * * `post`：来自表单的数据被包含在表单内容中，被发送到服务器
-   * * `get`：来自表单的数据以 `?` 作为分隔符被附加到 form 的 URI 属性中，得到的 URI 被发送到服务器。当表单没有副作用，且仅包含 ASCII 字符时使用这种方法
+   * * `post`：表单数据包含在表单内容中，发送到服务器
+   * * `get`：表单数据以 `?` 作为分隔符附加到表单的 URI 属性中，生成的 URI 发送到服务器。当表单没有副作用，并且仅包含 ASCII 字符时，使用此方法
    *
-   * 指定了该属性时，将覆盖 `form` 元素的 `method` 属性。
+   * 如果设置了此属性，将覆盖 `<form>` 元素的 `method` 属性。
    *
-   * **Note**：仅在未指定 `href` 属性、且 `type="submit"` 时可用。
+   * **Note**：仅在未设置 `href` 属性且 `type="submit"` 时，此属性才有效。
    */
   @property({ reflect: true, attribute: 'formmethod' })
   public formMethod?:
-    | /*来自表单的数据被包含在表单内容中，被发送到服务器*/ 'post'
-    | /*来自表单的数据以 `?` 作为分隔符被附加到 form 的 URI 属性中，得到的 URI 被发送到服务器。当表单没有副作用，且仅包含 ASCII 字符时使用这种方法*/ 'get';
+    | /*表单数据包含在表单内容中，发送到服务器*/ 'post'
+    | /*表单数据以 `?` 作为分隔符附加到表单的 URI 属性中，生成的 URI 发送到服务器。当表单没有副作用，并且仅包含 ASCII 字符时，使用此方法*/ 'get';
 
   /**
-   * 指定了该属性时，表示当表单被提交时不需要验证。
+   * 如果设置了此属性，表单提交时将不执行表单验证。
    *
-   * 指定了该属性时，将覆盖 `form` 元素的 `novalidate` 属性。
+   * 如果设置了此属性，将覆盖 `<form>` 元素的 `novalidate` 属性。
    *
-   * **Note**：仅在未指定 `href` 属性、且 `type="submit"` 时可用。
+   * **Note**：仅在未设置 `href` 属性且 `type="submit"` 时，此属性才有效。
    */
   @property({
     type: Boolean,
@@ -149,20 +149,20 @@ export class ButtonBase<E> extends AnchorMixin(
   public formNoValidate = false;
 
   /**
-   * 在何处显示提交表单后接收到的响应。可选值为：
+   * 提交表单后接收到的响应应显示在何处。可选值包括：
    *
-   * * `_self`：默认。在同一框架中打开
+   * * `_self`：默认选项，在当前框架中打开
    * * `_blank`：在新窗口中打开
    * * `_parent`：在父框架中打开
    * * `_top`：在整个窗口中打开
    *
-   * 指定了该属性时，将覆盖 `form` 元素的 `target` 属性。
+   * 如果设置了此属性，将覆盖 `<form>` 元素的 `target` 属性。
    *
-   * **Note**：仅在未指定 `href` 属性、且 `type="submit"` 时可用
+   * **Note**：仅在未设置 `href` 属性且 `type="submit"` 时，此属性才有效。
    */
   @property({ reflect: true, attribute: 'formtarget' })
   public formTarget?:
-    | /*默认。在同一框架中打开*/ '_self'
+    | /*默认选项，在当前框架中打开*/ '_self'
     | /*在新窗口中打开*/ '_blank'
     | /*在父框架中打开*/ '_parent'
     | /*在整个窗口中打开*/ '_top';
@@ -170,7 +170,7 @@ export class ButtonBase<E> extends AnchorMixin(
   private readonly formController = new FormController(this);
 
   /**
-   * 表单验证状态对象 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
+   * 表单验证状态对象，具体参见 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
    */
   public get validity(): ValidityState | undefined {
     if (this.isButton()) {
@@ -179,7 +179,7 @@ export class ButtonBase<E> extends AnchorMixin(
   }
 
   /**
-   * 表单验证未通过时的提示文案。验证通过时为空字符串
+   * 如果表单验证未通过，此属性将包含提示信息。如果验证通过，此属性将为空字符串
    */
   public get validationMessage(): string | undefined {
     if (this.isButton()) {
@@ -204,7 +204,7 @@ export class ButtonBase<E> extends AnchorMixin(
   }
 
   /**
-   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
+   * 检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`
    */
   public checkValidity(): boolean {
     if (this.isButton()) {
@@ -226,9 +226,9 @@ export class ButtonBase<E> extends AnchorMixin(
   }
 
   /**
-   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`。
+   * 检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`。
    *
-   * 验证未通过时，还将在组件上显示未通过的提示。
+   * 如果验证未通过，还会在组件上显示验证失败的提示。
    */
   public reportValidity(): boolean {
     if (this.isButton()) {
@@ -254,9 +254,9 @@ export class ButtonBase<E> extends AnchorMixin(
   }
 
   /**
-   * 设置自定义的错误提示文本。只要文本不为空，则表示字段验证未通过
+   * 设置自定义的错误提示文本。只要这个文本不为空，就表示字段未通过验证
    *
-   * @param message 自定义的提示文本
+   * @param message 自定义的错误提示文本
    */
   public setCustomValidity(message: string): void {
     if (this.isButton()) {

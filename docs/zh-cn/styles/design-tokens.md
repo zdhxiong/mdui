@@ -1,4 +1,4 @@
-设计令牌（Design Tokens）是一种用于管理设计系统的方法，它将设计系统中的所有可重用元素（如颜色、字体、间距等）抽象为单个、独立的变量，以便在整个设计系统中进行统一的管理和使用。
+设计令牌（Design Tokens）是一种用于管理设计系统的策略。它将设计系统中的所有可复用元素（例如颜色、字体、间距等）抽象为独立的变量，以便在整个设计系统中进行统一的管理和应用。
 
 <style>
 .design-tokens-color {
@@ -139,7 +139,7 @@
 }
 </style>
 
-mdui 使用全局 CSS 自定义属性来实现设计令牌。这意味着，你只需修改 CSS 自定义属性，就能全局修改所有 mdui 组件的样式。同时，对于你自己开发的样式，也推荐优先引用 CSS 自定义属性，这样能确保你自己的样式和 mdui 组件的样式保持统一，此外，在修改动态配色时，你自己的样式也能同步更新配色。
+mdui 使用全局 CSS 自定义属性来实现设计令牌。这意味着，你只需修改 CSS 自定义属性，就能全局修改所有 mdui 组件的样式。同时，对于你自己开发的样式，也推荐优先引用 CSS 自定义属性，以确保你的样式与 mdui 组件的样式保持统一，此外，在修改动态配色时，你自己的样式也能同步更新配色。
 
 ## 颜色 {#color}
 
@@ -778,7 +778,7 @@ CSS 自定义属性的属性值为 RGB 的三个颜色使用 `,` 分隔，下面
 
 ## 圆角 {#shape-corner}
 
-mdui 共提供了 7 种大小的圆角。下面是圆角的 CSS 自定义属性的用法示例：
+mdui 提供了 7 种不同大小的圆角。以下是如何使用这些圆角的 CSS 自定义属性的示例：
 
 ```css
 /* 修改 extra-small 的圆角大小 */
@@ -804,9 +804,9 @@ mdui 共提供了 7 种大小的圆角。下面是圆角的 CSS 自定义属性�
 
 ## 排版 {#typescale}
 
-mdui 提供了 15 种排版文字样式，包括 Display large、Display medium、Display small、Headline large、Headline medium、Headline small、Title large、Title medium、Title small、Label large、Label medium、Label small、Body large、Body medium、Body small。
+mdui 提供了 15 种不同的文字样式，包括 Display large、Display medium、Display small、Headline large、Headline medium、Headline small、Title large、Title medium、Title small、Label large、Label medium、Label small、Body large、Body medium、Body small。
 
-下面是排版文字样式的 CSS 自定义属性的用法示例：
+下面是使用示例：
 
 ```css
 /* 修改 Body large 的文字样式 */
@@ -1095,7 +1095,7 @@ mdui 提供了 15 种排版文字样式，包括 Display large、Display medium�
 
 ## 状态层不透明度 {#state-layer}
 
-部分 mdui 组件会在与之交互时，在组件上添加一层半透明的遮罩层。例如 [`<mdui-button>`](/zh-cn/docs/2/components/button) 组件，在鼠标悬浮、聚焦、鼠标按下时，都会产生半透明的遮罩层。通过修改这些 CSS 自定义属性，可以修改半透明遮罩层的不透明度。
+部分 mdui 组件在交互时会在其上添加一层半透明遮罩。例如 [`<mdui-button>`](/zh-cn/docs/2/components/button) 组件，在鼠标悬浮、聚焦、按下或拖动时，都会出现半透明遮罩。你可以通过修改 CSS 自定义属性来调整这些遮罩的不透明度。
 
 下面是使用示例：
 
@@ -1118,7 +1118,7 @@ mdui 提供了 15 种排版文字样式，包括 Display large、Display medium�
 
 ## 抬升高度（阴影） {#elevation}
 
-部分 mdui 组件会在页面上向上抬升，具体表现为具有不同级别的阴影。你可以修改这些 CSS 自定义属性来修改组件的阴影。
+部分 mdui 组件具有阴影效果，以模拟组件在页面上的抬升感。你可以通过修改 CSS 自定义属性来调整组件的阴影效果。
 
 下面是使用示例：
 
@@ -1145,7 +1145,7 @@ mdui 提供了 15 种排版文字样式，包括 Display large、Display medium�
 
 ## 动画 {#motion}
 
-mdui 组件中动画的缓动曲线和持续时间也可以通过 CSS 自定义属性进行配置。
+mdui 组件中的动画缓动曲线和持续时间可以通过 CSS 自定义属性进行配置。
 
 下面是使用示例：
 
@@ -1268,9 +1268,9 @@ mdui 组件中动画的缓动曲线和持续时间也可以通过 CSS 自定义�
   </tbody>
 </table>
 
-## 断点 {#breakpoint}
+## 响应式断点 {#breakpoint}
 
-部分 mdui 组件能够在各个断点处调整布局，这些断点值通过 CSS 自定义属性提供。下面是使用示例：
+mdui 提供了一系列的响应式断点，这些断点可以通过 CSS 自定义属性进行配置。下面是使用示例：
 
 ```css
 /* 修改 sm 的断点值 */
@@ -1279,7 +1279,7 @@ mdui 组件中动画的缓动曲线和持续时间也可以通过 CSS 自定义�
 }
 ```
 
-需要注意的是，这些 CSS 自定义属性无法用在 CSS 媒体查询中。下面是错误示例：
+需要注意的是，这些 CSS 自定义属性不能在 CSS 媒体查询中使用。以下是一个错误的示例：
 
 ```css
 /* 错误用法。媒体查询中无法使用 CSS 自定义属性 */
@@ -1288,7 +1288,7 @@ mdui 组件中动画的缓动曲线和持续时间也可以通过 CSS 自定义�
 }
 ```
 
-如果你需要使用 JavaScript 来进行断点的判断，可以使用 [`breakpoint`](/zh-cn/docs/2/functions/breakpoint) 函数。
+如果你需要在 JavaScript 中进行断点判断，可以使用 [`breakpoint`](/zh-cn/docs/2/functions/breakpoint) 函数。
 
 | CSS 自定义属性          | 默认值   |
 | ----------------------- | -------- |

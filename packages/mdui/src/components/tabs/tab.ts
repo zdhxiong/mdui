@@ -18,7 +18,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @summary 选项卡项组件。需与 `<mdui-tabs>` 和 `<mdui-tab-panel>` 组件配合使用
+ * @summary 选项卡导航项组件。需配合 `<mdui-tabs>` 和 `<mdui-tab-panel>` 组件使用
  *
  * ```html
  * <mdui-tabs value="tab-1">
@@ -35,21 +35,21 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
  *
- * @slot - 选项卡导航项的文本
+ * @slot - 选项卡导航项的文本内容
  * @slot icon - 选项卡导航项中的图标
  * @slot badge - 徽标
  * @slot custom - 自定义整个选项卡导航项中的内容
  *
- * @csspart container - 导航项容器
- * @csspart icon - 导航项中的图标
- * @csspart label - 导航项的文本
+ * @csspart container - 选项卡导航项容器
+ * @csspart icon - 选项卡导航项中的图标
+ * @csspart label - 选项卡导航项的文本
  */
 @customElement('mdui-tab')
 export class Tab extends RippleMixin(FocusableMixin(MduiElement))<TabEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, tabStyle];
 
   /**
-   * 该选项卡导航项的值
+   * 选项卡导航项的值
    */
   @property({ reflect: true })
   public value?: string;

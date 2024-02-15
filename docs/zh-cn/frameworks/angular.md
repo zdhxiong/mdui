@@ -1,8 +1,8 @@
-在 Angular 中使用 mdui 时，按照 [安装](/zh-cn/docs/2/getting-started/installation#npm) 页面的介绍完成安装后，还需要进行一些配置。
+在 Angular 中使用 mdui 时，首先需要按照 [安装](/zh-cn/docs/2/getting-started/installation#npm) 页面的指引完成安装，然后进行一些必要的配置。
 
 ## 配置 {#configuration}
 
-设置允许在 Angular 中使用 Web Components。如下示例：
+首先，我们需要在 Angular 中启用 Web Components 的支持。示例如下：
 
 ```js
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,7 +20,7 @@ import { AppComponent } from './app.component';
 export class AppModule {}
 ```
 
-然后就能在 Angular 组件代码中引入 mdui 组件了：
+配置完成后，我们就可以在 Angular 组件代码中引入并使用 mdui 组件了：
 
 ```js
 import { Dialog } from 'mdui/components/dialog.js';

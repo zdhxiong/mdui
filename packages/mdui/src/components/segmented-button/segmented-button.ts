@@ -15,7 +15,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @summary 分段按钮项组件。需与 `<mdui-segmented-button-group>` 组件配合使用
+ * @summary 分段按钮项组件。需配合 `<mdui-segmented-button-group>` 组件使用
  *
  * ```html
  * <mdui-segmented-button-group>
@@ -29,7 +29,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event blur - 失去焦点时触发
  * @event invalid - 表单字段验证未通过时触发
  *
- * @slot - 分段按钮项的文本
+ * @slot - 分段按钮项的文本内容
  * @slot icon - 分段按钮项的左侧图标
  * @slot selected-icon - 选中状态的左侧图标
  * @slot end-icon - 分段按钮项的右侧图标

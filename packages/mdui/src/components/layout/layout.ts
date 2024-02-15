@@ -17,14 +17,14 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * </mdui-layout>
  * ```
  *
- * @slot - 可以是 [`<mdui-top-app-bar>`](/docs/2/components/top-app-bar)、[`<mdui-bottom-app-bar>`](/docs/2/components/bottom-app-bar)、[`<mdui-navigation-bar>`](/docs/2/components/navigation-bar)、[`<mdui-navigation-drawer>`](/docs/2/components/navigation-drawer)、[`<mdui-navigation-rail>`](/docs/2/components/navigation-rail)、`<mdui-layout-item>`、`<mdui-layout-main>` 元素
+ * @slot - 可以包含 [`<mdui-top-app-bar>`](/docs/2/components/top-app-bar)、[`<mdui-bottom-app-bar>`](/docs/2/components/bottom-app-bar)、[`<mdui-navigation-bar>`](/docs/2/components/navigation-bar)、[`<mdui-navigation-drawer>`](/docs/2/components/navigation-drawer)、[`<mdui-navigation-rail>`](/docs/2/components/navigation-rail)、`<mdui-layout-item>`、`<mdui-layout-main>` 元素
  */
 @customElement('mdui-layout')
 export class Layout extends MduiElement<LayoutEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, layoutStyle];
 
   /**
-   * 把当前布局的高度设为 100%
+   * 设置当前布局的高度为 100%
    */
   @property({
     type: Boolean,

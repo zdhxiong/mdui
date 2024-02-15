@@ -1,6 +1,6 @@
-菜单用于提供一个垂直排列的一系列选项。
+菜单组件提供了一系列垂直排列的选项。
 
-如果你需要下拉打开菜单，可配合 [`<mdui-dropdown>`](/zh-cn/docs/2/components/dropdown) 组件来实现。
+如果你需要实现下拉菜单，可以配合 [`<mdui-dropdown>`](/zh-cn/docs/2/components/dropdown) 组件。
 
 ## 使用方法 {#usage}
 
@@ -31,7 +31,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 下拉菜单 {#example-dropdown}
 
-可配合 [`<mdui-dropdown>`](/zh-cn/docs/2/components/dropdown) 组件实现下拉菜单。
+配合 [`<mdui-dropdown>`](/zh-cn/docs/2/components/dropdown) 组件实现下拉菜单。
 
 ```html,example,expandable
 <mdui-dropdown>
@@ -45,7 +45,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 紧凑布局 {#example-dense}
 
-在 `<mdui-menu>` 组件上添加 `dense` 属性，可使菜单使用紧凑布局。
+在 `<mdui-menu>` 组件上添加 `dense` 属性，可以实现紧凑布局。
 
 ```html,example,expandable
 <mdui-menu dense>
@@ -57,7 +57,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 禁用菜单项 {#example-disabled}
 
-在 `<mdui-menu-item>` 组件上添加 `disabled` 属性，可禁用菜单项。
+在 `<mdui-menu-item>` 组件上添加 `disabled` 属性，可以禁用菜单项。
 
 ```html,example,expandable
 <mdui-menu>
@@ -69,7 +69,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 支持单选 {#example-selects-single}
 
-在 `<mdui-menu>` 组件上指定 `selects` 属性为 `single` 使菜单支持单选。此时 `<mdui-menu>` 的 `value` 值即为当前选中的 `<mdui-menu-item>` 的 `value` 值。
+在 `<mdui-menu>` 组件上指定 `selects` 属性为 `single`，可以实现单选功能。此时 `<mdui-menu>` 的 `value` 值即为当前选中的 `<mdui-menu-item>` 的 `value` 值。
 
 ```html,example,expandable
 <mdui-menu selects="single" value="item-2">
@@ -80,9 +80,9 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 支持多选 {#example-selects-multiple}
 
-在 `<mdui-menu>` 组件上指定 `selects` 属性为 `multiple` 使菜单支持多选。此时 `<mdui-menu>` 的 `value` 值即为当前选中的 `<mdui-menu-item>` 的 `value` 的值组成的数组。
+在 `<mdui-menu>` 组件上指定 `selects` 属性为 `multiple`，可以实现多选功能。此时 `<mdui-menu>` 的 `value` 值即为当前选中的 `<mdui-menu-item>` 的 `value` 值组成的数组。
 
-注意：支持多选时，`<mdui-menu>` 的 `value` 值为数组，只能通过 JavaScript 属性来读取和设置该值。
+注意：在多选模式下，`<mdui-menu>` 的 `value` 值为数组，只能通过 JavaScript 属性来读取和设置该值。
 
 ```html,example,expandable
 <mdui-menu selects="multiple" class="example-multiple">
@@ -100,9 +100,9 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 图标 {#example-icon}
 
-在 `<mdui-menu-item>` 组件上设置 `icon`、`end-icon` 属性，可分别在菜单项左侧、右侧添加 Material Icons 图标，设置 `end-text` 属性则可以在右侧设置文本。也可以通过 `icon`、`end-icon`、`end-text` slot 在按钮左侧、右侧添加图标及文本。
+在 `<mdui-menu-item>` 组件上，通过设置 `icon` 和 `end-icon` 属性，可以分别在菜单项的左侧和右侧添加 Material Icons 图标。通过设置 `end-text` 属性，可以在右侧添加文本。此外，也可以通过 `icon`、`end-icon` 和 `end-text` slot 在菜单项的左侧和右侧添加图标和文本。
 
-支持把 `icon` 属性设置为空字符串，以在菜单项左侧空出一个图标的位置，以便和其他菜单项保持对齐。
+如果需要在菜单项左侧空出一个图标的位置以保持与其他菜单项的对齐，可以将 `icon` 属性设置为空字符串。
 
 ```html,example,expandable
 <mdui-menu>
@@ -117,7 +117,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 </mdui-menu>
 ```
 
-在支持单选或多选时，可以通过 `selected-icon` 属性设置选中状态的图标。也可以通过 `selected-icon` slot 设置。
+在单选或多选模式下，可以通过 `selected-icon` 属性或 `selected-icon` slot 设置选中状态的图标。
 
 ```html,example,expandable
 <mdui-menu selects="multiple">
@@ -131,7 +131,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 链接 {#example-link}
 
-在 `<mdui-menu-item>` 组件上设置 `href` 属性，可使菜单项变为链接，此时还可使用这些和链接相关的属性：`download`、`target`、`rel`。
+在 `<mdui-menu-item>` 组件上设置 `href` 属性，可以将菜单项转换为链接。此时，还可以使用与链接相关的属性，如：`download`、`target` 和 `rel`。
 
 ```html,example,expandable
 <mdui-menu>
@@ -142,7 +142,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 子菜单 {#example-submenu}
 
-在 `<mdui-menu-item>` 组件中使用 `submenu` slot 可指定子菜单项的元素。
+在 `<mdui-menu-item>` 组件中，可以使用 `submenu` slot 来指定子菜单项的元素。
 
 ```html,example,expandable
 <mdui-menu>
@@ -157,7 +157,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 </mdui-menu>
 ```
 
-在 `<mdui-menu>` 组件上使用 `submenu-trigger` 属性，可设置子菜单的触发方式。
+在 `<mdui-menu>` 组件上，可以通过 `submenu-trigger` 属性设置子菜单的触发方式。
 
 ```html,example,expandable
 <mdui-menu submenu-trigger="click">
@@ -172,7 +172,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 </mdui-menu>
 ```
 
-在设置了 `submenu-trigger="hover"` 时，可在 `<mdui-menu>` 组件上通过 `submenu-open-delay`、`submenu-close-delay` 属性设置子菜单打开延时和关闭延时。
+当 `submenu-trigger` 属性设置为 `hover` 时，可以在 `<mdui-menu>` 组件上通过 `submenu-open-delay` 和 `submenu-close-delay` 属性设置子菜单的打开延时和关闭延时。
 
 ```html,example,expandable
 <mdui-menu submenu-trigger="hover" submenu-open-delay="1000" submenu-close-delay="1000">
@@ -189,7 +189,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 自定义内容 {#example-custom}
 
-在 `<mdui-menu-item>` 组件中使用 `custom` slot，可完全自定义菜单项的内容。
+在 `<mdui-menu-item>` 组件中，你可以使用 `custom` slot 来完全自定义菜单项的内容。
 
 ```html,example,expandable
 <style>

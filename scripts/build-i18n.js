@@ -131,7 +131,7 @@ originJson.cssProperties = {
 
 {{modeName}}的 RGB 颜色值，RGB 三色用 \`,\` 分隔。
 
-通过修改该属性，可以修改{{modeName}}下的颜色值。
+修改该属性可以改变{{modeName}}下的颜色值。
 
 **示例**：
 \`\`\`css
@@ -300,35 +300,35 @@ originJson.cssProperties = {
 originJson.cssClasses = {
   'mdui-theme-light': {
     description:
-      '把该 class 添加到某一元素上，该元素及其子元素将显示成亮色模式。',
+      '将此 class 添加到元素上，该元素及其子元素将使用亮色模式显示。',
     example: `\`\`\`html
 <div class="mdui-theme-light"></div>
 \`\`\``,
   },
   'mdui-theme-dark': {
     description:
-      '把该 class 添加到 `<html>` 元素上，整个页面将显示成暗色模式。也可以添加到其他元素上，只在该元素及其子元素上显示暗色模式。',
+      '将此 class 添加到 `<html>` 元素上，整个页面将使用暗色模式显示。也可以添加到其他元素上，使该元素及其子元素使用暗色模式显示。',
     example: `\`\`\`html
-<!-- 整个页面显示成暗色模式 -->
+<!-- 整个页面使用暗色模式显示 -->
 <html class="mdui-theme-dark"></html>
 
-<!-- 只在该元素及其子元素上显示暗色模式 -->
+<!-- 该元素及其子元素使用暗色模式显示 -->
 <div class="mdui-theme-dark"></div>
 \`\`\``,
   },
   'mdui-theme-auto': {
     description:
-      '把该 class 添加到 `<html>` 上，整个页面将根据操作系统的设置，自动切换亮色模式和暗色模式。也可以添加到其他元素上，只在该元素及其子元素上自动切换亮色模式和暗色模式。',
+      '将此 class 添加到 `<html>` 上，整个页面将根据操作系统设置自动切换亮色模式和暗色模式。也可添加到其他元素上，使该元素及其子元素自动切换亮色模式和暗色模式。',
     example: `\`\`\`html
 <!-- 整个页面自动切换亮色模式和暗色模式 -->
 <html class="mdui-theme-auto"></html>
 
-<!-- 只在该元素及其子元素上自动切换亮色模式和暗色模式 -->
+<!-- 该元素及其子元素自动切换亮色模式和暗色模式 -->
 <div class="mdui-theme-auto"></div>
 \`\`\``,
   },
   'mdui-prose': {
-    description: '添加该 class，将为文章优化排版样式。',
+    description: '添加此 class，将优化文章的排版样式。',
     example: `\`\`\`html
 <div class="mdui-prose">
   <h1>文章标题</h2>
@@ -337,7 +337,7 @@ originJson.cssClasses = {
 \`\`\``,
   },
   'mdui-table': {
-    description: `在 \`<table>\` 元素上添加该 class，可以优化表格的显示样式。
+    description: `在 \`<table>\` 元素上添加此 class，将优化表格的显示样式。
 
 也可以添加在 \`<table>\` 的父元素上，除了优化表格显示样式外，还支持表格横向滚动`,
     example: `\`\`\`html

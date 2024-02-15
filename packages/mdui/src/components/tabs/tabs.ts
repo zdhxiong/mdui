@@ -36,7 +36,7 @@ type TabPanel = TabPanelOriginal & {
 };
 
 /**
- * @summary 选项卡组件。需与 `<mdui-tab>` 和 `<mdui-tab-panel>` 组件配合使用
+ * @summary 选项卡组件。需配合 `<mdui-tab>` 和 `<mdui-tab-panel>` 组件使用
  *
  * ```html
  * <mdui-tabs value="tab-1">
@@ -63,16 +63,15 @@ export class Tabs extends MduiElement<TabsEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, tabsStyle];
 
   /**
-   * 选项卡形状。可选值为：
+   * 选项卡形状。可选值包括：
    *
-   * * `primary`：位于 `<mdui-top-app-bar>` 下方，用于切换应用的主页面时，可使用该形状的选项卡
-   * * `secondary`：位于页面中，用于切换一组相关内容时，可使用该形状的选项卡
+   * * `primary`：适用于位于 `<mdui-top-app-bar>` 下方，用于切换应用的主页面的场景
+   * * `secondary`：适用于位于页面中，用于切换一组相关内容的场景
    */
   @property({ reflect: true })
   public variant:
-    | /*位于 `<mdui-top-app-bar>` 下方，用于切换应用的主页面时，可使用该形状的选项卡*/ 'primary'
-    | /*位于页面中，用于切换一组相关内容时，可使用该形状的选项卡*/ 'secondary' =
-    'primary';
+    | /*适用于位于 `<mdui-top-app-bar>` 下方，用于切换应用的主页面的场景*/ 'primary'
+    | /*适用于位于页面中，用于切换一组相关内容的场景*/ 'secondary' = 'primary';
 
   /**
    * 当前激活的 `<mdui-tab>` 的值
@@ -81,35 +80,35 @@ export class Tabs extends MduiElement<TabsEventMap> {
   public value?: string;
 
   /**
-   * 选项卡位置。默认为 `top-start`。可选值为：
+   * 选项卡位置。默认为 `top-start`。可选值包括：
    *
-   * * `top-start`：位于上方，且左对齐
-   * * `top`：位于上方，且居中对齐
-   * * `top-end`：位于上方，且右对齐
-   * * `bottom-start`：位于下方，且左对齐
-   * * `bottom`：位于下方，且居中对齐
-   * * `bottom-end`：位于下方，且右对齐
-   * * `left-start`：位于左侧，且顶部对齐
-   * * `left`：位于左侧，且居中对齐
-   * * `left-end`：位于左侧，且底部对齐
-   * * `right-start`：位于右侧，且顶部对齐
-   * * `right`：位于右侧，且居中对齐
-   * * `right-end`：位于右侧，且底部对齐
+   * * `top-start`：位于上方，左对齐
+   * * `top`：位于上方，居中对齐
+   * * `top-end`：位于上方，右对齐
+   * * `bottom-start`：位于下方，左对齐
+   * * `bottom`：位于下方，居中对齐
+   * * `bottom-end`：位于下方，右对齐
+   * * `left-start`：位于左侧，顶部对齐
+   * * `left`：位于左侧，居中对齐
+   * * `left-end`：位于左侧，底部对齐
+   * * `right-start`：位于右侧，顶部对齐
+   * * `right`：位于右侧，居中对齐
+   * * `right-end`：位于右侧，底部对齐
    */
   @property({ reflect: true })
   public placement:
-    | /*位于上方，且左对齐*/ 'top-start'
-    | /*位于上方，且居中对齐*/ 'top'
-    | /*位于上方，且右对齐*/ 'top-end'
-    | /*位于下方，且左对齐*/ 'bottom-start'
-    | /*位于下方，且居中对齐*/ 'bottom'
-    | /*位于下方，且右对齐*/ 'bottom-end'
-    | /*位于左侧，且顶部对齐*/ 'left-start'
-    | /*位于左侧，且居中对齐*/ 'left'
-    | /*位于左侧，且底部对齐*/ 'left-end'
-    | /*位于右侧，且顶部对齐*/ 'right-start'
-    | /*位于右侧，且居中对齐*/ 'right'
-    | /*位于右侧，且底部对齐*/ 'right-end' = 'top-start';
+    | /*位于上方，左对齐*/ 'top-start'
+    | /*位于上方，居中对齐*/ 'top'
+    | /*位于上方，右对齐*/ 'top-end'
+    | /*位于下方，左对齐*/ 'bottom-start'
+    | /*位于下方，居中对齐*/ 'bottom'
+    | /*位于下方，右对齐*/ 'bottom-end'
+    | /*位于左侧，顶部对齐*/ 'left-start'
+    | /*位于左侧，居中对齐*/ 'left'
+    | /*位于左侧，底部对齐*/ 'left-end'
+    | /*位于右侧，顶部对齐*/ 'right-start'
+    | /*位于右侧，居中对齐*/ 'right'
+    | /*位于右侧，底部对齐*/ 'right-end' = 'top-start';
 
   /**
    * 是否填满父元素宽度

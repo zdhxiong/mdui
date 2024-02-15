@@ -1,4 +1,4 @@
-复选框用于让用户从一组选项中选择一个或多个选项。它可以将单个选项设为打开或关闭。
+复选框允许用户从一组选项中选择一个或多个选项，或者切换单个选项的开/关状态。
 
 ## 使用方法 {#usage}
 
@@ -24,7 +24,7 @@ import type { Checkbox } from 'mdui/components/checkbox.js';
 
 ### 选中状态 {#example-checked}
 
-选中时，`checked` 属性变为 `true`。也可以通过添加 `checked` 属性，使复选框默认处于选中状态。
+复选框选中时，`checked` 属性值为 `true`。添加 `checked` 属性可以使复选框默认处于选中状态。
 
 ```html,example,expandable
 <mdui-checkbox checked>Checkbox</mdui-checkbox>
@@ -32,7 +32,7 @@ import type { Checkbox } from 'mdui/components/checkbox.js';
 
 ### 禁用状态 {#example-disabled}
 
-添加 `disabled` 属性可禁用复选框。
+添加 `disabled` 属性可以禁用复选框。
 
 ```html,example,expandable
 <mdui-checkbox disabled>Checkbox</mdui-checkbox>
@@ -49,7 +49,7 @@ import type { Checkbox } from 'mdui/components/checkbox.js';
 
 ### 图标 {#example-icon}
 
-可通过设置 `unchecked-icon`、`checked-icon`、`indeterminate-icon` 属性，分别设置未选中、选中、不确定状态时的复选框的 Material Icons 图标。也可以通过 `unchecked-icon`、`checked-icon`、`indeterminate-icon` slot 进行设置。
+通过设置 `unchecked-icon`、`checked-icon`、`indeterminate-icon` 属性，可以分别设置未选中、选中、不确定状态时的复选框的 Material Icons 图标。也可以通过 `unchecked-icon`、`checked-icon`、`indeterminate-icon` slot 进行设置。
 
 ```html,example,expandable
 <mdui-checkbox

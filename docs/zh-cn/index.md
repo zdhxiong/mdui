@@ -19,13 +19,13 @@
 <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
 ```
 
-如果你还需要使用组件的图标属性（例如 `<mdui-button icon="search"></mdui-button>` 中的 `icon` 属性），则还需要引入图标的 CSS 文件，参见 [使用 Material Icons 图标](/zh-cn/docs/2/components/icon#usage-material-icons)。
+如果你需要使用组件的图标属性（例如 `<mdui-button icon="search"></mdui-button>` 中的 `icon` 属性），则还需要引入图标的 CSS 文件，参见 [使用 Material Icons 图标](/zh-cn/docs/2/components/icon#usage-material-icons)。
 
 mdui 不依赖任何第三方库，引入上述文件后，就能正常工作了。
 
 ## 最简单的页面模板 {#template}
 
-下面是一个最简单的页面模板，你可以自行在其中添加更多组件和内容，来构建一个网站。
+下面是一个最简单的页面模板，你可以在其中添加更多组件和内容，来构建一个网站。
 
 ```html
 <!doctype html>

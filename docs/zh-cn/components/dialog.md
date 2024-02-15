@@ -40,7 +40,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 ### 点击遮罩关闭 {#example-close-on-overlay-click}
 
-添加 `close-on-overlay-click` 属性可在点击遮罩层时关闭对话框。
+添加 `close-on-overlay-click` 属性，点击遮罩层时会关闭对话框。
 
 ```html,example,expandable
 <mdui-dialog close-on-overlay-click class="example-overlay">Dialog</mdui-dialog>
@@ -57,7 +57,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 ### 按下 ESC 键关闭 {#example-close-on-esc}
 
-添加 `close-on-esc` 属性可支持在按下 ESC 键时关闭对话框。
+添加 `close-on-esc` 属性，按下 ESC 键时会关闭对话框。
 
 ```html,example,expandable
 <mdui-dialog
@@ -78,7 +78,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 ### 全屏 {#example-fullscreen}
 
-添加 `fullscreen` 属性可使对话框全屏显示。
+添加 `fullscreen` 属性，对话框会全屏显示。
 
 ```html,example,expandable
 <mdui-dialog fullscreen class="example-fullscreen">
@@ -100,7 +100,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 ### 图标 {#example-icon}
 
-设置 `icon` 属性，可在对话框上方添加 Material Icons 图标。
+设置 `icon` 属性，对话框上方会添加 Material Icons 图标。
 
 ```html,example,expandable
 <mdui-dialog
@@ -139,7 +139,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 ### 标题与描述 {#example-headline}
 
-可通过 `headline` 和 `description` 属性设置对话框的标题和描述。
+通过 `headline` 和 `description` 属性设置对话框的标题和描述。
 
 ```html,example,expandable
 <mdui-dialog
@@ -159,7 +159,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 </script>
 ```
 
-也可以通过 `headline` 和 `description` slot 设置对话框的标题元素和描述元素。
+也可以通过 `headline` 和 `description` slot 来设置对话框的标题元素和描述元素。
 
 ```html,example,expandable
 <mdui-dialog close-on-overlay-click class="example-headline-slot">
@@ -179,7 +179,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 ### 底部操作按钮 {#example-action}
 
-可通过 `action` slot 添加底部操作按钮。
+可以通过 `action` slot 添加底部操作按钮。
 
 ```html,example,expandable
 <mdui-dialog
@@ -201,7 +201,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 </script>
 ```
 
-添加 `stacked-actions` 属性使底部操作按钮垂直排列。
+添加 `stacked-actions` 属性，使底部操作按钮垂直排列。
 
 ```html,example,expandable
 <mdui-dialog
@@ -226,7 +226,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 ### 顶部内容 {#example-header}
 
-可通过 `header` slot 设置对话框顶部内容。
+可以通过 `header` slot 设置对话框顶部内容。
 
 ```html,example,expandable
 <mdui-dialog close-on-overlay-click class="example-header">

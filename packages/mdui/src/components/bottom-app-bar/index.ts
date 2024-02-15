@@ -30,8 +30,8 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
  *
  * @slot - 底部应用栏内部的元素
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --z-index - 组件的 CSS `z-index` 值
  */
 @customElement('mdui-bottom-app-bar')
 export class BottomAppBar extends ScrollBehaviorMixin(
@@ -50,7 +50,7 @@ export class BottomAppBar extends ScrollBehaviorMixin(
   public hide = false;
 
   /**
-   * 是否使底部应用栏中的 [`<mdui-fab>`](/docs/2/components/fab) 组件脱离应用栏。若为 `true`，则在应用栏隐藏后，[`<mdui-fab>`](/docs/2/components/fab) 仍将停留在页面上
+   * 是否让底部应用栏中的 [`<mdui-fab>`](/docs/2/components/fab) 组件脱离应用栏。如果为 `true`，则当应用栏隐藏后，[`<mdui-fab>`](/docs/2/components/fab) 仍会停留在页面上
    */
   @property({
     type: Boolean,
@@ -62,6 +62,7 @@ export class BottomAppBar extends ScrollBehaviorMixin(
 
   /**
    * 滚动行为。可选值为：
+   *
    * * `hide`：滚动时隐藏
    */
   @property({ reflect: true, attribute: 'scroll-behavior' })

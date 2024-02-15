@@ -1,6 +1,6 @@
-下拉选择用于在一个下拉菜单中提供一系列选项。
+下拉选择组件用于在一个下拉菜单中提供一系列选项。
 
-这个页面仅介绍 `<mdui-select>` 组件的用法，下拉菜单项的用法，请参见 [`<mdui-menu-item>`](/zh-cn/docs/2/components/menu#menu-item-api)。
+本页面主要介绍 `<mdui-select>` 组件的使用方法，关于下拉菜单项的用法，请参见 [`<mdui-menu-item>`](/zh-cn/docs/2/components/menu#menu-item-api)。
 
 ## 使用方法 {#usage}
 
@@ -31,7 +31,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 形状 {#example-variant}
 
-使用 `variant` 属性设置下拉选择的形状。
+通过 `variant` 属性设置下拉选择的形状。
 
 ```html,example,expandable
 <mdui-select variant="filled" value="item-1">
@@ -45,13 +45,13 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 </mdui-select>
 ```
 
-### 支持多选 {#example-multiple}
+### 多选支持 {#example-multiple}
 
 下拉选择默认为单选，`<mdui-select>` 组件的 `value` 值即为当前选中的 [`<mdui-menu-item>`](/zh-cn/docs/2/components/menu#menu-item-api) 的 `value` 值。
 
-添加 `multiple` 属性可使下拉选择变为多选。此时 `<mdui-select>` 的 `value` 值为当前选中的 [`<mdui-menu-item>`](/zh-cn/docs/2/components/menu#menu-item-api) 的 `value` 的值组成的数组。
+添加 `multiple` 属性可以使下拉选择支持多选。此时 `<mdui-select>` 的 `value` 值为当前选中的 [`<mdui-menu-item>`](/zh-cn/docs/2/components/menu#menu-item-api) 的 `value` 的值组成的数组。
 
-注意：支持多选时，`<mdui-select>` 的 `value` 值为数组，只能通过 JavaScript 属性来读取和设置该值。
+注意：在支持多选时，`<mdui-select>` 的 `value` 值为数组，只能通过 JavaScript 属性来读取和设置该值。
 
 ```html,example,expandable
 <mdui-select multiple class="example-multiple">
@@ -61,7 +61,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 </mdui-select>
 
 <script>
-  // 设置默认选中 item-1 和 item-2
+  // 默认选中 item-1 和 item-2
   const select = document.querySelector(".example-multiple");
   select.value = ["item-1", "item-2"];
 </script>
@@ -78,7 +78,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 </mdui-select>
 ```
 
-使用 `placeholder` 属性设置没有选中值时的占位文本。
+使用 `placeholder` 属性设置未选中值时的占位文本。
 
 ```html,example,expandable
 <mdui-select placeholder="Placeholder">
@@ -102,9 +102,9 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 </mdui-select>
 ```
 
-### 只读状态 {#example-readonly}
+### 只读模式 {#example-readonly}
 
-添加 `readonly` 属性使下拉选择进入只读状态。
+通过添加 `readonly` 属性，可以将下拉选择设置为只读模式。
 
 ```html,example,expandable
 <mdui-select readonly value="item-1">
@@ -113,9 +113,9 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 </mdui-select>
 ```
 
-### 禁用状态 {#example-disabled}
+### 禁用模式 {#example-disabled}
 
-添加 `disabled` 属性可禁用下拉选择。
+通过添加 `disabled` 属性，可以禁用下拉选择。
 
 ```html,example,expandable
 <mdui-select disabled value="item-1">
@@ -126,7 +126,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 可清空 {#example-clearable}
 
-添加 `clearable` 属性后，在下拉选择有值时，会在右侧添加清空按钮。
+添加 `clearable` 属性后，当下拉选择有值时，右侧会出现一个清空按钮。
 
 ```html,example,expandable
 <mdui-select clearable value="item-1">
@@ -135,7 +135,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 </mdui-select>
 ```
 
-可通过 `clear` slot 自定义清空按钮。
+也可以通过 `clear` slot 自定义清空按钮。
 
 ```html,example,expandable
 <mdui-select clearable value="item-1">
@@ -147,7 +147,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 下拉菜单位置 {#example-placement}
 
-可通过 `placement` 属性设置下拉菜单的位置。
+通过 `placement` 属性，你可以设置下拉菜单的位置。
 
 ```html,example,expandable
 <mdui-select placement="top" value="item-1">
@@ -158,7 +158,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 文本右对齐 {#example-end-aligned}
 
-添加 `end-aligned` 属性可使文本右对齐。
+添加 `end-aligned` 属性，可以使文本右对齐。
 
 ```html,example,expandable
 <mdui-select end-aligned value="item-1">
@@ -169,7 +169,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 ### 前后文本及图标 {#example-prefix-suffix}
 
-设置 `icon`、`end-icon` 属性，可分别在下拉选择的左侧、右侧添加 Material Icons 图标。也可以通过 `icon`、`end-icon` slot 在下拉选择左侧、右侧添加元素。
+通过设置 `icon` 和 `end-icon` 属性，可以在下拉选择的左侧和右侧添加 Material Icons 图标。你也可以通过 `icon` 和 `end-icon` slot 在下拉选择的左侧和右侧添加元素。
 
 ```html,example,expandable
 <mdui-select value="item-1" icon="search" end-icon="mic">
@@ -187,7 +187,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 </mdui-select>
 ```
 
-设置 `prefix` 和 `suffix` 属性，可分别在下拉选择的左侧、右侧添加文本。也可以通过 `prefix`、`suffix` slot 在下拉选择左侧、右侧添加文本元素。这些文本只有在下拉选择聚焦、或有值时才会显示。
+通过设置 `prefix` 和 `suffix` 属性，可以在下拉选择的左侧和右侧添加文本。也可以通过 `prefix` 和 `suffix` slot 在下拉选择的左侧和右侧添加文本元素。这些文本只有在下拉选择聚焦或有值时才会显示。
 
 ```html,example,expandable
 <mdui-select value="item-1" prefix="$" suffix="/100">

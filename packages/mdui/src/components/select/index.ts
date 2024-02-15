@@ -33,7 +33,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @summary 选择框组件。需与 `<mdui-menu-item>` 组件配合使用
+ * @summary 选择框组件。需配合 `<mdui-menu-item>` 组件使用
  *
  * ```html
  * <mdui-select>
@@ -46,7 +46,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event blur - 失去焦点时触发
  * @event change - 选中的值变更时触发
  * @event invalid - 表单字段验证未通过时触发
- * @event clear - 在点击由 `clearable` 属性生成的清空按钮时触发。可以通过调用 `event.preventDefault()` 阻止清空下拉框
+ * @event clear - 在点击由 `clearable` 属性生成的清空按钮时触发。可以通过调用 `event.preventDefault()` 阻止清空选择框
  *
  * @slot - `<mdui-menu-item>` 元素
  * @slot icon - 左侧图标
@@ -69,15 +69,15 @@ export class Select
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * 下拉框形状。可选值为：
+   * 选择框的样式。可选值包括：
    *
-   * * `filled`：带背景色的下拉框，视觉效果较强
-   * * `outlined`：带边框的下拉框，视觉效果较弱
+   * * `filled`：带背景色的选择框，视觉效果较强
+   * * `outlined`：带边框的选择框，视觉效果较弱
    */
   @property({ reflect: true })
   public variant:
-    | /*带背景色的下拉框，视觉效果较强*/ 'filled'
-    | /*带边框的下拉框，视觉效果较弱*/ 'outlined' = 'filled';
+    | /*带背景色的选择框，视觉效果较强*/ 'filled'
+    | /*带边框的选择框，视觉效果较弱*/ 'outlined' = 'filled';
 
   /**
    * 是否支持多选
@@ -90,16 +90,15 @@ export class Select
   public multiple = false;
 
   /**
-   * 下拉框名称，将与表单数据一起提交
+   * 选择框的名称，将与表单数据一起提交
    */
   @property({ reflect: true })
   public name = '';
 
   /**
-   * 下拉框的值，将与表单数据一起提交。
+   * 选择框的值，将与表单数据一起提交。
    *
-   * 若未指定 `multiple` 属性，则该值为字符串；否则，该值为字符串数组。
-   * HTML 属性只能设置字符串值；如果需要设置数组值，请通过 JavaScript 设置
+   * 如果未指定 `multiple` 属性，该值为字符串；如果指定了 `multiple` 属性，该值为字符串数组。HTML 属性只能设置字符串值；如果需要设置数组值，请通过 JavaScript 属性设置。
    */
   @property()
   public value: string | string[] = '';
@@ -117,19 +116,19 @@ export class Select
   public label?: string;
 
   /**
-   * 提示文本
+   * 占位符文本
    */
   @property({ reflect: true })
   public placeholder?: string;
 
   /**
-   * 下拉框底部的帮助文本。也可以通过 `slot="helper"` 设置
+   * 选择框底部的帮助文本。也可以通过 `slot="helper"` 设置
    */
   @property({ reflect: true })
   public helper?: string;
 
   /**
-   * 是否可清空下拉框
+   * 是否可以清空选择框
    */
   @property({
     type: Boolean,
@@ -139,21 +138,21 @@ export class Select
   public clearable = false;
 
   /**
-   * 可清空下拉框时，显示在下拉框右侧的清空按钮的 Material Icons 图标名。也可以通过 `slot="clear-icon"` 设置
+   * 当选择框可清空时，显示在选择框右侧的清空按钮的 Material Icons 图标名。也可以通过 `slot="clear-icon"` 设置
    */
   @property({ reflect: true, attribute: 'clear-icon' })
   public clearIcon?: string;
 
   /**
-   * 下拉框的方位。可选值为：
+   * 选择框的位置。可选值包括：
    *
-   * * `auto`：自动判断方位
+   * * `auto`：自动判断位置
    * * `bottom`：位于下方
    * * `top`：位于上方
    */
   @property({ reflect: true })
   public placement:
-    | /*自动判断方位*/ 'auto'
+    | /*自动判断位置*/ 'auto'
     | /*位于下方*/ 'bottom'
     | /*位于上方*/ 'top' = 'auto';
 
@@ -169,45 +168,45 @@ export class Select
   public endAligned = false;
 
   /**
-   * 下拉框的前缀文本。仅在聚焦状态，或下拉框有值时才会显示。也可以通过 `slot="prefix"` 设置
+   * 选择框的前缀文本。仅在聚焦状态，或选择框有值时才会显示。也可以通过 `slot="prefix"` 设置
    */
   @property({ reflect: true })
   public prefix!: string;
 
   /**
-   * 下拉框的后缀文本。仅在聚焦状态，或下拉框有值时才会显示。也可以通过 `slot="suffix"` 设置
+   * 选择框的后缀文本。仅在聚焦状态，或选择框有值时才会显示。也可以通过 `slot="suffix"` 设置
    */
   @property({ reflect: true })
   public suffix?: string;
 
   /**
-   * 下拉框的前缀图标的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
+   * 选择框的前缀图标的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
    */
   @property({ reflect: true })
   public icon?: string;
 
   /**
-   * 下拉框的后缀图标的 Material Icons 图标名。也可以通过 `slot="end-icon"` 设置
+   * 选择框的后缀图标的 Material Icons 图标名。也可以通过 `slot="end-icon"` 设置
    */
   @property({ reflect: true, attribute: 'end-icon' })
   public endIcon?: string;
 
   /**
-   * 表单字段验证失败时，显示在下拉框右侧的 Material Icons 图标名。也可以通过 `slot="error-icon"` 设置
+   * 表单字段验证失败时，显示在选择框右侧的 Material Icons 图标名。也可以通过 `slot="error-icon"` 设置
    */
   @property({ reflect: true, attribute: 'error-icon' })
   public errorIcon?: string;
 
   /**
-   * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
+   * 关联的 `<form>` 元素。此属性值应为同一页面中的一个 `<form>` 元素的 `id`。
    *
-   * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
+   * 如果未指定此属性，则该元素必须是 `<form>` 元素的子元素。通过此属性，你可以将元素放置在页面的任何位置，而不仅仅是 `<form>` 元素的子元素。
    */
   @property({ reflect: true })
   public form?: string;
 
   /**
-   * 是否为只读
+   * 是否为只读状态
    */
   @property({
     type: Boolean,
@@ -268,14 +267,14 @@ export class Select
   });
 
   /**
-   * 表单验证状态对象 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
+   * 表单验证状态对象，具体参见 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
    */
   public get validity(): ValidityState {
     return this.hiddenInputRef.value!.validity;
   }
 
   /**
-   * 表单验证未通过时的提示文案。验证通过时为空字符串
+   * 如果表单验证未通过，此属性将包含提示信息。如果验证通过，此属性将为空字符串
    */
   public get validationMessage(): string {
     return this.hiddenInputRef.value!.validationMessage;
@@ -313,7 +312,7 @@ export class Select
   }
 
   /**
-   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
+   * 检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`
    */
   public checkValidity(): boolean {
     const valid = this.hiddenInputRef.value!.checkValidity();
@@ -330,9 +329,9 @@ export class Select
   }
 
   /**
-   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`。
+   * 检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`。
    *
-   * 验证未通过时，还将在组件上显示未通过的提示。
+   * 如果验证未通过，还会在组件上显示验证失败的提示。
    */
   public reportValidity(): boolean {
     this.invalid = !this.hiddenInputRef.value!.reportValidity();
@@ -351,9 +350,9 @@ export class Select
   }
 
   /**
-   * 设置自定义的错误提示文本。只要文本不为空，则表示字段验证未通过
+   * 设置自定义的错误提示文本。只要这个文本不为空，就表示字段未通过验证
    *
-   * @param message 自定义的提示文本
+   * @param message 自定义的错误提示文本
    */
   public setCustomValidity(message: string): void {
     this.hiddenInputRef.value!.setCustomValidity(message);

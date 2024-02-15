@@ -1,4 +1,4 @@
-监听元素尺寸变化，在尺寸变化时，执行回调函数。该函数内部使用 [`ResizeObserver`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserver) 实现，不过实现了单例模式，因此使用该函数拥有更高的性能。
+`observeResize` 函数用于监听元素尺寸的变化，当尺寸发生变化时，会执行指定的回调函数。该函数使用 [`ResizeObserver`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserver) 实现，但采用了单例模式，因此性能更优。
 
 ## 使用方法 {#usage}
 
@@ -34,7 +34,7 @@ observer.unobserve();
 
 <pre><code class="nohighlight">(entry: <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserverEntry" target="_blank" rel="noopener nofollow">ResizeObserverEntry</a>, observer: <a href="#api-ObserveResize">ObserveResize</a>) => void</code></pre>
 
-该函数中的 `this` 也指向 [ObserveResize](#api-ObserveResize)。
+在回调函数中，`this` 指向 [ObserveResize](#api-ObserveResize)。
 
 ### ObserveResize {#api-ObserveResize}
 

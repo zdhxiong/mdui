@@ -7,7 +7,7 @@ import { tabPanelStyle } from './tab-panel-style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
- * @summary 选项卡面板项组件。需与 `<mdui-tabs>` 和 `<mdui-tab>` 组件配合使用
+ * @summary 选项卡面板项组件。需配合 `<mdui-tabs>` 和 `<mdui-tab>` 组件使用
  *
  * ```html
  * <mdui-tabs value="tab-1">
@@ -21,7 +21,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * </mdui-tabs>
  * ```
  *
- * @slot - 选项卡面板内容
+ * @slot - 选项卡面板项内容
  */
 @customElement('mdui-tab-panel')
 export class TabPanel extends MduiElement<TabPanelEventMap> {
@@ -31,7 +31,7 @@ export class TabPanel extends MduiElement<TabPanelEventMap> {
   ];
 
   /**
-   * 该选项卡面板的值
+   * 选项卡面板项的值
    */
   @property({ reflect: true })
   public value?: string;

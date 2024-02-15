@@ -1,4 +1,4 @@
-你可以通过 npm 安装 mdui，或从 CDN 引入 mdui。推荐使用 npm 安装。
+你可以选择通过 npm 安装 mdui，或者从 CDN 引入 mdui。推荐使用 npm 进行安装。
 
 ## npm 安装 {#npm}
 
@@ -15,7 +15,7 @@ import 'mdui/mdui.css';
 import 'mdui';
 ```
 
-也可以直接从 mdui 导入需要使用的函数。例如导入 [`snackbar`](/zh-cn/docs/2/functions/snackbar) 函数：
+也可以直接从 mdui 导入需要使用的函数。例如，要导入 [`snackbar`](/zh-cn/docs/2/functions/snackbar) 函数，可以这样做：
 
 ```js
 import { snackbar } from 'mdui';
@@ -44,7 +44,7 @@ import { snackbar } from 'mdui';
 
 ### 按需导入 {#cherry-picking}
 
-为了减小项目体积，可以仅导入需要的组件和函数。例如你只需要使用 [`<mdui-button>`](/zh-cn/docs/2/components/button) 组件和 [`snackbar`](/zh-cn/docs/2/functions/snackbar) 函数，则可以按照以下方式导入：
+为了优化项目体积，可以仅导入需要的组件和函数。例如，如果你只需要使用 [`<mdui-button>`](/zh-cn/docs/2/components/button) 组件和 [`snackbar`](/zh-cn/docs/2/functions/snackbar) 函数，可以按照以下方式导入：
 
 ```js
 // CSS 文件始终需要导入
@@ -126,11 +126,12 @@ import { throttle } from 'mdui/functions/throttle.js';</code></pre>
 
 ## CDN {#cdn}
 
-你可以使用 `<link>` 和 `<script>` 标签直接通过 CDN 来使用 mdui。也可以下载 CSS 和 JavaScript 文件部署在你自己的服务器上。引入 CSS 和 JavaScript 文件后，就能使用所有 mdui 组件了。
+你可以使用 `<link>` 和 `<script>` 标签直接通过 CDN 来使用 mdui。也可以下载 CSS 和 JavaScript 文件并部署在你自己的服务器上。引入 CSS 和 JavaScript 文件后，就能使用所有 mdui 组件了。
+
 
 ### 使用全局构建版本 {#global-build}
 
-这个例子使用全局构建版本的 mdui，所有函数都以属性的形式暴露在全局对象 `mdui` 上：
+下面的例子展示了如何使用全局构建版本的 mdui。在这个版本中，所有的函数都作为属性暴露在全局对象 `mdui` 上：
 
 ```html
 <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
@@ -147,7 +148,7 @@ import { throttle } from 'mdui/functions/throttle.js';</code></pre>
 
 ### 使用 ES 模块构建版本 {#es-module}
 
-这个例子使用 ES 模块构建版本的 mdui，你可以使用 ES 模块语法从 CDN 导入：
+下面的例子展示了如何使用 ES 模块构建版本的 mdui。在这个版本中，你可以使用 ES 模块语法从 CDN 导入 mdui：
 
 ```html
 <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">

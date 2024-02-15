@@ -17,7 +17,7 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @summary 单选框组件。需与 `<mdui-radio-group>` 组件配合使用
+ * @summary 单选框组件。需配合 `<mdui-radio-group>` 组件使用
  *
  * ```html
  * <mdui-radio-group value="chinese">
@@ -30,14 +30,14 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event blur - 失去焦点时触发
  * @event change - 选中该单选项时触发
  *
- * @slot - 文本
+ * @slot - 文本内容
  * @slot unchecked-icon - 未选中状态的图标
  * @slot checked-icon - 选中状态的图标
  *
  * @csspart control - 左侧图标容器
  * @csspart unchecked-icon 未选中状态的图标
  * @csspart checked-icon 选中状态的图标
- * @csspart label - 文本
+ * @csspart label - 文本内容
  */
 @customElement('mdui-radio')
 export class Radio extends RippleMixin(

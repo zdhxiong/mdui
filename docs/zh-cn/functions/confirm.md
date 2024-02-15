@@ -35,7 +35,7 @@ import { confirm } from 'mdui/functions/confirm.js';
 
 <pre><code class="nohighlight">confirm(options: <a href="#api-options">Options</a>): Promise&lt;void&gt;</code></pre>
 
-函数的参数为 [Options](#api-options) 对象；返回值为 Promise，如果是通过点击确定按钮关闭，则 Promise 会被 resolve，如果是通过其他方式关闭，则 Promise 会被 reject。
+函数接收一个 [Options](#api-options) 对象作为参数；返回值为 Promise，如果通过点击确定按钮关闭，则 Promise 会被 resolve，如果通过其他方式关闭，则 Promise 会被 reject。
 
 ### Options {#api-options}
 

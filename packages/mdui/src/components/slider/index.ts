@@ -25,7 +25,7 @@ import type { Ref } from 'lit/directives/ref.js';
  *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
- * @event change - 在值发生了变更，且失去了焦点时，将触发该事件
+ * @event change - 在值发生变更，且失去焦点时，将触发该事件
  * @event input - 值变更时触发
  * @event invalid - 表单字段验证未通过时触发
  *

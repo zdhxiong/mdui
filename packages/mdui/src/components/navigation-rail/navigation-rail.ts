@@ -28,7 +28,7 @@ type NavigationRailItem = NavigationRailItemOriginal & {
 };
 
 /**
- * @summary 侧边导航栏组件。需与 `<mdui-navigation-rail-item>` 组件配合使用
+ * @summary 侧边导航栏组件。需配合 `<mdui-navigation-rail-item>` 组件使用
  *
  * ```html
  * <mdui-navigation-rail>
@@ -48,8 +48,8 @@ type NavigationRailItem = NavigationRailItemOriginal & {
  * @csspart bottom - 底部元素的容器
  * @csspart items - `<mdui-navigation-rail-item>` 组件的容器
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --z-index - 组件的 CSS `z-index` 值
  */
 @customElement('mdui-navigation-rail')
 export class NavigationRail extends LayoutItemBase<NavigationRailEventMap> {
@@ -65,19 +65,19 @@ export class NavigationRail extends LayoutItemBase<NavigationRailEventMap> {
   public value?: string;
 
   /**
-   * 导航栏的位置。可选值为：
+   * 导航栏的位置。可选值包括：
    *
-   * * `left`：显示在左侧
-   * * `right`：显示在右侧
+   * * `left`：左侧
+   * * `right`：右侧
    */
   @property({ reflect: true })
   // eslint-disable-next-line prettier/prettier
   public placement:
-    | /*显示在左侧*/ 'left'
-    | /*显示在右侧*/ 'right' = 'left';
+    | /*左侧*/ 'left'
+    | /*右侧*/ 'right' = 'left';
 
   /**
-   * 导航栏中的 `<mdui-navigation-rail-item>` 元素的对齐方式。可选值为：
+   * `<mdui-navigation-rail-item>` 元素的对齐方式。可选值包括：
    *
    * * `start`：顶部对齐
    * * `center`：居中对齐
@@ -90,10 +90,9 @@ export class NavigationRail extends LayoutItemBase<NavigationRailEventMap> {
     | /*底部对齐*/ 'end' = 'start';
 
   /**
-   * 默认导航栏相对于 `body` 元素显示，该参数设置为 `true` 时，导航栏将相对于它的父元素显示
+   * 默认情况下，导航栏相对于 `body` 元素显示。当该参数设置为 `true` 时，导航栏将相对于其父元素显示。
    *
-   * Note:
-   * 设置了该属性时，必须手动在父元素上设置样式 `position: relative;`
+   * **Note**：设置该属性时，必须在父元素上手动设置样式 `position: relative;`。
    */
   @property({
     type: Boolean,

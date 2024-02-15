@@ -11,7 +11,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @summary 顶部应用栏标题组件。需与 `<mdui-top-app-bar>` 组件配合使用
+ * @summary 顶部应用栏标题组件。需配合 `<mdui-top-app-bar>` 组件使用
  *
  * ```html
  * <mdui-top-app-bar>
@@ -23,10 +23,10 @@ import type { Ref } from 'lit/directives/ref.js';
  * ```
  *
  * @slot - 顶部应用栏的标题文本
- * @slot label-large - 展开状态的标题文本
+ * @slot label-large - 展开状态下的标题文本
  *
- * @csspart label 文本内容
- * @csspart label-large 展开状态的文本内容
+ * @csspart label 标题文本
+ * @csspart label-large 展开状态下的标题文本
  */
 @customElement('mdui-top-app-bar-title')
 export class TopAppBarTitle extends MduiElement<TopAppBarTitleEventMap> {

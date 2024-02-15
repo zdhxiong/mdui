@@ -28,44 +28,44 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event change - 选中状态变更时触发
  * @event delete - 点击删除图标时触发
  *
- * @slot - 文本
+ * @slot - 纸片文本
  * @slot icon - 左侧元素
  * @slot end-icon - 右侧元素
- * @slot selected-icon - 选中状态的左侧元素
- * @slot delete-icon - 可删除时，右侧的删除元素
+ * @slot selected-icon - 选中状态下的左侧元素
+ * @slot delete-icon - 可删除时的右侧删除元素
  *
  * @csspart button - 内部的 `<button>` 或 `<a>` 元素
- * @csspart label - 文本
+ * @csspart label - 纸片文本
  * @csspart icon - 左侧图标
  * @csspart end-icon - 右侧图标
- * @csspart selected-icon - 选中状态的左侧图标
- * @csspart delete-icon - 可删除时，右侧的删除图标
+ * @csspart selected-icon - 选中状态下的左侧图标
+ * @csspart delete-icon - 可删除时的右侧删除图标
  * @csspart loading - 加载中状态的 `<mdui-circular-progress>` 元素
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-chip')
 export class Chip extends ButtonBase<ChipEventMap> {
   public static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   /**
-   * 纸片形状。可选值为：
+   * 纸片的形状。可选值包括：
    *
-   * * `assist`：用于显示和当前上下文相关的辅助操作。例如在点餐页面，提供分享，收藏等功能
-   * * `filter`：用于对内容进行筛选。例如在搜索结果页，对搜索结果进行过滤
-   * * `input`：用于表示用户输入的信息片段。例如 Gmail 中“收件人”字段中的联系人
-   * * `suggestion`：用于提供动态生成的推荐信息，以简化用户操作。例如在聊天应用中猜测用户可能想发送的信息，供用户选择
+   * * `assist`：用于显示与当前上下文相关的辅助操作，如在点餐页面提供分享、收藏等功能
+   * * `filter`：用于对内容进行筛选，如在搜索结果页过滤搜索结果
+   * * `input`：用于表示用户输入的信息片段，如在 Gmail 的“收件人”字段中的联系人
+   * * `suggestion`：用于提供动态生成的推荐信息，以简化用户操作，如在聊天应用中预测用户可能想发送的信息
    */
   @property({ reflect: true })
   public variant:
-    | /*用于显示和当前上下文相关的辅助操作。例如在点餐页面，提供分享，收藏等功能*/ 'assist'
-    | /*用于对内容进行筛选。例如在搜索结果页，对搜索结果进行过滤*/ 'filter'
-    | /*用于表示用户输入的信息片段。例如 Gmail 中“收件人”字段中的联系人*/ 'input'
-    | /*用于提供动态生成的推荐信息，以简化用户操作。例如在聊天应用中猜测用户可能想发送的信息，供用户选择*/ 'suggestion' =
+    | /*用于显示与当前上下文相关的辅助操作，如在点餐页面提供分享、收藏等功能*/ 'assist'
+    | /*用于对内容进行筛选，如在搜索结果页过滤搜索结果*/ 'filter'
+    | /*用于表示用户输入的信息片段，如在 Gmail 的“收件人”字段中的联系人*/ 'input'
+    | /*用于提供动态生成的推荐信息，以简化用户操作，如在聊天应用中预测用户可能想发送的信息*/ 'suggestion' =
     'assist';
 
   /**
-   * 是否包含阴影
+   * 是否显示阴影
    */
   @property({
     type: Boolean,
@@ -85,7 +85,7 @@ export class Chip extends ButtonBase<ChipEventMap> {
   public selectable = false;
 
   /**
-   * 是否为选中状态
+   * 是否已选中
    */
   @property({
     type: Boolean,
@@ -95,7 +95,7 @@ export class Chip extends ButtonBase<ChipEventMap> {
   public selected = false;
 
   /**
-   * 是否可删除。为 `true` 时，在右侧会显示删除图标
+   * 是否可删除。为 `true` 时，纸片右侧会显示删除图标
    */
   @property({
     type: Boolean,
@@ -111,7 +111,7 @@ export class Chip extends ButtonBase<ChipEventMap> {
   public icon?: string;
 
   /**
-   * 选中状态，左侧的 Material Icons 图标名。也可以通过 `slot="selected-icon"` 设置
+   * 选中状态下左侧的 Material Icons 图标名。也可以通过 `slot="selected-icon"` 设置
    */
   @property({ reflect: true, attribute: 'selected-icon' })
   public selectedIcon?: string;
@@ -123,7 +123,7 @@ export class Chip extends ButtonBase<ChipEventMap> {
   public endIcon?: string;
 
   /**
-   * 可删除时，右侧的删除图标的 Material Icons 图标名。也可以通过 `slot="delete-icon"` 设置
+   * 可删除时，右侧删除图标的 Material Icons 图标名。也可以通过 `slot="delete-icon"` 设置
    */
   @property({ reflect: true, attribute: 'delete-icon' })
   public deleteIcon?: string;

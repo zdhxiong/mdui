@@ -1,4 +1,4 @@
-线性进度指示器是一个横条状的指示器，用于通知用户正在进行的任务的状态，例如正在加载数据或提交表单等。
+线性进度指示器是一种横向的指示器，用于向用户展示任务的执行进度，如数据加载或表单提交等。
 
 ## 使用方法 {#usage}
 
@@ -22,15 +22,15 @@ import type { LinearProgress } from 'mdui/components/linear-progress.js';
 
 ## 示例 {#examples}
 
-### 固定进度 {#example-value}
+### 设定进度 {#example-value}
 
-线性进度指示器默认为不确定进度，可通过 `value` 属性设置当前进度，默认进度最大值为 1。
+线性进度指示器默认为不确定的进度，你可以通过 `value` 属性来设定当前的进度，默认的进度最大值为 `1`。
 
 ```html,example,expandable
 <mdui-linear-progress value="0.5"></mdui-linear-progress>
 ```
 
-可通过 `max` 属性设置进度最大值。
+你也可以通过 `max` 属性来设定进度的最大值。
 
 ```html,example,expandable
 <mdui-linear-progress value="30" max="100"></mdui-linear-progress>

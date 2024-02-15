@@ -24,7 +24,7 @@ import type { Divider } from 'mdui/components/divider.js';
 
 ### 垂直分割线 {#example-vertical}
 
-添加 `vertical` 属性，可使分割线垂直显示。
+添加 `vertical` 属性，可以使分割线垂直显示。
 
 ```html,example,expandable
 <div style="height: 80px;padding: 0 20px">
@@ -34,7 +34,7 @@ import type { Divider } from 'mdui/components/divider.js';
 
 ### 左侧缩进 {#example-inset}
 
-添加 `inset` 属性使分割线左侧缩进。通常用于列表中，可使分割线和左侧文本对齐。
+添加 `inset` 属性，可以使分割线左侧缩进。这通常用于列表中，以使分割线和左侧文本对齐。
 
 ```html,example,expandable
 <mdui-list>
@@ -46,7 +46,7 @@ import type { Divider } from 'mdui/components/divider.js';
 
 ### 两侧缩进 {#example-middle}
 
-添加 `middle` 属性使分割线两侧缩进。
+添加 `middle` 属性，可以使分割线两侧缩进。
 
 ```html,example,expandable
 <mdui-list>

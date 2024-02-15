@@ -33,7 +33,7 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @summary 菜单项组件
+ * @summary 菜单项组件。需配合 `<mdui-menu>` 组件使用
  *
  * ```html
  * <mdui-menu>
@@ -75,13 +75,13 @@ export class MenuItem extends AnchorMixin(
   ];
 
   /**
-   * 该菜单项的值
+   * 菜单项的值
    */
   @property({ reflect: true })
   public value?: string;
 
   /**
-   * 是否禁用该菜单项
+   * 是否禁用菜单项
    */
   @property({
     type: Boolean,
@@ -93,7 +93,7 @@ export class MenuItem extends AnchorMixin(
   /**
    * 左侧的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
    *
-   * 如果需要在左侧留出一个图标的位置，可以传入空字符串进行占位
+   * 如果左侧不需要显示图标，但需要预留一个图标的位置，可传入空字符串进行占位
    */
   @property({ reflect: true })
   public icon?: string;

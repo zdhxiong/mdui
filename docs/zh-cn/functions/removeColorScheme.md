@@ -1,4 +1,4 @@
-`removeColorScheme` 函数可移除在当前页面、或指定元素上设置的配色方案。参见 [动态配色](/zh-cn/docs/2/styles/dynamic-color)。
+`removeColorScheme` 函数用于移除当前页面或指定元素上的配色方案。详见 [动态配色](/zh-cn/docs/2/styles/dynamic-color)。
 
 ## 使用方法 {#usage}
 
@@ -26,4 +26,4 @@ removeColorScheme(element);
 
 <pre><code class="nohighlight">removeColorScheme(target?: string | HTMLElement | <a href="/zh-cn/docs/2/functions/jq">JQ</a>&lt;HTMLElement&gt;): void</code></pre>
 
-函数的参数为要移除配色方案的元素，值可以是 CSS 选择器、DOM 元素、或 [JQ 对象](/zh-cn/docs/2/functions/jq)。若不传入参数，则默认为 `document.documentElement`，`<html>` 元素。
+函数的参数为要移除配色方案的元素，可以是 CSS 选择器、DOM 元素，或 [JQ 对象](/zh-cn/docs/2/functions/jq)。如果不传入参数，则默认移除 `<html>` 元素的配色方案。

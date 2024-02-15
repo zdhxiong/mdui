@@ -6,7 +6,7 @@ import { listSubheaderStyle } from './list-subheader-style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
- * @summary 列表标题组件。需与 `<mdui-list>` 组件配合使用
+ * @summary 列表标题组件。需配合 `<mdui-list>` 组件使用
  *
  * ```html
  * <mdui-list>
@@ -16,7 +16,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * </mdui-list>
  * ```
  *
- * @slot - 文本
+ * @slot - 列表标题文本
  */
 @customElement('mdui-list-subheader')
 export class ListSubheader extends MduiElement<ListSubheaderEventMap> {

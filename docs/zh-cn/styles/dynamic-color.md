@@ -1,12 +1,12 @@
-mdui 支持动态配色。你只需给出一个颜色值，mdui 会自动生成一套完整的配色方案。同时还支持从给定的壁纸中提取主色调，并生成配色方案。
+mdui 提供了动态配色功能。只需提供一个颜色值，mdui 就能自动生成一套完整的配色方案。此外，mdui 还支持从指定的壁纸中提取主色调，并据此生成配色方案。
 
-你可以随时点击文档页面右上角的 <mdui-icon name="palette--outlined" style="vertical-align: middle"></mdui-icon> 图标来切换配色方案，以查看各个组件在不同配色方案下的显示效果。
+你可以随时点击文档页面右上角的 <mdui-icon name="palette--outlined" style="vertical-align: middle"></mdui-icon> 图标，切换配色方案，查看各个组件在不同配色方案下的显示效果。
 
-一套配色方案即为一组 CSS 自定义属性，mdui 组件中的颜色值都引用了这一组 CSS 自定义属性，因此能一次性更新所有组件的配色方案。完整 CSS 自定义属性列表可参见 [设计令牌 - 颜色](/zh-cn/docs/2/styles/design-tokens#color)。
+一套配色方案实际上是一组 CSS 自定义属性。mdui 组件中的颜色值都引用了这一组 CSS 自定义属性，因此可以一次性更新所有组件的配色方案。完整的 CSS 自定义属性列表请参见 [设计令牌 - 颜色](/zh-cn/docs/2/styles/design-tokens#color)。
 
 ## 生成配色方案 {#color-scheme}
 
-你可以使用 [`setColorScheme`](/zh-cn/docs/2/functions/setColorScheme) 函数来生成配色方案，该函数接受一个十六进制颜色值作为参数，生成一套配色方案，并将页面的 `<html>` 设置为该配色方案。例如：
+你可以使用 [`setColorScheme`](/zh-cn/docs/2/functions/setColorScheme) 函数来生成配色方案。该函数接受一个十六进制颜色值作为参数，生成一套配色方案，并将页面的 `<html>` 元素设置为该配色方案。例如：
 
 ```js
 import { setColorScheme } from 'mdui/functions/setColorScheme.js';
@@ -26,7 +26,7 @@ setColorScheme('#0061a4', {
 });
 ```
 
-默认情况下生成的配色方案仅包含 [设计令牌 - 颜色](/zh-cn/docs/2/styles/design-tokens#color) 中所列出的颜色，你可以在第二个参数中指定 `customColors` 属性，mdui 会根据你给出的自定义颜色名和颜色值生成一组自定义颜色组。例如：
+默认情况下生成的配色方案仅包含 [设计令牌 - 颜色](/zh-cn/docs/2/styles/design-tokens#color) 中所列出的颜色。你可以在第二个参数中指定 `customColors` 属性，mdui 会根据你给出的自定义颜色名和颜色值生成一组自定义颜色组。例如：
 
 ```js
 import { setColorScheme } from 'mdui/functions/setColorScheme.js';
@@ -76,13 +76,13 @@ setColorScheme('#0061a4', {
 <div class="music-container">Music Container</div>
 ```
 
-你还可以使用 [`removeColorScheme`](/zh-cn/docs/2/functions/removeColorScheme) 函数来移除通过上述方法生成的配色方案。可传入参数指定移除在哪个元素上设置的配色方案，默认移除 `<html>` 上的配色方案。
+你还可以使用 [`removeColorScheme`](/zh-cn/docs/2/functions/removeColorScheme) 函数来移除通过上述方法生成的配色方案。你可以传入参数来指定移除哪个元素上的配色方案，默认情况下，它会移除 `<html>` 上的配色方案。
 
 ## 从壁纸中提取颜色 {#from-wallpaper}
 
-mdui 提供了 [`getColorFromImage`](/zh-cn/docs/2/functions/getColorFromImage) 函数，用于从一个给定的 `Image` 实例中提取出主色调。该函数返回 Promise，resolve 的值即为提取的十六进制颜色值。
+mdui 提供了 [`getColorFromImage`](/zh-cn/docs/2/functions/getColorFromImage) 函数，用于从一个给定的 `Image` 实例中提取主色调。该函数返回一个 Promise，resolve 的值即为提取的十六进制颜色值。
 
-你可以使用从该函数获得的颜色值，再调用上面文档介绍的 [`setColorScheme`](/zh-cn/docs/2/functions/setColorScheme) 函数来设置配色方案。例如：
+你可以使用从该函数获得的颜色值，然后调用上述文档中介绍的 [`setColorScheme`](/zh-cn/docs/2/functions/setColorScheme) 函数来设置配色方案。例如：
 
 ```js
 import { getColorFromImage } from 'mdui/functions/getColorFromImage.js';

@@ -18,7 +18,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @summary 底部导航栏项组件。需与 `<mdui-navigation-bar>` 组件配合使用
+ * @summary 底部导航栏项组件。需配合 `<mdui-navigation-bar>` 组件使用
  *
  * ```html
  * <mdui-navigation-bar>
@@ -28,7 +28,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * </mdui-navigation-bar>
  * ```
  *
- * @slot - 文本
+ * @slot - 导航项文本
  * @slot icon - 图标
  * @slot active-icon - 激活状态的图标元素
  * @slot badge - 徽标
@@ -41,9 +41,9 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart badge - 徽标
  * @csspart icon - 图标
  * @csspart active-icon - 激活状态的图标
- * @csspart label - 文本
+ * @csspart label - 导航项文本
  *
- * @cssprop --shape-corner-indicator - 指示器的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-indicator - 指示器的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-navigation-bar-item')
 export class NavigationBarItem extends AnchorMixin(
@@ -67,7 +67,7 @@ export class NavigationBarItem extends AnchorMixin(
   public activeIcon?: string;
 
   /**
-   * 该导航项的值
+   * 导航项的值
    */
   @property({ reflect: true })
   public value?: string;

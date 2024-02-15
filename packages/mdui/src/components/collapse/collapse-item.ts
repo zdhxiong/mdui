@@ -15,7 +15,7 @@ import type { CSSResultGroup, TemplateResult, PropertyValues } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @summary 折叠面板项组件。需与 `<mdui-collapse>` 组件配合使用
+ * @summary 折叠面板项组件，需配合 `<mdui-collapse>` 组件使用
  *
  * ```html
  * <mdui-collapse>
@@ -43,19 +43,19 @@ export class CollapseItem extends MduiElement<CollapseItemEventMap> {
   ];
 
   /**
-   * 该折叠面板项的值
+   * 此折叠面板项的值
    */
   @property({ reflect: true })
   public value?: string;
 
   /**
-   * 该折叠面板项的头部文本
+   * 此折叠面板项的头部文本
    */
   @property({ reflect: true })
   public header?: string;
 
   /**
-   * 是否禁用该折叠面板项
+   * 是否禁用此折叠面板项
    */
   @property({
     type: Boolean,

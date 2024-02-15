@@ -29,18 +29,18 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @event closed - Snackbar 隐藏动画完成时，事件被触发
  * @event action-click - 点击操作按钮时触发
  *
- * @slot - Snackbar 中的消息文本内容
+ * @slot - Snackbar 的消息文本内容
  * @slot action - 右侧的操作按钮
- * @slot close-button - 右侧的关闭按钮。必须设置 `closeable` 属性为 `true` 才会显示该按钮
- * @slot close-icon - 右侧的关闭按钮中的图标
+ * @slot close-button - 右侧的关闭按钮。必须设置 `closeable` 属性为 `true` 才会显示
+ * @slot close-icon - 关闭按钮中的图标
  *
  * @csspart message - 消息文本
  * @csspart action - 操作按钮
  * @csspart close-button - 关闭按钮
  * @csspart close-icon - 关闭按钮中的图标
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --z-index - 组件的 CSS `z-index` 值
  */
 @customElement('mdui-snackbar')
 export class Snackbar extends MduiElement<SnackbarEventMap> {
@@ -57,23 +57,23 @@ export class Snackbar extends MduiElement<SnackbarEventMap> {
   public open = false;
 
   /**
-   * Snackbar 出现的位置。默认为 `bottom`。可选值为：
+   * Snackbar 的显示位置。默认为 `bottom`。可选值包括：
    *
-   * * `top`：位于顶部，居中对齐
-   * * `top-start`：位于顶部，左对齐
-   * * `top-end`：位于顶部，右对齐
-   * * `bottom`：位于底部，居中对齐
-   * * `bottom-start`：位于底部，左对齐
-   * * `bottom-end`：位于底部，右对齐
+   * * `top`：顶部居中
+   * * `top-start`：顶部左对齐
+   * * `top-end`：顶部右对齐
+   * * `bottom`：底部居中
+   * * `bottom-start`：底部左对齐
+   * * `bottom-end`：底部右对齐
    */
   @property({ reflect: true })
   public placement:
-    | /*位于顶部，居中对齐*/ 'top'
-    | /*位于顶部，左对齐*/ 'top-start'
-    | /*位于顶部，右对齐*/ 'top-end'
-    | /*位于底部，居中对齐*/ 'bottom'
-    | /*位于底部，左对齐*/ 'bottom-start'
-    | /*位于底部，右对齐*/ 'bottom-end' = 'bottom';
+    | /*顶部居中*/ 'top'
+    | /*顶部左对齐*/ 'top-start'
+    | /*顶部右对齐*/ 'top-end'
+    | /*底部居中*/ 'bottom'
+    | /*底部左对齐*/ 'bottom-start'
+    | /*底部右对齐*/ 'bottom-end' = 'bottom';
 
   /**
    * 操作按钮的文本。也可以通过 `slot="action"` 设置操作按钮
@@ -82,7 +82,7 @@ export class Snackbar extends MduiElement<SnackbarEventMap> {
   public action?: string;
 
   /**
-   * 操作按钮是否为 loading 状态
+   * 操作按钮是否处于加载中状态
    */
   @property({
     type: Boolean,
@@ -103,31 +103,31 @@ export class Snackbar extends MduiElement<SnackbarEventMap> {
   public closeable = false;
 
   /**
-   * 关闭按钮中的 Material Icons 图标名。也可以通过 `slot="close-icon"` 设置
+   * 关闭按钮的 Material Icons 图标名。也可以通过 `slot="close-icon"` 设置
    */
   @property({ reflect: true, attribute: 'close-icon' })
   public closeIcon?: string;
 
   /**
-   * 消息文本最多显示几行。默认不限制行数。可选值为：
+   * 消息文本的最大显示行数。默认不限制。可选值包括：
    *
-   * * `1`：消息文本最多显示一行
-   * * `2`：消息文本最多显示两行
+   * * `1`：最多显示一行
+   * * `2`：最多显示两行
    */
   @property({ type: Number, reflect: true, attribute: 'message-line' })
   // eslint-disable-next-line prettier/prettier
   public messageLine?:
-    | /*消息文本最多显示一行*/ 1
-    | /*消息文本最多显示两行*/ 2;
+    | /*最多显示一行*/ 1
+    | /*最多显示两行*/ 2;
 
   /**
-   * 在多长时间后自动关闭（单位为毫秒）。设置为 `0` 时，不自动关闭。默认为 5 秒后自动关闭。
+   * 自动关闭的延迟时间（单位：毫秒）。设置为 `0` 则不自动关闭。默认为 5000 毫秒
    */
   @property({ type: Number, reflect: true, attribute: 'auto-close-delay' })
   public autoCloseDelay = 5000;
 
   /**
-   * 点击或触摸 Snackbar 以外的区域时是否关闭 Snackbar
+   * 点击或触摸 Snackbar 以外的区域时，是否关闭 Snackbar
    */
   @property({
     type: Boolean,

@@ -37,25 +37,25 @@ import type { Ref } from 'lit/directives/ref.js';
  * </mdui-dropdown>
  * ```
  *
- * @event open - dropdown 开始打开时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 dropdown 打开
- * @event opened - dropdown 打开动画完成时，事件被触发
- * @event close - dropdown 开始关闭时，事件被触发。可以通过调用 `event.preventDefault()` 阻止 dropdown 关闭
- * @event closed - dropdown 关闭动画完成时，事件被触发
+ * @event open - 下拉组件开始打开时，事件被触发。可以通过调用 `event.preventDefault()` 阻止下拉组件打开
+ * @event opened - 下拉组件打开动画完成时，事件被触发
+ * @event close - 下拉组件开始关闭时，事件被触发。可以通过调用 `event.preventDefault()` 阻止下拉组件关闭
+ * @event closed - 下拉组件关闭动画完成时，事件被触发
  *
- * @slot - dropdown 的内容
- * @slot trigger - 触发 dropdown 的元素，例如 [`<mdui-button>`](/docs/2/components/button) 元素
+ * @slot - 下拉组件的内容
+ * @slot trigger - 触发下拉组件的元素，例如 [`<mdui-button>`](/docs/2/components/button) 元素
  *
- * @csspart trigger - 触发 dropdown 的元素的容器，即 `trigger` slot 的容器
- * @csspart panel - dropdown 内容的容器
+ * @csspart trigger - 触发下拉组件的元素的容器，即 `trigger` slot 的容器
+ * @csspart panel - 下拉组件内容的容器
  *
- * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
+ * @cssprop --z-index - 组件的 CSS `z-index` 值
  */
 @customElement('mdui-dropdown')
 export class Dropdown extends MduiElement<DropdownEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * dropdown 是否打开
+   * 是否打开下拉组件
    */
   @property({
     type: Boolean,
@@ -65,7 +65,7 @@ export class Dropdown extends MduiElement<DropdownEventMap> {
   public open = false;
 
   /**
-   * 是否禁用 dropdown
+   * 是否禁用下拉组件
    */
   @property({
     type: Boolean,
@@ -75,58 +75,58 @@ export class Dropdown extends MduiElement<DropdownEventMap> {
   public disabled = false;
 
   /**
-   * dropdown 的触发方式，支持传入多个值，用空格分隔。可选值为：
+   * 下拉组件的触发方式，支持多个值，用空格分隔。可选值包括：
    *
-   * * `click`：点击时触发
+   * * `click`：点击触发
    * * `hover`：鼠标悬浮触发
-   * * `focus`：聚焦时触发
-   * * `contextmenu`：鼠标右键点击、或触摸长按时触发
-   * * `manual`：使用了该值时，只能使用编程方式打开和关闭 dropdown，且不能再指定其他触发方式
+   * * `focus`：聚焦触发
+   * * `contextmenu`：鼠标右键点击、或触摸长按触发
+   * * `manual`：仅能通过编程方式打开和关闭下拉组件，不能再指定其他触发方式
    */
   @property({ reflect: true })
   public trigger:
-    | /*点击时触发*/ 'click'
+    | /*点击触发*/ 'click'
     | /*鼠标悬浮触发*/ 'hover'
-    | /*聚焦时触发*/ 'focus'
-    | /*鼠标右键点击、或触摸长按时触发*/ 'contextmenu'
-    | /*使用了该值时，只能使用编程方式打开和关闭 dropdown，且不能再指定其他触发方式*/ 'manual'
+    | /*聚焦触发*/ 'focus'
+    | /*鼠标右键点击、或触摸长按触发*/ 'contextmenu'
+    | /*仅能通过编程方式打开和关闭下拉组件，不能再指定其他触发方式*/ 'manual'
     | string = 'click';
 
   /**
-   * dropdown 内容的位置。可选值为：
+   * 下拉组件内容的位置。可选值包括：
    *
    * * `auto`：自动判断位置
-   * * `top-start`：位于上方，且左对齐
-   * * `top`：位于上方，且居中对齐
-   * * `top-end`：位于上方，且右对齐
-   * * `bottom-start`：位于下方，且左对齐
-   * * `bottom`：位于下方，且居中对齐
-   * * `bottom-end`：位于下方，且右对齐
-   * * `left-start`：位于左侧，且顶部对齐
-   * * `left`：位于左侧，且居中对齐
-   * * `left-end`：位于左侧，且底部对齐
-   * * `right-start`：位于右侧，且顶部对齐
-   * * `right`：位于右侧，且居中对齐
-   * * `right-end`：位于右侧，且底部对齐
+   * * `top-start`：上方左对齐
+   * * `top`：上方居中
+   * * `top-end`：上方右对齐
+   * * `bottom-start`：下方左对齐
+   * * `bottom`：下方居中
+   * * `bottom-end`：下方右对齐
+   * * `left-start`：左侧顶部对齐
+   * * `left`：左侧居中
+   * * `left-end`：左侧底部对齐
+   * * `right-start`：右侧顶部对齐
+   * * `right`：右侧居中
+   * * `right-end`：右侧底部对齐
    */
   @property({ reflect: true })
   public placement:
     | /*自动判断位置*/ 'auto'
-    | /*位于上方，且左对齐*/ 'top-start'
-    | /*位于上方，且居中对齐*/ 'top'
-    | /*位于上方，且右对齐*/ 'top-end'
-    | /*位于下方，且左对齐*/ 'bottom-start'
-    | /*位于下方，且居中对齐*/ 'bottom'
-    | /*位于下方，且右对齐*/ 'bottom-end'
-    | /*位于左侧，且顶部对齐*/ 'left-start'
-    | /*位于左侧，且居中对齐*/ 'left'
-    | /*位于左侧，且底部对齐*/ 'left-end'
-    | /*位于右侧，且顶部对齐*/ 'right-start'
-    | /*位于右侧，且居中对齐*/ 'right'
-    | /*位于右侧，且底部对齐*/ 'right-end' = 'auto';
+    | /*上方左对齐*/ 'top-start'
+    | /*上方居中*/ 'top'
+    | /*上方右对齐*/ 'top-end'
+    | /*下方左对齐*/ 'bottom-start'
+    | /*下方居中*/ 'bottom'
+    | /*下方右对齐*/ 'bottom-end'
+    | /*左侧顶部对齐*/ 'left-start'
+    | /*左侧居中*/ 'left'
+    | /*左侧底部对齐*/ 'left-end'
+    | /*右侧顶部对齐*/ 'right-start'
+    | /*右侧居中*/ 'right'
+    | /*右侧底部对齐*/ 'right-end' = 'auto';
 
   /**
-   * 在点击 [`<mdui-menu-item>`](/docs/2/components/menu#menu-item-api) 元素后，是否仍保持 dropdown 为打开状态
+   * 点击 [`<mdui-menu-item>`](/docs/2/components/menu#menu-item-api) 后，下拉组件是否保持打开状态
    */
   @property({
     type: Boolean,
@@ -137,19 +137,19 @@ export class Dropdown extends MduiElement<DropdownEventMap> {
   public stayOpenOnClick = false;
 
   /**
-   * 通过 hover 触发 dropdown 打开时的延时，单位为毫秒
+   * 鼠标悬浮触发下拉组件打开的延时，单位为毫秒
    */
   @property({ type: Number, reflect: true, attribute: 'open-delay' })
   public openDelay = 150;
 
   /**
-   * 通过 hover 触发 dropdown 关闭时的延时，单位为毫秒
+   * 鼠标悬浮触发下拉组件关闭的延时，单位为毫秒
    */
   @property({ type: Number, reflect: true, attribute: 'close-delay' })
   public closeDelay = 150;
 
   /**
-   * 是否在触发 dropdown 时的光标所在的位置打开 dropdown。通常用于在打开鼠标右键菜单时使用
+   * 是否在触发下拉组件的光标位置打开下拉组件，常用于打开鼠标右键菜单
    */
   @property({
     type: Boolean,

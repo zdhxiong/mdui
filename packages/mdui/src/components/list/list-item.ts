@@ -22,7 +22,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @summary 列表项组件。需与 `<mdui-list>` 组件配合使用
+ * @summary 列表项组件。需配合 `<mdui-list>` 组件使用
  *
  * ```html
  * <mdui-list>
@@ -48,8 +48,8 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart headline - 主标题
  * @csspart description - 副标题
  *
- * @cssprop --shape-corner - 列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --shape-corner-rounded - 指定了 `rounded` 时，列表项的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 列表项的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-rounded - 指定了 `rounded` 属性时，列表项的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-list-item')
 export class ListItem extends AnchorMixin(
@@ -67,17 +67,17 @@ export class ListItem extends AnchorMixin(
   public headline?: string;
 
   /**
-   * 主文本行数，超过行数限制后会截断显示。默认为没有行数限制。可选值为：
+   * 主文本行数，超过限制后将截断显示。默认无行数限制。可选值包括：
    *
-   * * `1`：显示单行文本，超出后截断显示
-   * * `2`：显示两行文本，超出后截断显示
-   * * `3`：显示三行文本，超出后截断显示
+   * * `1`：显示单行，超出后截断
+   * * `2`：显示两行，超出后截断
+   * * `3`：显示三行，超出后截断
    */
   @property({ type: Number, reflect: true, attribute: 'headline-line' })
   public headlineLine?:
-    | /*显示单行文本，超出后截断显示*/ 1
-    | /*显示两行文本，超出后截断显示*/ 2
-    | /*显示三行文本，超出后截断显示*/ 3;
+    | /*显示单行，超出后截断*/ 1
+    | /*显示两行，超出后截断*/ 2
+    | /*显示三行，超出后截断*/ 3;
 
   /**
    * 副文本。也可以通过 `slot="description"` 设置
@@ -86,17 +86,17 @@ export class ListItem extends AnchorMixin(
   public description?: string;
 
   /**
-   * 副文本行数，超过行数限制后会截断显示。默认为没有行数限制。可选值为：
+   * 副文本行数，超过限制后将截断显示。默认无行数限制。可选值包括：
    *
-   * * `1`：显示单行文本，超出后截断显示
-   * * `2`：显示两行文本，超出后截断显示
-   * * `3`：显示三行文本，超出后截断显示
+   * * `1`：显示单行，超出后截断
+   * * `2`：显示两行，超出后截断
+   * * `3`：显示三行，超出后截断
    */
   @property({ type: Number, reflect: true, attribute: 'description-line' })
   public descriptionLine?:
-    | /*显示单行文本，超出后截断显示*/ 1
-    | /*显示两行文本，超出后截断显示*/ 2
-    | /*显示三行文本，超出后截断显示*/ 3;
+    | /*显示单行，超出后截断*/ 1
+    | /*显示两行，超出后截断*/ 2
+    | /*显示三行，超出后截断*/ 3;
 
   /**
    * 左侧的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
@@ -111,7 +111,7 @@ export class ListItem extends AnchorMixin(
   public endIcon?: string;
 
   /**
-   * 是否禁用该列表项，列表项将置灰，且其中的 [`<mdui-checkbox>`](/docs/2/components/checkbox)、[`<mdui-radio>`](/docs/2/components/radio)、[`<mdui-switch>`](/docs/2/components/switch) 等都将禁用
+   * 是否禁用该列表项，禁用后，列表项将变为灰色，且其中的 [`<mdui-checkbox>`](/docs/2/components/checkbox)、[`<mdui-radio>`](/docs/2/components/radio)、[`<mdui-switch>`](/docs/2/components/switch) 等也将禁用
    */
   @property({
     type: Boolean,
@@ -131,7 +131,7 @@ export class ListItem extends AnchorMixin(
   public active = false;
 
   /**
-   * 是否使列表项不可点击，但其中的 [`<mdui-checkbox>`](/docs/2/components/checkbox)、[`<mdui-radio>`](/docs/2/components/radio)、[`<mdui-switch>`](/docs/2/components/switch) 等仍可进行交互
+   * 是否使列表项不可点击。设置后，列表项中的 [`<mdui-checkbox>`](/docs/2/components/checkbox)、[`<mdui-radio>`](/docs/2/components/radio)、[`<mdui-switch>`](/docs/2/components/switch) 等仍可交互
    */
   @property({
     type: Boolean,
@@ -141,7 +141,7 @@ export class ListItem extends AnchorMixin(
   public nonclickable = false;
 
   /**
-   * 使用圆角形状的列表项
+   * 是否使用圆角形状的列表项
    */
   @property({
     type: Boolean,
@@ -151,7 +151,7 @@ export class ListItem extends AnchorMixin(
   public rounded = false;
 
   /**
-   * 列表项的垂直对齐方式。可选值为：
+   * 列表项的垂直对齐方式。可选值包括：
    *
    * * `start`：顶部对齐
    * * `center`：居中对齐

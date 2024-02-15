@@ -43,7 +43,7 @@ import { dialog } from 'mdui/functions/dialog.js';
 
 <pre><code class="nohighlight">dialog(options: <a href="#api-options">Options</a>): <a href="/zh-cn/docs/2/components/dialog">Dialog</a></code></pre>
 
-函数的参数为 [Options](#api-options) 对象；返回值为 [`<mdui-dialog>`](/zh-cn/docs/2/components/dialog) 组件实例。
+函数接收一个 [Options](#api-options) 对象作为参数；返回值为 [`<mdui-dialog>`](/zh-cn/docs/2/components/dialog) 组件实例。
 
 ### Options {#api-options}
 

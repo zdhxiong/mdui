@@ -35,7 +35,7 @@ import { prompt } from 'mdui/functions/prompt.js';
 
 <pre><code class="nohighlight">prompt(options: <a href="#api-options">Options</a>): Promise&lt;string&gt;</code></pre>
 
-函数的参数为 [Options](#api-options) 对象；返回值为 Promise，如果是通过点击确定按钮关闭，则 Promise 会被 resolve，resolve 的参数为输入框的值，如果是通过其他方式关闭，则 Promise 会被 reject。
+函数的参数为 [Options](#api-options) 对象；返回值为 Promise，如果是通过点击确定按钮关闭对话框，则 Promise 会被 resolve，resolve 的参数为输入框的值，如果是通过其他方式关闭对话框，则 Promise 会被 reject。
 
 ### Options {#api-options}
 

@@ -24,7 +24,7 @@ import type { Ref } from 'lit/directives/ref.js';
  *
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
- * @event change - 在值发生了变更，且失去了焦点时，将触发该事件
+ * @event change - 值发生变更，且失去焦点时，将触发该事件
  * @event input - 值变更时触发
  * @event invalid - 表单字段验证未通过时触发
  *
@@ -42,7 +42,7 @@ export class RangeSlider
   public static override styles: CSSResultGroup = [SliderBase.styles];
 
   /**
-   * 默认值。在重置表单时，将重置为该默认值。该属性只能通过 JavaScript 属性设置
+   * 默认值。在重置表单时，将重置为该默认值。此属性只能通过 JavaScript 属性设置
    */
   @defaultValue()
   public defaultValue: number[] = [];
@@ -64,10 +64,9 @@ export class RangeSlider
   private _value: number[] = [];
 
   /**
-   * 滑块的值，为数组格式；将于表单数据一起提交
+   * 滑块的值，为数组格式，将于表单数据一起提交。
    *
-   * NOTE:
-   * 该属性无法通过 HTML 属性设置初始值，如果要修改该值，只能通过修改 JavaScript 属性值实现。
+   * **NOTE**：该属性无法通过 HTML 属性设置初始值，如果要修改该值，只能通过修改 JavaScript 属性值实现。
    */
   @property({ type: Array, attribute: false })
   public get value(): number[] {

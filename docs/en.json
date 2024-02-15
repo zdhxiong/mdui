@@ -2,14 +2,6 @@
   "superclass": {
     "ScrollBehaviorMixin": {
       "properties": {
-        "scrollBehavior": {
-          "description": "Defines the scroll behavior. Accepts multiple space-separated values. Possible values:\n\n* `hide`: Hides when scrolling.\n* `shrink`: Shrinks when scrolling for medium to large app bars.\n* `elevate`: Increases elevation when scrolling.",
-          "enum": {
-            "hide": "Hides when scrolling.",
-            "shrink": "Shrinks when scrolling for medium to large app bars",
-            "elevate": "Increases elevation when scrolling."
-          }
-        },
         "scrollTarget": {
           "description": "The element that listens for scroll events. Accepts a CSS selector, DOM element, or [JQ object](/docs/2/functions/jq). Defaults to `window`."
         },
@@ -338,6 +330,9 @@
       },
       "fabDetach": {
         "description": "When set, detaches the [`<mdui-fab>`](/docs/2/components/fab) from the bottom app bar. The [`<mdui-fab>`](/docs/2/components/fab) remains on the page even after the app bar is hidden."
+      },
+      "scrollBehavior": {
+        "description": "Defines the scroll behavior. Possible values:\n\n* `hide`: Hides when scrolling."
       }
     },
     "events": {
@@ -1123,6 +1118,9 @@
       },
       "value": {
         "description": "The value of the selected `<mdui-navigation-bar-item>`."
+      },
+      "scrollBehavior": {
+        "description": "Defines the scroll behavior. Possible values:\n\n* `hide`: Hides when scrolling."
       }
     },
     "events": {
@@ -2177,6 +2175,14 @@
       },
       "shrink": {
         "description": "Shrinks the app bar to `small` style. Only applicable for `medium` or `large` variants."
+      },
+      "scrollBehavior": {
+        "description": "Defines the scroll behavior. Accepts multiple space-separated values. Possible values:\n\n* `hide`: Hides when scrolling.\n* `shrink`: Shrinks when scrolling for medium to large app bars.\n* `elevate`: Increases elevation when scrolling.",
+        "enum": {
+          "hide": "Hides when scrolling.",
+          "shrink": "Shrinks when scrolling for medium to large app bars",
+          "elevate": "Increases elevation when scrolling."
+        }
       }
     },
     "events": {

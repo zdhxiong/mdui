@@ -25,7 +25,7 @@ type CollapseItem = CollapseItemOriginal & {
 };
 
 /**
- * @summary 折叠面板组件。需与 `<mdui-collapse-item>` 组件配合使用
+ * @summary 折叠面板组件，需配合 `<mdui-collapse-item>` 组件使用
  *
  * ```html
  * <mdui-collapse>
@@ -34,7 +34,7 @@ type CollapseItem = CollapseItemOriginal & {
  * </mdui-collapse>
  * ```
  *
- * @event change - 当前打开的折叠面板项改变时触发
+ * @event change - 当前展开的折叠面板项变化时触发
  *
  * @slot - `<mdui-collapse-item>` 组件
  */
@@ -46,7 +46,7 @@ export class Collapse extends MduiElement<CollapseEventMap> {
   ];
 
   /**
-   * 是否为手风琴模式
+   * 是否启用手风琴模式
    */
   @property({
     type: Boolean,
@@ -56,18 +56,15 @@ export class Collapse extends MduiElement<CollapseEventMap> {
   public accordion = false;
 
   /**
-   * 当前打开的 `<mdui-collapse-item>` 的值
+   * 当前展开的 `<mdui-collapse-item>` 的值
    *
-   * Note:
-   * 该属性的 HTML 属性始终为字符串，且仅在 `accordion` 为 `true` 时可以设置初始值；
-   * 该属性的 JavaScript 属性值在 `accordion` 为 `true` 时为字符串、在 `accordion` 为 `false` 时为字符串数组。
-   * 所以，在 `accordion` 为 `false` 时，如果要修改该值，只能通过修改 JavaScript 属性值实现。
+   * **Note**：该属性的 HTML 属性始终为字符串，只有在 `accordion` 为 `true` 时，才能设置初始值；该属性的 JavaScript 属性值在 `accordion` 为 `true` 时为字符串，在 `accordion` 为 `false` 时为字符串数组。因此，当 `accordion` 为 `false` 时，只能通过修改 JavaScript 属性值来改变此值。
    */
   @property()
   public value?: string | string[];
 
   /**
-   * 是否禁用该折叠面板
+   * 是否禁用此折叠面板
    */
   @property({
     type: Boolean,

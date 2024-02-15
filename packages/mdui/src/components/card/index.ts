@@ -22,9 +22,9 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event focus - 获得焦点时触发
  * @event blur - 失去焦点时触发
  *
- * @slot - 卡片内容
+ * @slot - 卡片的内容
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-card')
 export class Card extends AnchorMixin(
@@ -33,20 +33,20 @@ export class Card extends AnchorMixin(
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * 卡片形状。可选值为：
+   * 卡片的形状。可选值包括：
    *
-   * * `elevated`：具有阴影，与背景的分离度比 `filled` 更高，但小于 `outlined`
-   * * `filled`：与背景的分离度最小
-   * * `outlined`：具有边框，与背景的分离度最大
+   * * `elevated`：带阴影的卡片，与背景的视觉分离度较高
+   * * `filled`：带填充色的卡片，与背景的视觉分离度较低
+   * * `outlined`：带边框的卡片，与背景的视觉分离度最高
    */
   @property({ reflect: true })
   public variant:
-    | /*具有阴影，与背景的分离度比 `filled` 更高，但小于 `outlined`*/ 'elevated'
-    | /*与背景的分离度最小*/ 'filled'
-    | /*具有边框，与背景的分离度最大*/ 'outlined' = 'elevated';
+    | /*带阴影的卡片，与背景的视觉分离度较高*/ 'elevated'
+    | /*带填充色的卡片，与背景的视觉分离度较低*/ 'filled'
+    | /*带边框的卡片，与背景的视觉分离度最高*/ 'outlined' = 'elevated';
 
   /**
-   * 是否可点击。为 `true` 时，会添加鼠标悬浮效果、及点击涟漪效果
+   * 是否可点击。为 `true` 时，卡片将具有鼠标悬浮效果和点击涟漪效果
    */
   @property({
     type: Boolean,

@@ -43,8 +43,8 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart unchecked-icon - 未选中状态的图标
  * @csspart checked-icon 选中状态的图标
  *
- * @cssprop --shape-corner - 组件的轨道的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --shape-corner-thumb - 组件的图标容器的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件轨道的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-thumb - 组件图标容器的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-switch')
 export class Switch
@@ -74,7 +74,7 @@ export class Switch
   public checked = false;
 
   /**
-   * 默认选中状态。在重置表单时，将重置为该默认状态。该属性只能通过 JavaScript 属性设置
+   * 默认选中状态。在重置表单时，将重置为此状态。此属性只能通过 JavaScript 属性设置
    */
   @defaultValue('checked')
   public defaultChecked = false;
@@ -94,7 +94,7 @@ export class Switch
   public checkedIcon?: string;
 
   /**
-   * 提交表单时，是否必须选中该开关
+   * 提交表单时，是否必须选中此开关
    */
   @property({
     type: Boolean,
@@ -104,9 +104,9 @@ export class Switch
   public required = false;
 
   /**
-   * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
+   * 关联的 `<form>` 元素。此属性值应为同一页面中的一个 `<form>` 元素的 `id`。
    *
-   * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
+   * 如果未指定此属性，则该元素必须是 `<form>` 元素的子元素。通过此属性，你可以将元素放置在页面的任何位置，而不仅仅是 `<form>` 元素的子元素。
    */
   @property({ reflect: true })
   public form?: string;
@@ -142,14 +142,14 @@ export class Switch
   );
 
   /**
-   * 表单验证状态对象 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
+   * 表单验证状态对象，具体参见 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
    */
   public get validity(): ValidityState {
     return this.inputRef.value!.validity;
   }
 
   /**
-   * 表单验证未通过时的提示文案。验证通过时为空字符串
+   * 如果表单验证未通过，此属性将包含提示信息。如果验证通过，此属性将为空字符串
    */
   public get validationMessage(): string {
     return this.inputRef.value!.validationMessage;
@@ -193,7 +193,7 @@ export class Switch
   }
 
   /**
-   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
+   * 检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`
    */
   public checkValidity(): boolean {
     const valid = this.inputRef.value!.checkValidity();
@@ -210,9 +210,9 @@ export class Switch
   }
 
   /**
-   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`。
+   * 检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`。
    *
-   * 验证未通过时，还将在组件上显示未通过的提示。
+   * 如果验证未通过，还会在组件上显示验证失败的提示。
    */
   public reportValidity(): boolean {
     this.invalid = !this.inputRef.value!.reportValidity();
@@ -235,9 +235,9 @@ export class Switch
   }
 
   /**
-   * 设置自定义的错误提示文本。只要文本不为空，则表示字段验证未通过
+   * 设置自定义的错误提示文本。只要这个文本不为空，就表示字段未通过验证
    *
-   * @param message 自定义的提示文本
+   * @param message 自定义的错误提示文本
    */
   public setCustomValidity(message: string): void {
     this.inputRef.value!.setCustomValidity(message);

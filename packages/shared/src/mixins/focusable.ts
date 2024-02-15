@@ -38,7 +38,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
 ): Constructor<FocusableMixinInterface> & T => {
   class FocusableMixinClass extends superclass {
     /**
-     * 是否在页面加载完成后自动获得焦点
+     * 是否在页面加载完成后自动获取焦点
      */
     @property({
       type: Boolean,
@@ -85,7 +85,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     private _lastFocusDisabled?: boolean;
 
     /**
-     * 通过 Tab 键在元素之间切换焦点时，tabIndex 属性指定了元素获取焦点的顺序
+     * 元素在使用 Tab 键切换焦点时的顺序
      */
     @property({ type: Number, attribute: 'tabindex' })
     public override get tabIndex(): number {
@@ -194,11 +194,11 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     }
 
     /**
-     * 将焦点设置在当前元素。
+     * 将焦点设置到当前元素。
      *
-     * 可传入一个对象作为参数。对象属性为：
+     * 可以传入一个对象作为参数，该对象的属性包括：
      *
-     * * `preventScroll`：默认情况下，在聚焦后会滚动页面，以将聚焦的元素滚动到视图中。可将该属性设为 `true` 以阻止页面滚动。
+     * * `preventScroll`：默认情况下，元素获取焦点后，页面会滚动以将该元素滚动到视图中。如果不希望页面滚动，可以将此属性设置为 `true`。
      */
     public override focus(options?: FocusOptions): void {
       if (this.focusDisabled || !this.focusElement) {
@@ -213,7 +213,7 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     }
 
     /**
-     * 从当前元素中移除焦点
+     * 移除当前元素的焦点
      */
     public override blur(): void {
       if (this.focusElement !== this) {

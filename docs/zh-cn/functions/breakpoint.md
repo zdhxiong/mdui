@@ -1,6 +1,6 @@
-该函数用于进行页面断点的判断。
+该函数用于判断页面的断点。
 
-mdui 共包含 6 个断点，分别为：`xs`、`sm`、`md`、`lg`、`xl`、`xxl`，其默认值可见 [设计令牌](/zh-cn/docs/2/styles/design-tokens#breakpoint) 页面。可通过该函数判断页面宽度是否大于、小于、等于、不等于指定断点，及是否在指定断点范围内。
+mdui 提供了 6 个断点，分别为：`xs`、`sm`、`md`、`lg`、`xl`、`xxl`。其默认值可在 [设计令牌](/zh-cn/docs/2/styles/design-tokens#breakpoint) 页面查看。你可以使用此函数来判断页面宽度是否大于、小于、等于、不等于指定的断点，或者是否在指定的断点范围内。
 
 ## 使用方法 {#usage}
 
@@ -37,11 +37,11 @@ breakpointCondition.between('sm', 'lg');
 
 该函数返回 [`breakpointCondition`](#api-breakpointCondition) 对象。函数的行为取决于传入的参数类型：
 
-* 若不传入参数，则返回当前页面宽度的 `breakpointCondition` 对象。
-* 若传入数值，则返回指定宽度的 `breakpointCondition` 对象。
-* 若传入 CSS 选择器，则返回该选择器对应的元素宽度的 `breakpointCondition` 对象。
-* 若传入 HTML 元素，则返回指定元素宽度的 `breakpointCondition` 对象。
-* 若传入 [JQ 对象](/zh-cn/docs/2/functions/jq)，则返回该 JQ 对象中的元素宽度的 `breakpointCondition` 对象。
+* 如果不传入参数，将返回当前页面宽度的 `breakpointCondition` 对象。
+* 如果传入数值，将返回指定宽度的 `breakpointCondition` 对象。
+* 如果传入 CSS 选择器，将返回该选择器对应元素宽度的 `breakpointCondition` 对象。
+* 如果传入 HTML 元素，将返回该元素宽度的 `breakpointCondition` 对象。
+* 如果传入 [JQ 对象](/zh-cn/docs/2/functions/jq)，将返回该 JQ 对象中元素的宽度的 `breakpointCondition` 对象。
 
 ### Breakpoint {#api-Breakpoint}
 

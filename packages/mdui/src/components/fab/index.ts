@@ -34,16 +34,16 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart icon - 左侧的图标
  * @csspart loading - 加载中状态的 `<mdui-circular-progress>` 元素
  *
- * @cssprop --shape-corner-small - `size="small"` 时，组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --shape-corner-normal - `size="normal"` 时，组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --shape-corner-large - `size="large"` 时，组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-small - `size="small"` 时，组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-normal - `size="normal"` 时，组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-large - `size="large"` 时，组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-fab')
 export class Fab extends ButtonBase<FabEventMap> {
   public static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   /**
-   * FAB 形状，此组件的不同形状之间只有颜色不一样。可选值为：
+   * FAB 的形状，此组件的不同形状之间只有颜色不一样。可选值包括：
    *
    * * `primary`：使用 Primary container 背景色
    * * `surface`：使用 Surface container high 背景色
@@ -58,7 +58,7 @@ export class Fab extends ButtonBase<FabEventMap> {
     | /*使用 Tertiary container 背景色*/ 'tertiary' = 'primary';
 
   /**
-   * FAB 大小。可选值为：
+   * FAB 的大小。可选值包括：
    * * `normal`：普通大小 FAB
    * * `small`：小型 FAB
    * * `large`：大型 FAB

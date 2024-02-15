@@ -1,4 +1,4 @@
-浮动操作按钮（FAB）用于页面上最重要的操作，你可以用它把关键操作放在触手可及的位置。
+浮动操作按钮（FAB）用于突出显示页面上的主要操作，它将关键操作置于易于访问的位置。
 
 ## 使用方法 {#usage}
 
@@ -35,7 +35,7 @@ import type { Fab } from 'mdui/components/fab.js';
 
 ### 展开状态 {#example-extended}
 
-添加 `extended` 属性可将 Fab 设置为展开状态，此时 default slot 中的文本将显示出来。
+添加 `extended` 属性可以将 FAB 设置为展开状态，此时 default slot 中的文本将显示出来。
 
 ```html,example,expandable
 <mdui-fab extended icon="edit">Compose</mdui-fab>
@@ -43,7 +43,7 @@ import type { Fab } from 'mdui/components/fab.js';
 
 ### 形状 {#example-variant}
 
-使用 `variant` 属性设置 Fab 的形状。
+使用 `variant` 属性可以设置 FAB 的形状。
 
 ```html,example,expandable
 <mdui-fab variant="primary" icon="edit"></mdui-fab>
@@ -54,7 +54,7 @@ import type { Fab } from 'mdui/components/fab.js';
 
 ### 大小 {#example-size}
 
-使用 `size` 属性设置 Fab 的大小。
+使用 `size` 属性可以设置 FAB 的大小。
 
 ```html,example,expandable
 <mdui-fab size="small" icon="edit"></mdui-fab>
@@ -64,15 +64,15 @@ import type { Fab } from 'mdui/components/fab.js';
 
 ### 链接 {#example-link}
 
-添加 `href` 属性，可使 Fab 变为链接，此时还可使用这些和链接相关的属性：`download`、`target`、`rel`。
+添加 `href` 属性，可以使 FAB 具有链接功能，此时还可以使用与链接相关的属性：`download`、`target`、`rel`。
 
 ```html,example,expandable
 <mdui-fab icon="edit" href="https://www.mdui.org" target="_blank"></mdui-fab>
 ```
 
-### 禁用及 loading 状态 {#example-disabled}
+### 禁用及加载中状态 {#example-disabled}
 
-添加 `disabled` 属性可禁用 Fab；添加 `loading` 属性可为 Fab 添加加载中状态。
+添加 `disabled` 属性可以禁用 FAB；添加 `loading` 属性可以为 FAB 添加加载中状态。
 
 ```html,example,expandable
 <mdui-fab disabled icon="edit"></mdui-fab>

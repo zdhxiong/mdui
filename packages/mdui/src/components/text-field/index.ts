@@ -83,7 +83,7 @@ export class TextField
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * 文本框形状。默认为 `filled`。可选值为：
+   * 文本框的形状。默认为 `filled`。可选值包括：
    *
    * * `filled`：带背景色的文本框，视觉效果较强
    * * `outlined`：带边框的文本框，视觉效果较弱
@@ -94,7 +94,7 @@ export class TextField
     | /*带边框的文本框，视觉效果较弱*/ 'outlined' = 'filled';
 
   /**
-   * 文本框输入类型。默认为 `text`。可选值为：
+   * 文本框输入类型。默认为 `text`。可选值包括：
    *
    * * `text`：默认值。文本字段
    * * `number`：只能输入数字。拥有动态键盘的设备上会显示数字键盘
@@ -151,7 +151,7 @@ export class TextField
   public label?: string;
 
   /**
-   * 提示文本
+   * 占位符文本
    */
   @property({ reflect: true })
   public placeholder?: string;
@@ -163,7 +163,7 @@ export class TextField
   public helper?: string;
 
   /**
-   * 是否仅在获得焦点时，显示底部帮助文本
+   * 是否仅在获得焦点时，显示底部的帮助文本
    */
   @property({
     type: Boolean,
@@ -174,7 +174,7 @@ export class TextField
   public helperOnFocus = false;
 
   /**
-   * 是否可清空文本框
+   * 是否可清空文本框内容
    */
   @property({
     type: Boolean,
@@ -190,7 +190,7 @@ export class TextField
   public clearIcon?: string;
 
   /**
-   * 文本是否右对齐
+   * 是否将文本右对齐
    */
   @property({
     type: Boolean,
@@ -201,13 +201,13 @@ export class TextField
   public endAligned = false;
 
   /**
-   * 文本框的前缀文本。仅在聚焦状态，或文本框有值时才会显示。也可以通过 `slot="prefix"` 设置
+   * 文本框的前缀文本。只在文本框聚焦或有值时显示。也可以通过 `slot="prefix"` 设置
    */
   @property({ reflect: true })
   public prefix!: string;
 
   /**
-   * 文本框的后缀文本。仅在聚焦状态，或文本框有值时才会显示。也可以通过 `slot="suffix"` 设置
+   * 文本框的后缀文本。只在文本框聚焦或有值时显示。也可以通过 `slot="suffix"` 设置
    */
   @property({ reflect: true })
   public suffix?: string;
@@ -231,15 +231,15 @@ export class TextField
   public errorIcon?: string;
 
   /**
-   * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
+   * 关联的 `<form>` 元素。此属性值应为同一页面中的一个 `<form>` 元素的 `id`。
    *
-   * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
+   * 如果未指定此属性，则该元素必须是 `<form>` 元素的子元素。通过此属性，你可以将元素放置在页面的任何位置，而不仅仅是 `<form>` 元素的子元素。
    */
   @property({ reflect: true })
   public form?: string;
 
   /**
-   * 是否为只读
+   * 是否为只读模式
    */
   @property({
     type: Boolean,
@@ -249,7 +249,7 @@ export class TextField
   public readonly = false;
 
   /**
-   * 是否为禁用状态
+   * 是否禁用输入框
    */
   @property({
     type: Boolean,
@@ -269,13 +269,13 @@ export class TextField
   public required = false;
 
   /**
-   * 文本框固定显示的行数
+   * 文本框的固定显示行数
    */
   @property({ type: Number, reflect: true })
   public rows?: number;
 
   /**
-   * 是否根据输入的内容自动调整文本框高度
+   * 是否根据输入内容自动调整文本框高度
    */
   @property({
     type: Boolean,
@@ -285,13 +285,13 @@ export class TextField
   public autosize = false;
 
   /**
-   * `autosize` 为 `true` 时，可以通过该属性指定最小行数
+   * `autosize` 为 `true` 时，文本框的最小行数
    */
   @property({ type: Number, reflect: true, attribute: 'min-rows' })
   public minRows?: number;
 
   /**
-   * `autosize` 为 `true` 时，可以通过该属性指定最大行数
+   * `autosize` 为 `true` 时，文本框的最大行数
    */
   @property({ type: Number, reflect: true, attribute: 'max-rows' })
   public maxRows?: number;
@@ -309,7 +309,7 @@ export class TextField
   public maxlength?: number;
 
   /**
-   * 是否显示字数统计。必须指定了 `maxlength` 时，该参数才有效
+   * 是否显示字数统计，只在 `maxlength` 被指定时有效
    */
   @property({
     type: Boolean,
@@ -331,7 +331,7 @@ export class TextField
   public max?: number;
 
   /**
-   * `type` 为 `number` 时，数值在增减过程固定改变的值
+   * `type` 为 `number` 时，数值增减的步长
    */
   @property({ type: Number, reflect: true })
   public step?: number;
@@ -343,7 +343,7 @@ export class TextField
   public pattern?: string;
 
   /**
-   * `type` 为 `password` 时，设置该属性会添加一个切换按钮，点击时可在密文和明文之间切换
+   * `type` 为 `password` 时，设置此属性会添加一个切换按钮，用于在明文和密文之间切换
    */
   @property({
     type: Boolean,
@@ -354,31 +354,31 @@ export class TextField
   public togglePassword = false;
 
   /**
-   * 含密码切换按钮时，明文密码状态下，按钮的 Material Icons 图标。也可以通过 `slot="show-password-icon"` 设置
+   * 密码切换按钮的 Material Icons 图标，当密码为明文时显示。也可以通过 `slot="show-password-icon"` 设置
    */
   @property({ reflect: true, attribute: 'show-password-icon' })
   public showPasswordIcon?: string;
 
   /**
-   * 含密码切换按钮时，密文密码状态下，按钮的 Material Icons 图标。也可以通过 `slot="hide-password-icon"` 设置
+   * 密码切换按钮的 Material Icons 图标，当密码为密文时显示。也可以通过 `slot="hide-password-icon"` 设置
    */
   @property({ reflect: true, attribute: 'hide-password-icon' })
   public hidePasswordIcon?: string;
 
   /**
-   * iOS 的非标准属性（运行在 iOS 上的 Safari、Firefox、Chrome 都支持），文本是否自动首字母大写。在 iOS5 和之后的版本上有效。可选值为：
+   * iOS 的非标准属性，用于控制文本首字母是否自动大写。在 iOS5 及以后的版本上有效。可选值包括：
    *
    * * `none`：禁用首字母大写
-   * * `sentences`：句子的首字母大写
-   * * `words`：单词或字母的首字母大写
-   * * `characters`：全部字母大写
+   * * `sentences`：句子首字母大写
+   * * `words`：单词首字母大写
+   * * `characters`：所有字母大写
    */
   @property({ reflect: true })
   public autocapitalize!:
     | /*禁用首字母大写*/ 'none'
-    | /*句子的首字母大写*/ 'sentences'
-    | /*单词或字母的首字母大写*/ 'words'
-    | /*全部字母大写*/ 'characters';
+    | /*句子首字母大写*/ 'sentences'
+    | /*单词首字母大写*/ 'words'
+    | /*所有字母大写*/ 'characters';
 
   /**
    * `input` 元素的 `autocorrect` 属性
@@ -387,45 +387,45 @@ export class TextField
   public autocorrect?: string;
 
   /**
-   * 是否使用浏览器的记忆功能自动填充文本。可选值为：
+   * 是否使用浏览器的自动填充功能。可选值包括：
    *
-   * * `off`：不使用浏览器的记忆自动填充，使用者必须输入他们想要输入的所有内容。或者网页提供了自己的自动填充方法
+   * * `off`：禁用浏览器的自动填充，使用者必须输入他们想要输入的所有内容。或者网页提供了自己的自动填充方法
    * * `on`：浏览器根据用户之前输入的内容或者习惯，在用户输入的时候给出相应输入提示
    */
   @property({ reflect: true })
   public autocomplete?:
-    | /*不使用浏览器的记忆自动填充，使用者必须输入他们想要输入的所有内容。或者网页提供了自己的自动填充方法*/ 'off'
+    | /*禁用浏览器的自动填充，使用者必须输入他们想要输入的所有内容。或者网页提供了自己的自动填充方法*/ 'off'
     | /*浏览器根据用户之前输入的内容或者习惯，在用户输入的时候给出相应输入提示*/ 'on';
 
   /**
-   * `input` 元素的 `enterkeyhint` 属性。可用于定制虚拟键盘上的 Enter 键的显示文本或图标。具体显示效果取决于用户使用的设备和语言。可选值为：
+   * `input` 元素的 `enterkeyhint` 属性，用于定制虚拟键盘上的 Enter 键的显示文本或图标。具体显示效果取决于用户使用的设备和语言。可选值包括：
    *
-   * * `enter`：插入新行，多出现在多行文本框等需要输入多行的场景中
-   * * `done`：输入完成，虚拟键盘将关闭
-   * * `go`：把用户带到他们输入的文本的目标处
+   * * `enter`：插入新行
+   * * `done`：完成输入，关闭虚拟键盘
+   * * `go`：导航到输入文本的目标
    * * `next`：移动到下一个输入项
    * * `previous`：移动到上一个输入项
-   * * `search`：把用户带到搜索结果
+   * * `search`：导航到搜索结果
    * * `send`：发送文本信息
    */
   @property({ reflect: true })
   public enterkeyhint?:
-    | /*插入新行，多出现在多行文本框等需要输入多行的场景中*/ 'enter'
-    | /*输入完成，虚拟键盘将关闭*/ 'done'
-    | /*把用户带到他们输入的文本的目标处*/ 'go'
+    | /*插入新行*/ 'enter'
+    | /*完成输入，关闭虚拟键盘*/ 'done'
+    | /*导航到输入文本的目标*/ 'go'
     | /*移动到下一个输入项*/ 'next'
     | /*移动到上一个输入项*/ 'previous'
-    | /*把用户带到搜索结果*/ 'search'
+    | /*导航到搜索结果*/ 'search'
     | /*发送文本信息*/ 'send';
 
   /**
-   * 启用拼写检查
+   * 是否启用拼写检查
    */
   @property({ type: Boolean, reflect: true, converter: booleanConverter })
   public spellcheck = false;
 
   /**
-   * `input` 元素的 `inputmode` 属性。用于定制使用哪种虚拟键盘。可选值为：
+   * `input` 元素的 `inputmode` 属性，用于定制虚拟键盘的类型。可选值包括：
    *
    * * `none`：无虚拟键盘。在需要实现自己的键盘输入控件时很有用
    * * `text`：标准文本输入键盘
@@ -506,14 +506,14 @@ export class TextField
   private readonlyButClearable = false;
 
   /**
-   * 表单验证状态对象 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
+   * 表单验证状态对象，具体参见 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
    */
   public get validity(): ValidityState {
     return this.inputRef.value!.validity;
   }
 
   /**
-   * 表单验证未通过时的提示文案。验证通过时为空字符串
+   * 如果表单验证未通过，此属性将包含提示信息。如果验证通过，此属性将为空字符串
    */
   public get validationMessage(): string {
     return this.inputRef.value!.validationMessage;
@@ -657,7 +657,7 @@ export class TextField
   }
 
   /**
-   * 把文本框中特定范围的文本替换成一个新的文本
+   * 将文本框中特定范围的文本替换为新的文本
    * @param replacement 要插入的字符串
    * @param start 要替换的字符的起止位置的索引。默认为当前用户选中的字符的起始位置的索引
    * @param end 要替换的字符的结束位置的索引。默认为当前用户选中的字符的结束位置的索引
@@ -684,7 +684,7 @@ export class TextField
   }
 
   /**
-   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
+   * 检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`
    */
   public checkValidity(): boolean {
     const valid = this.inputRef.value!.checkValidity();
@@ -701,9 +701,9 @@ export class TextField
   }
 
   /**
-   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`。
+   * 检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`。
    *
-   * 验证未通过时，还将在组件上显示未通过的提示。
+   * 如果验证未通过，还会在组件上显示验证失败的提示。
    */
   public reportValidity(): boolean {
     this.invalid = !this.inputRef.value!.reportValidity();
@@ -722,9 +722,9 @@ export class TextField
   }
 
   /**
-   * 设置自定义的错误提示文本。只要文本不为空，则表示字段验证未通过
+   * 设置自定义的错误提示文本。只要这个文本不为空，就表示字段未通过验证
    *
-   * @param message 自定义的提示文本
+   * @param message 自定义的错误提示文本
    */
   public setCustomValidity(message: string): void {
     this.inputRef.value!.setCustomValidity(message);

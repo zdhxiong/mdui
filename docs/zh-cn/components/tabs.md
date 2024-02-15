@@ -1,4 +1,4 @@
-选项卡用于将不同内容、数据集等进行分组。
+选项卡组件用于将内容或数据集进行分组显示。
 
 ## 使用方法 {#usage}
 
@@ -34,9 +34,9 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 
 ## 示例 {#examples}
 
-### 形状 {#example-variant}
+### 选项卡样式 {#example-variant}
 
-在 `<mdui-tabs>` 组件上使用 `variant` 属性设置选项卡的形状。
+通过在 `<mdui-tabs>` 组件上使用 `variant` 属性，可以设置选项卡的样式。
 
 ```html,example,expandable
 <mdui-tabs value="tab-1" variant="primary">
@@ -62,7 +62,7 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 
 ### 选项卡位置 {#example-placement}
 
-在 `<mdui-tabs>` 组件上使用 `placement` 属性设置选项卡的位置。
+在 `<mdui-tabs>` 组件上使用 `placement` 属性，可以设置选项卡的位置。
 
 ```html,example,expandable
 <mdui-select class="example-change-placement" placeholder="选择 placement 值" style="width: 180px">
@@ -100,9 +100,9 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 </script>
 ```
 
-### 全宽 {#example-full-width}
+### 全宽显示 {#example-full-width}
 
-在 `<mdui-tabs>` 组件上添加 `full-width` 属性使选项卡占据全部宽度，并由各个选项卡平分。
+在 `<mdui-tabs>` 组件上添加 `full-width` 属性，可以使选项卡占据全部宽度，各个选项卡将平均分配宽度。
 
 ```html,example,expandable
 <mdui-tabs value="tab-1" full-width>
@@ -118,9 +118,9 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 
 ### 图标 {#example-icon}
 
-在 `<mdui-tab>` 组件上设置 `icon` 属性，可在选项卡上添加 Material Icons 图标。也可以通过 `icon` slot 添加图标元素。
+在 `<mdui-tab>` 组件上设置 `icon` 属性，可以在选项卡上添加 Material Icons 图标。也可以通过 `icon` slot 添加图标元素。
 
-添加 `inline` 属性可将图标和文本水平排列。
+添加 `inline` 属性可以将图标和文本水平排列。
 
 ```html,example,expandable
 <mdui-tabs value="tab-1">
@@ -139,7 +139,7 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 
 ### 徽标 {#example-badge}
 
-在 `<mdui-tab>` 组件中，可通过 `badge` slot 添加徽标。
+在 `<mdui-tab>` 组件中，可以通过 `badge` slot 添加徽标。
 
 ```html,example,expandable
 <mdui-tabs value="tab-1">
@@ -158,7 +158,7 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 
 ### 自定义内容 {#example-custom}
 
-在 `<mdui-tab>` 组件中使用 `custom` slot，可完全自定义选项卡的内容。
+在 `<mdui-tab>` 组件中使用 `custom` slot，可以完全自定义选项卡的内容。
 
 ```html,example,expandable
 <mdui-tabs value="tab-1">

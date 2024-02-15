@@ -31,10 +31,10 @@ import type { Ref } from 'lit/directives/ref.js';
  * <mdui-dialog>content</mdui-dialog>
  * ```
  *
- * @event open - 在对话框打开之前触发。可以通过调用 `event.preventDefault()` 阻止对话框打开
- * @event opened - 在对话框打开之后触发
- * @event close - 在对话框关闭之前触发。可以通过调用 `event.preventDefault()` 阻止对话框关闭
- * @event closed - 在对话框关闭之后触发
+ * @event open - 对话框开始打开时触发。可以通过调用 `event.preventDefault()` 阻止对话框打开
+ * @event opened - 对话框打开动画完成后触发
+ * @event close - 对话框开始关闭时触发。可以通过调用 `event.preventDefault()` 阻止对话框关闭
+ * @event closed - 对话框关闭动画完成后触发
  * @event overlay-click - 点击遮罩层时触发
  *
  * @slot header - 顶部元素，默认包含 `icon` slot 和 `headline` slot
@@ -46,15 +46,15 @@ import type { Ref } from 'lit/directives/ref.js';
  *
  * @csspart overlay - 遮罩层
  * @csspart panel - 对话框容器
- * @csspart header - 对话框 header 部分，其中包含了 icon 和 headline
- * @csspart icon - 顶部的图标，位于 header 中
- * @csspart headline - 顶部的标题，位于 header 中
- * @csspart body - 对话框的 body 部分
+ * @csspart header - 对话框 header 部分，包含 icon 和 headline
+ * @csspart icon - 顶部图标，位于 header 中
+ * @csspart headline - 顶部标题，位于 header 中
+ * @csspart body - 对话框 body 部分
  * @csspart description - 副文本部分，位于 body 中
  * @csspart action - 底部操作按钮
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --z-index - 组件的 CSS `z-index` 值
  */
 @customElement('mdui-dialog')
 export class Dialog extends MduiElement<DialogEventMap> {
@@ -89,7 +89,7 @@ export class Dialog extends MduiElement<DialogEventMap> {
   public open = false;
 
   /**
-   * 是否为全屏对话框
+   * 是否全屏显示对话框
    */
   @property({
     type: Boolean,
@@ -99,7 +99,7 @@ export class Dialog extends MduiElement<DialogEventMap> {
   public fullscreen = false;
 
   /**
-   * 是否在按下 ESC 键时，关闭对话框
+   * 是否允许按下 ESC 键关闭对话框
    */
   @property({
     type: Boolean,
@@ -110,7 +110,7 @@ export class Dialog extends MduiElement<DialogEventMap> {
   public closeOnEsc = false;
 
   /**
-   * 是否在点击遮罩时，关闭对话框
+   * 是否允许点击遮罩层关闭对话框
    */
   @property({
     type: Boolean,

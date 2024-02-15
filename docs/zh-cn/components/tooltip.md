@@ -1,4 +1,4 @@
-工具提示用于对指定元素进行补充文本提示、或提供上下文信息，以便更好地理解该元素的功能或作用。
+工具提示用于对特定元素提供补充文本提示或上下文信息，以便用户更好地理解该元素的功能或用途。
 
 ## 使用方法 {#usage}
 
@@ -26,7 +26,7 @@ import type { Tooltip } from 'mdui/components/tooltip.js';
 
 ### 纯文本 tooltip {#example-plain}
 
-默认为纯文本 tooltip。可通过 `content` 属性指定 tooltip 的内容。
+默认为纯文本 tooltip。可以通过 `content` 属性设置 tooltip 的内容。
 
 ```html,example,expandable
 <mdui-tooltip content="Plain tooltip">
@@ -34,7 +34,7 @@ import type { Tooltip } from 'mdui/components/tooltip.js';
 </mdui-tooltip>
 ```
 
-也可以通过 `content` slot 指定 tooltip 的内容。
+也可以通过 `content` slot 设置 tooltip 的内容。
 
 ```html,example,expandable
 <mdui-tooltip>
@@ -48,7 +48,7 @@ import type { Tooltip } from 'mdui/components/tooltip.js';
 
 ### 富文本 tooltip {#example-rich}
 
-指定 `variant` 的值为 `rich`，即为富文本 tooltip。可通过 `headline` 属性指定 tooltip 的标题，`content` 属性指定 tooltip 的内容。
+设置 `variant` 属性为 `rich` 可以创建富文本 tooltip。可以通过 `headline` 属性设置 tooltip 的标题，`content` 属性设置 tooltip 的内容。
 
 ```html,example,expandable
 <mdui-tooltip
@@ -60,7 +60,7 @@ import type { Tooltip } from 'mdui/components/tooltip.js';
 </mdui-tooltip>
 ```
 
-也可以通过 `headline`、`content` slot 指定 tooltip 的标题和内容。通过 `action` slot 指定 tooltip 的操作按钮。
+也可以通过 `headline`、`content` slot 设置 tooltip 的标题和内容。通过 `action` slot 设置 tooltip 的操作按钮。
 
 ```html,example,expandable
 <mdui-tooltip variant="rich">
@@ -73,7 +73,7 @@ import type { Tooltip } from 'mdui/components/tooltip.js';
 
 ### 位置 {#example-placement}
 
-使用 `placement` 属性设置 tooltip 的位置。
+通过 `placement` 属性可以设置 tooltip 的位置。
 
 ```html,example,expandable
 <div class="example-placement">
@@ -154,7 +154,7 @@ import type { Tooltip } from 'mdui/components/tooltip.js';
 
 ### 触发方式 {#example-trigger}
 
-使用 `trigger` 属性设置 tooltip 的触发方式。
+通过 `trigger` 属性，可以设置 tooltip 的触发方式。
 
 ```html,example,expandable
 <mdui-tooltip trigger="click" content="tooltip">
@@ -164,7 +164,7 @@ import type { Tooltip } from 'mdui/components/tooltip.js';
 
 ### 打开/关闭延时 {#example-delay}
 
-在触发方式为 `hover` 时，可以使用 `open-delay` 属性设置打开延时，`close-delay` 属性设置关闭延时。单位为毫秒。
+当触发方式为 `hover` 时，可以通过 `open-delay` 和 `close-delay` 属性分别设置打开和关闭 tooltip 的延时，单位为毫秒。
 
 ```html,example,expandable
 <mdui-tooltip open-delay="1000" close-delay="1000" content="tooltip">
@@ -174,7 +174,7 @@ import type { Tooltip } from 'mdui/components/tooltip.js';
 
 ### 禁用状态 {#example-disabled}
 
-添加 `disabled` 属性，可以禁用 tooltip。
+通过添加 `disabled` 属性，可以禁用 tooltip。
 
 ```html,example,expandable
 <mdui-tooltip disabled content="tooltip">

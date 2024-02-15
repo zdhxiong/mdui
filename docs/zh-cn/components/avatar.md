@@ -24,7 +24,7 @@ import type { Avatar } from 'mdui/components/avatar.js';
 
 ### 图片头像 {#example-src}
 
-可以使用 `src` 属性指定一个图片链接作为头像。也可以在 default slot 中提供一个 `<img>` 元素作为头像。
+可以使用 `src` 属性指定一个图片链接作为头像，或者在 default slot 中提供一个 `<img>` 元素作为头像。
 
 ```html,example,expandable
 <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
@@ -34,11 +34,11 @@ import type { Avatar } from 'mdui/components/avatar.js';
 </mdui-avatar>
 ```
 
-可以使用 `fit` 属性定义图片如何适应容器框，同原生 [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)。
+可以使用 `fit` 属性定义图片如何适应容器框，类似于原生的 [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)。
 
 ### 图标头像 {#example-icon}
 
-可使用 `icon` 属性指定一个 Material Icons 图标作为头像。也可以在 default slot 中提供一个图标元素作为头像。
+可以使用 `icon` 属性指定一个 Material Icons 图标作为头像，或者在 default slot 中提供一个图标元素作为头像。
 
 ```html,example,expandable
 <mdui-avatar icon="people_alt"></mdui-avatar>

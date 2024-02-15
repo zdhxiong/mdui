@@ -6,7 +6,7 @@ import { listStyle } from './list-style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
- * @summary 列表组件。需与 `<mdui-list-item>` 组件配合使用
+ * @summary 列表组件。需配合 `<mdui-list-item>` 组件使用
  *
  * ```html
  * <mdui-list>

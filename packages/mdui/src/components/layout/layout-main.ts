@@ -9,7 +9,7 @@ import type { Layout } from './layout.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
- * @summary 布局主内容组件
+ * @summary 布局主体内容组件
  *
  * ```html
  * <mdui-layout>
@@ -19,7 +19,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * </mdui-layout>
  * ```
  *
- * @slot - 可以是任意内容
+ * @slot - 可以包含任意内容
  */
 @customElement('mdui-layout-main')
 export class LayoutMain extends MduiElement<LayoutMainEventMap> {

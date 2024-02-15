@@ -22,37 +22,37 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event invalid - 表单字段验证未通过时触发
  *
  * @slot - 按钮的文本
- * @slot icon - 按钮左侧元素
- * @slot end-icon - 按钮右侧元素
+ * @slot icon - 按钮左侧的元素
+ * @slot end-icon - 按钮右侧的元素
  *
  * @csspart button - 内部的 `<button>` 或 `<a>` 元素
- * @csspart label - 按钮文本
- * @csspart icon - 按钮左侧图标
- * @csspart end-icon - 按钮右侧图标
+ * @csspart label - 按钮的文本
+ * @csspart icon - 按钮左侧的图标
+ * @csspart end-icon - 按钮右侧的图标
  * @csspart loading - 加载中状态的 `<mdui-circular-progress>` 元素
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-button')
 export class Button extends ButtonBase<ButtonEventMap> {
   public static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   /**
-   * 按钮形状。可选值为：
+   * 按钮的形状。可选值包括：
    *
-   * * `elevated`：带阴影的按钮，在需要把按钮和背景进行视觉分离时使用
-   * * `filled`：视觉效果仅次于 FAB，用于重要流程的最终操作，如“保存”、“确认”等
-   * * `tonal`：视觉效果介于 `filled` 和 `outlined` 之间，用于中高优先级的操作，如流程中的“下一步”
-   * * `outlined`：带边框的按钮，用于中等优先级，且次要的操作，如“返回”
-   * * `text`：文本按钮，用于最低优先级的操作
+   * * `elevated`：带阴影的按钮，适用于需要将按钮与背景视觉分离的场景
+   * * `filled`：视觉效果强烈，适用于重要流程的最终操作，如“保存”、“确认”等
+   * * `tonal`：视觉效果介于 `filled` 和 `outlined` 之间，适用于中高优先级的操作，如流程中的“下一步”
+   * * `outlined`：带边框的按钮，适用于中等优先级，且次要的操作，如“返回”
+   * * `text`：文本按钮，适用于最低优先级的操作
    */
   @property({ reflect: true })
   public variant:
-    | /*带阴影的按钮，在需要把按钮和背景进行视觉分离时使用*/ 'elevated'
-    | /*视觉效果仅次于 FAB，用于重要流程的最终操作，如“保存”、“确认”等*/ 'filled'
-    | /*视觉效果介于 `filled` 和 `outlined` 之间，用于中等偏高优先级的场景，如流程中的“下一步”*/ 'tonal'
-    | /*带边框的按钮，用于中等优先级，且次要操作的场景，如“返回”*/ 'outlined'
-    | /*文本按钮，用于最低优先级的操作*/ 'text' = 'filled';
+    | /*带阴影的按钮，适用于需要将按钮与背景视觉分离的场景*/ 'elevated'
+    | /*视觉效果强烈，适用于重要流程的最终操作，如“保存”、“确认”等*/ 'filled'
+    | /*视觉效果介于 `filled` 和 `outlined` 之间，适用于中高优先级的操作，如流程中的“下一步”*/ 'tonal'
+    | /*带边框的按钮，适用于中等优先级，且次要的操作，如“返回”*/ 'outlined'
+    | /*文本按钮，适用于最低优先级的操作*/ 'text' = 'filled';
 
   /**
    * 是否填满父元素宽度

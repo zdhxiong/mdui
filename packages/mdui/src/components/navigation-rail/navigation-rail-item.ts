@@ -19,7 +19,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @summary 侧边导航栏项组件。需与 `<mdui-navigation-rail>` 组件配合使用
+ * @summary 侧边导航项组件。需配合 `<mdui-navigation-rail>` 组件使用
  *
  * ```html
  * <mdui-navigation-rail>
@@ -29,7 +29,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * </mdui-navigation-rail>
  * ```
  *
- * @slot - 文本
+ * @slot - 文本内容
  * @slot icon - 图标
  * @slot active-icon - 激活状态的图标
  * @slot badge - 徽标
@@ -42,9 +42,9 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart badge - 徽标
  * @csspart icon - 图标
  * @csspart active-icon - 激活状态的图标
- * @csspart label - 文本
+ * @csspart label - 文本内容
  *
- * @cssprop --shape-corner-indicator - 指示器的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-indicator - 指示器的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-navigation-rail-item')
 export class NavigationRailItem extends AnchorMixin(
@@ -56,13 +56,13 @@ export class NavigationRailItem extends AnchorMixin(
   ];
 
   /**
-   * 未激活状态的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
+   * 未激活状态下的 Material Icons 图标名。也可以通过 `slot="icon"` 设置
    */
   @property({ reflect: true })
   public icon?: string;
 
   /**
-   * 激活状态的 Material Icons 图标名。也可以通过 `slot="active-icon"` 设置
+   * 激活状态下的 Material Icons 图标名。也可以通过 `slot="active-icon"` 设置
    */
   @property({ reflect: true, attribute: 'active-icon' })
   public activeIcon?: string;

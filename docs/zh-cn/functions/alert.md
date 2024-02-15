@@ -1,4 +1,4 @@
-`alert` 函数是对 [`<mdui-dialog>`](/zh-cn/docs/2/components/dialog) 组件的封装，该函数在功能上用于代替系统原生的 `window.alert` 函数。使用该函数，你无需编写组件的 HTML 代码，就能打开一个警告框。
+`alert` 函数是对 [`<mdui-dialog>`](/zh-cn/docs/2/components/dialog) 组件的封装，该函数用于代替系统原生的 `window.alert` 函数。使用该函数，你无需编写组件的 HTML 代码，就能打开一个警告框。
 
 ## 使用方法 {#usage}
 
@@ -33,7 +33,7 @@ import { alert } from 'mdui/functions/alert.js';
 
 <pre><code class="nohighlight">alert(options: <a href="#api-options">Options</a>): Promise&lt;void&gt;</code></pre>
 
-函数的参数为 [Options](#api-options) 对象；返回值为 Promise，如果是通过点击确定按钮关闭，则 Promise 会被 resolve，如果是通过其他方式关闭，则 Promise 会被 reject。
+`alert` 函数接收一个 [Options](#api-options) 对象作为参数；返回值为 Promise，如果警告框是通过点击确定按钮关闭的，则 Promise 会被 resolve，如果警告框是通过其他方式关闭的，则 Promise 会被 reject。
 
 ### Options {#api-options}
 

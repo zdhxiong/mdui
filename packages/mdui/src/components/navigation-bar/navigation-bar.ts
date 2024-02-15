@@ -25,7 +25,7 @@ type NavigationBarItem = NavigationBarItemOriginal & {
 };
 
 /**
- * @summary 底部导航栏组件。需与 `<mdui-navigation-bar-item>` 组件配合使用
+ * @summary 底部导航栏组件。需配合 `<mdui-navigation-bar-item>` 组件使用
  *
  * ```html
  * <mdui-navigation-bar>
@@ -43,8 +43,8 @@ type NavigationBarItem = NavigationBarItemOriginal & {
  *
  * @slot - `<mdui-navigation-bar-item>` 组件
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --z-index - 组件的 CSS `z-index` 值
  */
 @customElement('mdui-navigation-bar')
 export class NavigationBar extends ScrollBehaviorMixin(
@@ -66,17 +66,17 @@ export class NavigationBar extends ScrollBehaviorMixin(
   public hide = false;
 
   /**
-   * 文本的可视状态。可选值为：
+   * 文本的可视状态。可选值包括：
    *
-   * * `auto`：小于等于3个选项时，始终显示；大于3个选项时，仅显示选中状态的文本
-   * * `selected`：仅选中状态显示文本
+   * * `auto`：当选项小于等于3个时，始终显示文本；当选项大于3个时，仅显示选中状态的文本
+   * * `selected`：仅在选中状态显示文本
    * * `labeled`：始终显示文本
    * * `unlabeled`：始终不显示文本
    */
   @property({ reflect: true, attribute: 'label-visibility' })
   public labelVisibility:
-    | /*小于等于3个选项时，始终显示；大于3个选项时，仅显示选中状态的文本*/ 'auto'
-    | /*仅选中状态显示文本*/ 'selected'
+    | /*当选项小于等于3个时，始终显示文本；当选项大于3个时，仅显示选中状态的文本*/ 'auto'
+    | /*仅在选中状态显示文本*/ 'selected'
     | /*始终显示文本*/ 'labeled'
     | /*始终不显示文本*/ 'unlabeled' = 'auto';
 
@@ -87,11 +87,12 @@ export class NavigationBar extends ScrollBehaviorMixin(
   public value?: string;
 
   /**
-   * 滚动行为。可选值为：
+   * 滚动行为。可选值包括：
+   *
    * * `hide`：滚动时隐藏
    */
   @property({ reflect: true, attribute: 'scroll-behavior' })
-  public scrollBehavior?: 'hide' /*滚动时隐藏*/;
+  public scrollBehavior?: 'hide';
 
   // 因为 navigation-bar-item 的 value 可能会重复，所以在每个 navigation-bar-item 元素上都添加了一个唯一的 key，通过 activeKey 来记录激活状态的 key
   @state()

@@ -41,7 +41,7 @@ import type { Icon } from 'mdui/components/icon.js';
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Two+Tone" rel="stylesheet">
 ```
 
-使用组件时，在 `name` 属性中传入图标名称、并以图标变体名称为后缀（Filled 变体无需添加后缀），下面是 `delete` 图标的 5 种变体的使用方式：
+使用组件时，在 `name` 属性中传入图标名称，并以图标变体名称为后缀（Filled 变体无需添加后缀），下面是 `delete` 图标的 5 种变体的使用方式：
 
 ```html,example
 <!-- Filled -->

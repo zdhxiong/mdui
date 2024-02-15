@@ -37,24 +37,10 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
 ): Constructor<ScrollBehaviorMixinInterface> & T => {
   class ScrollBehaviorMixinClass extends superclass {
     /**
-     * 需要监听其滚动事件的元素，值可以是 CSS 选择器、DOM 元素、或 [JQ 对象](/docs/2/functions/jq)。默认为监听 `window`
+     * 需要监听其滚动事件的元素。值可以是 CSS 选择器、DOM 元素、或 [JQ 对象](/docs/2/functions/jq)。默认监听 `window` 的滚动事件
      */
     @property({ attribute: 'scroll-target' })
     public scrollTarget?: string | HTMLElement | JQ<HTMLElement>;
-
-    /**
-     * 滚动行为。可选值为：
-     * * `hide`：滚动时隐藏
-     * * `shrink`：滚动时缩小
-     * * `elevate`：滚动时增加阴影
-     *
-     * todo: 生成 custom-elements.json 时，属性名的注释用了父类的，属性枚举值的类型和注释用了该类的。期望都使用父类的。
-     */
-    @property({ reflect: true, attribute: 'scroll-behavior' })
-    public scrollBehavior?:
-      | /*滚动时隐藏*/ 'hide'
-      | /*滚动时缩小*/ 'shrink'
-      | /*滚动时增加阴影*/ 'elevate';
 
     /**
      * 在滚动多少距离之后触发滚动行为，单位为 `px`
@@ -104,6 +90,7 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
         this.updateContainerPadding();
       }
 
+      // @ts-ignore
       if (!this.scrollBehavior) {
         return;
       }
@@ -135,6 +122,7 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
         return;
       }
 
+      // @ts-ignore
       if (this.scrollBehavior) {
         this.updateScrollTop(listening);
 
@@ -169,6 +157,7 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
     protected hasScrollBehavior(
       behavior: ScrollBehavior | ScrollBehavior[],
     ): boolean {
+      // @ts-ignore
       const behaviors = (this.scrollBehavior?.split(' ') ??
         []) as ScrollBehavior[];
 

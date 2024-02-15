@@ -1,4 +1,4 @@
-侧边导航栏用于在平板电脑及桌面电脑上提供访问不同主页面的方式。
+侧边导航栏为平板电脑和桌面电脑提供了访问不同主页面的方式。
 
 ## 使用方法 {#usage}
 
@@ -16,7 +16,7 @@ import type { NavigationRail } from 'mdui/components/navigation-rail.js';
 import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js';
 ```
 
-使用示例：（示例中的 `style="position: relative"` 为演示所需，使用时请移除该样式。）
+使用示例：（示例中的 `style="position: relative"` 是为了演示需要，实际使用时请移除该样式。）
 
 ```html,example
 <mdui-navigation-rail value="recent" style="position: relative">
@@ -28,18 +28,18 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 **注意事项：**
 
-该组件默认使用 `position: fixed` 定位，且会自动在 `body` 上添加 `padding-left` 或 `padding-right` 样式，以避免页面内容被该组件遮挡。
+该组件默认使用 `position: fixed` 定位，并会自动在 `body` 上添加 `padding-left` 或 `padding-right` 样式，以防止页面内容被该组件遮挡。
 
-但在下列两种情况下，默认使用 `position: absolute` 定位：
+但在以下两种情况下，会默认使用 `position: absolute` 定位：
 
-1. `<mdui-navigation-rail>` 组件的 `contained` 属性为 `true` 时。且此时会在父元素上添加 `padding-left` 或 `padding-right` 样式。
-2. 位于 [`<mdui-layout></mdui-layout>`](/zh-cn/docs/2/components/layout) 组件中时。此时不会添加 `padding-left` 或 `padding-right` 样式。
+1. `<mdui-navigation-rail>` 组件的 `contained` 属性为 `true` 时。此时会在父元素上添加 `padding-left` 或 `padding-right` 样式。
+2. 当位于 [`<mdui-layout></mdui-layout>`](/zh-cn/docs/2/components/layout) 组件中时。此时不会添加 `padding-left` 或 `padding-right` 样式。
 
 ## 样式 {#examples}
 
 ### 位于指定容器内 {#example-contained}
 
-默认情况下，侧边导航栏会相对于当前窗口，显示在页面左侧或右侧。如果你希望把侧边导航栏放在指定容器内，可以在 `<mdui-navigation-rail>` 组件上添加 `contained` 属性，此时侧边导航栏会相对于父元素显示（你需要自行在父元素上添加样式 `position: relative`）。
+默认情况下，侧边导航栏会相对于当前窗口，在页面左侧或右侧显示。如果你希望将侧边导航栏放在指定的容器内，可以在 `<mdui-navigation-rail>` 组件上添加 `contained` 属性，此时侧边导航栏会相对于其父元素显示（你需要自行在父元素上添加 `position: relative` 样式）。
 
 ```html,example,expandable
 <div style="position: relative">
@@ -57,7 +57,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 ### 位于右侧 {#example-placement}
 
-在 `<mdui-navigation-rail>` 组件上设置 `placement` 属性为 `right`，可将侧边导航栏显示在右侧。
+在 `<mdui-navigation-rail>` 组件上设置 `placement` 属性为 `right`，可以将侧边导航栏显示在右侧。
 
 ```html,example,expandable
 <div style="position: relative">
@@ -75,7 +75,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 ### 显示分割线 {#example-divider}
 
-在 `<mdui-navigation-rail>` 组件上添加 `divider` 属性，可在侧边导航栏上添加一条分割线，以便和页面内容区分开。
+在 `<mdui-navigation-rail>` 组件上添加 `divider` 属性，可以在侧边导航栏上添加一条分割线，以便和页面内容区分开。
 
 ```html,example,expandable
 <div style="position: relative">
@@ -93,7 +93,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 ### 在顶部/底部添加元素 {#example-top-bottom}
 
-在 `<mdui-navigation-rail>` 组件内可通过 `top`、`bottom` slot 在顶部和底部添加元素。
+可以在 `<mdui-navigation-rail>` 组件内通过 `top`、`bottom` slot 在顶部和底部添加元素。
 
 ```html,example,expandable
 <div style="position: relative">
@@ -115,7 +115,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 ### 导航项垂直对齐方式 {#example-alignment}
 
-设置 `<mdui-navigation-rail>` 组件的 `alignment` 属性，可修改导航项的垂直对齐方式。
+通过设置 `<mdui-navigation-rail>` 组件的 `alignment` 属性，可以修改导航项的垂直对齐方式。
 
 ```html,example,expandable
 <div class="example-alignment" style="position: relative">
@@ -147,7 +147,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 ### 图标 {#example-icon}
 
-在 `<mdui-navigation-rail-item>` 组件上使用 `icon` 属性可设置未激活状态的导航项图标，使用 `active-icon` 属性可设置激活状态的导航项图标。也可以用 `icon` 和 `active-icon` slot 设置未激活和激活状态的图标元素。
+在 `<mdui-navigation-rail-item>` 组件上，可以使用 `icon` 属性设置未激活状态的导航项图标，使用 `active-icon` 属性设置激活状态的导航项图标。也可以用 `icon` 和 `active-icon` slot 设置未激活和激活状态的图标元素。
 
 ```html,example,expandable
 <div style="position: relative">
@@ -167,7 +167,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 </div>
 ```
 
-### 不含文本 {#example-no-label}
+### 仅使用图标 {#example-no-label}
 
 `<mdui-navigation-rail-item>` 组件可以仅使用图标，不添加文本。
 
@@ -187,7 +187,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 ### 链接 {#example-link}
 
-在 `<mdui-navigation-rail-item>` 组件上设置 `href` 属性，可使导航项变为链接，此时还可使用这些和链接相关的属性：`download`、`target`、`rel`。
+在 `<mdui-navigation-rail-item>` 组件上设置 `href` 属性，可以使导航项变为链接。此时，您还可以使用这些和链接相关的属性：`download`、`target`、`rel`。
 
 ```html,example,expandable
 <div style="position: relative">
@@ -209,7 +209,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 ### 徽标 {#example-badge}
 
-在 `<mdui-navigation-rail-item>` 组件中，可通过 `badge` slot 添加徽标。
+在 `<mdui-navigation-rail-item>` 组件中，可以通过 `badge` slot 添加徽标。
 
 ```html,example,expandable
 <div style="position: relative">

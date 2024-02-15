@@ -16,7 +16,7 @@ import type { NavigationBar } from 'mdui/components/navigation-bar.js';
 import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 ```
 
-使用示例：（示例中的 `style="position: relative"` 为演示所需，使用时请移除该样式。）
+使用示例：（示例中的 `style="position: relative"` 仅用于演示，实际使用时请移除该样式。）
 
 ```html,example
 <mdui-navigation-bar value="item-1" style="position: relative">
@@ -28,16 +28,16 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 **注意事项：**
 
-该组件默认使用 `position: fixed` 定位，且会自动在 `body` 上添加 `padding-bottom` 样式，以避免页面内容被该组件遮挡。但在下列两种情况下，默认使用 `position: absolute` 定位：
+该组件默认使用 `position: fixed` 定位，并会自动在 `body` 上添加 `padding-bottom` 样式，以防止页面内容被组件遮挡。但在以下两种情况下，会默认使用 `position: absolute` 定位：
 
-1. 指定了 `scroll-target` 属性时。且此时会在 `scroll-target` 的元素上添加 `padding-bottom` 样式。
-2. 位于 [`<mdui-layout></mdui-layout>`](/zh-cn/docs/2/components/layout) 组件中时。此时不会添加 `padding-bottom` 样式。
+1. 当指定了 `scroll-target` 属性时。此时会在 `scroll-target` 的元素上添加 `padding-bottom` 样式。
+2. 当组件位于 [`<mdui-layout></mdui-layout>`](/zh-cn/docs/2/components/layout) 中时。此时不会添加 `padding-bottom` 样式。
 
 ## 示例 {#examples}
 
 ### 文本标签显示状态 {#example-label-visibility}
 
-导航栏中的文本标签默认在导航项小于等于 3 个时，始终显示；大于 3 个时，仅显示选中状态的文本。
+导航栏中的文本标签默认在导航项小于等于 3 个时始终显示；当导航项大于 3 个时，仅显示选中状态的文本。
 
 ```html,example,expandable
 <mdui-navigation-bar value="item-1" style="position: relative">
@@ -56,7 +56,7 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 </mdui-navigation-bar>
 ```
 
-可在 `<mdui-navigation-bar>` 组件上通过 `label-visibility` 属性设置文本标签的显示状态。可选值为：
+你可以通过在 `<mdui-navigation-bar>` 组件上设置 `label-visibility` 属性来调整文本标签的显示状态。可选值有：
 
 * `selected`：仅显示选中状态的文本
 * `labeled`：始终显示文本
@@ -87,9 +87,9 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 ### 位于指定容器内 {#example-scroll-target}
 
-默认情况下，导航栏会相对于当前窗口，显示在页面底部。
+默认情况下，导航栏会相对于当前窗口，在页面底部显示。
 
-如果你希望把导航栏放在指定容器内，可以在 `<mdui-navigation-bar>` 组件上指定 `scroll-target` 属性，其值为可滚动内容的容器的 CSS 选择器或 DOM 元素，此时导航栏会相对于父元素显示（你需要自行在父元素上添加样式 `position: relative; overflow: hidden`）。
+如果你希望将导航栏放在指定的容器内，可以在 `<mdui-navigation-bar>` 组件上指定 `scroll-target` 属性。该属性的值应为可滚动内容的容器的 CSS 选择器或 DOM 元素。此时，导航栏会相对于父元素显示（你需要自行在父元素上添加 `position: relative; overflow: hidden` 样式）。
 
 ```html,example,expandable
 <div style="position: relative;overflow: hidden">
@@ -107,9 +107,9 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 ### 滚动时隐藏 {#example-scroll-behavior}
 
-在 `<mdui-navigation-bar>` 组件上设置 `scroll-behavior` 属性为 `hide`，可在页面向下滚动时隐藏导航栏，向上滚动时显示导航栏。
+通过在 `<mdui-navigation-bar>` 组件上设置 `scroll-behavior` 属性为 `hide`，可以实现页面向下滚动时隐藏导航栏，向上滚动时显示导航栏的效果。
 
-使用 `scroll-threshold` 属性，可设置滚动多少像素后开始隐藏导航栏。
+使用 `scroll-threshold` 属性，可以设置滚动多少像素后开始隐藏导航栏。
 
 ```html,example,expandable
 <div style="position: relative;overflow: hidden">
@@ -132,7 +132,7 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 ### 图标 {#example-icon}
 
-在 `<mdui-navigation-bar-item>` 组件上使用 `icon` 属性可设置未激活状态的导航项图标，使用 `active-icon` 属性可设置激活状态的导航项图标。也可以用 `icon` 和 `active-icon` slot 设置未激活和激活状态的图标元素。
+在 `<mdui-navigation-bar-item>` 组件上，`icon` 属性用于设置未激活状态的导航项图标，`active-icon` 属性用于设置激活状态的导航项图标。也可以通过 `icon` 和 `active-icon` slot 来设置未激活和激活状态的图标元素。
 
 ```html,example,expandable
 <mdui-navigation-bar value="item-1" style="position: relative">
@@ -151,7 +151,7 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 ### 链接 {#example-link}
 
-在 `<mdui-navigation-bar-item>` 组件上设置 `href` 属性，可使导航项变为链接，此时还可使用这些和链接相关的属性：`download`、`target`、`rel`。
+在 `<mdui-navigation-bar-item>` 组件上设置 `href` 属性，可以将导航项变为链接。此时，还可以使用与链接相关的属性：`download`、`target`、`rel`。
 
 ```html,example,expandable
 <mdui-navigation-bar value="item-1" style="position: relative">
@@ -162,7 +162,7 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 ### 徽标 {#example-badge}
 
-在 `<mdui-navigation-bar-item>` 组件中，可通过 `badge` slot 添加徽标。
+在 `<mdui-navigation-bar-item>` 组件中，可以通过 `badge` slot 添加徽章。
 
 ```html,example,expandable
 <mdui-navigation-bar value="item-1" style="position: relative">

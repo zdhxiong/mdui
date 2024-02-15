@@ -30,7 +30,7 @@ type SegmentedButton = SegmentedButtonOriginal & {
 };
 
 /**
- * @summary 分段按钮组件。需与 `<mdui-segmented-button>` 组件配合使用
+ * @summary 分段按钮组件。需配合 `<mdui-segmented-button>` 组件使用
  *
  * ```html
  * <mdui-segmented-button-group>
@@ -45,7 +45,7 @@ type SegmentedButton = SegmentedButtonOriginal & {
  *
  * @slot - `<mdui-segmented-button>` 组件
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-segmented-button-group')
 export class SegmentedButtonGroup
@@ -69,16 +69,16 @@ export class SegmentedButtonGroup
   public fullWidth = false;
 
   /**
-   * 分段按钮的可选中状态。默认为不可选中。可选值为：
+   * 分段按钮的可选中状态，默认为不可选中。可选值包括：
    *
-   * * `single`：最多只能选中一个
-   * * `multiple`：可以选中多个
+   * * `single`：单选
+   * * `multiple`：多选
    */
   @property({ reflect: true })
   // eslint-disable-next-line prettier/prettier
   public selects?:
-    | /*最多只能选中一个*/ 'single'
-    | /*可以选中多个*/ 'multiple';
+    | /*单选*/ 'single'
+    | /*多选*/ 'multiple';
 
   /**
    * 是否为禁用状态
@@ -101,9 +101,9 @@ export class SegmentedButtonGroup
   public required = false;
 
   /**
-   * 关联的 `form` 元素。此属性值必须为同一页面中的一个 `<form>` 元素的 `id` 属性。
+   * 关联的 `<form>` 元素。此属性值应为同一页面中的一个 `<form>` 元素的 `id`。
    *
-   * 如果此属性未指定，则元素必须是 `form` 元素的后代。利用此属性，你可以将元素放置在页面中的任何位置，而不仅仅是作为 `form` 元素的后代。
+   * 如果未指定此属性，则该元素必须是 `<form>` 元素的子元素。通过此属性，你可以将元素放置在页面的任何位置，而不仅仅是 `<form>` 元素的子元素。
    */
   @property({ reflect: true })
   public form?: string;
@@ -115,12 +115,9 @@ export class SegmentedButtonGroup
   public name = '';
 
   /**
-   * 当前选中的 `<mdui-segmented-button>` 的值
+   * 当前选中的 `<mdui-segmented-button>` 的值。
    *
-   * Note:
-   * 该属性的 HTML 属性始终为字符串，且仅在 `selects="single"` 时可以通过 HTML 属性设置初始值
-   * 该属性的 JavaScript 属性值在 `selects="single"` 时为字符串，在 `selects="multiple"` 时为字符串数组。
-   * 所以，在 `selects="multiple"` 时，如果要修改该值，只能通过修改 JavaScript 属性值实现。
+   * **Note**：该属性的 HTML 属性始终为字符串，且仅在 `selects="single"` 时可以通过 HTML 属性设置初始值。该属性的 JavaScript 属性值在 `selects="single"` 时为字符串，在 `selects="multiple"` 时为字符串数组。所以，在 `selects="multiple"` 时，如果要修改该值，只能通过修改 JavaScript 属性值实现。
    */
   @property()
   public value: string | string[] = '';
@@ -151,14 +148,14 @@ export class SegmentedButtonGroup
   });
 
   /**
-   * 表单验证状态对象 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
+   * 表单验证状态对象，具体参见 [`ValidityState`](https://developer.mozilla.org/zh-CN/docs/Web/API/ValidityState)
    */
   public get validity(): ValidityState {
     return this.inputRef.value!.validity;
   }
 
   /**
-   * 表单验证未通过时的提示文案。验证通过时为空字符串
+   * 如果表单验证未通过，此属性将包含提示信息。如果验证通过，此属性将为空字符串
    */
   public get validationMessage(): string {
     return this.inputRef.value!.validationMessage;
@@ -293,7 +290,7 @@ export class SegmentedButtonGroup
   }
 
   /**
-   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`
+   * 检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`
    */
   public checkValidity(): boolean {
     const valid = this.inputRef.value!.checkValidity();
@@ -310,9 +307,9 @@ export class SegmentedButtonGroup
   }
 
   /**
-   * 检查表单字段是否验证通过。若未通过则返回 `false`，并触发 `invalid` 事件；若验证通过，则返回 `true`。
+   * 检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`。
    *
-   * 验证未通过时，还将在组件上显示未通过的提示。
+   * 如果验证未通过，还会在组件上显示验证失败的提示。
    */
   public reportValidity(): boolean {
     this.invalid = !this.inputRef.value!.reportValidity();
@@ -335,9 +332,9 @@ export class SegmentedButtonGroup
   }
 
   /**
-   * 设置自定义的错误提示文本。只要文本不为空，则表示字段验证未通过
+   * 设置自定义的错误提示文本。只要这个文本不为空，就表示字段未通过验证
    *
-   * @param message 自定义的提示文本
+   * @param message 自定义的错误提示文本
    */
   public setCustomValidity(message: string): void {
     this.inputRef.value!.setCustomValidity(message);

@@ -1,4 +1,4 @@
-卡片用于包含有关单个主题的内容和相关操作。
+卡片用于展示单个主题的内容和相关操作。
 
 ## 使用方法 {#usage}
 
@@ -34,7 +34,7 @@ import type { Card } from 'mdui/components/card.js';
 
 ### 可点击 {#example-clickable}
 
-添加 `clickable` 属性使卡片可被点击，此时会添加鼠标悬浮、及点击涟漪效果。
+添加 `clickable` 属性可以使卡片可点击，此时会添加鼠标悬浮效果和点击涟漪效果。
 
 ```html,example,expandable
 <mdui-card clickable style="width: 200px;height: 124px"></mdui-card>
@@ -42,7 +42,7 @@ import type { Card } from 'mdui/components/card.js';
 
 ### 链接 {#example-link}
 
-添加 `href` 属性，可使卡片变为链接，此时还可使用这些和链接相关的属性：`download`、`target`、`rel`。
+添加 `href` 属性，可以使卡片变为链接，此时还可以使用这些和链接相关的属性：`download`、`target`、`rel`。
 
 ```html,example,expandable
 <mdui-card href="https://www.mdui.org" target="_blank" style="width: 200px;height: 124px"></mdui-card>
@@ -50,7 +50,7 @@ import type { Card } from 'mdui/components/card.js';
 
 ### 禁用状态 {#example-disabled}
 
-添加 `disabled` 属性可禁用卡片。
+添加 `disabled` 属性可以禁用卡片。
 
 ```html,example,expandable
 <mdui-card disabled style="width: 200px;height: 124px"></mdui-card>

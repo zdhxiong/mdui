@@ -1,4 +1,4 @@
-范围滑块用于让用户从一系列值中选择一个范围。
+范围滑块组件用于让用户在一系列值中选择一个范围。
 
 ## 使用方法 {#usage}
 
@@ -24,7 +24,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 ### 默认值 {#example-value}
 
-可通过 `value` 属性读取范围滑块的当前值；或设置 `value` 属性来修改范围滑块的值。该属性值是一个数组，且只能通过 JavaScript 属性进行读取和设置。
+通过 `value` 属性，可以读取或设置范围滑块的当前值。该属性值是一个数组，只能通过 JavaScript 属性进行读取和设置。
 
 ```html,example,expandable
 <mdui-range-slider class="example-value"></mdui-range-slider>
@@ -37,7 +37,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 ### 禁用状态 {#example-disabled}
 
-添加 `disabled` 属性可禁用范围滑块。
+添加 `disabled` 属性可以禁用范围滑块。
 
 ```html,example,expandable
 <mdui-range-slider disabled></mdui-range-slider>
@@ -61,7 +61,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 ### 刻度标记 {#example-tickmarks}
 
-添加 `tickmarks` 属性在范围滑块上添加刻度标记。
+添加 `tickmarks` 属性可以在范围滑块上添加刻度标记。
 
 ```html,example,expandable
 <mdui-range-slider tickmarks step="10"></mdui-range-slider>
@@ -69,7 +69,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 ### 隐藏文本提示 {#example-nolabel}
 
-添加 `nolabel` 属性可隐藏范围滑块上的文本提示。
+添加 `nolabel` 属性可以隐藏范围滑块上的文本提示。
 
 ```html,example,expandable
 <mdui-range-slider nolabel></mdui-range-slider>
@@ -77,7 +77,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 ### 修改文本提示 {#example-labelFormatter}
 
-可通过 `labelFormatter` JavaScript 属性修改文本提示的显示格式。该属性值是一个函数，函数参数为当前范围滑块的值，返回值为你期望显示的文本。
+通过 `labelFormatter` JavaScript 属性，可以修改文本提示的显示格式。该属性值是一个函数，函数参数为当前范围滑块的值，返回值为你期望显示的文本。
 
 ```html,example,expandable
 <mdui-range-slider class="example-label-formatter"></mdui-range-slider>

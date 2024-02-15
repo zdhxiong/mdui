@@ -18,7 +18,7 @@ export class Divider extends MduiElement<DividerEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * 是否显示垂直分割线
+   * 是否为垂直分割线
    */
   @property({
     type: Boolean,
@@ -28,7 +28,7 @@ export class Divider extends MduiElement<DividerEventMap> {
   public vertical = false;
 
   /**
-   * 是否左侧缩进
+   * 是否进行左侧缩进
    */
   @property({
     type: Boolean,
@@ -38,7 +38,7 @@ export class Divider extends MduiElement<DividerEventMap> {
   public inset = false;
 
   /**
-   * 是否左右两侧缩进
+   * 是否进行左右两侧缩进
    */
   @property({
     type: Boolean,

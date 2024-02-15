@@ -11,7 +11,7 @@ mdui 专门为 VS Code 和 WebStorm 进行了优化，在这些 IDE 中可以获
 
 ### 通过 npm 安装的 mdui {#vscode-npm}
 
-如果你是通过 npm 安装的 mdui，则可以按以下步骤在当前项目中启用 VS Code 的 IDE 支持：
+如果你通过 npm 安装了 mdui，可以按照以下步骤在当前项目中启用 VS Code 的 IDE 支持：
 
 1. 在项目的根目录中创建 `.vscode` 目录。
 2. 在 `.vscode` 目录中创建 `settings.json` 文件。
@@ -23,40 +23,40 @@ mdui 专门为 VS Code 和 WebStorm 进行了优化，在这些 IDE 中可以获
     }
     ```
 
-如果 `settings.json` 文件已经存在，则将上面两行代码添加到 JSON 文档的根节点。修改完后重启 VS Code 即可。
+如果 `settings.json` 文件已经存在，只需将上述两行代码添加到 JSON 文档的根节点即可。修改完成后，重启 VS Code。
 
 ### 通过 CDN 使用的 mdui {#vscode-cdn}
 
-如果你是直接通过 CDN 引入的 mdui，则可以通过安装 mdui 的 VS Code 扩展来获得 IDE 支持。
+如果你是通过 CDN 引入的 mdui，可以通过安装 mdui 的 VS Code 扩展来获得 IDE 支持。
 
-在 VS Code 的扩展商店中搜索 `mdui`，选择第一条搜索结果安装即可、或者[点此安装](vscode:extension/zdhxiong.mdui)。安装完成后，在所有项目中都会启用 mdui 的 IDE 支持。
+在 VS Code 的扩展商店中搜索 `mdui`，选择第一条搜索结果进行安装，或者[点击此处安装](vscode:extension/zdhxiong.mdui)。安装完成后，所有项目都将启用 mdui 的 IDE 支持。
 
-建议优先使用 npm 安装并设置 `settings.json` 文件，而不是安装 VS Code 扩展，因为这样能确保 IDE 支持与当前使用的 mdui 版本保持一致。
+建议优先通过 npm 安装并设置 `settings.json` 文件，而非安装 VS Code 扩展，以确保 IDE 支持与当前使用的 mdui 版本保持一致。
 
 ## WebStorm {#webstorm}
 
 ### 通过 npm 安装的 mdui {#webstorm-npm}
 
-如果你是通过 npm 安装的 mdui，则可以按以下步骤在当前项目中启用 WebStorm 的 IDE 支持：
+如果你通过 npm 安装了 mdui，可以按照以下步骤在当前项目中启用 WebStorm 的 IDE 支持：
 
 1. 在项目根目录的 `package.json` 文件的根节点中添加以下代码：
     ```
     web-types: ["./node_modules/mdui/web-types.zh-cn.json"]
     ```
 
-如果 `package.json` 文件根节点已存在 `web-types` 属性，则把 `./node_modules/mdui/web-types.zh-cn.json` 添加到 `web-types` 数组中。修改完后重启 WebStorm 即可。
+如果 `package.json` 文件的根节点已存在 `web-types` 属性，只需将 `./node_modules/mdui/web-types.zh-cn.json` 添加到 `web-types` 数组中即可。修改完成后，重启 WebStorm。
 
 ### 通过 CDN 使用的 mdui {#webstorm-cdn}
 
-如果你是直接通过 CDN 引入的 mdui，则可以通过安装 mdui 的 WebStorm 插件来获得 IDE 支持。
+如果你是通过 CDN 引入的 mdui，可以通过安装 mdui 的 WebStorm 插件来获得 IDE 支持。
 
-在 WebStorm 的插件市场中搜索 `mdui`，选择第一条搜索结果安装即可。安装完成后，在所有项目中都会启用 mdui 的 IDE 支持。
+在 WebStorm 的插件市场中搜索 `mdui`，选择第一条搜索结果进行安装。安装完成后，所有项目都将启用 mdui 的 IDE 支持。
 
-建议优先使用 npm 安装来获取 IDE 支持，而不是安装 WebStorm 插件，因为这样能确保 IDE 支持与当前使用的 mdui 版本保持一致。
+建议优先通过 npm 安装来获取 IDE 支持，而非安装 WebStorm 插件，以确保 IDE 支持与当前使用的 mdui 版本保持一致。
 
 ## 对 VS Code 和 WebStorm 支持的差异 {#difference}
 
-mdui 对 VS Code 和 WebStorm 的支持有所不同。下面的表格列举了详细差异：
+mdui 对 VS Code 和 WebStorm 的支持存在一些差异。以下表格列出了详细的差异：
 
 | 具有代码自动完成及悬浮提示的位置         | VS Code                                                                | WebStorm                                                                                                  |
 | ---------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |

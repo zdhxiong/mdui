@@ -1,4 +1,4 @@
-徽标用于传达动态信息，例如用于计数或表示状态。它可以包含标签或数字。
+徽标用于展示动态信息，如计数或状态指示。它可以包含文字或数字。
 
 ## 使用方法 {#usage}
 
@@ -24,7 +24,7 @@ import type { Badge } from 'mdui/components/badge.js';
 
 ### 形状 {#example-variant}
 
-使用 `variant` 属性设置徽标的形状，为 `large` 时为大徽标。可在 default slot 中指定要显示的文案。
+使用 `variant` 属性来设置徽标的形状。当 `variant` 为 `large` 时，将显示大型徽标。你可以在 default slot 中指定要显示的文本。
 
 ```html,example,expandable
 <mdui-badge variant="small"></mdui-badge>

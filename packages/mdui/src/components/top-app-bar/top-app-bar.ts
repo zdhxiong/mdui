@@ -38,8 +38,8 @@ type TopAppBarTitle = {
  *
  * @slot - 顶部应用栏内部的元素
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐[引用设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --z-index - 组件的 CSS 的 `z-index` 值
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --z-index - 组件的 CSS `z-index` 值
  */
 @customElement('mdui-top-app-bar')
 export class TopAppBar extends ScrollBehaviorMixin(
@@ -51,7 +51,7 @@ export class TopAppBar extends ScrollBehaviorMixin(
   ];
 
   /**
-   * 顶部应用栏形状。默认为 `small`。可选值为：
+   * 顶部应用栏的形状。默认为 `small`。可选值包括：
    *
    * * `center-aligned`：小型应用栏，标题居中
    * * `small`：小型应用栏
@@ -76,7 +76,7 @@ export class TopAppBar extends ScrollBehaviorMixin(
   public hide = false;
 
   /**
-   * 是否缩小成 `variant="small"` 的样式，仅在 `variant="medium"` 或 `variant="large"` 时生效
+   * 是否缩小为 `variant="small"` 的样式，仅在 `variant="medium"` 或 `variant="large"` 时生效
    */
   @property({
     type: Boolean,
@@ -86,7 +86,7 @@ export class TopAppBar extends ScrollBehaviorMixin(
   public shrink = false;
 
   /**
-   * 滚动行为。可同时使用多个值，多个值之间用空格分割。可选值为：
+   * 滚动行为。可同时使用多个值，用空格分隔。可选值包括：
    *
    * * `hide`：滚动时隐藏
    * * `shrink`：在中型、大型应用栏中可使用，滚动时缩小成小型应用栏的样式

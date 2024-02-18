@@ -82,7 +82,10 @@ components.forEach((component) => {
         itemValue = item.description;
       }
 
-      if (item.inheritedFrom) {
+      if (
+        item.inheritedFrom &&
+        item.name !== 'scrollBehavior' // scrollBehavior 在每个父类中单独定义
+      ) {
         const inherited = item.inheritedFrom.name;
         const superclass = originJson.superclass;
 
@@ -353,7 +356,7 @@ originJson.cssClasses = {
 // zh-cn.json 直接全量写入
 fs.writeFileSync(
   `./docs/zh-cn.json`,
-  JSON.stringify(originJson, null, 2),
+  JSON.stringify(originJson, null, 2) + '\n',
   'utf-8',
 );
 
@@ -362,7 +365,9 @@ const updateJson = (targetJson, originJson) => {
   // 递归，移除多余的属性
   for (const key in targetJson) {
     if (originJson.hasOwnProperty(key)) {
-      if (
+      if (Array.isArray(targetJson[key]) || Array.isArray(originJson[key])) {
+        targetJson[key] = originJson[key];
+      } else if (
         typeof targetJson[key] === 'object' &&
         typeof originJson[key] === 'object'
       ) {
@@ -402,5 +407,9 @@ languages.forEach((lang) => {
 
   updateJson(targetJson, originJson);
 
-  fs.writeFileSync(langJsonPath, JSON.stringify(targetJson, null, 2), 'utf-8');
+  fs.writeFileSync(
+    langJsonPath,
+    JSON.stringify(targetJson, null, 2) + '\n',
+    'utf-8',
+  );
 });

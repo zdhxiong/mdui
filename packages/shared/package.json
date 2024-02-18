@@ -1,6 +1,6 @@
 {
   "name": "@mdui/shared",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "mdui 项目的公共部分",
   "type": "module",
   "files": [

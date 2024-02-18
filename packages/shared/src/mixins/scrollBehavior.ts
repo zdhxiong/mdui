@@ -43,6 +43,17 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
     public scrollTarget?: string | HTMLElement | JQ<HTMLElement>;
 
     /**
+     * 滚动行为。可选值为：
+     * * `hide`：滚动时隐藏
+     * * `shrink`：滚动时缩小
+     * * `elevate`：滚动时增加阴影
+     *
+     * todo: 生成 custom-elements.json 时，属性名的注释用了父类的，属性枚举值的类型和注释用了该类的。期望都使用父类的。
+     */
+    @property({ reflect: true, attribute: 'scroll-behavior' })
+    public scrollBehavior?: 'hide' | 'shrink' | 'elevate';
+
+    /**
      * 在滚动多少距离之后触发滚动行为，单位为 `px`
      */
     @property({ type: Number, reflect: true, attribute: 'scroll-threshold' })
@@ -90,7 +101,6 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
         this.updateContainerPadding();
       }
 
-      // @ts-ignore
       if (!this.scrollBehavior) {
         return;
       }
@@ -122,7 +132,6 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
         return;
       }
 
-      // @ts-ignore
       if (this.scrollBehavior) {
         this.updateScrollTop(listening);
 
@@ -157,7 +166,6 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
     protected hasScrollBehavior(
       behavior: ScrollBehavior | ScrollBehavior[],
     ): boolean {
-      // @ts-ignore
       const behaviors = (this.scrollBehavior?.split(' ') ??
         []) as ScrollBehavior[];
 

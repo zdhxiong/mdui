@@ -186,6 +186,7 @@
         }
       },
       "tagNames": [
+        "mdui-button-icon",
         "mdui-card",
         "mdui-list-item",
         "mdui-menu-item",
@@ -203,6 +204,7 @@
         }
       },
       "tagNames": [
+        "mdui-button-icon",
         "mdui-card",
         "mdui-checkbox",
         "mdui-list-item",
@@ -214,8 +216,8 @@
         "mdui-select",
         "mdui-slider",
         "mdui-switch",
-        "mdui-text-field",
-        "mdui-tab"
+        "mdui-tab",
+        "mdui-text-field"
       ],
       "methods": {
         "click": "Simulates a mouse click on the element.",
@@ -2177,12 +2179,7 @@
         "description": "Shrinks the app bar to `small` style. Only applicable for `medium` or `large` variants."
       },
       "scrollBehavior": {
-        "description": "Defines the scroll behavior. Accepts multiple space-separated values. Possible values:\n\n* `hide`: Hides when scrolling.\n* `shrink`: Shrinks when scrolling for medium to large app bars.\n* `elevate`: Increases elevation when scrolling.",
-        "enum": {
-          "hide": "Hides when scrolling.",
-          "shrink": "Shrinks when scrolling for medium to large app bars",
-          "elevate": "Increases elevation when scrolling."
-        }
+        "description": "Defines the scroll behavior. Accepts multiple space-separated values. Possible values:\n\n* `hide`: Hides when scrolling.\n* `shrink`: Shrinks when scrolling for medium to large app bars.\n* `elevate`: Increases elevation when scrolling."
       }
     },
     "events": {

@@ -186,6 +186,7 @@
         }
       },
       "tagNames": [
+        "mdui-button-icon",
         "mdui-card",
         "mdui-list-item",
         "mdui-menu-item",
@@ -203,6 +204,7 @@
         }
       },
       "tagNames": [
+        "mdui-button-icon",
         "mdui-card",
         "mdui-checkbox",
         "mdui-list-item",
@@ -2177,12 +2179,7 @@
         "description": "是否缩小为 `variant=\"small\"` 的样式，仅在 `variant=\"medium\"` 或 `variant=\"large\"` 时生效"
       },
       "scrollBehavior": {
-        "description": "滚动行为。可同时使用多个值，用空格分隔。可选值包括：\n\n* `hide`：滚动时隐藏\n* `shrink`：在中型、大型应用栏中可使用，滚动时缩小成小型应用栏的样式\n* `elevate`：滚动时添加阴影",
-        "enum": {
-          "hide": "滚动时隐藏",
-          "shrink": "在中型、大型应用栏中可使用，滚动时缩小成小型应用栏的样式",
-          "elevate": "滚动时添加阴影"
-        }
+        "description": "滚动行为。可同时使用多个值，用空格分隔。可选值包括：\n\n* `hide`：滚动时隐藏\n* `shrink`：在中型、大型应用栏中可使用，滚动时缩小成小型应用栏的样式\n* `elevate`：滚动时添加阴影"
       }
     },
     "events": {

@@ -31,7 +31,7 @@ class Home extends Component {
 }
 ```
 
-### JSX TypeScript 类型声明
+### JSX TypeScript 类型声明 {#jsx-typescript}
 
 如果你在 TypeScript 文件（.tsx）中使用 mdui，需要添加 TypeScript 类型声明。你需要在项目的 .d.ts 文件中手动引入 mdui 的类型声明文件：
 

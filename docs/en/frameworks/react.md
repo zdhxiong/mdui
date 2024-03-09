@@ -31,7 +31,7 @@ class Home extends Component {
 }
 ```
 
-### TypeScript Type Declarations for JSX
+### TypeScript Type Declarations for JSX {#jsx-typescript}
 
 If you're using mdui in TypeScript files (.tsx), it's important to include TypeScript type declarations. You can do this by importing mdui's type declaration files into your project's .d.ts file:
 

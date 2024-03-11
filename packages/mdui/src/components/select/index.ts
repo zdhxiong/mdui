@@ -403,8 +403,8 @@ export class Select
         .placement=${this.placement === 'top'
           ? 'top-start'
           : this.placement === 'bottom'
-          ? 'bottom-start'
-          : 'auto'}
+            ? 'bottom-start'
+            : 'auto'}
         @open=${this.onDropdownOpen}
         @close=${this.onDropdownClose}
       >

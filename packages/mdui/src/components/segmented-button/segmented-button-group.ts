@@ -235,9 +235,9 @@ export class SegmentedButtonGroup
       this.isSingle
         ? [this.value as string]
         : // 多选时，传入的值可能是字符串（通过 attribute 属性设置）；或字符串数组（通过 property 属性设置）
-        isString(this.value)
-        ? [this.value]
-        : this.value
+          isString(this.value)
+          ? [this.value]
+          : this.value
     ).filter((i) => i);
 
     if (!values.length) {

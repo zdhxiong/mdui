@@ -248,9 +248,9 @@ export class Menu extends MduiElement<MenuEventMap> {
       this.isSingle
         ? [this.value as string | undefined]
         : // 多选时，传入的值可能是字符串（通过 attribute 属性设置）；或字符串数组（通过 property 属性设置）
-        isString(this.value)
-        ? [this.value as string]
-        : (this.value as string[])
+          isString(this.value)
+          ? [this.value as string]
+          : (this.value as string[])
     ).filter((i) => i);
 
     if (!values.length) {

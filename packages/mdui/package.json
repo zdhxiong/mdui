@@ -47,15 +47,15 @@
   },
   "homepage": "https://www.mdui.org",
   "dependencies": {
-    "@lit-labs/motion": "^1.0.5",
+    "@lit-labs/motion": "^1.0.7",
     "@material/material-color-utilities": "^0.2.7",
     "@mdui/shared": "workspace:^",
     "@mdui/jq": "workspace:^",
     "@open-wc/dedupe-mixin": "^1.4.0",
-    "@floating-ui/utils": "^0.1.6",
+    "@floating-ui/utils": "^0.2.1",
     "classcat": "^5.0.4",
     "is-promise": "^4.0.0",
-    "lit": "^3.0.0",
+    "lit": "^3.1.2",
     "ssr-window": "^4.0.2",
     "tslib": "^2.6.2"
   }

@@ -95,14 +95,14 @@ export class Button extends ButtonBase<ButtonEventMap> {
             content: this.renderInner(),
           })
         : this.disabled || this.loading
-        ? html`<span part="button" class="button _a">
-            ${this.renderInner()}
-          </span>`
-        : this.renderAnchor({
-            className: 'button',
-            part: 'button',
-            content: this.renderInner(),
-          })}`;
+          ? html`<span part="button" class="button _a">
+              ${this.renderInner()}
+            </span>`
+          : this.renderAnchor({
+              className: 'button',
+              part: 'button',
+              content: this.renderInner(),
+            })}`;
   }
 
   private renderIcon(): TemplateResult {

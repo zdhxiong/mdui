@@ -161,8 +161,8 @@ export class Snackbar extends MduiElement<SnackbarEventMap> {
     const commonStyle = isMobile
       ? { left: '1rem', right: '1rem', minWidth: 0 }
       : isCenteredHorizontally
-      ? { left: '50%' }
-      : {};
+        ? { left: '50%' }
+        : {};
 
     // 打开
     // 要区分是否首次渲染，首次渲染时不触发事件，不执行动画；非首次渲染，触发事件，执行动画

@@ -1066,11 +1066,11 @@ export class TextField
           ${this.error || this.inputRef.value!.validationMessage}
         </div>`
       : hasHelper
-      ? html`<slot name="helper" part="helper" class="helper">
-          ${this.helper}
-        </slot>`
-      : // 右边有 counter，需要占位
-        html`<span></span>`;
+        ? html`<slot name="helper" part="helper" class="helper">
+            ${this.helper}
+          </slot>`
+        : // 右边有 counter，需要占位
+          html`<span></span>`;
   }
 
   private renderCounter(hasCounter: boolean): TemplateResult {

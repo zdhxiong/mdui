@@ -69,15 +69,15 @@ export class Avatar extends MduiElement<AvatarEventMap> {
     return this.hasSlotController.test('[default]')
       ? html`<slot></slot>`
       : this.src
-      ? html`<img
-          part="image"
-          alt=${ifDefined(this.label)}
-          src=${this.src}
-          style=${styleMap({ objectFit: this.fit })}
-        />`
-      : this.icon
-      ? html`<mdui-icon part="icon" name=${this.icon}></mdui-icon>`
-      : nothingTemplate;
+        ? html`<img
+            part="image"
+            alt=${ifDefined(this.label)}
+            src=${this.src}
+            style=${styleMap({ objectFit: this.fit })}
+          />`
+        : this.icon
+          ? html`<mdui-icon part="icon" name=${this.icon}></mdui-icon>`
+          : nothingTemplate;
   }
 }
 

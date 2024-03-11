@@ -223,8 +223,8 @@ export const ajax = <TResponse = any>(
             xhr.status === 204 || method === 'HEAD'
               ? 'nocontent'
               : xhr.status === 304
-              ? 'notmodified'
-              : 'success';
+                ? 'notmodified'
+                : 'success';
 
           if (
             dataType === 'json' ||
@@ -251,8 +251,8 @@ export const ajax = <TResponse = any>(
               method === 'HEAD'
                 ? undefined
                 : xhr.responseType === 'text' || xhr.responseType === ''
-                ? xhr.responseText
-                : xhr.response;
+                  ? xhr.responseText
+                  : xhr.response;
             successEventParams.response = responseData;
 
             trigger(ajaxSuccess, 'success', responseData, textStatus, xhr);

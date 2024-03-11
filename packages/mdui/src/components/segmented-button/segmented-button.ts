@@ -140,14 +140,14 @@ export class SegmentedButton extends ButtonBase<SegmentedButtonEventMap> {
             content: this.renderInner(),
           })
         : this.isDisabled() || this.loading
-        ? html`<span part="button" class="_a ${className}">
-            ${this.renderInner()}
-          </span>`
-        : this.renderAnchor({
-            className,
-            part: 'button',
-            content: this.renderInner(),
-          })}`;
+          ? html`<span part="button" class="_a ${className}">
+              ${this.renderInner()}
+            </span>`
+          : this.renderAnchor({
+              className,
+              part: 'button',
+              content: this.renderInner(),
+            })}`;
   }
 
   private isDisabled(): boolean {

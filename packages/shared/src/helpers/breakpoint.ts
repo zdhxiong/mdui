@@ -38,8 +38,8 @@ export const breakpoint = (
   const containerWidth = isElement(width)
     ? $(width).innerWidth()
     : isNumber(width)
-    ? width
-    : $(window).innerWidth();
+      ? width
+      : $(window).innerWidth();
 
   // 断点对应的宽度值
   const getBreakpointValue = (breakpoint: Breakpoint): number => {

@@ -308,18 +308,18 @@ const getCssProperties = (language) => {
                 property === 'weight'
                   ? 500
                   : property === 'line-height'
-                  ? 1.5
-                  : property === 'size'
-                  ? '16px'
-                  : 0.1;
+                    ? 1.5
+                    : property === 'size'
+                      ? '16px'
+                      : 0.1;
               const cssPropertyName =
                 property === 'weight'
                   ? 'font-weight'
                   : property === 'size'
-                  ? 'font-size'
-                  : property === 'tracking'
-                  ? 'letter-spacing'
-                  : property;
+                    ? 'font-size'
+                    : property === 'tracking'
+                      ? 'letter-spacing'
+                      : property;
 
               return {
                 name,
@@ -805,8 +805,8 @@ export const buildWebTypes = (metadataPath, packageFolder) => {
                   sectionPrefix === 'cssProperties'
                     ? item[nameField].slice(2)
                     : sectionPrefix === 'slots' && !item[nameField]
-                    ? 'default'
-                    : item[nameField]
+                      ? 'default'
+                      : item[nameField]
                 }`
               : undefined,
           };

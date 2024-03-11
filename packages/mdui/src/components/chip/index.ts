@@ -188,14 +188,14 @@ export class Chip extends ButtonBase<ChipEventMap> {
             content: this.renderInner(),
           })
         : this.disabled || this.loading
-        ? html`<span part="button" class="${className} _a">
-            ${this.renderInner()}
-          </span>`
-        : this.renderAnchor({
-            className,
-            part: 'button',
-            content: this.renderInner(),
-          })}`;
+          ? html`<span part="button" class="${className} _a">
+              ${this.renderInner()}
+            </span>`
+          : this.renderAnchor({
+              className,
+              part: 'button',
+              content: this.renderInner(),
+            })}`;
   }
 
   private onClick() {

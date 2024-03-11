@@ -125,14 +125,14 @@ export class ButtonIcon extends ButtonBase<ButtonIconEventMap> {
             content: this.renderIcon(),
           })
         : this.disabled || this.loading
-        ? html`<span part="button" class="button _a">
-            ${this.renderIcon()}
-          </span>`
-        : this.renderAnchor({
-            className: 'button',
-            part: 'button',
-            content: this.renderIcon(),
-          })}
+          ? html`<span part="button" class="button _a">
+              ${this.renderIcon()}
+            </span>`
+          : this.renderAnchor({
+              className: 'button',
+              part: 'button',
+              content: this.renderIcon(),
+            })}
       ${this.renderLoading()}`;
   }
 
@@ -141,12 +141,12 @@ export class ButtonIcon extends ButtonBase<ButtonIconEventMap> {
       this.hasSlotController.test('[default]')
         ? html`<slot></slot>`
         : this.icon
-        ? html`<mdui-icon
-            part="icon"
-            class="icon"
-            name=${this.icon}
-          ></mdui-icon>`
-        : nothingTemplate;
+          ? html`<mdui-icon
+              part="icon"
+              class="icon"
+              name=${this.icon}
+            ></mdui-icon>`
+          : nothingTemplate;
 
     const selectedIcon = () =>
       this.hasSlotController.test('selected-icon') || this.selectedIcon

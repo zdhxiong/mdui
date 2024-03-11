@@ -142,8 +142,8 @@ export class CollapseItem extends MduiElement<CollapseItemEventMap> {
       this.state === 'opened'
         ? 'auto'
         : this.state === 'open'
-        ? scrollHeight
-        : 0,
+          ? scrollHeight
+          : 0,
     );
   }
 }

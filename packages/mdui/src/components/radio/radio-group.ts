@@ -298,8 +298,8 @@ export class RadioGroup
       event.key === ' '
         ? 0
         : ['ArrowUp', 'ArrowLeft'].includes(event.key)
-        ? -1
-        : 1;
+          ? -1
+          : 1;
     let index = items.indexOf(itemChecked) + incr;
     if (index < 0) {
       index = items.length - 1;

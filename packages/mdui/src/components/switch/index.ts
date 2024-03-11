@@ -272,8 +272,8 @@ export class Switch
             ${this.checkedIcon
               ? html`<mdui-icon name=${this.checkedIcon} class="i"></mdui-icon>`
               : this.checkedIcon === ''
-              ? nothingTemplate
-              : html`<mdui-icon-check class="i"></mdui-icon-check>`}
+                ? nothingTemplate
+                : html`<mdui-icon-check class="i"></mdui-icon-check>`}
           </slot>
           <slot
             name="unchecked-icon"

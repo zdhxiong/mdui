@@ -6,6 +6,9 @@ import {
   argbFromHex,
   Scheme,
   CorePalette,
+  DynamicScheme,
+  TonalPalette,
+  hexFromArgb,
 } from '@material/material-color-utilities';
 import { getDocument } from 'ssr-window';
 import { $ } from '@mdui/jq/$.js';
@@ -15,7 +18,8 @@ import '@mdui/jq/methods/append.js';
 import '@mdui/jq/methods/get.js';
 import '@mdui/jq/methods/remove.js';
 import '@mdui/jq/methods/removeClass.js';
-import { toKebabCase } from '@mdui/jq/shared/helper.js';
+import { MaterialColors, type TMaterialColors } from './materialColors.js';
+// import { toKebabCase } from '@mdui/jq/shared/helper.js';
 import type { Theme } from './theme.js';
 import type { JQ } from '@mdui/jq/shared/core.js';
 
@@ -198,3 +202,89 @@ export const setFromSource = (
   // 添加新配色方案
   $target.addClass(className);
 };
+
+export type TVariant = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+export const enum EVariant {
+  MONOCHROME = 0,
+  NEUTRAL = 1,
+  TONAL_SPOT = 2,
+  VIBRANT = 3,
+  EXPRESSIVE = 4,
+  FIDELITY = 5,
+  CONTENT = 6,
+  RAINBOW = 7,
+  FRUIT_SALAD = 8,
+}
+export type TMaterialContrastLevel = -1.0 | 0 | 0.5 | 1.0;
+export const enum EMaterialContrastLevel {
+  Reduced = -1.0,
+  Default = 0,
+  Medium = 0.5,
+  High = 1.0,
+}
+export type TMaterialGeneratorOptions = {
+  isDark: boolean;
+  contrastLevel: number | TMaterialContrastLevel;
+  primaryPalette: number;
+  secondaryPalette: number;
+  tertiaryPalette: number;
+  neutralPalette: number;
+  neutralVariantPalette: number;
+  variant: TVariant;
+};
+
+export const generateMaterialDynamicScheme = (
+  sourceColorArgb: number,
+  options?: Partial<TMaterialGeneratorOptions>,
+) => {
+  const scheme = new DynamicScheme({
+    sourceColorArgb,
+    contrastLevel: options?.contrastLevel ?? EMaterialContrastLevel.Default,
+    isDark: options?.isDark ?? false,
+    // @ts-ignore
+    variant: EVariant.NEUTRAL,
+    primaryPalette: TonalPalette.fromInt(options?.primaryPalette ?? 0xffeb0057),
+    secondaryPalette: TonalPalette.fromInt(
+      options?.secondaryPalette ?? 0xfff46b00,
+    ),
+    tertiaryPalette: TonalPalette.fromInt(
+      options?.tertiaryPalette ?? 0xff00ab46,
+    ),
+    neutralPalette: TonalPalette.fromInt(options?.neutralPalette ?? 0xff949494),
+    neutralVariantPalette: TonalPalette.fromInt(
+      options?.neutralVariantPalette ?? 0xffbc8877,
+    ),
+  });
+
+  const theme: Record<string, string> = {};
+  for (const [key, value] of Object.entries(MaterialColors)) {
+    theme[key] = hexFromArgb(value.getArgb(scheme));
+  }
+
+  return theme as TMaterialColors;
+};
+
+export type TStylizableOptions = {
+  prefix: string;
+};
+export const toStyleText = (
+  theme: TMaterialColors,
+  options?: Partial<TStylizableOptions>,
+) => {
+  return Object.entries(theme)
+    .map(
+      (e) =>
+        `--${options?.prefix ?? 'mdui-color'}-${toKebabCase(e[0])}: ${e[1]};`,
+    )
+    .reduce((l, c) => l + c);
+};
+
+export const toKebabCase = (str: string) =>
+  str
+    .split('')
+    .map((letter, idx) => {
+      return letter.toUpperCase() === letter
+        ? `${idx !== 0 ? '-' : ''}${letter.toLowerCase()}`
+        : letter;
+    })
+    .join('');

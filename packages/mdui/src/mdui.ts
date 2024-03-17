@@ -52,6 +52,7 @@ export * from './functions/alert.js';
 export * from './functions/breakpoint.js';
 export * from './functions/confirm.js';
 export * from './functions/dialog.js';
+export * from './functions/generateScheme.js';
 export * from './functions/getColorFromImage.js';
 export * from './functions/getTheme.js';
 export * from './functions/observeResize.js';

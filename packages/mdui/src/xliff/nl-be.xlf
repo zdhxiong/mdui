@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file target-language="nl-be" source-language="en-us" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="components.textField.patternError">
+  <source>Please match the requested format.</source>
+  <target>Gelieve het gevraagde formaat overeen te laten komen.</target>
+</trans-unit>
+<trans-unit id="functions.alert.confirmText">
+  <source>OK</source>
+  <target>OK</target>
+</trans-unit>
+<trans-unit id="functions.confirm.confirmText">
+  <source>OK</source>
+  <target>OK</target>
+</trans-unit>
+<trans-unit id="functions.confirm.cancelText">
+  <source>Cancel</source>
+  <target>Annuleren</target>
+</trans-unit>
+<trans-unit id="functions.prompt.confirmText">
+  <source>OK</source>
+  <target>OK</target>
+</trans-unit>
+<trans-unit id="functions.prompt.cancelText">
+  <source>Cancel</source>
+  <target>Annuleren</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

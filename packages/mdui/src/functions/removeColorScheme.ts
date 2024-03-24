@@ -1,4 +1,4 @@
-import { remove } from './utils/colorScheme.js';
+import { remove } from '../internal/colorScheme.js';
 import type { JQ } from '@mdui/jq/shared/core.js';
 
 /**

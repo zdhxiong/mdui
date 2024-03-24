@@ -18,6 +18,7 @@ import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { offLocaleReady } from '../../internal/localize.js';
 import '../icon.js';
 import { style } from './style.js';
 import type { TopAppBar } from '../top-app-bar/top-app-bar.js';
@@ -364,6 +365,9 @@ export class Dialog extends MduiElement<DialogEventMap> {
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     unlockScreen(this);
+
+    // alert, confirm, prompt 函数支持 localize。这里确保在组件销毁时，取消监听 localize ready 事件
+    offLocaleReady(this);
   }
 
   protected override firstUpdated(_changedProperties: PropertyValues) {

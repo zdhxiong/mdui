@@ -11,6 +11,8 @@
   "files": [
     "components",
     "functions",
+    "internal",
+    "locales",
     "css-data.{en,zh-cn}.json",
     "custom-elements.json",
     "html-data.{en,zh-cn}.json",
@@ -48,6 +50,7 @@
   "homepage": "https://www.mdui.org",
   "dependencies": {
     "@lit-labs/motion": "^1.0.7",
+    "@lit/localize": "^0.12.1",
     "@material/material-color-utilities": "^0.2.7",
     "@mdui/shared": "workspace:^",
     "@mdui/jq": "workspace:^",

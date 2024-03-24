@@ -1,7 +1,7 @@
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/addClass.js';
 import '@mdui/jq/methods/removeClass.js';
-import type { Theme } from './utils/theme.js';
+import type { Theme } from '../internal/theme.js';
 import type { JQ } from '@mdui/jq/shared/core.js';
 
 /**

@@ -155,7 +155,7 @@ import { throttle } from 'mdui/functions/throttle.js';</code></pre>
 
 <mdui-button class="btn">点我</mdui-button>
 
-<script>
+<script type="module">
   import { snackbar } from 'https://unpkg.com/mdui@2/mdui.esm.js';
 
   document.querySelector('.btn').addEventListener('click', () => {

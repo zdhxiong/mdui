@@ -1,5 +1,5 @@
 import { $ } from '@mdui/jq/$.js';
-import type { Theme } from './utils/theme.js';
+import type { Theme } from '../internal/theme.js';
 import type { JQ } from '@mdui/jq/shared/core.js';
 
 /**

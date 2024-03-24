@@ -53,11 +53,17 @@ export * from './functions/breakpoint.js';
 export * from './functions/confirm.js';
 export * from './functions/dialog.js';
 export * from './functions/getColorFromImage.js';
+export * from './functions/getLocale.js';
 export * from './functions/getTheme.js';
+export * from './functions/loadLocale.js';
 export * from './functions/observeResize.js';
 export * from './functions/prompt.js';
 export * from './functions/removeColorScheme.js';
 export * from './functions/setColorScheme.js';
+export * from './functions/setLocale.js';
 export * from './functions/setTheme.js';
 export * from './functions/snackbar.js';
 export * from './functions/throttle.js';
+
+export type { LocaleCode, LocaleTargetCode } from './internal/localize.js';
+export type { LocaleModule, LocaleStatusEventDetail } from '@lit/localize';

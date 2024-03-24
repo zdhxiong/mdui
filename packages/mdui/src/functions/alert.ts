@@ -1,7 +1,11 @@
+import { msg } from '@lit/localize';
 import isPromise from 'is-promise';
 import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/on.js';
+import '@mdui/jq/methods/text.js';
 import { isUndefined, returnTrue } from '@mdui/jq/shared/helper.js';
+import { onLocaleReady, offLocaleReady } from '../internal/localize.js';
 import { dialog as openDialog } from './dialog.js';
 import type { Dialog } from '../components/dialog.js';
 
@@ -88,9 +92,10 @@ interface Options {
   onOverlayClick?: (dialog: Dialog) => void;
 }
 
-const defaultOptions: Required<Pick<Options, 'confirmText' | 'onConfirm'>> = {
-  confirmText: '确定',
-  onConfirm: returnTrue,
+const getConfirmText = () => {
+  return msg('OK', {
+    id: 'functions.alert.confirmText',
+  });
 };
 
 /**
@@ -100,7 +105,14 @@ const defaultOptions: Required<Pick<Options, 'confirmText' | 'onConfirm'>> = {
  * @param options
  */
 export const alert = (options: Options): Promise<void> => {
-  const mergedOptions = Object.assign({}, defaultOptions, options);
+  const mergedOptions = Object.assign(
+    {},
+    {
+      confirmText: getConfirmText(),
+      onConfirm: returnTrue,
+    },
+    options,
+  );
   const properties: (keyof Pick<
     Options,
     | 'headline'
@@ -156,8 +168,16 @@ export const alert = (options: Options): Promise<void> => {
       ],
     });
 
+    // 若未传入自定义文案，则监听 locale 变化更新文案
+    if (!options.confirmText) {
+      onLocaleReady(dialog, () => {
+        $(dialog).find('[slot="action"]').text(getConfirmText());
+      });
+    }
+
     $(dialog).on('close', () => {
       isResolve ? resolve() : reject();
+      offLocaleReady(dialog);
     });
   });
 };

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>loadLocale(), getLocale(), setLocale()</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: Roboto;
+    }
+
+    .form {
+      width: 600px;
+    }
+    @media (max-width: 600px) {
+      .form {
+        width: 100%;
+      }
+    }
+  </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/mdui/components/text-field.js';
+    import '../../packages/mdui/components/button.js';
+    import { $ } from '../../packages/jq/index.js';
+    import { loadLocale } from '../../packages/mdui/functions/loadLocale.js';
+    import { getLocale } from '../../packages/mdui/functions/getLocale.js';
+    import { setLocale } from '../../packages/mdui/functions/setLocale.js';
+    import { alert } from '../../packages/mdui/functions/alert.js';
+    import { confirm } from '../../packages/mdui/functions/confirm.js';
+    import { prompt } from '../../packages/mdui/functions/prompt.js';
+
+    window.addEventListener('mdui-localize-status', (event) => {
+      console.log(event);
+    });
+
+    loadLocale((locale) => import(`../../packages/mdui/locales/${locale}.js`));
+
+    setInterval(async () => {
+      await setLocale('zh-cn');
+      console.log('current locale: ', getLocale());
+      setTimeout(async () => {
+        await setLocale('en-us');
+        console.log('current locale: ', getLocale());
+      }, 2000)
+    }, 4000)
+
+    $('#alert').on('click', () => {
+      alert({ headline: 'headline' });
+    });
+
+    $('#confirm').on('click', () => {
+      confirm({ headline: 'headline' });
+    });
+
+    $('#prompt').on('click', () => {
+      prompt({ headline: 'headline' });
+    });
+  </script>
+</head>
+
+<body>
+<main>
+  <section>
+    <h2>Example</h2>
+    <mdui-text-field label="pattern textarea" rows="4" pattern="^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z]).*$"></mdui-text-field>
+    <mdui-button id="alert">alert()</mdui-button>
+    <mdui-button id="confirm">confirm()</mdui-button>
+    <mdui-button id="prompt">prompt()</mdui-button>
+  </section>
+</main>
+</body>

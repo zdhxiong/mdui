@@ -1,6 +1,11 @@
+import { msg } from '@lit/localize';
 import isPromise from 'is-promise';
 import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/find.js';
+import '@mdui/jq/methods/first';
+import '@mdui/jq/methods/last.js';
 import '@mdui/jq/methods/on.js';
+import '@mdui/jq/methods/text.js';
 import {
   isBoolean,
   isString,
@@ -8,6 +13,7 @@ import {
   returnTrue,
 } from '@mdui/jq/shared/helper.js';
 import { TextField } from '../components/text-field.js';
+import { onLocaleReady, offLocaleReady } from '../internal/localize.js';
 import { dialog as openDialog } from './dialog.js';
 import type { Dialog } from '../components/dialog.js';
 
@@ -128,23 +134,16 @@ interface Options {
   textFieldOptions?: Partial<TextField>;
 }
 
-const defaultOptions: Required<
-  Pick<
-    Options,
-    | 'confirmText'
-    | 'cancelText'
-    | 'onConfirm'
-    | 'onCancel'
-    | 'validator'
-    | 'textFieldOptions'
-  >
-> = {
-  confirmText: '确定',
-  cancelText: '取消',
-  onConfirm: returnTrue,
-  onCancel: returnTrue,
-  validator: returnTrue,
-  textFieldOptions: {},
+const getConfirmText = () => {
+  return msg('OK', {
+    id: 'functions.prompt.confirmText',
+  });
+};
+
+const getCancelText = () => {
+  return msg('Cancel', {
+    id: 'functions.prompt.cancelText',
+  });
 };
 
 /**
@@ -154,7 +153,18 @@ const defaultOptions: Required<
  * @param options
  */
 export const prompt = (options: Options): Promise<string> => {
-  const mergedOptions = Object.assign({}, defaultOptions, options);
+  const mergedOptions = Object.assign(
+    {},
+    {
+      confirmText: getConfirmText(),
+      cancelText: getCancelText(),
+      onConfirm: returnTrue,
+      onCancel: returnTrue,
+      validator: returnTrue,
+      textFieldOptions: {},
+    },
+    options,
+  );
   const properties: (keyof Pick<
     Options,
     | 'headline'
@@ -264,8 +274,21 @@ export const prompt = (options: Options): Promise<string> => {
       ],
     });
 
+    // 若未传入自定义文案，则监听 locale 变化更新文案
+    if (!options.confirmText) {
+      onLocaleReady(dialog, () => {
+        $(dialog).find('[slot="action"]').last().text(getConfirmText());
+      });
+    }
+    if (!options.cancelText) {
+      onLocaleReady(dialog, () => {
+        $(dialog).find('[slot="action"]').first().text(getCancelText());
+      });
+    }
+
     $(dialog).on('close', () => {
       isResolve ? resolve(textField.value) : reject();
+      offLocaleReady(dialog);
     });
   });
 };

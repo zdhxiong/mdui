@@ -5,6 +5,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
+import { msg } from '@lit/localize';
 import { animate } from '@lit-labs/motion';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
@@ -23,6 +24,7 @@ import '@mdui/shared/icons/visibility-off.js';
 import '@mdui/shared/icons/visibility.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
+import { onLocaleReady, offLocaleReady } from '../../internal/localize.js';
 import '../button-icon.js';
 import '../icon.js';
 import { style } from './style.js';
@@ -632,6 +634,7 @@ export class TextField
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.observeResize?.unobserve();
+    offLocaleReady(this);
   }
 
   /**
@@ -727,8 +730,10 @@ export class TextField
    * @param message 自定义的错误提示文本
    */
   public setCustomValidity(message: string): void {
-    this.inputRef.value!.setCustomValidity(message);
-    this.invalid = !this.inputRef.value!.checkValidity();
+    this.setCustomValidityInternal(message);
+
+    // 外部调用 setCustomValidity 时，不再使用内置的验证规则，所以需要移除监听语言变更事件
+    offLocaleReady(this);
   }
 
   protected firstUpdated(_changedProperties: PropertyValues) {
@@ -795,6 +800,12 @@ export class TextField
       )}`;
   }
 
+  private setCustomValidityInternal(message: string): void {
+    this.inputRef.value!.setCustomValidity(message);
+    this.invalid = !this.inputRef.value!.checkValidity();
+    this.requestUpdate();
+  }
+
   private onChange() {
     this.value = this.inputRef.value!.value;
     if (this.isTextarea) {
@@ -845,12 +856,27 @@ export class TextField
     if (this.pattern) {
       const patternRegex = new RegExp(this.pattern);
       const hasError = this.value && !this.value.match(patternRegex);
-      this.setCustomValidity(hasError ? '请与请求的格式匹配。' : '');
+
+      if (hasError) {
+        this.setCustomValidityInternal(this.getPatternErrorMsg());
+        onLocaleReady(this, () => {
+          this.setCustomValidityInternal(this.getPatternErrorMsg());
+        });
+      } else {
+        this.setCustomValidityInternal('');
+        offLocaleReady(this);
+      }
     }
   }
 
   private onTogglePassword() {
     this.isPasswordVisible = !this.isPasswordVisible;
+  }
+
+  private getPatternErrorMsg() {
+    return msg('Please match the requested format.', {
+      id: 'components.textField.patternError',
+    });
   }
 
   private setTextareaHeight() {

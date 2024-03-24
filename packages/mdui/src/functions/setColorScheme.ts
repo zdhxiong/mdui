@@ -1,6 +1,6 @@
 import { argbFromHex } from '@material/material-color-utilities';
-import { setFromSource } from './utils/colorScheme.js';
-import type { CustomColor } from './utils/colorScheme.js';
+import { setFromSource } from '../internal/colorScheme.js';
+import type { CustomColor } from '../internal/colorScheme.js';
 import type { JQ } from '@mdui/jq/shared/core.js';
 
 /**

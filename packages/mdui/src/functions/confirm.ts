@@ -1,7 +1,13 @@
+import { msg } from '@lit/localize';
 import isPromise from 'is-promise';
 import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/find.js';
+import '@mdui/jq/methods/first.js';
+import '@mdui/jq/methods/last.js';
 import '@mdui/jq/methods/on.js';
+import '@mdui/jq/methods/text.js';
 import { isUndefined, returnTrue } from '@mdui/jq/shared/helper.js';
+import { onLocaleReady, offLocaleReady } from '../internal/localize.js';
 import { dialog as openDialog } from './dialog.js';
 import type { Dialog } from '../components/dialog.js';
 
@@ -106,13 +112,16 @@ interface Options {
   onOverlayClick?: (dialog: Dialog) => void;
 }
 
-const defaultOptions: Required<
-  Pick<Options, 'confirmText' | 'cancelText' | 'onConfirm' | 'onCancel'>
-> = {
-  confirmText: '确定',
-  cancelText: '取消',
-  onConfirm: returnTrue,
-  onCancel: returnTrue,
+const getConfirmText = () => {
+  return msg('OK', {
+    id: 'functions.confirm.confirmText',
+  });
+};
+
+const getCancelText = () => {
+  return msg('Cancel', {
+    id: 'functions.confirm.cancelText',
+  });
 };
 
 /**
@@ -122,7 +131,16 @@ const defaultOptions: Required<
  * @param options
  */
 export const confirm = (options: Options): Promise<void> => {
-  const mergedOptions = Object.assign({}, defaultOptions, options);
+  const mergedOptions = Object.assign(
+    {},
+    {
+      confirmText: getConfirmText(),
+      cancelText: getCancelText(),
+      onConfirm: returnTrue,
+      onCancel: returnTrue,
+    },
+    options,
+  );
   const properties: (keyof Pick<
     Options,
     | 'headline'
@@ -186,8 +204,21 @@ export const confirm = (options: Options): Promise<void> => {
       ],
     });
 
+    // 若未传入自定义文案，则监听 locale 变化更新文案
+    if (!options.confirmText) {
+      onLocaleReady(dialog, () => {
+        $(dialog).find('[slot="action"]').last().text(getConfirmText());
+      });
+    }
+    if (!options.cancelText) {
+      onLocaleReady(dialog, () => {
+        $(dialog).find('[slot="action"]').first().text(getCancelText());
+      });
+    }
+
     $(dialog).on('close', () => {
       isResolve ? resolve() : reject();
+      offLocaleReady(dialog);
     });
   });
 };

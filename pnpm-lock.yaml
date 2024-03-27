@@ -11,6 +11,9 @@ importers:
       '@custom-elements-manifest/analyzer':
         specifier: 0.9.4
         version: 0.9.4
+      '@lit/localize-tools':
+        specifier: ^0.7.2
+        version: 0.7.2
       '@material-design-icons/svg':
         specifier: ^0.14.13
         version: 0.14.13
@@ -161,6 +164,9 @@ importers:
       '@lit-labs/motion':
         specifier: ^1.0.7
         version: 1.0.7
+      '@lit/localize':
+        specifier: ^0.12.1
+        version: 0.12.1
       '@material/material-color-utilities':
         specifier: ^0.2.7
         version: 0.2.7
@@ -648,6 +654,28 @@ packages:
   /@lit-labs/ssr-dom-shim@1.2.0:
     resolution: {integrity: sha512-yWJKmpGE6lUURKAaIltoPIE/wrbY3TEkqQt+X0m+7fQNnAv0keydnYvbiJFP1PnMhizmIWRWOG5KLhYyc/xl+g==}
 
+  /@lit/localize-tools@0.7.2:
+    resolution: {integrity: sha512-d5tehVao3Hz1DlTq6jy7TUYrCeyFi/E4BkzWr8MuAMjIM8aoKCR9s3cUw6m++8ZIiqGm2z7+6aHaPc/p1FGHyA==}
+    hasBin: true
+    dependencies:
+      '@lit/localize': 0.12.1
+      '@parse5/tools': 0.3.0
+      '@xmldom/xmldom': 0.8.10
+      fast-glob: 3.3.2
+      fs-extra: 10.1.0
+      jsonschema: 1.4.1
+      lit: 3.1.2
+      minimist: 1.2.8
+      parse5: 7.1.2
+      source-map-support: 0.5.21
+      typescript: 5.3.3
+    dev: true
+
+  /@lit/localize@0.12.1:
+    resolution: {integrity: sha512-uuF6OO6fjqomCf3jXsJ5cTGf1APYuN88S4Gvo/fjt9YkG4OMaMvpEUqd5oWhyzrJfY+HcenAbLJNi2Cq3H7gdg==}
+    dependencies:
+      lit: 3.1.2
+
   /@lit/reactive-element@2.0.4:
     resolution: {integrity: sha512-GFn91inaUa2oHLak8awSIigYz0cU0Payr1rcFsrkf5OJ5eSPxElyZfKh0f2p9FsTiZWXQdWGJeXZICEfXXYSXQ==}
     dependencies:
@@ -724,6 +752,12 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
+    dev: true
+
+  /@parse5/tools@0.3.0:
+    resolution: {integrity: sha512-zxRyTHkqb7WQMV8kTNBKWb1BeOFUKXBXTBWuxg9H9hfvQB3IwP6Iw2U75Ia5eyRxPNltmY7E8YAlz6zWwUnjKg==}
+    dependencies:
+      parse5: 7.1.2
     dev: true
 
   /@pkgjs/parseargs@0.11.0:
@@ -1586,6 +1620,11 @@ packages:
       - bufferutil
       - supports-color
       - utf-8-validate
+    dev: true
+
+  /@xmldom/xmldom@0.8.10:
+    resolution: {integrity: sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==}
+    engines: {node: '>=10.0.0'}
     dev: true
 
   /accepts@1.3.8:
@@ -3282,6 +3321,15 @@ packages:
     dev: true
     optional: true
 
+  /fs-extra@10.1.0:
+    resolution: {integrity: sha512-oRXApq54ETRj4eMiFzGnHWGy+zo5raudjuxN0b8H7s/RU2oW0Wvsx9O0ACRN/kRq9E8Vu/ReskGB5o3ji+FzHQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      graceful-fs: 4.2.11
+      jsonfile: 6.1.0
+      universalify: 2.0.1
+    dev: true
+
   /fs-extra@11.2.0:
     resolution: {integrity: sha512-PmDi3uwK5nFuXh7XDTlVnS17xJS7vW36is2+w3xcv8SVxiB4NyATf4ctkVY5bkSjX0Y4nbvZCq1/EjtEyr9ktw==}
     engines: {node: '>=14.14'}
@@ -4095,6 +4143,10 @@ packages:
       universalify: 2.0.1
     optionalDependencies:
       graceful-fs: 4.2.11
+    dev: true
+
+  /jsonschema@1.4.1:
+    resolution: {integrity: sha512-S6cATIPVv1z0IlxdN+zUk5EPjkGCdnhN4wVSBlvoUO1tOLJootbo9CquNJmbIh4yikWHiUedhRYrNPn1arpEmQ==}
     dev: true
 
   /keygrip@1.1.0:
@@ -6235,6 +6287,12 @@ packages:
   /typescript@4.9.5:
     resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: true
+
+  /typescript@5.3.3:
+    resolution: {integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==}
+    engines: {node: '>=14.17'}
     hasBin: true
     dev: true
 

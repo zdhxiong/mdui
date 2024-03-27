@@ -1,0 +1,15 @@
+{
+  "$schema": "https://raw.githubusercontent.com/lit/lit/main/packages/localize-tools/config.schema.json",
+  "sourceLocale": "en-us",
+  "targetLocales": ["zh-cn", "zh-hk", "zh-tw", "fa-ir", "es-es", "ko-kr", "ja-jp", "kk-kz", "id-id", "it-it", "da-dk", "nb-no", "nl-nl", "ru-ru", "tr-tr"],
+  "tsConfig": "./tsconfig.json",
+  "output": {
+    "mode": "runtime",
+    "outputDir": "./src/locales",
+    "localeCodesModule": "./packages/mdui/src/functions/utils/locale-codes.ts"
+  },
+  "interchange": {
+    "format": "xliff",
+    "xliffDir": "./src/xliff/"
+  }
+}

@@ -1,4 +1,6 @@
 src/components/**/*style.ts
+src/functions/utils/locale-codes.ts
+src/locales
 mdui.css
 custom-elements.json
 html-data.*.json

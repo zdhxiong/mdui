@@ -6,7 +6,7 @@
     "importHelpers": true,
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": false,
-    "module": "es2015",
+    "module": "es2020",
     "target": "es2021",
     "lib": ["es2021", "dom", "dom.iterable"],
     "declaration": true

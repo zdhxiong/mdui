@@ -4,21 +4,27 @@
 <body>
 <trans-unit id="components.textField.patternError">
   <source>Please match the requested format.</source>
+  <target>कृपया अनुरोधित स्वरूप को मेल खाएँ।</target>
 </trans-unit>
 <trans-unit id="functions.alert.confirmText">
   <source>OK</source>
+  <target>ठीक है</target>
 </trans-unit>
 <trans-unit id="functions.confirm.confirmText">
   <source>OK</source>
+  <target>ठीक है</target>
 </trans-unit>
 <trans-unit id="functions.confirm.cancelText">
   <source>Cancel</source>
+  <target>रद्द करें</target>
 </trans-unit>
 <trans-unit id="functions.prompt.confirmText">
   <source>OK</source>
+  <target>ठीक है</target>
 </trans-unit>
 <trans-unit id="functions.prompt.cancelText">
   <source>Cancel</source>
+  <target>रद्द करें</target>
 </trans-unit>
 </body>
 </file>

@@ -8,19 +8,23 @@
 </trans-unit>
 <trans-unit id="functions.alert.confirmText">
   <source>OK</source>
-  <target>确定</target>
+  <target>確定</target>
 </trans-unit>
 <trans-unit id="functions.confirm.confirmText">
   <source>OK</source>
+  <target>確定</target>
 </trans-unit>
 <trans-unit id="functions.confirm.cancelText">
   <source>Cancel</source>
+  <target>取消</target>
 </trans-unit>
 <trans-unit id="functions.prompt.confirmText">
   <source>OK</source>
+  <target>確定</target>
 </trans-unit>
 <trans-unit id="functions.prompt.cancelText">
   <source>Cancel</source>
+  <target>取消</target>
 </trans-unit>
 </body>
 </file>

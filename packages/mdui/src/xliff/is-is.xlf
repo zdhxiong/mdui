@@ -4,21 +4,27 @@
 <body>
 <trans-unit id="components.textField.patternError">
   <source>Please match the requested format.</source>
+  <target>Vinsamlegast samsvarið við beiðni um snið.</target>
 </trans-unit>
 <trans-unit id="functions.alert.confirmText">
   <source>OK</source>
+  <target>Í lagi</target>
 </trans-unit>
 <trans-unit id="functions.confirm.confirmText">
   <source>OK</source>
+  <target>Í lagi</target>
 </trans-unit>
 <trans-unit id="functions.confirm.cancelText">
   <source>Cancel</source>
+  <target>Hætta við</target>
 </trans-unit>
 <trans-unit id="functions.prompt.confirmText">
   <source>OK</source>
+  <target>Í lagi</target>
 </trans-unit>
 <trans-unit id="functions.prompt.cancelText">
   <source>Cancel</source>
+  <target>Hætta við</target>
 </trans-unit>
 </body>
 </file>

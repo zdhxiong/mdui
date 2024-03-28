@@ -37,6 +37,10 @@
     import { confirm } from '../../packages/mdui/functions/confirm.js';
     import { prompt } from '../../packages/mdui/functions/prompt.js';
 
+    window.addEventListener('mdui-localize-status', (event) => {
+      console.log(event);
+    });
+
     loadLocale((locale) => import(`../../packages/mdui/locales/${locale}.js`));
 
     setInterval(async () => {

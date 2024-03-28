@@ -1,7 +1,8 @@
 import { configureLocalization, LOCALE_STATUS_EVENT } from '@lit/localize';
+import { getWindow } from 'ssr-window';
 import { sourceLocale, targetLocales } from './locale-codes.js';
 import type { allLocales } from './locale-codes.js';
-import type { LocaleModule } from '@lit/localize';
+import type { LocaleModule, LocaleStatusEventDetail } from '@lit/localize';
 
 export type LoadFunc = (
   locale: (typeof targetLocales)[number],
@@ -9,6 +10,12 @@ export type LoadFunc = (
 
 export type GetLocal = () => (typeof allLocales)[number];
 export type SetLocal = (locale: (typeof allLocales)[number]) => Promise<void>;
+
+declare global {
+  interface WindowEventMap {
+    'mdui-localize-status': CustomEvent<LocaleStatusEventDetail>;
+  }
+}
 
 export const uninitializedError =
   'You must call `loadLocale` first to set up the localized template.';
@@ -21,6 +28,7 @@ export let setLocale: SetLocal | undefined;
  * @param loadFunc
  */
 export const initializeLocalize = (loadFunc: LoadFunc) => {
+  const window = getWindow();
   const result = configureLocalization({
     sourceLocale,
     targetLocales,
@@ -29,6 +37,14 @@ export const initializeLocalize = (loadFunc: LoadFunc) => {
 
   getLocale = result.getLocale as unknown as GetLocal;
   setLocale = result.setLocale as unknown as SetLocal;
+
+  window.addEventListener(LOCALE_STATUS_EVENT, (event) => {
+    window.dispatchEvent(
+      new CustomEvent('mdui-localize-status', {
+        detail: event.detail,
+      }),
+    );
+  });
 };
 
 let listeningLitLocalizeStatus = false;
@@ -42,6 +58,8 @@ const localeReadyCallbacksMap = new Map<HTMLElement, Array<() => void>>();
 export const onLocaleReady = (target: HTMLElement, callback: () => void) => {
   if (!listeningLitLocalizeStatus) {
     listeningLitLocalizeStatus = true;
+
+    const window = getWindow();
 
     window.addEventListener(LOCALE_STATUS_EVENT, (event) => {
       if (event.detail.status === 'ready') {

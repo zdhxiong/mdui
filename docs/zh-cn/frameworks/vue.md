@@ -36,3 +36,13 @@ export default {
   @input="name = $event.target.value"
 ></mdui-text-field>
 ```
+
+### eslint 配置 {#eslint}
+
+如果你使用了 [`eslint-plugin-vue`](https://www.npmjs.com/package/eslint-plugin-vue)，需要在 `.eslintrc.js` 中添加以下规则：
+
+```js
+rules: {
+  'vue/no-deprecated-slot-attribute': 'off'
+}
+```

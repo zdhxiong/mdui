@@ -36,3 +36,13 @@ The `v-model` directive cannot be used for two-way data binding with mdui compon
   @input="name = $event.target.value"
 ></mdui-text-field>
 ```
+
+### eslint Configuration {#eslint}
+
+If you're using [`eslint-plugin-vue`](https://www.npmjs.com/package/eslint-plugin-vue), you'll need to add the following rule to your `.eslintrc.js`:
+
+```js
+rules: {
+  'vue/no-deprecated-slot-attribute': 'off'
+}
+```

@@ -186,7 +186,6 @@
         }
       },
       "tagNames": [
-        "mdui-button-icon",
         "mdui-card",
         "mdui-list-item",
         "mdui-menu-item",
@@ -204,7 +203,6 @@
         }
       },
       "tagNames": [
-        "mdui-button-icon",
         "mdui-card",
         "mdui-checkbox",
         "mdui-list-item",
@@ -1597,7 +1595,25 @@
       "helper": "Bottom helper text."
     },
     "cssParts": {
+      "chips": "Container for option chips when `multiple` is enabled.",
+      "chip": "Individual chip representing each multiselect option.",
+      "chip__button": "The `<button>` element within the chip.",
+      "chip__label": "Text part of the chip.",
+      "chip__delete-icon": "Delete icon within the chip.",
       "text-field": "Text field, i.e., [`<mdui-text-field>`](/docs/2/components/text-field) element.",
+      "text-field__container": "Container for the text field.",
+      "text-field__icon": "Icon within the text field.",
+      "text-field__end-icon": "Right-side icon within the text field.",
+      "text-field__error-icon": "Icon displayed in the text field upon validation failure.",
+      "text-field__prefix": "Text on the left side of the text field.",
+      "text-field__suffix": "Text on the right side of the text field.",
+      "text-field__label": "Label text displayed above the text field.",
+      "text-field__input": "The `<input>` element within the text field.",
+      "text-field__clear-button": "Clear button within the text field.",
+      "text-field__clear-icon": "Icon within the clear button of the text field.",
+      "text-field__supporting": "Container for supporting information at the bottom of the text field, including helper and error messages.",
+      "text-field__helper": "Helper text displayed at the bottom of the text field.",
+      "text-field__error": "Error message displayed at the bottom of the text field.",
       "menu": "Dropdown menu, i.e., [`<mdui-menu>`](/docs/2/components/menu) element."
     }
   },

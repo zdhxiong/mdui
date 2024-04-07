@@ -58,7 +58,25 @@ import type { Ref } from 'lit/directives/ref.js';
  * @slot clear-icon - 清空按钮中的图标
  * @slot helper - 底部的帮助文本
  *
+ * @csspart chips - 多选时，放置选中值对应的 chip 的容器
+ * @csspart chip - 多选时，每一个选中的值对应的 chip
+ * @csspart chip__button - chip 内部的 `<button>` 元素
+ * @csspart chip__label - chip 内部的文本
+ * @csspart chip__delete-icon - chip 内部的删除图标
  * @csspart text-field - 文本框，即 [`<mdui-text-field>`](/docs/2/components/text-field) 元素
+ * @csspart text-field__container - text-field 内部的文本框容器
+ * @csspart text-field__icon - text-field 内部的左侧图标
+ * @csspart text-field__end-icon - text-field 内部的右侧图标
+ * @csspart text-field__error-icon - text-field 内部的验证失败状态的右侧图标
+ * @csspart text-field__prefix - text-field 内部的左侧文本
+ * @csspart text-field__suffix - text-field 内部的右侧文本
+ * @csspart text-field__label - text-field 内部的标签文本
+ * @csspart text-field__input - text-field 内部的 `<input>` 元素
+ * @csspart text-field__clear-button - text-field 内部的清空按钮
+ * @csspart text-field__clear-icon - text-field 内部的清空按钮中的图标
+ * @csspart text-field__supporting - text-field 内部的底部辅助信息容器，包括 helper 和 error
+ * @csspart text-field__helper - text-field 内部的底部帮助文本
+ * @csspart text-field__error - text-field 内部的底部错误描述文本
  * @csspart menu - 下拉菜单，即 [`<mdui-menu>`](/docs/2/components/menu) 元素
  */
 @customElement('mdui-select')
@@ -413,6 +431,23 @@ export class Select
           slot="trigger"
           part="text-field"
           class="text-field"
+          exportparts=${[
+            'container',
+            'icon',
+            'end-icon',
+            'error-icon',
+            'prefix',
+            'suffix',
+            'label',
+            'input',
+            'clear-button',
+            'clear-icon',
+            'supporting',
+            'helper',
+            'error',
+          ]
+            .map((v) => `${v}:text-field__${v}`)
+            .join(',')}
           readonly
           .readonlyButClearable=${true}
           .variant=${this.variant}
@@ -461,12 +496,16 @@ export class Select
           ${when(
             this.multiple && this.value.length,
             () =>
-              html`<div slot="input" class="chips">
+              html`<div slot="input" class="chips" part="chips">
                 ${map(
                   this.value,
                   (valueItem) =>
                     html`<mdui-chip
                       class="chip"
+                      part="chip"
+                      exportparts=${['button', 'label', 'delete-icon']
+                        .map((v) => `${v}:chip__${v}`)
+                        .join(',')}
                       variant="input"
                       deletable
                       tabindex="-1"

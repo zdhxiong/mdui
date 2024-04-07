@@ -186,7 +186,6 @@
         }
       },
       "tagNames": [
-        "mdui-button-icon",
         "mdui-card",
         "mdui-list-item",
         "mdui-menu-item",
@@ -204,7 +203,6 @@
         }
       },
       "tagNames": [
-        "mdui-button-icon",
         "mdui-card",
         "mdui-checkbox",
         "mdui-list-item",
@@ -1597,7 +1595,25 @@
       "helper": "底部的帮助文本"
     },
     "cssParts": {
+      "chips": "多选时，放置选中值对应的 chip 的容器",
+      "chip": "多选时，每一个选中的值对应的 chip",
+      "chip__button": "chip 内部的 `<button>` 元素",
+      "chip__label": "chip 内部的文本",
+      "chip__delete-icon": "chip 内部的删除图标",
       "text-field": "文本框，即 [`<mdui-text-field>`](/docs/2/components/text-field) 元素",
+      "text-field__container": "text-field 内部的文本框容器",
+      "text-field__icon": "text-field 内部的左侧图标",
+      "text-field__end-icon": "text-field 内部的右侧图标",
+      "text-field__error-icon": "text-field 内部的验证失败状态的右侧图标",
+      "text-field__prefix": "text-field 内部的左侧文本",
+      "text-field__suffix": "text-field 内部的右侧文本",
+      "text-field__label": "text-field 内部的标签文本",
+      "text-field__input": "text-field 内部的 `<input>` 元素",
+      "text-field__clear-button": "text-field 内部的清空按钮",
+      "text-field__clear-icon": "text-field 内部的清空按钮中的图标",
+      "text-field__supporting": "text-field 内部的底部辅助信息容器，包括 helper 和 error",
+      "text-field__helper": "text-field 内部的底部帮助文本",
+      "text-field__error": "text-field 内部的底部错误描述文本",
       "menu": "下拉菜单，即 [`<mdui-menu>`](/docs/2/components/menu) 元素"
     }
   },

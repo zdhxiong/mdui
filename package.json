@@ -4,8 +4,8 @@
   "scripts": {
     "preinstall": "npx -y only-allow pnpm",
     "clean:jq": "rimraf --glob packages/jq/{functions,methods,shared,static} packages/jq/*.{js,d.ts}",
-    "clean:shared": "rimraf --glob packages/shared/{controllers,decorators,helpers,icons,lit-styles,mixins} packages/shared/src/icons/*.ts packages/shared/src/icons/shared/style.ts packages/shared/mixin.less",
-    "clean:mdui": "rimraf --glob packages/mdui/{components,functions} packages/mdui/src/components/**/*style.ts packages/mdui/*.{js,d.ts} packages/mdui/mdui.css",
+    "clean:shared": "rimraf --glob packages/shared/{base,controllers,decorators,helpers,icons,lit-styles,mixins} packages/shared/src/icons/*.ts packages/shared/src/icons/shared/style.ts packages/shared/mixin.less",
+    "clean:mdui": "rimraf --glob packages/mdui/{components,functions,internal,locales} packages/mdui/src/components/**/*style.ts packages/mdui/*.{js,d.ts} packages/mdui/mdui.css",
     "clean:icons": "rimraf --glob packages/icons/src/*.ts packages/icons/*.{js,d.ts}",
     "clean": "run-p clean:*",
     "lint:jq": "eslint --fix packages/jq/src/**/*.ts",
@@ -37,7 +37,7 @@
     "jsxtypes:mdui": "node scripts/mdui/build-jsx-types.js",
     "localize-extract": "lit-localize extract --config packages/mdui/lit-localize.json",
     "localize-build": "lit-localize build --config packages/mdui/lit-localize.json",
-    "publish": "npm run bundle && pnpm publish --recursive --access public"
+    "publish": "npm run bundle && pnpm publish --recursive --access public --publish-branch v2"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "0.9.4",

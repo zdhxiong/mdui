@@ -1,6 +1,6 @@
 {
   "name": "mdui",
-  "version": "2.0.6",
+  "version": "2.1.0",
   "description": "实现 material you 设计规范的 Web Components 组件库",
   "type": "module",
   "main": "mdui.js",

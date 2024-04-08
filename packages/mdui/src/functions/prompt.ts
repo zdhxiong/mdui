@@ -2,7 +2,7 @@ import { msg } from '@lit/localize';
 import isPromise from 'is-promise';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/find.js';
-import '@mdui/jq/methods/first';
+import '@mdui/jq/methods/first.js';
 import '@mdui/jq/methods/last.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/text.js';

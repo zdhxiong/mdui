@@ -89,7 +89,7 @@ The `alert` function takes an [Options](#api-options) object and returns a Promi
     <tr id="options-confirmText">
       <td><a href="#options-confirmText"><code>confirmText</code></a></td>
       <td><code>string</code></td>
-      <td><code>确定</code></td>
+      <td><code>OK</code></td>
     </tr>
     <tr>
       <td colspan="3">The text for the confirm button.</td>

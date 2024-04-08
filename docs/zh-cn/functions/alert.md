@@ -89,7 +89,7 @@ import { alert } from 'mdui/functions/alert.js';
     <tr id="options-confirmText">
       <td><a href="#options-confirmText"><code>confirmText</code></a></td>
       <td><code>string</code></td>
-      <td><code>确定</code></td>
+      <td><code>OK</code></td>
     </tr>
     <tr>
       <td colspan="3">确认按钮的文本</td>

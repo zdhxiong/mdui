@@ -91,7 +91,7 @@ The function accepts an [Options](#api-options) object as a parameter and return
     <tr id="options-confirmText">
       <td><a href="#options-confirmText"><code>confirmText</code></a></td>
       <td><code>string</code></td>
-      <td><code>确定</code></td>
+      <td><code>OK</code></td>
     </tr>
     <tr>
       <td colspan="3">The text for the confirm button.</td>
@@ -99,7 +99,7 @@ The function accepts an [Options](#api-options) object as a parameter and return
     <tr id="options-cancelText">
       <td><a href="#options-cancelText"><code>cancelText</code></a></td>
       <td><code>string</code></td>
-      <td><code>取消</code></td>
+      <td><code>Cancel</code></td>
     </tr>
     <tr>
       <td colspan="3">The text for the cancel button.</td>

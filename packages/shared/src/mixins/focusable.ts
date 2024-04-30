@@ -7,7 +7,7 @@ import '@mdui/jq/methods/each.js';
 import '@mdui/jq/methods/removeAttr.js';
 import { DefinedController } from '../controllers/defined.js';
 import { booleanConverter } from '../helpers/decorator.js';
-import type { Constructor } from '@open-wc/dedupe-mixin';
+import type { Constructor } from '@lit/reactive-element/decorators/base.js';
 import type { PropertyValues, LitElement } from 'lit';
 
 let isClick = true;

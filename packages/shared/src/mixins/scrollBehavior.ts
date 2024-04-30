@@ -4,8 +4,8 @@ import '@mdui/jq/methods/css.js';
 import { isNodeName } from '@mdui/jq/shared/helper.js';
 import { DefinedController } from '../controllers/defined.js';
 import { watch } from '../decorators/watch.js';
+import type { Constructor } from '@lit/reactive-element/decorators/base.js';
 import type { JQ } from '@mdui/jq/shared/core.js';
-import type { Constructor } from '@open-wc/dedupe-mixin';
 import type { LitElement } from 'lit';
 
 type ScrollBehavior = 'hide' | 'shrink' | 'elevate';

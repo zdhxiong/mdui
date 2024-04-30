@@ -51,10 +51,10 @@
   "dependencies": {
     "@lit-labs/motion": "^1.0.7",
     "@lit/localize": "^0.12.1",
+    "@lit/reactive-element": "^2.0.4",
     "@material/material-color-utilities": "^0.2.7",
     "@mdui/shared": "workspace:^",
     "@mdui/jq": "workspace:^",
-    "@open-wc/dedupe-mixin": "^1.4.0",
     "@floating-ui/utils": "^0.2.1",
     "classcat": "^5.0.4",
     "is-promise": "^4.0.0",

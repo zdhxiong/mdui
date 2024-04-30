@@ -5,7 +5,7 @@ import { isArrayLike } from '@mdui/jq/shared/helper.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import './index.js';
 import type { Ripple } from './index.js';
-import type { Constructor } from '@open-wc/dedupe-mixin';
+import type { Constructor } from '@lit/reactive-element/decorators/base.js';
 import type { PropertyValues, LitElement } from 'lit';
 
 export declare class RippleMixinInterface {

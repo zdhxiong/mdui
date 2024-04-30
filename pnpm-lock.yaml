@@ -167,6 +167,9 @@ importers:
       '@lit/localize':
         specifier: ^0.12.1
         version: 0.12.1
+      '@lit/reactive-element':
+        specifier: ^2.0.4
+        version: 2.0.4
       '@material/material-color-utilities':
         specifier: ^0.2.7
         version: 0.2.7
@@ -176,9 +179,6 @@ importers:
       '@mdui/shared':
         specifier: workspace:^
         version: link:../shared
-      '@open-wc/dedupe-mixin':
-        specifier: ^1.4.0
-        version: 1.4.0
       classcat:
         specifier: ^5.0.4
         version: 5.0.4
@@ -197,12 +197,12 @@ importers:
 
   packages/shared:
     dependencies:
+      '@lit/reactive-element':
+        specifier: ^2.0.4
+        version: 2.0.4
       '@mdui/jq':
         specifier: workspace:^
         version: link:../jq
-      '@open-wc/dedupe-mixin':
-        specifier: ^1.4.0
-        version: 1.4.0
       lit:
         specifier: ^3.1.2
         version: 3.1.2
@@ -712,6 +712,7 @@ packages:
 
   /@open-wc/dedupe-mixin@1.4.0:
     resolution: {integrity: sha512-Sj7gKl1TLcDbF7B6KUhtvr+1UCxdhMbNY5KxdU5IfMFWqL8oy1ZeAcCANjoB1TL0AJTcPmcCFsCbHf8X2jGDUA==}
+    dev: true
 
   /@open-wc/scoped-elements@3.0.5:
     resolution: {integrity: sha512-q4U+hFTQQRyorJILOpmBm6PY2hgjCnQe214nXJNjbJMQ9EvT55oyZ7C8BY5aFYJkytUyBoawlMpZt4F2xjdzHw==}

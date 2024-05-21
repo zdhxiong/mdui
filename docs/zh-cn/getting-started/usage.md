@@ -78,7 +78,7 @@ JavaScript 属性则可以直接读取或设置组件实例的属性值：
 
 ## 方法 {#method}
 
-部分组件提供了公共方法，你可以通过调用这些方法来实现不同的功能。例如，[`<mdui-text-field>`](/zh-cn/docs/2/components/text-field) 组件的 [`focus()`](/zh-cn/docs/2/components/text-field#method-focus) 方法可以使文本框获得焦点。
+部分组件提供了公共方法，你可以通过调用这些方法来实现不同的功能。例如，[`<mdui-text-field>`](/zh-cn/docs/2/components/text-field) 组件的 [`focus()`](/zh-cn/docs/2/components/text-field#methods-focus) 方法可以使文本框获得焦点。
 
 ```html
 <mdui-text-field></mdui-text-field>
@@ -93,7 +93,7 @@ JavaScript 属性则可以直接读取或设置组件实例的属性值：
 
 ## 事件 {#event}
 
-部分组件在执行特定操作时会触发事件。例如，[`<mdui-dialog>`](/zh-cn/docs/2/components/dialog) 组件在打开时会触发 [`open`](/zh-cn/docs/2/components/dialog#event-open) 事件，你可以监听这个事件来执行自定义操作。
+部分组件在执行特定操作时会触发事件。例如，[`<mdui-dialog>`](/zh-cn/docs/2/components/dialog) 组件在打开时会触发 [`open`](/zh-cn/docs/2/components/dialog#events-open) 事件，你可以监听这个事件来执行自定义操作。
 
 ```html
 <mdui-dialog>Dialog</mdui-dialog>
@@ -123,7 +123,7 @@ JavaScript 属性则可以直接读取或设置组件实例的属性值：
 <mdui-button>点我</mdui-button>
 ```
 
-部分组件还提供了具名 slot，具名 slot 需要在 HTML 的 `slot` 属性中指定 slot 名称。下面的示例中，[`<mdui-icon>`](/zh-cn/docs/2/components/icon) 组件指定了 `slot="start"`，表示这是名为 [`start`](/zh-cn/docs/2/components/button#slot-start) 的具名 slot，即这个图标将被插入到组件内部的左侧：
+部分组件还提供了具名 slot，具名 slot 需要在 HTML 的 `slot` 属性中指定 slot 名称。下面的示例中，[`<mdui-icon>`](/zh-cn/docs/2/components/icon) 组件指定了 `slot="start"`，表示这是名为 [`start`](/zh-cn/docs/2/components/button#slots-icon) 的具名 slot，即这个图标将被插入到组件内部的左侧：
 
 ```html
 <mdui-button>
@@ -178,7 +178,7 @@ mdui-dialog {
 
 mdui 组件使用 shadow DOM 来封装样式和行为，但是常规 CSS 选择器无法选择到 shadow DOM 内部的元素。因此，一些组件为 Shadow DOM 元素添加了 `part` 属性，你可以使用 `::part` CSS 选择器来选择到对应的元素，并重写部分样式。
 
-例如，下面的代码使用 [`button`](/zh-cn/docs/2/components/button#css-parts-button) part 修改了按钮的内边距，且使用 [`label`](/zh-cn/docs/2/components/button#css-parts-label)、[`icon`](/zh-cn/docs/2/components/button#css-parts-icon)、[`end-icon`](/zh-cn/docs/2/components/button#css-parts-end-icon) part 分别修改了文本、左右图标的颜色：
+例如，下面的代码使用 [`button`](/zh-cn/docs/2/components/button#cssParts-button) part 修改了按钮的内边距，且使用 [`label`](/zh-cn/docs/2/components/button#cssParts-label)、[`icon`](/zh-cn/docs/2/components/button#cssParts-icon)、[`end-icon`](/zh-cn/docs/2/components/button#cssParts-end-icon) part 分别修改了文本、左右图标的颜色：
 
 ```html,example
 <mdui-button class="custom-button" icon="explore" end-icon="flight">Button</mdui-button>

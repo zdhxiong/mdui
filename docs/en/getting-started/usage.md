@@ -78,7 +78,7 @@ The `name` attribute of this component has both HTML and JavaScript properties, 
 
 ## Methods {#method}
 
-Components provide public methods that trigger specific behaviors. For example, the [`focus()`](/en/docs/2/components/text-field#method-focus) method of the [`<mdui-text-field>`](/en/docs/2/components/text-field) component sets the focus on the text field.
+Components provide public methods that trigger specific behaviors. For example, the [`focus()`](/en/docs/2/components/text-field#methods-focus) method of the [`<mdui-text-field>`](/en/docs/2/components/text-field) component sets the focus on the text field.
 
 ```html
 <mdui-text-field></mdui-text-field>
@@ -93,7 +93,7 @@ Please refer to the individual documentation of each component for a comprehensi
 
 ## Events {#event}
 
-Components emit events in response to specific actions. For example, the [`<mdui-dialog>`](/en/docs/2/components/dialog) component emits an [`open`](/en/docs/2/components/dialog#event-open) event when it begins to open. These events can be listened to, enabling the execution of custom actions.
+Components emit events in response to specific actions. For example, the [`<mdui-dialog>`](/en/docs/2/components/dialog) component emits an [`open`](/en/docs/2/components/dialog#events-open) event when it begins to open. These events can be listened to, enabling the execution of custom actions.
 
 ```html
 <mdui-dialog>Dialog</mdui-dialog>
@@ -123,7 +123,7 @@ The default slot is the most common, used for plain HTML or text within the comp
 <mdui-button>Click me</mdui-button>
 ```
 
-Some components also offer named slots. You should specify the slot name in the HTML's `slot` attribute. For example, the [`<mdui-icon>`](/en/docs/2/components/icon) component uses `slot="start"` to indicate a named slot called [`start`](/en/docs/2/components/button#slot-start), positioning the icon on the left inside the component:
+Some components also offer named slots. You should specify the slot name in the HTML's `slot` attribute. For example, the [`<mdui-icon>`](/en/docs/2/components/icon) component uses `slot="start"` to indicate a named slot called [`start`](/en/docs/2/components/button#slots-icon), positioning the icon on the left inside the component:
 
 ```html
 <mdui-button>
@@ -178,7 +178,7 @@ Please refer to the documentation of each component for a list of supported CSS 
 
 mdui components utilize the shadow DOM for encapsulating styles and behaviors. However, standard CSS selectors cannot select elements within the shadow DOM. To overcome this, some components add a `part` attribute to elements within the shadow DOM. These elements can then be selected and styled using the `::part` CSS selector.
 
-For example, the [`button`](/en/docs/2/components/button#css-parts-button) part modifies the inner padding of the button, while the [`label`](/en/docs/2/components/button#css-parts-label), [`icon`](/en/docs/2/components/button#css-parts-icon), and [`end-icon`](/en/docs/2/components/button#css-parts-end-icon) parts adjust the text color, left icon color, and right icon color, respectively:
+For example, the [`button`](/en/docs/2/components/button#cssParts-button) part modifies the inner padding of the button, while the [`label`](/en/docs/2/components/button#cssParts-label), [`icon`](/en/docs/2/components/button#cssParts-icon), and [`end-icon`](/en/docs/2/components/button#cssParts-end-icon) parts adjust the text color, left icon color, and right icon color, respectively:
 
 ```html,example
 <mdui-button class="custom-button" icon="explore" end-icon="flight">Button</mdui-button>

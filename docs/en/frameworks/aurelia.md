@@ -1,6 +1,4 @@
-After completing the [installation](/en/docs/2/getting-started/installation#npm) of mdui, you'll need to perform some additional packages and configurations.
-
-Install the Aurelia MDUI bridge (Aurelia 2 only)
+After completing the [installation](/en/docs/2/getting-started/installation#npm) of mdui, you'll need to install and configure an additional package (Aurelia 2 only)
 
 ```shell
 npm install aurelia-mdui --save

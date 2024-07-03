@@ -52,14 +52,14 @@
     "@lit-labs/motion": "^1.0.7",
     "@lit/localize": "^0.12.1",
     "@lit/reactive-element": "^2.0.4",
-    "@material/material-color-utilities": "^0.2.7",
+    "@material/material-color-utilities": "^0.3.0",
     "@mdui/shared": "workspace:^",
     "@mdui/jq": "workspace:^",
-    "@floating-ui/utils": "^0.2.1",
-    "classcat": "^5.0.4",
+    "@floating-ui/utils": "^0.2.4",
+    "classcat": "^5.0.5",
     "is-promise": "^4.0.0",
-    "lit": "^3.1.2",
+    "lit": "^3.1.4",
     "ssr-window": "^4.0.2",
-    "tslib": "^2.6.2"
+    "tslib": "^2.6.3"
   }
 }

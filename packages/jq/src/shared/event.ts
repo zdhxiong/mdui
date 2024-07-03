@@ -5,8 +5,8 @@ import '../methods/find.js';
 import '../methods/get.js';
 import { isObjectLike } from './helper.js';
 
-// @ts-ignore 直接使用 CustomEvent 在 ssr 环境下会报错
-const CustomEvent = getWindow().CustomEvent as typeof CustomEvent;
+// 直接使用 CustomEvent 在 ssr 环境下会报错
+const CustomEvent = (getWindow() as Window & typeof globalThis).CustomEvent;
 
 interface MduiCustomEventInit<TData> extends CustomEventInit {
   /**

@@ -10,6 +10,6 @@ export default {
     'packages/mdui/src/components/**/*style.ts',
   ],
   outdir: 'packages/mdui',
-  dev: true,
+  dev: false,
   litelement: true,
 };

@@ -33,6 +33,6 @@
   "homepage": "https://github.com/zdhxiong/mdui",
   "dependencies": {
     "ssr-window": "^4.0.2",
-    "tslib": "^2.6.2"
+    "tslib": "^2.6.3"
   }
 }

@@ -1,7 +1,10 @@
-import { moduleFilePathPlugin } from '../common/cem-plugins/module-file-path.js';
+import { moduleFilePathPlugin } from '../common/cem/plugins/module-file-path.js';
+import sortItems from '../common/cem/plugins/sort-items.js';
 
-// eslint-disable-next-line import/no-default-export
-export default {
+/**
+ * @type {import('../common/cem/types.js').userConfigOptions}
+ */
+const config = {
   globs: [
     'packages/mdui/src/components/**/*.ts',
     'packages/shared/src/mixins/*.ts',
@@ -14,5 +17,7 @@ export default {
   outdir: 'packages/mdui',
   dev: false,
   litelement: true,
-  plugins: [moduleFilePathPlugin('mdui')],
+  plugins: [moduleFilePathPlugin('mdui'), sortItems()],
 };
+
+export default config;

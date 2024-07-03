@@ -1,9 +1,9 @@
 /**
  * 替换 custom-elements.json 中的模块路径
  * @param {string} pkgName 当前包名
- * @return {Partial<import('@custom-elements-manifest/analyzer').Plugin>}
+ * @return {import('@custom-elements-manifest/analyzer').Plugin}
  */
-export function moduleFilePathPlugin(pkgName) {
+export const moduleFilePathPlugin = (pkgName) => {
   const replacePath = (path) => {
     return path
       ?.replace?.(new RegExp('^(?:/)?packages/' + pkgName + '/src/'), '') // 当前包，移除前缀
@@ -14,14 +14,14 @@ export function moduleFilePathPlugin(pkgName) {
   return {
     name: 'module-file-path',
     packageLinkPhase({ customElementsManifest }) {
-      customElementsManifest?.modules?.forEach((mod) => {
-        mod.path = replacePath(mod.path);
+      customElementsManifest?.modules.forEach((module) => {
+        module.path = replacePath(module.path);
 
-        for (const ex of mod.exports ?? []) {
+        for (const ex of module.exports ?? []) {
           ex.declaration.module = replacePath(ex.declaration.module);
         }
 
-        for (const dec of mod.declarations ?? []) {
+        for (const dec of module.declarations ?? []) {
           if (dec.kind === 'class') {
             ['members', 'attributes', 'events'].forEach((key) => {
               for (const member of dec[key] ?? []) {
@@ -44,4 +44,4 @@ export function moduleFilePathPlugin(pkgName) {
       });
     },
   };
-}
+};

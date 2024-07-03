@@ -142,5 +142,13 @@
     "plugin:import/recommended",
     "plugin:import/typescript",
     "prettier"
+  ],
+  "overrides": [
+    {
+      "files": ["scripts/**/*.ts", "scripts/**/*.js"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    }
   ]
 }

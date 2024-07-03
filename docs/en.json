@@ -133,8 +133,8 @@
         }
       },
       "tagNames": [
-        "mdui-button",
         "mdui-button-icon",
+        "mdui-button",
         "mdui-chip",
         "mdui-fab",
         "mdui-segmented-button"
@@ -349,50 +349,6 @@
       "--z-index": "The CSS `z-index` value of the component."
     }
   },
-  "mdui-button": {
-    "summary": "Button Component.\n\n```html\n<mdui-button>Button</mdui-button>\n```",
-    "properties": {
-      "variant": {
-        "description": "Defines the button style. Possible values:\n* `elevated`: A shadowed button for visual distinction.\n* `filled`: Used for final actions like 'Save' or 'Confirm'.\n* `tonal`: A mix between `filled` and `outlined`, suitable for medium to high-priority actions.\n* `outlined`: A bordered button for medium-priority and secondary actions.\n* `text`: A text button for low-priority actions.",
-        "enum": {
-          "elevated": "A shadowed button for visual distinction.",
-          "filled": "Used for final actions like 'Save' or 'Confirm'.",
-          "tonal": "A mix between `filled` and `outlined`, suitable for medium to high-priority actions.",
-          "outlined": "A bordered button for medium-priority and secondary actions.",
-          "text": "A text button for low-priority actions."
-        }
-      },
-      "fullWidth": {
-        "description": "If set, the button will fill the width of its parent element."
-      },
-      "icon": {
-        "description": "Specifies the Material Icons name on the left. Alternatively, use `slot=\"icon\"`."
-      },
-      "endIcon": {
-        "description": "Specifies the Material Icons name on the right. Alternatively, use `slot=\"end-icon\"`."
-      }
-    },
-    "events": {
-      "focus": "Emitted when the button gains focus.",
-      "blur": "Emitted when the button loses focus.",
-      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
-    },
-    "slots": {
-      "": "Button text.",
-      "icon": "Element on the left side of the button.",
-      "end-icon": "Element on the right side of the button."
-    },
-    "cssParts": {
-      "button": "Internal `<button>` or `<a>` element.",
-      "label": "Button text.",
-      "icon": "Icon on the left side of the button.",
-      "end-icon": "Icon on the right side of the button.",
-      "loading": "The `<mdui-circular-progress>` element for the loading state."
-    },
-    "cssProperties": {
-      "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
-    }
-  },
   "mdui-button-icon": {
     "summary": "Icon Button Component.\n\n```html\n<mdui-button-icon icon=\"search\"></mdui-button-icon>\n```",
     "properties": {
@@ -432,6 +388,50 @@
       "button": "Internal `<button>` or `<a>` element.",
       "icon": "Icon.",
       "selected-icon": "Icon in the selected state.",
+      "loading": "The `<mdui-circular-progress>` element for the loading state."
+    },
+    "cssProperties": {
+      "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
+    }
+  },
+  "mdui-button": {
+    "summary": "Button Component.\n\n```html\n<mdui-button>Button</mdui-button>\n```",
+    "properties": {
+      "variant": {
+        "description": "Defines the button style. Possible values:\n* `elevated`: A shadowed button for visual distinction.\n* `filled`: Used for final actions like 'Save' or 'Confirm'.\n* `tonal`: A mix between `filled` and `outlined`, suitable for medium to high-priority actions.\n* `outlined`: A bordered button for medium-priority and secondary actions.\n* `text`: A text button for low-priority actions.",
+        "enum": {
+          "elevated": "A shadowed button for visual distinction.",
+          "filled": "Used for final actions like 'Save' or 'Confirm'.",
+          "tonal": "A mix between `filled` and `outlined`, suitable for medium to high-priority actions.",
+          "outlined": "A bordered button for medium-priority and secondary actions.",
+          "text": "A text button for low-priority actions."
+        }
+      },
+      "fullWidth": {
+        "description": "If set, the button will fill the width of its parent element."
+      },
+      "icon": {
+        "description": "Specifies the Material Icons name on the left. Alternatively, use `slot=\"icon\"`."
+      },
+      "endIcon": {
+        "description": "Specifies the Material Icons name on the right. Alternatively, use `slot=\"end-icon\"`."
+      }
+    },
+    "events": {
+      "focus": "Emitted when the button gains focus.",
+      "blur": "Emitted when the button loses focus.",
+      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
+    },
+    "slots": {
+      "": "Button text.",
+      "icon": "Element on the left side of the button.",
+      "end-icon": "Element on the right side of the button."
+    },
+    "cssParts": {
+      "button": "Internal `<button>` or `<a>` element.",
+      "label": "Button text.",
+      "icon": "Icon on the left side of the button.",
+      "end-icon": "Icon on the right side of the button.",
       "loading": "The `<mdui-circular-progress>` element for the loading state."
     },
     "cssProperties": {
@@ -611,26 +611,6 @@
       }
     }
   },
-  "mdui-collapse": {
-    "summary": "Collapse Panel Component. It should be used in conjunction with the `<mdui-collapse-item>` component.\n\n```html\n<mdui-collapse>\n..<mdui-collapse-item header=\"header-1\">content-1</mdui-collapse-item>\n..<mdui-collapse-item header=\"header-2\">content-2</mdui-collapse-item>\n</mdui-collapse>\n```",
-    "properties": {
-      "accordion": {
-        "description": "Activates accordion mode."
-      },
-      "value": {
-        "description": "Specifies the open `<mdui-collapse-item>` value.\n\nNote: The HTML attribute is always a string and can only be initially set when `accordion` is `true`. The JavaScript property value is a string when `accordion` is `true` and a string array when `accordion` is `false`. To modify this value when `accordion` is `false`, you must change the JavaScript property."
-      },
-      "disabled": {
-        "description": "Disables the collapsible panel."
-      }
-    },
-    "events": {
-      "change": "Emitted when the open collapsible panel item changes."
-    },
-    "slots": {
-      "": "The `<mdui-collapse-item>` components."
-    }
-  },
   "mdui-collapse-item": {
     "summary": "Collapse Item Component. It should be used in conjunction with the `<mdui-collapse>` component.\n\n```html\n<mdui-collapse>\n..<mdui-collapse-item header=\"header-1\">content-1</mdui-collapse-item>\n..<mdui-collapse-item header=\"header-2\">content-2</mdui-collapse-item>\n</mdui-collapse>\n```",
     "properties": {
@@ -660,6 +640,26 @@
     "cssParts": {
       "header": "Content of the collapsible panel's header.",
       "body": "Content of the collapsible panel's body."
+    }
+  },
+  "mdui-collapse": {
+    "summary": "Collapse Panel Component. It should be used in conjunction with the `<mdui-collapse-item>` component.\n\n```html\n<mdui-collapse>\n..<mdui-collapse-item header=\"header-1\">content-1</mdui-collapse-item>\n..<mdui-collapse-item header=\"header-2\">content-2</mdui-collapse-item>\n</mdui-collapse>\n```",
+    "properties": {
+      "accordion": {
+        "description": "Activates accordion mode."
+      },
+      "value": {
+        "description": "Specifies the open `<mdui-collapse-item>` value.\n\nNote: The HTML attribute is always a string and can only be initially set when `accordion` is `true`. The JavaScript property value is a string when `accordion` is `true` and a string array when `accordion` is `false`. To modify this value when `accordion` is `false`, you must change the JavaScript property."
+      },
+      "disabled": {
+        "description": "Disables the collapsible panel."
+      }
+    },
+    "events": {
+      "change": "Emitted when the open collapsible panel item changes."
+    },
+    "slots": {
+      "": "The `<mdui-collapse-item>` components."
     }
   },
   "mdui-dialog": {
@@ -864,17 +864,6 @@
       "": "The SVG icon content."
     }
   },
-  "mdui-layout": {
-    "summary": "Layout Component.\n\n```html\n<mdui-layout>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-main></mdui-layout-main>\n</mdui-layout>\n```",
-    "properties": {
-      "fullHeight": {
-        "description": "Sets the layout height to 100%."
-      }
-    },
-    "slots": {
-      "": "Can contain elements such as [`<mdui-top-app-bar>`](/docs/2/components/top-app-bar), [`<mdui-bottom-app-bar>`](/docs/2/components/bottom-app-bar), [`<mdui-navigation-bar>`](/docs/2/components/navigation-bar), [`<mdui-navigation-drawer>`](/docs/2/components/navigation-drawer), [`<mdui-navigation-rail>`](/docs/2/components/navigation-rail), `<mdui-layout-item>`, and `<mdui-layout-main>`."
-    }
-  },
   "mdui-layout-item": {
     "summary": "Layout Item Component.\n\n```html\n<mdui-layout>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-main></mdui-layout-main>\n</mdui-layout>\n```",
     "properties": {
@@ -898,6 +887,17 @@
       "": "Can contains any content."
     }
   },
+  "mdui-layout": {
+    "summary": "Layout Component.\n\n```html\n<mdui-layout>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-main></mdui-layout-main>\n</mdui-layout>\n```",
+    "properties": {
+      "fullHeight": {
+        "description": "Sets the layout height to 100%."
+      }
+    },
+    "slots": {
+      "": "Can contain elements such as [`<mdui-top-app-bar>`](/docs/2/components/top-app-bar), [`<mdui-bottom-app-bar>`](/docs/2/components/bottom-app-bar), [`<mdui-navigation-bar>`](/docs/2/components/navigation-bar), [`<mdui-navigation-drawer>`](/docs/2/components/navigation-drawer), [`<mdui-navigation-rail>`](/docs/2/components/navigation-rail), `<mdui-layout-item>`, and `<mdui-layout-main>`."
+    }
+  },
   "mdui-linear-progress": {
     "summary": "Linear Progress Component.\n\n```html\n<mdui-linear-progress></mdui-linear-progress>\n```",
     "properties": {
@@ -913,12 +913,6 @@
     },
     "cssProperties": {
       "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
-    }
-  },
-  "mdui-list": {
-    "summary": "List Component. It should be used in conjunction with the `<mdui-list-item>` component.\n\n```html\n<mdui-list>\n..<mdui-list-subheader>Subheader</mdui-list-subheader>\n..<mdui-list-item>Item 1</mdui-list-item>\n..<mdui-list-item>Item 2</mdui-list-item>\n</mdui-list>\n```",
-    "slots": {
-      "": "Contains `<mdui-list-item>` elements."
     }
   },
   "mdui-list-item": {
@@ -1003,50 +997,10 @@
       "": "Subheader text."
     }
   },
-  "mdui-menu": {
-    "summary": "Menu Component. It should be used in conjunction with the `<mdui-menu-item>` component.\n\n```html\n<mdui-menu>\n..<mdui-menu-item>Item 1</mdui-menu-item>\n..<mdui-menu-item>Item 2</mdui-menu-item>\n</mdui-menu>\n```",
-    "properties": {
-      "selects": {
-        "description": "Defines the selectable state of menu items. Defaults to non-selectable. Possible values:\n\n* `single`: Only one item can be selected at a time.\n* `multiple`: Multiple items can be selected.",
-        "enum": {
-          "single": "Only one item can be selected at a time.",
-          "multiple": "Multiple items can be selected."
-        }
-      },
-      "value": {
-        "description": "The value of the selected `<mdui-menu-item>`.\n\nNote: The HTML attribute is always a string and can only be set as an initial value when `selects=\"single\"`. The JavaScript property value is a string when `selects=\"single\"` and an array of strings when `selects=\"multiple\"`. In `selects=\"multiple\"`, this value can only be modified by changing the JavaScript property."
-      },
-      "dense": {
-        "description": "Indicates whether the menu items use a compact layout."
-      },
-      "submenuTrigger": {
-        "description": "Defines the trigger method for submenus. Supports multiple values separated by spaces. Possible values:\n\n* `click`: Open submenu when clicking on a menu item.\n* `hover`: Open submenu when hovering over a menu item.\n* `focus`: Open submenu when focusing on a menu item.\n* `manual`: Only programmatically open and close submenus, no other trigger methods can be specified.",
-        "enum": {
-          "click": "Open submenu when clicking on a menu item.",
-          "hover": "Open submenu when hovering over a menu item.",
-          "focus": "Open submenu when focusing on a menu item.",
-          "manual": "Only programmatically open and close submenus, no other trigger methods can be specified."
-        }
-      },
-      "submenuOpenDelay": {
-        "description": "Specifies the delay (in milliseconds) for opening a submenu via hover."
-      },
-      "submenuCloseDelay": {
-        "description": "Specifies the delay (in milliseconds) for closing a submenu via hover."
-      }
-    },
-    "methods": {
-      "focus": "Sets focus on the element.",
-      "blur": "Remove focus from the element."
-    },
-    "events": {
-      "change": "Emitted when the selected state of menu items changes"
-    },
+  "mdui-list": {
+    "summary": "List Component. It should be used in conjunction with the `<mdui-list-item>` component.\n\n```html\n<mdui-list>\n..<mdui-list-subheader>Subheader</mdui-list-subheader>\n..<mdui-list-item>Item 1</mdui-list-item>\n..<mdui-list-item>Item 2</mdui-list-item>\n</mdui-list>\n```",
     "slots": {
-      "": "Submenu items (`<mdui-menu-item>`), dividers ([`<mdui-divider>`](/docs/2/components/divider)), and other elements."
-    },
-    "cssProperties": {
-      "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
+      "": "Contains `<mdui-list-item>` elements."
     }
   },
   "mdui-menu-item": {
@@ -1101,41 +1055,50 @@
       "submenu": "Submenu element."
     }
   },
-  "mdui-navigation-bar": {
-    "summary": "Navigation Bar Component. It should be used in conjunction with the `<mdui-navigation-bar-item>` component.\n\n```html\n<mdui-navigation-bar>\n..<mdui-navigation-bar-item icon=\"place\">Item 1</mdui-navigation-bar-item>\n..<mdui-navigation-bar-item icon=\"commute\">Item 2</mdui-navigation-bar-item>\n..<mdui-navigation-bar-item icon=\"people\">Item 3</mdui-navigation-bar-item>\n</mdui-navigation-bar>\n```",
+  "mdui-menu": {
+    "summary": "Menu Component. It should be used in conjunction with the `<mdui-menu-item>` component.\n\n```html\n<mdui-menu>\n..<mdui-menu-item>Item 1</mdui-menu-item>\n..<mdui-menu-item>Item 2</mdui-menu-item>\n</mdui-menu>\n```",
     "properties": {
-      "hide": {
-        "description": "Hides the navigation bar when set."
-      },
-      "labelVisibility": {
-        "description": "Specifies the visibility of the text. Possible values:\n\n* `auto`: Visible if there are 3 or fewer options, otherwise only the selected state is visible.\n* `selected`: Only visible in the selected state.\n* `labeled`: Always visible.\n* `unlabeled`: Never visible.",
+      "selects": {
+        "description": "Defines the selectable state of menu items. Defaults to non-selectable. Possible values:\n\n* `single`: Only one item can be selected at a time.\n* `multiple`: Multiple items can be selected.",
         "enum": {
-          "auto": "Visible if there are 3 or fewer options, otherwise only the selected state is visible.",
-          "selected": "Only visible in the selected state.",
-          "labeled": "Always visible.",
-          "unlabeled": "Never visible."
+          "single": "Only one item can be selected at a time.",
+          "multiple": "Multiple items can be selected."
         }
       },
       "value": {
-        "description": "The value of the selected `<mdui-navigation-bar-item>`."
+        "description": "The value of the selected `<mdui-menu-item>`.\n\nNote: The HTML attribute is always a string and can only be set as an initial value when `selects=\"single\"`. The JavaScript property value is a string when `selects=\"single\"` and an array of strings when `selects=\"multiple\"`. In `selects=\"multiple\"`, this value can only be modified by changing the JavaScript property."
       },
-      "scrollBehavior": {
-        "description": "Defines the scroll behavior. Possible values:\n\n* `hide`: Hides when scrolling."
+      "dense": {
+        "description": "Indicates whether the menu items use a compact layout."
+      },
+      "submenuTrigger": {
+        "description": "Defines the trigger method for submenus. Supports multiple values separated by spaces. Possible values:\n\n* `click`: Open submenu when clicking on a menu item.\n* `hover`: Open submenu when hovering over a menu item.\n* `focus`: Open submenu when focusing on a menu item.\n* `manual`: Only programmatically open and close submenus, no other trigger methods can be specified.",
+        "enum": {
+          "click": "Open submenu when clicking on a menu item.",
+          "hover": "Open submenu when hovering over a menu item.",
+          "focus": "Open submenu when focusing on a menu item.",
+          "manual": "Only programmatically open and close submenus, no other trigger methods can be specified."
+        }
+      },
+      "submenuOpenDelay": {
+        "description": "Specifies the delay (in milliseconds) for opening a submenu via hover."
+      },
+      "submenuCloseDelay": {
+        "description": "Specifies the delay (in milliseconds) for closing a submenu via hover."
       }
     },
+    "methods": {
+      "focus": "Sets focus on the element.",
+      "blur": "Remove focus from the element."
+    },
     "events": {
-      "change": "Emitted when the value changes.",
-      "show": "Emitted when the navigation bar starts to show. Can be prevented with `event.preventDefault()`.",
-      "shown": "Emitted after the navigation bar has shown and animations are complete.",
-      "hide": "Emitted when the navigation bar starts to hide. Can be prevented with `event.preventDefault()`.",
-      "hidden": "Emitted after the navigation bar has hidden and animations are complete."
+      "change": "Emitted when the selected state of menu items changes"
     },
     "slots": {
-      "": "Contains `<mdui-navigation-bar-item>` components."
+      "": "Submenu items (`<mdui-menu-item>`), dividers ([`<mdui-divider>`](/docs/2/components/divider)), and other elements."
     },
     "cssProperties": {
-      "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
-      "--z-index": "The CSS `z-index` value of the component."
+      "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
     }
   },
   "mdui-navigation-bar-item": {
@@ -1171,6 +1134,43 @@
     },
     "cssProperties": {
       "--shape-corner-indicator": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
+    }
+  },
+  "mdui-navigation-bar": {
+    "summary": "Navigation Bar Component. It should be used in conjunction with the `<mdui-navigation-bar-item>` component.\n\n```html\n<mdui-navigation-bar>\n..<mdui-navigation-bar-item icon=\"place\">Item 1</mdui-navigation-bar-item>\n..<mdui-navigation-bar-item icon=\"commute\">Item 2</mdui-navigation-bar-item>\n..<mdui-navigation-bar-item icon=\"people\">Item 3</mdui-navigation-bar-item>\n</mdui-navigation-bar>\n```",
+    "properties": {
+      "hide": {
+        "description": "Hides the navigation bar when set."
+      },
+      "labelVisibility": {
+        "description": "Specifies the visibility of the text. Possible values:\n\n* `auto`: Visible if there are 3 or fewer options, otherwise only the selected state is visible.\n* `selected`: Only visible in the selected state.\n* `labeled`: Always visible.\n* `unlabeled`: Never visible.",
+        "enum": {
+          "auto": "Visible if there are 3 or fewer options, otherwise only the selected state is visible.",
+          "selected": "Only visible in the selected state.",
+          "labeled": "Always visible.",
+          "unlabeled": "Never visible."
+        }
+      },
+      "value": {
+        "description": "The value of the selected `<mdui-navigation-bar-item>`."
+      },
+      "scrollBehavior": {
+        "description": "Defines the scroll behavior. Possible values:\n\n* `hide`: Hides when scrolling."
+      }
+    },
+    "events": {
+      "change": "Emitted when the value changes.",
+      "show": "Emitted when the navigation bar starts to show. Can be prevented with `event.preventDefault()`.",
+      "shown": "Emitted after the navigation bar has shown and animations are complete.",
+      "hide": "Emitted when the navigation bar starts to hide. Can be prevented with `event.preventDefault()`.",
+      "hidden": "Emitted after the navigation bar has hidden and animations are complete."
+    },
+    "slots": {
+      "": "Contains `<mdui-navigation-bar-item>` components."
+    },
+    "cssProperties": {
+      "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
+      "--z-index": "The CSS `z-index` value of the component."
     }
   },
   "mdui-navigation-drawer": {
@@ -1216,6 +1216,41 @@
     "cssProperties": {
       "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
       "--z-index": "The CSS `z-index` value of the component."
+    }
+  },
+  "mdui-navigation-rail-item": {
+    "summary": "Navigation Rail Item Component. It should be used in conjunction with the `<mdui-navigation-rail>` component.\n\n```html\n<mdui-navigation-rail>\n..<mdui-navigation-rail-item icon=\"watch_later\">Recent</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"image\">Images</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"library_music\">Library</mdui-navigation-rail-item>\n</mdui-navigation-rail>\n```",
+    "properties": {
+      "icon": {
+        "description": "Specifies the Material Icons name for the inactive state. Alternatively, use `slot=\"icon\"`."
+      },
+      "activeIcon": {
+        "description": "Specifies the Material Icons name for the active state. Alternatively, use `slot=\"active-icon\"`."
+      },
+      "value": {
+        "description": "The value of the navigation item."
+      }
+    },
+    "events": {
+      "focus": "Emitted when the navigation rail item gains focus.",
+      "blur": "Emitted when the navigation rail item loses focus."
+    },
+    "slots": {
+      "": "Text.",
+      "icon": "Icon.",
+      "active-icon": "Icon for the active state.",
+      "badge": "Badge."
+    },
+    "cssParts": {
+      "container": "Container for the navigation item.",
+      "indicator": "Indicator.",
+      "badge": "Badge.",
+      "icon": "Icon.",
+      "active-icon": "Icon for the active state.",
+      "label": "Text."
+    },
+    "cssProperties": {
+      "--shape-corner-indicator": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
     }
   },
   "mdui-navigation-rail": {
@@ -1264,77 +1299,6 @@
       "--z-index": "The CSS `z-index` value of the component."
     }
   },
-  "mdui-navigation-rail-item": {
-    "summary": "Navigation Rail Item Component. It should be used in conjunction with the `<mdui-navigation-rail>` component.\n\n```html\n<mdui-navigation-rail>\n..<mdui-navigation-rail-item icon=\"watch_later\">Recent</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"image\">Images</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"library_music\">Library</mdui-navigation-rail-item>\n</mdui-navigation-rail>\n```",
-    "properties": {
-      "icon": {
-        "description": "Specifies the Material Icons name for the inactive state. Alternatively, use `slot=\"icon\"`."
-      },
-      "activeIcon": {
-        "description": "Specifies the Material Icons name for the active state. Alternatively, use `slot=\"active-icon\"`."
-      },
-      "value": {
-        "description": "The value of the navigation item."
-      }
-    },
-    "events": {
-      "focus": "Emitted when the navigation rail item gains focus.",
-      "blur": "Emitted when the navigation rail item loses focus."
-    },
-    "slots": {
-      "": "Text.",
-      "icon": "Icon.",
-      "active-icon": "Icon for the active state.",
-      "badge": "Badge."
-    },
-    "cssParts": {
-      "container": "Container for the navigation item.",
-      "indicator": "Indicator.",
-      "badge": "Badge.",
-      "icon": "Icon.",
-      "active-icon": "Icon for the active state.",
-      "label": "Text."
-    },
-    "cssProperties": {
-      "--shape-corner-indicator": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
-    }
-  },
-  "mdui-radio": {
-    "summary": "Radio Component. It should be used in conjunction with the `<mdui-radio-group>` component.\n\n```html\n<mdui-radio-group value=\"chinese\">\n..<mdui-radio value=\"chinese\">Chinese</mdui-radio>\n..<mdui-radio value=\"english\">English</mdui-radio>\n</mdui-radio-group>\n```",
-    "properties": {
-      "value": {
-        "description": "Specifies the value of the radio."
-      },
-      "disabled": {
-        "description": "Disables the radio when set."
-      },
-      "checked": {
-        "description": "Sets the radio to the checked state."
-      },
-      "uncheckedIcon": {
-        "description": "Specifies the Material Icons name for the unchecked state. Alternatively, use `slot=\"unchecked-icon\"`."
-      },
-      "checkedIcon": {
-        "description": "Specifies the Material Icons name for the checked state. Alternatively, use `slot=\"checked-icon\"`."
-      }
-    },
-    "events": {
-      "focus": "Emitted when the radio gains focus.",
-      "blur": "Emitted when the radio loses focus.",
-      "change": "Emitted when the radio is selected."
-    },
-    "slots": {
-      "": "Text content.",
-      "unchecked-icon": "Icon for the unchecked state.",
-      "checked-icon": "Icon for the checked state."
-    },
-    "cssParts": {
-      "control": "Container for the left icon.",
-      "unchecked-icon": "Icon for the unchecked state.",
-      "checked-icon": "Icon for the checked state.",
-      "label": "Text content."
-    }
-  },
   "mdui-radio-group": {
     "summary": "Radio Group Component. It should be used in conjunction with the `<mdui-radio>` component.\n\n```html\n<mdui-radio-group value=\"chinese\">\n..<mdui-radio value=\"chinese\">Chinese</mdui-radio>\n..<mdui-radio value=\"english\">English</mdui-radio>\n</mdui-radio-group>\n```",
     "properties": {
@@ -1377,6 +1341,42 @@
       "": "`<mdui-radio>` elements."
     }
   },
+  "mdui-radio": {
+    "summary": "Radio Component. It should be used in conjunction with the `<mdui-radio-group>` component.\n\n```html\n<mdui-radio-group value=\"chinese\">\n..<mdui-radio value=\"chinese\">Chinese</mdui-radio>\n..<mdui-radio value=\"english\">English</mdui-radio>\n</mdui-radio-group>\n```",
+    "properties": {
+      "value": {
+        "description": "Specifies the value of the radio."
+      },
+      "disabled": {
+        "description": "Disables the radio when set."
+      },
+      "checked": {
+        "description": "Sets the radio to the checked state."
+      },
+      "uncheckedIcon": {
+        "description": "Specifies the Material Icons name for the unchecked state. Alternatively, use `slot=\"unchecked-icon\"`."
+      },
+      "checkedIcon": {
+        "description": "Specifies the Material Icons name for the checked state. Alternatively, use `slot=\"checked-icon\"`."
+      }
+    },
+    "events": {
+      "focus": "Emitted when the radio gains focus.",
+      "blur": "Emitted when the radio loses focus.",
+      "change": "Emitted when the radio is selected."
+    },
+    "slots": {
+      "": "Text content.",
+      "unchecked-icon": "Icon for the unchecked state.",
+      "checked-icon": "Icon for the checked state."
+    },
+    "cssParts": {
+      "control": "Container for the left icon.",
+      "unchecked-icon": "Icon for the unchecked state.",
+      "checked-icon": "Icon for the checked state.",
+      "label": "Text content."
+    }
+  },
   "mdui-range-slider": {
     "summary": "Range Slider Component.\n\n```html\n<mdui-range-slider></mdui-range-slider>\n```",
     "properties": {
@@ -1400,39 +1400,6 @@
       "handle": "Handle for interaction.",
       "label": "Tooltip text.",
       "tickmark": "Tick mark."
-    }
-  },
-  "mdui-segmented-button": {
-    "summary": "Segmented Button Component. It should be used in conjunction with the `<mdui-segmented-button-group>` component.\n\n```html\n<mdui-segmented-button-group>\n..<mdui-segmented-button>Day</mdui-segmented-button>\n..<mdui-segmented-button>Week</mdui-segmented-button>\n..<mdui-segmented-button>Month</mdui-segmented-button>\n</mdui-segmented-button-group>\n```",
-    "properties": {
-      "icon": {
-        "description": "Specifies the Material Icons name for the left icon. Alternatively, use `slot=\"icon\"`."
-      },
-      "endIcon": {
-        "description": "Specifies the Material Icons name for the right icon. Alternatively, use `slot=\"end-icon\"`."
-      },
-      "selectedIcon": {
-        "description": "Specifies the Material Icons name for the selected state. Alternatively, use `slot=\"selected-icon\"`."
-      }
-    },
-    "events": {
-      "focus": "Emitted when the segmented button gains focus.",
-      "blur": "Emitted when the segmented button loses focus.",
-      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
-    },
-    "slots": {
-      "": "Text content.",
-      "icon": "Left icon.",
-      "selected-icon": "Icon for the selected state.",
-      "end-icon": "Right icon."
-    },
-    "cssParts": {
-      "button": "Internal `<button>` or `<a>` element.",
-      "icon": "Left icon.",
-      "selected-icon": "Icon for the selected state.",
-      "end-icon": "Right icon.",
-      "label": "Text content.",
-      "loading": "The `<mdui-circular-progress>` element for the loading state."
     }
   },
   "mdui-segmented-button-group": {
@@ -1487,6 +1454,39 @@
     },
     "cssProperties": {
       "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
+    }
+  },
+  "mdui-segmented-button": {
+    "summary": "Segmented Button Component. It should be used in conjunction with the `<mdui-segmented-button-group>` component.\n\n```html\n<mdui-segmented-button-group>\n..<mdui-segmented-button>Day</mdui-segmented-button>\n..<mdui-segmented-button>Week</mdui-segmented-button>\n..<mdui-segmented-button>Month</mdui-segmented-button>\n</mdui-segmented-button-group>\n```",
+    "properties": {
+      "icon": {
+        "description": "Specifies the Material Icons name for the left icon. Alternatively, use `slot=\"icon\"`."
+      },
+      "endIcon": {
+        "description": "Specifies the Material Icons name for the right icon. Alternatively, use `slot=\"end-icon\"`."
+      },
+      "selectedIcon": {
+        "description": "Specifies the Material Icons name for the selected state. Alternatively, use `slot=\"selected-icon\"`."
+      }
+    },
+    "events": {
+      "focus": "Emitted when the segmented button gains focus.",
+      "blur": "Emitted when the segmented button loses focus.",
+      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
+    },
+    "slots": {
+      "": "Text content.",
+      "icon": "Left icon.",
+      "selected-icon": "Icon for the selected state.",
+      "end-icon": "Right icon."
+    },
+    "cssParts": {
+      "button": "Internal `<button>` or `<a>` element.",
+      "icon": "Left icon.",
+      "selected-icon": "Icon for the selected state.",
+      "end-icon": "Right icon.",
+      "label": "Text content.",
+      "loading": "The `<mdui-circular-progress>` element for the loading state."
     }
   },
   "mdui-select": {
@@ -1773,6 +1773,17 @@
       "--shape-corner-thumb": "The corner size of the icon container. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
     }
   },
+  "mdui-tab-panel": {
+    "summary": "Tab Panel Component. It should be used in conjunction with the `<mdui-tabs>` and `<mdui-tab>` components.\n\n```html\n<mdui-tabs value=\"tab-1\">\n..<mdui-tab value=\"tab-1\">Tab 1</mdui-tab>\n..<mdui-tab value=\"tab-2\">Tab 2</mdui-tab>\n..<mdui-tab value=\"tab-3\">Tab 3</mdui-tab>\n\n..<mdui-tab-panel slot=\"panel\" value=\"tab-1\">Panel 1</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-2\">Panel 2</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-3\">Panel 3</mdui-tab-panel>\n</mdui-tabs>\n```",
+    "properties": {
+      "value": {
+        "description": "Specifies the value of the tab panel."
+      }
+    },
+    "slots": {
+      "": "The content of the tab panel."
+    }
+  },
   "mdui-tab": {
     "summary": "Tab Component. It should be used in conjunction with the `<mdui-tabs>` and `<mdui-tab-panel>` components.\n\n```html\n<mdui-tabs value=\"tab-1\">\n..<mdui-tab value=\"tab-1\">Tab 1</mdui-tab>\n..<mdui-tab value=\"tab-2\">Tab 2</mdui-tab>\n..<mdui-tab value=\"tab-3\">Tab 3</mdui-tab>\n\n..<mdui-tab-panel slot=\"panel\" value=\"tab-1\">Panel 1</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-2\">Panel 2</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-3\">Panel 3</mdui-tab-panel>\n</mdui-tabs>\n```",
     "properties": {
@@ -1800,17 +1811,6 @@
       "container": "Tab container.",
       "icon": "Tab icon.",
       "label": "Tab text."
-    }
-  },
-  "mdui-tab-panel": {
-    "summary": "Tab Panel Component. It should be used in conjunction with the `<mdui-tabs>` and `<mdui-tab>` components.\n\n```html\n<mdui-tabs value=\"tab-1\">\n..<mdui-tab value=\"tab-1\">Tab 1</mdui-tab>\n..<mdui-tab value=\"tab-2\">Tab 2</mdui-tab>\n..<mdui-tab value=\"tab-3\">Tab 3</mdui-tab>\n\n..<mdui-tab-panel slot=\"panel\" value=\"tab-1\">Panel 1</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-2\">Panel 2</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-3\">Panel 3</mdui-tab-panel>\n</mdui-tabs>\n```",
-    "properties": {
-      "value": {
-        "description": "Specifies the value of the tab panel."
-      }
-    },
-    "slots": {
-      "": "The content of the tab panel."
     }
   },
   "mdui-tabs": {
@@ -2176,6 +2176,17 @@
       "--z-index": "The CSS `z-index` value of the component."
     }
   },
+  "mdui-top-app-bar-title": {
+    "summary": "Top App Bar Title Component. It should be used in conjunction with the `<mdui-top-app-bar>` component.\n\n```html\n<mdui-top-app-bar>\n..<mdui-button-icon icon=\"menu\"></mdui-button-icon>\n..<mdui-top-app-bar-title>Title</mdui-top-app-bar-title>\n..<div style=\"flex-grow: 1\"></div>\n..<mdui-button-icon icon=\"more_vert\"></mdui-button-icon>\n</mdui-top-app-bar>\n```",
+    "slots": {
+      "": "The title text of the top app bar.",
+      "label-large": "The title text when the top app bar is in the expanded state."
+    },
+    "cssParts": {
+      "label": "The title text.",
+      "label-large": "The title text when the top app bar is in the expanded state."
+    }
+  },
   "mdui-top-app-bar": {
     "summary": "Top App Bar Component.\n\n```html\n<mdui-top-app-bar>\n..<mdui-button-icon icon=\"menu\"></mdui-button-icon>\n..<mdui-top-app-bar-title>Title</mdui-top-app-bar-title>\n..<div style=\"flex-grow: 1\"></div>\n..<mdui-button-icon icon=\"more_vert\"></mdui-button-icon>\n</mdui-top-app-bar>\n```",
     "properties": {
@@ -2210,17 +2221,6 @@
     "cssProperties": {
       "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
       "--z-index": "The CSS `z-index` value of the component."
-    }
-  },
-  "mdui-top-app-bar-title": {
-    "summary": "Top App Bar Title Component. It should be used in conjunction with the `<mdui-top-app-bar>` component.\n\n```html\n<mdui-top-app-bar>\n..<mdui-button-icon icon=\"menu\"></mdui-button-icon>\n..<mdui-top-app-bar-title>Title</mdui-top-app-bar-title>\n..<div style=\"flex-grow: 1\"></div>\n..<mdui-button-icon icon=\"more_vert\"></mdui-button-icon>\n</mdui-top-app-bar>\n```",
-    "slots": {
-      "": "The title text of the top app bar.",
-      "label-large": "The title text when the top app bar is in the expanded state."
-    },
-    "cssParts": {
-      "label": "The title text.",
-      "label-large": "The title text when the top app bar is in the expanded state."
     }
   },
   "common": {

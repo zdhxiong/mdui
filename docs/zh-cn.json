@@ -133,8 +133,8 @@
         }
       },
       "tagNames": [
-        "mdui-button",
         "mdui-button-icon",
+        "mdui-button",
         "mdui-chip",
         "mdui-fab",
         "mdui-segmented-button"
@@ -349,50 +349,6 @@
       "--z-index": "组件的 CSS `z-index` 值"
     }
   },
-  "mdui-button": {
-    "summary": "按钮组件\n\n```html\n<mdui-button>Button</mdui-button>\n```",
-    "properties": {
-      "variant": {
-        "description": "按钮的形状。可选值包括：\n\n* `elevated`：带阴影的按钮，适用于需要将按钮与背景视觉分离的场景\n* `filled`：视觉效果强烈，适用于重要流程的最终操作，如“保存”、“确认”等\n* `tonal`：视觉效果介于 `filled` 和 `outlined` 之间，适用于中高优先级的操作，如流程中的“下一步”\n* `outlined`：带边框的按钮，适用于中等优先级，且次要的操作，如“返回”\n* `text`：文本按钮，适用于最低优先级的操作",
-        "enum": {
-          "elevated": "带阴影的按钮，适用于需要将按钮与背景视觉分离的场景",
-          "filled": "视觉效果强烈，适用于重要流程的最终操作，如“保存”、“确认”等",
-          "tonal": "视觉效果介于 `filled` 和 `outlined` 之间，适用于中高优先级的操作，如流程中的“下一步”",
-          "outlined": "带边框的按钮，适用于中等优先级，且次要的操作，如“返回”",
-          "text": "文本按钮，适用于最低优先级的操作"
-        }
-      },
-      "fullWidth": {
-        "description": "是否填满父元素宽度"
-      },
-      "icon": {
-        "description": "左侧的 Material Icons 图标名。也可以通过 `slot=\"icon\"` 设置"
-      },
-      "endIcon": {
-        "description": "右侧的 Material Icons 图标名。也可以通过 `slot=\"end-icon\"` 设置"
-      }
-    },
-    "events": {
-      "focus": "获得焦点时触发",
-      "blur": "失去焦点时触发",
-      "invalid": "表单字段验证未通过时触发"
-    },
-    "slots": {
-      "": "按钮的文本",
-      "icon": "按钮左侧的元素",
-      "end-icon": "按钮右侧的元素"
-    },
-    "cssParts": {
-      "button": "内部的 `<button>` 或 `<a>` 元素",
-      "label": "按钮的文本",
-      "icon": "按钮左侧的图标",
-      "end-icon": "按钮右侧的图标",
-      "loading": "加载中状态的 `<mdui-circular-progress>` 元素"
-    },
-    "cssProperties": {
-      "--shape-corner": "组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)"
-    }
-  },
   "mdui-button-icon": {
     "summary": "图标按钮组件\n\n```html\n<mdui-button-icon icon=\"search\"></mdui-button-icon>\n```",
     "properties": {
@@ -432,6 +388,50 @@
       "button": "内部的 `<button>` 或 `<a>` 元素",
       "icon": "未选中状态的图标",
       "selected-icon": "选中状态的图标",
+      "loading": "加载中状态的 `<mdui-circular-progress>` 元素"
+    },
+    "cssProperties": {
+      "--shape-corner": "组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)"
+    }
+  },
+  "mdui-button": {
+    "summary": "按钮组件\n\n```html\n<mdui-button>Button</mdui-button>\n```",
+    "properties": {
+      "variant": {
+        "description": "按钮的形状。可选值包括：\n\n* `elevated`：带阴影的按钮，适用于需要将按钮与背景视觉分离的场景\n* `filled`：视觉效果强烈，适用于重要流程的最终操作，如“保存”、“确认”等\n* `tonal`：视觉效果介于 `filled` 和 `outlined` 之间，适用于中高优先级的操作，如流程中的“下一步”\n* `outlined`：带边框的按钮，适用于中等优先级，且次要的操作，如“返回”\n* `text`：文本按钮，适用于最低优先级的操作",
+        "enum": {
+          "elevated": "带阴影的按钮，适用于需要将按钮与背景视觉分离的场景",
+          "filled": "视觉效果强烈，适用于重要流程的最终操作，如“保存”、“确认”等",
+          "tonal": "视觉效果介于 `filled` 和 `outlined` 之间，适用于中高优先级的操作，如流程中的“下一步”",
+          "outlined": "带边框的按钮，适用于中等优先级，且次要的操作，如“返回”",
+          "text": "文本按钮，适用于最低优先级的操作"
+        }
+      },
+      "fullWidth": {
+        "description": "是否填满父元素宽度"
+      },
+      "icon": {
+        "description": "左侧的 Material Icons 图标名。也可以通过 `slot=\"icon\"` 设置"
+      },
+      "endIcon": {
+        "description": "右侧的 Material Icons 图标名。也可以通过 `slot=\"end-icon\"` 设置"
+      }
+    },
+    "events": {
+      "focus": "获得焦点时触发",
+      "blur": "失去焦点时触发",
+      "invalid": "表单字段验证未通过时触发"
+    },
+    "slots": {
+      "": "按钮的文本",
+      "icon": "按钮左侧的元素",
+      "end-icon": "按钮右侧的元素"
+    },
+    "cssParts": {
+      "button": "内部的 `<button>` 或 `<a>` 元素",
+      "label": "按钮的文本",
+      "icon": "按钮左侧的图标",
+      "end-icon": "按钮右侧的图标",
       "loading": "加载中状态的 `<mdui-circular-progress>` 元素"
     },
     "cssProperties": {
@@ -611,26 +611,6 @@
       }
     }
   },
-  "mdui-collapse": {
-    "summary": "折叠面板组件，需配合 `<mdui-collapse-item>` 组件使用\n\n```html\n<mdui-collapse>\n..<mdui-collapse-item header=\"header-1\">content-1</mdui-collapse-item>\n..<mdui-collapse-item header=\"header-2\">content-2</mdui-collapse-item>\n</mdui-collapse>\n```",
-    "properties": {
-      "accordion": {
-        "description": "是否启用手风琴模式"
-      },
-      "value": {
-        "description": "当前展开的 `<mdui-collapse-item>` 的值\n\n**Note**：该属性的 HTML 属性始终为字符串，只有在 `accordion` 为 `true` 时，才能设置初始值；该属性的 JavaScript 属性值在 `accordion` 为 `true` 时为字符串，在 `accordion` 为 `false` 时为字符串数组。因此，当 `accordion` 为 `false` 时，只能通过修改 JavaScript 属性值来改变此值。"
-      },
-      "disabled": {
-        "description": "是否禁用此折叠面板"
-      }
-    },
-    "events": {
-      "change": "当前展开的折叠面板项变化时触发"
-    },
-    "slots": {
-      "": "`<mdui-collapse-item>` 组件"
-    }
-  },
   "mdui-collapse-item": {
     "summary": "折叠面板项组件，需配合 `<mdui-collapse>` 组件使用\n\n```html\n<mdui-collapse>\n..<mdui-collapse-item header=\"header-1\">content-1</mdui-collapse-item>\n..<mdui-collapse-item header=\"header-2\">content-2</mdui-collapse-item>\n</mdui-collapse>\n```",
     "properties": {
@@ -660,6 +640,26 @@
     "cssParts": {
       "header": "折叠面板的头部内容",
       "body": "折叠面板的正文内容"
+    }
+  },
+  "mdui-collapse": {
+    "summary": "折叠面板组件，需配合 `<mdui-collapse-item>` 组件使用\n\n```html\n<mdui-collapse>\n..<mdui-collapse-item header=\"header-1\">content-1</mdui-collapse-item>\n..<mdui-collapse-item header=\"header-2\">content-2</mdui-collapse-item>\n</mdui-collapse>\n```",
+    "properties": {
+      "accordion": {
+        "description": "是否启用手风琴模式"
+      },
+      "value": {
+        "description": "当前展开的 `<mdui-collapse-item>` 的值\n\n**Note**：该属性的 HTML 属性始终为字符串，只有在 `accordion` 为 `true` 时，才能设置初始值；该属性的 JavaScript 属性值在 `accordion` 为 `true` 时为字符串，在 `accordion` 为 `false` 时为字符串数组。因此，当 `accordion` 为 `false` 时，只能通过修改 JavaScript 属性值来改变此值。"
+      },
+      "disabled": {
+        "description": "是否禁用此折叠面板"
+      }
+    },
+    "events": {
+      "change": "当前展开的折叠面板项变化时触发"
+    },
+    "slots": {
+      "": "`<mdui-collapse-item>` 组件"
     }
   },
   "mdui-dialog": {
@@ -864,17 +864,6 @@
       "": "`svg` 图标的内容"
     }
   },
-  "mdui-layout": {
-    "summary": "布局组件\n\n```html\n<mdui-layout>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-main></mdui-layout-main>\n</mdui-layout>\n```",
-    "properties": {
-      "fullHeight": {
-        "description": "设置当前布局的高度为 100%"
-      }
-    },
-    "slots": {
-      "": "可以包含 [`<mdui-top-app-bar>`](/docs/2/components/top-app-bar)、[`<mdui-bottom-app-bar>`](/docs/2/components/bottom-app-bar)、[`<mdui-navigation-bar>`](/docs/2/components/navigation-bar)、[`<mdui-navigation-drawer>`](/docs/2/components/navigation-drawer)、[`<mdui-navigation-rail>`](/docs/2/components/navigation-rail)、`<mdui-layout-item>`、`<mdui-layout-main>` 元素"
-    }
-  },
   "mdui-layout-item": {
     "summary": "布局项组件\n\n```html\n<mdui-layout>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-main></mdui-layout-main>\n</mdui-layout>\n```",
     "properties": {
@@ -898,6 +887,17 @@
       "": "可以包含任意内容"
     }
   },
+  "mdui-layout": {
+    "summary": "布局组件\n\n```html\n<mdui-layout>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-main></mdui-layout-main>\n</mdui-layout>\n```",
+    "properties": {
+      "fullHeight": {
+        "description": "设置当前布局的高度为 100%"
+      }
+    },
+    "slots": {
+      "": "可以包含 [`<mdui-top-app-bar>`](/docs/2/components/top-app-bar)、[`<mdui-bottom-app-bar>`](/docs/2/components/bottom-app-bar)、[`<mdui-navigation-bar>`](/docs/2/components/navigation-bar)、[`<mdui-navigation-drawer>`](/docs/2/components/navigation-drawer)、[`<mdui-navigation-rail>`](/docs/2/components/navigation-rail)、`<mdui-layout-item>`、`<mdui-layout-main>` 元素"
+    }
+  },
   "mdui-linear-progress": {
     "summary": "线性进度指示器组件\n\n```html\n<mdui-linear-progress></mdui-linear-progress>\n```",
     "properties": {
@@ -913,12 +913,6 @@
     },
     "cssProperties": {
       "--shape-corner": "组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)"
-    }
-  },
-  "mdui-list": {
-    "summary": "列表组件。需配合 `<mdui-list-item>` 组件使用\n\n```html\n<mdui-list>\n..<mdui-list-subheader>Subheader</mdui-list-subheader>\n..<mdui-list-item>Item 1</mdui-list-item>\n..<mdui-list-item>Item 2</mdui-list-item>\n</mdui-list>\n```",
-    "slots": {
-      "": "`<mdui-list-item>` 元素"
     }
   },
   "mdui-list-item": {
@@ -1003,50 +997,10 @@
       "": "列表标题文本"
     }
   },
-  "mdui-menu": {
-    "summary": "菜单组件。需配合 `<mdui-menu-item>` 组件使用\n\n```html\n<mdui-menu>\n..<mdui-menu-item>Item 1</mdui-menu-item>\n..<mdui-menu-item>Item 2</mdui-menu-item>\n</mdui-menu>\n```",
-    "properties": {
-      "selects": {
-        "description": "菜单项的可选状态。默认不可选。可选值包括：\n\n* `single`：单选\n* `multiple`：多选",
-        "enum": {
-          "single": "单选",
-          "multiple": "多选"
-        }
-      },
-      "value": {
-        "description": "当前选中的 `<mdui-menu-item>` 的值。\n\n**Note**：该属性的 HTML 属性始终为字符串，仅在 `selects=\"single\"` 时可通过 HTML 属性设置初始值；该属性的 JavaScript 属性值在 `selects=\"single\"` 时为字符串，在 `selects=\"multiple\"` 时为字符串数组。因此，在 `selects=\"multiple\"` 时，若要修改该值，只能通过修改 JavaScript 属性值实现。"
-      },
-      "dense": {
-        "description": "菜单项是否使用紧凑布局"
-      },
-      "submenuTrigger": {
-        "description": "子菜单的触发方式，支持多个值，用空格分隔。可选值包括：\n\n* `click`：点击菜单项时打开子菜单\n* `hover`：鼠标悬浮到菜单项上时打开子菜单\n* `focus`：聚焦到菜单项上时打开子菜单\n* `manual`：仅能通过编程方式打开和关闭子菜单，不能再指定其他触发方式",
-        "enum": {
-          "click": "点击菜单项时打开子菜单",
-          "hover": "鼠标悬浮到菜单项上时打开子菜单",
-          "focus": "聚焦到菜单项上时打开子菜单",
-          "manual": "仅能通过编程方式打开和关闭子菜单，不能再指定其他触发方式"
-        }
-      },
-      "submenuOpenDelay": {
-        "description": "鼠标悬浮触发子菜单打开的延时，单位毫秒"
-      },
-      "submenuCloseDelay": {
-        "description": "鼠标悬浮触发子菜单关闭的延时，单位毫秒"
-      }
-    },
-    "methods": {
-      "focus": "将焦点设置在当前元素上",
-      "blur": "从当前元素中移除焦点"
-    },
-    "events": {
-      "change": "菜单项选中状态变化时触发"
-    },
+  "mdui-list": {
+    "summary": "列表组件。需配合 `<mdui-list-item>` 组件使用\n\n```html\n<mdui-list>\n..<mdui-list-subheader>Subheader</mdui-list-subheader>\n..<mdui-list-item>Item 1</mdui-list-item>\n..<mdui-list-item>Item 2</mdui-list-item>\n</mdui-list>\n```",
     "slots": {
-      "": "子菜单项（`<mdui-menu-item>`）、分割线（[`<mdui-divider>`](/docs/2/components/divider)）等元素"
-    },
-    "cssProperties": {
-      "--shape-corner": "组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)"
+      "": "`<mdui-list-item>` 元素"
     }
   },
   "mdui-menu-item": {
@@ -1101,41 +1055,50 @@
       "submenu": "子菜单元素"
     }
   },
-  "mdui-navigation-bar": {
-    "summary": "底部导航栏组件。需配合 `<mdui-navigation-bar-item>` 组件使用\n\n```html\n<mdui-navigation-bar>\n..<mdui-navigation-bar-item icon=\"place\">Item 1</mdui-navigation-bar-item>\n..<mdui-navigation-bar-item icon=\"commute\">Item 2</mdui-navigation-bar-item>\n..<mdui-navigation-bar-item icon=\"people\">Item 3</mdui-navigation-bar-item>\n</mdui-navigation-bar>\n```",
+  "mdui-menu": {
+    "summary": "菜单组件。需配合 `<mdui-menu-item>` 组件使用\n\n```html\n<mdui-menu>\n..<mdui-menu-item>Item 1</mdui-menu-item>\n..<mdui-menu-item>Item 2</mdui-menu-item>\n</mdui-menu>\n```",
     "properties": {
-      "hide": {
-        "description": "是否隐藏"
-      },
-      "labelVisibility": {
-        "description": "文本的可视状态。可选值包括：\n\n* `auto`：当选项小于等于3个时，始终显示文本；当选项大于3个时，仅显示选中状态的文本\n* `selected`：仅在选中状态显示文本\n* `labeled`：始终显示文本\n* `unlabeled`：始终不显示文本",
+      "selects": {
+        "description": "菜单项的可选状态。默认不可选。可选值包括：\n\n* `single`：单选\n* `multiple`：多选",
         "enum": {
-          "auto": "当选项小于等于3个时，始终显示文本；当选项大于3个时，仅显示选中状态的文本",
-          "selected": "仅在选中状态显示文本",
-          "labeled": "始终显示文本",
-          "unlabeled": "始终不显示文本"
+          "single": "单选",
+          "multiple": "多选"
         }
       },
       "value": {
-        "description": "当前选中的 `<mdui-navigation-bar-item>` 的值"
+        "description": "当前选中的 `<mdui-menu-item>` 的值。\n\n**Note**：该属性的 HTML 属性始终为字符串，仅在 `selects=\"single\"` 时可通过 HTML 属性设置初始值；该属性的 JavaScript 属性值在 `selects=\"single\"` 时为字符串，在 `selects=\"multiple\"` 时为字符串数组。因此，在 `selects=\"multiple\"` 时，若要修改该值，只能通过修改 JavaScript 属性值实现。"
       },
-      "scrollBehavior": {
-        "description": "滚动行为。可选值包括：\n\n* `hide`：滚动时隐藏"
+      "dense": {
+        "description": "菜单项是否使用紧凑布局"
+      },
+      "submenuTrigger": {
+        "description": "子菜单的触发方式，支持多个值，用空格分隔。可选值包括：\n\n* `click`：点击菜单项时打开子菜单\n* `hover`：鼠标悬浮到菜单项上时打开子菜单\n* `focus`：聚焦到菜单项上时打开子菜单\n* `manual`：仅能通过编程方式打开和关闭子菜单，不能再指定其他触发方式",
+        "enum": {
+          "click": "点击菜单项时打开子菜单",
+          "hover": "鼠标悬浮到菜单项上时打开子菜单",
+          "focus": "聚焦到菜单项上时打开子菜单",
+          "manual": "仅能通过编程方式打开和关闭子菜单，不能再指定其他触发方式"
+        }
+      },
+      "submenuOpenDelay": {
+        "description": "鼠标悬浮触发子菜单打开的延时，单位毫秒"
+      },
+      "submenuCloseDelay": {
+        "description": "鼠标悬浮触发子菜单关闭的延时，单位毫秒"
       }
     },
+    "methods": {
+      "focus": "将焦点设置在当前元素上",
+      "blur": "从当前元素中移除焦点"
+    },
     "events": {
-      "change": "值变化时触发",
-      "show": "开始显示时，事件被触发。可以通过调用 `event.preventDefault()` 阻止显示",
-      "shown": "显示动画完成时，事件被触发",
-      "hide": "开始隐藏时，事件被触发。可以通过调用 `event.preventDefault()` 阻止隐藏",
-      "hidden": "隐藏动画完成时，事件被触发"
+      "change": "菜单项选中状态变化时触发"
     },
     "slots": {
-      "": "`<mdui-navigation-bar-item>` 组件"
+      "": "子菜单项（`<mdui-menu-item>`）、分割线（[`<mdui-divider>`](/docs/2/components/divider)）等元素"
     },
     "cssProperties": {
-      "--shape-corner": "组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)",
-      "--z-index": "组件的 CSS `z-index` 值"
+      "--shape-corner": "组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)"
     }
   },
   "mdui-navigation-bar-item": {
@@ -1171,6 +1134,43 @@
     },
     "cssProperties": {
       "--shape-corner-indicator": "指示器的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)"
+    }
+  },
+  "mdui-navigation-bar": {
+    "summary": "底部导航栏组件。需配合 `<mdui-navigation-bar-item>` 组件使用\n\n```html\n<mdui-navigation-bar>\n..<mdui-navigation-bar-item icon=\"place\">Item 1</mdui-navigation-bar-item>\n..<mdui-navigation-bar-item icon=\"commute\">Item 2</mdui-navigation-bar-item>\n..<mdui-navigation-bar-item icon=\"people\">Item 3</mdui-navigation-bar-item>\n</mdui-navigation-bar>\n```",
+    "properties": {
+      "hide": {
+        "description": "是否隐藏"
+      },
+      "labelVisibility": {
+        "description": "文本的可视状态。可选值包括：\n\n* `auto`：当选项小于等于3个时，始终显示文本；当选项大于3个时，仅显示选中状态的文本\n* `selected`：仅在选中状态显示文本\n* `labeled`：始终显示文本\n* `unlabeled`：始终不显示文本",
+        "enum": {
+          "auto": "当选项小于等于3个时，始终显示文本；当选项大于3个时，仅显示选中状态的文本",
+          "selected": "仅在选中状态显示文本",
+          "labeled": "始终显示文本",
+          "unlabeled": "始终不显示文本"
+        }
+      },
+      "value": {
+        "description": "当前选中的 `<mdui-navigation-bar-item>` 的值"
+      },
+      "scrollBehavior": {
+        "description": "滚动行为。可选值包括：\n\n* `hide`：滚动时隐藏"
+      }
+    },
+    "events": {
+      "change": "值变化时触发",
+      "show": "开始显示时，事件被触发。可以通过调用 `event.preventDefault()` 阻止显示",
+      "shown": "显示动画完成时，事件被触发",
+      "hide": "开始隐藏时，事件被触发。可以通过调用 `event.preventDefault()` 阻止隐藏",
+      "hidden": "隐藏动画完成时，事件被触发"
+    },
+    "slots": {
+      "": "`<mdui-navigation-bar-item>` 组件"
+    },
+    "cssProperties": {
+      "--shape-corner": "组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)",
+      "--z-index": "组件的 CSS `z-index` 值"
     }
   },
   "mdui-navigation-drawer": {
@@ -1216,6 +1216,41 @@
     "cssProperties": {
       "--shape-corner": "组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)",
       "--z-index": "组件的 CSS `z-index` 值"
+    }
+  },
+  "mdui-navigation-rail-item": {
+    "summary": "侧边导航项组件。需配合 `<mdui-navigation-rail>` 组件使用\n\n```html\n<mdui-navigation-rail>\n..<mdui-navigation-rail-item icon=\"watch_later\">Recent</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"image\">Images</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"library_music\">Library</mdui-navigation-rail-item>\n</mdui-navigation-rail>\n```",
+    "properties": {
+      "icon": {
+        "description": "未激活状态下的 Material Icons 图标名。也可以通过 `slot=\"icon\"` 设置"
+      },
+      "activeIcon": {
+        "description": "激活状态下的 Material Icons 图标名。也可以通过 `slot=\"active-icon\"` 设置"
+      },
+      "value": {
+        "description": "导航项的值"
+      }
+    },
+    "events": {
+      "focus": "获得焦点时触发",
+      "blur": "失去焦点时触发"
+    },
+    "slots": {
+      "": "文本内容",
+      "icon": "图标",
+      "active-icon": "激活状态的图标",
+      "badge": "徽标"
+    },
+    "cssParts": {
+      "container": "导航项容器",
+      "indicator": "指示器",
+      "badge": "徽标",
+      "icon": "图标",
+      "active-icon": "激活状态的图标",
+      "label": "文本内容"
+    },
+    "cssProperties": {
+      "--shape-corner-indicator": "指示器的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)"
     }
   },
   "mdui-navigation-rail": {
@@ -1264,77 +1299,6 @@
       "--z-index": "组件的 CSS `z-index` 值"
     }
   },
-  "mdui-navigation-rail-item": {
-    "summary": "侧边导航项组件。需配合 `<mdui-navigation-rail>` 组件使用\n\n```html\n<mdui-navigation-rail>\n..<mdui-navigation-rail-item icon=\"watch_later\">Recent</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"image\">Images</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"library_music\">Library</mdui-navigation-rail-item>\n</mdui-navigation-rail>\n```",
-    "properties": {
-      "icon": {
-        "description": "未激活状态下的 Material Icons 图标名。也可以通过 `slot=\"icon\"` 设置"
-      },
-      "activeIcon": {
-        "description": "激活状态下的 Material Icons 图标名。也可以通过 `slot=\"active-icon\"` 设置"
-      },
-      "value": {
-        "description": "导航项的值"
-      }
-    },
-    "events": {
-      "focus": "获得焦点时触发",
-      "blur": "失去焦点时触发"
-    },
-    "slots": {
-      "": "文本内容",
-      "icon": "图标",
-      "active-icon": "激活状态的图标",
-      "badge": "徽标"
-    },
-    "cssParts": {
-      "container": "导航项容器",
-      "indicator": "指示器",
-      "badge": "徽标",
-      "icon": "图标",
-      "active-icon": "激活状态的图标",
-      "label": "文本内容"
-    },
-    "cssProperties": {
-      "--shape-corner-indicator": "指示器的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)"
-    }
-  },
-  "mdui-radio": {
-    "summary": "单选框组件。需配合 `<mdui-radio-group>` 组件使用\n\n```html\n<mdui-radio-group value=\"chinese\">\n..<mdui-radio value=\"chinese\">Chinese</mdui-radio>\n..<mdui-radio value=\"english\">English</mdui-radio>\n</mdui-radio-group>\n```",
-    "properties": {
-      "value": {
-        "description": "当前单选项的值"
-      },
-      "disabled": {
-        "description": "是否禁用当前单选项"
-      },
-      "checked": {
-        "description": "当前单选项是否已选中"
-      },
-      "uncheckedIcon": {
-        "description": "未选中状态的 Material Icons 图标名。也可以通过 `slot=\"unchecked-icon\"` 设置"
-      },
-      "checkedIcon": {
-        "description": "选中状态的 Material Icons 图标名。也可以通过 `slot=\"checked-icon\"` 设置"
-      }
-    },
-    "events": {
-      "focus": "获得焦点时触发",
-      "blur": "失去焦点时触发",
-      "change": "选中该单选项时触发"
-    },
-    "slots": {
-      "": "文本内容",
-      "unchecked-icon": "未选中状态的图标",
-      "checked-icon": "选中状态的图标"
-    },
-    "cssParts": {
-      "control": "左侧图标容器",
-      "unchecked-icon": "未选中状态的图标",
-      "checked-icon": "选中状态的图标",
-      "label": "文本内容"
-    }
-  },
   "mdui-radio-group": {
     "summary": "单选框组组件。需配合 `<mdui-radio>` 组件使用\n\n```html\n<mdui-radio-group value=\"chinese\">\n..<mdui-radio value=\"chinese\">Chinese</mdui-radio>\n..<mdui-radio value=\"english\">English</mdui-radio>\n</mdui-radio-group>\n```",
     "properties": {
@@ -1377,6 +1341,42 @@
       "": "`<mdui-radio>` 元素"
     }
   },
+  "mdui-radio": {
+    "summary": "单选框组件。需配合 `<mdui-radio-group>` 组件使用\n\n```html\n<mdui-radio-group value=\"chinese\">\n..<mdui-radio value=\"chinese\">Chinese</mdui-radio>\n..<mdui-radio value=\"english\">English</mdui-radio>\n</mdui-radio-group>\n```",
+    "properties": {
+      "value": {
+        "description": "当前单选项的值"
+      },
+      "disabled": {
+        "description": "是否禁用当前单选项"
+      },
+      "checked": {
+        "description": "当前单选项是否已选中"
+      },
+      "uncheckedIcon": {
+        "description": "未选中状态的 Material Icons 图标名。也可以通过 `slot=\"unchecked-icon\"` 设置"
+      },
+      "checkedIcon": {
+        "description": "选中状态的 Material Icons 图标名。也可以通过 `slot=\"checked-icon\"` 设置"
+      }
+    },
+    "events": {
+      "focus": "获得焦点时触发",
+      "blur": "失去焦点时触发",
+      "change": "选中该单选项时触发"
+    },
+    "slots": {
+      "": "文本内容",
+      "unchecked-icon": "未选中状态的图标",
+      "checked-icon": "选中状态的图标"
+    },
+    "cssParts": {
+      "control": "左侧图标容器",
+      "unchecked-icon": "未选中状态的图标",
+      "checked-icon": "选中状态的图标",
+      "label": "文本内容"
+    }
+  },
   "mdui-range-slider": {
     "summary": "范围滑块组件\n\n```html\n<mdui-range-slider></mdui-range-slider>\n```",
     "properties": {
@@ -1400,39 +1400,6 @@
       "handle": "操作杆",
       "label": "提示文本",
       "tickmark": "刻度标记"
-    }
-  },
-  "mdui-segmented-button": {
-    "summary": "分段按钮项组件。需配合 `<mdui-segmented-button-group>` 组件使用\n\n```html\n<mdui-segmented-button-group>\n..<mdui-segmented-button>Day</mdui-segmented-button>\n..<mdui-segmented-button>Week</mdui-segmented-button>\n..<mdui-segmented-button>Month</mdui-segmented-button>\n</mdui-segmented-button-group>\n```",
-    "properties": {
-      "icon": {
-        "description": "左侧的 Material Icons 图标名。也可以通过 `slot=\"icon\"` 设置"
-      },
-      "endIcon": {
-        "description": "右侧的 Material Icons 图标名。也可以通过 `slot=\"end-icon\"` 设置"
-      },
-      "selectedIcon": {
-        "description": "选中状态的 Material Icons 图标名。也可以通过 `slot=\"selected-icon\"` 设置"
-      }
-    },
-    "events": {
-      "focus": "获得焦点时触发",
-      "blur": "失去焦点时触发",
-      "invalid": "表单字段验证未通过时触发"
-    },
-    "slots": {
-      "": "分段按钮项的文本内容",
-      "icon": "分段按钮项的左侧图标",
-      "selected-icon": "选中状态的左侧图标",
-      "end-icon": "分段按钮项的右侧图标"
-    },
-    "cssParts": {
-      "button": "内部的 `<button>` 或 `<a>` 元素",
-      "icon": "左侧的图标",
-      "selected-icon": "选中状态的左侧图标",
-      "end-icon": "右侧的图标",
-      "label": "文本内容",
-      "loading": "加载中状态的 `<mdui-circular-progress>` 元素"
     }
   },
   "mdui-segmented-button-group": {
@@ -1487,6 +1454,39 @@
     },
     "cssProperties": {
       "--shape-corner": "组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)"
+    }
+  },
+  "mdui-segmented-button": {
+    "summary": "分段按钮项组件。需配合 `<mdui-segmented-button-group>` 组件使用\n\n```html\n<mdui-segmented-button-group>\n..<mdui-segmented-button>Day</mdui-segmented-button>\n..<mdui-segmented-button>Week</mdui-segmented-button>\n..<mdui-segmented-button>Month</mdui-segmented-button>\n</mdui-segmented-button-group>\n```",
+    "properties": {
+      "icon": {
+        "description": "左侧的 Material Icons 图标名。也可以通过 `slot=\"icon\"` 设置"
+      },
+      "endIcon": {
+        "description": "右侧的 Material Icons 图标名。也可以通过 `slot=\"end-icon\"` 设置"
+      },
+      "selectedIcon": {
+        "description": "选中状态的 Material Icons 图标名。也可以通过 `slot=\"selected-icon\"` 设置"
+      }
+    },
+    "events": {
+      "focus": "获得焦点时触发",
+      "blur": "失去焦点时触发",
+      "invalid": "表单字段验证未通过时触发"
+    },
+    "slots": {
+      "": "分段按钮项的文本内容",
+      "icon": "分段按钮项的左侧图标",
+      "selected-icon": "选中状态的左侧图标",
+      "end-icon": "分段按钮项的右侧图标"
+    },
+    "cssParts": {
+      "button": "内部的 `<button>` 或 `<a>` 元素",
+      "icon": "左侧的图标",
+      "selected-icon": "选中状态的左侧图标",
+      "end-icon": "右侧的图标",
+      "label": "文本内容",
+      "loading": "加载中状态的 `<mdui-circular-progress>` 元素"
     }
   },
   "mdui-select": {
@@ -1773,6 +1773,17 @@
       "--shape-corner-thumb": "组件图标容器的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)"
     }
   },
+  "mdui-tab-panel": {
+    "summary": "选项卡面板项组件。需配合 `<mdui-tabs>` 和 `<mdui-tab>` 组件使用\n\n```html\n<mdui-tabs value=\"tab-1\">\n..<mdui-tab value=\"tab-1\">Tab 1</mdui-tab>\n..<mdui-tab value=\"tab-2\">Tab 2</mdui-tab>\n..<mdui-tab value=\"tab-3\">Tab 3</mdui-tab>\n\n..<mdui-tab-panel slot=\"panel\" value=\"tab-1\">Panel 1</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-2\">Panel 2</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-3\">Panel 3</mdui-tab-panel>\n</mdui-tabs>\n```",
+    "properties": {
+      "value": {
+        "description": "选项卡面板项的值"
+      }
+    },
+    "slots": {
+      "": "选项卡面板项内容"
+    }
+  },
   "mdui-tab": {
     "summary": "选项卡导航项组件。需配合 `<mdui-tabs>` 和 `<mdui-tab-panel>` 组件使用\n\n```html\n<mdui-tabs value=\"tab-1\">\n..<mdui-tab value=\"tab-1\">Tab 1</mdui-tab>\n..<mdui-tab value=\"tab-2\">Tab 2</mdui-tab>\n..<mdui-tab value=\"tab-3\">Tab 3</mdui-tab>\n\n..<mdui-tab-panel slot=\"panel\" value=\"tab-1\">Panel 1</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-2\">Panel 2</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-3\">Panel 3</mdui-tab-panel>\n</mdui-tabs>\n```",
     "properties": {
@@ -1800,17 +1811,6 @@
       "container": "选项卡导航项容器",
       "icon": "选项卡导航项中的图标",
       "label": "选项卡导航项的文本"
-    }
-  },
-  "mdui-tab-panel": {
-    "summary": "选项卡面板项组件。需配合 `<mdui-tabs>` 和 `<mdui-tab>` 组件使用\n\n```html\n<mdui-tabs value=\"tab-1\">\n..<mdui-tab value=\"tab-1\">Tab 1</mdui-tab>\n..<mdui-tab value=\"tab-2\">Tab 2</mdui-tab>\n..<mdui-tab value=\"tab-3\">Tab 3</mdui-tab>\n\n..<mdui-tab-panel slot=\"panel\" value=\"tab-1\">Panel 1</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-2\">Panel 2</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-3\">Panel 3</mdui-tab-panel>\n</mdui-tabs>\n```",
-    "properties": {
-      "value": {
-        "description": "选项卡面板项的值"
-      }
-    },
-    "slots": {
-      "": "选项卡面板项内容"
     }
   },
   "mdui-tabs": {
@@ -2176,6 +2176,17 @@
       "--z-index": "组件的 CSS `z-index` 值"
     }
   },
+  "mdui-top-app-bar-title": {
+    "summary": "顶部应用栏标题组件。需配合 `<mdui-top-app-bar>` 组件使用\n\n```html\n<mdui-top-app-bar>\n..<mdui-button-icon icon=\"menu\"></mdui-button-icon>\n..<mdui-top-app-bar-title>Title</mdui-top-app-bar-title>\n..<div style=\"flex-grow: 1\"></div>\n..<mdui-button-icon icon=\"more_vert\"></mdui-button-icon>\n</mdui-top-app-bar>\n```",
+    "slots": {
+      "": "顶部应用栏的标题文本",
+      "label-large": "展开状态下的标题文本"
+    },
+    "cssParts": {
+      "label": "标题文本",
+      "label-large": "展开状态下的标题文本"
+    }
+  },
   "mdui-top-app-bar": {
     "summary": "顶部应用栏组件\n\n```html\n<mdui-top-app-bar>\n..<mdui-button-icon icon=\"menu\"></mdui-button-icon>\n..<mdui-top-app-bar-title>Title</mdui-top-app-bar-title>\n..<div style=\"flex-grow: 1\"></div>\n..<mdui-button-icon icon=\"more_vert\"></mdui-button-icon>\n</mdui-top-app-bar>\n```",
     "properties": {
@@ -2210,17 +2221,6 @@
     "cssProperties": {
       "--shape-corner": "组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)",
       "--z-index": "组件的 CSS `z-index` 值"
-    }
-  },
-  "mdui-top-app-bar-title": {
-    "summary": "顶部应用栏标题组件。需配合 `<mdui-top-app-bar>` 组件使用\n\n```html\n<mdui-top-app-bar>\n..<mdui-button-icon icon=\"menu\"></mdui-button-icon>\n..<mdui-top-app-bar-title>Title</mdui-top-app-bar-title>\n..<div style=\"flex-grow: 1\"></div>\n..<mdui-button-icon icon=\"more_vert\"></mdui-button-icon>\n</mdui-top-app-bar>\n```",
-    "slots": {
-      "": "顶部应用栏的标题文本",
-      "label-large": "展开状态下的标题文本"
-    },
-    "cssParts": {
-      "label": "标题文本",
-      "label-large": "展开状态下的标题文本"
     }
   },
   "common": {

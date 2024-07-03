@@ -1,10 +1,28 @@
 import fs from 'node:fs';
-import { getAllComponents, i18nLanguages } from './utils.js';
+import path from 'node:path';
+import {
+  CustomElementField,
+  ClassMethod,
+  Event,
+  CssCustomProperty,
+  CssPart,
+  Slot,
+} from 'custom-elements-manifest';
+import {
+  i18nLanguages,
+  I18nData,
+  getAllComponents,
+  I18nDataSection,
+  I18nDataItem,
+  isProperty,
+  isMethod,
+} from './common/build/index.js';
 
-const languages = i18nLanguages.filter((i) => i !== 'zh-cn'); // zh-cn 作为原始文件
-const metadataPath = './packages/mdui/custom-elements.json';
-const components = getAllComponents(metadataPath);
-const originJson = {
+const languages = i18nLanguages.filter((i) => i !== 'zh-cn'); // 目标文件，zh-cn 作为原始文件不列入其中
+const components = getAllComponents(
+  path.resolve('./packages/mdui/custom-elements.json'),
+);
+const originJson: I18nData = {
   // 所有继承自父类的属性放这里
   superclass: {},
 };
@@ -12,29 +30,40 @@ const originJson = {
 // 从 custom-elements.json 中提取要翻译的文案
 components.forEach((component) => {
   const tagName = component.tagName;
+
   originJson[tagName] = {};
   originJson[tagName].summary = component.summary;
 
-  [
+  const section: I18nDataSection[] = [
     'properties',
     'methods',
     'events',
     'slots',
     'cssParts',
     'cssProperties',
-  ].forEach((key) => {
-    const items =
-      key === 'properties'
-        ? component.members.filter((member) => member.kind === 'field')
-        : key === 'methods'
-        ? component.members.filter((member) => member.kind === 'method')
-        : key === 'events'
-        ? (component[key] ?? []).filter((event) => event.description)
-        : component[key] ?? [];
+  ];
 
-    items.forEach((item) => {
+  section.forEach((key) => {
+    const items: (
+      | CustomElementField
+      | ClassMethod
+      | Event
+      | Slot
+      | CssPart
+      | CssCustomProperty
+    )[] =
+      key === 'properties'
+        ? component.members.filter(isProperty)
+        : key === 'methods'
+          ? component.members.filter(isMethod)
+          : key === 'events'
+            ? (component[key] ?? []).filter((event) => event.description)
+            : component[key] ?? [];
+
+    items.forEach((_item) => {
+      const item = _item as CustomElementField; // 其他类型和 CustomElementField 结构一致
       const itemName = item.name;
-      let itemValue;
+      let itemValue: I18nDataItem | string;
 
       // properties 中的枚举类型每个都有单独的注释
       if (key === 'properties') {
@@ -45,7 +74,7 @@ components.forEach((component) => {
           .filter((v) => v && v !== 'undefined')
           .join(' | ');
 
-        const enumDesc = {};
+        const enumDesc: Record<string, string> = {};
 
         if (type) {
           // 枚举类型，每个枚举项都可以带有注释
@@ -75,11 +104,11 @@ components.forEach((component) => {
         }
 
         itemValue = {
-          description: item.description,
+          description: item.description!,
           enum: Object.keys(enumDesc).length ? enumDesc : undefined,
         };
       } else {
-        itemValue = item.description;
+        itemValue = item.description!;
       }
 
       if (
@@ -361,7 +390,7 @@ fs.writeFileSync(
 );
 
 // 更新目标语言文件
-const updateJson = (targetJson, originJson) => {
+const updateJson = (targetJson: I18nData, originJson: I18nData) => {
   // 递归，移除多余的属性
   for (const key in targetJson) {
     if (originJson.hasOwnProperty(key)) {
@@ -386,7 +415,7 @@ const updateJson = (targetJson, originJson) => {
   }
 
   // 确保属性顺序一致
-  const orderedData = {};
+  const orderedData: I18nData = {};
   Object.keys(originJson).forEach((key) => {
     if (key in targetJson) {
       orderedData[key] = targetJson[key];
@@ -403,7 +432,9 @@ const updateJson = (targetJson, originJson) => {
 // 其他语言的 json 文件，只写入新增的文案
 languages.forEach((lang) => {
   const langJsonPath = `./docs/${lang}.json`;
-  const targetJson = JSON.parse(fs.readFileSync(langJsonPath, 'utf-8'));
+  const targetJson: I18nData = JSON.parse(
+    fs.readFileSync(langJsonPath, 'utf-8'),
+  );
 
   updateJson(targetJson, originJson);
 

@@ -4,6 +4,7 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "importHelpers": true,
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": false,
     "module": "es2020",

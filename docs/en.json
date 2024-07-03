@@ -1,20 +1,5 @@
 {
   "superclass": {
-    "ScrollBehaviorMixin": {
-      "properties": {
-        "scrollTarget": {
-          "description": "The element that listens for scroll events. Accepts a CSS selector, DOM element, or [JQ object](/docs/2/functions/jq). Defaults to `window`."
-        },
-        "scrollThreshold": {
-          "description": "The scroll distance (in pixels) that triggers the scroll behavior."
-        }
-      },
-      "tagNames": [
-        "mdui-bottom-app-bar",
-        "mdui-navigation-bar",
-        "mdui-top-app-bar"
-      ]
-    },
     "LayoutItemBase": {
       "properties": {
         "order": {
@@ -30,67 +15,56 @@
         "mdui-top-app-bar"
       ]
     },
-    "ButtonBase": {
+    "ScrollBehaviorMixin": {
       "properties": {
-        "href": {
-          "description": "The URL for the hyperlink. If provided, the component is rendered as an `<a>` element and can use link-related attributes."
+        "scrollTarget": {
+          "description": "The element that listens for scroll events. Accepts a CSS selector, DOM element, or [JQ object](/docs/2/functions/jq). Defaults to `window`."
         },
-        "download": {
-          "description": "Instructs the browser to download the linked URL.\n\n**Note**: This is only available when `href` is specified."
-        },
-        "target": {
-          "description": "Defines where to open the linked URL. Possible values:\n\n* `_blank`: Opens in a new tab or window.\n* `_parent`: Opens in the parent browsing context or `_self` if no parent.\n* `_self`: Opens in the current browsing context. (Default).\n* `_top`: Opens in the topmost browsing context or `_self` if no ancestors.\n\n**Note**: This is only available when `href` is specified.",
-          "enum": {
-            "_blank": "Opens in a new tab or window.",
-            "_parent": "Opens in the parent browsing context or `_self` if no parent.",
-            "_self": "Opens in the current browsing context. (Default).",
-            "_top": "Opens in the topmost browsing context or `_self` if no ancestors."
-          }
-        },
-        "rel": {
-          "description": "Specifies the relationship of the linked URL as space-separated link types. Possible values:\n\n* `alternate`: Alternate versions of the current document.\n* `author`: The author of the current document or article.\n* `bookmark`: The permalink for the nearest ancestor section.\n* `external`: The referenced document is not part of the same site as the current document.\n* `help`: A link to context-sensitive help.\n* `license`: Indicates that the main content of the current document is covered by the copyright license described by the referenced document.\n* `me`: Indicates that the current document represents the person who owns the linked content.\n* `next`: Indicates that the current document is part of a series and the next document in the series is the referenced document.\n* `nofollow`: Indicates that the current document's original author or publisher does not endorse the referenced document.\n* `noreferrer`: No `Referer` header will be included. Also has the same effect as `noopener`.\n* `opener`: Creates an auxiliary browsing context if the hyperlink would otherwise create a top-level browsing context that is not an auxiliary browsing context (i.e., has \"`_blank`\" as `target` attribute value).\n* `prev`: Indicates that the current document is part of a series and the previous document in the series is the referenced document.\n* `search`: Links to a resource that can be used to search through the current document and its related pages.\n* `tag`: Gives a tag (identified by the given address) that applies to the current document.\n\n**Note**: This is only available when `href` is specified.",
-          "enum": {
-            "alternate": "Alternate versions of the current document.",
-            "author": "The author of the current document or article.",
-            "bookmark": "The permalink for the nearest ancestor section.",
-            "external": "The referenced document is not part of the same site as the current document.",
-            "help": "A link to context-sensitive help.",
-            "license": "Indicates that the main content of the current document is covered by the copyright license described by the referenced document.",
-            "me": "Indicates that the current document represents the person who owns the linked content.",
-            "next": "Indicates that the current document is part of a series and the next document in the series is the referenced document.",
-            "nofollow": "Indicates that the current document's original author or publisher does not endorse the referenced document.",
-            "noreferrer": "No `Referer` header will be included. Also has the same effect as `noopener`.",
-            "opener": "Creates an auxiliary browsing context if the hyperlink would otherwise create a top-level browsing context that is not an auxiliary browsing context (i.e., has \"`_blank`\" as `target` attribute value).",
-            "prev": "Indicates that the current document is part of a series and the previous document in the series is the referenced document.",
-            "search": "Links to a resource that can be used to search through the current document and its related pages.",
-            "tag": "Gives a tag (identified by the given address) that applies to the current document."
-          }
-        },
+        "scrollThreshold": {
+          "description": "The scroll distance (in pixels) that triggers the scroll behavior."
+        }
+      },
+      "tagNames": [
+        "mdui-bottom-app-bar",
+        "mdui-navigation-bar",
+        "mdui-top-app-bar"
+      ]
+    },
+    "FocusableMixin": {
+      "properties": {
         "autofocus": {
-          "description": "Specifies that the element should be focused when the page loads."
+          "description": "Determines if the element should be focused when the page loads."
         },
         "tabIndex": {
-          "description": "Defines the order in which the element receives focus when navigating with the Tab key."
-        },
+          "description": "Specifies the order in which the element receives focus when navigating with the Tab key."
+        }
+      },
+      "tagNames": [
+        "mdui-button-icon",
+        "mdui-card",
+        "mdui-checkbox",
+        "mdui-list-item",
+        "mdui-menu-item",
+        "mdui-navigation-bar-item",
+        "mdui-navigation-rail-item",
+        "mdui-radio",
+        "mdui-range-slider",
+        "mdui-select",
+        "mdui-slider",
+        "mdui-switch",
+        "mdui-tab",
+        "mdui-text-field"
+      ],
+      "methods": {
+        "blur": "Removes focus from the element.",
+        "click": "Simulates a mouse click on the element.",
+        "focus": "Sets focus on the element. An optional parameter can be an object with a `preventScroll` property. If `preventScroll` is set to `true`, the page will not scroll to bring the focused element into view."
+      }
+    },
+    "ButtonBase": {
+      "properties": {
         "disabled": {
           "description": "Disables the element."
-        },
-        "loading": {
-          "description": "Indicates that the element is in a loading state."
-        },
-        "name": {
-          "description": "The button's name, which is submitted with form data.\n\n**Note**: This is only available when `href` is not specified."
-        },
-        "value": {
-          "description": "The button's value, which is submitted with form data.\n\n**Note**: This is only available when `href` is not specified."
-        },
-        "type": {
-          "description": "Defines the button's default behavior. The default is `button`. Possible values:\n\n* `submit`: Submits the form data to the server.\n* `reset`: Resets all the controls to their initial values.\n* `button`: No default behavior, does nothing when pressed by default.\n\n**Note**: This is only available when `href` is not specified.",
-          "enum": {
-            "submit": "Submits the form data to the server.",
-            "reset": "Resets all the controls to their initial values.",
-            "button": "No default behavior, does nothing when pressed by default."
-          }
         },
         "form": {
           "description": "Associates the button with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the button is associated with its parent `<form>`, if any.\n\nThis attribute allows button elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`.\n\n**Note**: Only available when `href` is not specified."
@@ -125,45 +99,93 @@
             "_top": "Topmost browsing context or `_self` if no ancestors."
           }
         },
-        "validity": {
-          "description": "A [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) object that represents the element's validity states."
+        "loading": {
+          "description": "Indicates that the element is in a loading state."
+        },
+        "name": {
+          "description": "The button's name, which is submitted with form data.\n\n**Note**: This is only available when `href` is not specified."
+        },
+        "type": {
+          "description": "Defines the button's default behavior. The default is `button`. Possible values:\n\n* `submit`: Submits the form data to the server.\n* `reset`: Resets all the controls to their initial values.\n* `button`: No default behavior, does nothing when pressed by default.\n\n**Note**: This is only available when `href` is not specified.",
+          "enum": {
+            "submit": "Submits the form data to the server.",
+            "reset": "Resets all the controls to their initial values.",
+            "button": "No default behavior, does nothing when pressed by default."
+          }
         },
         "validationMessage": {
           "description": "The element's validation message. This is empty if the element meets its constraints."
+        },
+        "validity": {
+          "description": "A [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) object that represents the element's validity states."
+        },
+        "value": {
+          "description": "The button's value, which is submitted with form data.\n\n**Note**: This is only available when `href` is not specified."
+        },
+        "autofocus": {
+          "description": "Specifies that the element should be focused when the page loads."
+        },
+        "download": {
+          "description": "Instructs the browser to download the linked URL.\n\n**Note**: This is only available when `href` is specified."
+        },
+        "href": {
+          "description": "The URL for the hyperlink. If provided, the component is rendered as an `<a>` element and can use link-related attributes."
+        },
+        "rel": {
+          "description": "Specifies the relationship of the linked URL as space-separated link types. Possible values:\n\n* `alternate`: Alternate versions of the current document.\n* `author`: The author of the current document or article.\n* `bookmark`: The permalink for the nearest ancestor section.\n* `external`: The referenced document is not part of the same site as the current document.\n* `help`: A link to context-sensitive help.\n* `license`: Indicates that the main content of the current document is covered by the copyright license described by the referenced document.\n* `me`: Indicates that the current document represents the person who owns the linked content.\n* `next`: Indicates that the current document is part of a series and the next document in the series is the referenced document.\n* `nofollow`: Indicates that the current document's original author or publisher does not endorse the referenced document.\n* `noreferrer`: No `Referer` header will be included. Also has the same effect as `noopener`.\n* `opener`: Creates an auxiliary browsing context if the hyperlink would otherwise create a top-level browsing context that is not an auxiliary browsing context (i.e., has \"`_blank`\" as `target` attribute value).\n* `prev`: Indicates that the current document is part of a series and the previous document in the series is the referenced document.\n* `search`: Links to a resource that can be used to search through the current document and its related pages.\n* `tag`: Gives a tag (identified by the given address) that applies to the current document.\n\n**Note**: This is only available when `href` is specified.",
+          "enum": {
+            "alternate": "Alternate versions of the current document.",
+            "author": "The author of the current document or article.",
+            "bookmark": "The permalink for the nearest ancestor section.",
+            "external": "The referenced document is not part of the same site as the current document.",
+            "help": "A link to context-sensitive help.",
+            "license": "Indicates that the main content of the current document is covered by the copyright license described by the referenced document.",
+            "me": "Indicates that the current document represents the person who owns the linked content.",
+            "next": "Indicates that the current document is part of a series and the next document in the series is the referenced document.",
+            "nofollow": "Indicates that the current document's original author or publisher does not endorse the referenced document.",
+            "noreferrer": "No `Referer` header will be included. Also has the same effect as `noopener`.",
+            "opener": "Creates an auxiliary browsing context if the hyperlink would otherwise create a top-level browsing context that is not an auxiliary browsing context (i.e., has \"`_blank`\" as `target` attribute value).",
+            "prev": "Indicates that the current document is part of a series and the previous document in the series is the referenced document.",
+            "search": "Links to a resource that can be used to search through the current document and its related pages.",
+            "tag": "Gives a tag (identified by the given address) that applies to the current document."
+          }
+        },
+        "tabIndex": {
+          "description": "Defines the order in which the element receives focus when navigating with the Tab key."
+        },
+        "target": {
+          "description": "Defines where to open the linked URL. Possible values:\n\n* `_blank`: Opens in a new tab or window.\n* `_parent`: Opens in the parent browsing context or `_self` if no parent.\n* `_self`: Opens in the current browsing context. (Default).\n* `_top`: Opens in the topmost browsing context or `_self` if no ancestors.\n\n**Note**: This is only available when `href` is specified.",
+          "enum": {
+            "_blank": "Opens in a new tab or window.",
+            "_parent": "Opens in the parent browsing context or `_self` if no parent.",
+            "_self": "Opens in the current browsing context. (Default).",
+            "_top": "Opens in the topmost browsing context or `_self` if no ancestors."
+          }
         }
       },
       "tagNames": [
-        "mdui-button",
         "mdui-button-icon",
+        "mdui-button",
         "mdui-chip",
         "mdui-fab",
         "mdui-segmented-button"
       ],
       "methods": {
-        "click": "Simulates a mouse click on the element.",
-        "focus": "Sets focus on the element. An optional parameter can be an object with a `preventScroll` property. If `preventScroll` is set to `true`, the page will not scroll to bring the focused element into view.",
-        "blur": "Removes focus from the element.",
         "checkValidity": "Checks the validity of the form field. If it's invalid, it triggers an `invalid` event and returns `false`. If it's valid, it returns `true`.",
         "reportValidity": "Checks the validity of the form field. If it's invalid, it triggers an `invalid` event, returns `false`, and displays a validation message. If it's valid, it returns `true`.",
-        "setCustomValidity": "Sets a custom error message. If the text is non-empty, it indicates that the field is invalid."
+        "setCustomValidity": "Sets a custom error message. If the text is non-empty, it indicates that the field is invalid.",
+        "blur": "Removes focus from the element.",
+        "click": "Simulates a mouse click on the element.",
+        "focus": "Sets focus on the element. An optional parameter can be an object with a `preventScroll` property. If `preventScroll` is set to `true`, the page will not scroll to bring the focused element into view."
       }
     },
     "AnchorMixin": {
       "properties": {
-        "href": {
-          "description": "The URL for the hyperlink. If specified, the component renders as an `<a>` element and can use link-related attributes."
-        },
         "download": {
           "description": "Instructs the browser to treat the linked URL as a download.\n\n**Note**:  This is only available when `href` is specified."
         },
-        "target": {
-          "description": "Defines where to display the linked URL. Possible values:\n\n* `_blank`: Opens in a new tab or window.\n* `_parent`: Opens in the parent browsing context or `_self` if no parent exists.\n* `_self`: Opens in the current browsing context. (Default).\n* `_top`: Opens in the topmost browsing context or `_self` if no ancestors exist.\n\n**Note**: This is only available when `href` is specified.",
-          "enum": {
-            "_blank": "Opens in a new tab or window.",
-            "_parent": "Opens in the parent browsing context or `_self` if no parent exists.",
-            "_self": "Opens in the current browsing context. (Default).",
-            "_top": "Opens in the topmost browsing context or `_self` if no ancestors exist."
-          }
+        "href": {
+          "description": "The URL for the hyperlink. If specified, the component renders as an `<a>` element and can use link-related attributes."
         },
         "rel": {
           "description": "Specifies the relationship of the linked URL as space-separated link types. Possible values:\n\n* `alternate`: Alternate versions of the current document.\n* `author`: Author of the current document or article.\n* `bookmark`: Permanent link for the nearest ancestor section.\n* `external`: The referenced document is not part of the same site as the current document.\n* `help`: Link to context-sensitive help.\n* `license`: Indicates that the main content of the current document is covered by the copyright license described by the referenced document.\n* `me`: Indicates that the current document represents the person who owns the linked content.\n* `next`: Indicates that the current document is part of a series and the next document in the series is the referenced document.\n* `nofollow`: Indicates that the current document's original author or publisher does not endorse the referenced document.\n* `noreferrer`: No `Referer` header will be included. Also has the same effect as `noopener`.\n* `opener`: Creates an auxiliary browsing context if the hyperlink would otherwise create a top-level browsing context that is not an auxiliary browsing context (i.e., has \"`_blank`\" as `target` attribute value).\n* `prev`: Indicates that the current document is part of a series and the previous document in the series is the referenced document.\n* `search`: Links to a resource that can be used to search through the current document and its related pages.\n* `tag`: Gives a tag (identified by the given address) that applies to the current document.\n\n**Note**: This is only available when `href` is specified.",
@@ -183,9 +205,19 @@
             "search": "Links to a resource that can be used to search through the current document and its related pages.",
             "tag": "Gives a tag (identified by the given address) that applies to the current document."
           }
+        },
+        "target": {
+          "description": "Defines where to display the linked URL. Possible values:\n\n* `_blank`: Opens in a new tab or window.\n* `_parent`: Opens in the parent browsing context or `_self` if no parent exists.\n* `_self`: Opens in the current browsing context. (Default).\n* `_top`: Opens in the topmost browsing context or `_self` if no ancestors exist.\n\n**Note**: This is only available when `href` is specified.",
+          "enum": {
+            "_blank": "Opens in a new tab or window.",
+            "_parent": "Opens in the parent browsing context or `_self` if no parent exists.",
+            "_self": "Opens in the current browsing context. (Default).",
+            "_top": "Opens in the topmost browsing context or `_self` if no ancestors exist."
+          }
         }
       },
       "tagNames": [
+        "mdui-button-icon",
         "mdui-card",
         "mdui-list-item",
         "mdui-menu-item",
@@ -193,43 +225,28 @@
         "mdui-navigation-rail-item"
       ]
     },
-    "FocusableMixin": {
-      "properties": {
-        "autofocus": {
-          "description": "Determines if the element should be focused when the page loads."
-        },
-        "tabIndex": {
-          "description": "Specifies the order in which the element receives focus when navigating with the Tab key."
-        }
-      },
-      "tagNames": [
-        "mdui-card",
-        "mdui-checkbox",
-        "mdui-list-item",
-        "mdui-menu-item",
-        "mdui-navigation-bar-item",
-        "mdui-navigation-rail-item",
-        "mdui-radio",
-        "mdui-range-slider",
-        "mdui-select",
-        "mdui-slider",
-        "mdui-switch",
-        "mdui-tab",
-        "mdui-text-field"
-      ],
-      "methods": {
-        "click": "Simulates a mouse click on the element.",
-        "focus": "Sets focus on the element. An optional parameter can be an object with a `preventScroll` property. If `preventScroll` is set to `true`, the page will not scroll to bring the focused element into view.",
-        "blur": "Removes focus from the element."
-      }
-    },
     "SliderBase": {
       "properties": {
-        "min": {
-          "description": "Specifies the minimum value. Default is `0`."
+        "disabled": {
+          "description": "Disables the slider."
+        },
+        "form": {
+          "description": "Associates the slider with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the slider is associated with its parent `<form>`, if any.\n\nThis attribute allows slider elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."
+        },
+        "labelFormatter": {
+          "description": "Specifies a function to format the tooltip's value. The function should take the slider's value as an argument and return a string to display in the tooltip."
         },
         "max": {
           "description": "Specifies the maximum value. Default is `100`."
+        },
+        "min": {
+          "description": "Specifies the minimum value. Default is `0`."
+        },
+        "name": {
+          "description": "Specifies the slider's name, which is submitted with the form data."
+        },
+        "nolabel": {
+          "description": "Hides the tooltip."
         },
         "step": {
           "description": "Specifies the step interval. Default is `1`."
@@ -237,26 +254,11 @@
         "tickmarks": {
           "description": "Adds tickmarks to the slider."
         },
-        "nolabel": {
-          "description": "Hides the tooltip."
-        },
-        "disabled": {
-          "description": "Disables the slider."
-        },
-        "form": {
-          "description": "Associates the slider with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the slider is associated with its parent `<form>`, if any.\n\nThis attribute allows slider elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."
-        },
-        "name": {
-          "description": "Specifies the slider's name, which is submitted with the form data."
-        },
-        "validity": {
-          "description": "A [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) object that represents the element's validity states."
-        },
         "validationMessage": {
           "description": "The element's validation message. This is empty if the element meets its constraints."
         },
-        "labelFormatter": {
-          "description": "Specifies a function to format the tooltip's value. The function should take the slider's value as an argument and return a string to display in the tooltip."
+        "validity": {
+          "description": "A [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) object that represents the element's validity states."
         }
       },
       "tagNames": [
@@ -273,9 +275,6 @@
   "mdui-avatar": {
     "summary": "Avatar Component.\n\n```html\n<mdui-avatar src=\"https://avatars.githubusercontent.com/u/3030330?s=40&v=4\"></mdui-avatar>\n```",
     "properties": {
-      "src": {
-        "description": "URL of the avatar image."
-      },
       "fit": {
         "description": "Image resizing method, similar to the native CSS [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit). Possible values:\n\n* `contain`: Scales the image to fit within the box while maintaining the aspect ratio. The image will be \"letterboxed\" if the aspect ratios do not match.\n* `cover`: Scales the image to fill the box while maintaining the aspect ratio. The image will be clipped if the aspect ratios do not match.\n* `fill`: Default. Scales the image to fill the box. The image will be stretched if the aspect ratios do not match.\n* `none`: No resizing.\n* `scale-down`: Scales as if `none` or `contain` were specified, choosing the smaller result.",
         "enum": {
@@ -291,14 +290,17 @@
       },
       "label": {
         "description": "Text description of the avatar."
+      },
+      "src": {
+        "description": "URL of the avatar image."
       }
     },
     "slots": {
       "": "Custom avatar content, such as letters, `<img>` elements, icons, etc."
     },
     "cssParts": {
-      "image": "Internal `<img>` element when using an image avatar.",
-      "icon": "Internal `<mdui-icon>` element when using an icon avatar."
+      "icon": "Internal `<mdui-icon>` element when using an icon avatar.",
+      "image": "Internal `<img>` element when using an image avatar."
     },
     "cssProperties": {
       "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
@@ -325,21 +327,21 @@
   "mdui-bottom-app-bar": {
     "summary": "Bottom App Bar Component.\n\n```html\n<mdui-bottom-app-bar>\n..<mdui-button-icon icon=\"check_box--outlined\"></mdui-button-icon>\n..<mdui-button-icon icon=\"edit--outlined\"></mdui-button-icon>\n..<mdui-button-icon icon=\"mic_none--outlined\"></mdui-button-icon>\n..<mdui-button-icon icon=\"image--outlined\"></mdui-button-icon>\n..<div style=\"flex-grow: 1\"></div>\n..<mdui-fab icon=\"add\"></mdui-fab>\n</mdui-bottom-app-bar>\n```",
     "properties": {
-      "hide": {
-        "description": "Hides the bottom app bar when set."
-      },
       "fabDetach": {
         "description": "When set, detaches the [`<mdui-fab>`](/docs/2/components/fab) from the bottom app bar. The [`<mdui-fab>`](/docs/2/components/fab) remains on the page even after the app bar is hidden."
+      },
+      "hide": {
+        "description": "Hides the bottom app bar when set."
       },
       "scrollBehavior": {
         "description": "Defines the scroll behavior. Possible values:\n\n* `hide`: Hides when scrolling."
       }
     },
     "events": {
-      "show": "Emitted when the bottom app bar starts to show. Can be prevented with `event.preventDefault()`.",
-      "shown": "Emitted after the bottom app bar has shown and animations are complete.",
+      "hidden": "Emitted after the bottom app bar has hidden and animations are complete.",
       "hide": "Emitted when the bottom app bar starts to hide. Can be prevented with `event.preventDefault()`.",
-      "hidden": "Emitted after the bottom app bar has hidden and animations are complete."
+      "show": "Emitted when the bottom app bar starts to show. Can be prevented with `event.preventDefault()`.",
+      "shown": "Emitted after the bottom app bar has shown and animations are complete."
     },
     "slots": {
       "": "Elements within the bottom app bar."
@@ -349,53 +351,21 @@
       "--z-index": "The CSS `z-index` value of the component."
     }
   },
-  "mdui-button": {
-    "summary": "Button Component.\n\n```html\n<mdui-button>Button</mdui-button>\n```",
-    "properties": {
-      "variant": {
-        "description": "Defines the button style. Possible values:\n* `elevated`: A shadowed button for visual distinction.\n* `filled`: Used for final actions like 'Save' or 'Confirm'.\n* `tonal`: A mix between `filled` and `outlined`, suitable for medium to high-priority actions.\n* `outlined`: A bordered button for medium-priority and secondary actions.\n* `text`: A text button for low-priority actions.",
-        "enum": {
-          "elevated": "A shadowed button for visual distinction.",
-          "filled": "Used for final actions like 'Save' or 'Confirm'.",
-          "tonal": "A mix between `filled` and `outlined`, suitable for medium to high-priority actions.",
-          "outlined": "A bordered button for medium-priority and secondary actions.",
-          "text": "A text button for low-priority actions."
-        }
-      },
-      "fullWidth": {
-        "description": "If set, the button will fill the width of its parent element."
-      },
-      "icon": {
-        "description": "Specifies the Material Icons name on the left. Alternatively, use `slot=\"icon\"`."
-      },
-      "endIcon": {
-        "description": "Specifies the Material Icons name on the right. Alternatively, use `slot=\"end-icon\"`."
-      }
-    },
-    "events": {
-      "focus": "Emitted when the button gains focus.",
-      "blur": "Emitted when the button loses focus.",
-      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
-    },
-    "slots": {
-      "": "Button text.",
-      "icon": "Element on the left side of the button.",
-      "end-icon": "Element on the right side of the button."
-    },
-    "cssParts": {
-      "button": "Internal `<button>` or `<a>` element.",
-      "label": "Button text.",
-      "icon": "Icon on the left side of the button.",
-      "end-icon": "Icon on the right side of the button.",
-      "loading": "The `<mdui-circular-progress>` element for the loading state."
-    },
-    "cssProperties": {
-      "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
-    }
-  },
   "mdui-button-icon": {
     "summary": "Icon Button Component.\n\n```html\n<mdui-button-icon icon=\"search\"></mdui-button-icon>\n```",
     "properties": {
+      "icon": {
+        "description": "Specifies the Material Icons name. Alternatively, use the default slot."
+      },
+      "selectable": {
+        "description": "Indicates if the button is selectable."
+      },
+      "selected": {
+        "description": "Indicates if the button is selected."
+      },
+      "selectedIcon": {
+        "description": "Specifies the Material Icons name when selected. Alternatively, use `slot=\"selected-icon\"`."
+      },
       "variant": {
         "description": "Defines the icon button style. Possible values:\n* `standard`: For low-priority actions.\n* `filled`: Has the strongest visual effect, suitable for high-priority actions.\n* `tonal`: A visual effect between `filled` and `outlined`, suitable for medium to high-priority actions.\n* `outlined`: For medium-priority actions.",
         "enum": {
@@ -404,24 +374,12 @@
           "tonal": "A visual effect between `filled` and `outlined`, suitable for medium to high-priority actions.",
           "outlined": "For medium-priority actions."
         }
-      },
-      "icon": {
-        "description": "Specifies the Material Icons name. Alternatively, use the default slot."
-      },
-      "selectedIcon": {
-        "description": "Specifies the Material Icons name when selected. Alternatively, use `slot=\"selected-icon\"`."
-      },
-      "selectable": {
-        "description": "Indicates if the button is selectable."
-      },
-      "selected": {
-        "description": "Indicates if the button is selected."
       }
     },
     "events": {
-      "focus": "Emitted when the button gains focus.",
       "blur": "Emitted when the button loses focus.",
       "change": "Emitted when the selected state changes.",
+      "focus": "Emitted when the button gains focus.",
       "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
     },
     "slots": {
@@ -431,7 +389,51 @@
     "cssParts": {
       "button": "Internal `<button>` or `<a>` element.",
       "icon": "Icon.",
-      "selected-icon": "Icon in the selected state.",
+      "loading": "The `<mdui-circular-progress>` element for the loading state.",
+      "selected-icon": "Icon in the selected state."
+    },
+    "cssProperties": {
+      "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
+    }
+  },
+  "mdui-button": {
+    "summary": "Button Component.\n\n```html\n<mdui-button>Button</mdui-button>\n```",
+    "properties": {
+      "endIcon": {
+        "description": "Specifies the Material Icons name on the right. Alternatively, use `slot=\"end-icon\"`."
+      },
+      "fullWidth": {
+        "description": "If set, the button will fill the width of its parent element."
+      },
+      "icon": {
+        "description": "Specifies the Material Icons name on the left. Alternatively, use `slot=\"icon\"`."
+      },
+      "variant": {
+        "description": "Defines the button style. Possible values:\n* `elevated`: A shadowed button for visual distinction.\n* `filled`: Used for final actions like 'Save' or 'Confirm'.\n* `tonal`: A mix between `filled` and `outlined`, suitable for medium to high-priority actions.\n* `outlined`: A bordered button for medium-priority and secondary actions.\n* `text`: A text button for low-priority actions.",
+        "enum": {
+          "elevated": "A shadowed button for visual distinction.",
+          "filled": "Used for final actions like 'Save' or 'Confirm'.",
+          "tonal": "A mix between `filled` and `outlined`, suitable for medium to high-priority actions.",
+          "outlined": "A bordered button for medium-priority and secondary actions.",
+          "text": "A text button for low-priority actions."
+        }
+      }
+    },
+    "events": {
+      "blur": "Emitted when the button loses focus.",
+      "focus": "Emitted when the button gains focus.",
+      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
+    },
+    "slots": {
+      "": "Button text.",
+      "end-icon": "Element on the right side of the button.",
+      "icon": "Element on the left side of the button."
+    },
+    "cssParts": {
+      "button": "Internal `<button>` or `<a>` element.",
+      "end-icon": "Icon on the right side of the button.",
+      "icon": "Icon on the left side of the button.",
+      "label": "Button text.",
       "loading": "The `<mdui-circular-progress>` element for the loading state."
     },
     "cssProperties": {
@@ -441,6 +443,12 @@
   "mdui-card": {
     "summary": "Card Component.\n\n```html\n<mdui-card>card content</mdui-card>\n```",
     "properties": {
+      "clickable": {
+        "description": "Makes the card clickable. When set, a mouse hover effect and click ripple effect are added."
+      },
+      "disabled": {
+        "description": "Disables the card."
+      },
       "variant": {
         "description": "Defines the card style. Possible values:\n* `elevated`: Shadowed, providing more visual separation from the background than `filled`, but less than `outlined`.\n* `filled`: Provides minimal visual separation from the background.\n* `outlined`: Bordered, providing maximum visual separation from the background.",
         "enum": {
@@ -448,17 +456,11 @@
           "filled": "Provides minimal visual separation from the background.",
           "outlined": "Bordered, providing maximum visual separation from the background."
         }
-      },
-      "clickable": {
-        "description": "Makes the card clickable. When set, a mouse hover effect and click ripple effect are added."
-      },
-      "disabled": {
-        "description": "Disables the card."
       }
     },
     "events": {
-      "focus": "Emitted when the card gains focus.",
-      "blur": "Emitted when the card loses focus."
+      "blur": "Emitted when the card loses focus.",
+      "focus": "Emitted when the card gains focus."
     },
     "slots": {
       "": "Card content."
@@ -470,44 +472,44 @@
   "mdui-checkbox": {
     "summary": "Checkbox Component.\n\n```html\n<mdui-checkbox>Checkbox</mdui-checkbox>\n```",
     "properties": {
-      "disabled": {
-        "description": "Dsiables the checkbox."
-      },
       "checked": {
         "description": "Sets the checkbox to the checked state."
-      },
-      "defaultChecked": {
-        "description": "Sets the default checked state. Resets to this state when the form is reset. Can only be set via JavaScript property."
-      },
-      "indeterminate": {
-        "description": "Sets the checkbox to an indeterminate state."
-      },
-      "required": {
-        "description": "Requires the checkbox to be checked for form submission."
-      },
-      "form": {
-        "description": "Associates the checkbox with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the checkbox is associated with its parent `<form>`, if any.\n\nThis attribute allows checkbox elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."
-      },
-      "name": {
-        "description": "Sets the checkbox's name, which is submitted with form data."
-      },
-      "value": {
-        "description": "Sets the checkbox's value, which is submitted with form data."
-      },
-      "uncheckedIcon": {
-        "description": "Sets the Material Icons name for the unchecked state. Alternatively, use `slot=\"unchecked-icon\"`."
       },
       "checkedIcon": {
         "description": "Sets the Material Icons name for the checked state. Alternatively, use `slot=\"checked-icon\"`."
       },
+      "defaultChecked": {
+        "description": "Sets the default checked state. Resets to this state when the form is reset. Can only be set via JavaScript property."
+      },
+      "disabled": {
+        "description": "Dsiables the checkbox."
+      },
+      "form": {
+        "description": "Associates the checkbox with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the checkbox is associated with its parent `<form>`, if any.\n\nThis attribute allows checkbox elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."
+      },
+      "indeterminate": {
+        "description": "Sets the checkbox to an indeterminate state."
+      },
       "indeterminateIcon": {
         "description": "Sets the Material Icons name for the indeterminate state. Alternatively, use `slot=\"indeterminate-icon\"`."
+      },
+      "name": {
+        "description": "Sets the checkbox's name, which is submitted with form data."
+      },
+      "required": {
+        "description": "Requires the checkbox to be checked for form submission."
+      },
+      "uncheckedIcon": {
+        "description": "Sets the Material Icons name for the unchecked state. Alternatively, use `slot=\"unchecked-icon\"`."
+      },
+      "validationMessage": {
+        "description": "The element's validation message. This is empty if the element meets its constraints."
       },
       "validity": {
         "description": "A [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) object that represents the element's validity states."
       },
-      "validationMessage": {
-        "description": "The element's validation message. This is empty if the element meets its constraints."
+      "value": {
+        "description": "Sets the checkbox's value, which is submitted with form data."
       }
     },
     "methods": {
@@ -516,29 +518,53 @@
       "setCustomValidity": "Sets a custom error message. If the text is non-empty, it indicates that the field is invalid."
     },
     "events": {
-      "focus": "Emitted when the checkbox gains focus.",
       "blur": "Emitted when the checkbox loses focus.",
       "change": "Emitted when the checked state changes.",
+      "focus": "Emitted when the checkbox gains focus.",
       "input": "Emitted when the checked state changes.",
       "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
     },
     "slots": {
       "": "Text.",
-      "unchecked-icon": "Icon for the unchecked state.",
-      "checked-icon": "Icon for the checked state.",
-      "indeterminate-icon": "Icon for the indeterminate state."
-    },
-    "cssParts": {
-      "control": "Container for the left icon.",
-      "unchecked-icon": "Icon for the unchecked state.",
       "checked-icon": "Icon for the checked state.",
       "indeterminate-icon": "Icon for the indeterminate state.",
-      "label": "Text."
+      "unchecked-icon": "Icon for the unchecked state."
+    },
+    "cssParts": {
+      "checked-icon": "Icon for the checked state.",
+      "control": "Container for the left icon.",
+      "indeterminate-icon": "Icon for the indeterminate state.",
+      "label": "Text.",
+      "unchecked-icon": "Icon for the unchecked state."
     }
   },
   "mdui-chip": {
     "summary": "Chip Component.\n\n```html\n<mdui-chip>Chip</mdui-chip>\n```",
     "properties": {
+      "deletable": {
+        "description": "Makes the chip deletable. When set, a delete icon appears on the right."
+      },
+      "deleteIcon": {
+        "description": "Sets the Material Icons name for the delete icon when deletable. Alternatively, use `slot=\"delete-icon\"`."
+      },
+      "elevated": {
+        "description": "Gives the chip a shadow."
+      },
+      "endIcon": {
+        "description": "Sets the Material Icons name for the right icon. Alternatively, use `slot=\"end-icon\"`."
+      },
+      "icon": {
+        "description": "Sets the Material Icons name for the left icon. Alternatively, use `slot=\"icon\"`."
+      },
+      "selectable": {
+        "description": "Makes the chip selectable."
+      },
+      "selected": {
+        "description": "Marks the chip as selected."
+      },
+      "selectedIcon": {
+        "description": "Sets the Material Icons name for the left icon when selected. Alternatively, use `slot=\"selected-icon\"`."
+      },
       "variant": {
         "description": "Defines the chip type. Possible values:\n\n* `assist`: Displays auxiliary actions related to the context, such as sharing and favoriting on a meal ordering page.\n* `filter`: Filters content, like search results on a search results page.\n* `input`: Represents fragments of user input, such as contacts in the 'To' field in Gmail.\n* `suggestion`: Provides dynamically generated suggestions to simplify user actions, like message predictions in a chat application.",
         "enum": {
@@ -547,54 +573,30 @@
           "input": "Represents fragments of user input, such as contacts in the 'To' field in Gmail.",
           "suggestion": "Provides dynamically generated suggestions to simplify user actions, like message predictions in a chat application."
         }
-      },
-      "elevated": {
-        "description": "Gives the chip a shadow."
-      },
-      "selectable": {
-        "description": "Makes the chip selectable."
-      },
-      "selected": {
-        "description": "Marks the chip as selected."
-      },
-      "deletable": {
-        "description": "Makes the chip deletable. When set, a delete icon appears on the right."
-      },
-      "icon": {
-        "description": "Sets the Material Icons name for the left icon. Alternatively, use `slot=\"icon\"`."
-      },
-      "selectedIcon": {
-        "description": "Sets the Material Icons name for the left icon when selected. Alternatively, use `slot=\"selected-icon\"`."
-      },
-      "endIcon": {
-        "description": "Sets the Material Icons name for the right icon. Alternatively, use `slot=\"end-icon\"`."
-      },
-      "deleteIcon": {
-        "description": "Sets the Material Icons name for the delete icon when deletable. Alternatively, use `slot=\"delete-icon\"`."
       }
     },
     "events": {
-      "focus": "Emitted when the chip gains focus.",
       "blur": "Emitted when the chip loses focus.",
-      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints.",
       "change": "Emitted when the selected state changes.",
-      "delete": "Emitted when the delete icon is clicked."
+      "delete": "Emitted when the delete icon is clicked.",
+      "focus": "Emitted when the chip gains focus.",
+      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
     },
     "slots": {
       "": "Text.",
-      "icon": "Left icon.",
+      "delete-icon": "Delete icon when deletable.",
       "end-icon": "Right icon.",
-      "selected-icon": "Left icon when selected.",
-      "delete-icon": "Delete icon when deletable."
+      "icon": "Left icon.",
+      "selected-icon": "Left icon when selected."
     },
     "cssParts": {
       "button": "Internal `<button>` or `<a>` element.",
-      "label": "Text.",
-      "icon": "Left icon.",
-      "end-icon": "Right icon.",
-      "selected-icon": "Left icon when selected.",
       "delete-icon": "Delete icon on the right.",
-      "loading": "The `<mdui-circular-progress>` element for the loading state."
+      "end-icon": "Right icon.",
+      "icon": "Left icon.",
+      "label": "Text.",
+      "loading": "The `<mdui-circular-progress>` element for the loading state.",
+      "selected-icon": "Left icon when selected."
     },
     "cssProperties": {
       "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
@@ -611,17 +613,48 @@
       }
     }
   },
+  "mdui-collapse-item": {
+    "summary": "Collapse Item Component. It should be used in conjunction with the `<mdui-collapse>` component.\n\n```html\n<mdui-collapse>\n..<mdui-collapse-item header=\"header-1\">content-1</mdui-collapse-item>\n..<mdui-collapse-item header=\"header-2\">content-2</mdui-collapse-item>\n</mdui-collapse>\n```",
+    "properties": {
+      "disabled": {
+        "description": "Disables the collapsible panel item."
+      },
+      "header": {
+        "description": "Sets the header text for the collapsible panel item."
+      },
+      "trigger": {
+        "description": "Identifies the element that triggers the collapse on click. This can be a CSS selector, a DOM element, or a [JQ object](/docs/2/functions/jq). By default, the entire header area is the trigger."
+      },
+      "value": {
+        "description": "Specifies the value of the collapsible panel item."
+      }
+    },
+    "events": {
+      "close": "Emitted when the collapse item starts to close.",
+      "closed": "Emitted after the collapse item has closed and the animations are completed.",
+      "open": "Emitted when the collapse item starts to open.",
+      "opened": "Emitted after the collapse item has opened and the animations are completed."
+    },
+    "slots": {
+      "": "Main content of the collapsible panel item.",
+      "header": "Content of the collapsible panel item's header."
+    },
+    "cssParts": {
+      "body": "Content of the collapsible panel's body.",
+      "header": "Content of the collapsible panel's header."
+    }
+  },
   "mdui-collapse": {
     "summary": "Collapse Panel Component. It should be used in conjunction with the `<mdui-collapse-item>` component.\n\n```html\n<mdui-collapse>\n..<mdui-collapse-item header=\"header-1\">content-1</mdui-collapse-item>\n..<mdui-collapse-item header=\"header-2\">content-2</mdui-collapse-item>\n</mdui-collapse>\n```",
     "properties": {
       "accordion": {
         "description": "Activates accordion mode."
       },
-      "value": {
-        "description": "Specifies the open `<mdui-collapse-item>` value.\n\nNote: The HTML attribute is always a string and can only be initially set when `accordion` is `true`. The JavaScript property value is a string when `accordion` is `true` and a string array when `accordion` is `false`. To modify this value when `accordion` is `false`, you must change the JavaScript property."
-      },
       "disabled": {
         "description": "Disables the collapsible panel."
+      },
+      "value": {
+        "description": "Specifies the open `<mdui-collapse-item>` value.\n\nNote: The HTML attribute is always a string and can only be initially set when `accordion` is `true`. The JavaScript property value is a string when `accordion` is `true` and a string array when `accordion` is `false`. To modify this value when `accordion` is `false`, you must change the JavaScript property."
       }
     },
     "events": {
@@ -631,89 +664,58 @@
       "": "The `<mdui-collapse-item>` components."
     }
   },
-  "mdui-collapse-item": {
-    "summary": "Collapse Item Component. It should be used in conjunction with the `<mdui-collapse>` component.\n\n```html\n<mdui-collapse>\n..<mdui-collapse-item header=\"header-1\">content-1</mdui-collapse-item>\n..<mdui-collapse-item header=\"header-2\">content-2</mdui-collapse-item>\n</mdui-collapse>\n```",
-    "properties": {
-      "value": {
-        "description": "Specifies the value of the collapsible panel item."
-      },
-      "header": {
-        "description": "Sets the header text for the collapsible panel item."
-      },
-      "disabled": {
-        "description": "Disables the collapsible panel item."
-      },
-      "trigger": {
-        "description": "Identifies the element that triggers the collapse on click. This can be a CSS selector, a DOM element, or a [JQ object](/docs/2/functions/jq). By default, the entire header area is the trigger."
-      }
-    },
-    "events": {
-      "open": "Emitted when the collapse item starts to open.",
-      "opened": "Emitted after the collapse item has opened and the animations are completed.",
-      "close": "Emitted when the collapse item starts to close.",
-      "closed": "Emitted after the collapse item has closed and the animations are completed."
-    },
-    "slots": {
-      "": "Main content of the collapsible panel item.",
-      "header": "Content of the collapsible panel item's header."
-    },
-    "cssParts": {
-      "header": "Content of the collapsible panel's header.",
-      "body": "Content of the collapsible panel's body."
-    }
-  },
   "mdui-dialog": {
     "summary": "Dialog Component.\n\n```html\n<mdui-dialog>content</mdui-dialog>\n```",
     "properties": {
-      "icon": {
-        "description": "Sets the Material Icons name for the top icon. Alternatively, use `slot=\"icon\"`."
-      },
-      "headline": {
-        "description": "Sets the dialog title. Alternatively, use `slot=\"headline\"`."
-      },
-      "description": {
-        "description": "Sets the text below the title. Alternatively, use `slot=\"description\"`."
-      },
-      "open": {
-        "description": "Opens the dialog."
-      },
-      "fullscreen": {
-        "description": "Sets the dialog to full-screen."
-      },
       "closeOnEsc": {
         "description": "Closes the dialog when the ESC key is pressed."
       },
       "closeOnOverlayClick": {
         "description": "Closes the dialog when the overlay is clicked."
       },
+      "description": {
+        "description": "Sets the text below the title. Alternatively, use `slot=\"description\"`."
+      },
+      "fullscreen": {
+        "description": "Sets the dialog to full-screen."
+      },
+      "headline": {
+        "description": "Sets the dialog title. Alternatively, use `slot=\"headline\"`."
+      },
+      "icon": {
+        "description": "Sets the Material Icons name for the top icon. Alternatively, use `slot=\"icon\"`."
+      },
+      "open": {
+        "description": "Opens the dialog."
+      },
       "stackedActions": {
         "description": "Stacks the bottom action buttons vertically."
       }
     },
     "events": {
-      "open": "Emitted when the dialog starts to open. Can be prevented with `event.preventDefault()`.",
-      "opened": "Emitted after the dialog has opened and the animations are completed.",
       "close": "Emitted when the dialog starts to close. Can be prevented with `event.preventDefault().`.",
       "closed": "Emitted after the dialog has closed and the animations are completed.",
+      "open": "Emitted when the dialog starts to open. Can be prevented with `event.preventDefault()`.",
+      "opened": "Emitted after the dialog has opened and the animations are completed.",
       "overlay-click": "Emitted when the overlay is clicked."
     },
     "slots": {
-      "header": "Top element, contains the `icon` slot and `headline` slot by default.",
-      "icon": "Top icon.",
-      "headline": "Top headline.",
-      "description": "Text below the title.",
       "": "Main content of the dialog.",
-      "action": "Elements in the bottom action bar."
+      "action": "Elements in the bottom action bar.",
+      "description": "Text below the title.",
+      "header": "Top element, contains the `icon` slot and `headline` slot by default.",
+      "headline": "Top headline.",
+      "icon": "Top icon."
     },
     "cssParts": {
-      "overlay": "Overlay layer.",
-      "panel": "Dialog container.",
-      "header": "Dialog header, includes icon and headline.",
-      "icon": "Top icon in header.",
-      "headline": "Top headline in header.",
+      "action": "Bottom action buttons.",
       "body": "Dialog body.",
       "description": "Subtext in body.",
-      "action": "Bottom action buttons."
+      "header": "Dialog header, includes icon and headline.",
+      "headline": "Top headline in header.",
+      "icon": "Top icon in header.",
+      "overlay": "Overlay layer.",
+      "panel": "Dialog container."
     },
     "cssProperties": {
       "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
@@ -723,35 +725,34 @@
   "mdui-divider": {
     "summary": "Divider Component.\n\n```html\n<mdui-divider></mdui-divider>\n```",
     "properties": {
-      "vertical": {
-        "description": "Displays the divider vertically."
-      },
       "inset": {
         "description": "Adds an inset from the left side."
       },
       "middle": {
         "description": "Adds insets from both the left and right sides."
+      },
+      "vertical": {
+        "description": "Displays the divider vertically."
       }
     }
   },
   "mdui-dropdown": {
     "summary": "Dropdown Component.\n\n```html\n<mdui-dropdown>\n..<mdui-button slot=\"trigger\">open dropdown</mdui-button>\n..<mdui-menu>\n....<mdui-menu-item>Item 1</mdui-menu-item>\n....<mdui-menu-item>Item 2</mdui-menu-item>\n..</mdui-menu>\n</mdui-dropdown>\n```",
     "properties": {
-      "open": {
-        "description": "Opens the dropdown."
+      "closeDelay": {
+        "description": "Sets the delay (in ms) for closing the dropdown on hover."
       },
       "disabled": {
         "description": "Disables the dropdown."
       },
-      "trigger": {
-        "description": "Defines the trigger method for the dropdown. Supports multiple space-separated values. Possible values:\n\n* `click`: Trigger on click.\n* `hover`: Trigger on mouse hover.\n* `focus`: Trigger on focus.\n* `contextmenu`: Trigger on right-click or touch long press.\n* `manual`: If used, the dropdown can only be opened and closed programmatically, and no other trigger methods can be specified.",
-        "enum": {
-          "click": "Trigger on click.",
-          "hover": "Trigger on mouse hover.",
-          "focus": "Trigger on focus.",
-          "contextmenu": "Trigger on right-click or touch long press.",
-          "manual": "If used, the dropdown can only be opened and closed programmatically, and no other trigger methods can be specified."
-        }
+      "open": {
+        "description": "Opens the dropdown."
+      },
+      "openDelay": {
+        "description": "Sets the delay (in ms) for opening the dropdown on hover."
+      },
+      "openOnPointer": {
+        "description": "Opens the dropdown at the cursor position. This is typically used for context menus."
       },
       "placement": {
         "description": "Sets the position of the dropdown. Possible values:\n\n* `auto`: Automatically determine the position.\n* `top-start`: Above and left-aligned.\n* `top`: Above and centered.\n* `top-end`: Above and right-aligned.\n* `bottom-start`: Below and left-aligned.\n* `bottom`: Below and centered.\n* `bottom-end`: Below and right-aligned.\n* `left-start`: Left and top-aligned.\n* `left`: Left and centered.\n* `left-end`: Left and bottom-aligned.\n* `right-start`: Right and top-aligned.\n* `right`: Right and centered.\n* `right-end`: Right and bottom-aligned.",
@@ -774,29 +775,30 @@
       "stayOpenOnClick": {
         "description": "Keeps the dropdown open after clicking an [`<mdui-menu-item>`](/docs/2/components/menu#menu-item-api)."
       },
-      "openDelay": {
-        "description": "Sets the delay (in ms) for opening the dropdown on hover."
-      },
-      "closeDelay": {
-        "description": "Sets the delay (in ms) for closing the dropdown on hover."
-      },
-      "openOnPointer": {
-        "description": "Opens the dropdown at the cursor position. This is typically used for context menus."
+      "trigger": {
+        "description": "Defines the trigger method for the dropdown. Supports multiple space-separated values. Possible values:\n\n* `click`: Trigger on click.\n* `hover`: Trigger on mouse hover.\n* `focus`: Trigger on focus.\n* `contextmenu`: Trigger on right-click or touch long press.\n* `manual`: If used, the dropdown can only be opened and closed programmatically, and no other trigger methods can be specified.",
+        "enum": {
+          "click": "Trigger on click.",
+          "hover": "Trigger on mouse hover.",
+          "focus": "Trigger on focus.",
+          "contextmenu": "Trigger on right-click or touch long press.",
+          "manual": "If used, the dropdown can only be opened and closed programmatically, and no other trigger methods can be specified."
+        }
       }
     },
     "events": {
-      "open": "Emitted when the dropdown starts to open. Can be prevented with `event.preventDefault()`.",
-      "opened": "Emitted after the dropdown has opened and the animations are completed.",
       "close": "Emitted when the dropdown starts to close. Can be prevented with `event.preventDefault()`.",
-      "closed": "Emitted after the dropdown has closed and the animations are completed."
+      "closed": "Emitted after the dropdown has closed and the animations are completed.",
+      "open": "Emitted when the dropdown starts to open. Can be prevented with `event.preventDefault()`.",
+      "opened": "Emitted after the dropdown has opened and the animations are completed."
     },
     "slots": {
       "": "The content of the dropdown.",
       "trigger": "The element that triggers the dropdown, such as an [`<mdui-button>`](/docs/2/components/button) element."
     },
     "cssParts": {
-      "trigger": "The container of the element that triggers the dropdown, i.e., the container of the `trigger` slot.",
-      "panel": "The container of the dropdown content."
+      "panel": "The container of the dropdown content.",
+      "trigger": "The container of the element that triggers the dropdown, i.e., the container of the `trigger` slot."
     },
     "cssProperties": {
       "--z-index": "The CSS `z-index` value of the component."
@@ -805,14 +807,11 @@
   "mdui-fab": {
     "summary": "Floating Action Button Component.\n\n```html\n<mdui-fab icon=\"edit\"></mdui-fab>\n```",
     "properties": {
-      "variant": {
-        "description": "Sets the FAB color. Possible values:\n\n* `primary`: Uses the primary container background color.\n* `surface`: Uses the surface container high background color.\n* `secondary`: Uses the secondary container background color.\n* `tertiary`: Uses the tertiary container background color.",
-        "enum": {
-          "primary": "Uses the primary container background color.",
-          "surface": "Uses the surface container high background color.",
-          "secondary": "Uses the secondary container background color.",
-          "tertiary": "Uses the tertiary container background color."
-        }
+      "extended": {
+        "description": "Indicates if the FAB is in the extended state."
+      },
+      "icon": {
+        "description": "Sets the Material Icons name. Alternatively, use `slot=\"icon\"`."
       },
       "size": {
         "description": "Sets the FAB size. Possible values:\n* `normal`: Sets the FAB to a normal size.\n* `small`: Sets the FAB to a small size.\n* `large`: Sets the FAB to a large size.",
@@ -822,16 +821,19 @@
           "large": "Sets the FAB to a large size."
         }
       },
-      "icon": {
-        "description": "Sets the Material Icons name. Alternatively, use `slot=\"icon\"`."
-      },
-      "extended": {
-        "description": "Indicates if the FAB is in the extended state."
+      "variant": {
+        "description": "Sets the FAB color. Possible values:\n\n* `primary`: Uses the primary container background color.\n* `surface`: Uses the surface container high background color.\n* `secondary`: Uses the secondary container background color.\n* `tertiary`: Uses the tertiary container background color.",
+        "enum": {
+          "primary": "Uses the primary container background color.",
+          "surface": "Uses the surface container high background color.",
+          "secondary": "Uses the secondary container background color.",
+          "tertiary": "Uses the tertiary container background color."
+        }
       }
     },
     "events": {
-      "focus": "Emitted when the FAB gains focus.",
       "blur": "Emitted when the FAB loses focus.",
+      "focus": "Emitted when the FAB gains focus.",
       "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
     },
     "slots": {
@@ -840,14 +842,14 @@
     },
     "cssParts": {
       "button": "Internal `<button>` or `<a>` element.",
-      "label": "Text on the right side.",
       "icon": "Icon on the left side.",
+      "label": "Text on the right side.",
       "loading": "The `<mdui-circular-progress>` element for the loading state."
     },
     "cssProperties": {
-      "--shape-corner-small": "The size of the component corner when `size=\"small\"`. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
+      "--shape-corner-large": "The size of the component corner when `size=\"large\"`. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
       "--shape-corner-normal": "The size of the component corner when `size=\"normal\"`. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
-      "--shape-corner-large": "The size of the component corner when `size=\"large\"`. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
+      "--shape-corner-small": "The size of the component corner when `size=\"small\"`. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
     }
   },
   "mdui-icon": {
@@ -862,17 +864,6 @@
     },
     "slots": {
       "": "The SVG icon content."
-    }
-  },
-  "mdui-layout": {
-    "summary": "Layout Component.\n\n```html\n<mdui-layout>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-main></mdui-layout-main>\n</mdui-layout>\n```",
-    "properties": {
-      "fullHeight": {
-        "description": "Sets the layout height to 100%."
-      }
-    },
-    "slots": {
-      "": "Can contain elements such as [`<mdui-top-app-bar>`](/docs/2/components/top-app-bar), [`<mdui-bottom-app-bar>`](/docs/2/components/bottom-app-bar), [`<mdui-navigation-bar>`](/docs/2/components/navigation-bar), [`<mdui-navigation-drawer>`](/docs/2/components/navigation-drawer), [`<mdui-navigation-rail>`](/docs/2/components/navigation-rail), `<mdui-layout-item>`, and `<mdui-layout-main>`."
     }
   },
   "mdui-layout-item": {
@@ -898,6 +889,17 @@
       "": "Can contains any content."
     }
   },
+  "mdui-layout": {
+    "summary": "Layout Component.\n\n```html\n<mdui-layout>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-item></mdui-layout-item>\n..<mdui-layout-main></mdui-layout-main>\n</mdui-layout>\n```",
+    "properties": {
+      "fullHeight": {
+        "description": "Sets the layout height to 100%."
+      }
+    },
+    "slots": {
+      "": "Can contain elements such as [`<mdui-top-app-bar>`](/docs/2/components/top-app-bar), [`<mdui-bottom-app-bar>`](/docs/2/components/bottom-app-bar), [`<mdui-navigation-bar>`](/docs/2/components/navigation-bar), [`<mdui-navigation-drawer>`](/docs/2/components/navigation-drawer), [`<mdui-navigation-rail>`](/docs/2/components/navigation-rail), `<mdui-layout-item>`, and `<mdui-layout-main>`."
+    }
+  },
   "mdui-linear-progress": {
     "summary": "Linear Progress Component.\n\n```html\n<mdui-linear-progress></mdui-linear-progress>\n```",
     "properties": {
@@ -915,24 +917,18 @@
       "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
     }
   },
-  "mdui-list": {
-    "summary": "List Component. It should be used in conjunction with the `<mdui-list-item>` component.\n\n```html\n<mdui-list>\n..<mdui-list-subheader>Subheader</mdui-list-subheader>\n..<mdui-list-item>Item 1</mdui-list-item>\n..<mdui-list-item>Item 2</mdui-list-item>\n</mdui-list>\n```",
-    "slots": {
-      "": "Contains `<mdui-list-item>` elements."
-    }
-  },
   "mdui-list-item": {
     "summary": "List Item Component. It should be used in conjunction with the `<mdui-list>` component.\n\n```html\n<mdui-list>\n..<mdui-list-subheader>Subheader</mdui-list-subheader>\n..<mdui-list-item>Item 1</mdui-list-item>\n..<mdui-list-item>Item 2</mdui-list-item>\n</mdui-list>\n```",
     "properties": {
-      "headline": {
-        "description": "Main text. Alternatively, use the default slot."
+      "active": {
+        "description": "Activates the list item."
       },
-      "headlineLine": {
-        "description": "Line limit for main text. Truncates after exceeding. Default is no limit. Possible values:\n\n* `1`: Single-line text, truncates after exceeding\n* `2`: Double-line text, truncates after exceeding.\n* `3`: Triple-line text, truncates after exceeding.",
+      "alignment": {
+        "description": "Vertical alignment of the list item. Possible values:\n\n* `start`: Top alignment.\n* `center`: Center alignment.\n* `end`: Bottom alignment.",
         "enum": {
-          "1": "Single-line text, truncates after exceeding.",
-          "2": "Double-line text, truncates after exceeding.",
-          "3": "Triple-line text, truncates after exceeding."
+          "start": "Top alignment.",
+          "center": "Center alignment.",
+          "end": "Bottom alignment."
         }
       },
       "description": {
@@ -946,51 +942,51 @@
           "3": "Triple-line text, truncates after exceeding."
         }
       },
-      "icon": {
-        "description": "Material Icons name on the left. Alternatively, use `slot=\"icon\"`."
+      "disabled": {
+        "description": "Disables the list item. Grays out the item and disables elements like [`<mdui-checkbox>`](/docs/2/components/checkbox), [`<mdui-radio>`](/docs/2/components/radio), [`<mdui-switch>`](/docs/2/components/switch)."
       },
       "endIcon": {
         "description": "Material Icons name on the right. Alternatively, use `slot=\"end-icon\"`."
       },
-      "disabled": {
-        "description": "Disables the list item. Grays out the item and disables elements like [`<mdui-checkbox>`](/docs/2/components/checkbox), [`<mdui-radio>`](/docs/2/components/radio), [`<mdui-switch>`](/docs/2/components/switch)."
+      "headline": {
+        "description": "Main text. Alternatively, use the default slot."
       },
-      "active": {
-        "description": "Activates the list item."
+      "headlineLine": {
+        "description": "Line limit for main text. Truncates after exceeding. Default is no limit. Possible values:\n\n* `1`: Single-line text, truncates after exceeding\n* `2`: Double-line text, truncates after exceeding.\n* `3`: Triple-line text, truncates after exceeding.",
+        "enum": {
+          "1": "Single-line text, truncates after exceeding.",
+          "2": "Double-line text, truncates after exceeding.",
+          "3": "Triple-line text, truncates after exceeding."
+        }
+      },
+      "icon": {
+        "description": "Material Icons name on the left. Alternatively, use `slot=\"icon\"`."
       },
       "nonclickable": {
         "description": "Makes the list item non-clickable. Elements like [`<mdui-checkbox>`](/docs/2/components/checkbox), [`<mdui-radio>`](/docs/2/components/radio), [`<mdui-switch>`](/docs/2/components/switch) remain interactive."
       },
       "rounded": {
         "description": "Applies rounded style to the list item."
-      },
-      "alignment": {
-        "description": "Vertical alignment of the list item. Possible values:\n\n* `start`: Top alignment.\n* `center`: Center alignment.\n* `end`: Bottom alignment.",
-        "enum": {
-          "start": "Top alignment.",
-          "center": "Center alignment.",
-          "end": "Bottom alignment."
-        }
       }
     },
     "events": {
-      "focus": "Emitted when the list item gains focus.",
-      "blur": "Emitted when the list item loses focus."
+      "blur": "Emitted when the list item loses focus.",
+      "focus": "Emitted when the list item gains focus."
     },
     "slots": {
       "": "Main text.",
+      "custom": "Any custom content.",
       "description": "Subtext.",
-      "icon": "Element on the left of the list item.",
       "end-icon": "Element on the right of the list item.",
-      "custom": "Any custom content."
+      "icon": "Element on the left of the list item."
     },
     "cssParts": {
-      "container": "List item container.",
-      "icon": "Left icon.",
-      "end-icon": "Right icon.",
       "body": "Middle part.",
+      "container": "List item container.",
+      "description": "Subtitle.",
+      "end-icon": "Right icon.",
       "headline": "Main title.",
-      "description": "Subtitle."
+      "icon": "Left icon."
     },
     "cssProperties": {
       "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
@@ -1003,9 +999,70 @@
       "": "Subheader text."
     }
   },
+  "mdui-list": {
+    "summary": "List Component. It should be used in conjunction with the `<mdui-list-item>` component.\n\n```html\n<mdui-list>\n..<mdui-list-subheader>Subheader</mdui-list-subheader>\n..<mdui-list-item>Item 1</mdui-list-item>\n..<mdui-list-item>Item 2</mdui-list-item>\n</mdui-list>\n```",
+    "slots": {
+      "": "Contains `<mdui-list-item>` elements."
+    }
+  },
+  "mdui-menu-item": {
+    "summary": "Menu Item Component.\n\n```html\n<mdui-menu>\n..<mdui-menu-item>Item 1</mdui-menu-item>\n..<mdui-menu-item>Item 2</mdui-menu-item>\n</mdui-menu>\n```",
+    "properties": {
+      "disabled": {
+        "description": "Disables the menu item."
+      },
+      "endIcon": {
+        "description": "Specifies the Material Icons name for the right icon. Alternatively, use `slot=\"end-icon\"`."
+      },
+      "endText": {
+        "description": "Specifies the right text. Alternatively, use `slot=\"end-text\"`."
+      },
+      "icon": {
+        "description": "Specifies the Material Icons name for the left icon. Alternatively, use `slot=\"icon\"`. An empty string reserves space for an icon."
+      },
+      "selectedIcon": {
+        "description": "Specifies the Material Icons name for the selected state. Alternatively, use `slot=\"selected-icon\"`."
+      },
+      "submenuOpen": {
+        "description": "Opens the submenu."
+      },
+      "value": {
+        "description": "The value of the menu item."
+      }
+    },
+    "events": {
+      "blur": "Emitted when the menu item loses focus.",
+      "focus": "Emitted when the menu item gains focus.",
+      "submenu-close": "Emitted when the submenu starts to close. Can be prevented with `event.preventDefault()`.",
+      "submenu-closed": "Emitted after the submenu has closed and the animations are completed.",
+      "submenu-open": "Emitted when the submenu starts to open. Can be prevented with `event.preventDefault()`.",
+      "submenu-opened": "Emitted after the submenu has opened and the animations are completed."
+    },
+    "slots": {
+      "": "Menu item text.",
+      "custom": "Any custom content.",
+      "end-icon": "Right icon.",
+      "end-text": "Right text.",
+      "icon": "Left icon.",
+      "selected-icon": "Icon for the selected state.",
+      "submenu": "Submenu."
+    },
+    "cssParts": {
+      "container": "Menu item container.",
+      "end-icon": "Right icon.",
+      "end-text": "Right text.",
+      "icon": "Left icon.",
+      "label": "Text content.",
+      "selected-icon": "Icon for the selected state.",
+      "submenu": "Submenu element."
+    }
+  },
   "mdui-menu": {
     "summary": "Menu Component. It should be used in conjunction with the `<mdui-menu-item>` component.\n\n```html\n<mdui-menu>\n..<mdui-menu-item>Item 1</mdui-menu-item>\n..<mdui-menu-item>Item 2</mdui-menu-item>\n</mdui-menu>\n```",
     "properties": {
+      "dense": {
+        "description": "Indicates whether the menu items use a compact layout."
+      },
       "selects": {
         "description": "Defines the selectable state of menu items. Defaults to non-selectable. Possible values:\n\n* `single`: Only one item can be selected at a time.\n* `multiple`: Multiple items can be selected.",
         "enum": {
@@ -1013,11 +1070,11 @@
           "multiple": "Multiple items can be selected."
         }
       },
-      "value": {
-        "description": "The value of the selected `<mdui-menu-item>`.\n\nNote: The HTML attribute is always a string and can only be set as an initial value when `selects=\"single\"`. The JavaScript property value is a string when `selects=\"single\"` and an array of strings when `selects=\"multiple\"`. In `selects=\"multiple\"`, this value can only be modified by changing the JavaScript property."
+      "submenuCloseDelay": {
+        "description": "Specifies the delay (in milliseconds) for closing a submenu via hover."
       },
-      "dense": {
-        "description": "Indicates whether the menu items use a compact layout."
+      "submenuOpenDelay": {
+        "description": "Specifies the delay (in milliseconds) for opening a submenu via hover."
       },
       "submenuTrigger": {
         "description": "Defines the trigger method for submenus. Supports multiple values separated by spaces. Possible values:\n\n* `click`: Open submenu when clicking on a menu item.\n* `hover`: Open submenu when hovering over a menu item.\n* `focus`: Open submenu when focusing on a menu item.\n* `manual`: Only programmatically open and close submenus, no other trigger methods can be specified.",
@@ -1028,16 +1085,13 @@
           "manual": "Only programmatically open and close submenus, no other trigger methods can be specified."
         }
       },
-      "submenuOpenDelay": {
-        "description": "Specifies the delay (in milliseconds) for opening a submenu via hover."
-      },
-      "submenuCloseDelay": {
-        "description": "Specifies the delay (in milliseconds) for closing a submenu via hover."
+      "value": {
+        "description": "The value of the selected `<mdui-menu-item>`.\n\nNote: The HTML attribute is always a string and can only be set as an initial value when `selects=\"single\"`. The JavaScript property value is a string when `selects=\"single\"` and an array of strings when `selects=\"multiple\"`. In `selects=\"multiple\"`, this value can only be modified by changing the JavaScript property."
       }
     },
     "methods": {
-      "focus": "Sets focus on the element.",
-      "blur": "Remove focus from the element."
+      "blur": "Remove focus from the element.",
+      "focus": "Sets focus on the element."
     },
     "events": {
       "change": "Emitted when the selected state of menu items changes"
@@ -1049,56 +1103,39 @@
       "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
     }
   },
-  "mdui-menu-item": {
-    "summary": "Menu Item Component.\n\n```html\n<mdui-menu>\n..<mdui-menu-item>Item 1</mdui-menu-item>\n..<mdui-menu-item>Item 2</mdui-menu-item>\n</mdui-menu>\n```",
+  "mdui-navigation-bar-item": {
+    "summary": "Navigation Bar Item Component. It should be used in conjunction with the `<mdui-navigation-bar>` component.\n\n```html\n<mdui-navigation-bar>\n..<mdui-navigation-bar-item icon=\"place\">Item 1</mdui-navigation-bar-item>\n..<mdui-navigation-bar-item icon=\"commute\">Item 2</mdui-navigation-bar-item>\n..<mdui-navigation-bar-item icon=\"people\">Item 3</mdui-navigation-bar-item>\n</mdui-navigation-bar>\n```",
     "properties": {
-      "value": {
-        "description": "The value of the menu item."
-      },
-      "disabled": {
-        "description": "Disables the menu item."
+      "activeIcon": {
+        "description": "Specifies the Material Icons name for the active state. Alternatively, use `slot=\"active-icon\"`."
       },
       "icon": {
-        "description": "Specifies the Material Icons name for the left icon. Alternatively, use `slot=\"icon\"`. An empty string reserves space for an icon."
+        "description": "Specifies the Material Icons name for the inactive state. Alternatively, use `slot=\"icon\"`."
       },
-      "endIcon": {
-        "description": "Specifies the Material Icons name for the right icon. Alternatively, use `slot=\"end-icon\"`."
-      },
-      "endText": {
-        "description": "Specifies the right text. Alternatively, use `slot=\"end-text\"`."
-      },
-      "selectedIcon": {
-        "description": "Specifies the Material Icons name for the selected state. Alternatively, use `slot=\"selected-icon\"`."
-      },
-      "submenuOpen": {
-        "description": "Opens the submenu."
+      "value": {
+        "description": "The value of the navigation item."
       }
     },
     "events": {
-      "focus": "Emitted when the menu item gains focus.",
-      "blur": "Emitted when the menu item loses focus.",
-      "submenu-open": "Emitted when the submenu starts to open. Can be prevented with `event.preventDefault()`.",
-      "submenu-opened": "Emitted after the submenu has opened and the animations are completed.",
-      "submenu-close": "Emitted when the submenu starts to close. Can be prevented with `event.preventDefault()`.",
-      "submenu-closed": "Emitted after the submenu has closed and the animations are completed."
+      "blur": "Emitted when the navigation bar item loses focus.",
+      "focus": "Emitted when the navigation bar item gains focus."
     },
     "slots": {
-      "": "Menu item text.",
-      "icon": "Left icon.",
-      "end-icon": "Right icon.",
-      "end-text": "Right text.",
-      "selected-icon": "Icon for the selected state.",
-      "submenu": "Submenu.",
-      "custom": "Any custom content."
+      "": "Text.",
+      "active-icon": "Icon for the active state.",
+      "badge": "Badge.",
+      "icon": "Icon."
     },
     "cssParts": {
-      "container": "Menu item container.",
-      "icon": "Left icon.",
-      "label": "Text content.",
-      "end-icon": "Right icon.",
-      "end-text": "Right text.",
-      "selected-icon": "Icon for the selected state.",
-      "submenu": "Submenu element."
+      "active-icon": "Icon for the active state.",
+      "badge": "Badge.",
+      "container": "Container for the navigation item.",
+      "icon": "Icon.",
+      "indicator": "Indicator.",
+      "label": "Text."
+    },
+    "cssProperties": {
+      "--shape-corner-indicator": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
     }
   },
   "mdui-navigation-bar": {
@@ -1116,19 +1153,19 @@
           "unlabeled": "Never visible."
         }
       },
-      "value": {
-        "description": "The value of the selected `<mdui-navigation-bar-item>`."
-      },
       "scrollBehavior": {
         "description": "Defines the scroll behavior. Possible values:\n\n* `hide`: Hides when scrolling."
+      },
+      "value": {
+        "description": "The value of the selected `<mdui-navigation-bar-item>`."
       }
     },
     "events": {
       "change": "Emitted when the value changes.",
-      "show": "Emitted when the navigation bar starts to show. Can be prevented with `event.preventDefault()`.",
-      "shown": "Emitted after the navigation bar has shown and animations are complete.",
+      "hidden": "Emitted after the navigation bar has hidden and animations are complete.",
       "hide": "Emitted when the navigation bar starts to hide. Can be prevented with `event.preventDefault()`.",
-      "hidden": "Emitted after the navigation bar has hidden and animations are complete."
+      "show": "Emitted when the navigation bar starts to show. Can be prevented with `event.preventDefault()`.",
+      "shown": "Emitted after the navigation bar has shown and animations are complete."
     },
     "slots": {
       "": "Contains `<mdui-navigation-bar-item>` components."
@@ -1138,55 +1175,23 @@
       "--z-index": "The CSS `z-index` value of the component."
     }
   },
-  "mdui-navigation-bar-item": {
-    "summary": "Navigation Bar Item Component. It should be used in conjunction with the `<mdui-navigation-bar>` component.\n\n```html\n<mdui-navigation-bar>\n..<mdui-navigation-bar-item icon=\"place\">Item 1</mdui-navigation-bar-item>\n..<mdui-navigation-bar-item icon=\"commute\">Item 2</mdui-navigation-bar-item>\n..<mdui-navigation-bar-item icon=\"people\">Item 3</mdui-navigation-bar-item>\n</mdui-navigation-bar>\n```",
-    "properties": {
-      "icon": {
-        "description": "Specifies the Material Icons name for the inactive state. Alternatively, use `slot=\"icon\"`."
-      },
-      "activeIcon": {
-        "description": "Specifies the Material Icons name for the active state. Alternatively, use `slot=\"active-icon\"`."
-      },
-      "value": {
-        "description": "The value of the navigation item."
-      }
-    },
-    "events": {
-      "focus": "Emitted when the navigation bar item gains focus.",
-      "blur": "Emitted when the navigation bar item loses focus."
-    },
-    "slots": {
-      "": "Text.",
-      "icon": "Icon.",
-      "active-icon": "Icon for the active state.",
-      "badge": "Badge."
-    },
-    "cssParts": {
-      "container": "Container for the navigation item.",
-      "indicator": "Indicator.",
-      "badge": "Badge.",
-      "icon": "Icon.",
-      "active-icon": "Icon for the active state.",
-      "label": "Text."
-    },
-    "cssProperties": {
-      "--shape-corner-indicator": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
-    }
-  },
   "mdui-navigation-drawer": {
     "summary": "Navigation Drawer Component.\n\n```html\n<mdui-navigation-drawer>content</mdui-navigation-drawer>\n```",
     "properties": {
-      "open": {
-        "description": "Opens the navigation drawer."
-      },
-      "modal": {
-        "description": "Displays an overlay when open.\n\nOn narrow devices (screen width < [`--mdui-breakpoint-md`](/docs/2/styles/design-tokens#breakpoint)), the overlay always displays."
-      },
       "closeOnEsc": {
         "description": "Closes the drawer when the ESC key is pressed and an overlay is present."
       },
       "closeOnOverlayClick": {
         "description": "Closes the drawer when the overlay is clicked."
+      },
+      "contained": {
+        "description": "By default, the navigation drawer displays relative to the `body` element. When set, it displays relative to its parent element.\n\nNote: You must add `position: relative; overflow: hidden;` style to the parent element when this attribute is set."
+      },
+      "modal": {
+        "description": "Displays an overlay when open.\n\nOn narrow devices (screen width < [`--mdui-breakpoint-md`](/docs/2/styles/design-tokens#breakpoint)), the overlay always displays."
+      },
+      "open": {
+        "description": "Opens the navigation drawer."
       },
       "placement": {
         "description": "Sets the drawer's display position. Possible values:\n\n* `left`: Display on the left side.\n* `right`: Display on the right side.",
@@ -1194,16 +1199,13 @@
           "left": "Display on the left side.",
           "right": "Display on the right side."
         }
-      },
-      "contained": {
-        "description": "By default, the navigation drawer displays relative to the `body` element. When set, it displays relative to its parent element.\n\nNote: You must add `position: relative; overflow: hidden;` style to the parent element when this attribute is set."
       }
     },
     "events": {
-      "open": "Emitted when the navigation drawer starts to open. Can be prevented with `event.preventDefault()`.",
-      "opened": "Emitted after the navigation drawer has opened and the animations are completed.",
       "close": "Emitted when the navigation drawer starts to close. Can be prevented with `event.preventDefault()`.",
       "closed": "Emitted after the navigation drawer has closed and the animations are completed.",
+      "open": "Emitted when the navigation drawer starts to open. Can be prevented with `event.preventDefault()`.",
+      "opened": "Emitted after the navigation drawer has opened and the animations are completed.",
       "overlay-click": "Emitted when the overlay is clicked."
     },
     "slots": {
@@ -1218,19 +1220,44 @@
       "--z-index": "The CSS `z-index` value of the component."
     }
   },
+  "mdui-navigation-rail-item": {
+    "summary": "Navigation Rail Item Component. It should be used in conjunction with the `<mdui-navigation-rail>` component.\n\n```html\n<mdui-navigation-rail>\n..<mdui-navigation-rail-item icon=\"watch_later\">Recent</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"image\">Images</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"library_music\">Library</mdui-navigation-rail-item>\n</mdui-navigation-rail>\n```",
+    "properties": {
+      "activeIcon": {
+        "description": "Specifies the Material Icons name for the active state. Alternatively, use `slot=\"active-icon\"`."
+      },
+      "icon": {
+        "description": "Specifies the Material Icons name for the inactive state. Alternatively, use `slot=\"icon\"`."
+      },
+      "value": {
+        "description": "The value of the navigation item."
+      }
+    },
+    "events": {
+      "blur": "Emitted when the navigation rail item loses focus.",
+      "focus": "Emitted when the navigation rail item gains focus."
+    },
+    "slots": {
+      "": "Text.",
+      "active-icon": "Icon for the active state.",
+      "badge": "Badge.",
+      "icon": "Icon."
+    },
+    "cssParts": {
+      "active-icon": "Icon for the active state.",
+      "badge": "Badge.",
+      "container": "Container for the navigation item.",
+      "icon": "Icon.",
+      "indicator": "Indicator.",
+      "label": "Text."
+    },
+    "cssProperties": {
+      "--shape-corner-indicator": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
+    }
+  },
   "mdui-navigation-rail": {
     "summary": "Navigation Rail Component. It should be used in conjunction with the `<mdui-navigation-rail-item>` component.\n\n```html\n<mdui-navigation-rail>\n..<mdui-navigation-rail-item icon=\"watch_later\">Recent</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"image\">Images</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"library_music\">Library</mdui-navigation-rail-item>\n</mdui-navigation-rail>\n```",
     "properties": {
-      "value": {
-        "description": "The value of the selected `<mdui-navigation-rail-item>`."
-      },
-      "placement": {
-        "description": "Sets the navigation bar's position. Possible values:\n\n* `left`: Display on the left.\n* `right`: Display on the right.",
-        "enum": {
-          "left": "Display on the left.",
-          "right": "Display on the right."
-        }
-      },
       "alignment": {
         "description": "Sets the alignment of `<mdui-navigation-rail-item>`. Possible values:\n\n* `start`: Aligns to the top.\n* `center`: Aligns to the center.\n* `end`: Aligns to the bottom.",
         "enum": {
@@ -1244,6 +1271,16 @@
       },
       "divider": {
         "description": "Adds a divider between the navigation bar and the page content."
+      },
+      "placement": {
+        "description": "Sets the navigation bar's position. Possible values:\n\n* `left`: Display on the left.\n* `right`: Display on the right.",
+        "enum": {
+          "left": "Display on the left.",
+          "right": "Display on the right."
+        }
+      },
+      "value": {
+        "description": "The value of the selected `<mdui-navigation-rail-item>`."
       }
     },
     "events": {
@@ -1251,93 +1288,25 @@
     },
     "slots": {
       "": "Contains `<mdui-navigation-rail-item>` components.",
-      "top": "Top element.",
-      "bottom": "Bottom element."
+      "bottom": "Bottom element.",
+      "top": "Top element."
     },
     "cssParts": {
-      "top": "Container for the top element.",
       "bottom": "Container for the bottom element.",
-      "items": "Container for `<mdui-navigation-rail-item>` components."
+      "items": "Container for `<mdui-navigation-rail-item>` components.",
+      "top": "Container for the top element."
     },
     "cssProperties": {
       "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
       "--z-index": "The CSS `z-index` value of the component."
     }
   },
-  "mdui-navigation-rail-item": {
-    "summary": "Navigation Rail Item Component. It should be used in conjunction with the `<mdui-navigation-rail>` component.\n\n```html\n<mdui-navigation-rail>\n..<mdui-navigation-rail-item icon=\"watch_later\">Recent</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"image\">Images</mdui-navigation-rail-item>\n..<mdui-navigation-rail-item icon=\"library_music\">Library</mdui-navigation-rail-item>\n</mdui-navigation-rail>\n```",
-    "properties": {
-      "icon": {
-        "description": "Specifies the Material Icons name for the inactive state. Alternatively, use `slot=\"icon\"`."
-      },
-      "activeIcon": {
-        "description": "Specifies the Material Icons name for the active state. Alternatively, use `slot=\"active-icon\"`."
-      },
-      "value": {
-        "description": "The value of the navigation item."
-      }
-    },
-    "events": {
-      "focus": "Emitted when the navigation rail item gains focus.",
-      "blur": "Emitted when the navigation rail item loses focus."
-    },
-    "slots": {
-      "": "Text.",
-      "icon": "Icon.",
-      "active-icon": "Icon for the active state.",
-      "badge": "Badge."
-    },
-    "cssParts": {
-      "container": "Container for the navigation item.",
-      "indicator": "Indicator.",
-      "badge": "Badge.",
-      "icon": "Icon.",
-      "active-icon": "Icon for the active state.",
-      "label": "Text."
-    },
-    "cssProperties": {
-      "--shape-corner-indicator": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
-    }
-  },
-  "mdui-radio": {
-    "summary": "Radio Component. It should be used in conjunction with the `<mdui-radio-group>` component.\n\n```html\n<mdui-radio-group value=\"chinese\">\n..<mdui-radio value=\"chinese\">Chinese</mdui-radio>\n..<mdui-radio value=\"english\">English</mdui-radio>\n</mdui-radio-group>\n```",
-    "properties": {
-      "value": {
-        "description": "Specifies the value of the radio."
-      },
-      "disabled": {
-        "description": "Disables the radio when set."
-      },
-      "checked": {
-        "description": "Sets the radio to the checked state."
-      },
-      "uncheckedIcon": {
-        "description": "Specifies the Material Icons name for the unchecked state. Alternatively, use `slot=\"unchecked-icon\"`."
-      },
-      "checkedIcon": {
-        "description": "Specifies the Material Icons name for the checked state. Alternatively, use `slot=\"checked-icon\"`."
-      }
-    },
-    "events": {
-      "focus": "Emitted when the radio gains focus.",
-      "blur": "Emitted when the radio loses focus.",
-      "change": "Emitted when the radio is selected."
-    },
-    "slots": {
-      "": "Text content.",
-      "unchecked-icon": "Icon for the unchecked state.",
-      "checked-icon": "Icon for the checked state."
-    },
-    "cssParts": {
-      "control": "Container for the left icon.",
-      "unchecked-icon": "Icon for the unchecked state.",
-      "checked-icon": "Icon for the checked state.",
-      "label": "Text content."
-    }
-  },
   "mdui-radio-group": {
     "summary": "Radio Group Component. It should be used in conjunction with the `<mdui-radio>` component.\n\n```html\n<mdui-radio-group value=\"chinese\">\n..<mdui-radio value=\"chinese\">Chinese</mdui-radio>\n..<mdui-radio value=\"english\">English</mdui-radio>\n</mdui-radio-group>\n```",
     "properties": {
+      "defaultValue": {
+        "description": "The default selected value. Resets to this value when form is reset. This value can only be set via JavaScript property."
+      },
       "disabled": {
         "description": "Disables the radio group when set."
       },
@@ -1347,20 +1316,17 @@
       "name": {
         "description": "The name of the radio group, which is submitted with form data."
       },
-      "value": {
-        "description": "The value of the selected radio button, which is submitted with form data."
-      },
-      "defaultValue": {
-        "description": "The default selected value. Resets to this value when form is reset. This value can only be set via JavaScript property."
-      },
       "required": {
         "description": "Requires a radio selection when the form is submitted."
+      },
+      "validationMessage": {
+        "description": "The element's validation message. This is empty if the element meets its constraints."
       },
       "validity": {
         "description": "A [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) object that represents the element's validity states."
       },
-      "validationMessage": {
-        "description": "The element's validation message. This is empty if the element meets its constraints."
+      "value": {
+        "description": "The value of the selected radio button, which is submitted with form data."
       }
     },
     "methods": {
@@ -1377,6 +1343,42 @@
       "": "`<mdui-radio>` elements."
     }
   },
+  "mdui-radio": {
+    "summary": "Radio Component. It should be used in conjunction with the `<mdui-radio-group>` component.\n\n```html\n<mdui-radio-group value=\"chinese\">\n..<mdui-radio value=\"chinese\">Chinese</mdui-radio>\n..<mdui-radio value=\"english\">English</mdui-radio>\n</mdui-radio-group>\n```",
+    "properties": {
+      "checked": {
+        "description": "Sets the radio to the checked state."
+      },
+      "checkedIcon": {
+        "description": "Specifies the Material Icons name for the checked state. Alternatively, use `slot=\"checked-icon\"`."
+      },
+      "disabled": {
+        "description": "Disables the radio when set."
+      },
+      "uncheckedIcon": {
+        "description": "Specifies the Material Icons name for the unchecked state. Alternatively, use `slot=\"unchecked-icon\"`."
+      },
+      "value": {
+        "description": "Specifies the value of the radio."
+      }
+    },
+    "events": {
+      "blur": "Emitted when the radio loses focus.",
+      "change": "Emitted when the radio is selected.",
+      "focus": "Emitted when the radio gains focus."
+    },
+    "slots": {
+      "": "Text content.",
+      "checked-icon": "Icon for the checked state.",
+      "unchecked-icon": "Icon for the unchecked state."
+    },
+    "cssParts": {
+      "checked-icon": "Icon for the checked state.",
+      "control": "Container for the left icon.",
+      "label": "Text content.",
+      "unchecked-icon": "Icon for the unchecked state."
+    }
+  },
   "mdui-range-slider": {
     "summary": "Range Slider Component.\n\n```html\n<mdui-range-slider></mdui-range-slider>\n```",
     "properties": {
@@ -1388,58 +1390,40 @@
       }
     },
     "events": {
-      "focus": "Emitted when the range slider gains focus.",
       "blur": "Emitted when the range slider loses focus.",
       "change": "Emitted when the value changes and the range slider loses focus.",
+      "focus": "Emitted when the range slider gains focus.",
       "input": "Emitted when the value changes.",
       "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
     },
     "cssParts": {
-      "track-inactive": "Track for the inactive state.",
-      "track-active": "Track for the active state.",
       "handle": "Handle for interaction.",
       "label": "Tooltip text.",
-      "tickmark": "Tick mark."
-    }
-  },
-  "mdui-segmented-button": {
-    "summary": "Segmented Button Component. It should be used in conjunction with the `<mdui-segmented-button-group>` component.\n\n```html\n<mdui-segmented-button-group>\n..<mdui-segmented-button>Day</mdui-segmented-button>\n..<mdui-segmented-button>Week</mdui-segmented-button>\n..<mdui-segmented-button>Month</mdui-segmented-button>\n</mdui-segmented-button-group>\n```",
-    "properties": {
-      "icon": {
-        "description": "Specifies the Material Icons name for the left icon. Alternatively, use `slot=\"icon\"`."
-      },
-      "endIcon": {
-        "description": "Specifies the Material Icons name for the right icon. Alternatively, use `slot=\"end-icon\"`."
-      },
-      "selectedIcon": {
-        "description": "Specifies the Material Icons name for the selected state. Alternatively, use `slot=\"selected-icon\"`."
-      }
-    },
-    "events": {
-      "focus": "Emitted when the segmented button gains focus.",
-      "blur": "Emitted when the segmented button loses focus.",
-      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
-    },
-    "slots": {
-      "": "Text content.",
-      "icon": "Left icon.",
-      "selected-icon": "Icon for the selected state.",
-      "end-icon": "Right icon."
-    },
-    "cssParts": {
-      "button": "Internal `<button>` or `<a>` element.",
-      "icon": "Left icon.",
-      "selected-icon": "Icon for the selected state.",
-      "end-icon": "Right icon.",
-      "label": "Text content.",
-      "loading": "The `<mdui-circular-progress>` element for the loading state."
+      "tickmark": "Tick mark.",
+      "track-active": "Track for the active state.",
+      "track-inactive": "Track for the inactive state."
     }
   },
   "mdui-segmented-button-group": {
     "summary": "Segmented Button Group Component. It should be used in conjunction with the `<mdui-segmented-button>` component.\n\n```html\n<mdui-segmented-button-group>\n..<mdui-segmented-button>Day</mdui-segmented-button>\n..<mdui-segmented-button>Week</mdui-segmented-button>\n..<mdui-segmented-button>Month</mdui-segmented-button>\n</mdui-segmented-button-group>\n```",
     "properties": {
+      "defaultValue": {
+        "description": "The default selected value. Resets to this state when the form is reset. This value can only be set via JavaScript property."
+      },
+      "disabled": {
+        "description": "Disables the segmented button group when set."
+      },
+      "form": {
+        "description": "Associates the segmented button group with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the segmented button group is associated with its parent `<form>`, if any.\n\nThis attribute allows segmented button group elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."
+      },
       "fullWidth": {
         "description": "If set, the segmented button group will fill the width of its parent element."
+      },
+      "name": {
+        "description": "The name of the segmented button group, which is submitted with form data."
+      },
+      "required": {
+        "description": "Requires a selection when the form is submitted."
       },
       "selects": {
         "description": "Defines selectable states. Default is non-selectable. Possible values:\n\n* `single`: Only one can be selected.\n* `multiple`: Multiple selections are allowed.",
@@ -1448,29 +1432,14 @@
           "multiple": "Multiple selections are allowed."
         }
       },
-      "disabled": {
-        "description": "Disables the segmented button group when set."
-      },
-      "required": {
-        "description": "Requires a selection when the form is submitted."
-      },
-      "form": {
-        "description": "Associates the segmented button group with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the segmented button group is associated with its parent `<form>`, if any.\n\nThis attribute allows segmented button group elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."
-      },
-      "name": {
-        "description": "The name of the segmented button group, which is submitted with form data."
-      },
-      "value": {
-        "description": "The value of the selected `<mdui-segmented-button>`. This value is submitted with form data.\n\nNote: The HTML attribute is always a string and can only be set as an initial value when `selects=\"single\"`. The JavaScript property is a string when `selects=\"single\"` and an array of strings when `selects=\"multiple\"`. In `selects=\"multiple\"`, this value can only be modified by changing the JavaScript property."
-      },
-      "defaultValue": {
-        "description": "The default selected value. Resets to this state when the form is reset. This value can only be set via JavaScript property."
+      "validationMessage": {
+        "description": "The element's validation message. This is empty if the element meets its constraints."
       },
       "validity": {
         "description": "A [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) object that represents the element's validity states."
       },
-      "validationMessage": {
-        "description": "The element's validation message. This is empty if the element meets its constraints."
+      "value": {
+        "description": "The value of the selected `<mdui-segmented-button>`. This value is submitted with form data.\n\nNote: The HTML attribute is always a string and can only be set as an initial value when `selects=\"single\"`. The JavaScript property is a string when `selects=\"single\"` and an array of strings when `selects=\"multiple\"`. In `selects=\"multiple\"`, this value can only be modified by changing the JavaScript property."
       }
     },
     "methods": {
@@ -1489,62 +1458,56 @@
       "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
     }
   },
+  "mdui-segmented-button": {
+    "summary": "Segmented Button Component. It should be used in conjunction with the `<mdui-segmented-button-group>` component.\n\n```html\n<mdui-segmented-button-group>\n..<mdui-segmented-button>Day</mdui-segmented-button>\n..<mdui-segmented-button>Week</mdui-segmented-button>\n..<mdui-segmented-button>Month</mdui-segmented-button>\n</mdui-segmented-button-group>\n```",
+    "properties": {
+      "endIcon": {
+        "description": "Specifies the Material Icons name for the right icon. Alternatively, use `slot=\"end-icon\"`."
+      },
+      "icon": {
+        "description": "Specifies the Material Icons name for the left icon. Alternatively, use `slot=\"icon\"`."
+      },
+      "selectedIcon": {
+        "description": "Specifies the Material Icons name for the selected state. Alternatively, use `slot=\"selected-icon\"`."
+      }
+    },
+    "events": {
+      "blur": "Emitted when the segmented button loses focus.",
+      "focus": "Emitted when the segmented button gains focus.",
+      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
+    },
+    "slots": {
+      "": "Text content.",
+      "end-icon": "Right icon.",
+      "icon": "Left icon.",
+      "selected-icon": "Icon for the selected state."
+    },
+    "cssParts": {
+      "button": "Internal `<button>` or `<a>` element.",
+      "end-icon": "Right icon.",
+      "icon": "Left icon.",
+      "label": "Text content.",
+      "loading": "The `<mdui-circular-progress>` element for the loading state.",
+      "selected-icon": "Icon for the selected state."
+    }
+  },
   "mdui-select": {
     "summary": "Select Component. It should be used in conjunction with the `<mdui-menu-item>` component.\n\n```html\n<mdui-select>\n..<mdui-menu-item value=\"item-1\">Item 1</mdui-menu-item>\n..<mdui-menu-item value=\"item-2\">Item 2</mdui-menu-item>\n</mdui-select>\n```",
     "properties": {
-      "variant": {
-        "description": "Defines the select style. Possible values:\n\n* `filled`: Solid background, strong visual emphasis.\n* `outlined`: Bordered, less visual emphasis.",
-        "enum": {
-          "filled": "Solid background, strong visual emphasis.",
-          "outlined": "Bordered, less visual emphasis."
-        }
-      },
-      "multiple": {
-        "description": "Enables multiple selections."
-      },
-      "name": {
-        "description": "Name of the select, which is submitted with form data."
-      },
-      "value": {
-        "description": "Value of the select, which is submitted with form data.\n\nIf `multiple` is not set, the value is a string; if set, it's an array of strings. HTML attributes can only set string values; array values must be set via JavaScript property."
-      },
-      "defaultValue": {
-        "description": "Default selected value. Resets to this value when form is reset. Can only be set via JavaScript property."
-      },
-      "label": {
-        "description": "Label text."
-      },
-      "placeholder": {
-        "description": "Placeholder text."
-      },
-      "helper": {
-        "description": "Helper text displayed below the select. Alternatively, use `slot=\"helper\"`."
-      },
       "clearable": {
         "description": "Allows the select to be cleared."
       },
       "clearIcon": {
         "description": "Material Icons name for the clear button displayed on the right of the select when clearable. Alternatively, use `slot=\"clear-icon\"`."
       },
-      "placement": {
-        "description": "Select placement. Possible values:\n\n* `auto`: Automatically determined.\n* `bottom`: Below the input.\n* `top`: Above the input.",
-        "enum": {
-          "auto": "Automatically determined.",
-          "bottom": "Below the input.",
-          "top": "Above the input."
-        }
+      "defaultValue": {
+        "description": "Default selected value. Resets to this value when form is reset. Can only be set via JavaScript property."
+      },
+      "disabled": {
+        "description": "Disables the select."
       },
       "endAligned": {
         "description": "Aligns text to the right."
-      },
-      "prefix": {
-        "description": "Prefix text of the select. Displayed only when the select is focused or has a value. Alternatively, use `slot=\"prefix\"`."
-      },
-      "suffix": {
-        "description": "Suffix text of the select. Displayed only when the select is focused or has a value. Alternatively, use `slot=\"suffix\"`."
-      },
-      "icon": {
-        "description": "Material Icons name for the prefix icon. Alternatively, use `slot=\"icon\"`."
       },
       "endIcon": {
         "description": "Material Icons name for the suffix icon. Alternatively, use `slot=\"end-icon\"`."
@@ -1555,20 +1518,59 @@
       "form": {
         "description": "Associates the select with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the select is associated with its parent `<form>`, if any.\n\nThis attribute allows select elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."
       },
+      "helper": {
+        "description": "Helper text displayed below the select. Alternatively, use `slot=\"helper\"`."
+      },
+      "icon": {
+        "description": "Material Icons name for the prefix icon. Alternatively, use `slot=\"icon\"`."
+      },
+      "label": {
+        "description": "Label text."
+      },
+      "multiple": {
+        "description": "Enables multiple selections."
+      },
+      "name": {
+        "description": "Name of the select, which is submitted with form data."
+      },
+      "placeholder": {
+        "description": "Placeholder text."
+      },
+      "placement": {
+        "description": "Select placement. Possible values:\n\n* `auto`: Automatically determined.\n* `bottom`: Below the input.\n* `top`: Above the input.",
+        "enum": {
+          "auto": "Automatically determined.",
+          "bottom": "Below the input.",
+          "top": "Above the input."
+        }
+      },
+      "prefix": {
+        "description": "Prefix text of the select. Displayed only when the select is focused or has a value. Alternatively, use `slot=\"prefix\"`."
+      },
       "readonly": {
         "description": "Makes the select read-only."
-      },
-      "disabled": {
-        "description": "Disables the select."
       },
       "required": {
         "description": "Requires a selection when the form is submitted."
       },
-      "validity": {
-        "description": "A [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) object that represents the element's validity states."
+      "suffix": {
+        "description": "Suffix text of the select. Displayed only when the select is focused or has a value. Alternatively, use `slot=\"suffix\"`."
       },
       "validationMessage": {
         "description": "The element's validation message. This is empty if the element meets its constraints."
+      },
+      "validity": {
+        "description": "A [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) object that represents the element's validity states."
+      },
+      "value": {
+        "description": "Value of the select, which is submitted with form data.\n\nIf `multiple` is not set, the value is a string; if set, it's an array of strings. HTML attributes can only set string values; array values must be set via JavaScript property."
+      },
+      "variant": {
+        "description": "Defines the select style. Possible values:\n\n* `filled`: Solid background, strong visual emphasis.\n* `outlined`: Bordered, less visual emphasis.",
+        "enum": {
+          "filled": "Solid background, strong visual emphasis.",
+          "outlined": "Bordered, less visual emphasis."
+        }
       }
     },
     "methods": {
@@ -1577,74 +1579,99 @@
       "setCustomValidity": "Sets a custom error message. If the text is non-empty, it indicates that the field is invalid."
     },
     "events": {
-      "focus": "Emitted when the select gains focus.",
       "blur": "Emitted when the select loses focus.",
       "change": "Emitted when the selected value changes.",
-      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints.",
-      "clear": "Emitted when the clear button is clicked. Can be prevented with `event.preventDefault()`."
+      "clear": "Emitted when the clear button is clicked. Can be prevented with `event.preventDefault()`.",
+      "focus": "Emitted when the select gains focus.",
+      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
     },
     "slots": {
       "": "`<mdui-menu-item>` elements.",
-      "icon": "Left icon.",
-      "end-icon": "Right icon.",
-      "error-icon": "Right icon when validation fails.",
-      "prefix": "Left text.",
-      "suffix": "Right text.",
       "clear-button": "Clear button.",
       "clear-icon": "Icon in the clear button.",
-      "helper": "Bottom helper text."
+      "end-icon": "Right icon.",
+      "error-icon": "Right icon when validation fails.",
+      "helper": "Bottom helper text.",
+      "icon": "Left icon.",
+      "prefix": "Left text.",
+      "suffix": "Right text."
     },
     "cssParts": {
-      "chips": "Container for option chips when `multiple` is enabled.",
       "chip": "Individual chip representing each multiselect option.",
       "chip__button": "The `<button>` element within the chip.",
-      "chip__label": "Text part of the chip.",
       "chip__delete-icon": "Delete icon within the chip.",
+      "chip__label": "Text part of the chip.",
+      "chips": "Container for option chips when `multiple` is enabled.",
+      "menu": "Dropdown menu, i.e., [`<mdui-menu>`](/docs/2/components/menu) element.",
       "text-field": "Text field, i.e., [`<mdui-text-field>`](/docs/2/components/text-field) element.",
-      "text-field__container": "Container for the text field.",
-      "text-field__icon": "Icon within the text field.",
-      "text-field__end-icon": "Right-side icon within the text field.",
-      "text-field__error-icon": "Icon displayed in the text field upon validation failure.",
-      "text-field__prefix": "Text on the left side of the text field.",
-      "text-field__suffix": "Text on the right side of the text field.",
-      "text-field__label": "Label text displayed above the text field.",
-      "text-field__input": "The `<input>` element within the text field.",
       "text-field__clear-button": "Clear button within the text field.",
       "text-field__clear-icon": "Icon within the clear button of the text field.",
-      "text-field__supporting": "Container for supporting information at the bottom of the text field, including helper and error messages.",
-      "text-field__helper": "Helper text displayed at the bottom of the text field.",
+      "text-field__container": "Container for the text field.",
+      "text-field__end-icon": "Right-side icon within the text field.",
       "text-field__error": "Error message displayed at the bottom of the text field.",
-      "menu": "Dropdown menu, i.e., [`<mdui-menu>`](/docs/2/components/menu) element."
+      "text-field__error-icon": "Icon displayed in the text field upon validation failure.",
+      "text-field__helper": "Helper text displayed at the bottom of the text field.",
+      "text-field__icon": "Icon within the text field.",
+      "text-field__input": "The `<input>` element within the text field.",
+      "text-field__label": "Label text displayed above the text field.",
+      "text-field__prefix": "Text on the left side of the text field.",
+      "text-field__suffix": "Text on the right side of the text field.",
+      "text-field__supporting": "Container for supporting information at the bottom of the text field, including helper and error messages."
     }
   },
   "mdui-slider": {
     "summary": "Slider Component.\n\n```html\n<mdui-slider></mdui-slider>\n```",
     "properties": {
-      "value": {
-        "description": "The value of the slider, which is submitted with form data."
-      },
       "defaultValue": {
         "description": "The default value. The slider resets to this value when the form is reset. This can only be set via a JavaScript property."
+      },
+      "value": {
+        "description": "The value of the slider, which is submitted with form data."
       }
     },
     "events": {
-      "focus": "Emitted when the slider gains focus.",
       "blur": "Emitted when the slider loses focus.",
       "change": "Emitted when the value changes and the slider loses focus.",
+      "focus": "Emitted when the slider gains focus.",
       "input": "Emitted when the value changes.",
       "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
     },
     "cssParts": {
-      "track-inactive": "Inactive track.",
-      "track-active": "Active track.",
       "handle": "Slider handle.",
       "label": "Prompt text.",
-      "tickmark": "Tick mark."
+      "tickmark": "Tick mark.",
+      "track-active": "Active track.",
+      "track-inactive": "Inactive track."
     }
   },
   "mdui-snackbar": {
     "summary": "Snackbar Component.\n\n```html\n<mdui-snackbar>message</mdui-snackbar>\n```",
     "properties": {
+      "action": {
+        "description": "Text for the action button. Alternatively, use `slot=\"action\"`."
+      },
+      "actionLoading": {
+        "description": "Indicates if the action button is in the loading state."
+      },
+      "autoCloseDelay": {
+        "description": "Automatically closes the Snackbar after a specified time (in milliseconds). Set to `0` to disable auto-closing. Default is 5 seconds."
+      },
+      "closeable": {
+        "description": "Shows a close button on the right."
+      },
+      "closeIcon": {
+        "description": "Material Icons name for the close button. Alternatively, use `slot=\"close-icon\"`."
+      },
+      "closeOnOutsideClick": {
+        "description": "Closes the Snackbar when clicking or touching outside the Snackbar area."
+      },
+      "messageLine": {
+        "description": "Maximum lines for message text. Default is unlimited. Possible values:\n\n* `1`: Single line.\n* `2`: Two lines.",
+        "enum": {
+          "1": "Single line.",
+          "2": "Two lines."
+        }
+      },
       "open": {
         "description": "Opens the Snackbar."
       },
@@ -1658,39 +1685,14 @@
           "bottom-start": "Bottom, left-aligned.",
           "bottom-end": "Bottom, right-aligned."
         }
-      },
-      "action": {
-        "description": "Text for the action button. Alternatively, use `slot=\"action\"`."
-      },
-      "actionLoading": {
-        "description": "Indicates if the action button is in the loading state."
-      },
-      "closeable": {
-        "description": "Shows a close button on the right."
-      },
-      "closeIcon": {
-        "description": "Material Icons name for the close button. Alternatively, use `slot=\"close-icon\"`."
-      },
-      "messageLine": {
-        "description": "Maximum lines for message text. Default is unlimited. Possible values:\n\n* `1`: Single line.\n* `2`: Two lines.",
-        "enum": {
-          "1": "Single line.",
-          "2": "Two lines."
-        }
-      },
-      "autoCloseDelay": {
-        "description": "Automatically closes the Snackbar after a specified time (in milliseconds). Set to `0` to disable auto-closing. Default is 5 seconds."
-      },
-      "closeOnOutsideClick": {
-        "description": "Closes the Snackbar when clicking or touching outside the Snackbar area."
       }
     },
     "events": {
-      "open": "Emitted when the snackbar starts to open. Can be prevented with `event.preventDefault()`.",
-      "opened": "Emitted after the snackbar opens and animations complete.",
+      "action-click": "Emitted when the action button is clicked.",
       "close": "Emitted when the snackbar starts to close. Can be prevented with `event.preventDefault()`.",
       "closed": "Emitted after the snackbar closes and animations complete.",
-      "action-click": "Emitted when the action button is clicked."
+      "open": "Emitted when the snackbar starts to open. Can be prevented with `event.preventDefault()`.",
+      "opened": "Emitted after the snackbar opens and animations complete."
     },
     "slots": {
       "": "Snackbar message.",
@@ -1699,10 +1701,10 @@
       "close-icon": "Icon in right close button."
     },
     "cssParts": {
-      "message": "Message text.",
       "action": "Action button.",
       "close-button": "Close button.",
-      "close-icon": "Icon in the close button."
+      "close-icon": "Icon in the close button.",
+      "message": "Message text."
     },
     "cssProperties": {
       "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
@@ -1712,23 +1714,17 @@
   "mdui-switch": {
     "summary": "Switch Component.\n\n```html\n<mdui-switch></mdui-switch>\n```",
     "properties": {
-      "disabled": {
-        "description": "Disables the switch."
-      },
       "checked": {
         "description": "Sets the switch to the checked state."
-      },
-      "defaultChecked": {
-        "description": "The default checked state. The switch resets to this state when the form is reset. This can only be set via a JavaScript property."
-      },
-      "uncheckedIcon": {
-        "description": "The Material Icons name for the unchecked state. Alternatively, use `slot=\"unchecked-icon\"`."
       },
       "checkedIcon": {
         "description": "The Material Icons name for the checked state. Alternatively, use `slot=\"checked-icon\"`. Defaults to the `check` icon; an empty string removes the default icon."
       },
-      "required": {
-        "description": "The switch must be checked when submitting the form."
+      "defaultChecked": {
+        "description": "The default checked state. The switch resets to this state when the form is reset. This can only be set via a JavaScript property."
+      },
+      "disabled": {
+        "description": "Disables the switch."
       },
       "form": {
         "description": "Associates the switch with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the switch is associated with its parent `<form>`, if any.\n\nThis attribute allows switch elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."
@@ -1736,14 +1732,20 @@
       "name": {
         "description": "The name of the switch, which is submitted with form data."
       },
-      "value": {
-        "description": "The value of the switch, which is submitted with form data."
+      "required": {
+        "description": "The switch must be checked when submitting the form."
+      },
+      "uncheckedIcon": {
+        "description": "The Material Icons name for the unchecked state. Alternatively, use `slot=\"unchecked-icon\"`."
+      },
+      "validationMessage": {
+        "description": "The element's validation message. This is empty if the element meets its constraints."
       },
       "validity": {
         "description": "A [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) object that represents the element's validity states."
       },
-      "validationMessage": {
-        "description": "The element's validation message. This is empty if the element meets its constraints."
+      "value": {
+        "description": "The value of the switch, which is submitted with form data."
       }
     },
     "methods": {
@@ -1752,54 +1754,25 @@
       "setCustomValidity": "Sets a custom error message. If the text is non-empty, it indicates that the field is invalid."
     },
     "events": {
-      "focus": "Emitted when the switch gains focus.",
       "blur": "Emitted when the switch loses focus.",
       "change": "Emitted when the checked state changes.",
+      "focus": "Emitted when the switch gains focus.",
       "input": "Emitted when the checked state changes.",
       "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
     },
     "slots": {
-      "unchecked-icon": "Element for the unchecked state.",
-      "checked-icon": "Element for the checked state."
+      "checked-icon": "Element for the checked state.",
+      "unchecked-icon": "Element for the unchecked state."
     },
     "cssParts": {
-      "track": "Track.",
+      "checked-icon": "Icon for the checked state.",
       "thumb": "Icon container.",
-      "unchecked-icon": "Icon for the unchecked state.",
-      "checked-icon": "Icon for the checked state."
+      "track": "Track.",
+      "unchecked-icon": "Icon for the unchecked state."
     },
     "cssProperties": {
       "--shape-corner": "The corner size of the track. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
       "--shape-corner-thumb": "The corner size of the icon container. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner)."
-    }
-  },
-  "mdui-tab": {
-    "summary": "Tab Component. It should be used in conjunction with the `<mdui-tabs>` and `<mdui-tab-panel>` components.\n\n```html\n<mdui-tabs value=\"tab-1\">\n..<mdui-tab value=\"tab-1\">Tab 1</mdui-tab>\n..<mdui-tab value=\"tab-2\">Tab 2</mdui-tab>\n..<mdui-tab value=\"tab-3\">Tab 3</mdui-tab>\n\n..<mdui-tab-panel slot=\"panel\" value=\"tab-1\">Panel 1</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-2\">Panel 2</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-3\">Panel 3</mdui-tab-panel>\n</mdui-tabs>\n```",
-    "properties": {
-      "value": {
-        "description": "Specifies the tab value."
-      },
-      "icon": {
-        "description": "Specifies the Material Icons name. Alternatively, use `slot=\"icon\"`."
-      },
-      "inline": {
-        "description": "Arranges the icon and text horizontally."
-      }
-    },
-    "events": {
-      "focus": "Emitted when the tab gains focus.",
-      "blur": "Emitted when the tab loses focus."
-    },
-    "slots": {
-      "": "Tab text.",
-      "icon": "Tab icon.",
-      "badge": "Badge.",
-      "custom": "Custom tab content."
-    },
-    "cssParts": {
-      "container": "Tab container.",
-      "icon": "Tab icon.",
-      "label": "Tab text."
     }
   },
   "mdui-tab-panel": {
@@ -1813,18 +1786,40 @@
       "": "The content of the tab panel."
     }
   },
+  "mdui-tab": {
+    "summary": "Tab Component. It should be used in conjunction with the `<mdui-tabs>` and `<mdui-tab-panel>` components.\n\n```html\n<mdui-tabs value=\"tab-1\">\n..<mdui-tab value=\"tab-1\">Tab 1</mdui-tab>\n..<mdui-tab value=\"tab-2\">Tab 2</mdui-tab>\n..<mdui-tab value=\"tab-3\">Tab 3</mdui-tab>\n\n..<mdui-tab-panel slot=\"panel\" value=\"tab-1\">Panel 1</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-2\">Panel 2</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-3\">Panel 3</mdui-tab-panel>\n</mdui-tabs>\n```",
+    "properties": {
+      "icon": {
+        "description": "Specifies the Material Icons name. Alternatively, use `slot=\"icon\"`."
+      },
+      "inline": {
+        "description": "Arranges the icon and text horizontally."
+      },
+      "value": {
+        "description": "Specifies the tab value."
+      }
+    },
+    "events": {
+      "blur": "Emitted when the tab loses focus.",
+      "focus": "Emitted when the tab gains focus."
+    },
+    "slots": {
+      "": "Tab text.",
+      "badge": "Badge.",
+      "custom": "Custom tab content.",
+      "icon": "Tab icon."
+    },
+    "cssParts": {
+      "container": "Tab container.",
+      "icon": "Tab icon.",
+      "label": "Tab text."
+    }
+  },
   "mdui-tabs": {
     "summary": "Tabs Component. It should be used in conjunction with the `<mdui-tab>` and `<mdui-tab-panel>` components.\n\n```html\n<mdui-tabs value=\"tab-1\">\n..<mdui-tab value=\"tab-1\">Tab 1</mdui-tab>\n..<mdui-tab value=\"tab-2\">Tab 2</mdui-tab>\n..<mdui-tab value=\"tab-3\">Tab 3</mdui-tab>\n\n..<mdui-tab-panel slot=\"panel\" value=\"tab-1\">Panel 1</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-2\">Panel 2</mdui-tab-panel>\n..<mdui-tab-panel slot=\"panel\" value=\"tab-3\">Panel 3</mdui-tab-panel>\n</mdui-tabs>\n```",
     "properties": {
-      "variant": {
-        "description": "Defines the tab shape. Possible values:\n\n* `primary`: Located below `<mdui-top-app-bar>`, used for switching between main application pages.\n* `secondary`: Located within the page, used for switching between related content groups.",
-        "enum": {
-          "primary": "Located below `<mdui-top-app-bar>`, used for switching between main application pages.",
-          "secondary": "Located within the page, used for switching between related content groups."
-        }
-      },
-      "value": {
-        "description": "Specifies the active `<mdui-tab>` value."
+      "fullWidth": {
+        "description": "If set, the tabs will fill the width of its parent element."
       },
       "placement": {
         "description": "Defines the tab position. Default is `top-start`. Possible values:\n\n* `top-start`: Top, left-aligned.\n* `top`: Top, center-aligned.\n* `top-end`: Top, right-aligned.\n* `bottom-start`: Bottom, left-aligned.\n* `bottom`: Bottom, center-aligned.\n* `bottom-end`: Bottom, right-aligned.\n* `left-start`: Left, top-aligned.\n* `left`: Left, center-aligned.\n* `left-end`: Left, bottom-aligned.\n* `right-start`: Right, top-aligned.\n* `right`: Right, center-aligned.\n* `right-end`: Right, bottom-aligned.",
@@ -1843,8 +1838,15 @@
           "right-end": "Right, bottom-aligned."
         }
       },
-      "fullWidth": {
-        "description": "If set, the tabs will fill the width of its parent element."
+      "value": {
+        "description": "Specifies the active `<mdui-tab>` value."
+      },
+      "variant": {
+        "description": "Defines the tab shape. Possible values:\n\n* `primary`: Located below `<mdui-top-app-bar>`, used for switching between main application pages.\n* `secondary`: Located within the page, used for switching between related content groups.",
+        "enum": {
+          "primary": "Located below `<mdui-top-app-bar>`, used for switching between main application pages.",
+          "secondary": "Located within the page, used for switching between related content groups."
+        }
       }
     },
     "events": {
@@ -1862,12 +1864,148 @@
   "mdui-text-field": {
     "summary": "Text Field Component.\n\n```html\n<mdui-text-field label=\"Text Field\"></mdui-text-field>\n```",
     "properties": {
-      "variant": {
-        "description": "Defines the text field style. Default is `filled`. Possible values:\n\n* `filled`: Text field with background color, providing a stronger visual effect.\n* `outlined`: Text field with border, providing a subtler visual effect.",
+      "autocapitalize": {
+        "description": "A non-standard iOS attribute for automatic capitalization. Possible values:\n\n* `none`: Disables automatic capitalization.\n* `sentences`: Capitalizes the first letter of each sentence.\n* `words`: Capitalizes the first letter of each word.\n* `characters`: Capitalizes all letters.",
         "enum": {
-          "filled": "Text field with background color, providing a stronger visual effect.",
-          "outlined": "Text field with border, providing a subtler visual effect."
+          "none": "Disables automatic capitalization.",
+          "sentences": "Capitalizes the first letter of each sentence.",
+          "words": "Capitalizes the first letter of each word.",
+          "characters": "Capitalizes all letters."
         }
+      },
+      "autocomplete": {
+        "description": "Enables the browser's autocomplete feature for text input. Possible values:\n\n* `off`: Disables browser autocomplete.\n* `on`: Enables browser autocomplete.",
+        "enum": {
+          "off": "Disables browser autocomplete.",
+          "on": "Enables browser autocomplete."
+        }
+      },
+      "autocorrect": {
+        "description": "The `autocorrect` attribute of the `input` element."
+      },
+      "autosize": {
+        "description": "Allows the text field height to adjust automatically based on the input content."
+      },
+      "clearable": {
+        "description": "If set, the text field can be cleared."
+      },
+      "clearIcon": {
+        "description": "Material Icons name displayed on the right when the text field is clearable. Alternatively, use `slot=\"clear-icon\"`."
+      },
+      "counter": {
+        "description": "Displays the character count when `maxlength` is specified."
+      },
+      "defaultValue": {
+        "description": "The default value. The text field resets to this value on form reset. This can only be set via the JavaScript property."
+      },
+      "disabled": {
+        "description": "Disables the text field."
+      },
+      "endAligned": {
+        "description": "Aligns the text to the right."
+      },
+      "endIcon": {
+        "description": "Material Icons name for the suffix icon of the text field. Alternatively, use `slot=\"end-icon\"`."
+      },
+      "enterkeyhint": {
+        "description": "Customizes the Enter key text or icon on the virtual keyboard. The effect varies based on the device and language. Possible values:\n\n* `enter`: Inserts a new line, typically used in a multi-line text field.\n* `done`: Indicates input completion, closes the virtual keyboard.\n* `go`: Navigates to the target of the entered text.\n* `next`: Moves to the next text field.\n* `previous`: Moves to the previous text field.\n* `search`: Navigates to search results.\n* `send`: Sends a text message.",
+        "enum": {
+          "enter": "Inserts a new line, typically used in a multi-line text field.",
+          "done": "Indicates input completion, closes the virtual keyboard.",
+          "go": "Navigates to the target of the entered text.",
+          "next": "Moves to the next text field.",
+          "previous": "Moves to the previous text field.",
+          "search": "Navigates to search results.",
+          "send": "Sends a text message."
+        }
+      },
+      "errorIcon": {
+        "description": "Material Icons name displayed on the right side of the text field when the form field validation fails. Alternatively, use `slot=\"error-icon\"`."
+      },
+      "form": {
+        "description": "Associates the text field with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the text field is associated with its parent `<form>`, if any.\n\nThis attribute allows text field elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."
+      },
+      "helper": {
+        "description": "The helper text displayed at the bottom of the text field. Alternatively, use `slot=\"helper\"`."
+      },
+      "helperOnFocus": {
+        "description": "If set, the helper text is only displayed when the text field is focused."
+      },
+      "hidePasswordIcon": {
+        "description": "Material Icons name for the hidden password toggle button. Alternatively, use `slot=\"hide-password-icon\"`."
+      },
+      "icon": {
+        "description": "Material Icons name for the prefix icon of the text field. Alternatively, use `slot=\"icon\"`."
+      },
+      "inputmode": {
+        "description": "Customizes the virtual keyboard. Possible values:\n\n* `none`: No virtual keyboard. This is useful for custom input controls.\n* `text`: Standard text input keyboard.\n* `decimal`: Decimal input keyboard. This includes a period `.` or comma `,` and numbers.\n* `numeric`: Numeric keyboard. This displays numbers 0-9.\n* `tel`: Phone number keyboard. This includes numbers 0-9, asterisk `*`, and hash `#` keys.\n* `search`: Search-optimized virtual keyboard. 'Search' is displayed on the submit button.\n* `email`: Email-optimized virtual keyboard. This typically includes `@ .`.\n* `url`: URL-optimized virtual keyboard. This typically includes `. / #`.",
+        "enum": {
+          "none": "No virtual keyboard. This is useful for custom input controls.",
+          "text": "Standard text input keyboard.",
+          "decimal": "Decimal input keyboard. This includes a period `.` or comma `,` and numbers.",
+          "numeric": "Numeric keyboard. This displays numbers 0-9.",
+          "tel": "Phone number keyboard. This includes numbers 0-9, asterisk `*`, and hash `#` keys.",
+          "search": "Search-optimized virtual keyboard. 'Search' is displayed on the submit button.",
+          "email": "Email-optimized virtual keyboard. This typically includes `@ .`.",
+          "url": "URL-optimized virtual keyboard. This typically includes `. / #`."
+        }
+      },
+      "label": {
+        "description": "Label text."
+      },
+      "max": {
+        "description": "The maximum value when `type` is `number`."
+      },
+      "maxlength": {
+        "description": "The maximum number of characters for input."
+      },
+      "maxRows": {
+        "description": "The maximum number of rows when `autosize` is enabled."
+      },
+      "min": {
+        "description": "The minimum value when `type` is `number`."
+      },
+      "minlength": {
+        "description": "The minimum number of characters for input."
+      },
+      "minRows": {
+        "description": "The minimum number of rows when `autosize` is enabled."
+      },
+      "name": {
+        "description": "The name of text field, which is submitted with form data."
+      },
+      "pattern": {
+        "description": "The regular expression for form validation."
+      },
+      "placeholder": {
+        "description": "Placeholder text."
+      },
+      "prefix": {
+        "description": "The prefix text for the text field. It is only displayed when the text field is focused or has a value. Alternatively, use `slot=\"prefix\"`."
+      },
+      "readonly": {
+        "description": "Makes the text field read-only."
+      },
+      "required": {
+        "description": "The field must be filled in before the form is submitted."
+      },
+      "rows": {
+        "description": "The number of rows in the text field."
+      },
+      "showPasswordIcon": {
+        "description": "Material Icons name for the visible password toggle button. Alternatively, use `slot=\"show-password-icon\"`."
+      },
+      "spellcheck": {
+        "description": "Enable spell checking."
+      },
+      "step": {
+        "description": "The step interval during increment and decrement when `type` is `number`."
+      },
+      "suffix": {
+        "description": "The suffix text for the text field. It is only displayed when the text field is focused or has a value. Alternatively, use `slot=\"suffix\"`."
+      },
+      "togglePassword": {
+        "description": "Adds a toggle button for showing and hiding the password when `type` is `password`."
       },
       "type": {
         "description": "Specifies the text field type. Default is `text`. Possible values:\n\n* `text`: Standard text field.\n* `number`: Allows only numeric input. Devices with dynamic keyboards will display a numeric keyboard.\n* `password`: Masks the input for password confidentiality.\n* `url`: Validates URL format. Devices with dynamic keyboards will display a URL-specific keyboard.\n* `email`: Validates email format. Devices with dynamic keyboards will display an email-specific keyboard.\n* `search`: Changes the enter icon to a search icon on devices with dynamic keyboards.\n* `tel`: Displays a phone number keyboard on devices with dynamic keyboards.\n* `hidden`: Hides the control, but its value will still be submitted to the server.\n* `date`: Activates a date picker or a numeric scroll wheel for year, month, and day in supported browsers.\n* `datetime-local`: Activates a date and time picker in supported browsers, excluding time zone.\n* `month`: Allows input for year and month, excluding time zone.\n* `time`: Allows time input, excluding time zone.\n* `week`: Allows input for dates consisting of a year and week, excluding time zone.",
@@ -1887,220 +2025,95 @@
           "week": "Allows input for dates consisting of a year and week, excluding time zone."
         }
       },
-      "name": {
-        "description": "The name of text field, which is submitted with form data."
-      },
-      "value": {
-        "description": "The value of text field, which is submitted with form data."
-      },
-      "defaultValue": {
-        "description": "The default value. The text field resets to this value on form reset. This can only be set via the JavaScript property."
-      },
-      "label": {
-        "description": "Label text."
-      },
-      "placeholder": {
-        "description": "Placeholder text."
-      },
-      "helper": {
-        "description": "The helper text displayed at the bottom of the text field. Alternatively, use `slot=\"helper\"`."
-      },
-      "helperOnFocus": {
-        "description": "If set, the helper text is only displayed when the text field is focused."
-      },
-      "clearable": {
-        "description": "If set, the text field can be cleared."
-      },
-      "clearIcon": {
-        "description": "Material Icons name displayed on the right when the text field is clearable. Alternatively, use `slot=\"clear-icon\"`."
-      },
-      "endAligned": {
-        "description": "Aligns the text to the right."
-      },
-      "prefix": {
-        "description": "The prefix text for the text field. It is only displayed when the text field is focused or has a value. Alternatively, use `slot=\"prefix\"`."
-      },
-      "suffix": {
-        "description": "The suffix text for the text field. It is only displayed when the text field is focused or has a value. Alternatively, use `slot=\"suffix\"`."
-      },
-      "icon": {
-        "description": "Material Icons name for the prefix icon of the text field. Alternatively, use `slot=\"icon\"`."
-      },
-      "endIcon": {
-        "description": "Material Icons name for the suffix icon of the text field. Alternatively, use `slot=\"end-icon\"`."
-      },
-      "errorIcon": {
-        "description": "Material Icons name displayed on the right side of the text field when the form field validation fails. Alternatively, use `slot=\"error-icon\"`."
-      },
-      "form": {
-        "description": "Associates the text field with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the text field is associated with its parent `<form>`, if any.\n\nThis attribute allows text field elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."
-      },
-      "readonly": {
-        "description": "Makes the text field read-only."
-      },
-      "disabled": {
-        "description": "Disables the text field."
-      },
-      "required": {
-        "description": "The field must be filled in before the form is submitted."
-      },
-      "rows": {
-        "description": "The number of rows in the text field."
-      },
-      "autosize": {
-        "description": "Allows the text field height to adjust automatically based on the input content."
-      },
-      "minRows": {
-        "description": "The minimum number of rows when `autosize` is enabled."
-      },
-      "maxRows": {
-        "description": "The maximum number of rows when `autosize` is enabled."
-      },
-      "minlength": {
-        "description": "The minimum number of characters for input."
-      },
-      "maxlength": {
-        "description": "The maximum number of characters for input."
-      },
-      "counter": {
-        "description": "Displays the character count when `maxlength` is specified."
-      },
-      "min": {
-        "description": "The minimum value when `type` is `number`."
-      },
-      "max": {
-        "description": "The maximum value when `type` is `number`."
-      },
-      "step": {
-        "description": "The step interval during increment and decrement when `type` is `number`."
-      },
-      "pattern": {
-        "description": "The regular expression for form validation."
-      },
-      "togglePassword": {
-        "description": "Adds a toggle button for showing and hiding the password when `type` is `password`."
-      },
-      "showPasswordIcon": {
-        "description": "Material Icons name for the visible password toggle button. Alternatively, use `slot=\"show-password-icon\"`."
-      },
-      "hidePasswordIcon": {
-        "description": "Material Icons name for the hidden password toggle button. Alternatively, use `slot=\"hide-password-icon\"`."
-      },
-      "autocapitalize": {
-        "description": "A non-standard iOS attribute for automatic capitalization. Possible values:\n\n* `none`: Disables automatic capitalization.\n* `sentences`: Capitalizes the first letter of each sentence.\n* `words`: Capitalizes the first letter of each word.\n* `characters`: Capitalizes all letters.",
-        "enum": {
-          "none": "Disables automatic capitalization.",
-          "sentences": "Capitalizes the first letter of each sentence.",
-          "words": "Capitalizes the first letter of each word.",
-          "characters": "Capitalizes all letters."
-        }
-      },
-      "autocorrect": {
-        "description": "The `autocorrect` attribute of the `input` element."
-      },
-      "autocomplete": {
-        "description": "Enables the browser's autocomplete feature for text input. Possible values:\n\n* `off`: Disables browser autocomplete.\n* `on`: Enables browser autocomplete.",
-        "enum": {
-          "off": "Disables browser autocomplete.",
-          "on": "Enables browser autocomplete."
-        }
-      },
-      "enterkeyhint": {
-        "description": "Customizes the Enter key text or icon on the virtual keyboard. The effect varies based on the device and language. Possible values:\n\n* `enter`: Inserts a new line, typically used in a multi-line text field.\n* `done`: Indicates input completion, closes the virtual keyboard.\n* `go`: Navigates to the target of the entered text.\n* `next`: Moves to the next text field.\n* `previous`: Moves to the previous text field.\n* `search`: Navigates to search results.\n* `send`: Sends a text message.",
-        "enum": {
-          "enter": "Inserts a new line, typically used in a multi-line text field.",
-          "done": "Indicates input completion, closes the virtual keyboard.",
-          "go": "Navigates to the target of the entered text.",
-          "next": "Moves to the next text field.",
-          "previous": "Moves to the previous text field.",
-          "search": "Navigates to search results.",
-          "send": "Sends a text message."
-        }
-      },
-      "spellcheck": {
-        "description": "Enable spell checking."
-      },
-      "inputmode": {
-        "description": "Customizes the virtual keyboard. Possible values:\n\n* `none`: No virtual keyboard. This is useful for custom input controls.\n* `text`: Standard text input keyboard.\n* `decimal`: Decimal input keyboard. This includes a period `.` or comma `,` and numbers.\n* `numeric`: Numeric keyboard. This displays numbers 0-9.\n* `tel`: Phone number keyboard. This includes numbers 0-9, asterisk `*`, and hash `#` keys.\n* `search`: Search-optimized virtual keyboard. 'Search' is displayed on the submit button.\n* `email`: Email-optimized virtual keyboard. This typically includes `@ .`.\n* `url`: URL-optimized virtual keyboard. This typically includes `. / #`.",
-        "enum": {
-          "none": "No virtual keyboard. This is useful for custom input controls.",
-          "text": "Standard text input keyboard.",
-          "decimal": "Decimal input keyboard. This includes a period `.` or comma `,` and numbers.",
-          "numeric": "Numeric keyboard. This displays numbers 0-9.",
-          "tel": "Phone number keyboard. This includes numbers 0-9, asterisk `*`, and hash `#` keys.",
-          "search": "Search-optimized virtual keyboard. 'Search' is displayed on the submit button.",
-          "email": "Email-optimized virtual keyboard. This typically includes `@ .`.",
-          "url": "URL-optimized virtual keyboard. This typically includes `. / #`."
-        }
+      "validationMessage": {
+        "description": "The element's validation message. This is empty if the element meets its constraints."
       },
       "validity": {
         "description": "A [`ValidityState`](https://developer.mozilla.org/en-US/docs/Web/API/ValidityState) object that represents the element's validity states."
       },
-      "validationMessage": {
-        "description": "The element's validation message. This is empty if the element meets its constraints."
+      "value": {
+        "description": "The value of text field, which is submitted with form data."
       },
       "valueAsNumber": {
         "description": "Gets or sets the value as a `number`. Returns `NaN` if the value cannot be converted."
+      },
+      "variant": {
+        "description": "Defines the text field style. Default is `filled`. Possible values:\n\n* `filled`: Text field with background color, providing a stronger visual effect.\n* `outlined`: Text field with border, providing a subtler visual effect.",
+        "enum": {
+          "filled": "Text field with background color, providing a stronger visual effect.",
+          "outlined": "Text field with border, providing a subtler visual effect."
+        }
       }
     },
     "methods": {
-      "select": "Selects the content of the text field.",
-      "setSelectionRange": "Selects a specific range in the text field.",
-      "setRangeText": "Replaces a specific range in the text field with new text.",
       "checkValidity": "Checks the validity of the form field. If it's invalid, it triggers an `invalid` event and returns `false`. If it's valid, it returns `true`.",
       "reportValidity": "Checks the validity of the form field. If it's invalid, it triggers an `invalid` event, returns `false`, and displays a validation message. If it's valid, it returns `true`.",
-      "setCustomValidity": "Sets a custom error message. If the text is non-empty, it indicates that the field is invalid."
+      "select": "Selects the content of the text field.",
+      "setCustomValidity": "Sets a custom error message. If the text is non-empty, it indicates that the field is invalid.",
+      "setRangeText": "Replaces a specific range in the text field with new text.",
+      "setSelectionRange": "Selects a specific range in the text field."
     },
     "events": {
-      "focus": "Emitted when the text field gains focus.",
       "blur": "Emitted when the text field loses focus.",
       "change": "Emitted when the value changes and the text field loses focus.",
+      "clear": "Emitted when clear button is clicked. Can be prevented with `event.preventDefault()`.",
+      "focus": "Emitted when the text field gains focus.",
       "input": "Emitted when the value changes.",
-      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints.",
-      "clear": "Emitted when clear button is clicked. Can be prevented with `event.preventDefault()`."
+      "invalid": "Emitted when the form control's validity is checked and it doesn't meet the constraints."
     },
     "slots": {
-      "icon": "Icon on the left side.",
-      "end-icon": "Icon on the right side.",
-      "error-icon": "Icon on the right side for validation failure.",
-      "prefix": "Text on the left side.",
-      "suffix": "Text on the right side.",
       "clear-button": "Clear button.",
       "clear-icon": "Icon in the clear button.",
-      "toggle-password-button": "Button to toggle password visibility.",
-      "show-password-icon": "Icon in the password visibility toggle button (show password state).",
+      "end-icon": "Icon on the right side.",
+      "error-icon": "Icon on the right side for validation failure.",
+      "helper": "Text at the bottom for help.",
       "hide-password-icon": "Icon in the password visibility toggle button (hide password state).",
-      "helper": "Text at the bottom for help."
+      "icon": "Icon on the left side.",
+      "prefix": "Text on the left side.",
+      "show-password-icon": "Icon in the password visibility toggle button (show password state).",
+      "suffix": "Text on the right side.",
+      "toggle-password-button": "Button to toggle password visibility."
     },
     "cssParts": {
-      "container": "Container for the text field.",
-      "icon": "Icon on the left side.",
-      "end-icon": "Icon on the right side.",
-      "error-icon": "Icon on the right side for validation failure.",
-      "prefix": "Text on the left side.",
-      "suffix": "Text on the right side.",
-      "label": "Label text above the field.",
-      "input": "Internal `<input>` or `<textarea>` element.",
       "clear-button": "Clear button.",
       "clear-icon": "Icon in the clear button.",
-      "toggle-password-button": "Button to toggle password visibility.",
-      "show-password-icon": "Icon in the password visibility toggle button (show password state).",
-      "hide-password-icon": "Icon in the password visibility toggle button (hide password state).",
-      "supporting": "Container for bottom supporting info, including helper, error, and counter.",
-      "helper": "Text at the bottom for help.",
+      "container": "Container for the text field.",
+      "counter": "Character count in the bottom right corner.",
+      "end-icon": "Icon on the right side.",
       "error": "Text at the bottom for error.",
-      "counter": "Character count in the bottom right corner."
+      "error-icon": "Icon on the right side for validation failure.",
+      "helper": "Text at the bottom for help.",
+      "hide-password-icon": "Icon in the password visibility toggle button (hide password state).",
+      "icon": "Icon on the left side.",
+      "input": "Internal `<input>` or `<textarea>` element.",
+      "label": "Label text above the field.",
+      "prefix": "Text on the left side.",
+      "show-password-icon": "Icon in the password visibility toggle button (show password state).",
+      "suffix": "Text on the right side.",
+      "supporting": "Container for bottom supporting info, including helper, error, and counter.",
+      "toggle-password-button": "Button to toggle password visibility."
     }
   },
   "mdui-tooltip": {
     "summary": "Tooltip Component.\n\n```html\n<mdui-tooltip content=\"tooltip content\">\n..<mdui-button>button</mdui-button>\n</mdui-tooltip>\n```",
     "properties": {
-      "variant": {
-        "description": "Defines the tooltip shape. Default is `plain`. Possible values:\n\n* `plain`: For simple single-line text.\n* `rich`: For text including a title, body text, and action buttons.",
-        "enum": {
-          "plain": "For simple single-line text.",
-          "rich": "For text including a title, body text, and action buttons."
-        }
+      "closeDelay": {
+        "description": "Sets the delay in milliseconds before the tooltip disappears on hover."
+      },
+      "content": {
+        "description": "Sets the tooltip content. Alternatively, use `slot=\"content\"`."
+      },
+      "disabled": {
+        "description": "Disables the tooltip."
+      },
+      "headline": {
+        "description": "Sets the tooltip title. Only applicable when `variant=\"rich\"`. Alternatively, use `slot=\"headline\"`."
+      },
+      "open": {
+        "description": "Opens the tooltip."
+      },
+      "openDelay": {
+        "description": "Sets the delay in milliseconds before the tooltip appears on hover."
       },
       "placement": {
         "description": "Sets the tooltip position. Default is `auto`. Possible values:\n\n* `auto`: Position is determined automatically.\n* `top-left`: Top-left corner.\n* `top-start`: Top, left-aligned.\n* `top`: Top, centered.\n* `top-end`: Top, right-aligned.\n* `top-right`: Top-right corner.\n* `bottom-left`: Bottom-left corner.\n* `bottom-start`: Bottom, left-aligned.\n* `bottom`: Bottom, centered.\n* `bottom-end`: Bottom, right-aligned.\n* `bottom-right`: Bottom-right corner.\n* `left-start`: Left, top-aligned.\n* `left`: Left, centered.\n* `left-end`: Left, bottom-aligned.\n* `right-start`: Right, top-aligned.\n* `right`: Right, centered.\n* `right-end`: Right, bottom-aligned.",
@@ -2124,18 +2137,6 @@
           "right-end": "Right, bottom-aligned."
         }
       },
-      "openDelay": {
-        "description": "Sets the delay in milliseconds before the tooltip appears on hover."
-      },
-      "closeDelay": {
-        "description": "Sets the delay in milliseconds before the tooltip disappears on hover."
-      },
-      "headline": {
-        "description": "Sets the tooltip title. Only applicable when `variant=\"rich\"`. Alternatively, use `slot=\"headline\"`."
-      },
-      "content": {
-        "description": "Sets the tooltip content. Alternatively, use `slot=\"content\"`."
-      },
       "trigger": {
         "description": "Defines the trigger method. Supports multiple values separated by spaces. Possible values:\n\n* `click`: Triggered on click.\n* `hover`: Triggered on mouse hover.\n* `focus`: Triggered on focus.\n* `manual`: Can only open and close the tooltip programmatically, cannot specify other trigger methods.",
         "enum": {
@@ -2145,70 +2146,35 @@
           "manual": "Can only open and close the tooltip programmatically, cannot specify other trigger methods."
         }
       },
-      "disabled": {
-        "description": "Disables the tooltip."
-      },
-      "open": {
-        "description": "Opens the tooltip."
+      "variant": {
+        "description": "Defines the tooltip shape. Default is `plain`. Possible values:\n\n* `plain`: For simple single-line text.\n* `rich`: For text including a title, body text, and action buttons.",
+        "enum": {
+          "plain": "For simple single-line text.",
+          "rich": "For text including a title, body text, and action buttons."
+        }
       }
     },
     "events": {
-      "open": "Emitted when the tooltip starts to open. Can be prevented with `event.preventDefault()`.",
-      "opened": "Emitted after the tooltip has opened and the animations are completed.",
       "close": "Emitted when the tooltip starts to close. Can be prevented with `event.preventDefault()`.",
-      "closed": "Emitted after the tooltip has closed and the animations are completed."
+      "closed": "Emitted after the tooltip has closed and the animations are completed.",
+      "open": "Emitted when the tooltip starts to open. Can be prevented with `event.preventDefault()`.",
+      "opened": "Emitted after the tooltip has opened and the animations are completed."
     },
     "slots": {
       "": "Target element that triggers the tooltip. Only the first element in the `default` slot is used as the target.",
-      "headline": "Title of the tooltip. Effective only when `variant=\"rich\"`.",
+      "action": "Button at the bottom of the tooltip. Effective only when `variant=\"rich\"`.",
       "content": "Content of the tooltip, can contain HTML. If only plain text is included, can also use `content` attribute instead.",
-      "action": "Button at the bottom of the tooltip. Effective only when `variant=\"rich\"`."
+      "headline": "Title of the tooltip. Effective only when `variant=\"rich\"`."
     },
     "cssParts": {
-      "popup": "Container for the tooltip.",
-      "headline": "Title of the tooltip.",
+      "action": "Action button of the tooltip.",
       "content": "Body text of the tooltip.",
-      "action": "Action button of the tooltip."
+      "headline": "Title of the tooltip.",
+      "popup": "Container for the tooltip."
     },
     "cssProperties": {
       "--shape-corner-plain": "Corner radius of the component when `variant=\"plain\"`. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
       "--shape-corner-rich": "Corner radius of the component when `variant=\"rich\"`. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
-      "--z-index": "The CSS `z-index` value of the component."
-    }
-  },
-  "mdui-top-app-bar": {
-    "summary": "Top App Bar Component.\n\n```html\n<mdui-top-app-bar>\n..<mdui-button-icon icon=\"menu\"></mdui-button-icon>\n..<mdui-top-app-bar-title>Title</mdui-top-app-bar-title>\n..<div style=\"flex-grow: 1\"></div>\n..<mdui-button-icon icon=\"more_vert\"></mdui-button-icon>\n</mdui-top-app-bar>\n```",
-    "properties": {
-      "variant": {
-        "description": "Defines the top app bar style. Default is `small`. Possible values:\n\n* `center-aligned`: Small app bar with a center-aligned title.\n* `small`: Small app bar.\n* `medium`: Medium-sized app bar.\n* `large`: Large-sized app bar.",
-        "enum": {
-          "center-aligned": "Small app bar with a center-aligned title.",
-          "small": "Small app bar.",
-          "medium": "Medium-sized app bar.",
-          "large": "Large-sized app bar."
-        }
-      },
-      "hide": {
-        "description": "Hide the top app bar."
-      },
-      "shrink": {
-        "description": "Shrinks the app bar to `small` style. Only applicable for `medium` or `large` variants."
-      },
-      "scrollBehavior": {
-        "description": "Defines the scroll behavior. Accepts multiple space-separated values. Possible values:\n\n* `hide`: Hides when scrolling.\n* `shrink`: Shrinks when scrolling for medium to large app bars.\n* `elevate`: Increases elevation when scrolling."
-      }
-    },
-    "events": {
-      "show": "Emitted when the top app bar starts to show. Can be prevented with `event.preventDefault()`.",
-      "shown": "Emitted after the top app bar has shown and animations are complete.",
-      "hide": "Emitted when the top app bar starts to hide. Can be prevented with `event.preventDefault()`.",
-      "hidden": "Emitted after the top app bar has hidden and animations are complete."
-    },
-    "slots": {
-      "": "Elements contained within the top app bar."
-    },
-    "cssProperties": {
-      "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
       "--z-index": "The CSS `z-index` value of the component."
     }
   },
@@ -2221,6 +2187,42 @@
     "cssParts": {
       "label": "The title text.",
       "label-large": "The title text when the top app bar is in the expanded state."
+    }
+  },
+  "mdui-top-app-bar": {
+    "summary": "Top App Bar Component.\n\n```html\n<mdui-top-app-bar>\n..<mdui-button-icon icon=\"menu\"></mdui-button-icon>\n..<mdui-top-app-bar-title>Title</mdui-top-app-bar-title>\n..<div style=\"flex-grow: 1\"></div>\n..<mdui-button-icon icon=\"more_vert\"></mdui-button-icon>\n</mdui-top-app-bar>\n```",
+    "properties": {
+      "hide": {
+        "description": "Hide the top app bar."
+      },
+      "scrollBehavior": {
+        "description": "Defines the scroll behavior. Accepts multiple space-separated values. Possible values:\n\n* `hide`: Hides when scrolling.\n* `shrink`: Shrinks when scrolling for medium to large app bars.\n* `elevate`: Increases elevation when scrolling."
+      },
+      "shrink": {
+        "description": "Shrinks the app bar to `small` style. Only applicable for `medium` or `large` variants."
+      },
+      "variant": {
+        "description": "Defines the top app bar style. Default is `small`. Possible values:\n\n* `center-aligned`: Small app bar with a center-aligned title.\n* `small`: Small app bar.\n* `medium`: Medium-sized app bar.\n* `large`: Large-sized app bar.",
+        "enum": {
+          "center-aligned": "Small app bar with a center-aligned title.",
+          "small": "Small app bar.",
+          "medium": "Medium-sized app bar.",
+          "large": "Large-sized app bar."
+        }
+      }
+    },
+    "events": {
+      "hidden": "Emitted after the top app bar has hidden and animations are complete.",
+      "hide": "Emitted when the top app bar starts to hide. Can be prevented with `event.preventDefault()`.",
+      "show": "Emitted when the top app bar starts to show. Can be prevented with `event.preventDefault()`.",
+      "shown": "Emitted after the top app bar has shown and animations are complete."
+    },
+    "slots": {
+      "": "Elements contained within the top app bar."
+    },
+    "cssProperties": {
+      "--shape-corner": "The size of the component corner. You can use a specific pixel value, but it's recommended to reference [design tokens](/docs/2/styles/design-tokens#shape-corner).",
+      "--z-index": "The CSS `z-index` value of the component."
     }
   },
   "common": {

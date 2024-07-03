@@ -1,3 +1,5 @@
+import { moduleFilePathPlugin } from '../common/cem-plugins/module-file-path.js';
+
 // eslint-disable-next-line import/no-default-export
 export default {
   globs: [
@@ -12,4 +14,5 @@ export default {
   outdir: 'packages/mdui',
   dev: false,
   litelement: true,
+  plugins: [moduleFilePathPlugin('mdui')],
 };

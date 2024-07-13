@@ -535,8 +535,9 @@ export class Select
     }
 
     return (
-      this.menuItems.find((item) => item.value === valueItem)?.textContent ||
-      valueItem
+      this.menuItems
+        .find((item) => item.value === valueItem)
+        ?.textContent?.trim() || valueItem
     );
   }
 

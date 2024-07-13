@@ -570,7 +570,7 @@ export class TextField
 
   @watch('value')
   private async onValueChange() {
-    this.hasValue = !!this.value;
+    this.hasValue = !['', null].includes(this.value);
 
     if (this.hasUpdated) {
       await this.updateComplete;

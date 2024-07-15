@@ -750,6 +750,8 @@ export class TextField
     const hasEndIcon =
       !!this.endIcon || this.hasSlotController.test('end-icon');
     const hasErrorIcon = this.invalid || this.invalidStyle;
+    const hasPrefix = !!this.prefix || this.hasSlotController.test('prefix');
+    const hasSuffix = !!this.suffix || this.hasSlotController.test('suffix');
     const hasHelper = !!this.helper || this.hasSlotController.test('helper');
     const hasError =
       hasErrorIcon && !!(this.error || this.inputRef.value!.validationMessage);
@@ -768,6 +770,8 @@ export class TextField
       'has-icon': hasIcon,
       'has-end-icon': hasEndIcon,
       'has-error-icon': hasErrorIcon,
+      'has-prefix': hasPrefix,
+      'has-suffix': hasSuffix,
       'is-firefox': navigator.userAgent.includes('Firefox'),
       ...invalidClassNameObj,
     });

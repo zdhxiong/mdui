@@ -11,24 +11,31 @@ React does not natively support custom events. Therefore, to utilize events prov
 Here's an example of handling mdui component events in React:
 
 ```js
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.switchRef = React.createRef();
-  }
+import { useEffect, useRef } from 'react';
+import 'mdui/mdui.css';
+import 'mdui/components/switch.js';
 
-  componentDidMount() {
-    this.switchRef.current.addEventListener('change', event => {
-      console.log('switch is toggled');
-    });
-  }
+function App() {
+  const switchRef = useRef(null);
 
-  render() {
-    return(
-      <mdui-switch ref={this.switchRef}></mdui-switch>
-    );
-  }
+  useEffect(() => {
+    const handleToggle = () => {
+      console.log("switch is toggled");
+    };
+
+    switchRef.current.addEventListener('change', handleToggle);
+
+    return () => {
+      switchRef.current.removeEventListener('change', handleToggle);
+    };
+  }, []);
+
+  return (
+    <mdui-switch ref={switchRef}></mdui-switch>
+  );
 }
+
+export default App;
 ```
 
 ### TypeScript Type Declarations for JSX {#jsx-typescript}

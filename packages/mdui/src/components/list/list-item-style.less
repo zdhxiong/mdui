@@ -8,17 +8,17 @@
   .state-layer-color(on-surface);
 }
 
-:host([rounded]),
-:host([rounded]) mdui-ripple {
+:host([rounded]:not([rounded="false" i])),
+:host([rounded]:not([rounded="false" i])) mdui-ripple {
   border-radius: var(--shape-corner-rounded);
 }
 
-:host([active]) {
+:host([active]:not([active="false" i])) {
   .background-color(secondary-container);
   .state-layer-color(on-secondary-container);
 }
 
-:host([disabled]) {
+:host([disabled]:not([disabled="false" i])) {
   pointer-events: none;
 }
 
@@ -29,12 +29,12 @@
   color: inherit;
   -webkit-tap-highlight-color: transparent;
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     cursor: default;
     opacity: 0.38;
   }
 
-  :host([nonclickable]:not([href])) & {
+  :host([nonclickable]:not([href], [nonclickable="false" i])) & {
     cursor: auto;
     user-select: auto;
   }
@@ -68,7 +68,7 @@
   .color(on-surface);
   .typescale(body-large);
 
-  :host([active]) & {
+  :host([active]:not([active="false" i])) & {
     .color(on-secondary-container);
   }
 }
@@ -78,7 +78,7 @@
   .color(on-surface-variant);
   .typescale(body-medium);
 
-  :host([disabled]) &,
+  :host([disabled]:not([disabled="false" i])) &,
   :host([hover]) &,
   :host([focused]) &,
   :host([pressed]) & {
@@ -125,14 +125,14 @@
   .typescale(label-small);
   .color(on-surface-variant);
 
-  :host([disabled]) &,
+  :host([disabled]:not([disabled="false" i])) &,
   :host([hover]) &,
   :host([focused]) &,
   :host([pressed]) & {
     .color(on-surface);
   }
 
-  :host([active]) & {
+  :host([active]:not([active="false" i])) & {
     .color(on-secondary-container);
   }
 }

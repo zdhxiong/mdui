@@ -13,7 +13,7 @@
   .state-layer-color(on-surface);
 }
 
-:host([clickable]) {
+:host([clickable]:not([clickable="false" i])) {
   cursor: pointer;
 }
 
@@ -46,23 +46,23 @@
   .elevation(3);
 }
 
-:host([disabled]) {
+:host([disabled]:not([disabled="false" i])) {
   opacity: 0.38;
   cursor: default;
   user-select: none;
 }
 
-:host([variant="elevated"][disabled]) {
+:host([variant="elevated"][disabled]:not([disabled="false" i])) {
   .background-color(surface-variant);
   .elevation(0);
 }
 
-:host([variant="filled"][disabled]) {
+:host([variant="filled"][disabled]:not([disabled="false" i])) {
   .background-color(surface);
   .elevation(1);
 }
 
-:host([variant="outlined"][disabled]) {
+:host([variant="outlined"][disabled]:not([disabled="false" i])) {
   .elevation(0);
   .border-color(outline, 0.32);
 }

@@ -23,7 +23,7 @@
   position: absolute;
 }
 
-:host([hide]) {
+:host([hide]:not([hide="false" i])) {
   .translate-y(80 + 10);
   .transition-duration(short4);
 }

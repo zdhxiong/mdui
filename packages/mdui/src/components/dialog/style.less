@@ -20,7 +20,7 @@
   .background-color(surface-container-high);
 }
 
-:host([fullscreen]) {
+:host([fullscreen]:not([fullscreen="false" i])) {
   --shape-corner: var(--mdui-shape-corner-none);
 
   padding: 0;
@@ -53,7 +53,7 @@
   .background-color(surface-container-high);
   .elevation(3);
 
-  :host([fullscreen]) & {
+  :host([fullscreen]:not([fullscreen="false" i])) & {
     width: 100%;
     max-width: 100%;
     height: 100%;
@@ -105,7 +105,7 @@
   .color(on-surface-variant);
   .typescale(body-medium);
 
-  :host([fullscreen]) & {
+  :host([fullscreen]:not([fullscreen="false" i])) & {
     .color(on-surface);
   }
 
@@ -123,7 +123,7 @@
     .margin-left(8);
   }
 
-  :host([stacked-actions]) & {
+  :host([stacked-actions]:not([stacked-actions="false" i])) & {
     flex-direction: column;
     align-items: end;
 

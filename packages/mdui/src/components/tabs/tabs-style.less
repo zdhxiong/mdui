@@ -161,6 +161,8 @@
   }
 }
 
-:host([full-width]) ::slotted(mdui-tab) {
-  flex: 1;
+:host([full-width]:not([full-width="false" i])) {
+  ::slotted(mdui-tab) {
+    flex: 1;
+  }
 }

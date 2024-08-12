@@ -105,19 +105,19 @@
   .height(96);
 }
 
-:host([disabled]),
-:host([loading]) {
+:host([disabled]:not([disabled="false" i])),
+:host([loading]:not([loading="false" i])) {
   cursor: default;
   pointer-events: none;
 }
 
-:host([disabled]) {
+:host([disabled]:not([disabled="false" i])) {
   .color(on-surface, 38%);
   .background-color(on-surface, 12%);
   .elevation(0);
 }
 
-:host([extended]) {
+:host([extended]:not([extended="false" i])) {
   width: auto;
 }
 
@@ -140,7 +140,8 @@
     }
   }
 
-  :host(:not([extended])) & {
+  :host(:not([extended])) &,
+  :host([extended="false" i]) & {
     opacity: 0;
     transition-delay: 0ms;
     .transition-duration(short1);
@@ -178,7 +179,7 @@ mdui-circular-progress {
     .height(36);
   }
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     .stroke(on-surface, 38%)
   }
 }

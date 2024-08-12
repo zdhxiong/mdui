@@ -4,16 +4,16 @@
   .background-color(surface-variant);
 }
 
-:host([inset]) {
+:host([inset]:not([inset="false" i])) {
   .margin-left(16);
 }
 
-:host([middle]) {
+:host([middle]:not([middle="false" i])) {
   .margin-left(16);
   .margin-right(16);
 }
 
-:host([vertical]) {
+:host([vertical]:not([vertical="false" i])) {
   height: 100%;
   .width(1);
 }

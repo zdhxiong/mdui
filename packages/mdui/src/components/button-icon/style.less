@@ -42,50 +42,52 @@
   .state-layer-color(on-surface);
 }
 
-:host([variant="standard"][selected]) {
+:host([variant="standard"][selected]:not([selected="false" i])) {
   .color(primary);
   .state-layer-color(primary);
 }
 
-:host([variant="filled"][selected]),
-:host([variant="filled"]:not([selectable])) {
+:host([variant="filled"][selected]:not([selected="false" i])),
+:host([variant="filled"]:not([selectable])),
+:host([variant="filled"][selectable="false" i]) {
   .color(on-primary);
   .background-color(primary);
   .state-layer-color(on-primary);
 }
 
-:host([variant="tonal"][selected]),
-:host([variant="tonal"]:not([selectable])) {
+:host([variant="tonal"][selected]:not([selected="false" i])),
+:host([variant="tonal"]:not([selectable])),
+:host([variant="tonal"][selectable="false" i]) {
   .color(on-secondary-container);
   .background-color(secondary-container);
   .state-layer-color(on-secondary-container);
 }
 
-:host([variant="outlined"][selected]) {
+:host([variant="outlined"][selected]:not([selected="false" i])) {
   border: none;
   .color(inverse-on-surface);
   .background-color(inverse-surface);
   .state-layer-color(inverse-on-surface);
 }
 
-:host([variant="filled"][disabled]),
-:host([variant="tonal"][disabled]),
-:host([variant="outlined"][disabled]) {
+:host([variant="filled"][disabled]:not([disabled="false" i])),
+:host([variant="tonal"][disabled]:not([disabled="false" i])),
+:host([variant="outlined"][disabled]:not([disabled="false" i])) {
   .background-color(on-surface, 0.12);
   .border-color(on-surface, 0.12);
 }
 
-:host([disabled]),
-:host([loading]) {
+:host([disabled]:not([disabled="false" i])),
+:host([loading]:not([loading="false" i])) {
   cursor: default;
   pointer-events: none;
 }
 
-:host([disabled]) {
+:host([disabled]:not([disabled="false" i])) {
   .color(on-surface, 0.38) !important;
 }
 
-:host([loading]) {
+:host([loading]:not([loading="false" i])) {
   mdui-ripple,
   .button {
     opacity: 0;
@@ -112,11 +114,12 @@ mdui-circular-progress {
   .height(24);
 
   // filled 背景色和 loading 颜色冲突，需要特殊处理
-  :host([variant="filled"]:not([disabled])) & {
+  :host([variant="filled"]:not([disabled])) &,
+  :host([variant="filled"][disabled="false" i]) & {
     .stroke(on-primary);
   }
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     .stroke(on-surface, 38%)
   }
 }

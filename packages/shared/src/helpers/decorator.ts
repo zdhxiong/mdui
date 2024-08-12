@@ -8,11 +8,14 @@
  * 但在 vue 的服务端渲染（ssr）时，不存在 DOM 对象，所以会把 attribute 属性设置成 attr="true" 或 attr="false"
  * 所以在 attribute 属性 attr="false" 时，需要把属性值转换为布尔值 false
  *
+ * 在 CSS 中选择布尔属性时，必须排除掉属性值为 false 的情况。i 表示不区分大小写。仅 public 属性需要这样处理，private 和 protected 属性不需要
+ * 例如：:host([hide]:not([hide="false" i])) { ... }
+ *
  * 这段代码不能封装成函数，否则生成 custom-elements.json 会识别不了
  * 这段注释仅在这里写一次，其他地方不再重复
  *
  * @see https://v3-migration.vuejs.org/zh/breaking-changes/attribute-coercion.html
  */
 export const booleanConverter = (value: string | null): boolean => {
-  return value !== null && value !== 'false';
+  return value !== null && value.toLowerCase() !== 'false';
 };

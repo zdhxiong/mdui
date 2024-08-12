@@ -23,7 +23,7 @@
   position: absolute;
 }
 
-:host([hide]) {
+:host([hide]:not([hide="false" i])) {
   .transition-duration(short4);
   .bottom(-80 - 10);
 }
@@ -37,7 +37,7 @@
 }
 
 // 含 fab-detach 属性时，fab 脱离 bottom-app-bar
-:host([fab-detach]) {
+:host([fab-detach]:not([fab-detach="false" i])) {
   ::slotted(mdui-fab) {
     position: absolute;
     .transition(bottom, long2, standard);
@@ -46,7 +46,7 @@
   }
 }
 
-:host([fab-detach][hide][scroll-behavior~="hide"]) {
+:host([fab-detach][hide][scroll-behavior~="hide"]:not([hide="false" i], [fab-detach="false" i])) {
   ::slotted(mdui-fab) {
     .transition-duration(short4);
     .bottom(16);
@@ -54,15 +54,16 @@
   }
 }
 
-:host([fab-detach][hide][scroll-behavior~="hide"][scroll-target]:not([scroll-target=""])) {
+:host([fab-detach][hide][scroll-behavior~="hide"][scroll-target]:not([fab-detach="false" i], [hide="false" i], [scroll-target=""])) {
   ::slotted(mdui-fab) {
     .bottom(80 + 10 + 16);
   }
 }
 
 // 显示 bottom-app-bar 时，子元素依次进入
-:host([hide]) ::slotted(:not(mdui-fab)),
-:host([hide]:not([fab-detach])) ::slotted(mdui-fab) {
+:host([hide]:not([hide="false" i])) ::slotted(:not(mdui-fab)),
+:host([hide]:not([hide="false" i], [fab-detach])) ::slotted(mdui-fab),
+:host([hide][fab-detach="false" i]:not([hide="false" i])) ::slotted(mdui-fab) {
   transform: translateY(unit((140px / @mdui-root-font-size), rem));
   .transition(transform, 0, emphasized-accelerate, short4);
 }

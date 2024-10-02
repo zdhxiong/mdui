@@ -30,7 +30,7 @@ import type { Avatar } from 'mdui/components/avatar.js';
 <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
 
 <mdui-avatar>
-  <img src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"/>
+  <img src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" alt="图片头像示例"/>
 </mdui-avatar>
 ```
 

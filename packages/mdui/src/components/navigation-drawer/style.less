@@ -16,7 +16,7 @@
   right: 0;
 }
 
-:host([modal]),
+:host([modal]:not([modal="false" i])),
 :host([mobile]) {
   top: 0 !important;
   right: 0;
@@ -25,12 +25,12 @@
   z-index: var(--z-index);
 }
 
-:host([placement="right"][modal]),
+:host([placement="right"][modal]:not([modal="false" i])),
 :host([placement="right"][mobile]) {
   left: 0;
 }
 
-:host([contained]) {
+:host([contained]:not([contained="false" i])) {
   position: absolute;
 }
 
@@ -53,7 +53,7 @@
   .background-color(surface);
   .elevation(0);
 
-  :host([modal]) &,
+  :host([modal]:not([modal="false" i])) &,
   :host([mobile]) & {
     border-radius: 0 var(--shape-corner) var(--shape-corner) 0;
     max-width: 80%;
@@ -67,7 +67,7 @@
     right: 0;
   }
 
-  :host([placement="right"][modal]) &,
+  :host([placement="right"][modal]:not([modal="false" i])) &,
   :host([placement="right"][mobile]) & {
     border-radius: var(--shape-corner) 0 0 var(--shape-corner);
   }

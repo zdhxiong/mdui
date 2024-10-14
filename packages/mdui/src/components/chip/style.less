@@ -29,17 +29,17 @@
     .padding-left(3);
   }
 
-  :host([selected]) & {
+  :host([selected]:not([selected="false" i])) & {
     .padding-right(8);
     .padding-left(8);
   }
 
-  :host([selected][variant="input"]) & {
+  :host([selected][variant="input"]:not([selected="false" i])) & {
     .padding-right(4);
     .padding-left(4);
   }
 
-  :host([elevated]) & {
+  :host([elevated]:not([elevated="false" i])) & {
     .padding-right(8);
     .padding-left(8);
   }
@@ -50,41 +50,41 @@
   .state-layer-color(on-surface);
 }
 
-:host([elevated]) {
+:host([elevated]:not([elevated="false" i])) {
   border-width: 0;
   .background-color(surface-container-low);
   .elevation(1);
 }
 
-:host([selected]) {
+:host([selected]:not([selected="false" i])) {
   .color(on-secondary-container);
   .background-color(secondary-container);
   .border-width(0);
   .state-layer-color(on-secondary-container);
 }
 
-:host([disabled]),
-:host([loading]) {
+:host([disabled]:not([disabled="false" i])),
+:host([loading]:not([loading="false" i])) {
   cursor: default;
   pointer-events: none;
 }
 
-:host([disabled]) {
+:host([disabled]:not([disabled="false" i])) {
   .border-color(on-surface, 12%);
   .color(on-surface, 38%);
   .elevation(0);
 }
 
-:host([disabled][elevated]),
-:host([disabled][selected]) {
+:host([disabled][elevated]:not([disabled="false" i], [elevated="false" i])),
+:host([disabled][selected]:not([disabled="false" i], [selected="false" i])) {
   .background-color(on-surface, 12%);
 }
 
-:host([selected][hover]) {
+:host([selected][hover]:not([selected="false" i])) {
   .elevation(1);
 }
 
-:host([elevated][hover]) {
+:host([elevated][hover]:not([elevated="false" i])) {
   .color(on-secondary-container);
   .elevation(2);
 }
@@ -128,11 +128,11 @@
     .color(primary);
   }
 
-  :host([selected]) & {
+  :host([selected]:not([selected="false" i])) & {
     .color(on-secondary-container);
   }
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     opacity: 0.38;
     .color(on-surface);
   }
@@ -168,7 +168,7 @@ mdui-circular-progress {
   .width(18);
   .height(18);
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     .stroke(on-surface, 38%)
   }
 }
@@ -179,7 +179,7 @@ mdui-circular-progress {
   .width(24);
   .height(24);
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     opacity: 0.38;
   }
 }
@@ -222,7 +222,7 @@ mdui-circular-progress {
     .margin-right(1);
   }
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     .color(on-surface, 38%);
   }
 }

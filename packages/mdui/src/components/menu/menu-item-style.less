@@ -7,7 +7,7 @@
   .background-color(primary, 12%);
 }
 
-:host([disabled]) {
+:host([disabled]:not([disabled="false" i])) {
   pointer-events: none;
 }
 
@@ -16,7 +16,7 @@
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     cursor: default;
     opacity: 0.38;
   }

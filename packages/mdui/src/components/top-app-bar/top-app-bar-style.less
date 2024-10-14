@@ -67,21 +67,21 @@
   .height(152);
 }
 
-:host([hide]) {
+:host([hide]:not([hide="false" i])) {
   .transition-duration(short4);
   .top(-64 - 10);
 }
 
-:host([hide][variant="medium"]) {
+:host([hide][variant="medium"]:not([hide="false" i])) {
   .top(-112 - 10);
 }
 
-:host([hide][variant="large"]) {
+:host([hide][variant="large"]:not([hide="false" i])) {
   .top(-152 - 10);
 }
 
-:host([shrink][variant="medium"]),
-:host([shrink][variant="large"]) {
+:host([shrink][variant="medium"]:not([shrink="false" i])),
+:host([shrink][variant="large"]:not([shrink="false" i])) {
   .transition-duration(short4);
   .height(64);
 }

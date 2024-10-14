@@ -24,7 +24,7 @@
   .padding(0, 16);
 }
 
-:host([full-width]) {
+:host([full-width]:not([full-width="false" i])) {
   display: block;
 }
 
@@ -68,24 +68,24 @@
   .elevation(1);
 }
 
-:host([disabled]),
-:host([loading]) {
+:host([disabled]:not([disabled="false" i])),
+:host([loading]:not([loading="false" i])) {
   cursor: default;
   pointer-events: none;
 }
 
-:host([disabled]) {
+:host([disabled]:not([disabled="false" i])) {
   .color(on-surface, 38%);
   .elevation(0);
 }
 
-:host([variant="elevated"][disabled]),
-:host([variant="filled"][disabled]),
-:host([variant="tonal"][disabled]) {
+:host([variant="elevated"][disabled]:not([disabled="false" i])),
+:host([variant="filled"][disabled]:not([disabled="false" i])),
+:host([variant="tonal"][disabled]:not([disabled="false" i])) {
   .background-color(on-surface, 12%);
 }
 
-:host([variant="outlined"][disabled]) {
+:host([variant="outlined"][disabled]:not([disabled="false" i])) {
   .border-color(on-surface, 12%);
 }
 
@@ -122,7 +122,7 @@ mdui-circular-progress {
     .stroke(on-secondary-container);
   }
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     .stroke(on-surface, 38%)
   }
 }

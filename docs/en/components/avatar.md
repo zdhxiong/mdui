@@ -30,7 +30,7 @@ To use an image as the avatar, specify the image link using the `src` attribute,
 <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
 
 <mdui-avatar>
-  <img src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"/>
+  <img src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4" alt="Example of profile picture"/>
 </mdui-avatar>
 ```
 

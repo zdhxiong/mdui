@@ -9,7 +9,7 @@
   .height(40);
 }
 
-:host([disabled]) {
+:host([disabled]:not([disabled="false" i])) {
   cursor: default;
   pointer-events: none;
 }
@@ -41,7 +41,7 @@ label {
   .border(2, solid, outline);
   .background-color(surface-container-highest);
 
-  :host([checked]) & {
+  :host([checked]:not([checked="false" i])) & {
     .background-color(primary);
     .border-width(0);
   }
@@ -51,12 +51,12 @@ label {
     .border-color(error);
   }
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     .background-color(surface-container-highest, 0.12);
     .border-color(on-surface, 0.12);
   }
 
-  :host([disabled][checked]) & {
+  :host([disabled][checked]:not([disabled="false" i], [checked="false" i])) & {
     .background-color(on-surface, 0.12);
   }
 }
@@ -118,7 +118,7 @@ mdui-ripple {
     .background-color(on-surface-variant);
   }
 
-  :host([checked]) & {
+  :host([checked]:not([checked="false" i])) & {
     .height(24);
     .width(24);
     .left(24);
@@ -142,13 +142,13 @@ mdui-ripple {
     }
   }
 
-  :host([pressed][checked]) & {
+  :host([pressed][checked]:not([checked="false" i])) & {
     .left(22);
   }
 
-  :host([hover][checked]) &,
-  :host([focus-visible][checked]) &,
-  :host([pressed][checked]) & {
+  :host([hover][checked]:not([checked="false" i])) &,
+  :host([focus-visible][checked]:not([checked="false" i])) &,
+  :host([pressed][checked]:not([checked="false" i])) & {
     .background-color(primary-container);
   }
 
@@ -163,11 +163,11 @@ mdui-ripple {
     .background-color(error);
   }
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     .background-color(on-surface, 0.38);
   }
 
-  :host([disabled][checked]) & {
+  :host([disabled][checked]:not([disabled="false" i], [checked="false" i])) & {
     .background-color(surface);
   }
 }
@@ -188,14 +188,14 @@ mdui-ripple {
   .transition-timing-function(linear);
   .color(surface-container-highest);
 
-  :host([checked]) & {
+  :host([checked]:not([checked="false" i])) & {
     opacity: 0;
     transform: scale(0.92);
     transition-delay: 0ms;
     .transition-duration(short1);
   }
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     .color(surface-container-highest, 0.38);
   }
 }
@@ -208,7 +208,7 @@ mdui-ripple {
   .transition-timing-function(linear);
   .color(on-primary-container);
 
-  :host([checked]) & {
+  :host([checked]:not([checked="false" i])) & {
     opacity: 1;
     transform: scale(1);
     .transition-delay(short1);
@@ -219,7 +219,7 @@ mdui-ripple {
     .color(error-container);
   }
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     .color(on-surface, 0.38);
   }
 }

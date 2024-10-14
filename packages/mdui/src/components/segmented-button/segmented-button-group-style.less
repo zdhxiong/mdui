@@ -10,7 +10,7 @@
   .state-layer-color(on-surface);
 }
 
-:host([full-width]) {
+:host([full-width]:not([full-width="false" i])) {
   display: flex;
   flex-wrap: nowrap;
 }

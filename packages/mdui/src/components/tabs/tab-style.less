@@ -22,7 +22,7 @@
   .min-height(48);
   .padding(10, 16);
 
-  :host([inline]) & {
+  :host([inline]:not([inline="false" i])) & {
     flex-direction: row;
   }
 }

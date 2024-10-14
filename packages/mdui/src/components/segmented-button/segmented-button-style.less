@@ -31,7 +31,7 @@
   .state-layer-color(on-secondary-container);
 }
 
-:host([disabled]),
+:host([disabled]:not([disabled="false" i])),
 :host([group-disabled]) {
   cursor: default;
   pointer-events: none;
@@ -39,7 +39,7 @@
   .border-color(on-surface, 12%);
 }
 
-:host([loading]) {
+:host([loading]:not([loading="false" i])) {
   cursor: default;
   pointer-events: none;
 }
@@ -76,7 +76,7 @@ mdui-circular-progress {
   .width(18);
   .height(18);
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     opacity: 0.38;
   }
 }

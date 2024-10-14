@@ -16,11 +16,11 @@
   .padding(6, 12);
 }
 
-:host([contained]) {
+:host([contained]:not([contained="false" i])) {
   position: absolute;
 }
 
-:host([divider]) {
+:host([divider]:not([divider="false" i])) {
   .border-right(1, solid, surface-variant);
   .width(81); // 加了一像素边框后，需保持除分割线外的宽度不变
 }
@@ -31,7 +31,7 @@
   border-radius: var(--shape-corner) 0 0 var(--shape-corner);
 }
 
-:host([placement="right"][divider]) {
+:host([placement="right"][divider]:not([divider="false" i])) {
   border-right: none;
   .border-left(1, solid, surface-variant);
 }

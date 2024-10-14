@@ -26,7 +26,7 @@ input[type="range"] {
   .margin(0, -20);
   .padding(0, 12);
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     cursor: not-allowed;
   }
 }
@@ -49,7 +49,7 @@ input[type="range"] {
     .background-color(error, 0.12);
   }
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     .background-color(on-surface, 0.12);
   }
 }
@@ -61,7 +61,7 @@ input[type="range"] {
     .background-color(error);
   }
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     .background-color(on-surface, 0.38);
   }
 }
@@ -101,7 +101,7 @@ input[type="range"] {
       .background-color(error);
     }
 
-    :host([disabled]) & {
+    :host([disabled]:not([disabled="false" i])) & {
       .background-color(on-surface, 0.38);
       .elevation(0);
     }
@@ -187,7 +187,7 @@ input[type="range"] {
     }
   }
 
-  :host([disabled]) & {
+  :host([disabled]:not([disabled="false" i])) & {
     .background-color(on-surface, 0.38);
   }
 }

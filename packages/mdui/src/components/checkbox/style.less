@@ -79,7 +79,7 @@ i {
 }
 
 // 选中状态的图标
-:host([checked]) {
+:host([checked]:not([checked="false" i])) {
   i {
     .state-layer-color(primary);
   }
@@ -100,7 +100,7 @@ i {
 }
 
 // 不确定状态的图标
-:host([indeterminate]) {
+:host([indeterminate]:not([indeterminate="false" i])) {
   i {
     .state-layer-color(primary);
   }
@@ -136,7 +136,7 @@ i {
 }
 
 // 禁用状态的图标
-:host([disabled]) {
+:host([disabled]:not([disabled="false" i])) {
   cursor: default;
   pointer-events: none;
 
@@ -150,8 +150,8 @@ i {
 }
 
 // 禁用且选中状态、禁用且不确定状态
-:host([disabled][checked]),
-:host([disabled][indeterminate]) {
+:host([disabled][checked]:not([disabled="false" i], [checked="false" i])),
+:host([disabled][indeterminate]:not([disabled="false" i], [indeterminate="false" i])) {
   .unchecked-icon {
     opacity: 0;
   }

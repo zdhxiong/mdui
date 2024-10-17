@@ -1,4 +1,6 @@
-`observeResize` 函数用于监听元素尺寸的变化，当尺寸发生变化时，会执行指定的回调函数。该函数使用 [`ResizeObserver`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserver) 实现，但采用了单例模式，因此性能更优。
+`observeResize` 函数用于监听元素尺寸的变化，当尺寸发生变化时，会执行指定的回调函数。
+
+该函数使用 [`ResizeObserver`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserver) 实现，但采用了单例模式，因此性能更优。
 
 ## 使用方法 {#usage}
 

@@ -1,4 +1,6 @@
-The `prompt` function, a wrapper for the [`<mdui-dialog>`](/en/docs/2/components/dialog) component. It offers a more user-friendly alternative to the native `window.prompt` function. This function allows you to open a dialog with a text field without the need to write HTML code for the component.
+The `prompt` function is a wrapper for the [`<mdui-dialog>`](/en/docs/2/components/dialog) component and serves as a replacement for the native `window.prompt` function.
+
+By using this function, you can open a text input dialog without needing to write any HTML code for the component.
 
 ## Usage {#usage}
 

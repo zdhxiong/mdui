@@ -1,4 +1,4 @@
-Tabs are used to group different content or datasets.
+Tabs organize content across different screens and views.
 
 ## Usage {#usage}
 

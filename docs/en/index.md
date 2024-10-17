@@ -1,8 +1,8 @@
+Let's begin by incorporating mdui into a basic page template using a CDN.
+
 > You are currently reading the documentation for mdui 2!
 >
 > For mdui 1 documentation, please visit [www.mdui.org/docs/](https://www.mdui.org/docs/).
-
-Let's begin by incorporating mdui into a basic page template using a CDN.
 
 ## Getting Started {#getting-started}
 

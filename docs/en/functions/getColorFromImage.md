@@ -1,4 +1,6 @@
-The `getColorFromImage` function is designed to extract the dominant color from an image. The extracted color can be used in conjunction with the [`setColorScheme`](/en/docs/2/functions/setColorScheme) function to implement [dynamic color](/en/docs/2/styles/dynamic-color) functionality.
+The `getColorFromImage` function is designed to extract the dominant color from an image.
+
+The extracted color can be used in conjunction with the [`setColorScheme`](/en/docs/2/functions/setColorScheme) function to implement [dynamic color](/en/docs/2/styles/dynamic-color) functionality.
 
 
 ## Usage {#usage}

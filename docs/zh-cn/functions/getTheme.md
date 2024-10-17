@@ -1,4 +1,6 @@
-`getTheme` 函数用于获取当前页面或指定元素的主题设置。主题类型包括 `light`、`dark`、`auto` 三种，详见 [暗色模式](/zh-cn/docs/2/styles/dark-mode)。
+`getTheme` 函数用于获取当前页面或指定元素的主题设置。
+
+主题类型包括 `light`、`dark`、`auto` 三种，详见 [暗色模式](/zh-cn/docs/2/styles/dark-mode)。
 
 ## 使用方法 {#usage}
 

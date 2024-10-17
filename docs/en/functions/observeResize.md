@@ -1,4 +1,6 @@
-The observeResize function allows you to monitor changes in an element's size and execute a callback when the size changes. This function utilizes the [`ResizeObserver`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserver) API and implements the singleton pattern for enhanced performance.
+The `observeResize` function allows you to monitor changes in an element's size and execute a callback when the size changes.
+
+This function utilizes the [`ResizeObserver`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserver) API and implements the singleton pattern for enhanced performance.
 
 ## Usage {#usage}
 

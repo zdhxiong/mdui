@@ -1,4 +1,6 @@
-The navigation drawer provides a side-access method to different pages on a webpage. Typically, the [`<mdui-list>`](/en/docs/2/components/list) component is used within the navigation drawer to add navigation items.
+The navigation drawer provides a side-access method to different pages on a webpage.
+
+Typically, the [`<mdui-list>`](/en/docs/2/components/list) component is used within the navigation drawer to add navigation items.
 
 ## Usage {#usage}
 

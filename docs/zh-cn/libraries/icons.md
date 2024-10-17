@@ -1,4 +1,6 @@
-`@mdui/icons` 是一个独立的包，它包含了所有的 Material Icons 图标。每个图标都是一个独立的文件，这样你可以按需导入所需的图标，而不必导入整个图标库。因此，使用 `@mdui/icons` 相比于使用 [`<mdui-icon>`](/zh-cn/docs/2/components/icon) 组件，可以显著减少项目打包后的体积。
+`@mdui/icons` 是一个独立的包，它包含了所有的 Material Icons 图标，每个图标都是一个独立的文件。
+
+你可以按需导入所需的图标，而不必导入整个图标库。因此，使用 `@mdui/icons` 相比于使用 [`<mdui-icon>`](/zh-cn/docs/2/components/icon) 组件，可以显著减少项目打包后的体积。
 
 ## 安装 {#installation}
 

@@ -1,4 +1,6 @@
-The `setTheme` function is used to apply a specific theme to the current page or a designated element. The available themes are `light`, `dark`, and `auto`. For more information, please refer to the [Dark Mode](/en/docs/2/styles/dark-mode) section.
+The `setTheme` function is used to apply a specific theme to the current page or a designated element.
+
+The available themes are `light`, `dark`, and `auto`. For more information, please refer to the [Dark Mode](/en/docs/2/styles/dark-mode) section.
 
 ## Usage {#usage}
 

@@ -1,8 +1,8 @@
+让我们通过 mdui 的 CDN 和一个最简单的页面模板来开始使用 mdui。
+
 > 你正在阅读的是 mdui 2 的文档！
 >
 > 若要阅读 mdui 1 的文档，请访问 [www.mdui.org/docs/](https://www.mdui.org/docs/)。
-
-让我们通过 mdui 的 CDN 和一个最简单的页面模板来开始使用 mdui。
 
 ## 快速入门 {#getting-started}
 

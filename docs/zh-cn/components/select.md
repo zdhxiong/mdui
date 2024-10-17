@@ -1,4 +1,4 @@
-下拉选择组件用于在一个下拉菜单中提供一系列选项。
+下拉选择组件在一个下拉菜单中提供多种选项，方便用户快速选择所需内容。
 
 本页面主要介绍 `<mdui-select>` 组件的使用方法，关于下拉菜单项的用法，请参见 [`<mdui-menu-item>`](/zh-cn/docs/2/components/menu#menu-item-api)。
 

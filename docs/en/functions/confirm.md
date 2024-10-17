@@ -1,4 +1,6 @@
-The `confirm` function, a wrapper for the the [`<mdui-dialog>`](/en/docs/2/components/dialog) component. It offers a more user-friendly alternative to the native `window.confirm` function. This function allows you to open a confirmation dialog without the need to write HTML code for the component.
+The `confirm` function is a wrapper for the [`<mdui-dialog>`](/en/docs/2/components/dialog) component and serves as a replacement for the native `window.confirm` function.
+
+By using this function, you can open a confirmation dialog without needing to write any HTML code for the component.
 
 ## Usage {#usage}
 

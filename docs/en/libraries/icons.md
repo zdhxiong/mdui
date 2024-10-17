@@ -1,4 +1,6 @@
-`@mdui/icons` is a standalone package that encompasses all Material Icons. Each icon is encapsulated in a separate file, facilitating selective imports. This approach can significantly decrease the bundle size of your project, compared to using the [`<mdui-icon>`](/en/docs/2/components/icon) component.
+`@mdui/icons` is a standalone package that contains all the Material Icons, with each icon as an independent file.
+
+You can import only the icons you need without having to import the entire icon library. Therefore, using `@mdui/icons` can significantly reduce the size of your project bundle compared to using the [`<mdui-icon>`](/en/docs/2/components/icon) component.
 
 ## Installation {#installation}
 

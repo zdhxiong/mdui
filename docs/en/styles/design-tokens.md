@@ -1,4 +1,6 @@
-Design Tokens are a strategy employed in managing design systems. They abstract reusable elements such as colors, fonts, and spacing into independent variables. These variables are then consistently used across the design system.
+Design Tokens are a strategy employed in managing design systems.
+
+They abstract reusable elements such as colors, fonts, and spacing into independent variables. These variables are then consistently used across the design system.
 
 <style>
 .design-tokens-color {

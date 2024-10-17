@@ -1,4 +1,4 @@
-The `throttle` function creates a throttled version of a function that delays invoking the function until after a specified wait time has elapsed since the last time the throttled function was invoked.
+The `throttle` function is used to create a throttled function that can be executed at most once within a specified time interval.
 
 ## Usage {#usage}
 

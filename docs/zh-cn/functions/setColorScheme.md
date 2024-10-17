@@ -1,4 +1,6 @@
-`setColorScheme` 函数用于根据提供的十六进制颜色值，设置配色方案。配色方案的设置会影响到页面中的所有 mdui 组件。详见 [动态配色](/zh-cn/docs/2/styles/dynamic-color)。
+`setColorScheme` 函数用于根据提供的十六进制颜色值，设置配色方案。
+
+配色方案的设置会影响到页面中的所有 mdui 组件。详见 [动态配色](/zh-cn/docs/2/styles/dynamic-color)。
 
 ## 使用方法 {#usage}
 

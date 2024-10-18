@@ -334,9 +334,21 @@
   }
 }
 
-:host([variant="filled"]) .label + .input {
-  .padding-top(22);
-  .padding-bottom(6);
+textarea.input {
+  padding-top: 0;
+  .margin-top(14);
+}
+
+:host([variant="filled"]) .label {
+  + .input {
+    .padding-top(22);
+    .padding-bottom(6);
+  }
+
+  + textarea.input {
+    padding-top: 0;
+    .margin-top(22);
+  }
 }
 
 .supporting {

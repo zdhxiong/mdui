@@ -16,18 +16,16 @@
   display: flex;
   align-items: center;
   height: 100%;
+  .padding(2, 2, 2, 16);
   .transition(box-shadow, short4, standard);
-
-  padding: unit((2 / @mdui-root-font-size), rem);
-  
-  .padding-left(16);
 
   &.has-icon {
     .padding-left(12);
   }
 
-  &.has-end-icon,
-  &.has-error-icon {
+  &.has-action,
+  &.has-suffix,
+  &.has-right-icon {
     .padding-right(12);
   }
 
@@ -105,6 +103,7 @@
 }
 
 .icon,
+.action,
 .right-icon,
 .prefix,
 .suffix {
@@ -117,8 +116,7 @@
   }
 }
 
-.right-icon,
-.suffix {
+.right-icon {
   .invalid &,
   .invalid-style & {
     .color(error);
@@ -138,11 +136,13 @@
 }
 
 .icon,
+.action,
 .right-icon {
   .font-size(24);
 }
 
 .icon mdui-button-icon,
+.action mdui-button-icon,
 .right-icon mdui-button-icon,
 ::slotted(mdui-button-icon[slot]) {
   .margin-left(-8);
@@ -150,6 +150,7 @@
 }
 
 .icon .i,
+.action .i,
 .right-icon .i,
 ::slotted([slot$="icon"]) {
   font-size: inherit;
@@ -159,9 +160,21 @@
   .margin-right(16);
 }
 
-.right-icon:not(.end-icon),
-.has-end-icon .end-icon {
-  .margin-right(16);
+.has-prefix .prefix {
+  .padding-right(2);
+}
+
+.has-action .action {
+  .margin-left(12);
+}
+
+.has-suffix .suffix {
+  .padding-right(4);
+  .padding-left(2);
+}
+
+.has-right-icon .right-icon {
+  .margin-left(12);
 }
 
 .prefix,
@@ -180,15 +193,8 @@
   }
 }
 
-.has-prefix .prefix {
-  .padding-right(2);
-}
-
-.has-suffix .suffix {
-  .padding-left(2);
-}
-
 .input-container {
+  display: flex;
   width: 100%;
   height: 100%;
 }
@@ -278,11 +284,8 @@
 }
 
 .input {
-  display: flex;
-  flex-wrap: wrap;
+  display: block;
   width: 100%;
-  height: 100%;
-  min-height: 100%;
   border: none;
   outline: none;
   background: none;
@@ -290,16 +293,25 @@
   resize: none;
   cursor: inherit;
   font-family: inherit;
-  .padding(16, 0);
-  .padding-right(16);
+  .padding(14, 14, 14, 0);
   .typescale(body-large);
   .color(on-surface);
   .caret-color(primary);
+
+  .has-action &,
+  .has-right-icon & {
+    .padding-right(4);
+  }
+
+  .has-suffix & {
+    .padding-right(0);
+  }
 
   &.hide-input {
     opacity: 0;
     height: 0;
     min-height: 0;
+    width: 0;
     padding: 0 !important;
     overflow: hidden;
   }
@@ -323,8 +335,8 @@
 }
 
 :host([variant="filled"]) .label + .input {
-  .padding(24, 0, 8, 0);
-  .padding-right(16);
+  .padding-top(22);
+  .padding-bottom(6);
 }
 
 .supporting {
@@ -372,13 +384,6 @@
 // edge 中会默认添加密码切换按钮，隐藏掉
 ::-ms-reveal {
   display: none;
-}
-
-// 火狐中的日期时间选择器会默认添加 clear 按钮，隐藏掉
-.is-firefox .input[type="date"],
-.is-firefox .input[type="datetime-local"],
-.is-firefox .input[type="time"] {
-  clip-path: inset(0 2em 0 0);
 }
 
 // 移除 input[type="number"] 时，右侧的上下箭头

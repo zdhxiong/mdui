@@ -348,21 +348,21 @@
 // @duration 为 short1、short2 等
 // @timing-function 为 standard、standard-accelerate、emphasized 等
 // @delay 可以为整数，表示毫秒；也可以为 short1、short2 等
-.transition(@property, @duration, @timing-function, @delay: 0) {
+.transition(@prop, @duration, @timing-function, @delay: 0) {
   @durationVariable: "--mdui-motion-duration-@{duration}";
   @timingFunctionVariable: "--mdui-motion-easing-@{timing-function}";
 
-  & when (@delay =0) {
-    transition: ~"@{property} var(@{durationVariable}) var(@{timingFunctionVariable})";
+  & when (@delay = 0) {
+    transition: ~"@{prop} var(@{durationVariable}) var(@{timingFunctionVariable})";
   }
 
-  & when not (@delay =0) {
+  & when not (@delay = 0) {
     & when (isnumber(@delay)) {
-      transition: ~"@{property} var(@{durationVariable}) var(@{timingFunctionVariable}) @{delay}ms";
+      transition: ~"@{prop} var(@{durationVariable}) var(@{timingFunctionVariable}) @{delay}ms";
     }
 
     & when not (isnumber(@delay)) {
-      transition: ~"@{property} var(@{durationVariable}) var(@{timingFunctionVariable}) var(--mdui-motion-duration-@{delay})";
+      transition: ~"@{prop} var(@{durationVariable}) var(@{timingFunctionVariable}) var(--mdui-motion-duration-@{delay})";
     }
   }
 }

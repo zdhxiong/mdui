@@ -750,6 +750,13 @@ export class TextField
     const hasEndIcon =
       !!this.endIcon || this.hasSlotController.test('end-icon');
     const hasErrorIcon = this.invalid || this.invalidStyle;
+    const hasTogglePasswordButton =
+      this.type === 'password' && this.togglePassword && !this.disabled;
+    const hasClearButton =
+      this.clearable &&
+      !this.disabled &&
+      (!this.readonly || this.readonlyButClearable) &&
+      (typeof this.value === 'number' || this.value.length > 0);
     const hasPrefix = !!this.prefix || this.hasSlotController.test('prefix');
     const hasSuffix = !!this.suffix || this.hasSlotController.test('suffix');
     const hasHelper = !!this.helper || this.hasSlotController.test('helper');
@@ -768,8 +775,8 @@ export class TextField
       container: true,
       'has-value': this.hasValue,
       'has-icon': hasIcon,
-      'has-end-icon': hasEndIcon,
-      'has-error-icon': hasErrorIcon,
+      'has-right-icon': hasEndIcon || hasErrorIcon,
+      'has-action': hasClearButton || hasTogglePasswordButton,
       'has-prefix': hasPrefix,
       'has-suffix': hasSuffix,
       'is-firefox': navigator.userAgent.includes('Firefox'),
@@ -788,8 +795,9 @@ export class TextField
             () => html`<slot name="input" class="input"></slot>`,
           )}
         </div>
-        ${this.renderClearButton()}${this.renderTogglePasswordButton()}
-        ${this.renderSuffix(hasErrorIcon)}
+        ${this.renderSuffix()}${this.renderClearButton(hasClearButton)}
+        ${this.renderTogglePasswordButton(hasTogglePasswordButton)}
+        ${this.renderRightIcon(hasErrorIcon)}
       </div>
       ${when(
         hasError || hasHelper || hasCounter,
@@ -920,41 +928,34 @@ export class TextField
       <slot name="prefix" part="prefix" class="prefix">${this.prefix}</slot>`;
   }
 
-  private renderSuffix(hasErrorIcon: boolean): TemplateResult {
+  private renderSuffix(): TemplateResult {
     return html`<slot name="suffix" part="suffix" class="suffix">
-        ${this.suffix}
-      </slot>
-      ${hasErrorIcon
-        ? html`<slot name="error-icon" part="error-icon" class="right-icon">
-            ${this.errorIcon
-              ? html`<mdui-icon name=${this.errorIcon} class="i"></mdui-icon>`
-              : html`<mdui-icon-error class="i"></mdui-icon-error>`}
-          </slot>`
-        : html`<slot
-            name="end-icon"
-            part="end-icon"
-            class="end-icon right-icon"
-          >
-            ${this.endIcon
-              ? html`<mdui-icon name=${this.endIcon} class="i"></mdui-icon>`
-              : nothingTemplate}
-          </slot>`}`;
+      ${this.suffix}
+    </slot>`;
   }
 
-  private renderClearButton(): TemplateResult {
-    const hasClearButton =
-      this.clearable &&
-      !this.disabled &&
-      (!this.readonly || this.readonlyButClearable) &&
-      (typeof this.value === 'number' || this.value.length > 0);
+  private renderRightIcon(hasErrorIcon: boolean): TemplateResult {
+    return hasErrorIcon
+      ? html`<slot name="error-icon" part="error-icon" class="right-icon">
+          ${this.errorIcon
+            ? html`<mdui-icon name=${this.errorIcon} class="i"></mdui-icon>`
+            : html`<mdui-icon-error class="i"></mdui-icon-error>`}
+        </slot>`
+      : html`<slot name="end-icon" part="end-icon" class="end-icon right-icon">
+          ${this.endIcon
+            ? html`<mdui-icon name=${this.endIcon} class="i"></mdui-icon>`
+            : nothingTemplate}
+        </slot>`;
+  }
 
+  private renderClearButton(hasClearButton: boolean): TemplateResult {
     return when(
       hasClearButton,
       () =>
         html`<slot
           name="clear-button"
           part="clear-button"
-          class="right-icon"
+          class="action"
           @click=${this.onClear}
         >
           <mdui-button-icon tabindex="-1">
@@ -970,17 +971,16 @@ export class TextField
     );
   }
 
-  private renderTogglePasswordButton(): TemplateResult {
-    const hasTogglePasswordButton =
-      this.type === 'password' && this.togglePassword && !this.disabled;
-
+  private renderTogglePasswordButton(
+    hasTogglePasswordButton: boolean,
+  ): TemplateResult {
     return when(
       hasTogglePasswordButton,
       () =>
         html`<slot
           name="toggle-password-button"
           part="toggle-password-button"
-          class="right-icon"
+          class="action"
           @click=${this.onTogglePassword}
         >
           <mdui-button-icon tabindex="-1">

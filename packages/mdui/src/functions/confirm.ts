@@ -216,9 +216,11 @@ export const confirm = (options: Options): Promise<void> => {
       });
     }
 
-    $(dialog).on('close', () => {
-      isResolve ? resolve() : reject();
-      offLocaleReady(dialog);
+    $(dialog).on('close', (e) => {
+      if (e.target === dialog) {
+        isResolve ? resolve() : reject();
+        offLocaleReady(dialog);
+      }
     });
   });
 };

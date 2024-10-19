@@ -286,9 +286,11 @@ export const prompt = (options: Options): Promise<string> => {
       });
     }
 
-    $(dialog).on('close', () => {
-      isResolve ? resolve(textField.value) : reject();
-      offLocaleReady(dialog);
+    $(dialog).on('close', (e) => {
+      if (e.target === dialog) {
+        isResolve ? resolve(textField.value) : reject();
+        offLocaleReady(dialog);
+      }
     });
   });
 };

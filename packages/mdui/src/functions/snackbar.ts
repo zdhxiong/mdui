@@ -134,7 +134,11 @@ export const snackbar = (options: Options): Snackbar => {
     ) {
       const eventName = toKebabCase(key.slice(2));
 
-      $snackbar.on(eventName, () => {
+      $snackbar.on(eventName, (e) => {
+        if (e.target !== snackbar) {
+          return;
+        }
+
         if (key === 'onActionClick') {
           const actionClick = (options.onActionClick ?? returnTrue).call(
             snackbar,
@@ -163,7 +167,11 @@ export const snackbar = (options: Options): Snackbar => {
     }
   });
 
-  $snackbar.appendTo('body').on('closed', () => {
+  $snackbar.appendTo('body').on('closed', (e) => {
+    if (e.target !== snackbar) {
+      return;
+    }
+
     $snackbar.remove();
 
     if (options.queue) {

@@ -156,8 +156,10 @@ export const dialog = (options: Options): Dialog => {
     } else if (callbacks.includes(key)) {
       const eventName = toKebabCase(key.slice(2));
 
-      $dialog.on(eventName, () => {
-        value.call(dialog, dialog);
+      $dialog.on(eventName, (e) => {
+        if (e.target === dialog) {
+          value.call(dialog, dialog);
+        }
       });
     }
   });
@@ -194,7 +196,11 @@ export const dialog = (options: Options): Dialog => {
     });
   }
 
-  $dialog.appendTo('body').on('closed', () => {
+  $dialog.appendTo('body').on('closed', (e) => {
+    if (e.target !== dialog) {
+      return;
+    }
+
     $dialog.remove();
 
     if (options.queue) {

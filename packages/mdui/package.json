@@ -49,7 +49,6 @@
   },
   "homepage": "https://www.mdui.org",
   "dependencies": {
-    "@lit-labs/motion": "^1.0.7",
     "@lit/localize": "^0.12.1",
     "@lit/reactive-element": "^2.0.4",
     "@material/material-color-utilities": "^0.3.0",

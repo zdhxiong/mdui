@@ -185,9 +185,6 @@ importers:
       '@floating-ui/utils':
         specifier: ^0.2.4
         version: 0.2.4
-      '@lit-labs/motion':
-        specifier: ^1.0.7
-        version: 1.0.7
       '@lit/localize':
         specifier: ^0.12.1
         version: 0.12.1
@@ -545,9 +542,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
-
-  '@lit-labs/motion@1.0.7':
-    resolution: {integrity: sha512-odykI6Talw274lYRWQvrGNplHzRy5QAtYEMbqonX6oesEuDQq1nR9Mis38X587jinj68Gjria0mlzqowJ1FACw==}
 
   '@lit-labs/ssr-dom-shim@1.2.0':
     resolution: {integrity: sha512-yWJKmpGE6lUURKAaIltoPIE/wrbY3TEkqQt+X0m+7fQNnAv0keydnYvbiJFP1PnMhizmIWRWOG5KLhYyc/xl+g==}
@@ -4240,10 +4234,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
-
-  '@lit-labs/motion@1.0.7':
-    dependencies:
-      lit: 3.1.4
 
   '@lit-labs/ssr-dom-shim@1.2.0': {}
 

@@ -6,7 +6,6 @@ import { live } from 'lit/directives/live.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { msg } from '@lit/localize';
-import { animate } from '@lit-labs/motion';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
@@ -15,7 +14,6 @@ import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
-import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import '@mdui/shared/icons/cancel--outlined.js';
@@ -904,18 +902,7 @@ export class TextField
 
   private renderLabel(): TemplateResult {
     return this.label
-      ? html`<label
-          part="label"
-          class="label"
-          ${animate({
-            keyframeOptions: {
-              duration: getDuration(this, 'short4'),
-              easing: getEasing(this, 'standard'),
-            },
-          })}
-        >
-          ${this.label}
-        </label>`
+      ? html`<label part="label" class="label">${this.label}</label>`
       : nothingTemplate;
   }
 

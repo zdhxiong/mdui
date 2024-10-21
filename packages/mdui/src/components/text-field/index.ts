@@ -573,6 +573,8 @@ export class TextField
     if (this.hasUpdated) {
       await this.updateComplete;
 
+      this.setTextareaHeight();
+
       // reset 引起的值变更，不执行验证；直接修改值引起的变更，需要进行验证
       const form = this.formController.getForm();
       if (form && formResets.get(form)?.has(this)) {

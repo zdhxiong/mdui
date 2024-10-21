@@ -28,6 +28,9 @@ import type { TextField } from 'mdui/components/text-field.js';
 
 ```html,example,expandable
 <mdui-text-field variant="filled" label="Text Field"></mdui-text-field>
+
+<br/><br/>
+
 <mdui-text-field variant="outlined" label="Text Field"></mdui-text-field>
 ```
 
@@ -129,6 +132,8 @@ import type { TextField } from 'mdui/components/text-field.js';
 
 ```html,example,expandable
 <mdui-text-field autosize label="Text Field"></mdui-text-field>
+
+<br/><br/>
 
 <mdui-text-field autosize min-rows="2" max-rows="5" label="Text Field"></mdui-text-field>
 ```

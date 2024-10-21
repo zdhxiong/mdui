@@ -8,6 +8,8 @@
   align-items: center;
   flex-wrap: wrap;
   border-radius: var(--shape-corner);
+  transform: scaleY(0);
+  transition: transform 0ms var(--mdui-motion-easing-linear) var(--mdui-motion-duration-short4);
   .min-width(320);
   .max-width(576);
   .padding(4, 0);
@@ -19,22 +21,44 @@
 
 :host([placement^="top"]) {
   transform-origin: top;
-  .top(16);
 }
 
 :host([placement^="bottom"]) {
   transform-origin: bottom;
-  .bottom(16);
 }
 
-:host([placement="top-start"]),
-:host([placement="bottom-start"]) {
+:host([placement="top-start"]:not([mobile])),
+:host([placement="bottom-start"]:not([mobile])) {
   .left(16);
 }
 
-:host([placement="top-end"]),
-:host([placement="bottom-end"]) {
+:host([placement="top-end"]:not([mobile])),
+:host([placement="bottom-end"]:not([mobile])) {
   .right(16);
+}
+
+:host([placement="top"]:not([mobile])),
+:host([placement="bottom"]:not([mobile])) {
+  left: 50%;
+  transform: scaleY(0) translateX(-50%);
+}
+
+:host([mobile]) {
+  min-width: 0;
+  .left(16);
+  .right(16);
+}
+
+:host([open]) {
+  transform: scaleY(1);
+  transition: top var(--mdui-motion-duration-short4) var(--mdui-motion-easing-standard),
+              bottom var(--mdui-motion-duration-short4) var(--mdui-motion-easing-standard),
+              transform var(--mdui-motion-duration-medium4) var(--mdui-motion-easing-emphasized-decelerate);
+}
+
+:host([placement="top"][open]:not([mobile])),
+:host([placement="bottom"][open]:not([mobile])) {
+  transform: scaleY(1) translateX(-50%);
 }
 
 .message {

@@ -7,6 +7,7 @@ import { animateTo, stopAnimations } from '@mdui/shared/helpers/animate.js';
 import { breakpoint } from '@mdui/shared/helpers/breakpoint.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
+import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import '@mdui/shared/icons/clear.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -14,7 +15,19 @@ import '../button-icon.js';
 import '../button.js';
 import '../icon.js';
 import { style } from './style.js';
+import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
+
+// snackbar 堆叠时的数组
+const stacks: {
+  // snackbar 高度
+  height: number;
+  // snackbar 实例
+  snackbar: Snackbar;
+}[] = [];
+
+// 是否重新排序中，mobile 变化时，仅重新排序一次
+let reordering = false;
 
 /**
  * @summary 消息条组件
@@ -137,7 +150,15 @@ export class Snackbar extends MduiElement<SnackbarEventMap> {
   })
   public closeOnOutsideClick = false;
 
+  @property({
+    type: Boolean,
+    reflect: true,
+    converter: booleanConverter,
+  })
+  private mobile = false;
+
   private closeTimeout!: number;
+  private observeResize?: ObserveResize;
 
   public constructor() {
     super();
@@ -147,22 +168,10 @@ export class Snackbar extends MduiElement<SnackbarEventMap> {
 
   @watch('open')
   private async onOpenChange() {
-    const isMobile = breakpoint().down('sm');
-    const isCenteredHorizontally = ['top', 'bottom'].includes(this.placement);
-
     const easingLinear = getEasing(this, 'linear');
-    const easingEmphasizedDecelerate = getEasing(this, 'emphasized-decelerate');
-
     const children = Array.from(
       this.renderRoot.querySelectorAll<HTMLElement>('.message, .action-group'),
     );
-
-    // 手机上始终使用全宽的样式，但 @media 选择器中无法使用 CSS 变量，所以使用 js 来设置样式
-    const commonStyle = isMobile
-      ? { left: '1rem', right: '1rem', minWidth: 0 }
-      : isCenteredHorizontally
-        ? { left: '50%' }
-        : {};
 
     // 打开
     // 要区分是否首次渲染，首次渲染时不触发事件，不执行动画；非首次渲染，触发事件，执行动画
@@ -192,38 +201,15 @@ export class Snackbar extends MduiElement<SnackbarEventMap> {
         ...children.map((child) => stopAnimations(child)),
       ]);
 
+      stacks.push({
+        height: this.clientHeight,
+        snackbar: this,
+      });
+      await this.reorderStack(this);
+
       const duration = getDuration(this, 'medium4');
 
-      const getOpenStyle = (ident: 'start' | 'end') => {
-        const scaleY = `scaleY(${ident === 'start' ? 0 : 1})`;
-
-        if (isMobile) {
-          return { transform: scaleY };
-        } else {
-          return {
-            transform: [
-              scaleY,
-              isCenteredHorizontally ? 'translateX(-50%)' : '',
-            ]
-              .filter((i) => i)
-              .join(' '),
-          };
-        }
-      };
-
       await Promise.all([
-        animateTo(
-          this,
-          [
-            { ...getOpenStyle('start'), ...commonStyle },
-            { ...getOpenStyle('end'), ...commonStyle },
-          ],
-          {
-            duration: hasUpdated ? duration : 0,
-            easing: easingEmphasizedDecelerate,
-            fill: 'forwards',
-          },
-        ),
         animateTo(
           this,
           [{ opacity: 0 }, { opacity: 1, offset: 0.5 }, { opacity: 1 }],
@@ -273,55 +259,78 @@ export class Snackbar extends MduiElement<SnackbarEventMap> {
 
       const duration = getDuration(this, 'short4');
 
-      const getCloseStyle = (ident: 'start' | 'end') => {
-        const opacity = ident === 'start' ? 1 : 0;
-        const styles = { opacity };
-
-        if (!isMobile && isCenteredHorizontally) {
-          Object.assign(styles, { transform: 'translateX(-50%)' });
-        }
-
-        return styles;
-      };
-
       await Promise.all([
-        animateTo(
-          this,
-          [
-            { ...getCloseStyle('start'), ...commonStyle },
-            { ...getCloseStyle('end'), ...commonStyle },
-          ],
-          {
-            duration,
-            easing: easingLinear,
-            fill: 'forwards',
-          },
-        ),
+        animateTo(this, [{ opacity: 1 }, { opacity: 0 }], {
+          duration,
+          easing: easingLinear,
+          fill: 'forwards',
+        }),
         ...children.map((child) =>
           animateTo(
             child,
             [{ opacity: 1 }, { opacity: 0, offset: 0.75 }, { opacity: 0 }],
-            { duration, easing: easingLinear },
+            {
+              duration,
+              easing: easingLinear,
+            },
           ),
         ),
       ]);
 
       this.style.display = 'none';
       this.emit('closed');
+
+      const stackIndex = stacks.findIndex((stack) => stack.snackbar === this);
+      stacks.splice(stackIndex, 1);
+      if (stacks[stackIndex]) {
+        await this.reorderStack(stacks[stackIndex].snackbar);
+      }
+
       return;
     }
+  }
+
+  /**
+   * 这两个属性变更时，需要重新排序该组件后面的 snackbar
+   */
+  @watch('placement', true)
+  @watch('messageLine', true)
+  private async onStackChange() {
+    await this.reorderStack(this);
   }
 
   public override connectedCallback(): void {
     super.connectedCallback();
 
     document.addEventListener('pointerdown', this.onDocumentClick);
+
+    // 先立即计算一次，避免在首次 open 时还未计算完成
+    this.mobile = breakpoint().down('sm');
+
+    this.observeResize = observeResize(document.documentElement, async () => {
+      const mobile = breakpoint().down('sm');
+
+      if (this.mobile !== mobile) {
+        this.mobile = mobile;
+
+        if (!reordering) {
+          reordering = true;
+          await this.reorderStack();
+          reordering = false;
+        }
+      }
+    });
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
     document.removeEventListener('pointerdown', this.onDocumentClick);
+    window.clearTimeout(this.closeTimeout);
+    if (this.open) {
+      this.open = false;
+    }
+    this.observeResize?.unobserve();
   }
 
   protected override render(): TemplateResult {
@@ -361,6 +370,67 @@ export class Snackbar extends MduiElement<SnackbarEventMap> {
             </slot>`,
         )}
       </div>`;
+  }
+
+  /**
+   * 重新排序 snackbar 堆叠
+   * @param startSnackbar 从哪个 snackbar 开始重新排列，默认从第一个开始
+   * @private
+   */
+  private async reorderStack(startSnackbar?: Snackbar) {
+    const stackIndex = startSnackbar
+      ? stacks.findIndex((stack) => stack.snackbar === startSnackbar)
+      : 0;
+
+    for (let i = stackIndex; i < stacks.length; i++) {
+      const stack = stacks[i];
+      const snackbar = stack.snackbar;
+
+      if (this.mobile) {
+        ['top', 'bottom'].forEach((placement) => {
+          if (snackbar.placement.startsWith(placement)) {
+            const prevStacks = stacks.filter((stack, index) => {
+              return (
+                index < i && stack.snackbar.placement.startsWith(placement)
+              );
+            });
+            const prevHeight = prevStacks.reduce(
+              (prev, current) => prev + current.height,
+              0,
+            );
+
+            // @ts-ignore
+            snackbar.style[placement] =
+              `calc(${prevHeight}px + ${prevStacks.length + 1}rem)`;
+            snackbar.style[placement === 'top' ? 'bottom' : 'top'] = 'auto';
+          }
+        });
+      } else {
+        [
+          'top',
+          'top-start',
+          'top-end',
+          'bottom',
+          'bottom-start',
+          'bottom-end',
+        ].forEach((placement) => {
+          if (snackbar.placement === placement) {
+            const prevStacks = stacks.filter((stack, index) => {
+              return index < i && stack.snackbar.placement === placement;
+            });
+            const prevHeight = prevStacks.reduce(
+              (prev, current) => prev + current.height,
+              0,
+            );
+
+            snackbar.style[placement.startsWith('top') ? 'top' : 'bottom'] =
+              `calc(${prevHeight}px + ${prevStacks.length + 1}rem)`;
+            snackbar.style[placement.startsWith('top') ? 'bottom' : 'top'] =
+              'auto';
+          }
+        });
+      }
+    }
   }
 
   /**

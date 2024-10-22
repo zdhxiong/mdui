@@ -78,8 +78,7 @@ import type { Ref } from 'lit/directives/ref.js';
 @customElement('mdui-text-field')
 export class TextField
   extends FocusableMixin(MduiElement)<TextFieldEventMap>
-  implements FormControl
-{
+  implements FormControl {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -606,8 +605,8 @@ export class TextField
     $input.css(
       'max-height',
       parseFloat($input.css('line-height')) * (this.maxRows ?? 1) +
-        parseFloat($input.css('padding-top')) +
-        parseFloat($input.css('padding-bottom')),
+      parseFloat($input.css('padding-top')) +
+      parseFloat($input.css('padding-bottom')),
     );
   }
 
@@ -626,8 +625,8 @@ export class TextField
     $input.css(
       'min-height',
       parseFloat($input.css('line-height')) * (this.minRows ?? 1) +
-        parseFloat($input.css('padding-top')) +
-        parseFloat($input.css('padding-bottom')),
+      parseFloat($input.css('padding-top')) +
+      parseFloat($input.css('padding-bottom')),
     );
   }
 
@@ -788,28 +787,28 @@ export class TextField
         <div class="input-container">
           ${this.renderLabel()}
           ${this.isTextarea
-            ? this.renderTextArea(hasInputSlot)
-            : this.renderInput(hasInputSlot)}
+        ? this.renderTextArea(hasInputSlot)
+        : this.renderInput(hasInputSlot)}
           ${when(
-            hasInputSlot,
-            () => html`<slot name="input" class="input"></slot>`,
-          )}
+          hasInputSlot,
+          () => html`<slot name="input" class="input"></slot>`,
+        )}
         </div>
         ${this.renderSuffix()}${this.renderClearButton(hasClearButton)}
         ${this.renderTogglePasswordButton(hasTogglePasswordButton)}
         ${this.renderRightIcon(hasErrorIcon)}
       </div>
       ${when(
-        hasError || hasHelper || hasCounter,
-        () =>
-          html`<div
+          hasError || hasHelper || hasCounter,
+          () =>
+            html`<div
             part="supporting"
             class=${classMap({ supporting: true, ...invalidClassNameObj })}
           >
             ${this.renderHelper(hasError, hasHelper)}
             ${this.renderCounter(hasCounter)}
           </div>`,
-      )}`;
+        )}`;
   }
 
   private setCustomValidityInternal(message: string): void {
@@ -894,9 +893,8 @@ export class TextField
   private setTextareaHeight() {
     if (this.autosize) {
       this.inputRef.value!.style.height = 'auto';
-      this.inputRef.value!.style.height = `${
-        this.inputRef.value!.scrollHeight
-      }px`;
+      this.inputRef.value!.style.height = `${this.inputRef.value!.scrollHeight
+        }px`;
     } else {
       (this.inputRef.value!.style.height as string | undefined) = undefined;
     }
@@ -911,8 +909,8 @@ export class TextField
   private renderPrefix(): TemplateResult {
     return html`<slot name="icon" part="icon" class="icon">
         ${this.icon
-          ? html`<mdui-icon name=${this.icon} class="i"></mdui-icon>`
-          : nothingTemplate}
+        ? html`<mdui-icon name=${this.icon} class="i"></mdui-icon>`
+        : nothingTemplate}
       </slot>
       <slot name="prefix" part="prefix" class="prefix">${this.prefix}</slot>`;
   }
@@ -927,13 +925,13 @@ export class TextField
     return hasErrorIcon
       ? html`<slot name="error-icon" part="error-icon" class="right-icon">
           ${this.errorIcon
-            ? html`<mdui-icon name=${this.errorIcon} class="i"></mdui-icon>`
-            : html`<mdui-icon-error class="i"></mdui-icon-error>`}
+          ? html`<mdui-icon name=${this.errorIcon} class="i"></mdui-icon>`
+          : html`<mdui-icon-error class="i"></mdui-icon-error>`}
         </slot>`
       : html`<slot name="end-icon" part="end-icon" class="end-icon right-icon">
           ${this.endIcon
-            ? html`<mdui-icon name=${this.endIcon} class="i"></mdui-icon>`
-            : nothingTemplate}
+          ? html`<mdui-icon name=${this.endIcon} class="i"></mdui-icon>`
+          : nothingTemplate}
         </slot>`;
   }
 
@@ -950,8 +948,8 @@ export class TextField
           <mdui-button-icon tabindex="-1">
             <slot name="clear-icon" part="clear-icon">
               ${this.clearIcon
-                ? html`<mdui-icon name=${this.clearIcon} class="i"></mdui-icon>`
-                : html`<mdui-icon-cancel--outlined
+            ? html`<mdui-icon name=${this.clearIcon} class="i"></mdui-icon>`
+            : html`<mdui-icon-cancel--outlined
                     class="i"
                   ></mdui-icon-cancel--outlined>`}
             </slot>
@@ -974,23 +972,23 @@ export class TextField
         >
           <mdui-button-icon tabindex="-1">
             ${this.isPasswordVisible
-              ? html`<slot name="show-password-icon" part="show-password-icon">
+            ? html`<slot name="show-password-icon" part="show-password-icon">
                   ${this.showPasswordIcon
-                    ? html`<mdui-icon
+                ? html`<mdui-icon
                         name=${this.showPasswordIcon}
                         class="i"
                       ></mdui-icon>`
-                    : html`<mdui-icon-visibility-off
+                : html`<mdui-icon-visibility-off
                         class="i"
                       ></mdui-icon-visibility-off>`}
                 </slot>`
-              : html`<slot name="hide-password-icon" part="hide-password-icon">
+            : html`<slot name="hide-password-icon" part="hide-password-icon">
                   ${this.hidePasswordIcon
-                    ? html`<mdui-icon
+                ? html`<mdui-icon
                         name=${this.hidePasswordIcon}
                         class="i"
                       ></mdui-icon>`
-                    : html`<mdui-icon-visibility
+                : html`<mdui-icon-visibility
                         class="i"
                       ></mdui-icon-visibility>`}
                 </slot>`}
@@ -1010,11 +1008,11 @@ export class TextField
       name=${ifDefined(this.name)}
       .value=${live(this.value)}
       placeholder=${ifDefined(
-        // @ts-ignore
-        !this.label || this.isFocusedStyle || this.hasValue
-          ? this.placeholder
-          : undefined,
-      )}
+          // @ts-ignore
+          !this.label || this.isFocusedStyle || this.hasValue
+            ? this.placeholder
+            : undefined,
+        )}
       ?readonly=${this.readonly}
       ?disabled=${this.disabled}
       ?required=${this.required}
@@ -1024,14 +1022,12 @@ export class TextField
       max=${ifDefined(this.max)}
       step=${ifDefined(this.step)}
       autocapitalize=${ifDefined(
-        this.type === 'password' ? 'off' : this.autocapitalize,
-      )}
-      autocomplete=${ifDefined(
-        this.type === 'password' ? 'off' : this.autocomplete,
-      )}
+          this.type === 'password' ? 'off' : this.autocapitalize,
+        )}
+      autocomplete=${this.autocomplete}
       autocorrect=${ifDefined(
-        this.type === 'password' ? 'off' : this.autocorrect,
-      )}
+          this.type === 'password' ? 'off' : this.autocorrect,
+        )}
       spellcheck=${ifDefined(this.spellcheck)}
       pattern=${ifDefined(this.pattern)}
       enterkeyhint=${ifDefined(this.enterkeyhint)}
@@ -1051,11 +1047,11 @@ export class TextField
       name=${ifDefined(this.name)}
       .value=${live(this.value)}
       placeholder=${ifDefined(
-        // @ts-ignore
-        !this.label || this.isFocusedStyle || this.hasValue
-          ? this.placeholder
-          : undefined,
-      )}
+      // @ts-ignore
+      !this.label || this.isFocusedStyle || this.hasValue
+        ? this.placeholder
+        : undefined,
+    )}
       ?readonly=${this.readonly}
       ?disabled=${this.disabled}
       ?required=${this.required}
@@ -1089,7 +1085,7 @@ export class TextField
             ${this.helper}
           </slot>`
         : // 右边有 counter，需要占位
-          html`<span></span>`;
+        html`<span></span>`;
   }
 
   private renderCounter(hasCounter: boolean): TemplateResult {

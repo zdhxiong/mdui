@@ -631,8 +631,20 @@ export class TextField
     );
   }
 
+  public override connectedCallback(): void {
+    super.connectedCallback();
+
+    this.updateComplete.then(() => {
+      this.setTextareaHeight();
+      this.observeResize = observeResize(this.inputRef.value!, () =>
+        this.setTextareaHeight(),
+      );
+    });
+  }
+
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
+
     this.observeResize?.unobserve();
     offLocaleReady(this);
   }
@@ -734,15 +746,6 @@ export class TextField
 
     // 外部调用 setCustomValidity 时，不再使用内置的验证规则，所以需要移除监听语言变更事件
     offLocaleReady(this);
-  }
-
-  protected firstUpdated(_changedProperties: PropertyValues) {
-    super.firstUpdated(_changedProperties);
-
-    this.setTextareaHeight();
-    this.observeResize = observeResize(this.inputRef.value!, () =>
-      this.setTextareaHeight(),
-    );
   }
 
   protected override render(): TemplateResult {

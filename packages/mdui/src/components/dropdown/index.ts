@@ -335,10 +335,21 @@ export class Dropdown extends MduiElement<DropdownEventMap> {
       this.overflowAncestors.forEach((ancestor) => {
         ancestor.addEventListener('scroll', this.onWindowScroll);
       });
+
+      // triggerElement 的尺寸变化时，重新调整 panel 的位置
+      this.observeResize = observeResize(this.triggerElement, () => {
+        this.updatePositioner();
+      });
     });
   }
 
   public override disconnectedCallback(): void {
+    // 移除组件时，如果关闭动画正在进行中，则会导致关闭动画无法执行完成，最终组件无法隐藏
+    // 具体场景为 vue 的 <keep-alive> 中切换走，再切换回来时，面板仍然打开着
+    if (!this.open && this.panelRef.value) {
+      this.panelRef.value.hidden = true;
+    }
+
     super.disconnectedCallback();
 
     document.removeEventListener('pointerdown', this.onDocumentClick);
@@ -361,11 +372,6 @@ export class Dropdown extends MduiElement<DropdownEventMap> {
       this.triggerElement.addEventListener('click', this.onClick);
       this.triggerElement.addEventListener('contextmenu', this.onContextMenu);
       this.triggerElement.addEventListener('mouseenter', this.onMouseEnter);
-
-      // triggerElement 的尺寸变化时，重新调整 panel 的位置
-      this.observeResize = observeResize(this.triggerElement, () => {
-        this.updatePositioner();
-      });
     });
   }
 

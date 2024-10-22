@@ -152,26 +152,12 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
   }
 
   // contained 变更后，修改监听尺寸变化的元素。为 true 时，监听父元素；为 false 时，监听 body
-  @watch('contained')
+  @watch('contained', true)
   private async onContainedChange() {
     await this.definedController.whenDefined();
 
     this.observeResize?.unobserve();
-
-    this.observeResize = observeResize(
-      this.contained ? this.parentElement! : document.documentElement,
-      () => {
-        const target = this.contained ? this.parentElement! : undefined;
-        this.mobile = breakpoint(target).down('md');
-
-        // 若位于 layout 中，且为模态化，则重新布局时，占据的宽度为 0
-        if (this.isParentLayout) {
-          this.layoutManager!.updateLayout(this, {
-            width: this.isModal ? 0 : undefined,
-          });
-        }
-      },
-    );
+    this.setObserveResize();
   }
 
   @watch('placement', true)
@@ -423,7 +409,12 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
 
   public override connectedCallback(): void {
     super.connectedCallback();
+
     this.modalHelper = new Modal(this);
+
+    this.definedController.whenDefined().then(() => {
+      this.setObserveResize();
+    });
   }
 
   public override disconnectedCallback(): void {
@@ -466,6 +457,23 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
         class="panel"
         tabindex="0"
       ></slot>`;
+  }
+
+  private setObserveResize() {
+    this.observeResize = observeResize(
+      this.contained ? this.parentElement! : document.documentElement,
+      () => {
+        const target = this.contained ? this.parentElement! : undefined;
+        this.mobile = breakpoint(target).down('md');
+
+        // 若位于 layout 中，且为模态化，则重新布局时，占据的宽度为 0
+        if (this.isParentLayout) {
+          this.layoutManager!.updateLayout(this, {
+            width: this.isModal ? 0 : undefined,
+          });
+        }
+      },
+    );
   }
 
   private onOverlayClick() {

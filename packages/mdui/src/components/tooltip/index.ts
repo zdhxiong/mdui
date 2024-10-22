@@ -289,6 +289,13 @@ export class Tooltip extends MduiElement<TooltipEventMap> {
     this.overflowAncestors.forEach((ancestor) => {
       ancestor.addEventListener('scroll', this.onWindowScroll);
     });
+
+    this.definedController.whenDefined().then(() => {
+      // trigger 尺寸变化时，重新调整 tooltip 的位置
+      this.observeResize = observeResize(this.target, () => {
+        this.updatePositioner();
+      });
+    });
   }
 
   public override disconnectedCallback(): void {
@@ -315,11 +322,6 @@ export class Tooltip extends MduiElement<TooltipEventMap> {
       target.addEventListener('keydown', this.onKeydown);
       target.addEventListener('mouseenter', this.onMouseEnter);
       target.addEventListener('mouseleave', this.onMouseLeave);
-
-      // trigger 尺寸变化时，重新调整 tooltip 的位置
-      this.observeResize = observeResize(target, () => {
-        this.updatePositioner();
-      });
     });
   }
 

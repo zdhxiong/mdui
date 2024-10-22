@@ -178,17 +178,19 @@ export class Tabs extends MduiElement<TabsEventMap> {
     this.updateIndicator();
   }
 
+  public override connectedCallback() {
+    super.connectedCallback();
+
+    this.updateComplete.then(() => {
+      this.observeResize = observeResize(this.containerRef.value!, () =>
+        this.updateIndicator(),
+      );
+    });
+  }
+
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.observeResize?.unobserve();
-  }
-
-  protected override firstUpdated(_changedProperties: PropertyValues) {
-    super.firstUpdated(_changedProperties);
-
-    this.observeResize = observeResize(this.containerRef.value!, () =>
-      this.updateIndicator(),
-    );
   }
 
   protected override render(): TemplateResult {

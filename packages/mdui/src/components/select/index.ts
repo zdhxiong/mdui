@@ -322,6 +322,12 @@ export class Select
     this.definedController.whenDefined().then(() => {
       this.requestUpdate();
     });
+
+    this.updateComplete.then(() => {
+      this.observeResize = observeResize(this.textFieldRef.value!, () =>
+        this.resizeMenu(),
+      );
+    });
   }
 
   public override disconnectedCallback(): void {
@@ -375,14 +381,6 @@ export class Select
   public setCustomValidity(message: string): void {
     this.hiddenInputRef.value!.setCustomValidity(message);
     this.invalid = !this.hiddenInputRef.value!.checkValidity();
-  }
-
-  protected override firstUpdated(changedProperties: PropertyValues): void {
-    super.firstUpdated(changedProperties);
-
-    this.observeResize = observeResize(this.textFieldRef.value!, () =>
-      this.resizeMenu(),
-    );
   }
 
   protected override render(): TemplateResult {

@@ -127,7 +127,7 @@ export class TopAppBar extends ScrollBehaviorMixin(
         'transitionend',
         async () => {
           await this.scrollBehaviorDefinedController.whenDefined();
-          this.updateContainerPadding();
+          this.setContainerPadding('update', this.scrollTarget);
         },
         { once: true },
       );

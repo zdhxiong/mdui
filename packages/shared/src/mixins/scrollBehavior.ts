@@ -17,11 +17,23 @@ export declare class ScrollBehaviorMixinInterface {
   public scrollBehavior?: ScrollBehavior;
   public scrollThreshold?: number;
   protected scrollBehaviorDefinedController: DefinedController;
-  protected updateContainerPadding(): void;
+  protected setContainerPadding(
+    action: 'add' | 'update' | 'remove',
+    scrollTarget?: string | HTMLElement | JQ<HTMLElement>,
+  ): void;
   protected hasScrollBehavior(
     behavior: ScrollBehavior | ScrollBehavior[],
   ): boolean;
 }
+
+/**
+ * 如果同时有多个组件在同一个元素上设置了 padding-top 或 padding-bottom，则移除其中一个组件时，不移除 padding-top 或 padding-bottom
+ * 键为添加 padding 的目标元素，值为在分别在 top 和 bottom 上添加的组件数组
+ */
+const weakMap = new WeakMap<
+  HTMLElement,
+  { top: HTMLElement[]; bottom: HTMLElement[] }
+>();
 
 /**
  * 滚动行为
@@ -94,11 +106,13 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
 
     @watch('scrollTarget')
     private async onScrollTargetChange(oldValue: string, newValue: string) {
+      const hasUpdated = this.hasUpdated;
       await this.scrollBehaviorDefinedController.whenDefined();
 
-      // 仅在有值切换到无值、或无值切换到有值时，更新
-      if ((oldValue && !newValue) || (!oldValue && newValue)) {
-        this.updateContainerPadding();
+      // 旧元素移除 padding，新元素添加 padding
+      if (hasUpdated) {
+        this.setContainerPadding('remove', oldValue);
+        this.setContainerPadding('add', newValue);
       }
 
       if (!this.scrollBehavior) {
@@ -119,13 +133,8 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
     }
 
     @watch('scrollBehavior')
-    private async onScrollBehaviorChange(oldValue: string, newValue: string) {
+    private async onScrollBehaviorChange() {
       await this.scrollBehaviorDefinedController.whenDefined();
-
-      // 仅在有值切换到无值、或无值切换到有值时，更新
-      if ((oldValue && !newValue) || (!oldValue && newValue)) {
-        this.updateContainerPadding();
-      }
 
       const listening = this.getListening(this.scrollTarget);
       if (!listening) {
@@ -146,7 +155,7 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
 
       this.scrollBehaviorDefinedController.whenDefined().then(() => {
         this.isParentLayout = isNodeName(this.parentElement, 'mdui-layout');
-        this.updateContainerPadding();
+        this.setContainerPadding('add', this.scrollTarget);
       });
     }
 
@@ -154,7 +163,7 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
       super.disconnectedCallback();
 
       this.scrollBehaviorDefinedController.whenDefined().then(() => {
-        this.updateContainerPadding(false);
+        this.setContainerPadding('remove', this.scrollTarget);
       });
     }
 
@@ -199,28 +208,54 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
 
     /**
      * 更新滚动容器的 padding，避免内容被 navigation-bar 覆盖
-     * 仅 scrollBehavior 包含 hide、shrink 时，添加 padding
-     * @param withPadding 该值为 false 时，为移除 padding
+     * @param action 新增、更新、移除 padding
+     * @param scrollTarget 在该元素上添加、更新或移除 padding
      */
-    protected updateContainerPadding(withPadding = true): void {
-      const container = this.getContainer(this.scrollTarget);
+    protected setContainerPadding(
+      action: 'add' | 'update' | 'remove',
+      scrollTarget?: string | HTMLElement | JQ<HTMLElement>,
+    ): void {
+      const container = this.getContainer(scrollTarget);
       if (!container || this.isParentLayout) {
         return;
       }
 
-      const propName =
-        this.scrollPaddingPosition === 'top' ? 'paddingTop' : 'paddingBottom';
+      const position = this.scrollPaddingPosition;
+      const propName = position === 'top' ? 'paddingTop' : 'paddingBottom';
 
-      if (withPadding) {
-        const propValue =
-          this.getListening(this.scrollTarget) &&
-          ['fixed', 'absolute'].includes($(this).css('position'))
-            ? this.offsetHeight
-            : null;
+      if (action === 'add' || action === 'update') {
+        const propValue = ['fixed', 'absolute'].includes(
+          $(this).css('position'),
+        )
+          ? this.offsetHeight
+          : null;
 
         $(container).css({ [propName]: propValue });
-      } else {
-        $(container).css({ [propName]: null });
+
+        // 添加 padding 时，weakMap 中添加指定元素
+        if (action === 'add' && propValue !== null) {
+          const options = weakMap.get(container) ?? { top: [], bottom: [] };
+          options[position].push(this);
+          weakMap.set(container, options);
+        }
+      }
+
+      // 如果 weakMap 中指定元素的计数为 0，则移除 padding
+      if (action === 'remove') {
+        const options = weakMap.get(container);
+        if (!options) {
+          return;
+        }
+
+        const index = options[position].indexOf(this);
+        if (index > -1) {
+          options[position].splice(index, 1);
+          weakMap.set(container, options);
+        }
+
+        if (!options[position].length) {
+          $(container).css({ [propName]: null });
+        }
       }
     }
 

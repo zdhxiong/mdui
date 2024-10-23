@@ -387,15 +387,10 @@ export class TextField
   public autocorrect?: string;
 
   /**
-   * 是否使用浏览器的自动填充功能。可选值包括：
-   *
-   * * `off`：禁用浏览器的自动填充，使用者必须输入他们想要输入的所有内容。或者网页提供了自己的自动填充方法
-   * * `on`：浏览器根据用户之前输入的内容或者习惯，在用户输入的时候给出相应输入提示
+   * `input` 元素的 `autocomplete` 属性
    */
   @property({ reflect: true })
-  public autocomplete?:
-    | /*禁用浏览器的自动填充，使用者必须输入他们想要输入的所有内容。或者网页提供了自己的自动填充方法*/ 'off'
-    | /*浏览器根据用户之前输入的内容或者习惯，在用户输入的时候给出相应输入提示*/ 'on';
+  public autocomplete?: string;
 
   /**
    * `input` 元素的 `enterkeyhint` 属性，用于定制虚拟键盘上的 Enter 键的显示文本或图标。具体显示效果取决于用户使用的设备和语言。可选值包括：

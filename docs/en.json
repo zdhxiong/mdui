@@ -1999,11 +1999,7 @@
         "description": "The `autocorrect` attribute of the `input` element."
       },
       "autocomplete": {
-        "description": "Enables the browser's autocomplete feature for text input. Possible values:\n\n* `off`: Disables browser autocomplete.\n* `on`: Enables browser autocomplete.",
-        "enum": {
-          "off": "Disables browser autocomplete.",
-          "on": "Enables browser autocomplete."
-        }
+        "description": "The `autocomplete` attribute of the `input` element."
       },
       "enterkeyhint": {
         "description": "Customizes the Enter key text or icon on the virtual keyboard. The effect varies based on the device and language. Possible values:\n\n* `enter`: Inserts a new line, typically used in a multi-line text field.\n* `done`: Indicates input completion, closes the virtual keyboard.\n* `go`: Navigates to the target of the entered text.\n* `next`: Moves to the next text field.\n* `previous`: Moves to the previous text field.\n* `search`: Navigates to search results.\n* `send`: Sends a text message.",

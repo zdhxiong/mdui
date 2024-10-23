@@ -1031,9 +1031,7 @@ export class TextField
       autocapitalize=${ifDefined(
         this.type === 'password' ? 'off' : this.autocapitalize,
       )}
-      autocomplete=${ifDefined(
-        this.type === 'password' ? 'off' : this.autocomplete,
-      )}
+      autocomplete=${this.autocomplete}
       autocorrect=${ifDefined(
         this.type === 'password' ? 'off' : this.autocorrect,
       )}

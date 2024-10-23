@@ -28,7 +28,7 @@ import '../icon.js';
 import { style } from './style.js';
 import type { FormControl } from '@mdui/jq/shared/form.js';
 import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
-import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
@@ -838,7 +838,9 @@ export class TextField
     event.stopPropagation();
   }
 
-  private onInput() {
+  private onInput(event: InputEvent) {
+    event.stopPropagation();
+
     this.value = this.inputRef.value!.value;
     if (this.isTextarea) {
       this.setTextareaHeight();

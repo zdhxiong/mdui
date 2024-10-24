@@ -285,12 +285,12 @@ export class Tooltip extends MduiElement<TooltipEventMap> {
 
     document.addEventListener('pointerdown', this.onDocumentClick);
 
-    this.overflowAncestors = getOverflowAncestors(this.target);
-    this.overflowAncestors.forEach((ancestor) => {
-      ancestor.addEventListener('scroll', this.onWindowScroll);
-    });
-
     this.definedController.whenDefined().then(() => {
+      this.overflowAncestors = getOverflowAncestors(this.target);
+      this.overflowAncestors.forEach((ancestor) => {
+        ancestor.addEventListener('scroll', this.onWindowScroll);
+      });
+
       // trigger 尺寸变化时，重新调整 tooltip 的位置
       this.observeResize = observeResize(this.target, () => {
         this.updatePositioner();

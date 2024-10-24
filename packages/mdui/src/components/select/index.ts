@@ -1,4 +1,4 @@
-import { html, nothing, PropertyValues } from 'lit';
+import { html, nothing } from 'lit';
 import {
   customElement,
   property,

@@ -22,7 +22,7 @@ import { tabsStyle } from './tabs-style.js';
 import type { TabPanel as TabPanelOriginal } from './tab-panel.js';
 import type { Tab as TabOriginal } from './tab.js';
 import type { ObserveResize } from '@mdui/shared/helpers/observeResize.js';
-import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 type Tab = TabOriginal & {

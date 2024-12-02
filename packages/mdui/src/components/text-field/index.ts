@@ -393,6 +393,12 @@ export class TextField
   public autocomplete?: string;
 
   /**
+   * `input` 元素的 `aria-label` 属性
+   */
+  @property({ reflect: true })
+  public ariaLabel?: string;
+
+  /**
    * `input` 元素的 `enterkeyhint` 属性，用于定制虚拟键盘上的 Enter 键的显示文本或图标。具体显示效果取决于用户使用的设备和语言。可选值包括：
    *
    * * `enter`：插入新行
@@ -1027,6 +1033,7 @@ export class TextField
         this.type === 'password' ? 'off' : this.autocapitalize,
       )}
       autocomplete=${this.autocomplete}
+      aria-label=${ifDefined(this.ariaLabel)}
       autocorrect=${ifDefined(
         this.type === 'password' ? 'off' : this.autocorrect,
       )}

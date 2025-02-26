@@ -78,27 +78,29 @@ import { JQ } from '@mdui/jq';
 type HTMLElementProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 
 declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      ${jsxElements
-        .map(
-          (element) => `/**
-       * ${element.description.split('\n').join('\n       * ')}
-       * @see ${element.docUrl}
-       */
-      '${element.name}': {
-        ${element.attributes
+  namespace React {
+    namespace JSX {
+      interface IntrinsicElements {
+        ${jsxElements
           .map(
-            (attribute) => `/**
-         * ${attribute.description.split('\n').join('\n         * ')}
-         * @see ${attribute.docUrl}
-         */
-        '${attribute.name}'?: ${attribute.type};`,
+            (element) => `/**
+        * ${element.description.split('\n').join('\n       * ')}
+        * @see ${element.docUrl}
+        */
+        '${element.name}': {
+          ${element.attributes
+            .map(
+              (attribute) => `/**
+          * ${attribute.description.split('\n').join('\n         * ')}
+          * @see ${attribute.docUrl}
+          */
+          '${attribute.name}'?: ${attribute.type};`,
+            )
+            .join('\n        ')}
+        } & HTMLElementProps;`,
           )
-          .join('\n        ')}
-      } & HTMLElementProps;`,
-        )
-        .join('\n      ')}
+          .join('\n      ')}
+      }
     }
   }
 }

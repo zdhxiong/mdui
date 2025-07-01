@@ -43,7 +43,7 @@ export function each<T extends PlainObject, K extends keyof T>(
   callback: (this: T[K], key: K, value: T[K]) => unknown,
 ): T;
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-function-type
 export function each(this: unknown, target: any, callback: Function): unknown {
   // eachArray 回调函数是 value, key，这里的 each 函数是 key, value
   return isArrayLike(target)

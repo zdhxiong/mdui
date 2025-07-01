@@ -41,7 +41,7 @@ $('.box').replaceWith(function (index, html) {
   }
 }
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 $.fn.replaceWith = function (this: JQ, newContent: any): JQ {
   this.each((index, element) => {
     let content = newContent;

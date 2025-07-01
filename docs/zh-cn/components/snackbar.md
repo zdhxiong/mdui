@@ -18,7 +18,7 @@ import type { Snackbar } from 'mdui/components/snackbar.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=375
 <mdui-snackbar class="example-snackbar">Photo archived</mdui-snackbar>
 
 <mdui-button>打开 Snackbar</mdui-button>
@@ -37,7 +37,7 @@ import type { Snackbar } from 'mdui/components/snackbar.js';
 
 通过 `placement` 属性，你可以设置 Snackbar 的显示位置。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=376
 <div class="example-placement">
   <div class="row">
     <mdui-snackbar placement="top-start">Photo archived</mdui-snackbar>
@@ -82,7 +82,7 @@ import type { Snackbar } from 'mdui/components/snackbar.js';
 
 可以使用 `action` 属性在 Snackbar 的右侧添加一个操作按钮，并通过该属性指定按钮的文本。点击操作按钮会触发 `action-click` 事件。如果你想让操作按钮显示为加载中状态，可以添加 `action-loading` 属性。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=377
 <mdui-snackbar action="Undo" class="example-action">Photo archived</mdui-snackbar>
 
 <mdui-button>打开 Snackbar</mdui-button>
@@ -102,7 +102,7 @@ import type { Snackbar } from 'mdui/components/snackbar.js';
 
 也可以通过 `action` slot 在 Snackbar 的右侧添加自定义元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=378
 <mdui-snackbar class="example-action-slot">
   Photo archived
   <mdui-button slot="action" variant="text">Undo</mdui-button>
@@ -122,7 +122,7 @@ import type { Snackbar } from 'mdui/components/snackbar.js';
 
 添加 `closeable` 属性后，Snackbar 的右侧会出现一个关闭按钮。点击该按钮会关闭 Snackbar，并触发 `close` 事件。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=379
 <mdui-snackbar closeable class="example-closeable">Photo archived</mdui-snackbar>
 
 <mdui-button>打开 Snackbar</mdui-button>
@@ -137,7 +137,7 @@ import type { Snackbar } from 'mdui/components/snackbar.js';
 
 可以通过 `close-button` slot 来自定义关闭按钮的元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=380
 <mdui-snackbar closeable class="example-close-button-slot">
   Photo archived
   <mdui-avatar slot="close-button" icon="people_alt"></mdui-avatar>
@@ -155,7 +155,7 @@ import type { Snackbar } from 'mdui/components/snackbar.js';
 
 通过设置 `close-icon` 属性，你可以修改默认关闭按钮中的 Material Icons 图标。也可以通过 `close-icon` slot 来自定义关闭按钮中的图标元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=381
 <mdui-snackbar
   closeable
   close-icon="delete"
@@ -176,7 +176,7 @@ import type { Snackbar } from 'mdui/components/snackbar.js';
 
 默认情况下，消息文本没有行数限制。你可以通过 `message-line` 属性来限制文本行数，最多可以设置为 2 行。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=382
 <mdui-snackbar message-line="1" class="example-line">The item already has the label "travel". You can add a new label. You can add a new label.</mdui-snackbar>
 
 <mdui-button>打开 Snackbar</mdui-button>
@@ -193,7 +193,7 @@ import type { Snackbar } from 'mdui/components/snackbar.js';
 
 可以使用 `auto-close-delay` 属性来设置自动关闭的延时，单位为毫秒。默认值为 5000 毫秒。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=383
 <mdui-snackbar auto-close-delay="2000" class="example-close-delay">Photo archived</mdui-snackbar>
 
 <mdui-button>打开 Snackbar</mdui-button>
@@ -210,7 +210,7 @@ import type { Snackbar } from 'mdui/components/snackbar.js';
 
 通过添加 `close-on-outside-click` 属性，你可以设置在点击 Snackbar 外部区域时关闭 Snackbar。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=384
 <mdui-snackbar close-on-outside-click class="example-outside">Photo archived</mdui-snackbar>
 
 <mdui-button>打开 Snackbar</mdui-button>

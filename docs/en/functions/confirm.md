@@ -12,7 +12,7 @@ import { confirm } from 'mdui/functions/confirm.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=430
 <mdui-button class="example-button">open</mdui-button>
 
 <script type="module">

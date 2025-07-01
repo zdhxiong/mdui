@@ -18,7 +18,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=240
 <mdui-dialog class="example-dialog">
   Dialog
   <mdui-button>关闭</mdui-button>
@@ -42,7 +42,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 添加 `close-on-overlay-click` 属性，点击遮罩层时会关闭对话框。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=241
 <mdui-dialog close-on-overlay-click class="example-overlay">Dialog</mdui-dialog>
 
 <mdui-button>打开对话框</mdui-button>
@@ -59,7 +59,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 添加 `close-on-esc` 属性，按下 ESC 键时会关闭对话框。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=242
 <mdui-dialog
   close-on-esc
   close-on-overlay-click
@@ -80,7 +80,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 添加 `fullscreen` 属性，对话框会全屏显示。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=243
 <mdui-dialog fullscreen class="example-fullscreen">
   Dialog
   <mdui-button>关闭</mdui-button>
@@ -102,7 +102,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 设置 `icon` 属性，对话框上方会添加 Material Icons 图标。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=244
 <mdui-dialog
   icon="restart_alt"
   close-on-overlay-click
@@ -121,7 +121,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 也可以通过 `icon` slot 在对话框上方添加图标元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=245
 <mdui-dialog close-on-overlay-click class="example-icon-slot">
   Dialog
   <mdui-icon slot="icon" name="restart_alt"></mdui-icon>
@@ -141,7 +141,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 通过 `headline` 和 `description` 属性设置对话框的标题和描述。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=246
 <mdui-dialog
   headline="Delete selected images?"
   description="Images will be permenantly removed from you account and all synced devices."
@@ -161,7 +161,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 也可以通过 `headline` 和 `description` slot 来设置对话框的标题元素和描述元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=247
 <mdui-dialog close-on-overlay-click class="example-headline-slot">
   <span slot="headline">Delete selected images?</span>
   <span slot="description">Images will be permenantly removed from you account and all synced devices.</span>
@@ -181,7 +181,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 可以通过 `action` slot 添加底部操作按钮。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=248
 <mdui-dialog
   close-on-overlay-click
   headline="Delete selected images?"
@@ -203,7 +203,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 添加 `stacked-actions` 属性，使底部操作按钮垂直排列。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=249
 <mdui-dialog
   stacked-actions
   close-on-overlay-click
@@ -228,7 +228,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 可以通过 `header` slot 设置对话框顶部内容。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=250
 <mdui-dialog close-on-overlay-click class="example-header">
   <mdui-top-app-bar slot="header">
     <mdui-button-icon icon="close"></mdui-button-icon>

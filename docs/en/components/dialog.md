@@ -18,7 +18,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=240
 <mdui-dialog class="example-dialog">
   Dialog
   <mdui-button>Close</mdui-button>
@@ -42,7 +42,7 @@ Example:
 
 Add the `close-on-overlay-click` attribute to close the dialog when the overlay is clicked.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=241
 <mdui-dialog close-on-overlay-click class="example-overlay">Dialog</mdui-dialog>
 
 <mdui-button>Open Dialog</mdui-button>
@@ -59,7 +59,7 @@ Add the `close-on-overlay-click` attribute to close the dialog when the overlay 
 
 Add the `close-on-esc` attribute to enable closing the dialog when the ESC key is pressed.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=242
 <mdui-dialog
   close-on-esc
   close-on-overlay-click
@@ -80,7 +80,7 @@ Add the `close-on-esc` attribute to enable closing the dialog when the ESC key i
 
 Add the `fullscreen` attribute to make the dialog fullscreen.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=243
 <mdui-dialog fullscreen class="example-fullscreen">
   Dialog
   <mdui-button>Close</mdui-button>
@@ -102,7 +102,7 @@ Add the `fullscreen` attribute to make the dialog fullscreen.
 
 Set the `icon` attribute to add a Material Icon above the dialog.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=244
 <mdui-dialog
   icon="restart_alt"
   close-on-overlay-click
@@ -121,7 +121,7 @@ Set the `icon` attribute to add a Material Icon above the dialog.
 
 Alternatively, add an icon element above the dialog using the `icon` slot.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=245
 <mdui-dialog close-on-overlay-click class="example-icon-slot">
   Dialog
   <mdui-icon slot="icon" name="restart_alt"></mdui-icon>
@@ -141,7 +141,7 @@ Alternatively, add an icon element above the dialog using the `icon` slot.
 
 Use the `headline` and `description` attributes to set the dialog's title and description.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=246
 <mdui-dialog
   headline="Delete selected images?"
   description="Images will be permenantly removed from you account and all synced devices."
@@ -161,7 +161,7 @@ Use the `headline` and `description` attributes to set the dialog's title and de
 
 Alternatively, use the `headline` and `description` slots to set the title and description elements.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=247
 <mdui-dialog close-on-overlay-click class="example-headline-slot">
   <span slot="headline">Delete selected images?</span>
   <span slot="description">Images will be permenantly removed from you account and all synced devices.</span>
@@ -181,7 +181,7 @@ Alternatively, use the `headline` and `description` slots to set the title and d
 
 Use the `action` slot to add action buttons at the bottom of the dialog.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=248
 <mdui-dialog
   close-on-overlay-click
   headline="Delete selected images?"
@@ -203,7 +203,7 @@ Use the `action` slot to add action buttons at the bottom of the dialog.
 
 Add the `stacked-actions` attribute to stack the action buttons vertically.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=249
 <mdui-dialog
   stacked-actions
   close-on-overlay-click
@@ -228,7 +228,7 @@ Add the `stacked-actions` attribute to stack the action buttons vertically.
 
 Use the `header` slot to set the top content of the dialog.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=250
 <mdui-dialog close-on-overlay-click class="example-header">
   <mdui-top-app-bar slot="header">
     <mdui-button-icon icon="close"></mdui-button-icon>

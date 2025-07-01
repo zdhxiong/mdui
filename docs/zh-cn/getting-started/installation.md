@@ -140,7 +140,7 @@ import { throttle } from 'mdui/functions/throttle.js';</code></pre>
 
 下面的例子展示了如何使用全局构建版本的 mdui。在这个版本中，所有的函数都作为属性暴露在全局对象 `mdui` 上：
 
-```html
+```html,playgroundId=184
 <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
 <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
 
@@ -157,7 +157,7 @@ import { throttle } from 'mdui/functions/throttle.js';</code></pre>
 
 下面的例子展示了如何使用 ES 模块构建版本的 mdui。在这个版本中，你可以使用 ES 模块语法从 CDN 导入 mdui：
 
-```html
+```html,playgroundId=185
 <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
 
 <mdui-button class="btn">点我</mdui-button>

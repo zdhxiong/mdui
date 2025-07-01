@@ -18,7 +18,7 @@ import type { SegmentedButton } from 'mdui/components/segmented-button.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=344
 <mdui-segmented-button-group>
   <mdui-segmented-button>Day</mdui-segmented-button>
   <mdui-segmented-button>Week</mdui-segmented-button>
@@ -32,7 +32,7 @@ import type { SegmentedButton } from 'mdui/components/segmented-button.js';
 
 在 `<mdui-segmented-button-group>` 元素上添加 `full-width` 属性，可使组件占据全部宽度。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=345
 <mdui-segmented-button-group full-width>
   <mdui-segmented-button>Day</mdui-segmented-button>
   <mdui-segmented-button>Week</mdui-segmented-button>
@@ -44,7 +44,7 @@ import type { SegmentedButton } from 'mdui/components/segmented-button.js';
 
 在 `<mdui-segmented-button-group>` 元素上指定 `selects` 属性为 `single`，可以实现单选模式。此时 `<mdui-segmented-button-group>` 的 `value` 属性值即为当前选中的 `<mdui-segmented-button>` 的 `value` 属性的值。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=346
 <mdui-segmented-button-group selects="single">
   <mdui-segmented-button value="day">Day</mdui-segmented-button>
   <mdui-segmented-button value="week">Week</mdui-segmented-button>
@@ -64,7 +64,7 @@ import type { SegmentedButton } from 'mdui/components/segmented-button.js';
 
 注意：在多选模式下，`<mdui-segmented-button-group>` 的 `value` 属性值为数组，只能通过 JavaScript 属性来读取和设置该值。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=347
 <mdui-segmented-button-group selects="multiple">
   <mdui-segmented-button value="day">Day</mdui-segmented-button>
   <mdui-segmented-button value="week">Week</mdui-segmented-button>
@@ -88,7 +88,7 @@ import type { SegmentedButton } from 'mdui/components/segmented-button.js';
 
 在 `<mdui-segmented-button>` 元素上，通过设置 `icon` 和 `end-icon` 属性，可以在按钮的左侧和右侧添加 Material Icons 图标。另外，也可以通过 `icon` 和 `end-icon` slot 在按钮的左侧和右侧添加元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=348
 <mdui-segmented-button-group>
   <mdui-segmented-button icon="search">Day</mdui-segmented-button>
   <mdui-segmented-button end-icon="arrow_forward">Week</mdui-segmented-button>
@@ -102,7 +102,7 @@ import type { SegmentedButton } from 'mdui/components/segmented-button.js';
 
 在 `<mdui-segmented-button>` 元素上，通过添加 `selected-icon` 属性，可以设置选中状态的 Material Icons 图标。也可以通过 `selected-icon` slot 进行设置。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=349
 <mdui-segmented-button-group selects="multiple">
   <mdui-segmented-button value="day" selected-icon="cloud_done">Day</mdui-segmented-button>
   <mdui-segmented-button value="week">
@@ -116,7 +116,7 @@ import type { SegmentedButton } from 'mdui/components/segmented-button.js';
 
 在 `<mdui-segmented-button>` 元素上，通过设置 `href` 属性，可以将按钮转换为链接。此时，还可以使用与链接相关的属性，如：`download`、`target`、`rel`。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=350
 <mdui-segmented-button-group>
   <mdui-segmented-button href="https://www.mdui.org" target="_blank">Link</mdui-segmented-button>
   <mdui-segmented-button>Week</mdui-segmented-button>
@@ -128,7 +128,7 @@ import type { SegmentedButton } from 'mdui/components/segmented-button.js';
 
 在 `<mdui-segmented-button-group>` 元素上，通过添加 `disabled` 属性，可以禁用整个分段按钮组。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=351
 <mdui-segmented-button-group disabled>
   <mdui-segmented-button>Day</mdui-segmented-button>
   <mdui-segmented-button>Week</mdui-segmented-button>
@@ -138,7 +138,7 @@ import type { SegmentedButton } from 'mdui/components/segmented-button.js';
 
 在 `<mdui-segmented-button>` 元素上，通过添加 `disabled` 属性，可以禁用特定按钮；通过添加 `loading` 属性，可以为特定按钮添加加载中状态。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=352
 <mdui-segmented-button-group>
   <mdui-segmented-button>Day</mdui-segmented-button>
   <mdui-segmented-button disabled>Week</mdui-segmented-button>

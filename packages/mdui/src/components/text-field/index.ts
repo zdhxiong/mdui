@@ -1016,7 +1016,6 @@ export class TextField
       name=${ifDefined(this.name)}
       .value=${live(this.value)}
       placeholder=${ifDefined(
-        // @ts-ignore
         !this.label || this.isFocusedStyle || this.hasValue
           ? this.placeholder
           : undefined,
@@ -1056,7 +1055,6 @@ export class TextField
       name=${ifDefined(this.name)}
       .value=${live(this.value)}
       placeholder=${ifDefined(
-        // @ts-ignore
         !this.label || this.isFocusedStyle || this.hasValue
           ? this.placeholder
           : undefined,

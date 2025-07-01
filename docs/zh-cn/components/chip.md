@@ -16,7 +16,7 @@ import type { Chip } from 'mdui/components/chip.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=221
 <mdui-chip>Chip</mdui-chip>
 ```
 
@@ -31,7 +31,7 @@ import type { Chip } from 'mdui/components/chip.js';
 * `input`：用于表示用户输入的信息片段。例如，在 Gmail 中的“收件人”字段中的联系人。
 * `suggestion`：用于提供动态生成的推荐信息，以简化用户操作。例如，在聊天应用中猜测用户可能想发送的信息，供用户选择。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=222
 <mdui-chip variant="assist">Assist</mdui-chip>
 <mdui-chip variant="filter">Filter</mdui-chip>
 <mdui-chip variant="input">Input</mdui-chip>
@@ -42,7 +42,7 @@ import type { Chip } from 'mdui/components/chip.js';
 
 添加 `elevated` 属性可以使纸片拥有阴影。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=223
 <mdui-chip elevated>Chip</mdui-chip>
 ```
 
@@ -50,7 +50,7 @@ import type { Chip } from 'mdui/components/chip.js';
 
 添加 `icon`、`end-icon` 属性，可以分别在纸片左侧、右侧添加 Material Icons 图标。也可以通过 `icon`、`end-icon` slot 在纸片左侧、右侧添加元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=224
 <mdui-chip icon="search">Icon</mdui-chip>
 <mdui-chip end-icon="arrow_forward">End Icon</mdui-chip>
 <mdui-chip>
@@ -64,7 +64,7 @@ import type { Chip } from 'mdui/components/chip.js';
 
 添加 `href` 属性，可以使纸片变为链接，此时还可以使用这些和链接相关的属性：`download`、`target`、`rel`。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=225
 <mdui-chip href="https://www.mdui.org" target="_blank">Link</mdui-chip>
 ```
 
@@ -72,7 +72,7 @@ import type { Chip } from 'mdui/components/chip.js';
 
 添加 `disabled` 属性可以禁用纸片；添加 `loading` 属性可以为纸片添加加载中状态。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=226
 <mdui-chip disabled>Disabled</mdui-chip>
 <mdui-chip loading>Loading</mdui-chip>
 <mdui-chip loading disabled>Loading & Disabled</mdui-chip>
@@ -82,13 +82,13 @@ import type { Chip } from 'mdui/components/chip.js';
 
 添加 `selectable` 属性可以使纸片可被选中。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=227
 <mdui-chip selectable>Chip</mdui-chip>
 ```
 
 使用 `selected-icon` 属性可以指定选中状态的 Material Icons 图标名称。也可以通过 `selected-icon` slot 指定选中状态的图标元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=228
 <mdui-chip selectable selected-icon="favorite">Chip</mdui-chip>
 <mdui-chip selectable>
   Chip
@@ -98,7 +98,7 @@ import type { Chip } from 'mdui/components/chip.js';
 
 纸片被选中后，`selected` 属性变为 `true`。也可以通过添加 `selected` 属性，使纸片默认处于选中状态。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=229
 <mdui-chip selectable selected>Chip</mdui-chip>
 ```
 
@@ -106,7 +106,7 @@ import type { Chip } from 'mdui/components/chip.js';
 
 添加 `deletable` 属性后，纸片右侧会出现一个删除图标。点击该图标会触发 `delete` 事件。您可以通过 `delete-icon` 属性指定删除图标的 Material Icons 图标名，或者通过 `delete-icon` slot 指定删除图标的元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=230
 <mdui-chip deletable>Chip</mdui-chip>
 <mdui-chip deletable delete-icon="backspace">Chip</mdui-chip>
 <mdui-chip deletable>

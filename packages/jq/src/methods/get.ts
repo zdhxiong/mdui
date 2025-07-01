@@ -31,7 +31,7 @@ $('p').get()
   }
 }
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 $.fn.get = function (this: JQ, index?: number): any | any[] {
   return index === undefined
     ? [].slice.call(this)

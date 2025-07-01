@@ -18,7 +18,7 @@ import type { TopAppBarTitle } from 'mdui/components/top-app-bar-title.js';
 
 使用示例：（示例中的 `style="position: relative"` 仅用于演示，实际使用时请移除该样式。）
 
-```html,example
+```html,example,playgroundId=420
 <mdui-top-app-bar style="position: relative;">
   <mdui-button-icon icon="menu"></mdui-button-icon>
   <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
@@ -44,7 +44,7 @@ import type { TopAppBarTitle } from 'mdui/components/top-app-bar-title.js';
 
 如果你希望将顶部应用栏放在指定的容器内，可以在 `<mdui-top-app-bar>` 组件上指定 `scroll-target` 属性，其值为可滚动内容的容器的 CSS 选择器或 DOM 元素。此时，顶部应用栏会相对于父元素显示（你需要自行在父元素上添加样式 `position: relative; overflow: hidden`）。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=421
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar scroll-target=".example-scroll-target">
     <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
@@ -60,7 +60,7 @@ import type { TopAppBarTitle } from 'mdui/components/top-app-bar-title.js';
 
 可以通过在 `<mdui-top-app-bar>` 组件上使用 `variant` 属性来设置顶部应用栏的形状。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=422
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar variant="small" scroll-target=".example-variant" class="example-variant-bar">
     <mdui-button-icon icon="menu"></mdui-button-icon>
@@ -105,7 +105,7 @@ import type { TopAppBarTitle } from 'mdui/components/top-app-bar-title.js';
 
 **示例：滚动时隐藏**
 
-```html,example,expandable
+```html,example,expandable,playgroundId=423
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar
     scroll-behavior="hide"
@@ -126,7 +126,7 @@ import type { TopAppBarTitle } from 'mdui/components/top-app-bar-title.js';
 
 **示例：滚动时添加阴影**
 
-```html,example,expandable
+```html,example,expandable,playgroundId=424
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar
     scroll-behavior="elevate"
@@ -146,7 +146,7 @@ import type { TopAppBarTitle } from 'mdui/components/top-app-bar-title.js';
 
 **示例：滚动时收缩**
 
-```html,example,expandable
+```html,example,expandable,playgroundId=425
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar
     variant="medium"
@@ -168,7 +168,7 @@ import type { TopAppBarTitle } from 'mdui/components/top-app-bar-title.js';
 
 **示例：滚动时收缩及添加阴影**
 
-```html,example,expandable
+```html,example,expandable,playgroundId=426
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar
     variant="medium"
@@ -192,7 +192,7 @@ import type { TopAppBarTitle } from 'mdui/components/top-app-bar-title.js';
 对于 `variant` 属性为 `medium` 或 `large`，且 `scroll-behavior` 属性为 `shrink` 的顶部应用栏，你可以在 `<mdui-top-app-bar-title>` 组件中添加 `label-large` slot，以设置展开状态下的文本。
 
 
-```html,example,expandable
+```html,example,expandable,playgroundId=427
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar
     variant="medium"

@@ -16,7 +16,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=336
 <mdui-range-slider></mdui-range-slider>
 ```
 
@@ -26,7 +26,7 @@ Example:
 
 The `value` property represents the current value of the range slider. You can set the range slider's value by updating the `value` property. Note that the `value` property is an array and can only be accessed and modified through JavaScript property.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=337
 <mdui-range-slider class="example-value"></mdui-range-slider>
 
 <script>
@@ -39,7 +39,7 @@ The `value` property represents the current value of the range slider. You can s
 
 The range slider can be disabled by adding the `disabled` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=338
 <mdui-range-slider disabled></mdui-range-slider>
 ```
 
@@ -47,7 +47,7 @@ The range slider can be disabled by adding the `disabled` attribute.
 
 The `min` and `max` attributes allow you to set the minimum and maximum values of the range slider.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=339
 <mdui-range-slider min="10" max="20"></mdui-range-slider>
 ```
 
@@ -55,7 +55,7 @@ The `min` and `max` attributes allow you to set the minimum and maximum values o
 
 The `step` attribute defines the interval of the range slider.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=340
 <mdui-range-slider step="10"></mdui-range-slider>
 ```
 
@@ -63,7 +63,7 @@ The `step` attribute defines the interval of the range slider.
 
 Tickmarks can be displayed on the range slider by adding the `tickmarks` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=341
 <mdui-range-slider tickmarks step="10"></mdui-range-slider>
 ```
 
@@ -71,7 +71,7 @@ Tickmarks can be displayed on the range slider by adding the `tickmarks` attribu
 
 The tooltip on the range slider can be hidden by adding the `nolabel` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=342
 <mdui-range-slider nolabel></mdui-range-slider>
 ```
 
@@ -79,7 +79,7 @@ The tooltip on the range slider can be hidden by adding the `nolabel` attribute.
 
 The `labelFormatter` property allows you to customize the display format of the tooltip. This property is a function that takes the current value of the range slider as a parameter and returns the text you want to display.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=343
 <mdui-range-slider class="example-label-formatter"></mdui-range-slider>
 
 <script>

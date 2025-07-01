@@ -18,7 +18,7 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 使用示例：（示例中的 `style="position: relative"` 仅用于演示，实际使用时请移除该样式。）
 
-```html,example
+```html,example,playgroundId=308
 <mdui-navigation-bar value="item-1" style="position: relative">
   <mdui-navigation-bar-item icon="place" value="item-1">Item 1</mdui-navigation-bar-item>
   <mdui-navigation-bar-item icon="commute" value="item-2">Item 2</mdui-navigation-bar-item>
@@ -39,7 +39,7 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 导航栏中的文本标签默认在导航项小于等于 3 个时始终显示；当导航项大于 3 个时，仅显示选中状态的文本。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=309
 <mdui-navigation-bar value="item-1" style="position: relative">
   <mdui-navigation-bar-item icon="place" value="item-1">Item 1</mdui-navigation-bar-item>
   <mdui-navigation-bar-item icon="commute" value="item-2">Item 2</mdui-navigation-bar-item>
@@ -62,7 +62,7 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 * `labeled`：始终显示文本
 * `unlabeled`：始终不显示文本
 
-```html,example,expandable
+```html,example,expandable,playgroundId=310
 <mdui-navigation-bar value="item-1" label-visibility="selected" style="position: relative" class="example-label">
   <mdui-navigation-bar-item icon="place" value="item-1">Item 1</mdui-navigation-bar-item>
   <mdui-navigation-bar-item icon="commute" value="item-2">Item 2</mdui-navigation-bar-item>
@@ -91,7 +91,7 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 如果你希望将导航栏放在指定的容器内，可以在 `<mdui-navigation-bar>` 组件上指定 `scroll-target` 属性。该属性的值应为可滚动内容的容器的 CSS 选择器或 DOM 元素。此时，导航栏会相对于父元素显示（你需要自行在父元素上添加 `position: relative; overflow: hidden` 样式）。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=311
 <div style="position: relative;overflow: hidden">
   <mdui-navigation-bar scroll-target=".example-scroll-target" value="item-1">
     <mdui-navigation-bar-item icon="place" value="item-1">Item 1</mdui-navigation-bar-item>
@@ -111,7 +111,7 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 使用 `scroll-threshold` 属性，可以设置滚动多少像素后开始隐藏导航栏。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=312
 <div style="position: relative;overflow: hidden">
   <mdui-navigation-bar
     scroll-behavior="hide"
@@ -134,7 +134,7 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 在 `<mdui-navigation-bar-item>` 组件上，`icon` 属性用于设置未激活状态的导航项图标，`active-icon` 属性用于设置激活状态的导航项图标。也可以通过 `icon` 和 `active-icon` slot 来设置未激活和激活状态的图标元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=313
 <mdui-navigation-bar value="item-1" style="position: relative">
   <mdui-navigation-bar-item
     icon="place--outlined"
@@ -153,7 +153,7 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 在 `<mdui-navigation-bar-item>` 组件上设置 `href` 属性，可以将导航项变为链接。此时，还可以使用与链接相关的属性：`download`、`target`、`rel`。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=314
 <mdui-navigation-bar value="item-1" style="position: relative">
   <mdui-navigation-bar-item icon="place" href="https://www.mdui.org" target="_blank" value="item-1">Item 1</mdui-navigation-bar-item>
   <mdui-navigation-bar-item icon="commute" value="item-2">Item 2</mdui-navigation-bar-item>
@@ -164,7 +164,7 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 在 `<mdui-navigation-bar-item>` 组件中，可以通过 `badge` slot 添加徽章。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=315
 <mdui-navigation-bar value="item-1" style="position: relative">
   <mdui-navigation-bar-item icon="place" value="item-1">
     Item 1

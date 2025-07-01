@@ -16,7 +16,7 @@ import type { Checkbox } from 'mdui/components/checkbox.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=216
 <mdui-checkbox>Checkbox</mdui-checkbox>
 ```
 
@@ -26,7 +26,7 @@ import type { Checkbox } from 'mdui/components/checkbox.js';
 
 复选框选中时，`checked` 属性值为 `true`。添加 `checked` 属性可以使复选框默认处于选中状态。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=217
 <mdui-checkbox checked>Checkbox</mdui-checkbox>
 ```
 
@@ -34,7 +34,7 @@ import type { Checkbox } from 'mdui/components/checkbox.js';
 
 添加 `disabled` 属性可以禁用复选框。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=218
 <mdui-checkbox disabled>Checkbox</mdui-checkbox>
 <mdui-checkbox disabled checked>Checkbox</mdui-checkbox>
 ```
@@ -43,7 +43,7 @@ import type { Checkbox } from 'mdui/components/checkbox.js';
 
 添加 `indeterminate` 属性表示复选框处于不确定状态。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=219
 <mdui-checkbox indeterminate>Checkbox</mdui-checkbox>
 ```
 
@@ -51,7 +51,7 @@ import type { Checkbox } from 'mdui/components/checkbox.js';
 
 通过设置 `unchecked-icon`、`checked-icon`、`indeterminate-icon` 属性，可以分别设置未选中、选中、不确定状态时的复选框的 Material Icons 图标。也可以通过 `unchecked-icon`、`checked-icon`、`indeterminate-icon` slot 进行设置。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=220
 <mdui-checkbox
   unchecked-icon="radio_button_unchecked"
   checked-icon="check_circle"

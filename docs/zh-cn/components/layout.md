@@ -64,7 +64,7 @@ import type { LayoutMain } from 'mdui/components/layout-main.js';
 
 <p class="example-md-visible">请在大屏显示器上查看该示例。</p>
 
-```html,example,expandable
+```html,example,expandable,playgroundId=275
 <mdui-layout>
   <mdui-top-app-bar class="example-top-app-bar">
     <mdui-top-app-bar-title>Top App Bar</mdui-top-app-bar-title>
@@ -80,7 +80,7 @@ import type { LayoutMain } from 'mdui/components/layout-main.js';
 </mdui-layout>
 ```
 
-```html,example,expandable
+```html,example,expandable,playgroundId=276
 <mdui-layout>
   <mdui-navigation-drawer open class="example-navigation-drawer">
     <mdui-list>
@@ -104,7 +104,7 @@ import type { LayoutMain } from 'mdui/components/layout-main.js';
 
 下面的示例中，我们将两个 `<mdui-layout-item>` 组件放在了应用的两侧。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=277
 <mdui-layout>
   <mdui-top-app-bar class="example-top-app-bar">
     <mdui-top-app-bar-title>Top App Bar</mdui-top-app-bar-title>
@@ -132,7 +132,7 @@ import type { LayoutMain } from 'mdui/components/layout-main.js';
 
 你也可以使用 `order` 属性来指定布局顺序，系统将按 `order` 的值从小到大排列组件，`order` 相同时则按代码顺序排列。所有布局组件的默认 `order` 都为 `0`。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=278
 <mdui-layout class="example-order">
   <mdui-layout-item
     placement="left"

@@ -88,7 +88,7 @@ export function map<T extends PlainObject, K extends keyof T, TReturn>(
   ) => TReturn | TReturn[] | null | undefined,
 ): TReturn[];
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-function-type
 export function map(elements: any, callback: Function): unknown {
   const window = getWindow();
   let value;

@@ -59,7 +59,7 @@ eachArray(['val', 'html', 'text'], (name, nameIndex) => {
   const props = ['value', 'innerHTML', 'textContent'];
   const propName = props[nameIndex];
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const get = ($elements: JQ): any => {
     // text() 获取所有元素的文本
     if (nameIndex === 2) {
@@ -89,7 +89,7 @@ eachArray(['val', 'html', 'text'], (name, nameIndex) => {
     return firstElement[propName];
   };
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const set = (element: HTMLElement, value: any): void => {
     // text() 和 html() 赋值为 undefined，则保持原内容不变
     // val() 赋值为 undefined 则赋值为空
@@ -109,7 +109,7 @@ eachArray(['val', 'html', 'text'], (name, nameIndex) => {
     element[propName] = value;
   };
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   $.fn[name as 'val'] = function (this: JQ, value?: any): any {
     // 获取值
     if (!arguments.length) {

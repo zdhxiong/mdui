@@ -48,7 +48,7 @@ const test = ($: JQStatic, type: string): void => {
       let _i;
       let _currentClassName;
       $foo.removeClass(function (i, currentClassName) {
-        // eslint-disable-next-line
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         _this = this;
         _i = i;
         _currentClassName = currentClassName;

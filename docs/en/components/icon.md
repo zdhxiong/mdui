@@ -16,7 +16,7 @@ import type { Icon } from 'mdui/components/icon.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=269
 <mdui-icon name="search"></mdui-icon>
 ```
 
@@ -43,7 +43,7 @@ To use Material Icons, import the CSS file for the desired variant: Filled, Outl
 
 Use the `name` attribute to specify the icon, appending the variant name as a suffix (no suffix needed for Filled). Here's how to use the `delete` icon in all 5 variants:
 
-```html,example
+```html,example,playgroundId=270
 <!-- Filled -->
 <mdui-icon name="delete"></mdui-icon>
 
@@ -68,13 +68,13 @@ mdui also provides a standalone package [`@mdui/icons`](/en/docs/2/libraries/ico
 
 The component supports SVG icons. Pass the SVG icon link to the `src` attribute:
 
-```html,example
+```html,example,playgroundId=271
 <mdui-icon src="https://fonts.gstatic.com/s/i/materialicons/search/v17/24px.svg"></mdui-icon>
 ```
 
 Or, pass the SVG content directly into the component's default slot:
 
-```html,example
+```html,example,playgroundId=272
 <mdui-icon>
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M0 0h24v24H0z" fill="none"/>
@@ -89,7 +89,7 @@ Or, pass the SVG content directly into the component's default slot:
 
 Change the icon color by setting the `color` CSS style of the `<mdui-icon>` element or its parent.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=273
 <mdui-icon name="delete" style="color: red"></mdui-icon>
 <mdui-icon src="https://fonts.gstatic.com/s/i/materialicons/search/v17/24px.svg" style="color: red"></mdui-icon>
 ```
@@ -98,7 +98,7 @@ Change the icon color by setting the `color` CSS style of the `<mdui-icon>` elem
 
 Change the icon size by setting the `font-size` CSS style of the `<mdui-icon>` element or its parent.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=274
 <mdui-icon name="delete" style="font-size: 32px"></mdui-icon>
 <mdui-icon src="https://fonts.gstatic.com/s/i/materialicons/search/v17/24px.svg" style="font-size: 32px"></mdui-icon>
 ```

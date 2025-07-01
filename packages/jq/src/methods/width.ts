@@ -220,11 +220,11 @@ eachArray<typeName>(['Width', 'Height'], (name) => {
     (funcName, funcIndex) => {
       $.fn[funcName as 'width'] = function (
         this: JQ,
-        // eslint-disable-next-line
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         margin?: any,
-        // eslint-disable-next-line
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         value?: any,
-        // eslint-disable-next-line
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ): any {
         // 是否是赋值操作
         const isSet = arguments.length && (funcIndex < 2 || !isBoolean(margin));

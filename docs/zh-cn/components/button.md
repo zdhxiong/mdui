@@ -16,7 +16,7 @@ import type { Button } from 'mdui/components/button.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=197
 <mdui-button>Button</mdui-button>
 ```
 
@@ -26,7 +26,7 @@ import type { Button } from 'mdui/components/button.js';
 
 使用 `variant` 属性设置按钮的形状。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=198
 <mdui-button variant="elevated">Elevated</mdui-button>
 <mdui-button variant="filled">Filled</mdui-button>
 <mdui-button variant="tonal">Tonal</mdui-button>
@@ -38,7 +38,7 @@ import type { Button } from 'mdui/components/button.js';
 
 添加 `full-width` 属性可以使按钮显示为块状元素，即占据全部宽度。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=199
 <mdui-button full-width>Button</mdui-button>
 ```
 
@@ -46,7 +46,7 @@ import type { Button } from 'mdui/components/button.js';
 
 设置 `icon`、`end-icon` 属性，可以分别在按钮左侧、右侧添加 Material Icons 图标。也可以通过 `icon`、`end-icon` slot 在按钮左侧、右侧添加元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=200
 <mdui-button icon="search" end-icon="arrow_forward">Icon</mdui-button>
 <mdui-button>
   Slot
@@ -59,7 +59,7 @@ import type { Button } from 'mdui/components/button.js';
 
 设置 `href` 属性，可以使按钮变为链接，此时还可以使用这些和链接相关的属性：`download`、`target`、`rel`。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=201
 <mdui-button href="https://www.mdui.org" target="_blank">Link</mdui-button>
 ```
 
@@ -67,7 +67,7 @@ import type { Button } from 'mdui/components/button.js';
 
 添加 `disabled` 属性可以禁用按钮；添加 `loading` 属性可以为按钮添加加载中状态。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=202
 <mdui-button disabled>Disabled</mdui-button>
 <mdui-button loading>Loading</mdui-button>
 <mdui-button loading disabled>Loading & Disabled</mdui-button>

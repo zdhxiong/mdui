@@ -134,13 +134,11 @@ export const ajax = <TResponse = any>(
 
     // 全局回调
     if (callback in globalOptions) {
-      // @ts-ignore
       resultGlobal = globalOptions[callback](...args);
     }
 
     // 自定义回调
     if (mergedOptions[callback]) {
-      // @ts-ignore
       resultCustom = mergedOptions[callback](...args);
     }
 
@@ -235,7 +233,7 @@ export const ajax = <TResponse = any>(
               responseData =
                 method === 'HEAD' ? undefined : JSON.parse(xhr.responseText);
               successEventParams.response = responseData;
-            } catch (err) {
+            } catch (_err) {
               textStatus = 'parsererror';
 
               trigger(ajaxError, 'error', xhr, textStatus);

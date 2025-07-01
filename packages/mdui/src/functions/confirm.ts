@@ -218,7 +218,11 @@ export const confirm = (options: Options): Promise<void> => {
 
     $(dialog).on('close', (e) => {
       if (e.target === dialog) {
-        isResolve ? resolve() : reject();
+        if (isResolve) {
+          resolve();
+        } else {
+          reject();
+        }
         offLocaleReady(dialog);
       }
     });

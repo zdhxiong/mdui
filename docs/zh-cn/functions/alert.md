@@ -10,7 +10,7 @@ import { alert } from 'mdui/functions/alert.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=429
 <mdui-button class="example-button">open</mdui-button>
 
 <script type="module">

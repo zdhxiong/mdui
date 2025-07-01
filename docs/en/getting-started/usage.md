@@ -180,7 +180,7 @@ mdui components utilize the shadow DOM for encapsulating styles and behaviors. H
 
 For example, the [`button`](/en/docs/2/components/button#cssParts-button) part modifies the inner padding of the button, while the [`label`](/en/docs/2/components/button#cssParts-label), [`icon`](/en/docs/2/components/button#cssParts-icon), and [`end-icon`](/en/docs/2/components/button#cssParts-end-icon) parts adjust the text color, left icon color, and right icon color, respectively:
 
-```html,example
+```html,example,playgroundId=186
 <mdui-button class="custom-button" icon="explore" end-icon="flight">Button</mdui-button>
 
 <style>

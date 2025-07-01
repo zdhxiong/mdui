@@ -32,7 +32,7 @@ const result = $('input.checked').map(function (i, element) {
   }
 }
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 $.fn.map = function (this: JQ, callback: any): any {
   return new JQ(
     map(this, (element, i) => {

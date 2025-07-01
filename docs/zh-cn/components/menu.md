@@ -20,7 +20,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=295
 <mdui-menu>
   <mdui-menu-item>Item 1</mdui-menu-item>
   <mdui-menu-item>Item 2</mdui-menu-item>
@@ -33,7 +33,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 配合 [`<mdui-dropdown>`](/zh-cn/docs/2/components/dropdown) 组件实现下拉菜单。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=296
 <mdui-dropdown>
   <mdui-button slot="trigger">open dropdown</mdui-button>
   <mdui-menu>
@@ -47,7 +47,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 在 `<mdui-menu>` 组件上添加 `dense` 属性，可以实现紧凑布局。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=297
 <mdui-menu dense>
   <mdui-menu-item>Item 1</mdui-menu-item>
   <mdui-menu-item>Item 2</mdui-menu-item>
@@ -59,7 +59,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 在 `<mdui-menu-item>` 组件上添加 `disabled` 属性，可以禁用菜单项。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=298
 <mdui-menu>
   <mdui-menu-item disabled>Item 1</mdui-menu-item>
   <mdui-menu-item>Item 2</mdui-menu-item>
@@ -71,7 +71,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 在 `<mdui-menu>` 组件上指定 `selects` 属性为 `single`，可以实现单选功能。此时 `<mdui-menu>` 的 `value` 值即为当前选中的 `<mdui-menu-item>` 的 `value` 值。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=299
 <mdui-menu selects="single" value="item-2">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -84,7 +84,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 注意：在多选模式下，`<mdui-menu>` 的 `value` 值为数组，只能通过 JavaScript 属性来读取和设置该值。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=300
 <mdui-menu selects="multiple" class="example-multiple">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -104,7 +104,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 如果需要在菜单项左侧空出一个图标的位置以保持与其他菜单项的对齐，可以将 `icon` 属性设置为空字符串。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=301
 <mdui-menu>
   <mdui-menu-item icon="visibility" end-icon="add_circle" end-text="Ctrl+X">Item 1</mdui-menu-item>
   <mdui-menu-item>
@@ -119,7 +119,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 在单选或多选模式下，可以通过 `selected-icon` 属性或 `selected-icon` slot 设置选中状态的图标。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=302
 <mdui-menu selects="multiple">
   <mdui-menu-item value="item-1" selected-icon="cloud_done">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">
@@ -133,7 +133,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 在 `<mdui-menu-item>` 组件上设置 `href` 属性，可以将菜单项转换为链接。此时，还可以使用与链接相关的属性，如：`download`、`target` 和 `rel`。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=303
 <mdui-menu>
   <mdui-menu-item href="https://www.mdui.org" target="_blank">Item 1</mdui-menu-item>
   <mdui-menu-item>Item 2</mdui-menu-item>
@@ -144,7 +144,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 在 `<mdui-menu-item>` 组件中，可以使用 `submenu` slot 来指定子菜单项的元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=304
 <mdui-menu>
   <mdui-menu-item>
     Line spacing
@@ -159,7 +159,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 在 `<mdui-menu>` 组件上，可以通过 `submenu-trigger` 属性设置子菜单的触发方式。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=305
 <mdui-menu submenu-trigger="click">
   <mdui-menu-item>
     Line spacing
@@ -174,7 +174,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 当 `submenu-trigger` 属性设置为 `hover` 时，可以在 `<mdui-menu>` 组件上通过 `submenu-open-delay` 和 `submenu-close-delay` 属性设置子菜单的打开延时和关闭延时。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=306
 <mdui-menu submenu-trigger="hover" submenu-open-delay="1000" submenu-close-delay="1000">
   <mdui-menu-item>
     Line spacing
@@ -191,7 +191,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 在 `<mdui-menu-item>` 组件中，你可以使用 `custom` slot 来完全自定义菜单项的内容。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=307
 <style>
   .custom-item {
     padding: 4px 12px;

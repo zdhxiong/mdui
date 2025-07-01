@@ -129,7 +129,9 @@ export const dataAttr = (
     if (isString(value)) {
       try {
         value = stringTransform(value);
-      } catch (e) {}
+      } catch (_err) {
+        /* empty */
+      }
     }
   }
 

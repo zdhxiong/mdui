@@ -36,7 +36,9 @@ export const setAttribute = (
   key: string,
   value: string | null,
 ): void => {
-  isNull(value)
-    ? removeAttribute(element, key)
-    : element.setAttribute(key, value);
+  if (isNull(value)) {
+    removeAttribute(element, key);
+  } else {
+    element.setAttribute(key, value);
+  }
 };

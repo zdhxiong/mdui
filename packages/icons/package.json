@@ -1,6 +1,6 @@
 {
   "name": "@mdui/icons",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Material Icons 的 Web Components 图标组件库",
   "type": "module",
   "files": [
@@ -28,7 +28,7 @@
   "homepage": "https://github.com/zdhxiong/mdui",
   "dependencies": {
     "@mdui/shared": "workspace:^",
-    "lit": "^3.1.4",
-    "tslib": "^2.6.3"
+    "lit": "^3.3.0",
+    "tslib": "^2.8.1"
   }
 }

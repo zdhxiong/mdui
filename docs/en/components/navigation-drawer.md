@@ -18,7 +18,7 @@ import type { NavigationDrawer } from 'mdui/components/navigation-drawer.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=316
 <mdui-navigation-drawer close-on-overlay-click class="example-drawer">
   <mdui-button>Close Navigation Drawer</mdui-button>
 </mdui-navigation-drawer>
@@ -52,7 +52,7 @@ However, it uses a `position: absolute` style in the following cases:
 
 By default, the navigation drawer displays on the left or right side of the current window. To place it inside a container, add the `contained` attribute. This positions the navigation drawer relative to the parent element (you need to manually add `position: relative; overflow: hidden;` styles to the parent element).
 
-```html,example,expandable
+```html,example,expandable,playgroundId=317
 <div class="example-contained" style="position: relative; overflow: hidden">
   <mdui-navigation-drawer contained>
     <mdui-button class="close">Close Navigation Drawer</mdui-button>
@@ -82,7 +82,7 @@ The `close-on-esc` attribute allows the navigation drawer to close when the ESC 
 
 The `close-on-overlay-click` attribute allows the navigation drawer to close when the modal overlay is clicked.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=318
 <div class="example-modal" style="position: relative; overflow: hidden">
   <mdui-navigation-drawer modal close-on-esc close-on-overlay-click contained>
     <mdui-button class="close">Close Navigation Drawer</mdui-button>
@@ -108,7 +108,7 @@ The `close-on-overlay-click` attribute allows the navigation drawer to close whe
 
 Set the `placement` attribute to `right` to display the navigation drawer on the right side.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=319
 <div class="example-placement" style="position: relative; overflow: hidden">
   <mdui-navigation-drawer placement="right" modal close-on-esc close-on-overlay-click contained>
     <mdui-button class="close">Close Navigation Drawer</mdui-button>

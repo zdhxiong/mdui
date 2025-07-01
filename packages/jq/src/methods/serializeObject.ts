@@ -32,7 +32,7 @@ $.fn.serializeObject = function (this: JQ): Record<string, Value> {
   getFormControlsValue(this).forEach((element) => {
     const { name, value } = element;
 
-    if (!result.hasOwnProperty(name)) {
+    if (!Object.prototype.hasOwnProperty.call(result, name)) {
       result[name] = value;
     } else {
       const originalValue = result[name];

@@ -1,6 +1,6 @@
 {
   "name": "@mdui/shared",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "mdui 项目的公共部分",
   "type": "module",
   "files": [
@@ -28,9 +28,9 @@
   "homepage": "https://github.com/zdhxiong/mdui#readme",
   "dependencies": {
     "@mdui/jq": "workspace:^",
-    "@lit/reactive-element": "^2.0.4",
-    "lit": "^3.1.4",
-    "ssr-window": "^4.0.2",
-    "tslib": "^2.6.3"
+    "@lit/reactive-element": "^2.1.0",
+    "lit": "^3.3.0",
+    "ssr-window": "^5.0.1",
+    "tslib": "^2.8.1"
   }
 }

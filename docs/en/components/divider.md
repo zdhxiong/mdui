@@ -16,7 +16,7 @@ import type { Divider } from 'mdui/components/divider.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=251
 <mdui-divider></mdui-divider>
 ```
 
@@ -26,7 +26,7 @@ Example:
 
 To display the divider vertically, add the `vertical` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=252
 <div style="height: 80px;padding: 0 20px">
   <mdui-divider vertical></mdui-divider>
 </div>
@@ -36,7 +36,7 @@ To display the divider vertically, add the `vertical` attribute.
 
 To inset the divider from the left, add the `inset` attribute. This is typically used in lists to align the divider with the text on the left.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=253
 <mdui-list>
   <mdui-list-item>Item 1</mdui-list-item>
   <mdui-divider inset></mdui-divider>
@@ -48,7 +48,7 @@ To inset the divider from the left, add the `inset` attribute. This is typically
 
 To inset the divider from both sides, add the `middle` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=254
 <mdui-list>
   <mdui-list-item>Item 1</mdui-list-item>
   <mdui-divider middle></mdui-divider>

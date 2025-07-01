@@ -24,8 +24,10 @@ $('.box').toggle()
  */
 $.fn.toggle = function (this: JQ): JQ {
   return this.each((_, element) => {
-    getStyle(element, 'display') === 'none'
-      ? $(element).show()
-      : $(element).hide();
+    if (getStyle(element, 'display') === 'none') {
+      $(element).show();
+    } else {
+      $(element).hide();
+    }
   });
 };

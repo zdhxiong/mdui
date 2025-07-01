@@ -53,8 +53,13 @@
   .background-color(surface);
   .elevation(0);
 
-  :host([modal]:not([modal="false" i])) &,
-  :host([mobile]) & {
+  :host([placement="right"]) & {
+    left: initial;
+    right: 0;
+  }
+
+  :host([mobile]) &,
+  :host([modal]:not([modal="false" i])) & {
     border-radius: 0 var(--shape-corner) var(--shape-corner) 0;
     max-width: 80%;
     .width(360);
@@ -62,13 +67,8 @@
     .elevation(1);
   }
 
-  :host([placement="right"]) & {
-    left: initial;
-    right: 0;
-  }
-
-  :host([placement="right"][modal]:not([modal="false" i])) &,
-  :host([placement="right"][mobile]) & {
+  :host([placement="right"][mobile]) &,
+  :host([placement="right"][modal]:not([modal="false" i])) & {
     border-radius: var(--shape-corner) 0 0 var(--shape-corner);
   }
 }

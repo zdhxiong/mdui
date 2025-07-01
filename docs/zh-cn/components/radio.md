@@ -18,7 +18,7 @@ import type { Radio } from 'mdui/components/radio.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=330
 <mdui-radio-group value="chinese">
   <mdui-radio value="chinese">Chinese</mdui-radio>
   <mdui-radio value="english">English</mdui-radio>
@@ -31,7 +31,7 @@ import type { Radio } from 'mdui/components/radio.js';
 
 `<mdui-radio-group>` 组件的 `value` 属性值即当前选中的 `<mdui-radio>` 组件的 `value` 属性值。您也可以通过更新 `<mdui-radio-group>` 组件的 `value` 属性值，来切换当前选中的单选框。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=331
 <mdui-radio-group value="chinese">
   <mdui-radio value="chinese">Chinese</mdui-radio>
   <mdui-radio value="english">English</mdui-radio>
@@ -40,7 +40,7 @@ import type { Radio } from 'mdui/components/radio.js';
 
 可以单独使用 `<mdui-radio>` 组件，此时可以通过 `checked` 属性来读取和修改选中状态。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=332
 <mdui-radio checked>Radio</mdui-radio>
 ```
 
@@ -48,7 +48,7 @@ import type { Radio } from 'mdui/components/radio.js';
 
 通过在 `<mdui-radio-group>` 组件上添加 `disabled` 属性，可以禁用整个单选框组。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=333
 <mdui-radio-group disabled>
   <mdui-radio value="chinese">Chinese</mdui-radio>
   <mdui-radio value="english">English</mdui-radio>
@@ -57,7 +57,7 @@ import type { Radio } from 'mdui/components/radio.js';
 
 如果需要禁用特定的单选框，可以在 `<mdui-radio>` 组件上添加 `disabled` 属性。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=334
 <mdui-radio-group>
   <mdui-radio value="chinese">Chinese</mdui-radio>
   <mdui-radio value="english" disabled>English</mdui-radio>
@@ -68,7 +68,7 @@ import type { Radio } from 'mdui/components/radio.js';
 
 可以通过设置 `unchecked-icon` 和 `checked-icon` 属性，分别定义未选中和选中状态下的单选框的 Material Icons 图标。也可以通过 `unchecked-icon` 和 `checked-icon` slot 来设置。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=335
 <mdui-radio-group value="chinese">
   <mdui-radio
     unchecked-icon="check_box_outline_blank"

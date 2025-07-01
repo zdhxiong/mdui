@@ -32,5 +32,5 @@ export const selectorToArray = (selector: string): Element[] => {
 };
 
 export const removeSpace = (text: string): string => {
-  return text.replace(/\ +/g, '').replace(/[\r\n]/g, '');
+  return text.replace(/ +/g, '').replace(/[\r\n]/g, '');
 };

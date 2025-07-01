@@ -38,7 +38,7 @@ export function defaultValue(propertyName = 'value') {
         const converter = options.converter || defaultConverter;
         const fromAttribute = isFunction(converter)
           ? converter
-          : converter?.fromAttribute ?? defaultConverter.fromAttribute;
+          : (converter?.fromAttribute ?? defaultConverter.fromAttribute);
 
         const newValue: unknown = fromAttribute!(value, options.type);
 

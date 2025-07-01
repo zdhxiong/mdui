@@ -5,6 +5,7 @@ import {
   queryAssignedElements,
 } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+// eslint-disable-next-line import/extensions
 import { getOverflowAncestors } from '@floating-ui/utils/dom';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/height.js';

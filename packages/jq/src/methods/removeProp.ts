@@ -22,6 +22,8 @@ $.fn.removeProp = function (this: JQ, name: string): JQ {
     try {
       // @ts-ignore
       delete element[name];
-    } catch (e) {}
+    } catch (_err) {
+      /* empty */
+    }
   });
 };

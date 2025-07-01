@@ -16,7 +16,7 @@ import type { BottomAppBar } from 'mdui/components/bottom-app-bar.js';
 
 Example: (Note: The `style="position: relative"` in the example is for demonstration purposes only. Remove it in actual use.)
 
-```html,example
+```html,example,playgroundId=193
 <mdui-bottom-app-bar style="position: relative;">
   <mdui-button-icon icon="check_box--outlined"></mdui-button-icon>
   <mdui-button-icon icon="edit--outlined"></mdui-button-icon>
@@ -44,7 +44,7 @@ By default, the Bottom App Bar displays at the bottom of the page, relative to t
 
 To place it inside a specific container, specify the `scroll-target` attribute with the CSS selector or DOM element of the container. Ensure the parent element has `position: relative; overflow: hidden` styles.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=194
 <div style="position: relative;overflow: hidden">
   <mdui-bottom-app-bar scroll-target=".example-scroll-target">Content</mdui-bottom-app-bar>
 
@@ -60,7 +60,7 @@ To hide the Bottom App Bar when scrolling down and display it when scrolling up,
 
 The `scroll-threshold` attribute can be used to set the number of pixels to start hiding the Bottom App Bar.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=195
 <div style="position: relative;overflow: hidden">
   <mdui-bottom-app-bar
     scroll-behavior="hide"
@@ -78,7 +78,7 @@ The `scroll-threshold` attribute can be used to set the number of pixels to star
 
 If the Bottom App Bar includes a [Floating Action Button (FAB)](/en/docs/2/components/fab), add the `fab-detach` attribute to anchor the FAB at the page's bottom right when the Bottom App Bar hides on scroll.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=196
 <div style="position: relative;overflow: hidden">
   <mdui-bottom-app-bar
     fab-detach

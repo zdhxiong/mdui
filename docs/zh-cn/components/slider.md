@@ -16,7 +16,7 @@ import type { Slider } from 'mdui/components/slider.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=367
 <mdui-slider></mdui-slider>
 ```
 
@@ -26,7 +26,7 @@ import type { Slider } from 'mdui/components/slider.js';
 
 通过 `value` 属性，可以读取或设置滑块的当前值。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=368
 <mdui-slider value="50"></mdui-slider>
 ```
 
@@ -34,7 +34,7 @@ import type { Slider } from 'mdui/components/slider.js';
 
 添加 `disabled` 属性可以禁用滑块。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=369
 <mdui-slider disabled></mdui-slider>
 ```
 
@@ -42,7 +42,7 @@ import type { Slider } from 'mdui/components/slider.js';
 
 使用 `min` 和 `max` 属性来设置滑块的最小值和最大值。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=370
 <mdui-slider min="10" max="20"></mdui-slider>
 ```
 
@@ -50,7 +50,7 @@ import type { Slider } from 'mdui/components/slider.js';
 
 通过 `step` 属性，你可以设置滑块的步进间隔。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=371
 <mdui-slider step="10"></mdui-slider>
 ```
 
@@ -58,7 +58,7 @@ import type { Slider } from 'mdui/components/slider.js';
 
 添加 `tickmarks` 属性，可以在滑块上显示刻度标记。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=372
 <mdui-slider tickmarks step="10"></mdui-slider>
 ```
 
@@ -66,7 +66,7 @@ import type { Slider } from 'mdui/components/slider.js';
 
 如果你想隐藏滑块上的文本提示，可以添加 `nolabel` 属性。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=373
 <mdui-slider nolabel></mdui-slider>
 ```
 
@@ -74,7 +74,7 @@ import type { Slider } from 'mdui/components/slider.js';
 
 可以通过 `labelFormatter` JavaScript 属性来修改文本提示的显示格式。这个属性的值应该是一个函数，该函数接收当前滑块的值作为参数，返回你希望显示的文本。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=374
 <mdui-slider class="example-label-formatter"></mdui-slider>
 
 <script>

@@ -20,7 +20,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=353
 <mdui-select value="item-1">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -33,7 +33,7 @@ Example:
 
 The `variant` attribute allows you to modify the shape of the select.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=354
 <mdui-select variant="filled" value="item-1">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -53,7 +53,7 @@ To enable multi-select, add the `multiple` attribute. In this case, the `value` 
 
 Note: When multiple selections are enabled, the `value` of `<mdui-select>` is an array. This value can only be read and set using JavaScript properties.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=355
 <mdui-select multiple class="example-multiple">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -71,7 +71,7 @@ Note: When multiple selections are enabled, the `value` of `<mdui-select>` is an
 
 The `label` attribute allows you to display label text above the select.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=356
 <mdui-select label="Text Field" value="item-1">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -80,7 +80,7 @@ The `label` attribute allows you to display label text above the select.
 
 The `placeholder` attribute allows you to display placeholder text when no value is selected.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=357
 <mdui-select placeholder="Placeholder">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -89,7 +89,7 @@ The `placeholder` attribute allows you to display placeholder text when no value
 
 The `helper` attribute allows you to display helper text at the bottom of the select. Alternatively, use the `helper` slot to set helper text.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=358
 <mdui-select helper="Supporting text">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -106,7 +106,7 @@ The `helper` attribute allows you to display helper text at the bottom of the se
 
 To make the select read-only, add the `readonly` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=359
 <mdui-select readonly value="item-1">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -117,7 +117,7 @@ To make the select read-only, add the `readonly` attribute.
 
 To disable the select, add the `disabled` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=360
 <mdui-select disabled value="item-1">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -128,7 +128,7 @@ To disable the select, add the `disabled` attribute.
 
 The `clearable` attribute adds a clear button on the right when the select has a value.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=361
 <mdui-select clearable value="item-1">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -137,7 +137,7 @@ The `clearable` attribute adds a clear button on the right when the select has a
 
 You can customize the clear button using the `clear` slot.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=362
 <mdui-select clearable value="item-1">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -149,7 +149,7 @@ You can customize the clear button using the `clear` slot.
 
 You can set the dropdown menu position using the `placement` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=363
 <mdui-select placement="top" value="item-1">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -160,7 +160,7 @@ You can set the dropdown menu position using the `placement` attribute.
 
 To align the text to the right, add the `end-aligned` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=364
 <mdui-select end-aligned value="item-1">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -171,7 +171,7 @@ To align the text to the right, add the `end-aligned` attribute.
 
 You can add Material Icons to the left and right of the select by setting the `icon` and `end-icon` attributes. Alternatively, use the `icon` and `end-icon` slots to add elements to the select.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=365
 <mdui-select value="item-1" icon="search" end-icon="mic">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -189,7 +189,7 @@ You can add Material Icons to the left and right of the select by setting the `i
 
 You can add text to the left and right of the select by setting the `prefix` and `suffix` attributes. Alternatively, use the `prefix` and `suffix` slots to add text elements. This text is displayed when the select is focused or has a value.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=366
 <mdui-select value="item-1" prefix="$" suffix="/100">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>

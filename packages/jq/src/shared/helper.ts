@@ -39,7 +39,7 @@ export const isNodeName = (
   return element?.nodeName.toLowerCase() === name.toLowerCase();
 };
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 export const isFunction = (target: unknown): target is Function => {
   return typeof target === 'function';
 };

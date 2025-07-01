@@ -16,7 +16,7 @@ import type { Slider } from 'mdui/components/slider.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=367
 <mdui-slider></mdui-slider>
 ```
 
@@ -26,7 +26,7 @@ Example:
 
 The `value` property allows you to read or set the slider's value.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=368
 <mdui-slider value="50"></mdui-slider>
 ```
 
@@ -34,7 +34,7 @@ The `value` property allows you to read or set the slider's value.
 
 The `disabled` attribute can be used to disable the slider.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=369
 <mdui-slider disabled></mdui-slider>
 ```
 
@@ -42,7 +42,7 @@ The `disabled` attribute can be used to disable the slider.
 
 The `min` and `max` attributes allow you to set the slider's minimum and maximum values.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=370
 <mdui-slider min="10" max="20"></mdui-slider>
 ```
 
@@ -50,7 +50,7 @@ The `min` and `max` attributes allow you to set the slider's minimum and maximum
 
 The `step` attribute allows you to set the slider's step interval.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=371
 <mdui-slider step="10"></mdui-slider>
 ```
 
@@ -58,7 +58,7 @@ The `step` attribute allows you to set the slider's step interval.
 
 The `tickmarks` attribute can be used to add tickmarks to the slider.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=372
 <mdui-slider tickmarks step="10"></mdui-slider>
 ```
 
@@ -66,7 +66,7 @@ The `tickmarks` attribute can be used to add tickmarks to the slider.
 
 The `nolabel` attribute can be used to hide the slider's tooltip.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=373
 <mdui-slider nolabel></mdui-slider>
 ```
 
@@ -74,7 +74,7 @@ The `nolabel` attribute can be used to hide the slider's tooltip.
 
 The `labelFormatter` property allows you to modify the tooltip's display format. This property is a function that takes the slider's current value as a parameter and returns the display text.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=374
 <mdui-slider class="example-label-formatter"></mdui-slider>
 
 <script>

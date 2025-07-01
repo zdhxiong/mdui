@@ -26,7 +26,7 @@ $('<p>Hello</p>').appendTo('<p>I would like to say: </p>')
 }
 
 eachArray(['appendTo', 'prependTo'], (name, nameIndex) => {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   $.fn[name as 'appendTo'] = function (this: JQ, target: any): JQ {
     const extraChilds: HTMLElement[] = [];
     const $target = $(target).map((_, element: HTMLElement) => {

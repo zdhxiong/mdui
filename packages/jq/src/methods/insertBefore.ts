@@ -29,7 +29,7 @@ $('<p>I would like to say: </p>').insertBefore('<b>Hello</b>');
 }
 
 eachArray(['insertBefore', 'insertAfter'], (name, nameIndex) => {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   $.fn[name as 'insertBefore'] = function (this: JQ, target: any): JQ {
     const $element = nameIndex ? $(this.get().reverse()) : this; // 顺序和 jQuery 保持一致
     const $target = $(target);

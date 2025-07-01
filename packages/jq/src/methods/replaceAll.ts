@@ -23,7 +23,7 @@ $('.new').replaceAll('.box');
   }
 }
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 $.fn.replaceAll = function (this: JQ, target: any): JQ {
   return $(target).map((index, element) => {
     $(element).replaceWith(index ? this.clone() : this);

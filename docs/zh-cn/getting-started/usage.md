@@ -180,7 +180,7 @@ mdui 组件使用 shadow DOM 来封装样式和行为，但是常规 CSS 选择�
 
 例如，下面的代码使用 [`button`](/zh-cn/docs/2/components/button#cssParts-button) part 修改了按钮的内边距，且使用 [`label`](/zh-cn/docs/2/components/button#cssParts-label)、[`icon`](/zh-cn/docs/2/components/button#cssParts-icon)、[`end-icon`](/zh-cn/docs/2/components/button#cssParts-end-icon) part 分别修改了文本、左右图标的颜色：
 
-```html,example
+```html,example,playgroundId=186
 <mdui-button class="custom-button" icon="explore" end-icon="flight">Button</mdui-button>
 
 <style>

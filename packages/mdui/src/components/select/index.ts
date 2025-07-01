@@ -569,7 +569,7 @@ export class Select
     const menu = e.target as Menu;
     this.value = this.multiple
       ? (menu.value as string[]).map((v) => v ?? '')
-      : (menu.value as string | undefined) ?? '';
+      : ((menu.value as string | undefined) ?? '');
 
     await this.updateComplete;
 

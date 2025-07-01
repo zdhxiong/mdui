@@ -20,7 +20,7 @@ import type { CollapseItem } from 'mdui/components/collapse-item.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=234
 <mdui-collapse>
   <mdui-collapse-item header="first header">first content</mdui-collapse-item>
   <mdui-collapse-item header="second header">second content</mdui-collapse-item>
@@ -33,7 +33,7 @@ Example:
 
 You can set the panel header text using the `header` attribute of the `<mdui-collapse-item>` component. Alternatively, use the `header` slot to specify the panel header element. The default slot of the component is for the panel content.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=235
 <mdui-list>
   <mdui-collapse>
     <mdui-collapse-item>
@@ -56,7 +56,7 @@ You can set the panel header text using the `header` attribute of the `<mdui-col
 
 To enable accordion mode, add the `accordion` attribute to the `<mdui-collapse>` component. In this mode, only one panel can be open at a time.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=236
 <mdui-list>
   <mdui-collapse accordion>
     <mdui-collapse-item>
@@ -81,7 +81,7 @@ The `value` attribute of the `<mdui-collapse>` component can be used to get the 
 
 In accordion mode, `value` is a string and can be manipulated using either attribute or property. In non-accordion mode, `value` is an array and can only be manipulated using JavaScript property.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=237
 <mdui-list>
   <mdui-list-subheader>Accordion Mode</mdui-list-subheader>
   <mdui-collapse accordion value="item-1">
@@ -126,7 +126,7 @@ In accordion mode, `value` is a string and can be manipulated using either attri
 
 To disable the entire collapse panel group, add the `disabled` attribute to the `<mdui-collapse>` component. To disable a specific collapse panel, add the `disabled` attribute to the `<mdui-collapse-item>`.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=238
 <mdui-list>
   <mdui-list-subheader>All Disabled</mdui-list-subheader>
   <mdui-collapse disabled>
@@ -166,7 +166,7 @@ To disable the entire collapse panel group, add the `disabled` attribute to the 
 
 By default, clicking the entire panel header area triggers the collapse. You can specify the triggering element by using the `trigger` attribute of the `<mdui-collapse-item>` component. The `trigger` attribute can be a CSS selector or a DOM element.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=239
 <mdui-list>
   <mdui-collapse>
     <mdui-collapse-item trigger=".example-trigger">

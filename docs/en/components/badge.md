@@ -16,7 +16,7 @@ import type { Badge } from 'mdui/components/badge.js';
 
 example:
 
-```html,example
+```html,example,playgroundId=191
 <mdui-badge>12</mdui-badge>
 ```
 
@@ -26,7 +26,7 @@ example:
 
 The `variant` attribute determines the badge's shape. A `large` value creates a larger badge. Specify the content to display within the default slot.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=192
 <mdui-badge variant="small"></mdui-badge>
 <mdui-badge variant="large">99+</mdui-badge>
 ```

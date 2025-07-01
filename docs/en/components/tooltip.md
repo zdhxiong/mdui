@@ -16,7 +16,7 @@ import type { Tooltip } from 'mdui/components/tooltip.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=411
 <mdui-tooltip content="Plain tooltip">
   <mdui-button>button</mdui-button>
 </mdui-tooltip>
@@ -28,7 +28,7 @@ Example:
 
 By default, the tooltip displays plain text. The `content` attribute specifies the tooltip content.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=412
 <mdui-tooltip content="Plain tooltip">
   <mdui-button>button</mdui-button>
 </mdui-tooltip>
@@ -36,7 +36,7 @@ By default, the tooltip displays plain text. The `content` attribute specifies t
 
 Alternatively, the `content` slot can also be used for this purpose.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=413
 <mdui-tooltip>
   <mdui-button>button</mdui-button>
   <div slot="content">
@@ -50,7 +50,7 @@ Alternatively, the `content` slot can also be used for this purpose.
 
 For a rich text tooltip, set the `variant` attribute to `rich`. The tooltip's title and content can be specified using the `headline` and `content` attributes, respectively.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=414
 <mdui-tooltip
   variant="rich"
   headline="Rich tooltip"
@@ -62,7 +62,7 @@ For a rich text tooltip, set the `variant` attribute to `rich`. The tooltip's ti
 
 Alternatively, the `headline` and `content` slots can be used to specify the tooltip's title and content. The `action` slot is used to specify the tooltip's action button.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=415
 <mdui-tooltip variant="rich">
   <mdui-button>button</mdui-button>
   <div slot="headline">Rich tooltip</div>
@@ -75,7 +75,7 @@ Alternatively, the `headline` and `content` slots can be used to specify the too
 
 The `placement` attribute sets the tooltip's position.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=416
 <div class="example-placement">
   <div class="row">
     <mdui-tooltip placement="top-left" content="top-left">
@@ -156,7 +156,7 @@ The `placement` attribute sets the tooltip's position.
 
 The `trigger` attribute determines the trigger method for the tooltip.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=417
 <mdui-tooltip trigger="click" content="tooltip">
   <mdui-button>button</mdui-button>
 </mdui-tooltip>
@@ -166,7 +166,7 @@ The `trigger` attribute determines the trigger method for the tooltip.
 
 When the trigger method is `hover`, the `open-delay` and `close-delay` attributes set the opening and closing delays, respectively. The unit is in milliseconds.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=418
 <mdui-tooltip open-delay="1000" close-delay="1000" content="tooltip">
   <mdui-button>button</mdui-button>
 </mdui-tooltip>
@@ -176,7 +176,7 @@ When the trigger method is `hover`, the `open-delay` and `close-delay` attribute
 
 The `disabled` attribute disables the tooltip.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=419
 <mdui-tooltip disabled content="tooltip">
   <mdui-button>button</mdui-button>
 </mdui-tooltip>

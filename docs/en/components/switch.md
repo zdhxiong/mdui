@@ -16,7 +16,7 @@ import type { Switch } from 'mdui/components/switch.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=385
 <mdui-switch></mdui-switch>
 ```
 
@@ -26,7 +26,7 @@ Example:
 
 The `checked` attribute indicates whether the switch is on or off. To set the switch to the on state by default, add the `checked` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=386
 <mdui-switch checked></mdui-switch>
 ```
 
@@ -34,7 +34,7 @@ The `checked` attribute indicates whether the switch is on or off. To set the sw
 
 The `disabled` attribute can be used to disable the switch.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=387
 <mdui-switch disabled></mdui-switch>
 <mdui-switch disabled checked></mdui-switch>
 ```
@@ -43,7 +43,7 @@ The `disabled` attribute can be used to disable the switch.
 
 The `unchecked-icon` and `checked-icon` attributes can be used to set the Material Icons for the unchecked and checked states, respectively. Alternatively, the `unchecked-icon` and `checked-icon` slots can be used to set the icons for the unchecked and checked states.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=388
 <mdui-switch unchecked-icon="remove_moderator" checked-icon="verified_user"></mdui-switch>
 <mdui-switch>
   <mdui-icon slot="unchecked-icon" name="remove_moderator"></mdui-icon>

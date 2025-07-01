@@ -16,7 +16,7 @@ import type { ButtonIcon } from 'mdui/components/button-icon.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=203
 <mdui-button-icon icon="search"></mdui-button-icon>
 ```
 
@@ -26,7 +26,7 @@ Example:
 
 Use the `icon` attribute to specify the Material Icons name. Alternatively, you can use the default slot to specify the icon element.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=204
 <mdui-button-icon icon="search"></mdui-button-icon>
 <mdui-button-icon>
   <mdui-icon name="search"></mdui-icon>
@@ -37,7 +37,7 @@ Use the `icon` attribute to specify the Material Icons name. Alternatively, you 
 
 The `variant` attribute determines the shape of the icon button.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=205
 <mdui-button-icon variant="standard" icon="search"></mdui-button-icon>
 <mdui-button-icon variant="filled" icon="search"></mdui-button-icon>
 <mdui-button-icon variant="tonal" icon="search"></mdui-button-icon>
@@ -48,13 +48,13 @@ The `variant` attribute determines the shape of the icon button.
 
 Add the `selectable` attribute to make the icon button selectable.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=206
 <mdui-button-icon selectable icon="favorite_border"></mdui-button-icon>
 ```
 
 Use the `selected-icon` attribute to specify the Material Icons name for the selected state. Alternatively, use the `selected-icon` slot to specify the selected state icon element.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=207
 <mdui-button-icon selectable icon="favorite_border" selected-icon="favorite"></mdui-button-icon>
 <mdui-button-icon selectable icon="favorite_border">
   <mdui-icon slot="selected-icon" name="favorite"></mdui-icon>
@@ -63,7 +63,7 @@ Use the `selected-icon` attribute to specify the Material Icons name for the sel
 
 The `selected` property is `true` when the icon button is selected. Add the `selected` attribute to set the icon button to the selected state by default.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=208
 <mdui-button-icon selectable selected icon="favorite_border" selected-icon="favorite"></mdui-button-icon>
 ```
 
@@ -71,7 +71,7 @@ The `selected` property is `true` when the icon button is selected. Add the `sel
 
 Use the `href` attribute to turn the icon button into a link. The `download`, `target`, and `rel` attributes are available for link-related functionality.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=209
 <mdui-button-icon icon="search" href="https://www.mdui.org" target="_blank"></mdui-button-icon>
 ```
 
@@ -79,7 +79,7 @@ Use the `href` attribute to turn the icon button into a link. The `download`, `t
 
 Use the `disabled` attribute to disable the icon button. The `loading` attribute displays the loading state.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=210
 <mdui-button-icon disabled icon="search" variant="tonal"></mdui-button-icon>
 <mdui-button-icon loading icon="search" variant="tonal"></mdui-button-icon>
 <mdui-button-icon loading disabled icon="search" variant="tonal"></mdui-button-icon>

@@ -188,21 +188,24 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
     /**
      * 执行滚动事件，在滚动距离超过 scrollThreshold 时才会执行
      * Note: 父类可以按需实现该方法
-     * @param isScrollingUp 是否向上滚动
-     * @param scrollTop 距离 scrollTarget 顶部的距离
+     * @param _isScrollingUp 是否向上滚动
+     * @param _scrollTop 距离 scrollTarget 顶部的距离
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    protected runScrollThreshold(isScrollingUp: boolean, scrollTop: number) {
+
+    protected runScrollThreshold(_isScrollingUp: boolean, _scrollTop: number) {
       return;
     }
 
     /**
      * 执行滚动事件，会无视 scrollThreshold，始终会执行
-     * @param isScrollingUp 是否向上滚动
-     * @param scrollTop 距离 scrollTarget 顶部的距离
+     * @param _isScrollingUp 是否向上滚动
+     * @param _scrollTop 距离 scrollTarget 顶部的距离
      */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    protected runScrollNoThreshold(isScrollingUp: boolean, scrollTop: number) {
+
+    protected runScrollNoThreshold(
+      _isScrollingUp: boolean,
+      _scrollTop: number,
+    ) {
       return;
     }
 

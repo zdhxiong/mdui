@@ -10,7 +10,7 @@ import { confirm } from 'mdui/functions/confirm.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=430
 <mdui-button class="example-button">open</mdui-button>
 
 <script type="module">

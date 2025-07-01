@@ -1,8 +1,0 @@
-.DS_STORE
-.idea
-.vscode
-.vs
-.git
-node_modules
-packages/**/*.js
-packages/**/*.d.ts

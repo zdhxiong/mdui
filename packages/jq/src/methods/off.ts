@@ -12,7 +12,6 @@ import type { EventCallback } from '../shared/event.js';
 import type { PlainObject } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface JQ<T = HTMLElement> {
     /**
      * 解除通过事件委托绑定的指定事件
@@ -114,11 +113,11 @@ $('.wrapper').off();
 $.fn.off = function (
   this: JQ,
   types?: PlainObject<EventCallback | false> | string,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   selector?: any,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   callback?: any,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any {
   // types 是对象
   if (isObjectLike(types)) {

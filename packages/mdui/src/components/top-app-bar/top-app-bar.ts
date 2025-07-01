@@ -4,6 +4,7 @@ import {
   property,
   queryAssignedElements,
 } from 'lit/decorators.js';
+import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -111,6 +112,10 @@ export class TopAppBar extends ScrollBehaviorMixin(
   @queryAssignedElements({ selector: 'mdui-top-app-bar-title', flatten: true })
   private readonly titleElements!: TopAppBarTitle[];
 
+  private definedController = new DefinedController(this, {
+    relatedElements: ['mdui-top-app-bar-title'],
+  });
+
   protected get scrollPaddingPosition(): ScrollPaddingPosition {
     return 'top';
   }
@@ -135,6 +140,7 @@ export class TopAppBar extends ScrollBehaviorMixin(
       await this.updateComplete;
     }
 
+    await this.definedController.whenDefined();
     this.titleElements.forEach((titleElement) => {
       titleElement.variant = this.variant;
     });
@@ -145,6 +151,8 @@ export class TopAppBar extends ScrollBehaviorMixin(
     if (!this.hasUpdated) {
       await this.updateComplete;
     }
+
+    await this.definedController.whenDefined();
     this.titleElements.forEach((titleElement) => {
       titleElement.shrink = this.shrink;
     });

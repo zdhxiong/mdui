@@ -139,7 +139,7 @@ mdui can also be included directly via a CDN using `<link>` and `<script>` tags.
 
 The global build of mdui exposes all functions as properties on the global `mdui` object.
 
-```html
+```html,playgroundId=184
 <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
 <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
 
@@ -156,12 +156,12 @@ The global build of mdui exposes all functions as properties on the global `mdui
 
 The ES module build of mdui allows you to import it using ES module syntax from the CDN.
 
-```html
+```html,playgroundId=185
 <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">
 
 <mdui-button class="btn">Click me</mdui-button>
 
-<script>
+<script type="module">
   import { snackbar } from 'https://unpkg.com/mdui@2/mdui.esm.js';
 
   document.querySelector('.btn').addEventListener('click', () => {

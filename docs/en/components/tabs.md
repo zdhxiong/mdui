@@ -20,7 +20,7 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=389
 <mdui-tabs value="tab-1">
   <mdui-tab value="tab-1">Tab 1</mdui-tab>
   <mdui-tab value="tab-2">Tab 2</mdui-tab>
@@ -38,7 +38,7 @@ Example:
 
 The `variant` attribute on the `<mdui-tabs>` component allows you to set the style of the tabs.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=390
 <mdui-tabs value="tab-1" variant="primary">
   <mdui-tab value="tab-1">Tab 1</mdui-tab>
   <mdui-tab value="tab-2">Tab 2</mdui-tab>
@@ -64,7 +64,7 @@ The `variant` attribute on the `<mdui-tabs>` component allows you to set the sty
 
 The `placement` attribute on the `<mdui-tabs>` component allows you to set the position of the tabs.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=391
 <mdui-select class="example-change-placement" placeholder="Select placement value" style="width: 180px">
   <mdui-menu-item value="top-start">top-start</mdui-menu-item>
   <mdui-menu-item value="top">top</mdui-menu-item>
@@ -104,7 +104,7 @@ The `placement` attribute on the `<mdui-tabs>` component allows you to set the p
 
 To make the tabs occupy the entire width and be evenly distributed, add the `full-width` attribute to the `<mdui-tabs>` component.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=392
 <mdui-tabs value="tab-1" full-width>
   <mdui-tab value="tab-1">Tab 1</mdui-tab>
   <mdui-tab value="tab-2">Tab 2</mdui-tab>
@@ -122,7 +122,7 @@ Add Material Icons to the tabs by setting the `icon` attribute on the `<mdui-tab
 
 Arrange the icon and text horizontally by adding the `inline` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=393
 <mdui-tabs value="tab-1">
   <mdui-tab value="tab-1" icon="library_music">Tab 1</mdui-tab>
   <mdui-tab value="tab-2">
@@ -141,7 +141,7 @@ Arrange the icon and text horizontally by adding the `inline` attribute.
 
 Add a badge to the `<mdui-tab>` component using the `badge` slot.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=394
 <mdui-tabs value="tab-1">
   <mdui-tab value="tab-1">
     Tab 1
@@ -160,7 +160,7 @@ Add a badge to the `<mdui-tab>` component using the `badge` slot.
 
 Use the `custom` slot in the `<mdui-tab>` component to fully customize the content of the tabs.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=395
 <mdui-tabs value="tab-1">
   <mdui-tab value="tab-1">
     Tab 1

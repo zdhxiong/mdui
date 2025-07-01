@@ -16,7 +16,7 @@ import type { Chip } from 'mdui/components/chip.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=221
 <mdui-chip>Chip</mdui-chip>
 ```
 
@@ -31,7 +31,7 @@ The `variant` attribute determines the chip's appearance. There are four availab
 * `input`: Represents discrete pieces of information entered by a user.
 * `suggestion`: Helps narrow a user’s intent by presenting dynamically generated suggestions.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=222
 <mdui-chip variant="assist">Assist</mdui-chip>
 <mdui-chip variant="filter">Filter</mdui-chip>
 <mdui-chip variant="input">Input</mdui-chip>
@@ -42,7 +42,7 @@ The `variant` attribute determines the chip's appearance. There are four availab
 
 Add the `elevated` attribute to raise the chip, providing it with a shadow.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=223
 <mdui-chip elevated>Chip</mdui-chip>
 ```
 
@@ -50,7 +50,7 @@ Add the `elevated` attribute to raise the chip, providing it with a shadow.
 
 Use the `icon` and `end-icon` attributes to add Material Icons to the left and right sides of the chip, respectively. Alternatively, use the `icon` and `end-icon` slots to add elements to the chip's sides.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=224
 <mdui-chip icon="search">Icon</mdui-chip>
 <mdui-chip end-icon="arrow_forward">End Icon</mdui-chip>
 <mdui-chip>
@@ -64,7 +64,7 @@ Use the `icon` and `end-icon` attributes to add Material Icons to the left and r
 
 Use the `href` attribute to transform the chip into a link. The `download`, `target`, and `rel` attributes are available for link-related functionality.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=225
 <mdui-chip href="https://www.mdui.org" target="_blank">Link</mdui-chip>
 ```
 
@@ -72,7 +72,7 @@ Use the `href` attribute to transform the chip into a link. The `download`, `tar
 
 Use the `disabled` attribute to disable the chip. The `loading` attribute displays the loading state.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=226
 <mdui-chip disabled>Disabled</mdui-chip>
 <mdui-chip loading>Loading</mdui-chip>
 <mdui-chip loading disabled>Loading & Disabled</mdui-chip>
@@ -82,13 +82,13 @@ Use the `disabled` attribute to disable the chip. The `loading` attribute displa
 
 Add the `selectable` attribute to make the chip selectable.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=227
 <mdui-chip selectable>Chip</mdui-chip>
 ```
 
 Use the `selected-icon` attribute to specify the Material Icons name for the selected state. Alternatively, use the `selected-icon` slot to specify the selected state icon element.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=228
 <mdui-chip selectable selected-icon="favorite">Chip</mdui-chip>
 <mdui-chip selectable>
   Chip
@@ -98,7 +98,7 @@ Use the `selected-icon` attribute to specify the Material Icons name for the sel
 
 The `selected` property is `true` when the chip is selected. Add the `selected` attribute to set the chip as selected by default.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=229
 <mdui-chip selectable selected>Chip</mdui-chip>
 ```
 
@@ -106,7 +106,7 @@ The `selected` property is `true` when the chip is selected. Add the `selected` 
 
 Add the `deletable` attribute to add a delete icon to the right of the chip. Clicking this icon triggers the `delete` event. Use the `delete-icon` attribute to specify the Material Icons for the delete icon, or use the `delete-icon` slot to specify the element for the delete icon.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=230
 <mdui-chip deletable>Chip</mdui-chip>
 <mdui-chip deletable delete-icon="backspace">Chip</mdui-chip>
 <mdui-chip deletable>

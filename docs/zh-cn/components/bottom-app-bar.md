@@ -16,7 +16,7 @@ import type { BottomAppBar } from 'mdui/components/bottom-app-bar.js';
 
 使用示例：（注意：示例中的 `style="position: relative"` 是为了演示需要，实际使用时请移除该样式。）
 
-```html,example
+```html,example,playgroundId=193
 <mdui-bottom-app-bar style="position: relative;">
   <mdui-button-icon icon="check_box--outlined"></mdui-button-icon>
   <mdui-button-icon icon="edit--outlined"></mdui-button-icon>
@@ -44,7 +44,7 @@ import type { BottomAppBar } from 'mdui/components/bottom-app-bar.js';
 
 如果你希望将底部应用栏放在指定的容器内，可以指定 `scroll-target` 属性，其值为可滚动内容的容器的 CSS 选择器或 DOM 元素。此时，底部应用栏会相对于父元素显示（你需要自行在父元素上添加 `position: relative; overflow: hidden` 样式）。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=194
 <div style="position: relative;overflow: hidden">
   <mdui-bottom-app-bar scroll-target=".example-scroll-target">Content</mdui-bottom-app-bar>
 
@@ -60,7 +60,7 @@ import type { BottomAppBar } from 'mdui/components/bottom-app-bar.js';
 
 使用 `scroll-threshold` 属性，可以设置滚动多少像素后开始隐藏底部应用栏。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=195
 <div style="position: relative;overflow: hidden">
   <mdui-bottom-app-bar
     scroll-behavior="hide"
@@ -78,7 +78,7 @@ import type { BottomAppBar } from 'mdui/components/bottom-app-bar.js';
 
 如果底部应用栏中包含了[浮动操作按钮](/zh-cn/docs/2/components/fab)，则可以添加 `fab-detach` 属性，使得在页面滚动，底部应用栏隐藏时，浮动操作按钮仍然停留在页面右下角。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=196
 <div style="position: relative;overflow: hidden">
   <mdui-bottom-app-bar
     fab-detach

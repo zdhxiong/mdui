@@ -18,7 +18,7 @@ import type { NavigationDrawer } from 'mdui/components/navigation-drawer.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=316
 <mdui-navigation-drawer close-on-overlay-click class="example-drawer">
   <mdui-button>关闭侧边抽屉栏</mdui-button>
 </mdui-navigation-drawer>
@@ -52,7 +52,7 @@ import type { NavigationDrawer } from 'mdui/components/navigation-drawer.js';
 
 默认情况下，侧边抽屉栏会相对于当前窗口，在页面左侧或右侧显示。如果你希望把侧边抽屉栏放在指定容器内，可以添加 `contained` 属性，此时侧边抽屉栏会相对于父元素显示（你需要自行在父元素上添加样式 `position: relative; overflow: hidden;`）。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=317
 <div class="example-contained" style="position: relative; overflow: hidden">
   <mdui-navigation-drawer contained>
     <mdui-button class="close">关闭侧边抽屉栏</mdui-button>
@@ -82,7 +82,7 @@ import type { NavigationDrawer } from 'mdui/components/navigation-drawer.js';
 
 添加 `close-on-overlay-click` 属性，可以在点击遮罩层时关闭侧边抽屉栏。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=318
 <div class="example-modal" style="position: relative; overflow: hidden">
   <mdui-navigation-drawer modal close-on-esc close-on-overlay-click contained>
     <mdui-button class="close">关闭侧边抽屉栏</mdui-button>
@@ -108,7 +108,7 @@ import type { NavigationDrawer } from 'mdui/components/navigation-drawer.js';
 
 通过将 `placement` 属性设置为 `right`，可以将侧边抽屉栏显示在页面右侧。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=319
 <div class="example-placement" style="position: relative; overflow: hidden">
   <mdui-navigation-drawer placement="right" modal close-on-esc close-on-overlay-click contained>
     <mdui-button class="close">关闭侧边抽屉栏</mdui-button>

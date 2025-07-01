@@ -10,7 +10,7 @@ import { dialog } from 'mdui/functions/dialog.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=428
 <mdui-button class="example-button">open</mdui-button>
 
 <script type="module">

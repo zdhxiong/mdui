@@ -16,7 +16,7 @@ import type { Dropdown } from 'mdui/components/dropdown.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=255
 <mdui-dropdown>
   <mdui-button slot="trigger">open dropdown</mdui-button>
   <mdui-menu>
@@ -32,7 +32,7 @@ Example:
 
 Add the `disabled` attribute to disable the dropdown.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=256
 <mdui-dropdown disabled>
   <mdui-button slot="trigger">open dropdown</mdui-button>
   <mdui-menu>
@@ -46,7 +46,7 @@ Add the `disabled` attribute to disable the dropdown.
 
 Set the `placement` attribute to control the dropdown's open position.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=257
 <mdui-dropdown placement="right-start">
   <mdui-button slot="trigger">open dropdown</mdui-button>
   <mdui-menu>
@@ -60,7 +60,7 @@ Set the `placement` attribute to control the dropdown's open position.
 
 Set the dropdown's trigger method with the `trigger` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=258
 <mdui-dropdown trigger="hover">
   <mdui-button slot="trigger">open dropdown</mdui-button>
   <mdui-menu>
@@ -74,7 +74,7 @@ Set the dropdown's trigger method with the `trigger` attribute.
 
 Add the `open-on-pointer` attribute to open the dropdown at the pointer location. This is often combined with `trigger="contextmenu"` for right-click menu activation.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=259
 <mdui-dropdown trigger="contextmenu" open-on-pointer>
   <mdui-card slot="trigger" style="width:100%;height: 80px">Open the menu here with the right mouse button</mdui-card>
   <mdui-menu>
@@ -88,7 +88,7 @@ Add the `open-on-pointer` attribute to open the dropdown at the pointer location
 
 By default, clicking a menu item in the dropdown component closes it. Add `stay-open-on-click` to keep it open.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=260
 <mdui-dropdown trigger="click" stay-open-on-click>
   <mdui-button slot="trigger">open dropdown</mdui-button>
   <mdui-menu>
@@ -102,7 +102,7 @@ By default, clicking a menu item in the dropdown component closes it. Add `stay-
 
 With `trigger="hover"`, use `open-delay` and `close-delay` to set the open and close delays.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=261
 <mdui-dropdown trigger="hover" open-delay="1000" close-delay="1000">
   <mdui-button slot="trigger">open dropdown</mdui-button>
   <mdui-menu>

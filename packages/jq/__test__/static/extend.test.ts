@@ -7,7 +7,7 @@ const test = ($: JQStatic, type: string): void => {
       let _this;
       const merged = $.extend({
         testFunc: function () {
-          // eslint-disable-next-line
+          // eslint-disable-next-line @typescript-eslint/no-this-alias
           _this = this;
           return 'testFunc';
         },

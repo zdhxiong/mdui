@@ -16,7 +16,7 @@ import type { Avatar } from 'mdui/components/avatar.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=187
 <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
 ```
 
@@ -26,7 +26,7 @@ Example:
 
 To use an image as the avatar, specify the image link using the `src` attribute, or provide an `<img>` element within the default slot.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=188
 <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
 
 <mdui-avatar>
@@ -40,7 +40,7 @@ The `fit` attribute determines how the image should fit the container box. It wo
 
 To use a Material Icons icon as the avatar, specify the icon using the `icon` attribute. Alternatively, provide an icon element within the default slot.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=189
 <mdui-avatar icon="people_alt"></mdui-avatar>
 
 <mdui-avatar>
@@ -52,6 +52,6 @@ To use a Material Icons icon as the avatar, specify the icon using the `icon` at
 
 You can use any text within the default slot as the avatar.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=190
 <mdui-avatar>A</mdui-avatar>
 ```

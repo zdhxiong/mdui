@@ -55,7 +55,7 @@ $('<p>Hello</p>').append(function (index, html) {
 }
 
 eachArray(['prepend', 'append'], (name, nameIndex) => {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   $.fn[name as 'append'] = function (this: JQ, ...args: any[]): JQ {
     return this.each((index, element) => {
       const childNodes = element.childNodes;

@@ -18,7 +18,7 @@ import type { SegmentedButton } from 'mdui/components/segmented-button.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=344
 <mdui-segmented-button-group>
   <mdui-segmented-button>Day</mdui-segmented-button>
   <mdui-segmented-button>Week</mdui-segmented-button>
@@ -32,7 +32,7 @@ Example:
 
 To make the component take up the full width of its container, add the `full-width` attribute to the `<mdui-segmented-button-group>` component.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=345
 <mdui-segmented-button-group full-width>
   <mdui-segmented-button>Day</mdui-segmented-button>
   <mdui-segmented-button>Week</mdui-segmented-button>
@@ -44,7 +44,7 @@ To make the component take up the full width of its container, add the `full-wid
 
 To enable single selection mode, set the `selects` attribute of the `<mdui-segmented-button-group>` component to `single`. In this mode, the `value` property of `<mdui-segmented-button-group>` reflects the `value` property of the currently selected `<mdui-segmented-button>`.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=346
 <mdui-segmented-button-group selects="single">
   <mdui-segmented-button value="day">Day</mdui-segmented-button>
   <mdui-segmented-button value="week">Week</mdui-segmented-button>
@@ -64,7 +64,7 @@ To enable multiple selection mode, set the `selects` attribute of the `<mdui-seg
 
 Note that when supporting multiple selection, the `value` property of `<mdui-segmented-button-group>` is an array, and it can only be read and set through JavaScript property.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=347
 <mdui-segmented-button-group selects="multiple">
   <mdui-segmented-button value="day">Day</mdui-segmented-button>
   <mdui-segmented-button value="week">Week</mdui-segmented-button>
@@ -88,7 +88,7 @@ Note that when supporting multiple selection, the `value` property of `<mdui-seg
 
 To add Material Icons on the left and right sides of the button, use the `icon` and `end-icon` attributes on the `<mdui-segmented-button>` element. Alternatively, use the `icon` and `end-icon` slots to add elements on the left and right sides of the button.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=348
 <mdui-segmented-button-group>
   <mdui-segmented-button icon="search">Day</mdui-segmented-button>
   <mdui-segmented-button end-icon="arrow_forward">Week</mdui-segmented-button>
@@ -102,7 +102,7 @@ To add Material Icons on the left and right sides of the button, use the `icon` 
 
 To set the Material Icon for the selected state, use the `selected-icon` attribute on the `<mdui-segmented-button>` element. Alternatively, use the `selected-icon` slot.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=349
 <mdui-segmented-button-group selects="multiple">
   <mdui-segmented-button value="day" selected-icon="cloud_done">Day</mdui-segmented-button>
   <mdui-segmented-button value="week">
@@ -116,7 +116,7 @@ To set the Material Icon for the selected state, use the `selected-icon` attribu
 
 To turn the button into a link, use the `href` attribute on the `<mdui-segmented-button>` component. The `download`, `target`, and `rel` attributes are available for link-related functionality.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=350
 <mdui-segmented-button-group>
   <mdui-segmented-button href="https://www.mdui.org" target="_blank">Link</mdui-segmented-button>
   <mdui-segmented-button>Week</mdui-segmented-button>
@@ -128,7 +128,7 @@ To turn the button into a link, use the `href` attribute on the `<mdui-segmented
 
 To disable the entire segmented button group, add the `disabled` attribute to the `<mdui-segmented-button-group>` element.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=351
 <mdui-segmented-button-group disabled>
   <mdui-segmented-button>Day</mdui-segmented-button>
   <mdui-segmented-button>Week</mdui-segmented-button>
@@ -138,7 +138,7 @@ To disable the entire segmented button group, add the `disabled` attribute to th
 
 To disable specific buttons, add the `disabled` attribute to the `<mdui-segmented-button>` element. To make a button enter the loading state, add the `loading` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=352
 <mdui-segmented-button-group>
   <mdui-segmented-button>Day</mdui-segmented-button>
   <mdui-segmented-button disabled>Week</mdui-segmented-button>

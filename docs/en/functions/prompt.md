@@ -12,7 +12,7 @@ import { prompt } from 'mdui/functions/prompt.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=431
 <mdui-button class="example-button">open</mdui-button>
 
 <script type="module">

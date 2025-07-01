@@ -16,7 +16,7 @@ import type { Switch } from 'mdui/components/switch.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=385
 <mdui-switch></mdui-switch>
 ```
 
@@ -26,7 +26,7 @@ import type { Switch } from 'mdui/components/switch.js';
 
 当开关被选中时，`checked` 属性的值为 `true`。你也可以通过添加 `checked` 属性，使开关默认处于选中状态。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=386
 <mdui-switch checked></mdui-switch>
 ```
 
@@ -34,7 +34,7 @@ import type { Switch } from 'mdui/components/switch.js';
 
 通过添加 `disabled` 属性，可以禁用开关组件。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=387
 <mdui-switch disabled></mdui-switch>
 <mdui-switch disabled checked></mdui-switch>
 ```
@@ -43,7 +43,7 @@ import type { Switch } from 'mdui/components/switch.js';
 
 可以通过 `unchecked-icon` 属性来设置未选中状态的 Material Icons 图标，通过 `checked-icon` 属性来设置选中状态的 Material Icons 图标。也可以通过 `unchecked-icon` 和 `checked-icon` slot 来自定义未选中和选中状态的图标元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=388
 <mdui-switch unchecked-icon="remove_moderator" checked-icon="verified_user"></mdui-switch>
 <mdui-switch>
   <mdui-icon slot="unchecked-icon" name="remove_moderator"></mdui-icon>

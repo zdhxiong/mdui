@@ -23,7 +23,7 @@ $('img').each(function (index, element) {
   }
 }
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 $.fn.each = function (this: JQ, callback: void | any): JQ {
   return eachArray(this, (value, index) => {
     return callback.call(value, index, value);

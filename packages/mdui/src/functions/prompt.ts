@@ -288,7 +288,11 @@ export const prompt = (options: Options): Promise<string> => {
 
     $(dialog).on('close', (e) => {
       if (e.target === dialog) {
-        isResolve ? resolve(textField.value) : reject();
+        if (isResolve) {
+          resolve(textField.value);
+        } else {
+          reject();
+        }
         offLocaleReady(dialog);
       }
     });

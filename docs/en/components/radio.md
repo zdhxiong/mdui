@@ -18,7 +18,7 @@ import type { Radio } from 'mdui/components/radio.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=330
 <mdui-radio-group value="chinese">
   <mdui-radio value="chinese">Chinese</mdui-radio>
   <mdui-radio value="english">English</mdui-radio>
@@ -31,7 +31,7 @@ Example:
 
 The `value` property of the `<mdui-radio-group>` component corresponds to the `value` of the currently selected `<mdui-radio>` component. You can change the selected radio button by updating the `value` property of the `<mdui-radio-group>` component.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=331
 <mdui-radio-group value="chinese">
   <mdui-radio value="chinese">Chinese</mdui-radio>
   <mdui-radio value="english">English</mdui-radio>
@@ -40,7 +40,7 @@ The `value` property of the `<mdui-radio-group>` component corresponds to the `v
 
 The `<mdui-radio>` component can also be used independently. In this case, use the `checked` property to access and modify the checked state.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=332
 <mdui-radio checked>Radio</mdui-radio>
 ```
 
@@ -48,7 +48,7 @@ The `<mdui-radio>` component can also be used independently. In this case, use t
 
 To disable the entire radio group, add the `disabled` attribute to the `<mdui-radio-group>` component.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=333
 <mdui-radio-group disabled>
   <mdui-radio value="chinese">Chinese</mdui-radio>
   <mdui-radio value="english">English</mdui-radio>
@@ -57,7 +57,7 @@ To disable the entire radio group, add the `disabled` attribute to the `<mdui-ra
 
 To disable a specific radio button, add the `disabled` attribute to the `<mdui-radio>` component.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=334
 <mdui-radio-group>
   <mdui-radio value="chinese">Chinese</mdui-radio>
   <mdui-radio value="english" disabled>English</mdui-radio>
@@ -68,7 +68,7 @@ To disable a specific radio button, add the `disabled` attribute to the `<mdui-r
 
 You can set Material Icons for the unchecked and checked states of the radio button using the `unchecked-icon` and `checked-icon` attributes, respectively. Alternatively, you can use the `unchecked-icon` and `checked-icon` slots.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=335
 <mdui-radio-group value="chinese">
   <mdui-radio
     unchecked-icon="check_box_outline_blank"

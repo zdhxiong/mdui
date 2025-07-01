@@ -2,7 +2,7 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import { defineConfig } from 'rollup';
 import { visualizer } from 'rollup-plugin-visualizer';
-import pkg from '../../packages/mdui/package.json' assert { type: 'json' };
+import pkg from '../../packages/mdui/package.json' with { type: 'json' };
 
 const banner = `
 /*!

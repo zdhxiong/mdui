@@ -18,7 +18,7 @@ import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 
 Example: (Note: The `style="position: relative"` in the example is for demonstration purposes. Remove it in actual use.)
 
-```html,example
+```html,example,playgroundId=308
 <mdui-navigation-bar value="item-1" style="position: relative">
   <mdui-navigation-bar-item icon="place" value="item-1">Item 1</mdui-navigation-bar-item>
   <mdui-navigation-bar-item icon="commute" value="item-2">Item 2</mdui-navigation-bar-item>
@@ -39,7 +39,7 @@ By default, this component uses a `position: fixed` style and automatically adds
 
 Text labels in the navigation bar are always visible when there are 3 or fewer navigation items. If there are more than 3 items, only the text of the selected item is displayed.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=309
 <mdui-navigation-bar value="item-1" style="position: relative">
   <mdui-navigation-bar-item icon="place" value="item-1">Item 1</mdui-navigation-bar-item>
   <mdui-navigation-bar-item icon="commute" value="item-2">Item 2</mdui-navigation-bar-item>
@@ -62,7 +62,7 @@ The `label-visibility` attribute on `<mdui-navigation-bar>` controls the visibil
 * `labeled`: Text is always displayed.
 * `unlabeled`: Text is never displayed.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=310
 <mdui-navigation-bar value="item-1" label-visibility="selected" style="position: relative" class="example-label">
   <mdui-navigation-bar-item icon="place" value="item-1">Item 1</mdui-navigation-bar-item>
   <mdui-navigation-bar-item icon="commute" value="item-2">Item 2</mdui-navigation-bar-item>
@@ -91,7 +91,7 @@ By default, the navigation bar is relative to the current window and appears at 
 
 If you want to place the navigation bar within a specific container, use the `scroll-target` attribute on `<mdui-navigation-bar>`. The value should be the CSS selector or DOM element of the container with scrollable content. In this case, the navigation bar will be relative to the parent element. You need to manually add the styles `position: relative; overflow: hidden` to the parent element.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=311
 <div style="position: relative;overflow: hidden">
   <mdui-navigation-bar scroll-target=".example-scroll-target" value="item-1">
     <mdui-navigation-bar-item icon="place" value="item-1">Item 1</mdui-navigation-bar-item>
@@ -111,7 +111,7 @@ The `scroll-behavior` attribute on `<mdui-navigation-bar>` controls the visibili
 
 The `scroll-threshold` attribute sets the number of pixels to start hiding the navigation bar.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=312
 <div style="position: relative;overflow: hidden">
   <mdui-navigation-bar
     scroll-behavior="hide"
@@ -134,7 +134,7 @@ The `scroll-threshold` attribute sets the number of pixels to start hiding the n
 
 The `icon` attribute on `<mdui-navigation-bar-item>` sets the icon for the inactive state. The `active-icon` attribute sets the icon for the active state. Alternatively, use the `icon` and `active-icon` slots to set the icons for the inactive and active states.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=313
 <mdui-navigation-bar value="item-1" style="position: relative">
   <mdui-navigation-bar-item
     icon="place--outlined"
@@ -153,7 +153,7 @@ The `icon` attribute on `<mdui-navigation-bar-item>` sets the icon for the inact
 
 Use the `href` attribute on the `<mdui-navigation-bar-item>` component to turn the navigation item into a link. The `download`, `target`, and `rel` attributes are available for link-related functionality.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=314
 <mdui-navigation-bar value="item-1" style="position: relative">
   <mdui-navigation-bar-item icon="place" href="https://www.mdui.org" target="_blank" value="item-1">Item 1</mdui-navigation-bar-item>
   <mdui-navigation-bar-item icon="commute" value="item-2">Item 2</mdui-navigation-bar-item>
@@ -164,7 +164,7 @@ Use the `href` attribute on the `<mdui-navigation-bar-item>` component to turn t
 
 You can add a badge to the `<mdui-navigation-bar-item>` component using the `badge` slot.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=315
 <mdui-navigation-bar value="item-1" style="position: relative">
   <mdui-navigation-bar-item icon="place" value="item-1">
     Item 1

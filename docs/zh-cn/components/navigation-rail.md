@@ -18,7 +18,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 使用示例：（示例中的 `style="position: relative"` 是为了演示需要，实际使用时请移除该样式。）
 
-```html,example
+```html,example,playgroundId=320
 <mdui-navigation-rail value="recent" style="position: relative">
   <mdui-navigation-rail-item icon="watch_later--outlined" value="recent">Recent</mdui-navigation-rail-item>
   <mdui-navigation-rail-item icon="image--outlined" value="images">Images</mdui-navigation-rail-item>
@@ -41,7 +41,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 默认情况下，侧边导航栏会相对于当前窗口，在页面左侧或右侧显示。如果你希望将侧边导航栏放在指定的容器内，可以在 `<mdui-navigation-rail>` 组件上添加 `contained` 属性，此时侧边导航栏会相对于其父元素显示（你需要自行在父元素上添加 `position: relative` 样式）。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=321
 <div style="position: relative">
   <mdui-navigation-rail contained>
     <mdui-navigation-rail-item icon="watch_later--outlined">Recent</mdui-navigation-rail-item>
@@ -59,7 +59,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 在 `<mdui-navigation-rail>` 组件上设置 `placement` 属性为 `right`，可以将侧边导航栏显示在右侧。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=322
 <div style="position: relative">
   <mdui-navigation-rail placement="right" contained>
     <mdui-navigation-rail-item icon="watch_later--outlined">Recent</mdui-navigation-rail-item>
@@ -77,7 +77,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 在 `<mdui-navigation-rail>` 组件上添加 `divider` 属性，可以在侧边导航栏上添加一条分割线，以便和页面内容区分开。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=323
 <div style="position: relative">
   <mdui-navigation-rail divider contained>
     <mdui-navigation-rail-item icon="watch_later--outlined">Recent</mdui-navigation-rail-item>
@@ -95,7 +95,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 可以在 `<mdui-navigation-rail>` 组件内通过 `top`、`bottom` slot 在顶部和底部添加元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=324
 <div style="position: relative">
   <mdui-navigation-rail contained>
     <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
@@ -117,7 +117,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 通过设置 `<mdui-navigation-rail>` 组件的 `alignment` 属性，可以修改导航项的垂直对齐方式。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=325
 <div class="example-alignment" style="position: relative">
   <mdui-navigation-rail alignment="start" contained>
     <mdui-navigation-rail-item icon="watch_later--outlined">Recent</mdui-navigation-rail-item>
@@ -149,7 +149,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 在 `<mdui-navigation-rail-item>` 组件上，可以使用 `icon` 属性设置未激活状态的导航项图标，使用 `active-icon` 属性设置激活状态的导航项图标。也可以用 `icon` 和 `active-icon` slot 设置未激活和激活状态的图标元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=326
 <div style="position: relative">
   <mdui-navigation-rail contained>
     <mdui-navigation-rail-item icon="watch_later--outlined">Recent</mdui-navigation-rail-item>
@@ -171,7 +171,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 `<mdui-navigation-rail-item>` 组件可以仅使用图标，不添加文本。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=327
 <div style="position: relative">
   <mdui-navigation-rail contained>
     <mdui-navigation-rail-item icon="watch_later--outlined"></mdui-navigation-rail-item>
@@ -189,7 +189,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 在 `<mdui-navigation-rail-item>` 组件上设置 `href` 属性，可以使导航项变为链接。此时，您还可以使用这些和链接相关的属性：`download`、`target`、`rel`。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=328
 <div style="position: relative">
   <mdui-navigation-rail divider contained>
     <mdui-navigation-rail-item
@@ -211,7 +211,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 在 `<mdui-navigation-rail-item>` 组件中，可以通过 `badge` slot 添加徽标。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=329
 <div style="position: relative">
   <mdui-navigation-rail contained>
     <mdui-navigation-rail-item icon="watch_later--outlined">

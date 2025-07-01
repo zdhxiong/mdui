@@ -35,7 +35,7 @@ $('.box').is('.boxss'); // false
   }
 }
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 $.fn.is = function (this: JQ, selector: any): boolean {
   let isMatched = false;
 

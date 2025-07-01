@@ -16,7 +16,7 @@ import type { Avatar } from 'mdui/components/avatar.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=187
 <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
 ```
 
@@ -26,7 +26,7 @@ import type { Avatar } from 'mdui/components/avatar.js';
 
 可以使用 `src` 属性指定一个图片链接作为头像，或者在 default slot 中提供一个 `<img>` 元素作为头像。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=188
 <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
 
 <mdui-avatar>
@@ -40,7 +40,7 @@ import type { Avatar } from 'mdui/components/avatar.js';
 
 可以使用 `icon` 属性指定一个 Material Icons 图标作为头像，或者在 default slot 中提供一个图标元素作为头像。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=189
 <mdui-avatar icon="people_alt"></mdui-avatar>
 
 <mdui-avatar>
@@ -52,6 +52,6 @@ import type { Avatar } from 'mdui/components/avatar.js';
 
 可以在 default slot 中使用任意文字作为头像。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=190
 <mdui-avatar>A</mdui-avatar>
 ```

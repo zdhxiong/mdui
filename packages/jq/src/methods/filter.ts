@@ -38,7 +38,7 @@ $('#select option').filter(function (idx, element) {
   }
 }
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 $.fn.filter = function (this: JQ, selector: any): JQ {
   if (isFunction(selector)) {
     return this.map((index, element) => {

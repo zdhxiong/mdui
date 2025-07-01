@@ -18,7 +18,7 @@ import type { Snackbar } from 'mdui/components/snackbar.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=375
 <mdui-snackbar class="example-snackbar">Photo archived</mdui-snackbar>
 
 <mdui-button>Open Snackbar</mdui-button>
@@ -37,7 +37,7 @@ Example:
 
 You can set the snackbar's position using the `placement` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=376
 <div class="example-placement">
   <div class="row">
     <mdui-snackbar placement="top-start">Photo archived</mdui-snackbar>
@@ -82,7 +82,7 @@ You can set the snackbar's position using the `placement` attribute.
 
 The `action` attribute adds an action button on the right side and specifies its text. The `action-click` event is triggered when the action button is clicked. The `action-loading` attribute displays a loading state on the action button.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=377
 <mdui-snackbar action="Undo" class="example-action">Photo archived</mdui-snackbar>
 
 <mdui-button>Open Snackbar</mdui-button>
@@ -102,7 +102,7 @@ The `action` attribute adds an action button on the right side and specifies its
 
 The `action` slot can also be used to add elements on the right side.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=378
 <mdui-snackbar class="example-action-slot">
   Photo archived
   <mdui-button slot="action" variant="text">Undo</mdui-button>
@@ -122,7 +122,7 @@ The `action` slot can also be used to add elements on the right side.
 
 The `closeable` attribute adds a close button on the right. Clicking the button closes the snackbar and triggers the `close` event.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=379
 <mdui-snackbar closeable class="example-closeable">Photo archived</mdui-snackbar>
 
 <mdui-button>Open Snackbar</mdui-button>
@@ -137,7 +137,7 @@ The `closeable` attribute adds a close button on the right. Clicking the button 
 
 The `close-button` slot specifies the element of the close button.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=380
 <mdui-snackbar closeable class="example-close-button-slot">
   Photo archived
   <mdui-avatar slot="close-button" icon="people_alt"></mdui-avatar>
@@ -155,7 +155,7 @@ The `close-button` slot specifies the element of the close button.
 
 The `close-icon` attribute sets the Material Icon in the default close button. The `close-icon` slot sets the icon element in the default close button.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=381
 <mdui-snackbar
   closeable
   close-icon="delete"
@@ -176,7 +176,7 @@ The `close-icon` attribute sets the Material Icon in the default close button. T
 
 The `message-line` attribute limits the number of lines in the message text, with a maximum of `2` lines.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=382
 <mdui-snackbar message-line="1" class="example-line">The item already has the label "travel". You can add a new label. You can add a new label.</mdui-snackbar>
 
 <mdui-button>Open Snackbar</mdui-button>
@@ -193,7 +193,7 @@ The `message-line` attribute limits the number of lines in the message text, wit
 
 The `auto-close-delay` attribute sets the delay for automatic closure, in milliseconds. The default is `5000` milliseconds.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=383
 <mdui-snackbar auto-close-delay="2000" class="example-close-delay">Photo archived</mdui-snackbar>
 
 <mdui-button>Open Snackbar</mdui-button>
@@ -210,7 +210,7 @@ The `auto-close-delay` attribute sets the delay for automatic closure, in millis
 
 The `close-on-outside-click` attribute closes the snackbar when clicking outside of its area.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=384
 <mdui-snackbar close-on-outside-click class="example-outside">Photo archived</mdui-snackbar>
 
 <mdui-button>Open Snackbar</mdui-button>

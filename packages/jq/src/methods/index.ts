@@ -24,7 +24,7 @@ declare module '../shared/core.js' {
   }
 }
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 $.fn.index = function (this: JQ, selector?: any): number {
   if (!arguments.length) {
     return this.eq(0).parent().children().get().indexOf(this[0]);

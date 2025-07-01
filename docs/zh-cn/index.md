@@ -27,7 +27,7 @@ mdui 不依赖任何第三方库，引入上述文件后，就能正常工作了
 
 下面是一个最简单的页面模板，你可以在其中添加更多组件和内容，来构建一个网站。
 
-```html
+```html,playgroundId=183
 <!doctype html>
 <html lang="zh-CN">
   <head>

@@ -1,7 +1,7 @@
 import '../../methods/outerHeight.js';
 import { jQuery, jq, JQStatic } from '../utils.js';
 
-const test = ($: JQStatic, type: string): void => {
+const test = (_$: JQStatic, type: string): void => {
   describe(`${type} - .outerHeight`, () => {
     // 已在 .width() 方法中测试
     it('.outerHeight()', () => {

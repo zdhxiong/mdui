@@ -20,7 +20,7 @@ import type { ListSubheader } from 'mdui/components/list-subheader.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=282
 <mdui-list>
   <mdui-list-subheader>Subheader</mdui-list-subheader>
   <mdui-list-item>Item 1</mdui-list-item>
@@ -34,7 +34,7 @@ Example:
 
 The `headline` attribute on `<mdui-list-item>` sets the primary text, while the `description` attribute sets the secondary text.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=283
 <mdui-list>
   <mdui-list-item headline="Headline"></mdui-list-item>
   <mdui-list-item headline="Headline" description="Supporting text"></mdui-list-item>
@@ -43,7 +43,7 @@ The `headline` attribute on `<mdui-list-item>` sets the primary text, while the 
 
 Alternatively, use the default slot for the primary text and the `description` slot for the secondary text.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=284
 <mdui-list>
   <mdui-list-item>Headline</mdui-list-item>
   <mdui-list-item>
@@ -55,7 +55,7 @@ Alternatively, use the default slot for the primary text and the `description` s
 
 By default, both primary and secondary text are displayed in full. To limit the number of lines, use the `headline-line` and `description-line` attributes. The maximum limit is `3` lines.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=285
 <mdui-list>
   <mdui-list-item headline-line="1" description-line="2">
     Headline Headline Headline Headline Headline Headline Headline Headline Headline Headline Headline Headline Headline Headline
@@ -68,7 +68,7 @@ By default, both primary and secondary text are displayed in full. To limit the 
 
 The `icon` and `end-icon` attributes on `<mdui-list-item>` add Material Icons to the left and right sides, respectively.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=286
 <mdui-list>
   <mdui-list-item icon="people" end-icon="arrow_right">Headline</mdui-list-item>
 </mdui-list>
@@ -76,7 +76,7 @@ The `icon` and `end-icon` attributes on `<mdui-list-item>` add Material Icons to
 
 Alternatively, use the `icon` and `end-icon` slots to add elements to the left and right sides of the list item.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=287
 <mdui-list>
   <mdui-list-item>
     Headline
@@ -90,7 +90,7 @@ Alternatively, use the `icon` and `end-icon` slots to add elements to the left a
 
 The `href` attribute turns the list into a link, with `download`, `target`, and `rel` attributes available for link-related functionality.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=288
 <mdui-list>
   <mdui-list-item href="https://www.mdui.org" target="_blank">Headline</mdui-list-item>
 </mdui-list>
@@ -100,7 +100,7 @@ The `href` attribute turns the list into a link, with `download`, `target`, and 
 
 The `disabled` attribute on `<mdui-list-item>` disables the item. This also disables components within the list item.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=289
 <mdui-list>
   <mdui-list-item disabled>Headline</mdui-list-item>
   <mdui-list-item>Headline</mdui-list-item>
@@ -111,7 +111,7 @@ The `disabled` attribute on `<mdui-list-item>` disables the item. This also disa
 
 The `active` attribute on `<mdui-list-item>` activates the item.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=290
 <mdui-list>
   <mdui-list-item active>Headline</mdui-list-item>
   <mdui-list-item>Headline</mdui-list-item>
@@ -122,7 +122,7 @@ The `active` attribute on `<mdui-list-item>` activates the item.
 
 The `nonclickable` attribute on `<mdui-list-item>` removes mouse hover and click ripple effects.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=291
 <mdui-list>
   <mdui-list-item nonclickable>Headline</mdui-list-item>
   <mdui-list-item>Headline</mdui-list-item>
@@ -133,7 +133,7 @@ The `nonclickable` attribute on `<mdui-list-item>` removes mouse hover and click
 
 The `rounded` attribute on `<mdui-list-item>` gives the item a rounded appearance.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=292
 <mdui-list>
   <mdui-list-item rounded>Headline</mdui-list-item>
   <mdui-list-item rounded>Headline</mdui-list-item>
@@ -148,7 +148,7 @@ The `alignment` attribute on `<mdui-list-item>` aligns elements on the left and 
 * `center`: center alignment.
 * `end`: bottom alignment.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=293
 <mdui-list>
   <mdui-list-item alignment="start" description="Supporting text">
     Headline
@@ -169,7 +169,7 @@ The `alignment` attribute on `<mdui-list-item>` aligns elements on the left and 
 
 The `custom` slot in `<mdui-list-item>` allows for full customization of the list item content.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=294
 <mdui-list>
   <mdui-list-item>
     <div slot="custom" style="display: flex;">

@@ -4,7 +4,6 @@ import { jQuery, jq, assert, JQStatic } from '../utils.js';
 
 const test = ($: JQStatic, type: string): void => {
   describe(`${type} - .one`, () => {
-    // @ts-ignore
     const isJquery = type === 'jQuery';
 
     let eventCount = 0;
@@ -64,13 +63,11 @@ const test = ($: JQStatic, type: string): void => {
 
       $inner.one('input', true, (event) => {
         eventCount++;
-        // @ts-ignore
         assert.isTrue(event.data);
       });
 
       $inner.one('change', { key: 'val' }, (event) => {
         eventCount++;
-        // @ts-ignore
         assert.deepEqual(event.data, {
           key: 'val',
         });
@@ -79,13 +76,11 @@ const test = ($: JQStatic, type: string): void => {
       // 若 data 为字符串参数时，必须指定 selector 参数
       $inner.one('click', undefined, 'test-val', (event) => {
         eventCount++;
-        // @ts-ignore
         assert.equal(event.data, 'test-val');
       });
 
       $inner.one('dbclick', null, 'test-val', (event) => {
         eventCount++;
-        // @ts-ignore
         assert.equal(event.data, 'test-val');
       });
 
@@ -130,14 +125,12 @@ const test = ($: JQStatic, type: string): void => {
       $inner.one('click', '#button', 'test-data', (event) => {
         eventCount++;
         assert.deepEqual(event.target, $button[0]);
-        // @ts-ignore
         assert.equal(event.data, 'test-data');
       });
 
       $inner.one('click', '#button', 33, (event) => {
         eventCount = eventCount + 2;
         assert.deepEqual(event.target, $button[0]);
-        // @ts-ignore
         assert.deepEqual(event.data, 33);
       });
 
@@ -181,7 +174,6 @@ const test = ($: JQStatic, type: string): void => {
             eventCount++;
             assert.equal(data, 'data');
             assert.equal(event.type, 'click');
-            // @ts-ignore
             assert.equal(event.data, 'test-data');
           },
           input: (event, data1, data2) => {
@@ -189,7 +181,6 @@ const test = ($: JQStatic, type: string): void => {
             assert.equal(data1, 'data1');
             assert.equal(data2, 'data2');
             assert.equal(event.type, 'input');
-            // @ts-ignore
             assert.equal(event.data, 'test-data');
           },
         },
@@ -230,20 +221,20 @@ const test = ($: JQStatic, type: string): void => {
             assert.deepEqual($button[0], this);
             assert.isUndefined(data);
             assert.equal(event.type, 'click');
-            // @ts-ignore
             assert.isUndefined(event.data);
-            // @ts-ignore
-            !isJquery && assert.isNull(event.detail);
+            if (!isJquery) {
+              assert.isNull(event.detail);
+            }
           },
           change: function (event, data) {
             eventCount++;
             assert.deepEqual($button[0], this);
             assert.equal(data, 'val');
             assert.equal(event.type, 'change');
-            // @ts-ignore
             assert.isUndefined(event.data);
-            // @ts-ignore
-            !isJquery && assert.equal(event.detail, 'val');
+            if (!isJquery) {
+              assert.equal(event.detail, 'val');
+            }
           },
         },
         '#button',
@@ -284,16 +275,15 @@ const test = ($: JQStatic, type: string): void => {
           click: (event, data) => {
             eventCount++;
             assert.isUndefined(data);
-            // @ts-ignore
             assert.equal(event.data, 'test-data');
-            // @ts-ignore
-            !isJquery && assert.isNull(event.detail);
+            if (!isJquery) {
+              assert.isNull(event.detail);
+            }
           },
           change: (event, data1, data2) => {
             eventCount++;
             assert.equal(data1, 'data1');
             assert.equal(data2, 'data2');
-            // @ts-ignore
             assert.equal(event.data, 'test-data');
             if (!isJquery) {
               // @ts-ignore

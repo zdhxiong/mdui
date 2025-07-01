@@ -9,7 +9,7 @@ export const dir = (
   $elements: JQ,
   nameIndex: number,
   node: 'parentNode' | 'nextElementSibling' | 'previousElementSibling',
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   selector?: any,
   filter?: string,
 ): JQ => {

@@ -16,7 +16,7 @@ import type { Divider } from 'mdui/components/divider.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=251
 <mdui-divider></mdui-divider>
 ```
 
@@ -26,7 +26,7 @@ import type { Divider } from 'mdui/components/divider.js';
 
 添加 `vertical` 属性，可以使分割线垂直显示。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=252
 <div style="height: 80px;padding: 0 20px">
   <mdui-divider vertical></mdui-divider>
 </div>
@@ -36,7 +36,7 @@ import type { Divider } from 'mdui/components/divider.js';
 
 添加 `inset` 属性，可以使分割线左侧缩进。这通常用于列表中，以使分割线和左侧文本对齐。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=253
 <mdui-list>
   <mdui-list-item>Item 1</mdui-list-item>
   <mdui-divider inset></mdui-divider>
@@ -48,7 +48,7 @@ import type { Divider } from 'mdui/components/divider.js';
 
 添加 `middle` 属性，可以使分割线两侧缩进。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=254
 <mdui-list>
   <mdui-list-item>Item 1</mdui-list-item>
   <mdui-divider middle></mdui-divider>

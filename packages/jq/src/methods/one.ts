@@ -5,7 +5,6 @@ import type { EventCallback } from '../shared/event.js';
 import type { PlainObject } from '../shared/helper.js';
 
 declare module '../shared/core.js' {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface JQ<T = HTMLElement> {
     /**
      * 通过事件委托同时添加多个事件处理函数，触发一次后自动解绑
@@ -110,11 +109,11 @@ declare module '../shared/core.js' {
 $.fn.one = function (
   this: JQ,
   types: PlainObject<EventCallback | false> | string,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   selector?: any,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   callback?: any,
 ): JQ {
   // @ts-ignore

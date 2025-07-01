@@ -16,7 +16,7 @@ import type { Card } from 'mdui/components/card.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=211
 <mdui-card style="width: 200px;height: 124px">Card</mdui-card>
 ```
 
@@ -26,7 +26,7 @@ Example:
 
 The `variant` attribute determines the card's appearance.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=212
 <mdui-card variant="elevated" style="width: 200px;height: 124px"></mdui-card>
 <mdui-card variant="filled" style="width: 200px;height: 124px"></mdui-card>
 <mdui-card variant="outlined" style="width: 200px;height: 124px"></mdui-card>
@@ -36,7 +36,7 @@ The `variant` attribute determines the card's appearance.
 
 Add the `clickable` attribute to make the card interactive. This will add hover and click ripple effects.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=213
 <mdui-card clickable style="width: 200px;height: 124px"></mdui-card>
 ```
 
@@ -44,7 +44,7 @@ Add the `clickable` attribute to make the card interactive. This will add hover 
 
 Use the `href` attribute to transform the card into a link. The `download`, `target`, and `rel` attributes are available for link-related functionality.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=214
 <mdui-card href="https://www.mdui.org" target="_blank" style="width: 200px;height: 124px"></mdui-card>
 ```
 
@@ -52,6 +52,6 @@ Use the `href` attribute to transform the card into a link. The `download`, `tar
 
 Use the `disabled` attribute to disable the card.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=215
 <mdui-card disabled style="width: 200px;height: 124px"></mdui-card>
 ```

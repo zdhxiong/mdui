@@ -16,7 +16,7 @@ import type { Icon } from 'mdui/components/icon.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=269
 <mdui-icon name="search"></mdui-icon>
 ```
 
@@ -43,7 +43,7 @@ import type { Icon } from 'mdui/components/icon.js';
 
 使用组件时，在 `name` 属性中传入图标名称，并以图标变体名称为后缀（Filled 变体无需添加后缀），下面是 `delete` 图标的 5 种变体的使用方式：
 
-```html,example
+```html,example,playgroundId=270
 <!-- Filled -->
 <mdui-icon name="delete"></mdui-icon>
 
@@ -68,13 +68,13 @@ import type { Icon } from 'mdui/components/icon.js';
 
 该组件也支持使用 SVG 图标作为图标内容。可通过组件的 `src` 属性传入 SVG 图标的链接。例如：
 
-```html,example
+```html,example,playgroundId=271
 <mdui-icon src="https://fonts.gstatic.com/s/i/materialicons/search/v17/24px.svg"></mdui-icon>
 ```
 
 也可以在组件的 default slot 中传入 SVG 的内容。例如：
 
-```html,example
+```html,example,playgroundId=272
 <mdui-icon>
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M0 0h24v24H0z" fill="none"/>
@@ -89,7 +89,7 @@ import type { Icon } from 'mdui/components/icon.js';
 
 设置 `<mdui-icon>` 元素或父元素的 `color` CSS 样式修改图标颜色。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=273
 <mdui-icon name="delete" style="color: red"></mdui-icon>
 <mdui-icon src="https://fonts.gstatic.com/s/i/materialicons/search/v17/24px.svg" style="color: red"></mdui-icon>
 ```
@@ -98,7 +98,7 @@ import type { Icon } from 'mdui/components/icon.js';
 
 设置 `<mdui-icon>` 元素或父元素的 `font-size` CSS 样式修改图标大小。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=274
 <mdui-icon name="delete" style="font-size: 32px"></mdui-icon>
 <mdui-icon src="https://fonts.gstatic.com/s/i/materialicons/search/v17/24px.svg" style="font-size: 32px"></mdui-icon>
 ```

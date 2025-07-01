@@ -18,7 +18,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 
 Example: (Note: The `style="position: relative"` in the example is for demonstration purposes, Remove it in actual use.)
 
-```html,example
+```html,example,playgroundId=320
 <mdui-navigation-rail value="recent" style="position: relative">
   <mdui-navigation-rail-item icon="watch_later--outlined" value="recent">Recent</mdui-navigation-rail-item>
   <mdui-navigation-rail-item icon="image--outlined" value="images">Images</mdui-navigation-rail-item>
@@ -41,7 +41,7 @@ However, it defaults to `position: absolute` style in the following cases:
 
 By default, the navigation rail displays on the left or right side of the current window. To place it inside a container, add the `contained` attribute to the `<mdui-navigation-rail>` component. This positions the navigation rail relative to the parent element (you need to manually add `position: relative` style to the parent element).
 
-```html,example,expandable
+```html,example,expandable,playgroundId=321
 <div style="position: relative">
   <mdui-navigation-rail contained>
     <mdui-navigation-rail-item icon="watch_later--outlined">Recent</mdui-navigation-rail-item>
@@ -59,7 +59,7 @@ By default, the navigation rail displays on the left or right side of the curren
 
 Set the `placement` attribute of the `<mdui-navigation-rail>` component to `right` to display the navigation rail on the right.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=322
 <div style="position: relative">
   <mdui-navigation-rail placement="right" contained>
     <mdui-navigation-rail-item icon="watch_later--outlined">Recent</mdui-navigation-rail-item>
@@ -77,7 +77,7 @@ Set the `placement` attribute of the `<mdui-navigation-rail>` component to `righ
 
 Add the `divider` attribute to the `<mdui-navigation-rail>` component to add a divider to the navigation rail, distinguishing it from the page content.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=323
 <div style="position: relative">
   <mdui-navigation-rail divider contained>
     <mdui-navigation-rail-item icon="watch_later--outlined">Recent</mdui-navigation-rail-item>
@@ -95,7 +95,7 @@ Add the `divider` attribute to the `<mdui-navigation-rail>` component to add a d
 
 Inside the `<mdui-navigation-rail>` component, you can use the `top` and `bottom` slots to add elements at the top and bottom.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=324
 <div style="position: relative">
   <mdui-navigation-rail contained>
     <mdui-button-icon icon="menu" slot="top"></mdui-button-icon>
@@ -117,7 +117,7 @@ Inside the `<mdui-navigation-rail>` component, you can use the `top` and `bottom
 
 Set the `alignment` attribute of the `<mdui-navigation-rail>` component to modify the vertical alignment of navigation items.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=325
 <div class="example-alignment" style="position: relative">
   <mdui-navigation-rail alignment="start" contained>
     <mdui-navigation-rail-item icon="watch_later--outlined">Recent</mdui-navigation-rail-item>
@@ -149,7 +149,7 @@ Set the `alignment` attribute of the `<mdui-navigation-rail>` component to modif
 
 Use the `icon` attribute on the `<mdui-navigation-rail-item>` component to set the icon for the inactive state of the navigation item. The `active-icon` attribute sets the icon for the active state. Alternatively, use the `icon` and `active-icon` slots for the inactive and active states respectively.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=326
 <div style="position: relative">
   <mdui-navigation-rail contained>
     <mdui-navigation-rail-item icon="watch_later--outlined">Recent</mdui-navigation-rail-item>
@@ -171,7 +171,7 @@ Use the `icon` attribute on the `<mdui-navigation-rail-item>` component to set t
 
 The `<mdui-navigation-rail-item>` component can display icons without labels.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=327
 <div style="position: relative">
   <mdui-navigation-rail contained>
     <mdui-navigation-rail-item icon="watch_later--outlined"></mdui-navigation-rail-item>
@@ -189,7 +189,7 @@ The `<mdui-navigation-rail-item>` component can display icons without labels.
 
 Use the `href` attribute on the `<mdui-navigation-rail-item>` component to turn the navigation item into a link. The `download`, `target`, and `rel` attributes are available for link-related functionality.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=328
 <div style="position: relative">
   <mdui-navigation-rail divider contained>
     <mdui-navigation-rail-item
@@ -211,7 +211,7 @@ Use the `href` attribute on the `<mdui-navigation-rail-item>` component to turn 
 
 Add a badge to the `<mdui-navigation-rail-item>` component using the `badge` slot.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=329
 <div style="position: relative">
   <mdui-navigation-rail contained>
     <mdui-navigation-rail-item icon="watch_later--outlined">

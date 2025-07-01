@@ -20,7 +20,7 @@ import type { CollapseItem } from 'mdui/components/collapse-item.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=234
 <mdui-collapse>
   <mdui-collapse-item header="first header">first content</mdui-collapse-item>
   <mdui-collapse-item header="second header">second content</mdui-collapse-item>
@@ -33,7 +33,7 @@ import type { CollapseItem } from 'mdui/components/collapse-item.js';
 
 通过 `<mdui-collapse-item>` 组件的 `header` 属性可以设置面板头部的文本，也可以通过 `header` slot 来指定面板头部元素。组件的 default slot 用于面板内容。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=235
 <mdui-list>
   <mdui-collapse>
     <mdui-collapse-item>
@@ -56,7 +56,7 @@ import type { CollapseItem } from 'mdui/components/collapse-item.js';
 
 在 `<mdui-collapse>` 组件上添加 `accordion` 属性可以启用手风琴模式，这样一次只会有一个面板处于打开状态。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=236
 <mdui-list>
   <mdui-collapse accordion>
     <mdui-collapse-item>
@@ -81,7 +81,7 @@ import type { CollapseItem } from 'mdui/components/collapse-item.js';
 
 在手风琴模式下，`value` 属性的值为字符串，你可以使用 HTML 属性或 JavaScript 属性来操作该属性；在非手风琴模式下，`value` 属性的值为数组，此时只能通过 JavaScript 属性进行操作。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=237
 <mdui-list>
   <mdui-list-subheader>手风琴模式</mdui-list-subheader>
   <mdui-collapse accordion value="item-1">
@@ -126,7 +126,7 @@ import type { CollapseItem } from 'mdui/components/collapse-item.js';
 
 通过在 `<mdui-collapse>` 组件上添加 `disabled` 属性，可以禁用整个折叠面板组。同样，通过在 `<mdui-collapse-item>` 组件上添加 `disabled` 属性，可以禁用特定的折叠面板。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=238
 <mdui-list>
   <mdui-list-subheader>全部禁用</mdui-list-subheader>
   <mdui-collapse disabled>
@@ -166,7 +166,7 @@ import type { CollapseItem } from 'mdui/components/collapse-item.js';
 
 默认情况下，点击整个面板头部区域会触发折叠。你可以通过设置 `<mdui-collapse-item>` 组件的 `trigger` 属性来指定触发折叠的元素。`trigger` 属性可以是 CSS 选择器或 DOM 元素。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=239
 <mdui-list>
   <mdui-collapse>
     <mdui-collapse-item trigger=".example-trigger">

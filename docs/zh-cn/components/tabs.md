@@ -20,7 +20,7 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=389
 <mdui-tabs value="tab-1">
   <mdui-tab value="tab-1">Tab 1</mdui-tab>
   <mdui-tab value="tab-2">Tab 2</mdui-tab>
@@ -38,7 +38,7 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 
 通过在 `<mdui-tabs>` 组件上使用 `variant` 属性，可以设置选项卡的样式。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=390
 <mdui-tabs value="tab-1" variant="primary">
   <mdui-tab value="tab-1">Tab 1</mdui-tab>
   <mdui-tab value="tab-2">Tab 2</mdui-tab>
@@ -64,7 +64,7 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 
 在 `<mdui-tabs>` 组件上使用 `placement` 属性，可以设置选项卡的位置。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=391
 <mdui-select class="example-change-placement" placeholder="选择 placement 值" style="width: 180px">
   <mdui-menu-item value="top-start">top-start</mdui-menu-item>
   <mdui-menu-item value="top">top</mdui-menu-item>
@@ -104,7 +104,7 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 
 在 `<mdui-tabs>` 组件上添加 `full-width` 属性，可以使选项卡占据全部宽度，各个选项卡将平均分配宽度。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=392
 <mdui-tabs value="tab-1" full-width>
   <mdui-tab value="tab-1">Tab 1</mdui-tab>
   <mdui-tab value="tab-2">Tab 2</mdui-tab>
@@ -122,7 +122,7 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 
 添加 `inline` 属性可以将图标和文本水平排列。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=393
 <mdui-tabs value="tab-1">
   <mdui-tab value="tab-1" icon="library_music">Tab 1</mdui-tab>
   <mdui-tab value="tab-2">
@@ -141,7 +141,7 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 
 在 `<mdui-tab>` 组件中，可以通过 `badge` slot 添加徽标。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=394
 <mdui-tabs value="tab-1">
   <mdui-tab value="tab-1">
     Tab 1
@@ -160,7 +160,7 @@ import type { TabPanel } from 'mdui/components/tab-panel.js';
 
 在 `<mdui-tab>` 组件中使用 `custom` slot，可以完全自定义选项卡的内容。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=395
 <mdui-tabs value="tab-1">
   <mdui-tab value="tab-1">
     Tab 1

@@ -16,7 +16,7 @@ import type { Badge } from 'mdui/components/badge.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=191
 <mdui-badge>12</mdui-badge>
 ```
 
@@ -26,7 +26,7 @@ import type { Badge } from 'mdui/components/badge.js';
 
 使用 `variant` 属性来设置徽标的形状。当 `variant` 为 `large` 时，将显示大型徽标。你可以在 default slot 中指定要显示的文本。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=192
 <mdui-badge variant="small"></mdui-badge>
 <mdui-badge variant="large">99+</mdui-badge>
 ```

@@ -29,7 +29,7 @@ $('.box').parent('.parent')
 eachArray(['', 's', 'sUntil'], (name, nameIndex) => {
   $.fn[`parent${name}` as 'parent'] = function (
     this: JQ,
-    // eslint-disable-next-line
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     selector?: any,
     filter?: Selector,
   ): JQ {

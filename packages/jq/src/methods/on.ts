@@ -17,7 +17,6 @@ import type { PlainObject } from '../shared/helper.js';
 // ajaxSuccess 事件的回调函数的第二个参数为 { xhr, options, response }
 
 declare module '../shared/core.js' {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface JQ<T = HTMLElement> {
     /**
      * 通过事件委托同时添加多个事件处理函数
@@ -121,13 +120,13 @@ declare module '../shared/core.js' {
 
 $.fn.on = function (
   this: JQ,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   types: any,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   selector: any,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data?: any,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   callback?: any,
   one?: boolean, // 是否是 one 方法，只在 JQ 内部使用
 ): JQ {

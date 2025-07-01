@@ -120,7 +120,7 @@ const set = (
   });
 };
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 $.fn.offset = function (this: JQ, value?: any): any {
   // 获取坐标
   if (!arguments.length) {

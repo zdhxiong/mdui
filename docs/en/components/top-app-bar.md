@@ -18,7 +18,7 @@ import type { TopAppBarTitle } from 'mdui/components/top-app-bar-title.js';
 
 Example: (Note: The `style="position: relative"` in the example is for demonstration purposes. Remove it in actual use.)
 
-```html,example
+```html,example,playgroundId=420
 <mdui-top-app-bar style="position: relative;">
   <mdui-button-icon icon="menu"></mdui-button-icon>
   <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
@@ -44,7 +44,7 @@ By default, the top app bar is positioned relative to the current window and app
 
 To place the top app bar inside a container, specify the `scroll-target` attribute on the `<mdui-top-app-bar>` component. Set its value to the CSS selector or DOM element of the container with scrollable content. In this case, the top app bar will be positioned relative to the parent element. Ensure to add the styles `position: relative; overflow: hidden` to the parent element.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=421
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar scroll-target=".example-scroll-target">
     <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
@@ -60,7 +60,7 @@ To place the top app bar inside a container, specify the `scroll-target` attribu
 
 The `variant` attribute on the `<mdui-top-app-bar>` component sets the shape of the top app bar.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=422
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar variant="small" scroll-target=".example-variant" class="example-variant-bar">
     <mdui-button-icon icon="menu"></mdui-button-icon>
@@ -105,7 +105,7 @@ The `scroll-threshold` attribute sets the number of pixels to start the scroll b
 
 **Example: Hide on Scroll**
 
-```html,example,expandable
+```html,example,expandable,playgroundId=423
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar
     scroll-behavior="hide"
@@ -126,7 +126,7 @@ The `scroll-threshold` attribute sets the number of pixels to start the scroll b
 
 **Example: Add Shadow on Scroll**
 
-```html,example,expandable
+```html,example,expandable,playgroundId=424
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar
     scroll-behavior="elevate"
@@ -146,7 +146,7 @@ The `scroll-threshold` attribute sets the number of pixels to start the scroll b
 
 **Example: Shrink on Scroll**
 
-```html,example,expandable
+```html,example,expandable,playgroundId=425
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar
     variant="medium"
@@ -168,7 +168,7 @@ The `scroll-threshold` attribute sets the number of pixels to start the scroll b
 
 **Example: Shrink and Add Shadow on Scroll**
 
-```html,example,expandable
+```html,example,expandable,playgroundId=426
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar
     variant="medium"
@@ -191,7 +191,7 @@ The `scroll-threshold` attribute sets the number of pixels to start the scroll b
 
 For a top app bar with `variant` set to `medium` or `large`, and `scroll-behavior` set to `shrink`, you can use the `label-large` slot within the `<mdui-top-app-bar-title>` component to specify the text displayed in the expanded state.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=427
 <div style="position: relative;overflow: hidden">
   <mdui-top-app-bar
     variant="medium"

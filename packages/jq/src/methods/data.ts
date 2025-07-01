@@ -63,7 +63,7 @@ $('.box').data()
   }
 }
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 $.fn.data = function (this: JQ, key?: string | PlainObject, value?: any): any {
   // 获取所有值
   if (isUndefined(key)) {

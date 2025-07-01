@@ -20,7 +20,7 @@ import type { MenuItem } from 'mdui/components/menu-item.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=295
 <mdui-menu>
   <mdui-menu-item>Item 1</mdui-menu-item>
   <mdui-menu-item>Item 2</mdui-menu-item>
@@ -33,7 +33,7 @@ Example:
 
 To create a dropdown menu, use the [`<mdui-dropdown>`](/en/docs/2/components/dropdown) component.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=296
 <mdui-dropdown>
   <mdui-button slot="trigger">open dropdown</mdui-button>
   <mdui-menu>
@@ -47,7 +47,7 @@ To create a dropdown menu, use the [`<mdui-dropdown>`](/en/docs/2/components/dro
 
 For a dense menu style, add the `dense` attribute to `<mdui-menu>`.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=297
 <mdui-menu dense>
   <mdui-menu-item>Item 1</mdui-menu-item>
   <mdui-menu-item>Item 2</mdui-menu-item>
@@ -59,7 +59,7 @@ For a dense menu style, add the `dense` attribute to `<mdui-menu>`.
 
 To disable menu items, add the `disabled` attribute to `<mdui-menu-item>`.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=298
 <mdui-menu>
   <mdui-menu-item disabled>Item 1</mdui-menu-item>
   <mdui-menu-item>Item 2</mdui-menu-item>
@@ -71,7 +71,7 @@ To disable menu items, add the `disabled` attribute to `<mdui-menu-item>`.
 
 For single selection, set the `selects` attribute to `single` on `<mdui-menu>`. The `value` of `<mdui-menu>` is the `value` of the selected `<mdui-menu-item>`.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=299
 <mdui-menu selects="single" value="item-2">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -84,7 +84,7 @@ For multiple selection, set the `selects` attribute to `multiple` on `<mdui-menu
 
 Note: For multiple selection, the `value` of `<mdui-menu>` is an array and can only be read and set via JavaScript property.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=300
 <mdui-menu selects="multiple" class="example-multiple">
   <mdui-menu-item value="item-1">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">Item 2</mdui-menu-item>
@@ -104,7 +104,7 @@ To add Material Icons on the left and right, add `icon`, `end-icon` attributes t
 
 Setting `icon` attribute to an empty string creates space for an icon on the left, aligning it with other items.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=301
 <mdui-menu>
   <mdui-menu-item icon="visibility" end-icon="add_circle" end-text="Ctrl+X">Item 1</mdui-menu-item>
   <mdui-menu-item>
@@ -119,7 +119,7 @@ Setting `icon` attribute to an empty string creates space for an icon on the lef
 
 For single or multiple selection, use `selected-icon` attribute or `selected-icon` slot to define the icon for selected state.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=302
 <mdui-menu selects="multiple">
   <mdui-menu-item value="item-1" selected-icon="cloud_done">Item 1</mdui-menu-item>
   <mdui-menu-item value="item-2">
@@ -133,7 +133,7 @@ For single or multiple selection, use `selected-icon` attribute or `selected-ico
 
 To turn the menu item into a link, use the `href` attribute on the `<mdui-menu-item>` component. `download`, `target`, and `rel` attributes are available for link-related functionality.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=303
 <mdui-menu>
   <mdui-menu-item href="https://www.mdui.org" target="_blank">Item 1</mdui-menu-item>
   <mdui-menu-item>Item 2</mdui-menu-item>
@@ -144,7 +144,7 @@ To turn the menu item into a link, use the `href` attribute on the `<mdui-menu-i
 
 To specify submenu items, use the `submenu` slot within `<mdui-menu-item>`.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=304
 <mdui-menu>
   <mdui-menu-item>
     Line spacing
@@ -159,7 +159,7 @@ To specify submenu items, use the `submenu` slot within `<mdui-menu-item>`.
 
 Set `submenu-trigger` attribute on `<mdui-menu>` to define the trigger method for the submenu.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=305
 <mdui-menu submenu-trigger="click">
   <mdui-menu-item>
     Line spacing
@@ -174,7 +174,7 @@ Set `submenu-trigger` attribute on `<mdui-menu>` to define the trigger method fo
 
 When `submenu-trigger="hover"` is set, use `submenu-open-delay` and `submenu-close-delay` attributes on `<mdui-menu>` to set the delay for opening and closing the submenu.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=306
 <mdui-menu submenu-trigger="hover" submenu-open-delay="1000" submenu-close-delay="1000">
   <mdui-menu-item>
     Line spacing
@@ -191,7 +191,7 @@ When `submenu-trigger="hover"` is set, use `submenu-open-delay` and `submenu-clo
 
 To fully customize the menu item content, use the `custom` slot in `<mdui-menu-item>`.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=307
 <style>
   .custom-item {
     padding: 4px 12px;

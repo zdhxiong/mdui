@@ -64,7 +64,7 @@ By default, layout components occupy space in the order they appear in the code.
 
 <p class="example-md-visible">View this example on a large screen.</p>
 
-```html,example,expandable
+```html,example,expandable,playgroundId=275
 <mdui-layout>
   <mdui-top-app-bar class="example-top-app-bar">
     <mdui-top-app-bar-title>Top App Bar</mdui-top-app-bar-title>
@@ -80,7 +80,7 @@ By default, layout components occupy space in the order they appear in the code.
 </mdui-layout>
 ```
 
-```html,example,expandable
+```html,example,expandable,playgroundId=276
 <mdui-layout>
   <mdui-navigation-drawer open class="example-navigation-drawer">
     <mdui-list>
@@ -104,7 +104,7 @@ Use the `placement` attribute to specify the position (top, bottom, left, or rig
 
 In the following example, two `<mdui-layout-item>` components are placed on both sides of the application.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=277
 <mdui-layout>
   <mdui-top-app-bar class="example-top-app-bar">
     <mdui-top-app-bar-title>Top App Bar</mdui-top-app-bar-title>
@@ -132,7 +132,7 @@ In most cases, the order of layout components in the code will achieve the desir
 
 However, you can use the `order` attribute to specify the layout order. The system arranges the components in ascending order of `order` value. When `order` values are the same, it arranges them in the order they appear in the code. The default `order` for all layout components is `0`.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=278
 <mdui-layout class="example-order">
   <mdui-layout-item
     placement="left"

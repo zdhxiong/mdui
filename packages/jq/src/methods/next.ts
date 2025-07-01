@@ -28,7 +28,7 @@ $('.box').next('div')
 eachArray(['', 'All', 'Until'], (name, nameIndex) => {
   $.fn[`next${name}` as 'next'] = function (
     this: JQ,
-    // eslint-disable-next-line
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     selector?: any,
     filter?: Selector,
   ): JQ {

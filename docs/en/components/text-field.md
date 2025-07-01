@@ -16,7 +16,7 @@ import type { TextField } from 'mdui/components/text-field.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=396
 <mdui-text-field label="Text Field"></mdui-text-field>
 ```
 
@@ -26,7 +26,7 @@ Example:
 
 The `variant` attribute modifies the shape of the text field.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=397
 <mdui-text-field variant="filled" label="Text Field"></mdui-text-field>
 
 <br/><br/>
@@ -38,19 +38,19 @@ The `variant` attribute modifies the shape of the text field.
 
 The `label` attribute sets the label text above the text field.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=398
 <mdui-text-field label="Text Field"></mdui-text-field>
 ```
 
 The `placeholder` attribute sets the placeholder text when there is no value.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=399
 <mdui-text-field label="Text Field" placeholder="Placeholder"></mdui-text-field>
 ```
 
 The `helper` attribute or `helper` slot sets the helper text at the bottom of the text field. To display the helper text only when the input is focused, use the `helper-on-focus` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=400
 <mdui-text-field label="Text Field" helper="Supporting text"></mdui-text-field>
 
 <mdui-text-field label="Text Field">
@@ -64,7 +64,7 @@ The `helper` attribute or `helper` slot sets the helper text at the bottom of th
 
 The `clearable` attribute adds a clear button on the right when the text field has a value.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=401
 <mdui-text-field clearable label="Text Field" value="Input Text"></mdui-text-field>
 ```
 
@@ -72,7 +72,7 @@ The `clearable` attribute adds a clear button on the right when the text field h
 
 The `end-aligned` attribute aligns the text to the right.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=402
 <mdui-text-field end-aligned label="Text Field" value="Input Text"></mdui-text-field>
 ```
 
@@ -80,7 +80,7 @@ The `end-aligned` attribute aligns the text to the right.
 
 The `icon` and `end-icon` attributes or slots add Material Icons to the left and right of the text field, respectively.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=403
 <mdui-text-field icon="search" end-icon="mic" label="Text Field"></mdui-text-field>
 
 <br/><br/>
@@ -93,7 +93,7 @@ The `icon` and `end-icon` attributes or slots add Material Icons to the left and
 
 The `prefix` and `suffix` attributes or slots add text to the left and right of the text field. This text is displayed only when the text field is focused or has a value.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=404
 <mdui-text-field prefix="$" suffix="/100" label="Text Field"></mdui-text-field>
 
 <br/><br/>
@@ -108,7 +108,7 @@ The `prefix` and `suffix` attributes or slots add text to the left and right of 
 
 The `readonly` attribute makes the text field read-only.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=405
 <mdui-text-field readonly label="Text Field" value="Input Text"></mdui-text-field>
 ```
 
@@ -116,7 +116,7 @@ The `readonly` attribute makes the text field read-only.
 
 The `disabled` attribute disables the text field.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=406
 <mdui-text-field disabled label="Text Field" value="Input Text"></mdui-text-field>
 ```
 
@@ -124,13 +124,13 @@ The `disabled` attribute disables the text field.
 
 The `rows` attribute sets the number of rows for a multi-line text field.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=407
 <mdui-text-field rows="3" label="Text Field"></mdui-text-field>
 ```
 
 To automatically adjust the height of the text field based on the length of the input, use the `autosize` attribute. The `min-rows` and `max-rows` attributes specify the minimum and maximum number of rows.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=408
 <mdui-text-field autosize label="Text Field"></mdui-text-field>
 
 <br/><br/>
@@ -142,7 +142,7 @@ To automatically adjust the height of the text field based on the length of the 
 
 The `maxlength` attribute sets the maximum number of characters for the text field. To display a character counter below the text field, use the `counter` attribute.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=409
 <mdui-text-field maxlength="20" counter label="Text Field"></mdui-text-field>
 ```
 
@@ -150,6 +150,6 @@ The `maxlength` attribute sets the maximum number of characters for the text fie
 
 For password fields (`type="password"`), the `toggle-password` attribute adds a button on the right to toggle the visibility of the password.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=410
 <mdui-text-field type="password" toggle-password label="Text Field"></mdui-text-field>
 ```

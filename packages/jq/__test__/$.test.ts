@@ -24,7 +24,6 @@ const test = ($: JQStatic, type: string): void => {
       const $empty = $();
       assert.lengthOf($empty, 0);
 
-      // @ts-ignore
       const $null = $(null);
       assert.lengthOf($null, 0);
     });

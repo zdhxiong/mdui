@@ -1,7 +1,7 @@
 import '../../methods/prependTo.js';
 import { jQuery, jq, JQStatic } from '../utils.js';
 
-const test = ($: JQStatic, type: string): void => {
+const test = (_$: JQStatic, type: string): void => {
   describe(`${type} - .prependTo`, () => {
     it('.prependTo(JQSelector): JQ', () => {
       // 该方法直接调用 .prepend() 实现，.prepend() 通过即可

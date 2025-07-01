@@ -65,7 +65,7 @@ const isPlainText = (target: string): boolean => {
 };
 
 eachArray(['before', 'after'], (name, nameIndex) => {
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   $.fn[name as 'before'] = function (this: JQ, ...args: any[]): JQ {
     // after 方法，多个参数需要按参数顺序添加到元素后面，所以需要将参数顺序反向处理
     if (nameIndex === 1) {

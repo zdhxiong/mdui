@@ -2,6 +2,7 @@ import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
+// eslint-disable-next-line import/extensions
 import { getOverflowAncestors } from '@floating-ui/utils/dom';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
@@ -70,7 +71,7 @@ export class Tooltip extends MduiElement<TooltipEventMap> {
   /**
    * tooltip 的位置。默认为 `auto`。可选值包括：
    *
-   * * `auto`：自动判断位置。`variant="plan"` 时，优先使用 `top`；`variant="rich"` 时，优先使用 `bottom-right`
+   * * `auto`：自动判断位置。`variant="plain"` 时，优先使用 `top`；`variant="rich"` 时，优先使用 `bottom-right`
    * * `top-left`：位于左上方
    * * `top-start`：位于上方，左对齐
    * * `top`：位于上方，居中对齐

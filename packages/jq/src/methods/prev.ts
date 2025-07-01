@@ -29,7 +29,7 @@ $('.box').prev('div')
 eachArray(['', 'All', 'Until'], (name, nameIndex) => {
   $.fn[`prev${name}` as 'prev'] = function (
     this: JQ,
-    // eslint-disable-next-line
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     selector?: any,
     filter?: Selector,
   ): JQ {

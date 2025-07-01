@@ -16,7 +16,7 @@ import type { Checkbox } from 'mdui/components/checkbox.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=216
 <mdui-checkbox>Checkbox</mdui-checkbox>
 ```
 
@@ -26,7 +26,7 @@ Example:
 
 The `checked` property is `true` when the checkbox is checked. Add the `checked` attribute to set the checkbox to the checked state by default.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=217
 <mdui-checkbox checked>Checkbox</mdui-checkbox>
 ```
 
@@ -34,7 +34,7 @@ The `checked` property is `true` when the checkbox is checked. Add the `checked`
 
 Use the `disabled` attribute to disable the checkbox.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=218
 <mdui-checkbox disabled>Checkbox</mdui-checkbox>
 <mdui-checkbox disabled checked>Checkbox</mdui-checkbox>
 ```
@@ -43,7 +43,7 @@ Use the `disabled` attribute to disable the checkbox.
 
 The `indeterminate` attribute indicates an indeterminate state for the checkbox.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=219
 <mdui-checkbox indeterminate>Checkbox</mdui-checkbox>
 ```
 
@@ -51,7 +51,7 @@ The `indeterminate` attribute indicates an indeterminate state for the checkbox.
 
 Use the `unchecked-icon`, `checked-icon`, and `indeterminate-icon` attributes to set Material Icons for the checkbox in unchecked, checked, and indeterminate states, respectively. Alternatively, use the corresponding slots for setting icons.
 
-```html,example,expandable
+```html,example,expandable,playgroundId=220
 <mdui-checkbox
   unchecked-icon="radio_button_unchecked"
   checked-icon="check_circle"

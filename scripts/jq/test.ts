@@ -27,7 +27,11 @@ startTestRunner({
       playwrightLauncher({ product: 'firefox' }),
       playwrightLauncher({ product: 'webkit' }),
     ],
-    plugins: [fromRollup(commonjs)()],
+    plugins: [
+      fromRollup(commonjs)({
+        strictRequires: 'auto',
+      }),
+    ],
   },
   readCliArgs: false,
   readFileConfig: false,

@@ -135,6 +135,7 @@ export class CollapseItem extends MduiElement<CollapseItemEventMap> {
     // 如果是从 opened 状态开始关闭，则先设置高度值，并等重绘完成
     if (this.state === 'close') {
       $(this.bodyRef.value!).height(scrollHeight);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       this.bodyRef.value!.clientLeft;
     }
 

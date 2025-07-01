@@ -16,7 +16,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 使用示例：
 
-```html,example
+```html,example,playgroundId=336
 <mdui-range-slider></mdui-range-slider>
 ```
 
@@ -26,7 +26,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 通过 `value` 属性，可以读取或设置范围滑块的当前值。该属性值是一个数组，只能通过 JavaScript 属性进行读取和设置。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=337
 <mdui-range-slider class="example-value"></mdui-range-slider>
 
 <script>
@@ -39,7 +39,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 添加 `disabled` 属性可以禁用范围滑块。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=338
 <mdui-range-slider disabled></mdui-range-slider>
 ```
 
@@ -47,7 +47,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 使用 `min` 和 `max` 属性设置范围滑块的最小值和最大值。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=339
 <mdui-range-slider min="10" max="20"></mdui-range-slider>
 ```
 
@@ -55,7 +55,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 使用 `step` 属性设置范围滑块的步进间隔。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=340
 <mdui-range-slider step="10"></mdui-range-slider>
 ```
 
@@ -63,7 +63,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 添加 `tickmarks` 属性可以在范围滑块上添加刻度标记。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=341
 <mdui-range-slider tickmarks step="10"></mdui-range-slider>
 ```
 
@@ -71,7 +71,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 添加 `nolabel` 属性可以隐藏范围滑块上的文本提示。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=342
 <mdui-range-slider nolabel></mdui-range-slider>
 ```
 
@@ -79,7 +79,7 @@ import type { RangeSlider } from 'mdui/components/range-slider.js';
 
 通过 `labelFormatter` JavaScript 属性，可以修改文本提示的显示格式。该属性值是一个函数，函数参数为当前范围滑块的值，返回值为你期望显示的文本。
 
-```html,example,expandable
+```html,example,expandable,playgroundId=343
 <mdui-range-slider class="example-label-formatter"></mdui-range-slider>
 
 <script>

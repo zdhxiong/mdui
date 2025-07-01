@@ -2099,7 +2099,7 @@
         }
       },
       "placement": {
-        "description": "tooltip 的位置。默认为 `auto`。可选值包括：\n\n* `auto`：自动判断位置。`variant=\"plan\"` 时，优先使用 `top`；`variant=\"rich\"` 时，优先使用 `bottom-right`\n* `top-left`：位于左上方\n* `top-start`：位于上方，左对齐\n* `top`：位于上方，居中对齐\n* `top-end`：位于上方，右对齐\n* `top-right`：位于右上方\n* `bottom-left`：位于左下方\n* `bottom-start`：位于下方，左对齐\n* `bottom`：位于下方，居中对齐\n* `bottom-end`：位于下方，右对齐\n* `bottom-right`：位于右下方\n* `left-start`：位于左侧，顶部对齐\n* `left`：位于左侧，居中对齐\n* `left-end`：位于左侧，底部对齐\n* `right-start`：位于右侧，顶部对齐\n* `right`：位于右侧，居中对齐\n* `right-end`：位于右侧，底部对齐",
+        "description": "tooltip 的位置。默认为 `auto`。可选值包括：\n\n* `auto`：自动判断位置。`variant=\"plain\"` 时，优先使用 `top`；`variant=\"rich\"` 时，优先使用 `bottom-right`\n* `top-left`：位于左上方\n* `top-start`：位于上方，左对齐\n* `top`：位于上方，居中对齐\n* `top-end`：位于上方，右对齐\n* `top-right`：位于右上方\n* `bottom-left`：位于左下方\n* `bottom-start`：位于下方，左对齐\n* `bottom`：位于下方，居中对齐\n* `bottom-end`：位于下方，右对齐\n* `bottom-right`：位于右下方\n* `left-start`：位于左侧，顶部对齐\n* `left`：位于左侧，居中对齐\n* `left-end`：位于左侧，底部对齐\n* `right-start`：位于右侧，顶部对齐\n* `right`：位于右侧，居中对齐\n* `right-end`：位于右侧，底部对齐",
         "enum": {
           "auto": "自动判断位置",
           "top-left": "位于左上方",

@@ -21,7 +21,7 @@ $('.box').closest('.parent')
   }
 }
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 $.fn.closest = function (this: JQ, selector: any): JQ {
   if (this.is(selector)) {
     return this;

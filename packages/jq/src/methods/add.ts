@@ -21,7 +21,7 @@ $('.box').add('.selected');
   }
 }
 
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 $.fn.add = function (this: JQ, selector: any): JQ {
   return new JQ(unique(merge(this.get(), $(selector).get())));
 };

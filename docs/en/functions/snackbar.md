@@ -10,7 +10,7 @@ import { snackbar } from 'mdui/functions/snackbar.js';
 
 Example:
 
-```html,example
+```html,example,playgroundId=432
 <mdui-button class="example-button">open</mdui-button>
 
 <script type="module">

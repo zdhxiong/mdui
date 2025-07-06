@@ -6,9 +6,12 @@ import {
 } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import cc from 'classcat';
+import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/attr.js';
 import { isNodeName, getNodeName } from '@mdui/jq/shared/helper.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
+import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -163,6 +166,12 @@ export class ListItem extends AnchorMixin(
     | /*居中对齐*/ 'center'
     | /*底部对齐*/ 'end' = 'center';
 
+  /**
+   * 用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示
+   */
+  @property({ reflect: true })
+  public label?: string;
+
   @queryAssignedElements({ slot: 'icon', flatten: true })
   private readonly iconElements!: HTMLElement[];
 
@@ -194,6 +203,21 @@ export class ListItem extends AnchorMixin(
 
   protected override get focusDisabled(): boolean {
     return this.href ? this.disabled : this.disabled || this.nonclickable;
+  }
+
+  @watch('label')
+  private onLabelChange() {
+    $(this).attr('aria-label', this.label || null);
+  }
+
+  public override connectedCallback() {
+    super.connectedCallback();
+
+    $(this).attr({
+      role: 'listitem',
+      'aria-labelledby': 'headline',
+      'aria-describedby': 'description',
+    });
   }
 
   protected override render(): TemplateResult {
@@ -245,9 +269,16 @@ export class ListItem extends AnchorMixin(
       </slot>
       <div part="body" class="body">
         ${hasDefaultSlot
-          ? html`<slot part="headline" class="headline"></slot>`
-          : html`<div part="headline" class="headline">${this.headline}</div>`}
-        <slot name="description" part="description" class="description">
+          ? html`<slot part="headline" class="headline" id="headline"></slot>`
+          : html`<div part="headline" class="headline" id="headline">
+              ${this.headline}
+            </div>`}
+        <slot
+          name="description"
+          part="description"
+          class="description"
+          id="description"
+        >
           ${this.description}
         </slot>
       </div>

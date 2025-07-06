@@ -30,31 +30,31 @@
         "mdui-top-app-bar"
       ]
     },
-    "ButtonBase": {
+    "AnchorMixin": {
       "properties": {
         "href": {
-          "description": "The URL for the hyperlink. If provided, the component is rendered as an `<a>` element and can use link-related attributes."
+          "description": "The URL for the hyperlink. If specified, the component renders as an `<a>` element and can use link-related attributes."
         },
         "download": {
-          "description": "Instructs the browser to download the linked URL.\n\n**Note**: This is only available when `href` is specified."
+          "description": "Instructs the browser to treat the linked URL as a download.\n\n**Note**:  This is only available when `href` is specified."
         },
         "target": {
-          "description": "Defines where to open the linked URL. Possible values:\n\n* `_blank`: Opens in a new tab or window.\n* `_parent`: Opens in the parent browsing context or `_self` if no parent.\n* `_self`: Opens in the current browsing context. (Default).\n* `_top`: Opens in the topmost browsing context or `_self` if no ancestors.\n\n**Note**: This is only available when `href` is specified.",
+          "description": "Defines where to display the linked URL. Possible values:\n\n* `_blank`: Opens in a new tab or window.\n* `_parent`: Opens in the parent browsing context or `_self` if no parent exists.\n* `_self`: Opens in the current browsing context. (Default).\n* `_top`: Opens in the topmost browsing context or `_self` if no ancestors exist.\n\n**Note**: This is only available when `href` is specified.",
           "enum": {
             "_blank": "Opens in a new tab or window.",
-            "_parent": "Opens in the parent browsing context or `_self` if no parent.",
+            "_parent": "Opens in the parent browsing context or `_self` if no parent exists.",
             "_self": "Opens in the current browsing context. (Default).",
-            "_top": "Opens in the topmost browsing context or `_self` if no ancestors."
+            "_top": "Opens in the topmost browsing context or `_self` if no ancestors exist."
           }
         },
         "rel": {
-          "description": "Specifies the relationship of the linked URL as space-separated link types. Possible values:\n\n* `alternate`: Alternate versions of the current document.\n* `author`: The author of the current document or article.\n* `bookmark`: The permalink for the nearest ancestor section.\n* `external`: The referenced document is not part of the same site as the current document.\n* `help`: A link to context-sensitive help.\n* `license`: Indicates that the main content of the current document is covered by the copyright license described by the referenced document.\n* `me`: Indicates that the current document represents the person who owns the linked content.\n* `next`: Indicates that the current document is part of a series and the next document in the series is the referenced document.\n* `nofollow`: Indicates that the current document's original author or publisher does not endorse the referenced document.\n* `noreferrer`: No `Referer` header will be included. Also has the same effect as `noopener`.\n* `opener`: Creates an auxiliary browsing context if the hyperlink would otherwise create a top-level browsing context that is not an auxiliary browsing context (i.e., has \"`_blank`\" as `target` attribute value).\n* `prev`: Indicates that the current document is part of a series and the previous document in the series is the referenced document.\n* `search`: Links to a resource that can be used to search through the current document and its related pages.\n* `tag`: Gives a tag (identified by the given address) that applies to the current document.\n\n**Note**: This is only available when `href` is specified.",
+          "description": "Specifies the relationship of the linked URL as space-separated link types. Possible values:\n\n* `alternate`: Alternate versions of the current document.\n* `author`: Author of the current document or article.\n* `bookmark`: Permanent link for the nearest ancestor section.\n* `external`: The referenced document is not part of the same site as the current document.\n* `help`: Link to context-sensitive help.\n* `license`: Indicates that the main content of the current document is covered by the copyright license described by the referenced document.\n* `me`: Indicates that the current document represents the person who owns the linked content.\n* `next`: Indicates that the current document is part of a series and the next document in the series is the referenced document.\n* `nofollow`: Indicates that the current document's original author or publisher does not endorse the referenced document.\n* `noreferrer`: No `Referer` header will be included. Also has the same effect as `noopener`.\n* `opener`: Creates an auxiliary browsing context if the hyperlink would otherwise create a top-level browsing context that is not an auxiliary browsing context (i.e., has \"`_blank`\" as `target` attribute value).\n* `prev`: Indicates that the current document is part of a series and the previous document in the series is the referenced document.\n* `search`: Links to a resource that can be used to search through the current document and its related pages.\n* `tag`: Gives a tag (identified by the given address) that applies to the current document.\n\n**Note**: This is only available when `href` is specified.",
           "enum": {
             "alternate": "Alternate versions of the current document.",
-            "author": "The author of the current document or article.",
-            "bookmark": "The permalink for the nearest ancestor section.",
+            "author": "Author of the current document or article.",
+            "bookmark": "Permanent link for the nearest ancestor section.",
             "external": "The referenced document is not part of the same site as the current document.",
-            "help": "A link to context-sensitive help.",
+            "help": "Link to context-sensitive help.",
             "license": "Indicates that the main content of the current document is covered by the copyright license described by the referenced document.",
             "me": "Indicates that the current document represents the person who owns the linked content.",
             "next": "Indicates that the current document is part of a series and the next document in the series is the referenced document.",
@@ -65,18 +65,58 @@
             "search": "Links to a resource that can be used to search through the current document and its related pages.",
             "tag": "Gives a tag (identified by the given address) that applies to the current document."
           }
-        },
+        }
+      },
+      "tagNames": [
+        "mdui-button-icon",
+        "mdui-card",
+        "mdui-list-item",
+        "mdui-menu-item",
+        "mdui-navigation-bar-item",
+        "mdui-navigation-rail-item"
+      ]
+    },
+    "FocusableMixin": {
+      "properties": {
         "autofocus": {
-          "description": "Specifies that the element should be focused when the page loads."
+          "description": "Determines if the element should be focused when the page loads."
         },
         "tabIndex": {
-          "description": "Defines the order in which the element receives focus when navigating with the Tab key."
-        },
+          "description": "Specifies the order in which the element receives focus when navigating with the Tab key."
+        }
+      },
+      "tagNames": [
+        "mdui-button-icon",
+        "mdui-card",
+        "mdui-checkbox",
+        "mdui-list-item",
+        "mdui-menu-item",
+        "mdui-navigation-bar-item",
+        "mdui-navigation-rail-item",
+        "mdui-radio",
+        "mdui-range-slider",
+        "mdui-select",
+        "mdui-slider",
+        "mdui-switch",
+        "mdui-tab",
+        "mdui-text-field"
+      ],
+      "methods": {
+        "click": "Simulates a mouse click on the element.",
+        "focus": "Sets focus on the element. An optional parameter can be an object with a `preventScroll` property. If `preventScroll` is set to `true`, the page will not scroll to bring the focused element into view.",
+        "blur": "Removes focus from the element."
+      }
+    },
+    "ButtonBase": {
+      "properties": {
         "disabled": {
           "description": "Disables the element."
         },
         "loading": {
           "description": "Indicates that the element is in a loading state."
+        },
+        "label": {
+          "description": "无障碍描述标签"
         },
         "name": {
           "description": "The button's name, which is submitted with form data.\n\n**Note**: This is only available when `href` is not specified."
@@ -130,49 +170,30 @@
         },
         "validationMessage": {
           "description": "The element's validation message. This is empty if the element meets its constraints."
-        }
-      },
-      "tagNames": [
-        "mdui-button-icon",
-        "mdui-button",
-        "mdui-chip",
-        "mdui-fab",
-        "mdui-segmented-button"
-      ],
-      "methods": {
-        "click": "Simulates a mouse click on the element.",
-        "focus": "Sets focus on the element. An optional parameter can be an object with a `preventScroll` property. If `preventScroll` is set to `true`, the page will not scroll to bring the focused element into view.",
-        "blur": "Removes focus from the element.",
-        "checkValidity": "Checks the validity of the form field. If it's invalid, it triggers an `invalid` event and returns `false`. If it's valid, it returns `true`.",
-        "reportValidity": "Checks the validity of the form field. If it's invalid, it triggers an `invalid` event, returns `false`, and displays a validation message. If it's valid, it returns `true`.",
-        "setCustomValidity": "Sets a custom error message. If the text is non-empty, it indicates that the field is invalid."
-      }
-    },
-    "AnchorMixin": {
-      "properties": {
+        },
         "href": {
-          "description": "The URL for the hyperlink. If specified, the component renders as an `<a>` element and can use link-related attributes."
+          "description": "The URL for the hyperlink. If provided, the component is rendered as an `<a>` element and can use link-related attributes."
         },
         "download": {
-          "description": "Instructs the browser to treat the linked URL as a download.\n\n**Note**:  This is only available when `href` is specified."
+          "description": "Instructs the browser to download the linked URL.\n\n**Note**: This is only available when `href` is specified."
         },
         "target": {
-          "description": "Defines where to display the linked URL. Possible values:\n\n* `_blank`: Opens in a new tab or window.\n* `_parent`: Opens in the parent browsing context or `_self` if no parent exists.\n* `_self`: Opens in the current browsing context. (Default).\n* `_top`: Opens in the topmost browsing context or `_self` if no ancestors exist.\n\n**Note**: This is only available when `href` is specified.",
+          "description": "Defines where to open the linked URL. Possible values:\n\n* `_blank`: Opens in a new tab or window.\n* `_parent`: Opens in the parent browsing context or `_self` if no parent.\n* `_self`: Opens in the current browsing context. (Default).\n* `_top`: Opens in the topmost browsing context or `_self` if no ancestors.\n\n**Note**: This is only available when `href` is specified.",
           "enum": {
             "_blank": "Opens in a new tab or window.",
-            "_parent": "Opens in the parent browsing context or `_self` if no parent exists.",
+            "_parent": "Opens in the parent browsing context or `_self` if no parent.",
             "_self": "Opens in the current browsing context. (Default).",
-            "_top": "Opens in the topmost browsing context or `_self` if no ancestors exist."
+            "_top": "Opens in the topmost browsing context or `_self` if no ancestors."
           }
         },
         "rel": {
-          "description": "Specifies the relationship of the linked URL as space-separated link types. Possible values:\n\n* `alternate`: Alternate versions of the current document.\n* `author`: Author of the current document or article.\n* `bookmark`: Permanent link for the nearest ancestor section.\n* `external`: The referenced document is not part of the same site as the current document.\n* `help`: Link to context-sensitive help.\n* `license`: Indicates that the main content of the current document is covered by the copyright license described by the referenced document.\n* `me`: Indicates that the current document represents the person who owns the linked content.\n* `next`: Indicates that the current document is part of a series and the next document in the series is the referenced document.\n* `nofollow`: Indicates that the current document's original author or publisher does not endorse the referenced document.\n* `noreferrer`: No `Referer` header will be included. Also has the same effect as `noopener`.\n* `opener`: Creates an auxiliary browsing context if the hyperlink would otherwise create a top-level browsing context that is not an auxiliary browsing context (i.e., has \"`_blank`\" as `target` attribute value).\n* `prev`: Indicates that the current document is part of a series and the previous document in the series is the referenced document.\n* `search`: Links to a resource that can be used to search through the current document and its related pages.\n* `tag`: Gives a tag (identified by the given address) that applies to the current document.\n\n**Note**: This is only available when `href` is specified.",
+          "description": "Specifies the relationship of the linked URL as space-separated link types. Possible values:\n\n* `alternate`: Alternate versions of the current document.\n* `author`: The author of the current document or article.\n* `bookmark`: The permalink for the nearest ancestor section.\n* `external`: The referenced document is not part of the same site as the current document.\n* `help`: A link to context-sensitive help.\n* `license`: Indicates that the main content of the current document is covered by the copyright license described by the referenced document.\n* `me`: Indicates that the current document represents the person who owns the linked content.\n* `next`: Indicates that the current document is part of a series and the next document in the series is the referenced document.\n* `nofollow`: Indicates that the current document's original author or publisher does not endorse the referenced document.\n* `noreferrer`: No `Referer` header will be included. Also has the same effect as `noopener`.\n* `opener`: Creates an auxiliary browsing context if the hyperlink would otherwise create a top-level browsing context that is not an auxiliary browsing context (i.e., has \"`_blank`\" as `target` attribute value).\n* `prev`: Indicates that the current document is part of a series and the previous document in the series is the referenced document.\n* `search`: Links to a resource that can be used to search through the current document and its related pages.\n* `tag`: Gives a tag (identified by the given address) that applies to the current document.\n\n**Note**: This is only available when `href` is specified.",
           "enum": {
             "alternate": "Alternate versions of the current document.",
-            "author": "Author of the current document or article.",
-            "bookmark": "Permanent link for the nearest ancestor section.",
+            "author": "The author of the current document or article.",
+            "bookmark": "The permalink for the nearest ancestor section.",
             "external": "The referenced document is not part of the same site as the current document.",
-            "help": "Link to context-sensitive help.",
+            "help": "A link to context-sensitive help.",
             "license": "Indicates that the main content of the current document is covered by the copyright license described by the referenced document.",
             "me": "Indicates that the current document represents the person who owns the linked content.",
             "next": "Indicates that the current document is part of a series and the next document in the series is the referenced document.",
@@ -183,45 +204,48 @@
             "search": "Links to a resource that can be used to search through the current document and its related pages.",
             "tag": "Gives a tag (identified by the given address) that applies to the current document."
           }
-        }
-      },
-      "tagNames": [
-        "mdui-card",
-        "mdui-list-item",
-        "mdui-menu-item",
-        "mdui-navigation-bar-item",
-        "mdui-navigation-rail-item"
-      ]
-    },
-    "FocusableMixin": {
-      "properties": {
+        },
         "autofocus": {
-          "description": "Determines if the element should be focused when the page loads."
+          "description": "Specifies that the element should be focused when the page loads."
         },
         "tabIndex": {
-          "description": "Specifies the order in which the element receives focus when navigating with the Tab key."
+          "description": "Defines the order in which the element receives focus when navigating with the Tab key."
         }
       },
       "tagNames": [
-        "mdui-card",
-        "mdui-checkbox",
-        "mdui-list-item",
-        "mdui-menu-item",
-        "mdui-navigation-bar-item",
-        "mdui-navigation-rail-item",
-        "mdui-radio",
-        "mdui-range-slider",
-        "mdui-select",
-        "mdui-slider",
-        "mdui-switch",
-        "mdui-tab",
-        "mdui-text-field"
+        "mdui-button-icon",
+        "mdui-button",
+        "mdui-chip",
+        "mdui-fab",
+        "mdui-segmented-button"
       ],
       "methods": {
+        "checkValidity": "Checks the validity of the form field. If it's invalid, it triggers an `invalid` event and returns `false`. If it's valid, it returns `true`.",
+        "reportValidity": "Checks the validity of the form field. If it's invalid, it triggers an `invalid` event, returns `false`, and displays a validation message. If it's valid, it returns `true`.",
+        "setCustomValidity": "Sets a custom error message. If the text is non-empty, it indicates that the field is invalid.",
         "click": "Simulates a mouse click on the element.",
         "focus": "Sets focus on the element. An optional parameter can be an object with a `preventScroll` property. If `preventScroll` is set to `true`, the page will not scroll to bring the focused element into view.",
         "blur": "Removes focus from the element."
       }
+    },
+    "AccessibleMixin": {
+      "properties": {
+        "accessibleLabel": {
+          "description": "组件的无障碍名称。它将应用到 [`aria-label`](https://developer.mozilla.org/zh-CN/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label)，但不会在界面上显示"
+        },
+        "accessibleLabelledby": {
+          "description": "页面中其他元素的 id（或多个 id），组件将使用对应元素的文本作为无障碍名称。等同于 [`aria-labelledby`](https://developer.mozilla.org/zh-CN/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label)"
+        },
+        "accessibleDescription": {
+          "description": "组件的无障碍描述。它将应用到 [`aria-description`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-description)，但不会在界面上显示\nTODO: aria-description 位于 WAI-ARIA 1.3 规范中，尚未正式发布。目前采用添加隐藏元素，并通过 aria-describedby 指向隐藏元素"
+        },
+        "accessibleDescribedby": {
+          "description": "页面中其他元素的 id（或多个 id），组件将使用对应元素的文本作为无障碍描述。等同于 [`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-describedby)"
+        }
+      },
+      "tagNames": [
+        "mdui-icon"
+      ]
     },
     "SliderBase": {
       "properties": {
@@ -290,7 +314,7 @@
         "description": "The Material Icons name for the avatar."
       },
       "label": {
-        "description": "Text description of the avatar."
+        "description": "An alternate description to use for assistive devices."
       }
     },
     "slots": {
@@ -485,6 +509,9 @@
       "required": {
         "description": "Requires the checkbox to be checked for form submission."
       },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
+      },
       "form": {
         "description": "Associates the checkbox with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the checkbox is associated with its parent `<form>`, if any.\n\nThis attribute allows checkbox elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."
       },
@@ -608,6 +635,9 @@
       },
       "value": {
         "description": "Sets the current value of the progress indicator. If not specified, the progress indicator is in an indeterminate state."
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       }
     }
   },
@@ -673,6 +703,9 @@
       },
       "description": {
         "description": "Sets the text below the title. Alternatively, use `slot=\"description\"`."
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       },
       "open": {
         "description": "Opens the dialog."
@@ -906,6 +939,9 @@
       },
       "value": {
         "description": "Sets the current value of the progress indicator. If not specified, the progress indicator is in an indeterminate state."
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       }
     },
     "cssParts": {
@@ -965,6 +1001,9 @@
           "center": "Center alignment.",
           "end": "Bottom alignment."
         }
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       }
     },
     "events": {
@@ -999,6 +1038,11 @@
   },
   "mdui-list": {
     "summary": "List Component. It should be used in conjunction with the `<mdui-list-item>` component.\n\n```html\n<mdui-list>\n..<mdui-list-subheader>Subheader</mdui-list-subheader>\n..<mdui-list-item>Item 1</mdui-list-item>\n..<mdui-list-item>Item 2</mdui-list-item>\n</mdui-list>\n```",
+    "properties": {
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
+      }
+    },
     "slots": {
       "": "Contains `<mdui-list-item>` elements."
     }
@@ -1305,6 +1349,9 @@
       "disabled": {
         "description": "Disables the radio group when set."
       },
+      "label": {
+        "description": "用于描述单选框组的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
+      },
       "form": {
         "description": "Associates the radio group with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the radio group is associated with its parent `<form>`, if any.\n\nThis attribute allows radio group elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."
       },
@@ -1358,6 +1405,9 @@
       },
       "checkedIcon": {
         "description": "Specifies the Material Icons name for the checked state. Alternatively, use `slot=\"checked-icon\"`."
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       }
     },
     "events": {
@@ -1420,6 +1470,9 @@
       },
       "required": {
         "description": "Requires a selection when the form is submitted."
+      },
+      "label": {
+        "description": "用于描述分段按钮组的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       },
       "form": {
         "description": "Associates the segmented button group with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the segmented button group is associated with its parent `<form>`, if any.\n\nThis attribute allows segmented button group elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."
@@ -1625,6 +1678,9 @@
       },
       "defaultValue": {
         "description": "The default value. The slider resets to this value when the form is reset. This can only be set via a JavaScript property."
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       }
     },
     "events": {
@@ -1729,6 +1785,9 @@
       },
       "required": {
         "description": "The switch must be checked when submitting the form."
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       },
       "form": {
         "description": "Associates the switch with a `<form>` element. The value should be the `id` of a `<form>` in the same document. If not set, the switch is associated with its parent `<form>`, if any.\n\nThis attribute allows switch elements to be associated with `<form>`s anywhere in the document, not just inside a `<form>`."

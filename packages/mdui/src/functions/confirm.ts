@@ -9,6 +9,7 @@ import '@mdui/jq/methods/text.js';
 import { isUndefined, returnTrue } from '@mdui/jq/shared/helper.js';
 import { onLocaleReady, offLocaleReady } from '../internal/localize.js';
 import { dialog as openDialog } from './dialog.js';
+import type { Button } from '../components/button.js';
 import type { Dialog } from '../components/dialog.js';
 
 interface Options {
@@ -43,9 +44,19 @@ interface Options {
   confirmText?: string;
 
   /**
+   * 确认按钮为 `<mdui-button>` 组件。可在该参数中设置 `<mdui-button>` 组件的属性。
+   */
+  confirmOptions?: Partial<Button>;
+
+  /**
    * 取消按钮的文本
    */
   cancelText?: string;
+
+  /**
+   * 取消按钮为 `<mdui-button>` 组件。可在该参数中设置 `<mdui-button>` 组件的属性。
+   */
+  cancelOptions?: Partial<Button>;
 
   /**
    * 是否垂直排列底部操作按钮
@@ -71,7 +82,7 @@ interface Options {
   /**
    * 点击取消按钮时的回调函数。
    * 函数参数为 dialog 实例，`this` 也指向 dialog 实例。
-   * 默认点击确认按钮后会关闭 confirm；若返回值为 `false`，则不关闭 confirm；若返回值为 promise，则将在 promise 被 resolve 后，关闭 confirm。
+   * 默认点击取消按钮后会关闭 confirm；若返回值为 `false`，则不关闭 confirm；若返回值为 promise，则将在 promise 被 resolve 后，关闭 confirm。
    * @param dialog
    */
   onCancel?: (dialog: Dialog) => void | boolean | Promise<void>;
@@ -110,7 +121,47 @@ interface Options {
    * @param dialog
    */
   onOverlayClick?: (dialog: Dialog) => void;
+
+  /**
+   * 组件的无障碍名称。它将应用到 [`aria-label`](https://developer.mozilla.org/zh-CN/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label)，但不会在界面上显示
+   */
+  accessibleLabel?: string;
+
+  /**
+   * 页面中其他元素的 id（或多个 id），组件将使用对应元素的文本作为无障碍名称。等同于 [`aria-labelledby`](https://developer.mozilla.org/zh-CN/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-labelledby)
+   */
+  accessibleLabelledby?: string;
+
+  /**
+   * 组件的无障碍描述。它将应用到 [`aria-description`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-description)，但不会在界面上显示
+   */
+  accessibleDescription?: string;
+
+  /**
+   * 页面中其他元素的 id（或多个 id），组件将使用对应元素的文本作为无障碍描述。等同于 [`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-describedby)
+   */
+  accessibleDescribedby?: string;
 }
+
+type ConfirmProperties = Pick<
+  Options,
+  | 'headline'
+  | 'description'
+  | 'icon'
+  | 'closeOnEsc'
+  | 'closeOnOverlayClick'
+  | 'stackedActions'
+  | 'queue'
+  | 'onOpen'
+  | 'onOpened'
+  | 'onClose'
+  | 'onClosed'
+  | 'onOverlayClick'
+  | 'accessibleLabel'
+  | 'accessibleLabelledby'
+  | 'accessibleDescription'
+  | 'accessibleDescribedby'
+>;
 
 const getConfirmText = () => {
   return msg('OK', {
@@ -131,31 +182,20 @@ const getCancelText = () => {
  * @param options
  */
 export const confirm = (options: Options): Promise<void> => {
-  const mergedOptions = Object.assign(
-    {},
-    {
-      confirmText: getConfirmText(),
-      cancelText: getCancelText(),
-      onConfirm: returnTrue,
-      onCancel: returnTrue,
-    },
-    options,
-  );
-  const properties: (keyof Pick<
-    Options,
-    | 'headline'
-    | 'description'
-    | 'icon'
-    | 'closeOnEsc'
-    | 'closeOnOverlayClick'
-    | 'stackedActions'
-    | 'queue'
-    | 'onOpen'
-    | 'onOpened'
-    | 'onClose'
-    | 'onClosed'
-    | 'onOverlayClick'
-  >)[] = [
+  const mergedOptions = {
+    confirmText: getConfirmText(),
+    cancelText: getCancelText(),
+    onConfirm: returnTrue,
+    onCancel: returnTrue,
+    ...Object.fromEntries(
+      Object.entries(options).filter(([, value]) => !isUndefined(value)),
+    ),
+  } as Required<
+    Pick<Options, 'confirmText' | 'cancelText' | 'onConfirm' | 'onCancel'>
+  > &
+    Options;
+
+  const properties: (keyof ConfirmProperties)[] = [
     'headline',
     'description',
     'icon',
@@ -168,6 +208,10 @@ export const confirm = (options: Options): Promise<void> => {
     'onClose',
     'onClosed',
     'onOverlayClick',
+    'accessibleLabel',
+    'accessibleLabelledby',
+    'accessibleDescription',
+    'accessibleDescribedby',
   ];
 
   return new Promise((resolve, reject) => {
@@ -178,12 +222,14 @@ export const confirm = (options: Options): Promise<void> => {
           .filter((key) => !isUndefined(mergedOptions[key]))
           .map((key) => [key, mergedOptions[key]]),
       ),
+      accessibleRole: 'alertdialog',
       actions: [
         {
           text: mergedOptions.cancelText,
           onClick: (dialog) => {
             return mergedOptions.onCancel.call(dialog, dialog);
           },
+          options: mergedOptions.cancelOptions,
         },
         {
           text: mergedOptions.confirmText,
@@ -200,6 +246,7 @@ export const confirm = (options: Options): Promise<void> => {
 
             return clickResult;
           },
+          options: mergedOptions.confirmOptions,
         },
       ],
     });

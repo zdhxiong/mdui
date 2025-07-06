@@ -67,15 +67,32 @@
   .border-color(outline, 0.32);
 }
 
-.link {
+.base {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
+  appearance: none;
+  padding: 0;
+  margin: 0;
   color: inherit;
   font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
   letter-spacing: inherit;
-  text-decoration: none;
+  background: transparent;
+  border: none;
+  outline: none;
   touch-action: manipulation;
+  text-align: left;
+}
+
+.link {
+  text-decoration: none;
   -webkit-user-drag: none;
+}
+
+.button {
+  cursor: inherit;
 }

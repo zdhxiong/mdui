@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>Hætta við</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>Hreinsa</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>Fela lykilorð</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>Sýna lykilorð</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

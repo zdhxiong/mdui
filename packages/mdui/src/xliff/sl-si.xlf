@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>Prekliči</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>Počisti</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>Skrij geslo</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>Prikaži geslo</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

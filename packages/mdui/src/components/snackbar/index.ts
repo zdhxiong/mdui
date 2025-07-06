@@ -334,7 +334,7 @@ export class Snackbar extends MduiElement<SnackbarEventMap> {
   }
 
   protected override render(): TemplateResult {
-    return html`<slot part="message" class="message"></slot>
+    return html`<slot part="message" class="message" role="status"></slot>
       <div class="action-group">
         <slot
           name="action"

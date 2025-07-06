@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>ರದ್ದು ಮಾಡು</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>ತೆರವುಗೊಳಿಸಿ</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>ಪಾಸ್‌ವರ್ಡ್ ಮರೆಮಾಡು</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>ಪಾಸ್‌ವರ್ಡ್ ತೋರಿಸು</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

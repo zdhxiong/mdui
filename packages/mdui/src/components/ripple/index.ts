@@ -193,6 +193,7 @@ export class Ripple extends MduiElement<RippleEventMap> {
         focused: this.focused,
         dragged: this.dragged,
       })}"
+      aria-hidden="true"
     ></div>`;
   }
 }

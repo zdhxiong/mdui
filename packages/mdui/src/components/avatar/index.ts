@@ -2,10 +2,12 @@ import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import { when } from 'lit/directives/when.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { AccessibleMixin } from '@mdui/shared/mixins/accessible.js';
 import '../icon.js';
 import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
@@ -25,7 +27,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-avatar')
-export class Avatar extends MduiElement<AvatarEventMap> {
+export class Avatar extends AccessibleMixin(MduiElement)<AvatarEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -57,27 +59,41 @@ export class Avatar extends MduiElement<AvatarEventMap> {
   @property({ reflect: true })
   public icon?: string;
 
-  /**
-   * 头像的替代文本描述
-   */
-  @property({ reflect: true })
-  public label?: string;
-
   private readonly hasSlotController = new HasSlotController(this, '[default]');
 
   protected override render(): TemplateResult {
-    return this.hasSlotController.test('[default]')
-      ? html`<slot></slot>`
-      : this.src
-        ? html`<img
-            part="image"
-            alt=${ifDefined(this.label)}
-            src=${this.src}
-            style=${styleMap({ objectFit: this.fit })}
-          />`
-        : this.icon
-          ? html`<mdui-icon part="icon" name=${this.icon}></mdui-icon>`
-          : nothingTemplate;
+    return html`<div
+        class="base"
+        role="img"
+        aria-label=${ifDefined(this._accessibleLabel)}
+        aria-describedby=${ifDefined(
+          this._accessibleDescription ? 'describedby' : undefined,
+        )}
+      >
+        ${this.hasSlotController.test('[default]')
+          ? html`<slot aria-hidden="true"></slot>`
+          : this.src
+            ? html`<img
+                part="image"
+                alt=""
+                src=${this.src}
+                style=${styleMap({ objectFit: this.fit })}
+              />`
+            : this.icon
+              ? html`<mdui-icon
+                  part="icon"
+                  name=${this.icon}
+                  aria-hidden="true"
+                ></mdui-icon>`
+              : nothingTemplate}
+      </div>
+      ${when(
+        this._accessibleDescription,
+        () =>
+          html`<div style="display: none" id="describedby">
+            ${this._accessibleDescription}
+          </div>`,
+      )}`;
   }
 }
 

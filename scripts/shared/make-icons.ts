@@ -57,18 +57,14 @@ const folderPathMap = new Map<Variant, string>(
 );
 
 // 图标组件模板
-const template = `import { LitElement } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
-import { style } from '@mdui/shared/icons/shared/style.js';
-import { svgTag } from '@mdui/shared/icons/shared/svg-tag.js';
-import type { TemplateResult, CSSResultGroup } from 'lit';
+const template = `import { customElement } from 'lit/decorators/custom-element.js';
+import { IconElement } from '@mdui/shared/icons/shared/icon-element.js';
+import type { TemplateResult } from 'lit';
 
 @customElement('TemplateTagName')
-export class TemplateClassName extends LitElement {
-  public static override styles: CSSResultGroup = style;
-
+export class TemplateClassName extends IconElement {
   protected override render(): TemplateResult {
-    return svgTag(
+    return this.svg(
       'TemplateSvgContent'
     );
   }

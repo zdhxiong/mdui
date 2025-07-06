@@ -22,6 +22,10 @@
     import '../../packages/mdui/components/icon.js';
     import '../../packages/icons/settings.js';
     import '../../packages/icons/settings--outlined.js';
+
+    document.querySelector('#check-click').addEventListener('click', function (event) {
+      console.log('click', event.target);
+    });
   </script>
 </head>
 
@@ -112,6 +116,14 @@
     <section>
       <h2>style</h2>
       <mdui-button-icon variant="filled" icon="settings--outlined" style="width: 60px; height: 60px; font-size: 32px;"></mdui-button-icon>
+    </section>
+
+    <section>
+      <h2>a11y</h2>
+      <mdui-button-icon icon="settings--outlined" accessible-label="label"></mdui-button-icon>
+      <mdui-button-icon icon="settings--outlined" accessible-description="description" selectable></mdui-button-icon>
+      <mdui-button-icon icon="settings--outlined" accessible-label="label" accessible-description="description" selectable selected></mdui-button-icon>
+      <mdui-button-icon icon="settings--outlined" id="check-click"></mdui-button-icon>
     </section>
 
     <h1>状态</h1>

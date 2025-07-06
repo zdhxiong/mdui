@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>Ləğv et</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>Təmizlə</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>Parolu gizlət</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>Parolu göstər</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

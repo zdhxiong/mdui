@@ -38,6 +38,10 @@
         this.loading = false;
       }, 2000);
     });
+
+    document.querySelector('#check-click').addEventListener('click', function (event) {
+      console.log('click', event.target);
+    });
   </script>
 </head>
 
@@ -115,6 +119,15 @@
       <h2>href</h2>
       <mdui-chip variant="assist" href="https://www.mdui.org" target="_blank">link</mdui-chip>
       <mdui-chip variant="assist" href="https://www.mdui.org" target="_blank" disabled>disabled</mdui-chip>
+    </section>
+
+    <section>
+      <h2>a11y</h2>
+      <mdui-chip variant="assist" accessible-label="label">chip</mdui-chip>
+      <mdui-chip variant="assist" selectable accessible-description="description">selectable</mdui-chip>
+      <mdui-chip variant="assist" deletable accessible-label="label" accessible-description="description">deletable</mdui-chip>
+      <mdui-chip variant="assist" href="https://www.mdui.org" accessible-label="label" accessible-description="description">link</mdui-chip>
+      <mdui-chip id="check-click">Check click</mdui-chip>
     </section>
 
     <h1>状态</h1>

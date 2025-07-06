@@ -30,7 +30,7 @@
         "mdui-top-app-bar"
       ]
     },
-    "ButtonBase": {
+    "AnchorMixin": {
       "properties": {
         "href": {
           "description": "链接的目标 URL。\n\n如果设置了此属性，组件内部将渲染为 `<a>` 元素，并可以使用链接相关的属性。"
@@ -65,18 +65,58 @@
             "search": "提供一个资源链接，可用于搜索当前文件及其相关页面",
             "tag": "提供一个适用于当前文档的标签（由给定地址识别）"
           }
-        },
+        }
+      },
+      "tagNames": [
+        "mdui-button-icon",
+        "mdui-card",
+        "mdui-list-item",
+        "mdui-menu-item",
+        "mdui-navigation-bar-item",
+        "mdui-navigation-rail-item"
+      ]
+    },
+    "FocusableMixin": {
+      "properties": {
         "autofocus": {
           "description": "是否在页面加载完成后自动获取焦点"
         },
         "tabIndex": {
           "description": "元素在使用 Tab 键切换焦点时的顺序"
-        },
+        }
+      },
+      "tagNames": [
+        "mdui-button-icon",
+        "mdui-card",
+        "mdui-checkbox",
+        "mdui-list-item",
+        "mdui-menu-item",
+        "mdui-navigation-bar-item",
+        "mdui-navigation-rail-item",
+        "mdui-radio",
+        "mdui-range-slider",
+        "mdui-select",
+        "mdui-slider",
+        "mdui-switch",
+        "mdui-tab",
+        "mdui-text-field"
+      ],
+      "methods": {
+        "click": "模拟鼠标点击元素",
+        "focus": "将焦点设置到当前元素。\n\n可以传入一个对象作为参数，该对象的属性包括：\n\n* `preventScroll`：默认情况下，元素获取焦点后，页面会滚动以将该元素滚动到视图中。如果不希望页面滚动，可以将此属性设置为 `true`。",
+        "blur": "移除当前元素的焦点"
+      }
+    },
+    "ButtonBase": {
+      "properties": {
         "disabled": {
           "description": "是否禁用"
         },
         "loading": {
           "description": "是否处于加载中状态"
+        },
+        "label": {
+          "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
         },
         "name": {
           "description": "按钮的名称，将与表单数据一起提交。\n\n**Note**：仅在未设置 `href` 属性时，此属性才有效。"
@@ -130,26 +170,7 @@
         },
         "validationMessage": {
           "description": "如果表单验证未通过，此属性将包含提示信息。如果验证通过，此属性将为空字符串"
-        }
-      },
-      "tagNames": [
-        "mdui-button-icon",
-        "mdui-button",
-        "mdui-chip",
-        "mdui-fab",
-        "mdui-segmented-button"
-      ],
-      "methods": {
-        "click": "模拟鼠标点击元素",
-        "focus": "将焦点设置到当前元素。\n\n可以传入一个对象作为参数，该对象的属性包括：\n\n* `preventScroll`：默认情况下，元素获取焦点后，页面会滚动以将该元素滚动到视图中。如果不希望页面滚动，可以将此属性设置为 `true`。",
-        "blur": "移除当前元素的焦点",
-        "checkValidity": "检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`",
-        "reportValidity": "检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`。\n\n如果验证未通过，还会在组件上显示验证失败的提示。",
-        "setCustomValidity": "设置自定义的错误提示文本。只要这个文本不为空，就表示字段未通过验证"
-      }
-    },
-    "AnchorMixin": {
-      "properties": {
+        },
         "href": {
           "description": "链接的目标 URL。\n\n如果设置了此属性，组件内部将渲染为 `<a>` 元素，并可以使用链接相关的属性。"
         },
@@ -183,18 +204,7 @@
             "search": "提供一个资源链接，可用于搜索当前文件及其相关页面",
             "tag": "提供一个适用于当前文档的标签（由给定地址识别）"
           }
-        }
-      },
-      "tagNames": [
-        "mdui-card",
-        "mdui-list-item",
-        "mdui-menu-item",
-        "mdui-navigation-bar-item",
-        "mdui-navigation-rail-item"
-      ]
-    },
-    "FocusableMixin": {
-      "properties": {
+        },
         "autofocus": {
           "description": "是否在页面加载完成后自动获取焦点"
         },
@@ -203,25 +213,39 @@
         }
       },
       "tagNames": [
-        "mdui-card",
-        "mdui-checkbox",
-        "mdui-list-item",
-        "mdui-menu-item",
-        "mdui-navigation-bar-item",
-        "mdui-navigation-rail-item",
-        "mdui-radio",
-        "mdui-range-slider",
-        "mdui-select",
-        "mdui-slider",
-        "mdui-switch",
-        "mdui-tab",
-        "mdui-text-field"
+        "mdui-button-icon",
+        "mdui-button",
+        "mdui-chip",
+        "mdui-fab",
+        "mdui-segmented-button"
       ],
       "methods": {
+        "checkValidity": "检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`",
+        "reportValidity": "检查表单字段是否通过验证。如果未通过，返回 `false` 并触发 `invalid` 事件；如果通过，返回 `true`。\n\n如果验证未通过，还会在组件上显示验证失败的提示。",
+        "setCustomValidity": "设置自定义的错误提示文本。只要这个文本不为空，就表示字段未通过验证",
         "click": "模拟鼠标点击元素",
         "focus": "将焦点设置到当前元素。\n\n可以传入一个对象作为参数，该对象的属性包括：\n\n* `preventScroll`：默认情况下，元素获取焦点后，页面会滚动以将该元素滚动到视图中。如果不希望页面滚动，可以将此属性设置为 `true`。",
         "blur": "移除当前元素的焦点"
       }
+    },
+    "AccessibleMixin": {
+      "properties": {
+        "accessibleLabel": {
+          "description": "组件的无障碍名称。它将应用到 [`aria-label`](https://developer.mozilla.org/zh-CN/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label)，但不会在界面上显示"
+        },
+        "accessibleLabelledby": {
+          "description": "页面中其他元素的 id（或多个 id），组件将使用对应元素的文本作为无障碍名称。等同于 [`aria-labelledby`](https://developer.mozilla.org/zh-CN/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label)"
+        },
+        "accessibleDescription": {
+          "description": "组件的无障碍描述。它将应用到 [`aria-description`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-description)，但不会在界面上显示\nTODO: aria-description 位于 WAI-ARIA 1.3 规范中，尚未正式发布。目前采用添加隐藏元素，并通过 aria-describedby 指向隐藏元素"
+        },
+        "accessibleDescribedby": {
+          "description": "页面中其他元素的 id（或多个 id），组件将使用对应元素的文本作为无障碍描述。等同于 [`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-describedby)"
+        }
+      },
+      "tagNames": [
+        "mdui-icon"
+      ]
     },
     "SliderBase": {
       "properties": {
@@ -290,7 +314,7 @@
         "description": "头像的 Material Icons 图标名"
       },
       "label": {
-        "description": "头像的替代文本描述"
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       }
     },
     "slots": {
@@ -485,6 +509,9 @@
       "required": {
         "description": "提交表单时，是否必须选中此复选框"
       },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
+      },
       "form": {
         "description": "关联的 `<form>` 元素。此属性值应为同一页面中的一个 `<form>` 元素的 `id`。\n\n如果未指定此属性，则该元素必须是 `<form>` 元素的子元素。通过此属性，你可以将元素放置在页面的任何位置，而不仅仅是 `<form>` 元素的子元素。"
       },
@@ -608,6 +635,9 @@
       },
       "value": {
         "description": "进度指示器的当前值。如果未指定该值，则显示为不确定状态"
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       }
     }
   },
@@ -673,6 +703,9 @@
       },
       "description": {
         "description": "标题下方的文本。也可以通过 `slot=\"description\"` 设置"
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       },
       "open": {
         "description": "是否打开对话框"
@@ -906,6 +939,9 @@
       },
       "value": {
         "description": "进度指示器的当前值。如果未指定该值，则处于不确定状态"
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       }
     },
     "cssParts": {
@@ -965,6 +1001,9 @@
           "center": "居中对齐",
           "end": "底部对齐"
         }
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       }
     },
     "events": {
@@ -999,6 +1038,11 @@
   },
   "mdui-list": {
     "summary": "列表组件。需配合 `<mdui-list-item>` 组件使用\n\n```html\n<mdui-list>\n..<mdui-list-subheader>Subheader</mdui-list-subheader>\n..<mdui-list-item>Item 1</mdui-list-item>\n..<mdui-list-item>Item 2</mdui-list-item>\n</mdui-list>\n```",
+    "properties": {
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
+      }
+    },
     "slots": {
       "": "`<mdui-list-item>` 元素"
     }
@@ -1305,6 +1349,9 @@
       "disabled": {
         "description": "是否禁用此组件"
       },
+      "label": {
+        "description": "用于描述单选框组的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
+      },
       "form": {
         "description": "关联的 `<form>` 元素。此属性值应为同一页面中的一个 `<form>` 元素的 `id`。\n\n如果未指定此属性，则该元素必须是 `<form>` 元素的子元素。通过此属性，你可以将元素放置在页面的任何位置，而不仅仅是 `<form>` 元素的子元素。"
       },
@@ -1358,6 +1405,9 @@
       },
       "checkedIcon": {
         "description": "选中状态的 Material Icons 图标名。也可以通过 `slot=\"checked-icon\"` 设置"
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       }
     },
     "events": {
@@ -1420,6 +1470,9 @@
       },
       "required": {
         "description": "提交表单时，是否必须选中"
+      },
+      "label": {
+        "description": "用于描述分段按钮组的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       },
       "form": {
         "description": "关联的 `<form>` 元素。此属性值应为同一页面中的一个 `<form>` 元素的 `id`。\n\n如果未指定此属性，则该元素必须是 `<form>` 元素的子元素。通过此属性，你可以将元素放置在页面的任何位置，而不仅仅是 `<form>` 元素的子元素。"
@@ -1625,6 +1678,9 @@
       },
       "defaultValue": {
         "description": "默认值。在重置表单时，将重置为该默认值。该属性只能通过 JavaScript 属性设置"
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       }
     },
     "events": {
@@ -1729,6 +1785,9 @@
       },
       "required": {
         "description": "提交表单时，是否必须选中此开关"
+      },
+      "label": {
+        "description": "用于描述组件的无障碍标签。它将应用到 `aria-label`，但不会在界面上显示"
       },
       "form": {
         "description": "关联的 `<form>` 元素。此属性值应为同一页面中的一个 `<form>` 元素的 `id`。\n\n如果未指定此属性，则该元素必须是 `<form>` 元素的子元素。通过此属性，你可以将元素放置在页面的任何位置，而不仅仅是 `<form>` 元素的子元素。"

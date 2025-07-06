@@ -1,6 +1,8 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { when } from 'lit/directives/when.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import '../icon.js';
@@ -95,13 +97,31 @@ export class Button extends ButtonBase<ButtonEventMap> {
             content: this.renderInner(),
           })
         : this.disabled || this.loading
-          ? html`<span part="button" class="button _a">
-              ${this.renderInner()}
-            </span>`
+          ? html`<span
+                part="button"
+                class="button _a"
+                role="link"
+                aria-disabled="true"
+                aria-label=${ifDefined(this._accessibleLabel)}
+                aria-describedby=${ifDefined(
+                  this._accessibleDescription ? 'describedby' : undefined,
+                )}
+              >
+                ${this.renderInner()}
+              </span>
+              ${when(
+                this._accessibleDescription,
+                () =>
+                  html`<div style="display: none" id="describedby">
+                    ${this._accessibleDescription}
+                  </div>`,
+              )}`
           : this.renderAnchor({
               className: 'button',
               part: 'button',
               content: this.renderInner(),
+              accessibleLabel: this._accessibleLabel,
+              accessibleDescription: this._accessibleDescription,
             })}`;
   }
 
@@ -110,7 +130,7 @@ export class Button extends ButtonBase<ButtonEventMap> {
       return this.renderLoading();
     }
 
-    return html`<slot name="icon" part="icon" class="icon">
+    return html`<slot name="icon" part="icon" class="icon" aria-hidden="true">
       ${this.icon
         ? html`<mdui-icon name=${this.icon}></mdui-icon>`
         : nothingTemplate}
@@ -122,7 +142,12 @@ export class Button extends ButtonBase<ButtonEventMap> {
   }
 
   private renderEndIcon(): TemplateResult {
-    return html`<slot name="end-icon" part="end-icon" class="end-icon">
+    return html`<slot
+      name="end-icon"
+      part="end-icon"
+      class="end-icon"
+      aria-hidden="true"
+    >
       ${this.endIcon
         ? html`<mdui-icon name=${this.endIcon}></mdui-icon>`
         : nothingTemplate}

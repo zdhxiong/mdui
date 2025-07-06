@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>Annulla</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>Cancella</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>Nascondi password</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>Mostra password</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

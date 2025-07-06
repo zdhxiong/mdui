@@ -1,185 +1,271 @@
 <!doctype html>
 <html lang="zh">
-
-<head>
-  <title>Slider</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-    rel="stylesheet">
-  <link
-    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-    rel="stylesheet">
-  <style>
-    body {
-      font-family: Roboto;
-    }
-  </style>
-  <script type="module">
-    import '../../packages/mdui/mdui.css';
-    import '../../packages/mdui/components/slider.js';
-    import '../../packages/mdui/components/range-slider.js';
-    import '../../packages/mdui/components/button.js';
-    import { $ } from '../../packages/jq/index.js';
-
-    await Promise.allSettled([
-      customElements.whenDefined('mdui-slider'),
-      customElements.whenDefined('mdui-range-slider')
-    ]);
-
-    // label 格式化
-    $('.label-formatter').each((_, slider) => {
-      slider.labelFormatter = (value) => {
-        return `${value}小时`
+  <head>
+    <title>Slider</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Roboto;
       }
-    });
+    </style>
+    <script type="module">
+      import '../../packages/mdui/mdui.css';
+      import '../../packages/mdui/components/slider.js';
+      import '../../packages/mdui/components/range-slider.js';
+      import '../../packages/mdui/components/button.js';
+      import { $ } from '../../packages/jq/index.js';
 
-    // 设置初始值
-    $('.range-slider-disabled').each(function () {
-      this.value = [20, 60];
-    });
-    $('.range-slider-default-value').each(function () {
-      this.value = [15, 54];
-    });
+      await Promise.allSettled([
+        customElements.whenDefined('mdui-slider'),
+        customElements.whenDefined('mdui-range-slider'),
+      ]);
 
-    // 验证
-    $('.invalid').on('change', function () {
-      if (this.value <= 50) {
-        this.setCustomValidity('值必须大于50');
-      } else {
-        this.setCustomValidity('');
-      }
-    });
+      // label 格式化
+      $('.label-formatter').each((_, slider) => {
+        slider.labelFormatter = (value) => {
+          return `${value}小时`;
+        };
+      });
 
-    // 范围验证
-    $('.invalid-range').on('change', function () {
-      if (this.value[0] <= 20 || this.value[1] >= 80) {
-        this.setCustomValidity('值必须大于20，且小于80');
-      } else {
-        this.setCustomValidity('');
-      }
-    });
+      // 设置初始值
+      $('.range-slider-disabled').each(function () {
+        this.value = [20, 60];
+      });
+      $('.range-slider-default-value').each(function () {
+        this.value = [15, 54];
+      });
 
-    // 阻止错误提示
-    $('.invalid-prevent').on('invalid', (e) => {
-      e.preventDefault();
-    });
+      // 验证
+      $('.invalid').on('change', function () {
+        if (this.value <= 50) {
+          this.setCustomValidity('值必须大于50');
+        } else {
+          this.setCustomValidity('');
+        }
+      });
 
-    $('#default-value').on({
-      input: (e) => { console.log('slider input event: ', e.target); },
-      change: (e) => { console.log('slider change event: ', e.target); },
-    });
-    $('#default-value-range').on({
-      input: (e) => { console.log('range-slider input event: ', e.target); },
-      change: (e) => { console.log('range-slider change event: ', e.target); },
-    });
-  </script>
-</head>
+      // 范围验证
+      $('.invalid-range').on('change', function () {
+        if (this.value[0] <= 20 || this.value[1] >= 80) {
+          this.setCustomValidity('值必须大于20，且小于80');
+        } else {
+          this.setCustomValidity('');
+        }
+      });
 
-<body>
-  <main>
-    <section>
-      <h2>normal</h2>
-      <mdui-slider></mdui-slider>
-      <mdui-range-slider></mdui-range-slider>
-      <div class="mdui-theme-dark">
+      // 阻止错误提示
+      $('.invalid-prevent').on('invalid', (e) => {
+        e.preventDefault();
+      });
+
+      $('#default-value').on({
+        input: (e) => {
+          console.log('slider input event: ', e.target);
+        },
+        change: (e) => {
+          console.log('slider change event: ', e.target);
+        },
+      });
+      $('#default-value-range').on({
+        input: (e) => {
+          console.log('range-slider input event: ', e.target);
+        },
+        change: (e) => {
+          console.log('range-slider change event: ', e.target);
+        },
+      });
+    </script>
+  </head>
+
+  <body>
+    <main>
+      <section>
+        <h2>normal</h2>
         <mdui-slider></mdui-slider>
         <mdui-range-slider></mdui-range-slider>
-      </div>
-    </section>
+        <div class="mdui-theme-dark">
+          <mdui-slider></mdui-slider>
+          <mdui-range-slider></mdui-range-slider>
+        </div>
+      </section>
 
-    <section>
-      <h2>no-ripple</h2>
-      <mdui-slider no-ripple></mdui-slider>
-      <mdui-range-slider no-ripple></mdui-range-slider>
-    </section>
+      <section>
+        <h2>no-ripple</h2>
+        <mdui-slider no-ripple></mdui-slider>
+        <mdui-range-slider no-ripple></mdui-range-slider>
+      </section>
 
-    <section>
-      <h2>min, max, step</h2>
-      <mdui-slider min="10" max="20" step="2"></mdui-slider>
-      <mdui-range-slider min="10" max="20" step="2"></mdui-range-slider>
-      <div class="mdui-theme-dark">
+      <section>
+        <h2>min, max, step</h2>
         <mdui-slider min="10" max="20" step="2"></mdui-slider>
         <mdui-range-slider min="10" max="20" step="2"></mdui-range-slider>
-      </div>
-    </section>
+        <div class="mdui-theme-dark">
+          <mdui-slider min="10" max="20" step="2"></mdui-slider>
+          <mdui-range-slider min="10" max="20" step="2"></mdui-range-slider>
+        </div>
+      </section>
 
-    <section>
-      <h2>disabled</h2>
-      <mdui-slider disabled value="50"></mdui-slider>
-      <mdui-slider disabled tickmarks value="50"></mdui-slider>
-      <mdui-range-slider disabled class="range-slider-disabled"></mdui-range-slider>
-      <mdui-range-slider disabled tickmarks class="range-slider-disabled"></mdui-range-slider>
-      <div class="mdui-theme-dark">
+      <section>
+        <h2>disabled</h2>
         <mdui-slider disabled value="50"></mdui-slider>
         <mdui-slider disabled tickmarks value="50"></mdui-slider>
-        <mdui-range-slider disabled class="range-slider-disabled"></mdui-range-slider>
-        <mdui-range-slider disabled tickmarks class="range-slider-disabled"></mdui-range-slider>
-      </div>
-    </section>
+        <mdui-range-slider
+          disabled
+          class="range-slider-disabled"
+        ></mdui-range-slider>
+        <mdui-range-slider
+          disabled
+          tickmarks
+          class="range-slider-disabled"
+        ></mdui-range-slider>
+        <div class="mdui-theme-dark">
+          <mdui-slider disabled value="50"></mdui-slider>
+          <mdui-slider disabled tickmarks value="50"></mdui-slider>
+          <mdui-range-slider
+            disabled
+            class="range-slider-disabled"
+          ></mdui-range-slider>
+          <mdui-range-slider
+            disabled
+            tickmarks
+            class="range-slider-disabled"
+          ></mdui-range-slider>
+        </div>
+      </section>
 
-    <section>
-      <h2>tickmarks</h2>
-      <mdui-slider min="0" max="10" tickmarks></mdui-slider>
-      <mdui-range-slider min="0" max="10" tickmarks></mdui-range-slider>
-      <div class="mdui-theme-dark">
+      <section>
+        <h2>tickmarks</h2>
         <mdui-slider min="0" max="10" tickmarks></mdui-slider>
         <mdui-range-slider min="0" max="10" tickmarks></mdui-range-slider>
-      </div>
-    </section>
+        <div class="mdui-theme-dark">
+          <mdui-slider min="0" max="10" tickmarks></mdui-slider>
+          <mdui-range-slider min="0" max="10" tickmarks></mdui-range-slider>
+        </div>
+      </section>
 
-    <section>
-      <h2>default value</h2>
-      <mdui-slider min="0" max="100" step="10" value="15" id="default-value"></mdui-slider>
-      <mdui-slider min="0" max="100" step="10" tickmarks value="15"></mdui-slider>
-      <mdui-range-slider min="0" max="100" step="10" class="range-slider-default-value" id="default-value-range"></mdui-range-slider>
-      <mdui-range-slider min="0" max="100" step="10" tickmarks class="range-slider-default-value"></mdui-range-slider>
-      <div class="mdui-theme-dark">
-        <mdui-slider min="0" max="100" step="10" value="15"></mdui-slider>
-        <mdui-slider min="0" max="100" step="10" tickmarks value="15"></mdui-slider>
-        <mdui-range-slider min="0" max="100" step="10" class="range-slider-default-value"></mdui-range-slider>
-        <mdui-range-slider min="0" max="100" step="10" tickmarks class="range-slider-default-value"></mdui-range-slider>
-      </div>
-    </section>
+      <section>
+        <h2>default value</h2>
+        <mdui-slider
+          min="0"
+          max="100"
+          step="10"
+          value="15"
+          id="default-value"
+        ></mdui-slider>
+        <mdui-slider
+          min="0"
+          max="100"
+          step="10"
+          tickmarks
+          value="15"
+        ></mdui-slider>
+        <mdui-range-slider
+          min="0"
+          max="100"
+          step="10"
+          class="range-slider-default-value"
+          id="default-value-range"
+        ></mdui-range-slider>
+        <mdui-range-slider
+          min="0"
+          max="100"
+          step="10"
+          tickmarks
+          class="range-slider-default-value"
+        ></mdui-range-slider>
+        <div class="mdui-theme-dark">
+          <mdui-slider min="0" max="100" step="10" value="15"></mdui-slider>
+          <mdui-slider
+            min="0"
+            max="100"
+            step="10"
+            tickmarks
+            value="15"
+          ></mdui-slider>
+          <mdui-range-slider
+            min="0"
+            max="100"
+            step="10"
+            class="range-slider-default-value"
+          ></mdui-range-slider>
+          <mdui-range-slider
+            min="0"
+            max="100"
+            step="10"
+            tickmarks
+            class="range-slider-default-value"
+          ></mdui-range-slider>
+        </div>
+      </section>
 
-    <section>
-      <h2>nolabel</h2>
-      <mdui-slider nolabel></mdui-slider>
-      <mdui-range-slider nolabel></mdui-range-slider>
-      <div class="mdui-theme-dark">
+      <section>
+        <h2>nolabel</h2>
         <mdui-slider nolabel></mdui-slider>
         <mdui-range-slider nolabel></mdui-range-slider>
-      </div>
-    </section>
+        <div class="mdui-theme-dark">
+          <mdui-slider nolabel></mdui-slider>
+          <mdui-range-slider nolabel></mdui-range-slider>
+        </div>
+      </section>
 
-    <section>
-      <h2>labelFormatter</h2>
-      <mdui-slider class="label-formatter"></mdui-slider>
-      <mdui-range-slider class="label-formatter"></mdui-range-slider>
-      <div class="mdui-theme-dark">
+      <section>
+        <h2>labelFormatter</h2>
         <mdui-slider class="label-formatter"></mdui-slider>
         <mdui-range-slider class="label-formatter"></mdui-range-slider>
-      </div>
-    </section>
-
-    <section>
-      <h2>invalid</h2>
-      <form>
-        <mdui-slider class="invalid"></mdui-slider>
-        <mdui-slider class="invalid invalid-prevent"></mdui-slider>
-        <mdui-range-slider class="invalid-range"></mdui-range-slider>
-        <mdui-range-slider class="invalid-range invalid-prevent"></mdui-range-slider>
         <div class="mdui-theme-dark">
+          <mdui-slider class="label-formatter"></mdui-slider>
+          <mdui-range-slider class="label-formatter"></mdui-range-slider>
+        </div>
+      </section>
+
+      <section>
+        <h2>invalid</h2>
+        <form>
           <mdui-slider class="invalid"></mdui-slider>
           <mdui-slider class="invalid invalid-prevent"></mdui-slider>
           <mdui-range-slider class="invalid-range"></mdui-range-slider>
-          <mdui-range-slider class="invalid-range invalid-prevent"></mdui-range-slider>
-        </div>
-        <br/>
-        <mdui-button type="submit">Submit</mdui-button>
-      </form>
-    </section>
-  </main>
-</body>
+          <mdui-range-slider
+            class="invalid-range invalid-prevent"
+          ></mdui-range-slider>
+          <div class="mdui-theme-dark">
+            <mdui-slider class="invalid"></mdui-slider>
+            <mdui-slider class="invalid invalid-prevent"></mdui-slider>
+            <mdui-range-slider class="invalid-range"></mdui-range-slider>
+            <mdui-range-slider
+              class="invalid-range invalid-prevent"
+            ></mdui-range-slider>
+          </div>
+          <br />
+          <mdui-button type="submit">Submit</mdui-button>
+        </form>
+      </section>
+
+      <section>
+        <h2>a11y</h2>
+        <mdui-slider
+          accessible-label="label"
+          accessible-description="description"
+        ></mdui-slider>
+        <mdui-slider
+          accessible-label="label"
+          accessible-description="description"
+          min="10"
+          max="20"
+          value="12"
+        ></mdui-slider>
+      </section>
+    </main>
+  </body>
 </html>

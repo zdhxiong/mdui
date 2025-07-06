@@ -123,6 +123,14 @@ export const toKebabCase = (string: string): string => {
 };
 
 /**
+ * 将布尔值转换为字符串 'true' 或 'false'
+ * @param value
+ */
+export const toBooleanString = (value: boolean): 'true' | 'false' => {
+  return value ? 'true' : 'false';
+};
+
+/**
  * 始终返回 false 的函数
  */
 export const returnFalse = (): false => {

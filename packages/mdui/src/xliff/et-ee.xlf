@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>Loobu</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>Tühjenda</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>Peida parool</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>Näita parooli</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

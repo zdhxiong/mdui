@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>გაუქმება</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>გასუფთავება</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>პაროლის დამალვა</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>პაროლის ჩვენება</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

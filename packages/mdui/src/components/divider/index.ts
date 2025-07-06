@@ -1,5 +1,7 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { $ } from '@mdui/jq/$.js';
+import '@mdui/jq/methods/attr.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
@@ -46,6 +48,15 @@ export class Divider extends MduiElement<DividerEventMap> {
     converter: booleanConverter,
   })
   public middle = false;
+
+  public override connectedCallback() {
+    super.connectedCallback();
+
+    $(this).attr({
+      role: 'separator',
+      'aria-orientation': this.vertical ? 'vertical' : 'horizontal',
+    });
+  }
 
   protected override render(): TemplateResult {
     return html``;

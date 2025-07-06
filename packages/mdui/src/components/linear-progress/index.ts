@@ -1,9 +1,12 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import { when } from 'lit/directives/when.js';
 import { isUndefined } from '@mdui/jq/shared/helper.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { AccessibleMixin } from '@mdui/shared/mixins/accessible.js';
 import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
@@ -19,7 +22,9 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-linear-progress')
-export class LinearProgress extends MduiElement<LinearProgressEventMap> {
+export class LinearProgress extends AccessibleMixin(
+  MduiElement,
+)<LinearProgressEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -36,20 +41,35 @@ export class LinearProgress extends MduiElement<LinearProgressEventMap> {
 
   protected override render(): TemplateResult {
     const isDeterminate = !isUndefined(this.value);
+    const className = isDeterminate ? 'determinate' : 'indeterminate';
 
-    if (isDeterminate) {
-      const value = this.value!;
-
-      return html`<div
-        part="indicator"
-        class="determinate"
-        style="${styleMap({
+    const value = this.value!;
+    const style = isDeterminate
+      ? {
           width: `${(value / Math.max(this.max ?? value, value)) * 100}%`,
-        })}"
-      ></div>`;
-    }
+        }
+      : {};
 
-    return html`<div part="indicator" class="indeterminate"></div>`;
+    return html`<div
+        part="indicator"
+        class=${className}
+        style=${styleMap(style)}
+        role="progressbar"
+        aria-label=${ifDefined(this._accessibleLabel)}
+        aria-describedby=${ifDefined(
+          this._accessibleDescription ? 'describedby' : undefined,
+        )}
+        aria-valuemin="0"
+        aria-valuemax=${this.max}
+        aria-valuenow=${ifDefined(isDeterminate ? value : undefined)}
+      ></div>
+      ${when(
+        this._accessibleDescription,
+        () =>
+          html`<div style="display: none" id="describedby">
+            ${this._accessibleDescription}
+          </div>`,
+      )}`;
   }
 }
 

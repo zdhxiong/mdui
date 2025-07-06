@@ -1,19 +1,22 @@
 import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { live } from 'lit/directives/live.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { when } from 'lit/directives/when.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
-import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import '@mdui/shared/icons/circle.js';
 import '@mdui/shared/icons/radio-button-unchecked.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { AccessibleMixin } from '@mdui/shared/mixins/accessible.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
 import { radioStyle } from './radio-style.js';
 import type { Ripple } from '../ripple/index.js';
-import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
+import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
@@ -40,8 +43,8 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart label - 文本内容
  */
 @customElement('mdui-radio')
-export class Radio extends RippleMixin(
-  FocusableMixin(MduiElement),
+export class Radio extends AccessibleMixin(
+  RippleMixin(FocusableMixin(MduiElement)),
 )<RadioEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, radioStyle];
 
@@ -83,6 +86,12 @@ export class Radio extends RippleMixin(
   @property({ reflect: true, attribute: 'checked-icon' })
   public checkedIcon?: string;
 
+  /**
+   * 是否必填，由 `<mdui-radio-group>` 组件控制该参数
+   */
+  @property({ attribute: false })
+  protected required = false;
+
   // 是否验证未通过。由 <mdui-radio-group> 控制该参数
   @state()
   protected invalid = false;
@@ -106,6 +115,7 @@ export class Radio extends RippleMixin(
   @state()
   protected isInitial = true;
 
+  private readonly inputRef: Ref<HTMLInputElement> = createRef();
   private readonly rippleRef: Ref<Ripple> = createRef();
 
   protected override get rippleElement() {
@@ -113,30 +123,19 @@ export class Radio extends RippleMixin(
   }
 
   protected override get rippleDisabled(): boolean {
-    return this.isDisabled();
+    return this.isDisabled;
   }
 
-  protected override get focusElement(): HTMLElement {
-    return this;
+  protected override get focusElement(): HTMLElement | undefined {
+    return this.inputRef.value;
   }
 
   protected override get focusDisabled(): boolean {
-    return this.isDisabled() || !this.focusable;
+    return this.isDisabled || !this.focusable;
   }
 
-  @watch('checked', true)
-  private onCheckedChange() {
-    this.emit('change');
-  }
-
-  protected override firstUpdated(_changedProperties: PropertyValues) {
-    super.firstUpdated(_changedProperties);
-
-    this.addEventListener('click', () => {
-      if (!this.isDisabled()) {
-        this.checked = true;
-      }
-    });
+  private get isDisabled(): boolean {
+    return this.disabled || this.groupDisabled;
   }
 
   protected override render(): TemplateResult {
@@ -145,7 +144,27 @@ export class Radio extends RippleMixin(
       initial: this.isInitial,
     });
 
-    return html`<i part="control" class=${className}>
+    return html`<input
+        ${ref(this.inputRef)}
+        id="input"
+        type="radio"
+        .disabled=${this.focusDisabled}
+        .checked=${live(this.checked)}
+        .required=${this.required}
+        @change=${this.onChange}
+        aria-label=${ifDefined(this._accessibleLabel)}
+        aria-describedby=${ifDefined(
+          this._accessibleDescription ? 'describedby' : undefined,
+        )}
+      />
+      ${when(
+        this._accessibleDescription,
+        () =>
+          html`<div style="display: none" id="describedby">
+            ${this._accessibleDescription}
+          </div>`,
+      )}
+      <i part="control" class=${className} aria-hidden="true">
         <mdui-ripple
           ${ref(this.rippleRef)}
           .noRipple=${this.noRipple}
@@ -167,11 +186,17 @@ export class Radio extends RippleMixin(
             : html`<mdui-icon-circle class="i"></mdui-icon-circle>`}
         </slot>
       </i>
-      <slot part="label" class="label ${className}"></slot>`;
+      <label part="label" class="label ${className}" for="input">
+        <slot></slot>
+      </label>`;
   }
 
-  private isDisabled(): boolean {
-    return this.disabled || this.groupDisabled;
+  /**
+   * input[type="radio"] 的 change 事件无法冒泡越过 shadow dom
+   */
+  private onChange() {
+    this.checked = this.inputRef.value!.checked;
+    this.emit('change');
   }
 }
 

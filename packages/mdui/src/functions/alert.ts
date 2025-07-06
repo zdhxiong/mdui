@@ -7,6 +7,7 @@ import '@mdui/jq/methods/text.js';
 import { isUndefined, returnTrue } from '@mdui/jq/shared/helper.js';
 import { onLocaleReady, offLocaleReady } from '../internal/localize.js';
 import { dialog as openDialog } from './dialog.js';
+import type { Button } from '../components/button.js';
 import type { Dialog } from '../components/dialog.js';
 
 interface Options {
@@ -39,6 +40,11 @@ interface Options {
    * 确认按钮的文本
    */
   confirmText?: string;
+
+  /**
+   * 确认按钮为 `<mdui-button>` 组件。可在该参数中设置 `<mdui-button>` 组件的属性。
+   */
+  confirmOptions?: Partial<Button>;
 
   /**
    * 队列名称。
@@ -90,7 +96,46 @@ interface Options {
    * @param dialog
    */
   onOverlayClick?: (dialog: Dialog) => void;
+
+  /**
+   * 组件的无障碍名称。它将应用到 [`aria-label`](https://developer.mozilla.org/zh-CN/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label)，但不会在界面上显示
+   */
+  accessibleLabel?: string;
+
+  /**
+   * 页面中其他元素的 id（或多个 id），组件将使用对应元素的文本作为无障碍名称。等同于 [`aria-labelledby`](https://developer.mozilla.org/zh-CN/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-labelledby)
+   */
+  accessibleLabelledby?: string;
+
+  /**
+   * 组件的无障碍描述。它将应用到 [`aria-description`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-description)，但不会在界面上显示
+   */
+  accessibleDescription?: string;
+
+  /**
+   * 页面中其他元素的 id（或多个 id），组件将使用对应元素的文本作为无障碍描述。等同于 [`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-describedby)
+   */
+  accessibleDescribedby?: string;
 }
+
+type AlertProperties = Pick<
+  Options,
+  | 'headline'
+  | 'description'
+  | 'icon'
+  | 'closeOnEsc'
+  | 'closeOnOverlayClick'
+  | 'queue'
+  | 'onOpen'
+  | 'onOpened'
+  | 'onClose'
+  | 'onClosed'
+  | 'onOverlayClick'
+  | 'accessibleLabel'
+  | 'accessibleLabelledby'
+  | 'accessibleDescription'
+  | 'accessibleDescribedby'
+>;
 
 const getConfirmText = () => {
   return msg('OK', {
@@ -105,28 +150,15 @@ const getConfirmText = () => {
  * @param options
  */
 export const alert = (options: Options): Promise<void> => {
-  const mergedOptions = Object.assign(
-    {},
-    {
-      confirmText: getConfirmText(),
-      onConfirm: returnTrue,
-    },
-    options,
-  );
-  const properties: (keyof Pick<
-    Options,
-    | 'headline'
-    | 'description'
-    | 'icon'
-    | 'closeOnEsc'
-    | 'closeOnOverlayClick'
-    | 'queue'
-    | 'onOpen'
-    | 'onOpened'
-    | 'onClose'
-    | 'onClosed'
-    | 'onOverlayClick'
-  >)[] = [
+  const mergedOptions = {
+    confirmText: getConfirmText(),
+    onConfirm: returnTrue,
+    ...Object.fromEntries(
+      Object.entries(options).filter(([, value]) => !isUndefined(value)),
+    ),
+  } as Required<Pick<Options, 'confirmText' | 'onConfirm'>> & Options;
+
+  const properties: (keyof AlertProperties)[] = [
     'headline',
     'description',
     'icon',
@@ -138,6 +170,10 @@ export const alert = (options: Options): Promise<void> => {
     'onClose',
     'onClosed',
     'onOverlayClick',
+    'accessibleLabel',
+    'accessibleLabelledby',
+    'accessibleDescription',
+    'accessibleDescribedby',
   ];
 
   return new Promise((resolve, reject) => {
@@ -148,6 +184,7 @@ export const alert = (options: Options): Promise<void> => {
           .filter((key) => !isUndefined(mergedOptions[key]))
           .map((key) => [key, mergedOptions[key]]),
       ),
+      accessibleRole: 'alertdialog',
       actions: [
         {
           text: mergedOptions.confirmText,
@@ -164,6 +201,7 @@ export const alert = (options: Options): Promise<void> => {
 
             return clickResult;
           },
+          options: mergedOptions.confirmOptions,
         },
       ],
     });

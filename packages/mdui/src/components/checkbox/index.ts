@@ -4,6 +4,7 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { when } from 'lit/directives/when.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
@@ -13,6 +14,7 @@ import '@mdui/shared/icons/check-box-outline-blank.js';
 import '@mdui/shared/icons/check-box.js';
 import '@mdui/shared/icons/indeterminate-check-box.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { AccessibleMixin } from '@mdui/shared/mixins/accessible.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
@@ -48,7 +50,9 @@ import type { Ref } from 'lit/directives/ref.js';
  */
 @customElement('mdui-checkbox')
 export class Checkbox
-  extends RippleMixin(FocusableMixin(MduiElement))<CheckboxEventMap>
+  extends AccessibleMixin(
+    RippleMixin(FocusableMixin(MduiElement)),
+  )<CheckboxEventMap>
   implements FormControl
 {
   public static override styles: CSSResultGroup = [componentStyle, style];
@@ -256,7 +260,7 @@ export class Checkbox
   }
 
   protected override render(): TemplateResult {
-    return html`<label class="${classMap({ invalid: this.invalid })}">
+    return html`<label class=${classMap({ invalid: this.invalid })}>
       <input
         ${ref(this.inputRef)}
         type="checkbox"
@@ -267,8 +271,19 @@ export class Checkbox
         .checked=${live(this.checked)}
         .required=${this.required}
         @change=${this.onChange}
+        aria-label=${ifDefined(this._accessibleLabel)}
+        aria-describedby=${ifDefined(
+          this._accessibleDescription ? 'describedby' : undefined,
+        )}
       />
-      <i part="control">
+      ${when(
+        this._accessibleDescription,
+        () =>
+          html`<div style="display: none" id="describedby">
+            ${this._accessibleDescription}
+          </div>`,
+      )}
+      <i part="control" aria-hidden="true">
         <mdui-ripple
           ${ref(this.rippleRef)}
           .noRipple=${this.noRipple}

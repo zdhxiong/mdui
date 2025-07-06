@@ -2,10 +2,12 @@ import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/closest.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
+import { toBooleanString } from '@mdui/jq/shared/helper.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
@@ -13,6 +15,7 @@ import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { AccessibleMixin } from '@mdui/shared/mixins/accessible.js';
 import { radioGroupStyle } from './radio-group-style.js';
 import type { Radio as RadioOriginal } from './radio.js';
 import type { FormControl } from '@mdui/jq/shared/form.js';
@@ -20,6 +23,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 type Radio = RadioOriginal & {
+  required: boolean;
   invalid: boolean;
   focusable: boolean;
   groupDisabled: boolean;
@@ -44,7 +48,7 @@ type Radio = RadioOriginal & {
  */
 @customElement('mdui-radio-group')
 export class RadioGroup
-  extends MduiElement<RadioGroupEventMap>
+  extends AccessibleMixin(MduiElement)<RadioGroupEventMap>
   implements FormControl
 {
   public static override styles: CSSResultGroup = [
@@ -141,7 +145,9 @@ export class RadioGroup
   @watch('value', true)
   private async onValueChange() {
     this.isInitial = false;
-    await this.definedController.whenDefined();
+    if (!this.definedController.isDefined()) {
+      await this.definedController.whenDefined();
+    }
 
     this.emit('input');
     this.emit('change');
@@ -221,25 +227,43 @@ export class RadioGroup
   }
 
   protected override render(): TemplateResult {
-    return html`<fieldset>
-      <input
-        ${ref(this.inputRef)}
-        type="radio"
-        class="input"
-        name=${ifDefined(this.name)}
-        value=${ifDefined(this.value)}
-        .checked=${!!this.value}
-        .required=${this.required}
-        tabindex="-1"
-        @keydown=${this.onKeyDown}
-      />
-      <slot
-        @click=${this.onClick}
-        @keydown=${this.onKeyDown}
-        @slotchange=${this.onSlotChange}
-        @change=${this.onCheckedChange}
-      ></slot>
-    </fieldset>`;
+    return html`<div
+        class="base"
+        role="radiogroup"
+        aria-label=${ifDefined(this._accessibleLabel)}
+        aria-describedby=${ifDefined(
+          this._accessibleDescription ? 'describedby' : undefined,
+        )}
+        aria-disabled=${toBooleanString(this.disabled)}
+        aria-required=${toBooleanString(this.required)}
+        aria-invalid=${toBooleanString(this.invalid)}
+      >
+        <input
+          ${ref(this.inputRef)}
+          type="radio"
+          class="input"
+          name=${ifDefined(this.name)}
+          value=${ifDefined(this.value)}
+          .checked=${!!this.value}
+          .required=${this.required}
+          tabindex="-1"
+          @keydown=${this.onKeyDown}
+          aria-hidden="true"
+        />
+        <slot
+          @click=${this.onClick}
+          @keydown=${this.onKeyDown}
+          @slotchange=${this.onSlotChange}
+          @change=${this.onCheckedChange}
+        ></slot>
+      </div>
+      ${when(
+        this._accessibleDescription,
+        () =>
+          html`<div style="display: none" id="describedby">
+            ${this._accessibleDescription}
+          </div>`,
+      )}`;
   }
 
   // 更新 mdui-radio 的 checked 后，需要更新可聚焦状态
@@ -271,9 +295,6 @@ export class RadioGroup
     }
 
     this.value = item.value;
-
-    await this.updateComplete;
-    item.focus();
   }
 
   /**
@@ -331,6 +352,7 @@ export class RadioGroup
   // 更新 <mdui-radio> 的状态
   private updateItems() {
     this.items.forEach((item) => {
+      item.required = this.required;
       item.checked = item.value === this.value;
       item.invalid = this.invalid;
       item.groupDisabled = this.disabled;

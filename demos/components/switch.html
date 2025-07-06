@@ -23,6 +23,11 @@
     import '../../packages/mdui/components/button.js';
     import { $ } from '../../packages/jq/index.js';
 
+    $('#check-event').on({
+      input: (e) => { console.log('input event: ', e.target); },
+      change: (e) => { console.log('change event: ', e.target); },
+    });
+
     $('.prevent-default').on('invalid', (e) => {
       e.preventDefault();
     });
@@ -33,7 +38,7 @@
   <main>
     <section>
       <h2>Switch</h2>
-      <mdui-switch></mdui-switch>
+      <mdui-switch id="check-event"></mdui-switch>
       <mdui-switch no-ripple></mdui-switch>
       <mdui-switch disabled></mdui-switch>
       <div class="mdui-theme-dark">
@@ -83,6 +88,13 @@
         <br />
         <mdui-button type="submit">Submit</mdui-button>
       </form>
+    </section>
+
+    <section>
+      <h2>a11y</h2>
+      <mdui-switch accessible-label="label"></mdui-switch>
+      <mdui-switch accessible-description="description" required></mdui-switch>
+      <mdui-switch accessible-label="label" accessible-description="description" checked></mdui-switch>
     </section>
 
   </main>

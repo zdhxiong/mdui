@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>Peruuta</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>Tyhjennä</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>Piilota salasana</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>Näytä salasana</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

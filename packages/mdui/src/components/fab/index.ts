@@ -1,6 +1,8 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
@@ -139,13 +141,31 @@ export class Fab extends ButtonBase<FabEventMap> {
             content: this.renderInner(),
           })
         : this.disabled || this.loading
-          ? html`<span part="button" class="_a ${className}">
-              ${this.renderInner()}
-            </span>`
+          ? html`<span
+                part="button"
+                class="_a ${className}"
+                role="link"
+                aria-disabled="true"
+                aria-label=${ifDefined(this._accessibleLabel)}
+                aria-describedby=${ifDefined(
+                  this._accessibleDescription ? 'describedby' : undefined,
+                )}
+              >
+                ${this.renderInner()}
+              </span>
+              ${when(
+                this._accessibleDescription,
+                () =>
+                  html`<div style="display: none" id="describedby">
+                    ${this._accessibleDescription}
+                  </div>`,
+              )}`
           : this.renderAnchor({
               className,
               part: 'button',
               content: this.renderInner(),
+              accessibleLabel: this._accessibleLabel,
+              accessibleDescription: this._accessibleDescription,
             })}`;
   }
 
@@ -158,7 +178,7 @@ export class Fab extends ButtonBase<FabEventMap> {
       return this.renderLoading();
     }
 
-    return html`<slot name="icon" part="icon" class="icon">
+    return html`<slot name="icon" part="icon" class="icon" aria-hidden="true">
       ${this.icon
         ? html`<mdui-icon name=${this.icon}></mdui-icon>`
         : nothingTemplate}

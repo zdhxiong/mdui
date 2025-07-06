@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>取消</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>清除</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>隐藏密码</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>显示密码</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

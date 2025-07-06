@@ -7,7 +7,7 @@ import { when } from 'lit/directives/when.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/find.js';
 import '@mdui/jq/methods/get.js';
-import { isString } from '@mdui/jq/shared/helper.js';
+import { isString, toBooleanString } from '@mdui/jq/shared/helper.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { DefinedController } from '@mdui/shared/controllers/defined.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
@@ -16,6 +16,7 @@ import { watch } from '@mdui/shared/decorators/watch.js';
 import { arraysEqualIgnoreOrder } from '@mdui/shared/helpers/array.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { AccessibleMixin } from '@mdui/shared/mixins/accessible.js';
 import { segmentedButtonGroupStyle } from './segmented-button-group-style.js';
 import type { SegmentedButton as SegmentedButtonOriginal } from './segmented-button.js';
 import type { FormControl } from '@mdui/jq/shared/form.js';
@@ -23,9 +24,12 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 type SegmentedButton = SegmentedButtonOriginal & {
-  selected: boolean;
+  selects?: 'single' | 'multiple';
+  required: boolean;
   invalid: boolean;
   groupDisabled: boolean;
+  selectedKeys: number[];
+  selected: boolean;
   readonly key: number;
 };
 
@@ -49,7 +53,7 @@ type SegmentedButton = SegmentedButtonOriginal & {
  */
 @customElement('mdui-segmented-button-group')
 export class SegmentedButtonGroup
-  extends MduiElement<SegmentedButtonGroupEventMap>
+  extends AccessibleMixin(MduiElement)<SegmentedButtonGroupEventMap>
   implements FormControl
 {
   public static override styles: CSSResultGroup = [
@@ -341,39 +345,78 @@ export class SegmentedButtonGroup
     this.invalid = !this.inputRef.value!.checkValidity();
   }
 
+  /**
+   * Accessibility
+   *
+   * 单选：
+   * role="radiogroup" aria-disabled="true" aria-required="true"
+   *   => role="radio" aria-checked="true" aria-invalid="true"
+   *
+   * 多选：
+   * role="group" aria-disabled="true"
+   *   => role="checkbox" aria-checked="true" aria-required="true" aria-invalid="true"
+   *
+   * 不可选：
+   * role="group" aria-disabled="true"
+   * @protected
+   */
   protected override render(): TemplateResult {
-    return html`${when(
-        this.isSelectable && this.isSingle,
+    return html`<div
+        class="group"
+        role=${this.isSingle ? 'radiogroup' : 'group'}
+        aria-label=${ifDefined(this._accessibleLabel)}
+        aria-describedby=${ifDefined(
+          this._accessibleDescription ? 'describedby' : undefined,
+        )}
+        aria-disabled=${toBooleanString(this.disabled)}
+        aria-required=${ifDefined(
+          this.isSingle ? toBooleanString(this.required) : undefined,
+        )}
+      >
+        ${when(
+          this.isSelectable && this.isSingle,
+          () =>
+            html`<input
+              ${ref(this.inputRef)}
+              type="radio"
+              name=${ifDefined(this.name)}
+              value="1"
+              .disabled=${this.disabled}
+              .required=${this.required}
+              .checked=${!!this.value}
+              tabindex="-1"
+              @keydown=${this.onInputKeyDown}
+              aria-hidden="true"
+            />`,
+        )}
+        ${when(
+          this.isSelectable && this.isMultiple,
+          () =>
+            html`<select
+              ${ref(this.inputRef)}
+              name=${ifDefined(this.name)}
+              .disabled=${this.disabled}
+              .required=${this.required}
+              multiple
+              tabindex="-1"
+              @keydown=${this.onInputKeyDown}
+              aria-hidden="true"
+            >
+              ${map(
+                this.value,
+                (value) => html`<option selected value=${value}></option>`,
+              )}
+            </select>`,
+        )}
+        <slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>
+      </div>
+      ${when(
+        this._accessibleDescription,
         () =>
-          html`<input
-            ${ref(this.inputRef)}
-            type="radio"
-            name=${ifDefined(this.name)}
-            value="1"
-            .disabled=${this.disabled}
-            .required=${this.required}
-            .checked=${!!this.value}
-            tabindex="-1"
-            @keydown=${this.onInputKeyDown}
-          />`,
-      )}${when(
-        this.isSelectable && this.isMultiple,
-        () =>
-          html`<select
-            ${ref(this.inputRef)}
-            name=${ifDefined(this.name)}
-            .disabled=${this.disabled}
-            .required=${this.required}
-            multiple
-            tabindex="-1"
-            @keydown=${this.onInputKeyDown}
-          >
-            ${map(
-              this.value,
-              (value) => html`<option selected value=${value}></option>`,
-            )}
-          </select>`,
-      )}<slot @slotchange=${this.onSlotChange} @click=${this.onClick}></slot>`;
+          html`<div style="display: none" id="describedby">
+            ${this._accessibleDescription}
+          </div>`,
+      )}`;
   }
 
   // 切换一个元素的选中状态
@@ -475,8 +518,11 @@ export class SegmentedButtonGroup
     const items = this.items;
 
     items.forEach((item, index) => {
+      item.selects = this.selects;
+      item.required = this.required;
       item.invalid = this.invalid;
       item.groupDisabled = this.disabled;
+      item.selectedKeys = this.selectedKeys;
       item.selected = this.selectedKeys.includes(item.key);
 
       if (slotChange) {

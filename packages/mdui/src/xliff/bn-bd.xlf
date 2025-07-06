@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>বাতিল করুন</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>পরিষ্কার করুন</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>পাসওয়ার্ড লুকান</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>পাসওয়ার্ড দেখান</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

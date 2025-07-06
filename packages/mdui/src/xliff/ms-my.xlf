@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>Batal</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>Kosongkan</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>Sembunyikan kata laluan</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>Tunjuk kata laluan</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

@@ -393,12 +393,6 @@ export class TextField
   public autocomplete?: string;
 
   /**
-   * `input` 元素的 `aria-label` 属性
-   */
-  @property({ reflect: true })
-  public ariaLabel?: string;
-
-  /**
    * `input` 元素的 `enterkeyhint` 属性，用于定制虚拟键盘上的 Enter 键的显示文本或图标。具体显示效果取决于用户使用的设备和语言。可选值包括：
    *
    * * `enter`：插入新行
@@ -910,7 +904,9 @@ export class TextField
 
   private renderLabel(): TemplateResult {
     return this.label
-      ? html`<label part="label" class="label">${this.label}</label>`
+      ? html`<label part="label" class="label" for="input"
+          >${this.label}</label
+        >`
       : nothingTemplate;
   }
 
@@ -953,7 +949,10 @@ export class TextField
           class="action"
           @click=${this.onClear}
         >
-          <mdui-button-icon tabindex="-1">
+          <mdui-button-icon
+            tabindex="-1"
+            label=${msg('Clear', { id: 'components.textField.clear' })}
+          >
             <slot name="clear-icon" part="clear-icon">
               ${this.clearIcon
                 ? html`<mdui-icon name=${this.clearIcon} class="i"></mdui-icon>`
@@ -978,7 +977,16 @@ export class TextField
           class="action"
           @click=${this.onTogglePassword}
         >
-          <mdui-button-icon tabindex="-1">
+          <mdui-button-icon
+            tabindex="-1"
+            label=${this.isPasswordVisible
+              ? msg('Hide password', {
+                  id: 'components.textField.hidePassword',
+                })
+              : msg('Show password', {
+                  id: 'components.textField.showPassword',
+                })}
+          >
             ${this.isPasswordVisible
               ? html`<slot name="show-password-icon" part="show-password-icon">
                   ${this.showPasswordIcon
@@ -1010,6 +1018,7 @@ export class TextField
       ${ref(this.inputRef)}
       part="input"
       class="input ${classMap({ 'hide-input': hasInputSlot })}"
+      id="input"
       type=${this.type === 'password' && this.isPasswordVisible
         ? 'text'
         : this.type}
@@ -1031,8 +1040,7 @@ export class TextField
       autocapitalize=${ifDefined(
         this.type === 'password' ? 'off' : this.autocapitalize,
       )}
-      autocomplete=${this.autocomplete}
-      aria-label=${ifDefined(this.ariaLabel)}
+      autocomplete=${ifDefined(this.autocomplete)}
       autocorrect=${ifDefined(
         this.type === 'password' ? 'off' : this.autocorrect,
       )}
@@ -1044,6 +1052,8 @@ export class TextField
       @input=${this.onInput}
       @invalid=${this.onInvalid}
       @keydown=${this.onKeyDown}
+      aria-describedby="helper"
+      aria-errormessage="error"
     />`;
   }
 
@@ -1052,6 +1062,7 @@ export class TextField
       ${ref(this.inputRef)}
       part="input"
       class="input ${classMap({ 'hide-input': hasInputSlot })}"
+      id="input"
       name=${ifDefined(this.name)}
       .value=${live(this.value)}
       placeholder=${ifDefined(
@@ -1075,6 +1086,8 @@ export class TextField
       @invalid=${this.onInvalid}
       @keydown=${this.onKeyDown}
       @keyup=${this.onTextAreaKeyUp}
+      aria-describedby="helper"
+      aria-errormessage="error"
     ></textarea>`;
   }
 
@@ -1084,11 +1097,11 @@ export class TextField
    */
   private renderHelper(hasError: boolean, hasHelper: boolean): TemplateResult {
     return hasError
-      ? html`<div part="error" class="error">
+      ? html`<div part="error" class="error" id="error">
           ${this.error || this.inputRef.value!.validationMessage}
         </div>`
       : hasHelper
-        ? html`<slot name="helper" part="helper" class="helper">
+        ? html`<slot name="helper" part="helper" class="helper" id="helper">
             ${this.helper}
           </slot>`
         : // 右边有 counter，需要占位

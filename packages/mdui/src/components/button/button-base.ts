@@ -1,12 +1,15 @@
 import { html } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
+import { isUndefined, toBooleanString } from '@mdui/jq/shared/helper.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { FormController } from '@mdui/shared/controllers/form.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { AccessibleMixin } from '@mdui/shared/mixins/accessible.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '../circular-progress.js';
@@ -20,10 +23,15 @@ type RenderButtonOptions = {
   part?: string; // csspart 名称
   content?: TemplateResult | TemplateResult[];
   tabindex?: number;
+  role?: 'radio' | 'checkbox';
+  ariaPressed?: boolean;
+  ariaChecked?: boolean;
+  ariaRequired?: boolean;
+  ariaInvalid?: boolean;
 };
 
-export class ButtonBase<E> extends AnchorMixin(
-  RippleMixin(FocusableMixin(MduiElement)),
+export class ButtonBase<E> extends AccessibleMixin(
+  AnchorMixin(RippleMixin(FocusableMixin(MduiElement))),
 )<E> {
   public static override styles: CSSResultGroup = [
     componentStyle,
@@ -280,7 +288,10 @@ export class ButtonBase<E> extends AnchorMixin(
 
   protected renderLoading(): TemplateResult {
     return this.loading
-      ? html`<mdui-circular-progress part="loading"></mdui-circular-progress>`
+      ? html`<mdui-circular-progress
+          part="loading"
+          aria-hidden="true"
+        ></mdui-circular-progress>`
       : nothingTemplate;
   }
 
@@ -289,15 +300,44 @@ export class ButtonBase<E> extends AnchorMixin(
     className,
     part,
     content = html`<slot></slot>`,
+    role,
+    ariaPressed,
+    ariaChecked,
+    ariaRequired,
+    ariaInvalid,
   }: RenderButtonOptions): TemplateResult {
     return html`<button
-      id=${ifDefined(id)}
-      class=${cc(['_button', className])}
-      part=${ifDefined(part)}
-      ?disabled=${this.rippleDisabled || this.focusDisabled}
-    >
-      ${content}
-    </button>`;
+        id=${ifDefined(id)}
+        class=${cc(['_button', className])}
+        part=${ifDefined(part)}
+        ?disabled=${this.rippleDisabled || this.focusDisabled}
+        role=${ifDefined(role)}
+        aria-label=${ifDefined(this._accessibleLabel)}
+        aria-describedby=${ifDefined(
+          this._accessibleDescription ? 'describedby' : undefined,
+        )}
+        aria-pressed=${ifDefined(
+          isUndefined(ariaPressed) ? undefined : toBooleanString(ariaPressed),
+        )}
+        aria-checked=${ifDefined(
+          isUndefined(ariaChecked) ? undefined : toBooleanString(ariaChecked),
+        )}
+        aria-required=${ifDefined(
+          isUndefined(ariaRequired) ? undefined : toBooleanString(ariaRequired),
+        )}
+        aria-invalid=${ifDefined(
+          isUndefined(ariaInvalid) ? undefined : toBooleanString(ariaInvalid),
+        )}
+      >
+        ${content}
+      </button>
+      ${when(
+        this._accessibleDescription,
+        () =>
+          html`<div style="display: none" id="describedby">
+            ${this._accessibleDescription}
+          </div>`,
+      )}`;
   }
 
   protected isButton(): boolean {

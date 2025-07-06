@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>لغو</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>پاک کردن</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>پنهان کردن رمز عبور</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>نمایش رمز عبور</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

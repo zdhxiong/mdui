@@ -5,6 +5,7 @@ import {
   queryAssignedElements,
 } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
@@ -18,6 +19,7 @@ import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { lockScreen, unlockScreen } from '@mdui/shared/helpers/scroll.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { AccessibleMixin } from '@mdui/shared/mixins/accessible.js';
 import { offLocaleReady } from '../../internal/localize.js';
 import '../icon.js';
 import { style } from './style.js';
@@ -58,7 +60,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @cssprop --z-index - 组件的 CSS `z-index` 值
  */
 @customElement('mdui-dialog')
-export class Dialog extends MduiElement<DialogEventMap> {
+export class Dialog extends AccessibleMixin(MduiElement)<DialogEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -131,6 +133,12 @@ export class Dialog extends MduiElement<DialogEventMap> {
     attribute: 'stacked-actions',
   })
   public stackedActions = false;
+
+  /**
+   * 组件的无障碍角色。如果是警告对话框，则需要设置为 `alertdialog`；否则默认为普通对话框 `dialog`。
+   */
+  @property({ reflect: true, attribute: 'accessible-role' })
+  public accessibleRole?: 'alertdialog' | 'dialog';
 
   /**
    * 是否可拖拽移动位置
@@ -249,14 +257,15 @@ export class Dialog extends MduiElement<DialogEventMap> {
 
       await stopAnimation();
 
-      // 设置聚焦
+      // 设置聚焦。优先聚焦到 autofocus 元素，其次聚焦到对话框中第一个可聚焦元素，否则聚焦到 dialog
       requestAnimationFrame(() => {
         const autoFocusTarget = this.querySelector(
           '[autofocus]',
         ) as HTMLInputElement;
+
         if (autoFocusTarget) {
           autoFocusTarget.focus({ preventScroll: true });
-        } else {
+        } else if (!this.modalHelper.checkFocus()) {
           this.panelRef.value!.focus({ preventScroll: true });
         }
       });
@@ -411,7 +420,24 @@ export class Dialog extends MduiElement<DialogEventMap> {
           'has-description': hasDescription,
           'has-default': hasDefaultSlot,
         })}"
-        tabindex="0"
+        tabindex="-1"
+        role=${this.accessibleRole || 'dialog'}
+        aria-label=${ifDefined(this._accessibleLabel)}
+        aria-labelledby=${ifDefined(
+          this._accessibleLabel
+            ? undefined
+            : hasHeadline
+              ? 'headline'
+              : undefined,
+        )}
+        aria-describedby=${ifDefined(
+          this._accessibleDescription
+            ? 'describedby'
+            : hasDescription
+              ? 'description'
+              : undefined,
+        )}
+        aria-modal="true"
       >
         ${when(
           hasHeader,
@@ -424,7 +450,12 @@ export class Dialog extends MduiElement<DialogEventMap> {
         ${when(
           hasBody,
           () =>
-            html`<div ${ref(this.bodyRef)} part="body" class="body">
+            html`<div
+              ${ref(this.bodyRef)}
+              part="body"
+              class="body"
+              tabindex="-1"
+            >
               ${when(hasDescription, () => this.renderDescription())}
               <slot></slot>
             </div>`,
@@ -433,7 +464,14 @@ export class Dialog extends MduiElement<DialogEventMap> {
           hasActionSlot,
           () => html`<slot name="action" part="action" class="action"></slot>`,
         )}
-      </div>`;
+      </div>
+      ${when(
+        this._accessibleDescription,
+        () =>
+          html`<div style="display: none" id="describedby">
+            ${this._accessibleDescription}
+          </div>`,
+      )}`;
   }
 
   private onOverlayClick() {
@@ -454,13 +492,23 @@ export class Dialog extends MduiElement<DialogEventMap> {
   }
 
   private renderHeadline(): TemplateResult {
-    return html`<slot name="headline" part="headline" class="headline">
+    return html`<slot
+      name="headline"
+      part="headline"
+      class="headline"
+      id="headline"
+    >
       ${this.headline}
     </slot>`;
   }
 
   private renderDescription(): TemplateResult {
-    return html`<slot name="description" part="description" class="description">
+    return html`<slot
+      name="description"
+      part="description"
+      class="description"
+      id="description"
+    >
       ${this.description}
     </slot>`;
   }

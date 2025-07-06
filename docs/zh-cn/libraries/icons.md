@@ -23,3 +23,9 @@ import '@mdui/icons/search.js';
 ```html
 <mdui-icon-search></mdui-icon-search>
 ```
+
+可以使用 `label` 属性为图标添加无障碍描述文本：
+
+```html
+<mdui-icon-search label="搜索"></mdui-icon-search>
+```

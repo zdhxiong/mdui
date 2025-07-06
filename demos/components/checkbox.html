@@ -22,9 +22,18 @@
     import '../../packages/mdui/components/button.js';
     import { $ } from '../../packages/jq/index.js';
 
+    $('#check-event').on({
+      input: (e) => { console.log('input event: ', e.target); },
+      change: (e) => { console.log('change event: ', e.target); },
+    });
+
     // 隐藏默认错误提示
     $('.prevent-default').on('invalid', function (e) {
       e.preventDefault();
+    });
+
+    document.querySelector('#check-click').addEventListener('click', function (event) {
+      console.log('click', event.target);
     });
   </script>
 </head>
@@ -37,6 +46,7 @@
       <mdui-checkbox no-ripple>no-ripple</mdui-checkbox>
       <mdui-checkbox disabled></mdui-checkbox>
       <mdui-checkbox disabled>Checkbox</mdui-checkbox>
+      <mdui-checkbox id="check-event">Check event</mdui-checkbox>
       <div class="mdui-theme-dark">
         <mdui-checkbox></mdui-checkbox>
         <mdui-checkbox>Checkbox</mdui-checkbox>
@@ -124,6 +134,18 @@
     <section>
       <h2>长文本自动换行</h2>
       <mdui-checkbox>长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本长文本</mdui-checkbox>
+    </section>
+
+    <section>
+      <h2>a11y</h2>
+      <mdui-checkbox accessible-label="label">Checkbox</mdui-checkbox>
+      <mdui-checkbox accessible-description="description">Checkbox</mdui-checkbox>
+      <mdui-checkbox accessible-label="label" accessible-description="description">Checkbox</mdui-checkbox>
+      <mdui-checkbox accessible-label="label" disabled>Disabled</mdui-checkbox>
+      <mdui-checkbox accessible-label="label" checked>Checked</mdui-checkbox>
+      <mdui-checkbox accessible-label="label" indeterminate>Indeterminate</mdui-checkbox>
+      <mdui-checkbox accessible-label="label" required>Required</mdui-checkbox>
+      <mdui-checkbox id="check-click">Check click</mdui-checkbox>
     </section>
 
   </main>

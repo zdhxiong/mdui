@@ -30,6 +30,10 @@
         this.loading = false;
       }, 2000);
     });
+
+    document.querySelector('#check-click').addEventListener('click', function (event) {
+      console.log('click', event.target);
+    });
   </script>
 </head>
 
@@ -171,6 +175,14 @@
         }
       </style>
       <mdui-fab icon="edit" extended class="custom2">Extended FAB</mdui-fab>
+    </section>
+
+    <section>
+      <h2>a11y</h2>
+      <mdui-fab icon="edit" accessible-label="label"></mdui-fab>
+      <mdui-fab icon="edit" extended accessible-description="description">Extended FAB</mdui-fab>
+      <mdui-fab icon="edit" href="https://www.mdui.org" accessible-label="label" accessible-description="description">link</mdui-fab>
+      <mdui-fab icon="edit" id="check-click">Check click</mdui-fab>
     </section>
 
     <h1>状态</h1>

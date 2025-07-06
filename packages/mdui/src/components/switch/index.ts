@@ -4,6 +4,8 @@ import { classMap } from 'lit/directives/class-map.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { when } from 'lit/directives/when.js';
+import { toBooleanString } from '@mdui/jq/shared/helper.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
@@ -13,6 +15,7 @@ import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import '@mdui/shared/icons/check.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { AccessibleMixin } from '@mdui/shared/mixins/accessible.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import '../icon.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
@@ -48,7 +51,9 @@ import type { Ref } from 'lit/directives/ref.js';
  */
 @customElement('mdui-switch')
 export class Switch
-  extends RippleMixin(FocusableMixin(MduiElement))<SwitchEventMap>
+  extends AccessibleMixin(
+    RippleMixin(FocusableMixin(MduiElement)),
+  )<SwitchEventMap>
   implements FormControl
 {
   public static override styles: CSSResultGroup = [componentStyle, style];
@@ -261,8 +266,21 @@ export class Switch
         .checked=${live(this.checked)}
         .required=${this.required}
         @change=${this.onChange}
+        role="switch"
+        aria-checked=${toBooleanString(this.checked)}
+        aria-label=${ifDefined(this._accessibleLabel)}
+        aria-describedby=${ifDefined(
+          this._accessibleDescription ? 'describedby' : undefined,
+        )}
       />
-      <div part="track" class="track">
+      ${when(
+        this._accessibleDescription,
+        () =>
+          html`<div style="display: none" id="describedby">
+            ${this._accessibleDescription}
+          </div>`,
+      )}
+      <div part="track" class="track" aria-hidden="true">
         <div part="thumb" class="thumb">
           <mdui-ripple
             ${ref(this.rippleRef)}

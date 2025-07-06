@@ -23,3 +23,9 @@ Then, you can utilize the corresponding icon component in your HTML:
 ```html
 <mdui-icon-search></mdui-icon-search>
 ```
+
+You can use the `label` property to add an accessible description for assistive devices:
+
+```html
+<mdui-icon-search label="搜索"></mdui-icon-search>
+```

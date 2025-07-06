@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>ยกเลิก</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>ล้าง</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>ซ่อนรหัสผ่าน</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>แสดงรหัสผ่าน</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

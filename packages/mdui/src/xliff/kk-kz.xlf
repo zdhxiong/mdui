@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>Болдырмау</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>Тазалау</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>Құпия сөзді жасыру</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>Құпия сөзді көрсету</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

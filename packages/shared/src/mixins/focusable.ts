@@ -10,7 +10,8 @@ import { booleanConverter } from '../helpers/decorator.js';
 import type { Constructor } from '@lit/reactive-element/decorators/base.js';
 import type { PropertyValues, LitElement } from 'lit';
 
-let isClick = true;
+// 检测是否通过鼠标点击获得焦点，不是通过鼠标点击获得的焦点，需要添加 focus-visible 样式
+let isClick = false;
 const document = getDocument();
 
 document.addEventListener('pointerdown', () => {
@@ -171,6 +172,9 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
     public override connectedCallback(): void {
       super.connectedCallback();
 
+      this.onFocus = this.onFocus.bind(this);
+      this.onBlur = this.onBlur.bind(this);
+
       this.updateComplete.then(() => {
         requestAnimationFrame(() => {
           this.manageAutoFocus();
@@ -205,10 +209,21 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
         return;
       }
 
+      isClick = false;
+
       if (this.focusElement !== this) {
         this.focusElement.focus(options);
       } else {
         HTMLElement.prototype.focus.apply(this, [options]);
+      }
+
+      this.onFocus();
+
+      // 如果存在 ripple，为 ripple 添加 focused 样式
+      // @ts-ignore
+      if (this.rippleElement) {
+        // @ts-ignore
+        this.startFocus();
       }
     }
 
@@ -221,19 +236,15 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
       } else {
         HTMLElement.prototype.blur.apply(this);
       }
+
+      this.onBlur();
     }
 
     protected override firstUpdated(changedProperties: PropertyValues): void {
       super.firstUpdated(changedProperties);
 
-      this.focusElement!.addEventListener('focus', () => {
-        this.focused = true;
-        this.focusVisible = !isClick;
-      });
-      this.focusElement!.addEventListener('blur', () => {
-        this.focused = false;
-        this.focusVisible = false;
-      });
+      this.focusElement!.addEventListener('focus', this.onFocus);
+      this.focusElement!.addEventListener('blur', this.onBlur);
     }
 
     protected override update(changedProperties: PropertyValues): void {
@@ -289,6 +300,16 @@ export const FocusableMixin = <T extends Constructor<LitElement>>(
         );
         this.focusElement!.focus();
       }
+    }
+
+    private onFocus(): void {
+      this.focused = true;
+      this.focusVisible = !isClick;
+    }
+
+    private onBlur(): void {
+      this.focused = false;
+      this.focusVisible = false;
     }
   }
 

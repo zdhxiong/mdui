@@ -1,9 +1,12 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { when } from 'lit/directives/when.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { AccessibleMixin } from '@mdui/shared/mixins/accessible.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { RippleMixin } from '../ripple/ripple-mixin.js';
@@ -27,8 +30,8 @@ import type { Ref } from 'lit/directives/ref.js';
  * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-card')
-export class Card extends AnchorMixin(
-  RippleMixin(FocusableMixin(MduiElement)),
+export class Card extends AccessibleMixin(
+  AnchorMixin(RippleMixin(FocusableMixin(MduiElement))),
 )<CardEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
@@ -76,9 +79,7 @@ export class Card extends AnchorMixin(
   }
 
   protected override get focusElement(): HTMLElement | null {
-    return this.href && !this.disabled
-      ? this.renderRoot.querySelector('._a')
-      : this;
+    return this.renderRoot.querySelector('.base');
   }
 
   protected override get focusDisabled(): boolean {
@@ -89,13 +90,53 @@ export class Card extends AnchorMixin(
     return html`<mdui-ripple
         ${ref(this.rippleRef)}
         .noRipple=${this.noRipple}
-      ></mdui-ripple
-      >${this.href && !this.disabled
-        ? this.renderAnchor({
-            className: 'link',
-            content: html`<slot></slot>`,
-          })
-        : html`<slot></slot>`}`;
+      ></mdui-ripple>
+      ${this.href
+        ? this.disabled
+          ? html`<div
+                class="base"
+                role="link"
+                aria-disabled="true"
+                aria-label=${ifDefined(this._accessibleLabel)}
+                aria-describedby=${ifDefined(
+                  this._accessibleDescription ? 'describedby' : undefined,
+                )}
+              >
+                <slot></slot>
+              </div>
+              ${this.renderDescribedby()}`
+          : this.renderAnchor({
+              className: 'base link',
+              content: html`<slot></slot>`,
+              accessibleLabel: this._accessibleLabel,
+              accessibleDescription: this._accessibleDescription,
+            })
+        : this.clickable
+          ? html`<button
+                class="base button"
+                type="button"
+                ?disabled=${this.disabled}
+                aria-label=${ifDefined(this._accessibleLabel)}
+                aria-describedby=${ifDefined(
+                  this._accessibleDescription ? 'describedby' : undefined,
+                )}
+              >
+                <slot></slot>
+              </button>
+              ${this.renderDescribedby()}`
+          : html`<div class="base">
+              <slot></slot>
+            </div>`}`;
+  }
+
+  private renderDescribedby(): TemplateResult {
+    return when(
+      this._accessibleDescription,
+      () =>
+        html`<div style="display: none" id="describedby">
+          ${this._accessibleDescription}
+        </div>`,
+    );
   }
 }
 

@@ -1,9 +1,12 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import { when } from 'lit/directives/when.js';
 import { isUndefined } from '@mdui/jq/shared/helper.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
+import { AccessibleMixin } from '@mdui/shared/mixins/accessible.js';
 import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
@@ -15,7 +18,9 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * ```
  */
 @customElement('mdui-circular-progress')
-export class CircularProgress extends MduiElement<CircularProgressEventMap> {
+export class CircularProgress extends AccessibleMixin(
+  MduiElement,
+)<CircularProgressEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
@@ -34,13 +39,28 @@ export class CircularProgress extends MduiElement<CircularProgressEventMap> {
     const isDeterminate = !isUndefined(this.value);
 
     return html`<div
-      class="progress ${classMap({
-        determinate: isDeterminate,
-        indeterminate: !isDeterminate,
-      })}"
-    >
-      ${isDeterminate ? this.renderDeterminate() : this.renderInDeterminate()}
-    </div>`;
+        class="progress ${classMap({
+          determinate: isDeterminate,
+          indeterminate: !isDeterminate,
+        })}"
+        role="progressbar"
+        aria-label=${ifDefined(this._accessibleLabel)}
+        aria-describedby=${ifDefined(
+          this._accessibleDescription ? 'describedby' : undefined,
+        )}
+        aria-valuemin="0"
+        aria-valuemax=${this.max}
+        aria-valuenow=${ifDefined(isDeterminate ? this.value : undefined)}
+      >
+        ${isDeterminate ? this.renderDeterminate() : this.renderInDeterminate()}
+      </div>
+      ${when(
+        this._accessibleDescription,
+        () =>
+          html`<div style="display: none" id="describedby">
+            ${this._accessibleDescription}
+          </div>`,
+      )}`;
   }
 
   private renderDeterminate(): TemplateResult {
@@ -53,7 +73,10 @@ export class CircularProgress extends MduiElement<CircularProgressEventMap> {
     const determinateStrokeDashOffset =
       (1 - value / Math.max(this.max ?? value, value)) * circumference;
 
-    return html`<svg viewBox="0 0 ${center * 2} ${center * 2}">
+    return html`<svg
+      viewBox="0 0 ${center * 2} ${center * 2}"
+      aria-hidden="true"
+    >
       <circle
         class="track"
         cx="${center}"
@@ -93,7 +116,7 @@ export class CircularProgress extends MduiElement<CircularProgressEventMap> {
         ></circle>
       </svg>`;
 
-    return html`<div class="layer">
+    return html`<div class="layer" aria-hidden="true">
       <div class="clipper left">${circle(strokeWidth)}</div>
       <div class="gap-patch">${circle(strokeWidth * 0.8)}</div>
       <div class="clipper right">${circle(strokeWidth)}</div>

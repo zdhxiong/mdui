@@ -1,6 +1,8 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
@@ -67,6 +69,12 @@ export class SegmentedButton extends ButtonBase<SegmentedButtonEventMap> {
   public selectedIcon?: string;
 
   /**
+   * 分段按钮数组的可选择状态。由 <mdui-segmented-button-group> 组件控制该参数
+   */
+  @property({ attribute: false })
+  protected selects?: 'single' | 'multiple';
+
+  /**
    * 是否选中该分段按钮项，由 <mdui-segmented-button-group> 组件控制该参数
    */
   @property({
@@ -75,6 +83,12 @@ export class SegmentedButton extends ButtonBase<SegmentedButtonEventMap> {
     converter: booleanConverter,
   })
   protected selected = false;
+
+  /**
+   * 是否必填，由 <mdui-segmented-button-group> 组件控制该参数
+   */
+  @property({ attribute: false })
+  protected required = false;
 
   /**
    * 是否验证未通过。由 <mdui-segmented-button-group> 控制该参数
@@ -95,6 +109,12 @@ export class SegmentedButton extends ButtonBase<SegmentedButtonEventMap> {
   })
   protected groupDisabled = false;
 
+  /**
+   * 当前 <mdui-segmented-button> 组件已选中的 key。由 <mdui-segmented-button-group> 组件控制该参数
+   */
+  @property({ attribute: false })
+  protected selectedKeys: number[] = [];
+
   // 每一个 segmented-button 元素都添加一个唯一的 key
   protected readonly key = uniqueId();
 
@@ -111,11 +131,27 @@ export class SegmentedButton extends ButtonBase<SegmentedButtonEventMap> {
   }
 
   protected override get rippleDisabled(): boolean {
-    return this.isDisabled() || this.loading;
+    return this.isDisabled || this.loading;
   }
 
   protected override get focusDisabled(): boolean {
-    return this.isDisabled() || this.loading;
+    return this.isDisabled || this.loading;
+  }
+
+  private get isDisabled(): boolean {
+    return this.disabled || this.groupDisabled;
+  }
+
+  private get isSingle(): boolean {
+    return this.selects === 'single';
+  }
+
+  private get isMultiple(): boolean {
+    return this.selects === 'multiple';
+  }
+
+  private get isSelectable(): boolean {
+    return this.isSingle || this.isMultiple;
   }
 
   protected override render(): TemplateResult {
@@ -138,20 +174,44 @@ export class SegmentedButton extends ButtonBase<SegmentedButtonEventMap> {
             className,
             part: 'button',
             content: this.renderInner(),
+            role: this.isSingle
+              ? 'radio'
+              : this.isMultiple
+                ? 'checkbox'
+                : undefined,
+            ariaChecked: this.isSelectable ? this.selected : undefined,
+            ariaRequired: this.isMultiple
+              ? this.required && !this.selectedKeys.length
+              : undefined,
+            ariaInvalid: this.isSelectable ? this.invalid : undefined,
           })
-        : this.isDisabled() || this.loading
-          ? html`<span part="button" class="_a ${className}">
-              ${this.renderInner()}
-            </span>`
+        : this.isDisabled || this.loading
+          ? html`<span
+                part="button"
+                class="_a ${className}"
+                role="link"
+                aria-disabled="true"
+                aria-label=${ifDefined(this._accessibleLabel)}
+                aria-describedby=${ifDefined(
+                  this._accessibleDescription ? 'describedby' : undefined,
+                )}
+              >
+                ${this.renderInner()}
+              </span>
+              ${when(
+                this._accessibleDescription,
+                () =>
+                  html`<div style="display: none" id="describedby">
+                    ${this._accessibleDescription}
+                  </div>`,
+              )}`
           : this.renderAnchor({
               className,
               part: 'button',
               content: this.renderInner(),
+              accessibleLabel: this._accessibleLabel,
+              accessibleDescription: this._accessibleDescription,
             })}`;
-  }
-
-  private isDisabled(): boolean {
-    return this.disabled || this.groupDisabled;
   }
 
   private renderIcon(): TemplateResult {
@@ -164,6 +224,7 @@ export class SegmentedButton extends ButtonBase<SegmentedButtonEventMap> {
         name="selected-icon"
         part="selected-icon"
         class="selected-icon"
+        aria-hidden="true"
       >
         ${this.selectedIcon
           ? html`<mdui-icon name=${this.selectedIcon} class="i"></mdui-icon>`
@@ -171,7 +232,7 @@ export class SegmentedButton extends ButtonBase<SegmentedButtonEventMap> {
       </slot>`;
     }
 
-    return html`<slot name="icon" part="icon" class="icon">
+    return html`<slot name="icon" part="icon" class="icon" aria-hidden="true">
       ${this.icon
         ? html`<mdui-icon name=${this.icon} class="i"></mdui-icon>`
         : nothingTemplate}
@@ -189,7 +250,12 @@ export class SegmentedButton extends ButtonBase<SegmentedButtonEventMap> {
   }
 
   private renderEndIcon(): TemplateResult {
-    return html`<slot name="end-icon" part="end-icon" class="end-icon">
+    return html`<slot
+      name="end-icon"
+      part="end-icon"
+      class="end-icon"
+      aria-hidden="true"
+    >
       ${this.endIcon
         ? html`<mdui-icon name=${this.endIcon} class="i"></mdui-icon>`
         : nothingTemplate}

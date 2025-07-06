@@ -1,6 +1,8 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { when } from 'lit/directives/when.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
@@ -186,15 +188,34 @@ export class Chip extends ButtonBase<ChipEventMap> {
             className,
             part: 'button',
             content: this.renderInner(),
+            ariaPressed: this.selectable ? this.selected : undefined,
           })
         : this.disabled || this.loading
-          ? html`<span part="button" class="${className} _a">
-              ${this.renderInner()}
-            </span>`
+          ? html`<span
+                part="button"
+                class="${className} _a"
+                role="link"
+                aria-disabled="true"
+                aria-label=${ifDefined(this._accessibleLabel)}
+                aria-describedby=${ifDefined(
+                  this._accessibleDescription ? 'describedby' : undefined,
+                )}
+              >
+                ${this.renderInner()}
+              </span>
+              ${when(
+                this._accessibleDescription,
+                () =>
+                  html`<div style="display: none" id="describedby">
+                    ${this._accessibleDescription}
+                  </div>`,
+              )}`
           : this.renderAnchor({
               className,
               part: 'button',
               content: this.renderInner(),
+              accessibleLabel: this._accessibleLabel,
+              accessibleDescription: this._accessibleDescription,
             })}`;
   }
 
@@ -214,8 +235,8 @@ export class Chip extends ButtonBase<ChipEventMap> {
       return;
     }
 
-    // 按下空格键时，切换选中状态
-    if (this.selectable && event.key === ' ') {
+    // 按下空格或回车键时，切换选中状态
+    if (this.selectable && [' ', 'Enter'].includes(event.key)) {
       event.preventDefault();
       this.selected = !this.selected;
     }
@@ -261,11 +282,14 @@ export class Chip extends ButtonBase<ChipEventMap> {
     };
 
     return !this.selected
-      ? html`<slot name="icon" part="icon" class="icon">${icon()}</slot>`
+      ? html`<slot name="icon" part="icon" class="icon" aria-hidden="true">
+          ${icon()}
+        </slot>`
       : html`<slot
           name="selected-icon"
           part="selected-icon"
           class="selected-icon"
+          aria-hidden="true"
         >
           ${selectedIcon()}
         </slot>`;
@@ -276,7 +300,12 @@ export class Chip extends ButtonBase<ChipEventMap> {
   }
 
   private renderEndIcon(): TemplateResult {
-    return html`<slot name="end-icon" part="end-icon" class="end-icon">
+    return html`<slot
+      name="end-icon"
+      part="end-icon"
+      class="end-icon"
+      aria-hidden="true"
+    >
       ${this.endIcon
         ? html`<mdui-icon name="${this.endIcon}" class="i"></mdui-icon>`
         : nothingTemplate}
@@ -292,6 +321,7 @@ export class Chip extends ButtonBase<ChipEventMap> {
       name="delete-icon"
       part="delete-icon"
       class="delete-icon"
+      aria-hidden="true"
       @click=${this.onDelete}
     >
       ${this.deleteIcon

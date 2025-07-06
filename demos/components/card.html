@@ -31,6 +31,10 @@
   <script type="module">
     import '../../packages/mdui/mdui.css';
     import '../../packages/mdui/components/card.js';
+
+    document.querySelector('#check-click').addEventListener('click', function (event) {
+      console.log('click', event.target);
+    });
   </script>
 </head>
 
@@ -42,6 +46,7 @@
       <mdui-card variant="elevated" clickable>Elevated clickable</mdui-card>
       <mdui-card variant="elevated" clickable no-ripple>Elevated no-ripple</mdui-card>
       <mdui-card variant="elevated" disabled>Elevated disabled</mdui-card>
+      <mdui-card variant="elevated" clickable disabled>Elevated clickable disabled</mdui-card>
     </section>
 
     <section>
@@ -50,6 +55,7 @@
       <mdui-card variant="filled" clickable>Filled clickable</mdui-card>
       <mdui-card variant="filled" clickable no-ripple>Filled no-ripple</mdui-card>
       <mdui-card variant="filled" disabled>Filled disabled</mdui-card>
+      <mdui-card variant="filled" clickable disabled>Filled clickable disabled</mdui-card>
     </section>
 
     <section>
@@ -58,6 +64,7 @@
       <mdui-card variant="outlined" clickable>Outlined clickable</mdui-card>
       <mdui-card variant="outlined" clickable no-ripple>Outlined no-ripple</mdui-card>
       <mdui-card variant="outlined" disabled>Outlined disabled</mdui-card>
+      <mdui-card variant="outlined" clickable disabled>Outlined clickable disabled</mdui-card>
     </section>
 
     <section>
@@ -65,6 +72,17 @@
       <mdui-card href="https://www.mdui.org">link</mdui-card>
       <mdui-card href="https://www.mdui.org" no-ripple>link no-ripple</mdui-card>
       <mdui-card href="https://www.mdui.org" disabled>link disabled</mdui-card>
+    </section>
+
+    <section>
+      <h2>a11y</h2>
+      <mdui-card accessible-label="label"></mdui-card>
+      <mdui-card accessible-description="description"></mdui-card>
+      <mdui-card accessible-label="label" accessible-description="description" clickable>clickable</mdui-card>
+      <mdui-card accessible-label="label" accessible-description="description" clickable disabled>clickable disabled</mdui-card>
+      <mdui-card accessible-label="label" accessible-description="description" href="https://www.mdui.org">link</mdui-card>
+      <mdui-card accessible-label="label" accessible-description="description" href="https://www.mdui.org" disabled>link disabled</mdui-card>
+      <mdui-card clickable id="check-click">Check click</mdui-card>
     </section>
 
     <h1>状态</h1>
@@ -87,10 +105,10 @@
           width="1024px" />
         <div style="white-space: nowrap">
           <div style="padding: 130px 16px 86px">
-            <mdui-card variant="elevated" style="height: 80px; width: 130px">Elevated</mdui-card>
+            <mdui-card variant="elevated" clickable style="height: 80px; width: 130px">Elevated</mdui-card>
           </div>
           <div class="mdui-theme-dark" style="padding: 130px 16px 86px">
-            <mdui-card variant="elevated" style="height: 80px; width: 130px">Elevated</mdui-card>
+            <mdui-card variant="elevated" clickable style="height: 80px; width: 130px">Elevated</mdui-card>
           </div>
         </div>
       </div>
@@ -114,10 +132,10 @@
           width="1024px" />
         <div style="white-space: nowrap">
           <div style="padding: 130px 16px 86px">
-            <mdui-card variant="filled" style="height: 80px; width: 130px">Filled</mdui-card>
+            <mdui-card variant="filled" clickable style="height: 80px; width: 130px">Filled</mdui-card>
           </div>
           <div class="mdui-theme-dark" style="padding: 130px 16px 86px">
-            <mdui-card variant="filled" style="height: 80px; width: 130px">Filled</mdui-card>
+            <mdui-card variant="filled" clickable style="height: 80px; width: 130px">Filled</mdui-card>
           </div>
         </div>
       </div>
@@ -141,10 +159,10 @@
           width="1024px" />
         <div style="white-space: nowrap">
           <div style="padding: 130px 16px 86px">
-            <mdui-card variant="outlined" style="height: 80px; width: 130px">Outlined</mdui-card>
+            <mdui-card variant="outlined" clickable style="height: 80px; width: 130px">Outlined</mdui-card>
           </div>
           <div class="mdui-theme-dark" style="padding: 130px 16px 86px">
-            <mdui-card variant="outlined" style="height: 80px; width: 130px">Outlined</mdui-card>
+            <mdui-card variant="outlined" clickable style="height: 80px; width: 130px">Outlined</mdui-card>
           </div>
         </div>
       </div>

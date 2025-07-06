@@ -1,6 +1,7 @@
 import eslint from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
 import { configs as litConfigs } from 'eslint-plugin-lit';
+import { configs as litA11yConfigs } from 'eslint-plugin-lit-a11y';
 import prettierPlugin from 'eslint-plugin-prettier/recommended';
 import { configs as wcConfigs } from 'eslint-plugin-wc';
 import tseslint from 'typescript-eslint';
@@ -23,6 +24,7 @@ const config = tseslint.config(
   importPlugin.flatConfigs.recommended,
   wcConfigs['flat/recommended'],
   litConfigs['flat/recommended'],
+  litA11yConfigs.recommended,
   {
     settings: {
       'import/resolver': {
@@ -135,6 +137,8 @@ const config = tseslint.config(
       ],
       'prettier/prettier': 'error',
       'grouped-accessor-pairs': ['error', 'getBeforeSet'],
+      'lit-a11y/click-events-have-key-events': 'off',
+      'lit-a11y/no-aria-slot': 'off',
       'import/no-unresolved': 'off',
       'import/extensions': [
         'error',

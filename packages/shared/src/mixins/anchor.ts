@@ -1,6 +1,8 @@
 import { html, nothing } from 'lit';
 import { property } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { when } from 'lit/directives/when.js';
+import { nothingTemplate } from '../helpers/template.js';
 import type { Constructor } from '@lit/reactive-element/decorators/base.js';
 import type { LitElement, TemplateResult } from 'lit';
 import type { DirectiveResult } from 'lit/directive.js';
@@ -14,6 +16,8 @@ type RenderAnchorOptions = {
     | TemplateResult
     | typeof nothing
     | (TemplateResult | typeof nothing)[];
+  accessibleLabel?: string;
+  accessibleDescription?: string;
   tabIndex?: number;
   refDirective?: DirectiveResult<typeof RefDirective>;
 };
@@ -119,22 +123,35 @@ export const AnchorMixin = <T extends Constructor<LitElement>>(
       className,
       part,
       content = html`<slot></slot>`,
+      accessibleLabel,
+      accessibleDescription,
       refDirective,
       tabIndex,
     }: RenderAnchorOptions): TemplateResult {
       return html`<a
-        ${refDirective!}
-        id=${ifDefined(id)}
-        class="_a ${className ? className : ''}"
-        part=${ifDefined(part)}
-        href=${ifDefined(this.href)}
-        download=${ifDefined(this.download)}
-        target=${ifDefined(this.target)}
-        rel=${ifDefined(this.rel)}
-        tabindex=${ifDefined(tabIndex)}
-      >
-        ${content}
-      </a>`;
+          ${refDirective!}
+          id=${ifDefined(id)}
+          class="_a ${className ? className : ''}"
+          part=${ifDefined(part)}
+          href=${ifDefined(this.href)}
+          download=${ifDefined(this.download)}
+          target=${ifDefined(this.target)}
+          rel=${ifDefined(this.rel)}
+          tabindex=${ifDefined(tabIndex)}
+          aria-label=${ifDefined(accessibleLabel)}
+          aria-describedby=${ifDefined(
+            accessibleDescription ? 'describedby' : undefined,
+          )}
+        >
+          ${content}
+        </a>
+        ${when(
+          accessibleDescription,
+          () =>
+            html`<div style="display: none" id="describedby">
+              ${accessibleDescription}
+            </div>`,
+        )}`;
     }
   }
 

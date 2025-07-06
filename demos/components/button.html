@@ -29,6 +29,10 @@
         this.loading = false;
       }, 2000);
     });
+
+    document.querySelector('#check-click').addEventListener('click', function (event) {
+      console.log('click', event.target);
+    });
   </script>
 </head>
 
@@ -172,6 +176,14 @@
         }
       </style>
       <mdui-button class="custom2" icon="settings" variant="filled">custom</mdui-button>
+    </section>
+
+    <section>
+      <h2>a11y</h2>
+      <mdui-button accessible-label="label">button</mdui-button>
+      <mdui-button href="https://www.mdui.org" accessible-description="description">link</mdui-button>
+      <mdui-button href="https://www.mdui.org" accessible-label="label" accessible-description="description">link</mdui-button>
+      <mdui-button id="check-click">Check click</mdui-button>
     </section>
 
     <h1>状态</h1>

@@ -260,7 +260,9 @@
           <mdui-top-app-bar-title>Title</mdui-top-app-bar-title>
           <mdui-button variant="text">Save</mdui-button>
         </mdui-top-app-bar>
-        <div class="fill-placeholder"></div>
+        <div class="fill-placeholder">
+          <mdui-button>test</mdui-button>
+        </div>
         <mdui-button slot="action" variant="text">Accept</mdui-button>
       </mdui-dialog>
       <mdui-button class="open">open</mdui-button>
@@ -278,6 +280,28 @@
         <mdui-button variant="text" slot="action">Ask again later</mdui-button>
       </mdui-dialog>
       <mdui-button class="open">open</mdui-button>
+    </section>
+
+    <section>
+      <h2>a11y</h2>
+      <mdui-dialog
+        close-on-esc
+        close-on-overlay-click
+        headline="Reset settings?"
+        accessible-role=""
+        accessible-label="label"
+        accessible-description="description"
+      ></mdui-dialog>
+      <mdui-button class="open">open dialog</mdui-button>
+
+      <mdui-dialog
+      close-on-esc
+      close-on-overlay-click
+      accessible-role="alertdialog"
+      accessible-label="label"
+      accessible-description="description"
+      ></mdui-dialog>
+      <mdui-button class="open">open alertdialog</mdui-button>
     </section>
   </main>
 </body>

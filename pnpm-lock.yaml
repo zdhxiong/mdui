@@ -86,6 +86,9 @@ importers:
       eslint-plugin-lit:
         specifier: ^2.1.1
         version: 2.1.1(eslint@9.30.0)
+      eslint-plugin-lit-a11y:
+        specifier: ^5.1.0
+        version: 5.1.0(eslint@9.30.0)
       eslint-plugin-prettier:
         specifier: ^5.5.1
         version: 5.5.1(@types/eslint@9.6.1)(eslint-config-prettier@10.1.5(eslint@9.30.0))(eslint@9.30.0)(prettier@3.6.2)
@@ -890,6 +893,9 @@ packages:
   '@textlint/types@14.8.4':
     resolution: {integrity: sha512-9nyY8vVXlr8hHKxa6+37omJhXWCwovMQcgMteuldYd4dOxGm14AK2nXdkgtKEUQnzLGaXy46xwLCfhQy7V7/YA==}
 
+  '@thepassle/axobject-query@4.0.0':
+    resolution: {integrity: sha512-/LHo+2jOdxs2WtbGocr3/lDSzsnjgCV6DSoBf4Y1Q0D24Hu67NPWuneoJimfHu5auqqSWi1fAvtln2013VxVqg==}
+
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
@@ -1003,6 +1009,9 @@ packages:
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
+
+  '@types/parse5@2.2.34':
+    resolution: {integrity: sha512-p3qOvaRsRpFyEmaS36RtLzpdxZZnmxGuT1GMgzkTtTJVFuEw7KFjGK83MFODpJExgX1bEzy9r0NYjMC3IMfi7w==}
 
   '@types/parse5@6.0.3':
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
@@ -1398,6 +1407,10 @@ packages:
 
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
+
+  aria-query@5.3.2:
+    resolution: {integrity: sha512-COROpnaoap1E2F000S62r6A60uHZnmlvomhfyT2DlTcrY1OrBKn2UhH7qn5wTC9zMvD0AY7csdPSNwKP+7WiQw==}
+    engines: {node: '>= 0.4'}
 
   array-back@3.1.0:
     resolution: {integrity: sha512-TkuxA4UCOvxuDK6NZYXCalszEzj+TLszyASooky+i742l9TqsOdYCMJJupxRic61hwquNtppB3hgcuq9SVSH1Q==}
@@ -1964,6 +1977,10 @@ packages:
     resolution: {integrity: sha512-JeMq7fEshyepOWDfcfHK06N3MhyPhz++vtqWhMT5O9A3K42rdsEDpfdVqjaqaAhsw6a+ZqeDvQVtD0hFHQWrzg==}
     engines: {node: '>= 0.6.0'}
 
+  dequal@2.0.3:
+    resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
+    engines: {node: '>=6'}
+
   destroy@1.2.0:
     resolution: {integrity: sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
@@ -1989,6 +2006,9 @@ packages:
 
   dom-serializer@2.0.0:
     resolution: {integrity: sha512-wIkAryiqt/nV5EQKqQpo3SToSOV9J0DnbJqwK7Wv/Trc92zIAYZ4FlMu+JPFW1DfGFt81ZTCGgDEabffXeLyJg==}
+
+  dom5@3.0.1:
+    resolution: {integrity: sha512-JPFiouQIr16VQ4dX6i0+Hpbg3H2bMKPmZ+WZgBOSSvOPx9QHwwY8sPzeM2baUtViESYto6wC2nuZOMC/6gulcA==}
 
   domelementtype@2.3.0:
     resolution: {integrity: sha512-OLETBj6w0OsagBwdXnPdN0cnMfF9opN69co+7ZrbfPGrdpPVNBUj02spi6B1N7wChLQiPn4CSH/zJvXw56gmHw==}
@@ -2202,6 +2222,11 @@ packages:
       '@typescript-eslint/parser':
         optional: true
 
+  eslint-plugin-lit-a11y@5.1.0:
+    resolution: {integrity: sha512-ic38E0KR6tzjxilqPwZQsze7qV6o3i0Cnt/hTF9ibrZWVL7Vq+KZvowwS5rHPDOY3hAtThswCOlMdySvQdSnPA==}
+    peerDependencies:
+      eslint: '>= 5'
+
   eslint-plugin-lit@2.1.1:
     resolution: {integrity: sha512-qmyAOnnTCdS+vDnNxtCoF0icSKIio4GUv6ZLnaCtTX6G/YezRa6Ag6tOQ+MfV5Elvtw9CIXeliRX4mIBSwrPIA==}
     engines: {node: '>= 18'}
@@ -2226,6 +2251,10 @@ packages:
     resolution: {integrity: sha512-0p1wkSlA2Ue3FA4qW+5LZ+15sy0p1nUyVl1eyBMLq4rtN1LtE9IdI49BXNWMz8N8bM/y7Ulx8SWGAni5f8XO5g==}
     peerDependencies:
       eslint: '>=8.40.0'
+
+  eslint-rule-extender@0.0.1:
+    resolution: {integrity: sha512-F0j1Twve3lamL3J0rRSVAynlp58sDPG39JFcQrM+u9Na7PmCgiPHNODh6YE9mduaGcsn3NBqbf6LZRj0cLr8Ng==}
+    engines: {node: '>=10'}
 
   eslint-scope@8.4.0:
     resolution: {integrity: sha512-sNXOfKCn74rt8RICKMvJS7XKV/Xk9kA7DyJr8mJik3S7Cwgy3qlkkmyS2uQB3jiJg6VNdZd/pDBJu0nvG2NlTg==}
@@ -3091,6 +3120,13 @@ packages:
     resolution: {integrity: sha512-j/8tY9j5t+GVMLeioLaxweJiKUayFhlGqNTzf2ZGwL0ZCQijd2RLHK0SLW5Tsko8YyyqCZC2cojIb0/s62qTAg==}
     engines: {node: ^4.8.4 || ^6.10.1 || ^7.10.1 || >= 8.1.4}
 
+  language-subtag-registry@0.3.23:
+    resolution: {integrity: sha512-0K65Lea881pHotoGEa5gDlMxt3pctLi2RplBb7Ezh4rRdLEOtgi7n4EwK9lamnUCkKBqaeKRVebTq6BAxSkpXQ==}
+
+  language-tags@1.0.9:
+    resolution: {integrity: sha512-MbjN408fEndfiQXbFQ1vnd+1NoLDsnQW41410oQBXiyXDMYH5z505juWa4KUE1LqxRC7DgOgZDbKLxHIwm27hA==}
+    engines: {node: '>=0.10'}
+
   less-plugin-npm-import@2.1.0:
     resolution: {integrity: sha512-f7pVkEooRq2/jge/M/Y+spoPXj5rRIY30q1as+3kZsDG8Rs+loNJUCVQjzXB9Ao/9FeIJULiq2zrXymv+OMTbw==}
     engines: {node: '>=0.4.2'}
@@ -3581,6 +3617,9 @@ packages:
 
   parse5-htmlparser2-tree-adapter@7.0.0:
     resolution: {integrity: sha512-B77tOZrqqfUfnVcOrUvfdLbz4pu4RopLD/4vmu3HUPswwTA8OH0EMW9BlWR2B0RCoiZRAHEUu7IxeP1Pd1UU+g==}
+
+  parse5@4.0.0:
+    resolution: {integrity: sha512-VrZ7eOd3T1Fk4XWNXMgiGBK/z0MG48BWG2uQNU4I72fkQuKUTZpl+u9k+CxEG0twMVzSmXEEz12z5Fnw1jIQFA==}
 
   parse5@6.0.1:
     resolution: {integrity: sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==}
@@ -5390,6 +5429,10 @@ snapshots:
     dependencies:
       '@textlint/ast-node-types': 14.8.4
 
+  '@thepassle/axobject-query@4.0.0':
+    dependencies:
+      dequal: 2.0.3
+
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
   '@tybys/wasm-util@0.9.0':
@@ -5524,6 +5567,10 @@ snapshots:
       undici-types: 5.26.5
 
   '@types/normalize-package-data@2.4.4': {}
+
+  '@types/parse5@2.2.34':
+    dependencies:
+      '@types/node': 20.14.9
 
   '@types/parse5@6.0.3': {}
 
@@ -6049,6 +6096,8 @@ snapshots:
       sprintf-js: 1.0.3
 
   argparse@2.0.1: {}
+
+  aria-query@5.3.2: {}
 
   array-back@3.1.0: {}
 
@@ -6667,6 +6716,8 @@ snapshots:
 
   dependency-graph@0.11.0: {}
 
+  dequal@2.0.3: {}
+
   destroy@1.2.0: {}
 
   detect-libc@2.0.3:
@@ -6689,6 +6740,12 @@ snapshots:
       domelementtype: 2.3.0
       domhandler: 5.0.3
       entities: 4.5.0
+
+  dom5@3.0.1:
+    dependencies:
+      '@types/parse5': 2.2.34
+      clone: 2.1.2
+      parse5: 4.0.0
 
   domelementtype@2.3.0: {}
 
@@ -7028,6 +7085,20 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
+  eslint-plugin-lit-a11y@5.1.0(eslint@9.30.0):
+    dependencies:
+      '@thepassle/axobject-query': 4.0.0
+      aria-query: 5.3.2
+      axe-core: 4.9.1
+      dom5: 3.0.1
+      emoji-regex: 10.3.0
+      eslint: 9.30.0
+      eslint-plugin-lit: 2.1.1(eslint@9.30.0)
+      eslint-rule-extender: 0.0.1
+      language-tags: 1.0.9
+      parse5: 7.1.2
+      parse5-htmlparser2-tree-adapter: 6.0.1
+
   eslint-plugin-lit@2.1.1(eslint@9.30.0):
     dependencies:
       eslint: 9.30.0
@@ -7049,6 +7120,8 @@ snapshots:
       eslint: 9.30.0
       is-valid-element-name: 1.0.0
       js-levenshtein-esm: 2.0.0
+
+  eslint-rule-extender@0.0.1: {}
 
   eslint-scope@8.4.0:
     dependencies:
@@ -8013,6 +8086,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  language-subtag-registry@0.3.23: {}
+
+  language-tags@1.0.9:
+    dependencies:
+      language-subtag-registry: 0.3.23
+
   less-plugin-npm-import@2.1.0:
     dependencies:
       promise: 7.0.4
@@ -8535,6 +8614,8 @@ snapshots:
     dependencies:
       domhandler: 5.0.3
       parse5: 7.1.2
+
+  parse5@4.0.0: {}
 
   parse5@6.0.1: {}
 

@@ -332,8 +332,16 @@ export class Tooltip extends MduiElement<TooltipEventMap> {
       (this.headline || this.hasSlotController.test('headline'));
     const hasAction = this.isRich() && this.hasSlotController.test('action');
 
-    return html`<slot></slot>
-      <div ${ref(this.popupRef)} part="popup" class="popup" hidden>
+    return html`<slot aria-describedby="tooltip"></slot>
+      ${'' /* eslint-disable-next-line lit-a11y/accessible-name */}
+      <div
+        ${ref(this.popupRef)}
+        part="popup"
+        class="popup"
+        id="tooltip"
+        hidden
+        role="tooltip"
+      >
         ${when(
           hasHeadline,
           () =>

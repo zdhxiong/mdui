@@ -1,6 +1,8 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { when } from 'lit/directives/when.js';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
@@ -123,15 +125,34 @@ export class ButtonIcon extends ButtonBase<ButtonIconEventMap> {
             className: 'button',
             part: 'button',
             content: this.renderIcon(),
+            ariaPressed: this.selectable ? this.selected : undefined,
           })
         : this.disabled || this.loading
-          ? html`<span part="button" class="button _a">
-              ${this.renderIcon()}
-            </span>`
+          ? html`<span
+                part="button"
+                class="button _a"
+                role="link"
+                aria-disabled="true"
+                aria-label=${ifDefined(this._accessibleLabel)}
+                aria-describedby=${ifDefined(
+                  this._accessibleDescription ? 'describedby' : undefined,
+                )}
+              >
+                ${this.renderIcon()}
+              </span>
+              ${when(
+                this._accessibleDescription,
+                () =>
+                  html`<div style="display: none" id="describedby">
+                    ${this._accessibleDescription}
+                  </div>`,
+              )}`
           : this.renderAnchor({
               className: 'button',
               part: 'button',
               content: this.renderIcon(),
+              accessibleLabel: this._accessibleLabel,
+              accessibleDescription: this._accessibleDescription,
             })}
       ${this.renderLoading()}`;
   }
@@ -139,12 +160,13 @@ export class ButtonIcon extends ButtonBase<ButtonIconEventMap> {
   private renderIcon(): TemplateResult {
     const icon = () =>
       this.hasSlotController.test('[default]')
-        ? html`<slot></slot>`
+        ? html`<slot aria-hidden="true"></slot>`
         : this.icon
           ? html`<mdui-icon
               part="icon"
               class="icon"
               name=${this.icon}
+              aria-hidden="true"
             ></mdui-icon>`
           : nothingTemplate;
 
@@ -154,6 +176,7 @@ export class ButtonIcon extends ButtonBase<ButtonIconEventMap> {
             name="selected-icon"
             part="selected-icon"
             class="selected-icon"
+            aria-hidden="true"
           >
             <mdui-icon name=${this.selectedIcon}></mdui-icon>
           </slot>`

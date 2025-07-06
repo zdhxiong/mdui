@@ -4,11 +4,14 @@ import '@mdui/jq/methods/append.js';
 import '@mdui/jq/methods/appendTo.js';
 import '@mdui/jq/methods/on.js';
 import '@mdui/jq/methods/remove.js';
-import { returnTrue, toKebabCase } from '@mdui/jq/shared/helper.js';
+import {
+  isUndefined,
+  returnTrue,
+  toKebabCase,
+} from '@mdui/jq/shared/helper.js';
 import { dequeue, queue } from '@mdui/shared/helpers/queue.js';
-import '../components/button.js';
+import { Button } from '../components/button.js';
 import { Dialog } from '../components/dialog.js';
-import type { Button } from '../components/button.js';
 import type { JQ } from '@mdui/jq/shared/core.js';
 
 interface Action {
@@ -24,6 +27,11 @@ interface Action {
    * @param dialog
    */
   onClick?: (dialog: Dialog) => void | boolean | Promise<void>;
+
+  /**
+   * 按钮为 `<mdui-button>` 组件。可在该参数中设置 `<mdui-button>` 组件的属性。
+   */
+  options?: Partial<Button>;
 }
 
 interface Options {
@@ -109,11 +117,53 @@ interface Options {
    * @param dialog
    */
   onOverlayClick?: (dialog: Dialog) => void;
+
+  /**
+   * dialog 组件的无障碍角色。如果是警告对话框，则需要设置为 'alertdialog'；否则默认为普通对话框 `dialog`。
+   */
+  accessibleRole?: 'alertdialog' | 'dialog';
+
+  /**
+   * 组件的无障碍名称。它将应用到 [`aria-label`](https://developer.mozilla.org/zh-CN/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label)，但不会在界面上显示
+   */
+  accessibleLabel?: string;
+
+  /**
+   * 页面中其他元素的 id（或多个 id），组件将使用对应元素的文本作为无障碍名称。等同于 [`aria-labelledby`](https://developer.mozilla.org/zh-CN/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-labelledby)
+   */
+  accessibleLabelledby?: string;
+
+  /**
+   * 组件的无障碍描述。它将应用到 [`aria-description`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-description)，但不会在界面上显示
+   */
+  accessibleDescription?: string;
+
+  /**
+   * 页面中其他元素的 id（或多个 id），组件将使用对应元素的文本作为无障碍描述。等同于 [`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-describedby)
+   */
+  accessibleDescribedby?: string;
 }
 
-const defaultAction: Required<Pick<Action, 'onClick'>> = {
-  onClick: returnTrue,
-};
+type DialogProperties = Pick<
+  Options,
+  | 'headline'
+  | 'description'
+  | 'icon'
+  | 'closeOnEsc'
+  | 'closeOnOverlayClick'
+  | 'stackedActions'
+  | 'accessibleRole'
+  | 'accessibleLabel'
+  | 'accessibleLabelledby'
+  | 'accessibleDescription'
+  | 'accessibleDescribedby'
+>;
+
+type DialogCallbacks = Pick<
+  Options,
+  'onOpen' | 'onOpened' | 'onClose' | 'onClosed' | 'onOverlayClick'
+>;
+
 const queueName = 'mdui.functions.dialog.';
 let currentDialog: Dialog | undefined = undefined;
 
@@ -125,44 +175,49 @@ export const dialog = (options: Options): Dialog => {
   const dialog = new Dialog();
   const $dialog = $(dialog);
 
-  const properties: (keyof Pick<
-    Options,
-    | 'headline'
-    | 'description'
-    | 'icon'
-    | 'closeOnEsc'
-    | 'closeOnOverlayClick'
-    | 'stackedActions'
-  >)[] = [
+  const properties: (keyof DialogProperties)[] = [
     'headline',
     'description',
     'icon',
     'closeOnEsc',
     'closeOnOverlayClick',
     'stackedActions',
+    'accessibleRole',
+    'accessibleLabel',
+    'accessibleLabelledby',
+    'accessibleDescription',
+    'accessibleDescribedby',
   ];
 
-  const callbacks: (keyof Pick<
-    Options,
-    'onOpen' | 'onOpened' | 'onClose' | 'onClosed' | 'onOverlayClick'
-  >)[] = ['onOpen', 'onOpened', 'onClose', 'onClosed', 'onOverlayClick'];
+  const callbacks: (keyof DialogCallbacks)[] = [
+    'onOpen',
+    'onOpened',
+    'onClose',
+    'onClosed',
+    'onOverlayClick',
+  ];
 
-  Object.entries(options).forEach(([key, value]) => {
-    // @ts-ignore
-    if (properties.includes(key)) {
-      // @ts-ignore
-      dialog[key] = value;
-      // @ts-ignore
-    } else if (callbacks.includes(key)) {
+  // 赋值 dialog 的属性
+  Object.assign(
+    dialog,
+    Object.fromEntries(
+      properties
+        .filter((key) => !isUndefined(options[key]))
+        .map((key) => [key, options[key]]),
+    ),
+  );
+
+  // 绑定 dialog 的回调函数
+  callbacks
+    .filter((key) => !isUndefined(options[key]))
+    .forEach((key) => {
       const eventName = toKebabCase(key.slice(2));
-
       $dialog.on(eventName, (e) => {
         if (e.target === dialog) {
-          value.call(dialog, dialog);
+          options[key]!.call(dialog, dialog);
         }
       });
-    }
-  });
+    });
 
   if (options.body) {
     $dialog.append(options.body);
@@ -170,12 +225,24 @@ export const dialog = (options: Options): Dialog => {
 
   if (options.actions) {
     options.actions.forEach((action) => {
-      const mergedAction = Object.assign({}, defaultAction, action);
+      const mergedAction = {
+        onClick: returnTrue,
+        options: {},
+        ...Object.fromEntries(
+          Object.entries(action).filter(([, value]) => !isUndefined(value)),
+        ),
+      } as unknown as Required<Action>;
 
-      $<Button>(`<mdui-button
-        slot="action"
-        variant="text"
-      >${mergedAction.text}</mdui-button>`)
+      const button = new Button();
+
+      Object.assign(button, mergedAction.options);
+      button.textContent = mergedAction.text;
+      button.slot = 'action';
+      if (!mergedAction.options.variant) {
+        button.variant = 'text';
+      }
+
+      $(button)
         .appendTo($dialog)
         .on('click', function () {
           const clickResult = mergedAction.onClick.call(dialog, dialog);

@@ -1,6 +1,7 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { live } from 'lit/directives/live.js';
 import { map } from 'lit/directives/map.js';
 import { createRef, ref } from 'lit/directives/ref.js';
@@ -9,6 +10,7 @@ import { when } from 'lit/directives/when.js';
 import { FormController, formResets } from '@mdui/shared/controllers/form.js';
 import { defaultValue } from '@mdui/shared/decorators/default-value.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
+import { AccessibleMixin } from '@mdui/shared/mixins/accessible.js';
 import { SliderBase } from './slider-base.js';
 import { style } from './style.js';
 import type { Ripple } from '../ripple/index.js';
@@ -36,7 +38,10 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart tickmark - 刻度标记
  */
 @customElement('mdui-slider')
-export class Slider extends SliderBase<SliderEventMap> implements FormControl {
+export class Slider
+  extends AccessibleMixin(SliderBase)<SliderEventMap>
+  implements FormControl
+{
   public static override styles: CSSResultGroup = [SliderBase.styles, style];
 
   /**
@@ -121,14 +126,36 @@ export class Slider extends SliderBase<SliderEventMap> implements FormControl {
         .value=${live(this.value.toString())}
         @input=${this.onInput}
         @change=${this.onChange}
+        aria-label=${ifDefined(this._accessibleLabel)}
+        aria-describedby=${ifDefined(
+          this._accessibleDescription ? 'describedby' : undefined,
+        )}
+        aria-valuetext=${this.labelFormatter(this.value)}
       />
-      <div part="track-inactive" class="track-inactive"></div>
+      ${when(
+        this._accessibleDescription,
+        () =>
+          html`<div style="display: none" id="describedby">
+            ${this._accessibleDescription}
+          </div>`,
+      )}
+      <div
+        part="track-inactive"
+        class="track-inactive"
+        aria-hidden="true"
+      ></div>
       <div
         ${ref(this.trackActiveRef)}
         part="track-active"
         class="track-active"
+        aria-hidden="true"
       ></div>
-      <div ${ref(this.handleRef)} part="handle" class="handle">
+      <div
+        ${ref(this.handleRef)}
+        part="handle"
+        class="handle"
+        aria-hidden="true"
+      >
         <div class="elevation"></div>
         <mdui-ripple
           ${ref(this.rippleRef)}
@@ -147,6 +174,7 @@ export class Slider extends SliderBase<SliderEventMap> implements FormControl {
                 left: `${((value - this.min) / this.max) * 100}%`,
                 display: value === this.value ? 'none' : 'block',
               })}"
+              aria-hidden="true"
             ></div>`,
         ),
       )}

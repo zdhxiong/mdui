@@ -26,6 +26,18 @@
   <source>Cancel</source>
   <target>Չեղարկել</target>
 </trans-unit>
+<trans-unit id="components.textField.clear">
+  <source>Clear</source>
+  <target>Մաքրել</target>
+</trans-unit>
+<trans-unit id="components.textField.hidePassword">
+  <source>Hide password</source>
+  <target>Թաքցնել գաղտնաբառը</target>
+</trans-unit>
+<trans-unit id="components.textField.showPassword">
+  <source>Show password</source>
+  <target>Ցույց տալ գաղտնաբառը</target>
+</trans-unit>
 </body>
 </file>
 </xliff>

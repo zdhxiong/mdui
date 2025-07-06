@@ -15,6 +15,7 @@ import {
 import { TextField } from '../components/text-field.js';
 import { onLocaleReady, offLocaleReady } from '../internal/localize.js';
 import { dialog as openDialog } from './dialog.js';
+import type { Button } from '../components/button.js';
 import type { Dialog } from '../components/dialog.js';
 
 interface Options {
@@ -49,9 +50,19 @@ interface Options {
   confirmText?: string;
 
   /**
+   * 确认按钮为 `<mdui-button>` 组件。可在该参数中设置 `<mdui-button>` 组件的属性。
+   */
+  confirmOptions?: Partial<Button>;
+
+  /**
    * 取消按钮的文本
    */
   cancelText?: string;
+
+  /**
+   * 取消按钮为 `<mdui-button>` 组件。可在该参数中设置 `<mdui-button>` 组件的属性。
+   */
+  cancelOptions?: Partial<Button>;
 
   /**
    * 是否垂直排列底部操作按钮
@@ -79,6 +90,7 @@ interface Options {
    * 点击取消按钮时的回调函数。
    * 函数参数为输入框的值和 dialog 实例，`this` 指向 dialog 实例。
    * 默认点击取消按钮后会关闭 prompt；若返回值为 `false`，则不关闭 prompt；若返回值为 promise，则将在 promise 被 resolve 后，关闭 prompt。
+   * @param value
    * @param dialog
    */
   onCancel?: (value: string, dialog: Dialog) => void | boolean | Promise<void>;
@@ -129,10 +141,50 @@ interface Options {
   validator?: (value: string) => boolean | string | Promise<void>;
 
   /**
-   * prompt 内部的输入框为 `<mdui-text-field>` 组件。可在该参数中设置 `<mdui-text-field>` 组件的参数。
+   * prompt 内部的输入框为 `<mdui-text-field>` 组件。可在该参数中设置 `<mdui-text-field>` 组件的属性。
    */
   textFieldOptions?: Partial<TextField>;
+
+  /**
+   * 组件的无障碍名称。它将应用到 [`aria-label`](https://developer.mozilla.org/zh-CN/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-label)，但不会在界面上显示
+   */
+  accessibleLabel?: string;
+
+  /**
+   * 页面中其他元素的 id（或多个 id），组件将使用对应元素的文本作为无障碍名称。等同于 [`aria-labelledby`](https://developer.mozilla.org/zh-CN/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-labelledby)
+   */
+  accessibleLabelledby?: string;
+
+  /**
+   * 组件的无障碍描述。它将应用到 [`aria-description`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-description)，但不会在界面上显示
+   */
+  accessibleDescription?: string;
+
+  /**
+   * 页面中其他元素的 id（或多个 id），组件将使用对应元素的文本作为无障碍描述。等同于 [`aria-describedby`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-describedby)
+   */
+  accessibleDescribedby?: string;
 }
+
+type PromptProperties = Pick<
+  Options,
+  | 'headline'
+  | 'description'
+  | 'icon'
+  | 'closeOnEsc'
+  | 'closeOnOverlayClick'
+  | 'stackedActions'
+  | 'queue'
+  | 'onOpen'
+  | 'onOpened'
+  | 'onClose'
+  | 'onClosed'
+  | 'onOverlayClick'
+  | 'accessibleLabel'
+  | 'accessibleLabelledby'
+  | 'accessibleDescription'
+  | 'accessibleDescribedby'
+>;
 
 const getConfirmText = () => {
   return msg('OK', {
@@ -153,33 +205,30 @@ const getCancelText = () => {
  * @param options
  */
 export const prompt = (options: Options): Promise<string> => {
-  const mergedOptions = Object.assign(
-    {},
-    {
-      confirmText: getConfirmText(),
-      cancelText: getCancelText(),
-      onConfirm: returnTrue,
-      onCancel: returnTrue,
-      validator: returnTrue,
-      textFieldOptions: {},
-    },
-    options,
-  );
-  const properties: (keyof Pick<
-    Options,
-    | 'headline'
-    | 'description'
-    | 'icon'
-    | 'closeOnEsc'
-    | 'closeOnOverlayClick'
-    | 'stackedActions'
-    | 'queue'
-    | 'onOpen'
-    | 'onOpened'
-    | 'onClose'
-    | 'onClosed'
-    | 'onOverlayClick'
-  >)[] = [
+  const mergedOptions = {
+    confirmText: getConfirmText(),
+    cancelText: getCancelText(),
+    onConfirm: returnTrue,
+    onCancel: returnTrue,
+    validator: returnTrue,
+    textFieldOptions: {},
+    ...Object.fromEntries(
+      Object.entries(options).filter(([, value]) => !isUndefined(value)),
+    ),
+  } as Required<
+    Pick<
+      Options,
+      | 'confirmText'
+      | 'cancelText'
+      | 'onConfirm'
+      | 'onCancel'
+      | 'validator'
+      | 'textFieldOptions'
+    >
+  > &
+    Options;
+
+  const properties: (keyof PromptProperties)[] = [
     'headline',
     'description',
     'icon',
@@ -192,13 +241,15 @@ export const prompt = (options: Options): Promise<string> => {
     'onClose',
     'onClosed',
     'onOverlayClick',
+    'accessibleLabel',
+    'accessibleLabelledby',
+    'accessibleDescription',
+    'accessibleDescribedby',
   ];
 
   const textField = new TextField();
-  Object.entries(mergedOptions.textFieldOptions).forEach(([key, value]) => {
-    // @ts-ignore
-    textField[key] = value;
-  });
+
+  Object.assign(textField, mergedOptions.textFieldOptions);
 
   return new Promise((resolve, reject) => {
     let isResolve = false;
@@ -209,12 +260,14 @@ export const prompt = (options: Options): Promise<string> => {
           .map((key) => [key, mergedOptions[key]]),
       ),
       body: textField,
+      accessibleRole: 'alertdialog',
       actions: [
         {
           text: mergedOptions.cancelText,
           onClick: (dialog) => {
             return mergedOptions.onCancel.call(dialog, textField.value, dialog);
           },
+          options: mergedOptions.cancelOptions,
         },
         {
           text: mergedOptions.confirmText,
@@ -270,6 +323,7 @@ export const prompt = (options: Options): Promise<string> => {
 
             return onConfirm();
           },
+          options: mergedOptions.confirmOptions,
         },
       ],
     });

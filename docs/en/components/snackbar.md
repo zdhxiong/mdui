@@ -118,7 +118,7 @@ The `action` slot can also be used to add elements on the right side.
 </script>
 ```
 
-### Closable {#example-closeable}
+### Closeable {#example-closeable}
 
 The `closeable` attribute adds a close button on the right. Clicking the button closes the snackbar and triggers the `close` event.
 

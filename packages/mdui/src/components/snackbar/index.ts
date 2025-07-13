@@ -189,7 +189,7 @@ export class Snackbar extends MduiElement<SnackbarEventMap> {
       }
 
       window.clearTimeout(this.closeTimeout);
-      if (this.autoCloseDelay) {
+      if (this.autoCloseDelay && !this.action && !this.closeable) {
         this.closeTimeout = window.setTimeout(() => {
           this.open = false;
         }, this.autoCloseDelay);

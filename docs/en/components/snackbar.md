@@ -192,6 +192,7 @@ The `message-line` attribute limits the number of lines in the message text, wit
 ### Auto Close Delay {#example-auto-close-delay}
 
 The `auto-close-delay` attribute sets the delay for automatic closure, in milliseconds. The default is `5000` milliseconds.
+Note: Following the guidelines of Material Design 3, this automatic closure is disabled when either `action` is defined or `closeable` is enabled.
 
 ```html,example,expandable,playgroundId=383
 <mdui-snackbar auto-close-delay="2000" class="example-close-delay">Photo archived</mdui-snackbar>

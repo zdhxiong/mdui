@@ -192,6 +192,7 @@ import type { Snackbar } from 'mdui/components/snackbar.js';
 ### 自动关闭延时 {#example-auto-close-delay}
 
 可以使用 `auto-close-delay` 属性来设置自动关闭的延时，单位为毫秒。默认值为 5000 毫秒。
+注意： 根据 Material Design 3 的指南，当定义了 `action` 或启用了 `closeable` 时，自动关闭将被禁用。
 
 ```html,example,expandable,playgroundId=383
 <mdui-snackbar auto-close-delay="2000" class="example-close-delay">Photo archived</mdui-snackbar>

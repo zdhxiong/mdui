@@ -1,7 +1,7 @@
 import { getNodeName } from '@mdui/jq/shared/helper.js';
 
 /**
- * https://github.com/shoelace-style/shoelace/blob/next/src/internal/active-elements.ts
+ * https://github.com/shoelace-style/webawesome/blob/next/packages/webawesome/src/internal/active-elements.ts
  *
  * Use a generator so we can iterate and possibly break early.
  * 按层级从外到内获取所有活跃元素

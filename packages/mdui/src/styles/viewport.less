@@ -2,27 +2,17 @@
  * 在草案（https://www.w3.org/TR/mediaqueries-5/#custom-mq）中很多年了，然而浏览器还不支持，等浏览器支持后再启用该功能
  * 在媒体查询中，rem 始终基于初始 font-size 值，而不是当前 font-size 值，所以媒体查询中使用 px 作为单位
  * 目前 JavaScript 代码中需要用到断点查询时，从 breakpoint.less 中的 CSS 自定义属性值读取
- *
- * xs：=0px
- * sm: <600px
- * md：>=600px & <840px
- * lg：>=840px & <1080px
- * xl：>=1080px & < 1920px
- * xxl：>=1920px
  */
 @custom-media --mdui-viewport-xs (min-width: 0) and (max-width: 599.98px);
 @custom-media --mdui-viewport-sm-down (max-width: 599.98px);
 @custom-media --mdui-viewport-sm (min-width: 600px) and (max-width: 839.98px);
 @custom-media --mdui-viewport-sm-up (min-width: 600px);
 @custom-media --mdui-viewport-md-down (max-width: 839.98px);
-@custom-media --mdui-viewport-md (min-width: 840px) and (max-width: 1079.98px);
+@custom-media --mdui-viewport-md (min-width: 840px) and (max-width: 1199.98px);
 @custom-media --mdui-viewport-md-up (min-width: 840px);
-@custom-media --mdui-viewport-lg-down (max-width: 1079.98px);
-@custom-media --mdui-viewport-lg (min-width: 1080px) and (max-width: 1439.98px);
-@custom-media --mdui-viewport-lg-up (min-width: 1080px);
-@custom-media --mdui-viewport-xl-down (max-width: 1439.98px);
-@custom-media --mdui-viewport-xl (min-width: 1440px) and (max-width: 1919.98px);
-@custom-media --mdui-viewport-xl-up (min-width: 1440px);
-@custom-media --mdui-viewport-xxl-down (max-width: 1919.98px);
-@custom-media --mdui-viewport-xxl (min-width: 1920px);
-@custom-media --mdui-viewport-xxl-up (min-width: 1920px);
+@custom-media --mdui-viewport-lg-down (max-width: 1199.98px);
+@custom-media --mdui-viewport-lg (min-width: 1200px) and (max-width: 1599.98px);
+@custom-media --mdui-viewport-lg-up (min-width: 1200px);
+@custom-media --mdui-viewport-xl-down (max-width: 1599.98px);
+@custom-media --mdui-viewport-xl (min-width: 1600px);
+@custom-media --mdui-viewport-xl-up (min-width: 1600px);

@@ -7,7 +7,7 @@ interface CSSProperty {
   description: string;
   docUrl: string;
 }
-type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 type Theme = 'light' | 'dark' | '';
 type Elevation = 0 | 1 | 2 | 3 | 4 | 5;
 type Easing =
@@ -45,9 +45,8 @@ export const getCssProperties = (language: I18nLanguage): CSSProperty[] => {
       ['xs', 0],
       ['sm', 600],
       ['md', 840],
-      ['lg', 1080],
-      ['xl', 1440],
-      ['xxl', 1920],
+      ['lg', 1200],
+      ['xl', 1600],
     ];
 
     return breakpointMap.map(([breakpoint, width]) => {

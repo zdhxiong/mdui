@@ -8,7 +8,7 @@ import '@mdui/jq/methods/innerWidth.js';
 import { isElement, isNumber } from '@mdui/jq/shared/helper.js';
 import type { JQ } from '@mdui/jq/shared/core.js';
 
-export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 /**
  * 获取断点对象，通过返回的对象可用于判断指定宽度、或指定元素的宽度、或当前窗口宽度与各个断点值的关系
@@ -52,7 +52,7 @@ export const breakpoint = (
 
   // 获取比指定断点更大的一个断点
   const getNextBreakpoint = (
-    breakpoint: Exclude<Breakpoint, 'xxl'>,
+    breakpoint: Exclude<Breakpoint, 'xl'>,
   ): Breakpoint => {
     switch (breakpoint) {
       case 'xs':
@@ -63,8 +63,6 @@ export const breakpoint = (
         return 'lg';
       case 'lg':
         return 'xl';
-      case 'xl':
-        return 'xxl';
     }
   };
 
@@ -90,7 +88,7 @@ export const breakpoint = (
      * @param breakpoint
      */
     only(breakpoint: Breakpoint): boolean {
-      if (breakpoint === 'xxl') {
+      if (breakpoint === 'xl') {
         return this.up(breakpoint);
       } else {
         return this.up(breakpoint) && this.down(getNextBreakpoint(breakpoint));

@@ -1123,7 +1123,9 @@ mdui components use elevation to create depth with shadows. You can adjust these
 ```css
 /* Modify the elevation of level1 */
 :root {
-  --mdui-elevation-level1: 0 0.5px 1.5px 0 rgba(var(--mdui-color-shadow), 19%), 0 0 1px 0 rgba(var(--mdui-color-shadow), 3.9%);
+  --mdui-elevation-level1:
+    0 0.5px 1.5px 0 rgba(var(--mdui-color-shadow), 19%),
+    0 0 1px 0 rgba(var(--mdui-color-shadow), 3.9%);
 }
 
 /* Set the elevation of the foo element to level1 */
@@ -1154,7 +1156,8 @@ mdui components incorporate animations, with customizable easing curves and dura
 
 /* Apply the standard easing curve and short1 duration to the transition effect of the foo element */
 .foo {
-  transition: all var(--mdui-motion-duration-short1) var(--mdui-motion-easing-standard);
+  transition: all var(--mdui-motion-duration-short1)
+    var(--mdui-motion-easing-standard);
 }
 ```
 
@@ -1280,17 +1283,15 @@ Please note that CSS custom properties cannot be used in CSS media queries. For 
 ```css
 /* Incorrect usage. CSS custom properties cannot be used in media queries */
 @media (min-width: var(--mdui-breakpoint-sm)) {
-
 }
 ```
 
 To determine breakpoints in JavaScript, use the [`breakpoint`](/en/docs/2/functions/breakpoint) function.
 
-| CSS Custom Property     | Default  |
-| ----------------------- | -------- |
-| `--mdui-breakpoint-xs`  | `0px`    |
-| `--mdui-breakpoint-sm`  | `600px`  |
-| `--mdui-breakpoint-md`  | `840px`  |
-| `--mdui-breakpoint-lg`  | `1080px` |
-| `--mdui-breakpoint-xl`  | `1440px` |
-| `--mdui-breakpoint-xxl` | `1920px` |
+| CSS Custom Property    | Default  |
+| ---------------------- | -------- |
+| `--mdui-breakpoint-xs` | `0px`    |
+| `--mdui-breakpoint-sm` | `600px`  |
+| `--mdui-breakpoint-md` | `840px`  |
+| `--mdui-breakpoint-lg` | `1200px` |
+| `--mdui-breakpoint-xl` | `1600px` |

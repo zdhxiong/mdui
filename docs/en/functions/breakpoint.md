@@ -1,6 +1,6 @@
 This function is designed to determine page breakpoints.
 
-mdui provides 6 breakpoints: `xs`, `sm`, `md`, `lg`, `xl`, and `xxl`. Default values can be found on the [Design Tokens](/en/docs/2/styles/design-tokens#breakpoint) page. This function allows you to check if the current page width is greater than, less than, equal to, not equal to a specified breakpoint, or within a specified range.
+mdui provides 5 breakpoints: `xs`, `sm`, `md`, `lg`, and `xl`. Default values can be found on the [Design Tokens](/en/docs/2/styles/design-tokens#breakpoint) page. This function allows you to check if the current page width is greater than, less than, equal to, not equal to a specified breakpoint, or within a specified range.
 
 ## Usage {#usage}
 
@@ -37,16 +37,16 @@ breakpointCondition.between('sm', 'lg');
 
 This function returns a [`breakpointCondition`](#api-breakpointCondition) object. The behavior of the function depends on the type of the parameter passed:
 
-* If no parameter is passed, it returns the `breakpointCondition` for the current page width.
-* If a number is passed, it returns the `breakpointCondition` for the specified width.
-* If a CSS selector is passed, it returns the `breakpointCondition` for the width of the corresponding element.
-* If an HTML element is passed, it returns the `breakpointCondition` for the width of the specified element.
-* If a [JQ object](/en/docs/2/functions/jq) is passed, it returns the `breakpointCondition` for the width of the element within the JQ object.
+- If no parameter is passed, it returns the `breakpointCondition` for the current page width.
+- If a number is passed, it returns the `breakpointCondition` for the specified width.
+- If a CSS selector is passed, it returns the `breakpointCondition` for the width of the corresponding element.
+- If an HTML element is passed, it returns the `breakpointCondition` for the width of the specified element.
+- If a [JQ object](/en/docs/2/functions/jq) is passed, it returns the `breakpointCondition` for the width of the element within the JQ object.
 
 ### Breakpoint {#api-Breakpoint}
 
 ```ts
-type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 ```
 
 ### breakpointCondition {#api-breakpointCondition}

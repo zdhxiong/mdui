@@ -113,9 +113,7 @@ declare global {
 import { JQ } from '@mdui/jq';
 import * as mdui from "./mdui.js";
 
-export interface IntrinsicAttributes<T> {
-  ref: (e: T | null) => void;
-}
+export interface IntrinsicAttributes<T> { }
 
 export interface IntrinsicElements {
   ${jsxElements

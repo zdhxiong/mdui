@@ -22,7 +22,8 @@ export const buildJSXTypes = (metadataPath: string, packageFolder: string) => {
   i18nLanguages.forEach((language) => {
     const i18nData = getI18nData(language);
     const jsxElements: {
-      name: string;
+      tagName: string;
+      className: string;
       docUrl: string;
       description: string;
       attributes: {
@@ -37,11 +38,13 @@ export const buildJSXTypes = (metadataPath: string, packageFolder: string) => {
     const components = getAllComponents(metadataPath);
     components.map((component) => {
       const tagName = component.tagName;
+      const className = component.name;
       const docUrl = getDocUrlByTagName(tagName, language);
       const hasMultipleComponents = isDocHasMultipleComponents(tagName);
 
       jsxElements.push({
-        name: tagName,
+        tagName: tagName,
+        className: className,
         docUrl,
         description: handleDescription(
           i18nData[tagName].summary,
@@ -54,9 +57,8 @@ export const buildJSXTypes = (metadataPath: string, packageFolder: string) => {
             .filter((v) => v && v !== 'undefined') // 移除 undefined
             .map((v) => v.replace(/\/\*([\s\S]*?)\*\//, '').trim()); // 移除枚举类型枚举项的注释
 
-          const componentName = `${
-            hasMultipleComponents ? tagName.slice(5) + '-' : ''
-          }`;
+          const componentName = `${hasMultipleComponents ? tagName.slice(5) + '-' : ''
+            }`;
 
           return {
             name: attr.attribute!,
@@ -82,33 +84,71 @@ declare global {
     namespace JSX {
       interface IntrinsicElements {
         ${jsxElements
-          .map(
-            (element) => `/**
+        .map(
+          (element) => `/**
         * ${element.description.split('\n').join('\n       * ')}
         * @see ${element.docUrl}
         */
-        '${element.name}': {
+        '${element.tagName}': {
           ${element.attributes
-            .map(
-              (attribute) => `/**
+              .map(
+                (attribute) => `/**
           * ${attribute.description.split('\n').join('\n         * ')}
           * @see ${attribute.docUrl}
           */
           '${attribute.name}'?: ${attribute.type};`,
-            )
-            .join('\n        ')}
+              )
+              .join('\n        ')}
         } & HTMLElementProps;`,
-          )
-          .join('\n      ')}
+        )
+        .join('\n      ')}
       }
     }
   }
 }
 `;
 
+
+    const jsx2Type = `
+import { JQ } from '@mdui/jq';
+import * as mdui from "./mdui.js";
+
+export interface IntrinsicAttributes<T> {
+  ref: (e: T | null) => void;
+}
+
+export interface IntrinsicElements {
+  ${jsxElements
+        .map(
+          (element) => `/**
+  * ${element.description.split('\n').join('\n  * ')}
+  * @see ${element.docUrl}
+  */
+  '${element.tagName}': {
+    ${element.attributes
+              .map(
+                (attribute) => `/**
+    * ${attribute.description.split('\n').join('\n    * ')}
+    * @see ${attribute.docUrl}
+    */
+    '${attribute.name}'?: ${attribute.type};`,
+              )
+              .join('\n    ')}
+  } & IntrinsicAttributes<mdui.${element.className}>;`,
+        )
+        .join('\n  ')}
+}
+`;
+
     fs.writeFileSync(
       path.resolve(`./packages/${packageFolder}/jsx.${language}.d.ts`),
       jsxType,
+      'utf8',
+    );
+
+    fs.writeFileSync(
+      path.resolve(`./packages/${packageFolder}/jsx2.${language}.d.ts`),
+      jsx2Type,
       'utf8',
     );
   });

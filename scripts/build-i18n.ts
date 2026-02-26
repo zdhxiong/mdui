@@ -21,7 +21,7 @@ import {
 const languages = i18nLanguages.filter((i) => i !== 'zh-cn'); // 目标文件，zh-cn 作为原始文件不列入其中
 const components = getAllComponents(
   path.resolve('./packages/mdui/custom-elements.json'),
-);
+).sort((a, b) => a.tagName.localeCompare(b.tagName));
 const originJson: I18nData = {
   // 所有继承自父类的属性放这里
   superclass: {},
@@ -363,7 +363,7 @@ originJson.cssClasses = {
     description: '添加此 class，将优化文章的排版样式。',
     example: `\`\`\`html
 <div class="mdui-prose">
-  <h1>文章标题</h2>
+  <h1>文章标题</h1>
   <p>文章正文</p>
 </div>
 \`\`\``,

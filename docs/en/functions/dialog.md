@@ -1,6 +1,6 @@
 # dialog Function
 
-The `dialog` function, a wrapper for the [`<mdui-dialog>`](/en/docs/2/components/dialog) component. It offers a more convenient way to open a dialog without the need to write HTML code for the component.
+The `dialog` function is a wrapper for the [`<mdui-dialog>`](/en/docs/2/components/dialog) component. It offers a more convenient way to open a dialog without the need to write HTML code for the component.
 
 ## Usage {#usage}
 

@@ -75,7 +75,7 @@ type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
   not(breakpoint: <a href="#api-Breakpoint">Breakpoint</a>): boolean;
 
   /**
-   * Checks if the current width is not within the specified breakpoint.
+   * Checks if the current width is between the specified breakpoints.
    */
   between(startBreakpoint: <a href="#api-Breakpoint">Breakpoint</a>, endBreakpoint: <a href="#api-Breakpoint">Breakpoint</a>): boolean;
 }</code></pre>

@@ -90,7 +90,7 @@ Alternatively, use the `icon` and `end-icon` slots to add elements to the left a
 
 ### Link {#example-link}
 
-The `href` attribute turns the list into a link, with `download`, `target`, and `rel` attributes available for link-related functionality.
+The `href` attribute turns the list item into a link, with `download`, `target`, and `rel` attributes available for link-related functionality.
 
 ```html,example,expandable,playgroundId=288
 <mdui-list>

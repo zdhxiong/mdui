@@ -114,7 +114,7 @@ export class Checkbox
   public name = '';
 
   /**
-   * 复选框的值，将于表单数据一起提交
+   * 复选框的值，将与表单数据一起提交
    */
   @property({ reflect: true })
   public value = 'on';

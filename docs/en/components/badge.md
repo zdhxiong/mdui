@@ -16,7 +16,7 @@ Import the TypeScript type:
 import type { Badge } from 'mdui/components/badge.js';
 ```
 
-example:
+Example:
 
 ```html,example,playgroundId=191
 <mdui-badge>12</mdui-badge>

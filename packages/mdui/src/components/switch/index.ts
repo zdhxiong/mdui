@@ -118,7 +118,7 @@ export class Switch
   public name = '';
 
   /**
-   * 开关的值，将于表单数据一起提交
+   * 开关的值，将与表单数据一起提交
    */
   @property({ reflect: true })
   public value = 'on';

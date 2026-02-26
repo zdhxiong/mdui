@@ -31,7 +31,7 @@ setLocale('zh-cn').then(() => {
 
 The `mdui-localize-status` event fires on `window` whenever a locale switch starts, finishes, or fails. You can listen to this event to execute custom operations, such as setting a locale preference cookie.
 
-The `detail.status` string property tells you what kind of status change has occured, and can be either `loading`, `ready`, or `error`:
+The `detail.status` string property tells you what kind of status change has occurred, and can be either `loading`, `ready`, or `error`:
 
 <table>
   <thead>
@@ -48,7 +48,7 @@ The `detail.status` string property tells you what kind of status change has occ
         <p>The <code>detail</code> object contains:</p>
         <ul>
           <li><code>loadingLocale</code>: Code of the locale that has started loading.</li>
-        <ul>
+        </ul>
       </td>
     </tr>
     <tr>

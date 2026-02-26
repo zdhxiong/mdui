@@ -66,7 +66,7 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
     public scrollBehavior?: 'hide' | 'shrink' | 'elevate';
 
     /**
-     * 在滚动多少距离之后触发滚动行为，单位为 `px`
+     * 触发滚动行为所需的滚动距离，单位为 `px`
      */
     @property({ type: Number, reflect: true, attribute: 'scroll-threshold' })
     public scrollThreshold?: number;

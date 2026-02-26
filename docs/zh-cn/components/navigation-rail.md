@@ -37,7 +37,7 @@ import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js
 1. `<mdui-navigation-rail>` 组件的 `contained` 属性为 `true` 时。此时会在父元素上添加 `padding-left` 或 `padding-right` 样式。
 2. 当位于 [`<mdui-layout></mdui-layout>`](/zh-cn/docs/2/components/layout) 组件中时。此时不会添加 `padding-left` 或 `padding-right` 样式。
 
-## 样式 {#examples}
+## 示例 {#examples}
 
 ### 位于指定容器内 {#example-contained}
 

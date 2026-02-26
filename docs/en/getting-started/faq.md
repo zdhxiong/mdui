@@ -1,6 +1,6 @@
 # Frequently Asked Questions
 
-Here are the frequently asked questions about mdui that you should look up before you ask in community or create new issue.
+Here are frequently asked questions about mdui. Check these before asking in the community or creating a new issue.
 
 ## Why Don't Components Display with Self-Closing Tags? {#no-self-closing}
 
@@ -18,7 +18,7 @@ mdui is a library based on Web Components. Web Components do not support self-cl
 
 mdui components are registered via JavaScript, which may cause a brief unstyled display until the JavaScript loads and registers the components. Here are two solutions:
 
-One solution is to use the [`:defined`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:defined) pseudo-class to hide unregistered mdui components. The following CSS hides all unregistered mdui components and shows them once registered:
+One solution is to use the [`:defined`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:defined) pseudo-class to hide unregistered mdui components. The following CSS hides all unregistered mdui components and shows them once registered:
 
 ```css
 :not(:defined) {
@@ -26,7 +26,7 @@ One solution is to use the [`:defined`](https://developer.mozilla.org/zh-CN/docs
 }
 ```
 
-Another solution is to use the [`customElements.whenDefined()`](https://developer.mozilla.org/zh-CN/docs/Web/API/CustomElementRegistry/whenDefined) method. This method returns a promise that resolves when the specified component is registered. To handle cases where some components may fail to load, use [`Promise.allSettled()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled).
+Another solution is to use the [`customElements.whenDefined()`](https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/whenDefined) method. This method returns a promise that resolves when the specified component is registered. To handle cases where some components may fail to load, use [`Promise.allSettled()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled).
 
 In the following example, the `<body>` element is initially hidden using `opacity: 0` and fades in after the components are registered. `Promise.allSettled()` is used to wait for all promises to complete, ensuring the page displays properly even if a component fails to load.
 

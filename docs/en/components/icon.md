@@ -24,7 +24,7 @@ Example:
 
 ### Using Material Icons {#usage-material-icons}
 
-To use Material Icons, import the CSS file for the desired variant: Filled, Outlined, Rounded, Sharp, or Two Tone.
+To use Material Icons, import the CSS file for the desired variant: Filled, Outlined, Rounded, Sharp, or Two-Tone.
 
 ```html
 <!-- Filled -->
@@ -79,7 +79,7 @@ Use the `name` attribute to specify the icon, appending the variant name as a su
 
 Search for icons directly using the [Material Icons Search](/en/docs/2/components/icon#search) tool at the page bottom. Click an icon to copy its code to the clipboard.
 
-mdui also provides a standalone package [`@mdui/icons`](/en/docs/2/libraries/icons), with each icon component as a separate file. This allows importing only needed icon components, without the entire icon library.
+mdui also provides a standalone package [`@mdui/icons`](/en/docs/2/libraries/icons), with each icon component as a separate file. This allows you to import only the icon components you need, without including the entire icon library.
 
 ### Using SVG Icon {#usage-svg}
 

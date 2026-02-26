@@ -51,7 +51,7 @@ The `indeterminate` attribute indicates an indeterminate state for the checkbox.
 
 ### Icons {#example-icon}
 
-Use the `unchecked-icon`, `checked-icon`, and `indeterminate-icon` attributes to set Material Icons for the checkbox in unchecked, checked, and indeterminate states, respectively. Alternatively, use the corresponding slots for setting icons.
+Use the `unchecked-icon`, `checked-icon`, and `indeterminate-icon` attributes to set the Material Icons for the checkbox in unchecked, checked, and indeterminate states, respectively. Alternatively, use the corresponding slots for setting icons.
 
 ```html,example,expandable,playgroundId=220
 <mdui-checkbox

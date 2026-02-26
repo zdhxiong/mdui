@@ -35,17 +35,17 @@ Search for `mdui` in the VS Code extension marketplace, select the first result 
 
 Prioritize npm installation and `settings.json` setup over the VS Code extension to ensure IDE support aligns with the mdui version in use.
 
-WebStorm {#webstorm}
-
 ## WebStorm {#webstorm}
 
 ### For npm-installed mdui {#webstorm-npm}
 
 To enable WebStorm IDE support for mdui installed via npm:
 
-1. Add the following code to the root of your project's `package.json` file:
-   ```
-   web-types: ["./node_modules/mdui/web-types.en.json"]
+1. Add the following property to the root of your project's `package.json` file:
+   ```json
+   {
+     "web-types": ["./node_modules/mdui/web-types.en.json"]
+   }
    ```
 
 If `package.json` already has a `web-types` property, add `./node_modules/mdui/web-types.en.json` to the `web-types` array. Restart WebStorm after these changes.

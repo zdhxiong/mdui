@@ -28,7 +28,7 @@ Example:
 
 The `variant` attribute determines the chip's appearance. There are four available variants:
 
-- `assist`: Represents smart or automated actions that can span multiple apps.
+- `assist`: Used for auxiliary actions related to the current context, such as sharing or favoriting an item.
 - `filter`: Represents filters for a collection.
 - `input`: Represents discrete pieces of information entered by a user.
 - `suggestion`: Helps narrow a user’s intent by presenting dynamically generated suggestions.
@@ -88,7 +88,7 @@ Add the `selectable` attribute to make the chip selectable.
 <mdui-chip selectable>Chip</mdui-chip>
 ```
 
-Use the `selected-icon` attribute to specify the Material Icons name for the selected state. Alternatively, use the `selected-icon` slot to specify the selected state icon element.
+Use the `selected-icon` attribute to specify the Material Icon name for the selected state. Alternatively, use the `selected-icon` slot to specify the selected state icon element.
 
 ```html,example,expandable,playgroundId=228
 <mdui-chip selectable selected-icon="favorite">Chip</mdui-chip>
@@ -106,7 +106,7 @@ The `selected` property is `true` when the chip is selected. Add the `selected` 
 
 ### Deletable {#example-deletable}
 
-Add the `deletable` attribute to add a delete icon to the right of the chip. Clicking this icon triggers the `delete` event. Use the `delete-icon` attribute to specify the Material Icons for the delete icon, or use the `delete-icon` slot to specify the element for the delete icon.
+Add the `deletable` attribute to add a delete icon to the right of the chip. Clicking this icon triggers the `delete` event. Use the `delete-icon` attribute to specify the Material Icon for the delete icon, or use the `delete-icon` slot to specify the element for the delete icon.
 
 ```html,example,expandable,playgroundId=230
 <mdui-chip deletable>Chip</mdui-chip>

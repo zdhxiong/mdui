@@ -36,7 +36,7 @@ The `variant` attribute determines the card's appearance.
 
 ### Clickable {#example-clickable}
 
-Add the `clickable` attribute to make the card interactive. This will add hover and click ripple effects.
+Add the `clickable` attribute to make the card interactive. This adds hover and click ripple effects.
 
 ```html,example,expandable,playgroundId=213
 <mdui-card clickable style="width: 200px;height: 124px"></mdui-card>

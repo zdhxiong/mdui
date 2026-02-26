@@ -2,7 +2,7 @@
 
 Snackbars provide brief updates about app processes at the bottom of the screen.
 
-In addition to direct component usage, mdui also offers a [`mdui.snackbar`](/en/docs/2/functions/snackbar) function for simplified Snackbar component usage.
+In addition to direct component usage, mdui also offers a [`mdui.snackbar`](/en/docs/2/functions/snackbar) function for a simpler way to use the Snackbar component.
 
 ## Usage {#usage}
 

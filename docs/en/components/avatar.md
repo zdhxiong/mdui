@@ -36,11 +36,11 @@ To use an image as the avatar, specify the image link using the `src` attribute,
 </mdui-avatar>
 ```
 
-The `fit` attribute determines how the image should fit the container box. It works similar to the native [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) property.
+The `fit` attribute determines how the image should fit the container box. It works similarly to the native [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) property.
 
 ### Icon Avatar {#example-icon}
 
-To use a Material Icons icon as the avatar, specify the icon using the `icon` attribute. Alternatively, provide an icon element within the default slot.
+To use a Material Icon as the avatar, specify the icon using the `icon` attribute. Alternatively, provide an icon element within the default slot.
 
 ```html,example,expandable,playgroundId=189
 <mdui-avatar icon="people_alt"></mdui-avatar>

@@ -90,7 +90,7 @@ export class NavigationRail extends LayoutItemBase<NavigationRailEventMap> {
     | /*底部对齐*/ 'end' = 'start';
 
   /**
-   * 默认情况下，导航栏相对于 `body` 元素显示。当该参数设置为 `true` 时，导航栏将相对于其父元素显示。
+   * 默认情况下，导航栏相对于 `body` 元素显示。当该属性设置为 `true` 时，导航栏将相对于其父元素显示。
    *
    * **Note**：设置该属性时，必须在父元素上手动设置样式 `position: relative;`。
    */
@@ -102,7 +102,7 @@ export class NavigationRail extends LayoutItemBase<NavigationRailEventMap> {
   public contained = false;
 
   /**
-   * 是否在导航栏和页面内容之间添加分割线
+   * 是否在导航栏和页面内容之间添加分隔线
    */
   @property({
     type: Boolean,

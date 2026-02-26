@@ -26,7 +26,7 @@ Example:
 
 ### Icon {#example-icon}
 
-Use the `icon` attribute to specify the Material Icons name. Alternatively, you can use the default slot to specify the icon element.
+Use the `icon` attribute to specify the Material Icon name. Alternatively, you can use the default slot to specify the icon element.
 
 ```html,example,expandable,playgroundId=204
 <mdui-button-icon icon="search"></mdui-button-icon>
@@ -54,7 +54,7 @@ Add the `selectable` attribute to make the icon button selectable.
 <mdui-button-icon selectable icon="favorite_border"></mdui-button-icon>
 ```
 
-Use the `selected-icon` attribute to specify the Material Icons name for the selected state. Alternatively, use the `selected-icon` slot to specify the selected state icon element.
+Use the `selected-icon` attribute to specify the Material Icon name for the selected state. Alternatively, use the `selected-icon` slot to specify the selected state icon element.
 
 ```html,example,expandable,playgroundId=207
 <mdui-button-icon selectable icon="favorite_border" selected-icon="favorite"></mdui-button-icon>

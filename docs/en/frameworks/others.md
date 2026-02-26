@@ -24,6 +24,6 @@ Please send bug reports to [https://github.com/mreiche/aurelia-mdui](https://git
 
 ## WebCell {#WebCell}
 
-To integrate mdui with [WebCell](https://web-cell.dev/), start by following the steps on the [installation](/en/docs/2/getting-started/installation#npm) page, first-class Web components, TypeScript & JSX supports is out of box.
+To integrate mdui with [WebCell](https://web-cell.dev/), start by following the steps on the [installation](/en/docs/2/getting-started/installation#npm) page. Web Components, TypeScript, and JSX support is first-class and available out of the box.
 
 Or you can create a new project with [the official GitHub template repository](https://github.com/EasyWebApp/WebCell-mobile) by [clicking only one button](https://github.com/new?template_name=WebCell-mobile&template_owner=EasyWebApp).

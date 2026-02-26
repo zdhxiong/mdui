@@ -2,7 +2,7 @@
 
 The `observeResize` function allows you to monitor changes in an element's size and execute a callback when the size changes.
 
-This function utilizes the [`ResizeObserver`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserver) API and implements the singleton pattern for enhanced performance.
+This function utilizes the [`ResizeObserver`](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver) API and implements the singleton pattern for enhanced performance.
 
 ## Usage {#usage}
 
@@ -36,7 +36,7 @@ The `target` parameter can be a CSS selector, a DOM element, or a <a href="/en/d
 
 ### Callback {#api-Callback}
 
-<pre><code class="nohighlight">(entry: <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserverEntry" target="_blank" rel="noopener nofollow">ResizeObserverEntry</a>, observer: <a href="#api-ObserveResize">ObserveResize</a>) => void</code></pre>
+<pre><code class="nohighlight">(entry: <a href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry" target="_blank" rel="noopener nofollow">ResizeObserverEntry</a>, observer: <a href="#api-ObserveResize">ObserveResize</a>) => void</code></pre>
 
 In this function, `this` also refers to [ObserveResize](#api-ObserveResize).
 

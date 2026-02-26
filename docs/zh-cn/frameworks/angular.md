@@ -31,7 +31,7 @@ import { Dialog } from 'mdui/components/dialog.js';
   selector: 'app-dialog-example',
   template: `<div id="page">
     <button (click)="openDialog()">Open Dialog</button>
-    <mdui-dialog #dialog primary="Dialog Title">Dialog Content</mdui-dialog>
+    <mdui-dialog #dialog headline="Dialog Title">Dialog Content</mdui-dialog>
   </div>`
 })
 export class DialogExampleComponent implements OnInit {

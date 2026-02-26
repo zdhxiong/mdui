@@ -16,7 +16,7 @@ import type { CSSResultGroup, PropertyValues, TemplateResult } from 'lit';
 import type { Ref } from 'lit/directives/ref.js';
 
 /**
- * @summary 纸片组件
+ * @summary 标签组件
  *
  * ```html
  * <mdui-chip>Chip</mdui-chip>
@@ -28,14 +28,14 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event change - 选中状态变更时触发
  * @event delete - 点击删除图标时触发
  *
- * @slot - 纸片文本
+ * @slot - 标签文本
  * @slot icon - 左侧元素
  * @slot end-icon - 右侧元素
  * @slot selected-icon - 选中状态下的左侧元素
  * @slot delete-icon - 可删除时的右侧删除元素
  *
  * @csspart button - 内部的 `<button>` 或 `<a>` 元素
- * @csspart label - 纸片文本
+ * @csspart label - 标签文本
  * @csspart icon - 左侧图标
  * @csspart end-icon - 右侧图标
  * @csspart selected-icon - 选中状态下的左侧图标
@@ -49,7 +49,7 @@ export class Chip extends ButtonBase<ChipEventMap> {
   public static override styles: CSSResultGroup = [ButtonBase.styles, style];
 
   /**
-   * 纸片的形状。可选值包括：
+   * 标签的形状。可选值包括：
    *
    * * `assist`：用于显示与当前上下文相关的辅助操作，如在点餐页面提供分享、收藏等功能
    * * `filter`：用于对内容进行筛选，如在搜索结果页过滤搜索结果
@@ -95,7 +95,7 @@ export class Chip extends ButtonBase<ChipEventMap> {
   public selected = false;
 
   /**
-   * 是否可删除。为 `true` 时，纸片右侧会显示删除图标
+   * 是否可删除。为 `true` 时，标签右侧会显示删除图标
    */
   @property({
     type: Boolean,

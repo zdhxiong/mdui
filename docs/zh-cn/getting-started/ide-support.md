@@ -42,8 +42,10 @@ mdui 专门为 VS Code 和 WebStorm 进行了优化，在这些 IDE 中可以获
 如果你通过 npm 安装了 mdui，可以按照以下步骤在当前项目中启用 WebStorm 的 IDE 支持：
 
 1. 在项目根目录的 `package.json` 文件的根节点中添加以下代码：
-   ```
-   web-types: ["./node_modules/mdui/web-types.zh-cn.json"]
+   ```json
+   {
+     "web-types": ["./node_modules/mdui/web-types.zh-cn.json"]
+   }
    ```
 
 如果 `package.json` 文件的根节点已存在 `web-types` 属性，只需将 `./node_modules/mdui/web-types.zh-cn.json` 添加到 `web-types` 数组中即可。修改完成后，重启 WebStorm。

@@ -33,9 +33,9 @@ Example: (Note: The `style="position: relative"` in the example is for demonstra
 
 The BottomAppBar component uses `position: fixed` by default. It automatically adds `padding-bottom` to the `body` to prevent the page content from being obscured.
 
-However, it uses `position: absolute` in the following two cases:
+However, it uses `position: absolute` in the following cases:
 
-1. When the `scroll-target` attribute is specified. In this case, `padding-bottom` will be added to the element specified by `scroll-target`.
+1. When the `scroll-target` attribute is specified. In this case, `padding-bottom` is added to the element specified by `scroll-target`.
 2. When it's within the [`<mdui-layout></mdui-layout>`](/en/docs/2/components/layout) component. In this case, `padding-bottom` won't be added.
 
 ## Examples {#examples}
@@ -60,7 +60,7 @@ To place it inside a specific container, specify the `scroll-target` attribute w
 
 To hide the Bottom App Bar when scrolling down and display it when scrolling up, set the `scroll-behavior` attribute to `hide`.
 
-The `scroll-threshold` attribute can be used to set the number of pixels to start hiding the Bottom App Bar.
+The `scroll-threshold` attribute can be used to set the number of pixels to scroll before the Bottom App Bar starts hiding.
 
 ```html,example,expandable,playgroundId=195
 <div style="position: relative;overflow: hidden">

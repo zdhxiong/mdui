@@ -81,6 +81,6 @@ The `labelFormatter` property allows you to modify the tooltip's display format.
 
 <script>
   const slider = document.querySelector(".example-label-formatter");
-  slider.labelFormatter = (value) => `${value} 小时`;
+  slider.labelFormatter = (value) => `${value} hours`;
 </script>
 ```

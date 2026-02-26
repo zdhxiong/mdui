@@ -56,7 +56,7 @@ For a rich text tooltip, set the `variant` attribute to `rich`. The tooltip's ti
 <mdui-tooltip
   variant="rich"
   headline="Rich tooltip"
-  content="Rich tooltips bring attention to a particular element of feature that warrants the user's focus. It supports multiple lines of informational text."
+  content="Rich tooltips bring attention to a particular element or feature that warrants the user's focus. It supports multiple lines of informational text."
 >
   <mdui-button>button</mdui-button>
 </mdui-tooltip>
@@ -68,7 +68,7 @@ Alternatively, the `headline` and `content` slots can be used to specify the too
 <mdui-tooltip variant="rich">
   <mdui-button>button</mdui-button>
   <div slot="headline">Rich tooltip</div>
-  <div slot="content">Rich tooltips bring attention to a particular element of feature that warrants the user's focus. It supports multiple lines of informational text.</div>
+  <div slot="content">Rich tooltips bring attention to a particular element or feature that warrants the user's focus. It supports multiple lines of informational text.</div>
   <mdui-button slot="action" variant="text">Action</mdui-button>
 </mdui-tooltip>
 ```

@@ -8,7 +8,7 @@ import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
- * @summary 线性进度指示器组件
+ * @summary 线性进度条组件
  *
  * ```html
  * <mdui-linear-progress></mdui-linear-progress>
@@ -23,13 +23,13 @@ export class LinearProgress extends MduiElement<LinearProgressEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * 进度指示器的最大值。默认为 `1`
+   * 进度条的最大值。默认为 `1`
    */
   @property({ type: Number, reflect: true })
   public max = 1;
 
   /**
-   * 进度指示器的当前值。如果未指定该值，则处于不确定状态
+   * 进度条的当前值。如果未指定该值，则处于不确定状态
    */
   @property({ type: Number })
   public value?: number;

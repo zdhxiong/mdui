@@ -26,4 +26,4 @@ Aurelia.register(MduiWebTask).app(MyApp).start();
 
 在 [WebCell](https://web-cell.dev/) 中使用 mdui 时，只需要按照 [安装](/zh-cn/docs/2/getting-started/installation#npm) 页面的步骤完成安装即可，Web Components、TypeScript 和 JSX 支持是一级特性且开箱即用的。
 
-或者，您可用 [官方 GitHub 模板仓库](https://github.com/EasyWebApp/WebCell-mobile) 来 [一键创建新项目](https://github.com/new?template_name=WebCell-mobile&template_owner=EasyWebApp)。
+或者，您可以使用 [官方 GitHub 模板仓库](https://github.com/EasyWebApp/WebCell-mobile) 来 [一键创建新项目](https://github.com/new?template_name=WebCell-mobile&template_owner=EasyWebApp)。

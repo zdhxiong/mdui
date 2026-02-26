@@ -4,11 +4,11 @@ To integrate mdui with React, start by following the steps on the [installation]
 
 ## Notes {#notes}
 
-When using mdui in a React environment, there are certain aspects to be aware of. These considerations stem from the general constraints of Web Components and are not specific to mdui.
+When using mdui in a React environment, keep a few things in mind. These considerations come from the general constraints of Web Components and are not specific to mdui.
 
 ### Event Binding {#event-binding}
 
-React does not natively support custom events. Therefore, to utilize events provided by mdui components, it's necessary to obtain a reference to the component using the `ref` attribute. This reference can then be used to add event listeners.
+React does not natively support custom events. Therefore, to use events provided by mdui components, you need to obtain a reference to the component using the `ref` attribute. That reference can then be used to add event listeners.
 
 Here's an example of handling mdui component events in React:
 

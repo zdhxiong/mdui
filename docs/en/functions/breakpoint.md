@@ -1,8 +1,8 @@
 # breakpoint Function
 
-The `breakpoint` function is designed to determine page breakpoints.
+The `breakpoint` function checks the current page width against responsive breakpoints.
 
-mdui provides 6 breakpoints: `xs`, `sm`, `md`, `lg`, `xl`, and `xxl`. Default values can be found on the [Design Tokens](/en/docs/2/styles/design-tokens#breakpoint) page. This function allows you to check if the current page width is greater than, less than, equal to, not equal to a specified breakpoint, or within a specified range.
+mdui provides six breakpoints: `xs`, `sm`, `md`, `lg`, `xl`, and `xxl`. Default values are listed on the [Design Tokens](/en/docs/2/styles/design-tokens#breakpoint) page. This function lets you check whether the current page width is above, below, equal to, or different from a specified breakpoint, or within a specified range.
 
 ## Usage {#usage}
 
@@ -37,7 +37,7 @@ breakpointCondition.between('sm', 'lg');
 
 <pre><code class="nohighlight">breakpoint(width?: number | string | HTMLElement | <a href="/en/docs/2/functions/jq">JQ</a>&lt;HTMLElement&gt;): <a href="#api-breakpointCondition">breakpointCondition</a></code></pre>
 
-This function returns a [`breakpointCondition`](#api-breakpointCondition) object. The behavior of the function depends on the type of the parameter passed:
+This function returns a [`breakpointCondition`](#api-breakpointCondition) object. Its behavior depends on the type of argument you pass:
 
 - If no parameter is passed, it returns the `breakpointCondition` for the current page width.
 - If a number is passed, it returns the `breakpointCondition` for the specified width.
@@ -65,17 +65,17 @@ type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
   down(breakpoint: <a href="#api-Breakpoint">Breakpoint</a>): boolean;
 
   /**
-   * Checks if the current width is within the specified breakpoint.
+   * Checks if the current width is equal to the specified breakpoint.
    */
   only(breakpoint: <a href="#api-Breakpoint">Breakpoint</a>): boolean;
 
   /**
-   * Checks if the current width is not within the specified breakpoint.
+   * Checks if the current width is not equal to the specified breakpoint.
    */
   not(breakpoint: <a href="#api-Breakpoint">Breakpoint</a>): boolean;
 
   /**
-   * Checks if the current width is not within the specified breakpoint.
+   * Checks if the current width is between the specified breakpoints.
    */
   between(startBreakpoint: <a href="#api-Breakpoint">Breakpoint</a>, endBreakpoint: <a href="#api-Breakpoint">Breakpoint</a>): boolean;
 }</code></pre>

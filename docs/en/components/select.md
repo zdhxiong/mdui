@@ -1,8 +1,8 @@
 # Select Component
 
-The Select component is designed to present a list of options in a dropdown menu.
+The Select component presents options in a dropdown menu.
 
-This guide focuses on the usage of the `<mdui-select>` component. For information on dropdown menu items, please refer to the [`<mdui-menu-item>`](/en/docs/2/components/menu#menu-item-api) section.
+This guide focuses on the usage of the `<mdui-select>` component. For information on dropdown menu items, see the [`<mdui-menu-item>`](/en/docs/2/components/menu#menu-item-api) section.
 
 ## Usage {#usage}
 
@@ -33,7 +33,7 @@ Example:
 
 ### Variants {#example-variant}
 
-The `variant` attribute allows you to modify the shape of the select.
+Use the `variant` attribute to change the select's shape.
 
 ```html,example,expandable,playgroundId=354
 <mdui-select variant="filled" value="item-1">
@@ -49,11 +49,11 @@ The `variant` attribute allows you to modify the shape of the select.
 
 ### Multiple Selection {#example-multiple}
 
-By default, the component is set to single-select. The `value` of the `<mdui-select>` component corresponds to the `value` of the currently selected [`<mdui-menu-item>`](/en/docs/2/components/menu#menu-item-api).
+By default, the component allows only a single selection. The `value` of the `<mdui-select>` component corresponds to the `value` of the currently selected [`<mdui-menu-item>`](/en/docs/2/components/menu#menu-item-api).
 
-To enable multi-select, add the `multiple` attribute. In this case, the `value` of `<mdui-select>` becomes an array containing the `value` properties of the currently selected [`<mdui-menu-item>`](/en/docs/2/components/menu#menu-item-api) components.
+To allow multiple selections, add the `multiple` attribute. In this case, the `value` of `<mdui-select>` becomes an array containing the `value` properties of the currently selected [`<mdui-menu-item>`](/en/docs/2/components/menu#menu-item-api) components.
 
-Note: When multiple selections are enabled, the `value` of `<mdui-select>` is an array. This value can only be read and set using JavaScript properties.
+Note: When multiple selection is enabled, the `value` property of `<mdui-select>` is an array and can only be accessed and accessed and updated in JavaScript.
 
 ```html,example,expandable,playgroundId=355
 <mdui-select multiple class="example-multiple">
@@ -71,7 +71,7 @@ Note: When multiple selections are enabled, the `value` of `<mdui-select>` is an
 
 ### Helper Text {#example-helper-text}
 
-The `label` attribute allows you to display label text above the select.
+Use the `label` attribute to display a label above the select.
 
 ```html,example,expandable,playgroundId=356
 <mdui-select label="Text Field" value="item-1">
@@ -80,7 +80,7 @@ The `label` attribute allows you to display label text above the select.
 </mdui-select>
 ```
 
-The `placeholder` attribute allows you to display placeholder text when no value is selected.
+Use the `placeholder` attribute to display placeholder text when no value is selected.
 
 ```html,example,expandable,playgroundId=357
 <mdui-select placeholder="Placeholder">
@@ -89,7 +89,7 @@ The `placeholder` attribute allows you to display placeholder text when no value
 </mdui-select>
 ```
 
-The `helper` attribute allows you to display helper text at the bottom of the select. Alternatively, use the `helper` slot to set helper text.
+Use the `helper` attribute to display helper text at the bottom of the select. Alternatively, use the `helper` slot to provide helper text.
 
 ```html,example,expandable,playgroundId=358
 <mdui-select helper="Supporting text">
@@ -128,7 +128,7 @@ To disable the select, add the `disabled` attribute.
 
 ### Clearable {#example-clearable}
 
-The `clearable` attribute adds a clear button on the right when the select has a value.
+The `clearable` attribute displays a clear button on the right when the select has a value.
 
 ```html,example,expandable,playgroundId=361
 <mdui-select clearable value="item-1">
@@ -149,7 +149,7 @@ You can customize the clear button using the `clear` slot.
 
 ### Dropdown Menu Position {#example-placement}
 
-You can set the dropdown menu position using the `placement` attribute.
+Use the `placement` attribute to set the dropdown menu position.
 
 ```html,example,expandable,playgroundId=363
 <mdui-select placement="top" value="item-1">
@@ -171,7 +171,7 @@ To align the text to the right, add the `end-aligned` attribute.
 
 ### Prefix, Suffix, and Icons {#example-prefix-suffix}
 
-You can add Material Icons to the left and right of the select by setting the `icon` and `end-icon` attributes. Alternatively, use the `icon` and `end-icon` slots to add elements to the select.
+Use the `icon` and `end-icon` attributes to add Material Icons to the left and right of the select. Alternatively, use the `icon` and `end-icon` slots to add elements to the select.
 
 ```html,example,expandable,playgroundId=365
 <mdui-select value="item-1" icon="search" end-icon="mic">
@@ -189,7 +189,7 @@ You can add Material Icons to the left and right of the select by setting the `i
 </mdui-select>
 ```
 
-You can add text to the left and right of the select by setting the `prefix` and `suffix` attributes. Alternatively, use the `prefix` and `suffix` slots to add text elements. This text is displayed when the select is focused or has a value.
+Use the `prefix` and `suffix` attributes to add text to the left and right of the select. Alternatively, use the `prefix` and `suffix` slots to add text elements. They appear when the select is focused or has a value.
 
 ```html,example,expandable,playgroundId=366
 <mdui-select value="item-1" prefix="$" suffix="/100">

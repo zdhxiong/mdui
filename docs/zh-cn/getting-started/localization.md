@@ -48,7 +48,7 @@ setLocale('zh-cn').then(() => {
         <p><code>detail</code> 对象包含：</p>
         <ul>
           <li><code>loadingLocale</code>：新加载语言的语言代码。</li>
-        <ul>
+        </ul>
       </td>
     </tr>
     <tr>
@@ -95,7 +95,7 @@ window.addEventListener('mdui-localize-status', (event) => {
 
 ### 懒加载 {#lazy-load}
 
-使用[动态导入](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)可以在切换到对应语言时，才下载对应的语言包。这是最为推荐的方法。
+使用[动态导入](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/import)可以在切换到对应语言时，才下载对应的语言包。这是最为推荐的方法。
 
 ```js
 import { loadLocale } from 'mdui/functions/loadLocale.js';

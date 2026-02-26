@@ -1,6 +1,6 @@
 # confirm 函数
 
-`configm` 函数是对 [`<mdui-dialog>`](/zh-cn/docs/2/components/dialog) 组件的封装，该函数在功能上用于代替系统原生的 `window.confirm` 函数。使用该函数，你无需编写组件的 HTML 代码，就能打开一个确认框。
+`confirm` 函数是对 [`<mdui-dialog>`](/zh-cn/docs/2/components/dialog) 组件的封装，该函数在功能上用于代替系统原生的 `window.confirm` 函数。使用该函数，你无需编写组件的 HTML 代码，就能打开一个确认框。
 
 ## 使用方法 {#usage}
 

@@ -1,6 +1,6 @@
 # JavaScript Library
 
-mdui includes a lightweight JavaScript utility library that provides a jQuery-like API with chainable calls, but at only a fraction of jQuery's size.
+mdui includes a lightweight JavaScript utility library that provides a jQuery-like API with chainable calls at only a fraction of jQuery's size.
 
 Import the function:
 
@@ -86,23 +86,23 @@ This method serializes an array or an object into a string that can be used as a
 
 ```js
 $.param({ width: 1680, height: 1050 });
-// Returns: "width=1680&height=1050"
+// width=1680&height=1050
 
 $.param({ foo: { one: 1, two: 2 } });
-// Returns: "foo[one]=1&foo[two]=2"
+// foo[one]=1&foo[two]=2
 
 $.param({ ids: [1, 2, 3] });
-// Returns: "ids[]=1&ids[]=2&ids[]=3"
+// ids[]=1&ids[]=2&ids[]=3
 ```
 
-If the parameter passed is an array, it should be in the format returned by the [`.serializeArray()`] method.
+If the parameter passed is an array, it should be in the format returned by the [`.serializeArray()`](#serializeArray) method.
 
 ```js
 $.param([
   { name: 'name', value: 'mdui' },
   { name: 'password', value: '123456' },
 ]);
-// Returns: "name=mdui&password=123456"
+// name=mdui&password=123456
 ```
 
 ## Array and Object Operations {#api-array}
@@ -308,7 +308,9 @@ This method returns the index of the first element in the current collection rel
 
 If a CSS selector is passed as a parameter, it returns the index relative to the elements matched by the selector.
 
-If a DOM element or a JQ object is passed as a parameter, it returns the index of that element within the current collection.
+If a DOM element is passed as a parameter, it returns the index of that element within the current collection.
+
+If a JQ object is passed as a parameter, it returns the index of the first element in the object within the current collection.
 
 ```html
 <div id="child">
@@ -332,15 +334,16 @@ This method returns a subset of the current collection.
 The first parameter is the start position, and the second is the end position (exclusive). If the second parameter is omitted, the method includes all elements from the start position to the end of the collection.
 
 ```js
-$('div').slice(3); // Returns all elements from the third position onwards
-$('div').slice(3, 5); // Returns elements from the third to the fifth position (excluding the fifth)
+// Returns all elements from the third position (inclusive) onwards
+$('div').slice(3);
+
+// Returns elements from the third to the fifth position (inclusive of the third, exclusive of the fifth)
+$('div').slice(3, 5);
 ```
 
 ### `.filter()` {#filter}
 
-This method filters the current collection based on the specified criteria.
-
-The parameter can be a CSS selector, a DOM element, an array of DOM elements, or a callback function that returns a boolean.
+This method filters the current collection based on the specified criteria. The parameter can be a CSS selector, a DOM element, an array of DOM elements, or a callback function that returns a boolean.
 
 When the parameter is a callback, it takes the index of the element and the current element as arguments. `this` refers to the current element. If the function returns `true`, the element is included in the result; if `false`, it's excluded.
 
@@ -551,7 +554,9 @@ $('#input').val();
 
 This method can also set values for all elements in the collection.
 
-The value can be a string, a number, an array (for `<select multiple="multiple">`, `<input type="checkbox">`, `<input type="radio">`, or `<option>`), or the return value of a callback function. The callback function's first parameter is the element's index, the second is the existing value, and `this` refers to the current element.
+The value can be a string, a number, or the return value of a callback function. The callback function's first parameter is the element's index, the second is the existing value, and `this` refers to the current element.
+
+For `<input type="checkbox">`, `<input type="radio">`, and `<option>`, the value or the return value of the callback function can be an array. In this case, the elements with values in the array will be selected, while those not in the array will be deselected.
 
 If the value or the callback function's return value is `undefined`, the element's value will be set to an empty string.
 
@@ -666,7 +671,7 @@ This method retrieves or stores data on the elements in the current collection.
 
 If the value is `undefined` when storing data, it will not be stored.
 
-Note: This method include `data-*` attributes on the elements when retrieving data.
+Note: This method includes `data-*` attributes on the elements when retrieving data.
 
 ```js
 // Store data on elements in the current collection
@@ -788,7 +793,7 @@ $('.box').height('20%');
 $('.box').height(10);
 
 // Set the height using a callback function
-$('.box').height(function (index, oldWidth) {
+$('.box').height(function (index, oldHeight) {
   return 10;
 });
 ```
@@ -910,7 +915,7 @@ $('.box').outerHeight(10);
 $('.box').outerHeight(10, true);
 
 // Set height using the return value of a callback function
-$('.box').outerHeight(function (index, oldWidth) {
+$('.box').outerHeight(function (index, oldHeight) {
   return 10;
 });
 ```
@@ -1039,7 +1044,9 @@ $('span').parents('p');
 
 This method retrieves all ancestor elements for each element in the current collection until an element matching the specified parameter is encountered (excluding the matching element).
 
-The first parameter can be a CSS selector, a DOM element, or a JQ object. An optional second parameter, a CSS selector, can be passed to filter the returned elements.
+The first parameter can be a CSS selector, a DOM element, or a JQ object.
+
+An optional second parameter, which must be a CSS selector, can be passed to filter the returned elements.
 
 If no parameters are given, it matches all ancestors, similar to `.parents()`.
 
@@ -1194,9 +1201,7 @@ $('p').remove('.box');
 
 ### `.prepend()` {#prepend}
 
-This method adds content at the beginning of the elements in the current collection.
-
-It accepts an HTML string, DOM element, array of DOM elements, or JQ object as parameters. Multiple parameters can be used.
+This method adds content at the beginning of the elements in the current collection. It accepts an HTML string, DOM element, array of DOM elements, or JQ object as parameters. Multiple parameters can be used.
 
 You can also provide a callback function that returns an HTML string, DOM element, array of DOM elements, or JQ object. The callback function's first parameter is the element's index, the second is its original HTML, and `this` refers to the current element.
 
@@ -1212,7 +1217,7 @@ $('<p>I would like to say: </p>').prepend('<b>Hello</b>', '<b>World</b>');
 // Result: <p><b>Hello</b><b>World</b>I would like to say: </p>
 
 // Insert an element using a callback function
-$('<p>Hello</p>').append(function (index, oldHTML) {
+$('<p>Hello</p>').prepend(function (index, oldHTML) {
   return '<b>' + oldHTML + index + '</b>';
 });
 // Result: <p><b>Hello0</b>Hello</p>
@@ -1220,9 +1225,7 @@ $('<p>Hello</p>').append(function (index, oldHTML) {
 
 ### `.prependTo()` {#prependTo}
 
-This method inserts elements from the current collection at the beginning of the specified element.
-
-It accepts a CSS selector, HTML string, DOM element, array of DOM elements, or JQ object as parameters.
+This method inserts elements from the current collection at the beginning of the specified element. It accepts a CSS selector, HTML string, DOM element, array of DOM elements, or JQ object as parameters.
 
 The method returns the original collection.
 
@@ -1233,9 +1236,7 @@ $('<p>Hello</p>').prependTo('<p>I would like to say: </p>');
 
 ### `.append()` {#append}
 
-This method adds content at the end of the elements in the current collection.
-
-It accepts an HTML string, DOM element, array of DOM elements, or JQ object as parameters. Multiple parameters can be used.
+This method adds content at the end of the elements in the current collection. It accepts an HTML string, DOM element, array of DOM elements, or JQ object as parameters. Multiple parameters can be used.
 
 You can also provide a callback function that returns an HTML string, DOM element, array of DOM elements, or JQ object. The callback function's first parameter is the element's index, the second is its original HTML, and `this` refers to the current element.
 
@@ -1259,9 +1260,7 @@ $('<p>Hello</p>').append(function (index, oldHTML) {
 
 ### `.appendTo()` {#appendTo}
 
-This method inserts elements from the current collection at the end of the specified element.
-
-It accepts a CSS selector, HTML string, DOM element, array of DOM elements, or JQ object as parameters.
+This method inserts elements from the current collection at the end of the specified element. It accepts a CSS selector, HTML string, DOM element, array of DOM elements, or JQ object as parameters.
 
 The method returns the original collection.
 
@@ -1272,9 +1271,7 @@ $('<p>Hello</p>').appendTo('<p>I would like to say: </p>');
 
 ### `.after()` {#after}
 
-This method inserts content after the elements in the current collection.
-
-It accepts an HTML string, DOM element, array of DOM elements, or JQ object as parameters. Multiple parameters can be used.
+This method inserts content after the elements in the current collection. It accepts an HTML string, DOM element, array of DOM elements, or JQ object as parameters. Multiple parameters can be used.
 
 You can also provide a callback function that returns an HTML string, DOM element, array of DOM elements, or JQ object. The callback function's first parameter is the element's index, the second is its original HTML, and `this` refers to the current element.
 
@@ -1311,9 +1308,7 @@ $('<b>Hello</b>').insertAfter('<p>I would like to say: </p>');
 
 ### `.before()` {#before}
 
-This method inserts content before the elements in the current collection.
-
-It accepts an HTML string, DOM element, array of DOM elements, or JQ object as parameters. Multiple parameters can be used.
+This method inserts content before the elements in the current collection. It accepts an HTML string, DOM element, array of DOM elements, or JQ object as parameters. Multiple parameters can be used.
 
 You can also provide a callback function that returns an HTML string, DOM element, array of DOM elements, or JQ object. The callback function's first parameter is the element's index, the second is its original HTML, and `this` refers to the current element.
 
@@ -1542,7 +1537,9 @@ $('.box').on('click.myPlugin', function () {
 
 ### `.one()` {#one}
 
-This method binds an event handler to each matched element for a specific event, but the event will only be triggered once. The usage is the same as `.on()`.
+This method binds an event handler to each matched element for a specific event, but the event will only be triggered once.
+
+The usage is the same as `.on()`.
 
 ### `.off()` {#off}
 
@@ -1568,7 +1565,7 @@ $(document).off('click', '.box');
 $(document).off('click', '.box', callback);
 
 // Unbind multiple event handlers
-$('.box.').off({
+$('.box').off({
   click: callback1,
   focus: callback2,
 });
@@ -1602,9 +1599,9 @@ $('.box').trigger('click.myPlugin');
 
 // CustomEvent parameters
 $('.box').trigger('click', undefined, {
-  bubbles: true;
-  cancelable: true;
-  composed: true
+  bubbles: true,
+  cancelable: true,
+  composed: true,
 });
 ```
 
@@ -1708,7 +1705,10 @@ $(document).on('ajaxComplete', function (e, { xhr, options }) {
       <td><code>GET</code></td>
     </tr>
     <tr>
-      <td colspan="3">The request method. It can be one of the following: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>HEAD</code>, <code>OPTIONS</code>, <code>DELETE</code>.</td>
+      <td colspan="3">
+        <p>The request method.</p>
+        <p>It can be one of the following: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>HEAD</code>, <code>OPTIONS</code>, <code>DELETE</code>.</p>
+      </td>
     </tr>
     <tr id="ajax-options-data">
       <td><a href="#ajax-options-data"><code>data</code></a></td>
@@ -1764,7 +1764,10 @@ $(document).on('ajaxComplete', function (e, { xhr, options }) {
       <td><code>{}</code></td>
     </tr>
     <tr>
-      <td colspan="3">Data to be added to the headers. This can be overridden in the <code>beforeSend</code> callback. Fields with string or <code>null</code> values will be sent, fields with <code>undefined</code> values will be removed.</td>
+      <td colspan="3">
+        <p>Data to be added to the headers. This can be overridden in the <code>beforeSend</code> callback.</p>
+        <p>Fields with string or <code>null</code> values will be sent, fields with <code>undefined</code> values will be removed.</p>
+      </td>
     </tr>
     <tr id="ajax-options-xhrFields">
       <td><a href="#ajax-options-xhrFields"><code>xhrFields</code></a></td>
@@ -1809,7 +1812,10 @@ $(document).on('ajaxComplete', function (e, { xhr, options }) {
       <td><code>text</code></td>
     </tr>
     <tr>
-      <td colspan="3">The type of data expected from the server. It can be either <code>text</code> or <code>json</code>.</td>
+      <td colspan="3">
+        <p>The type of data expected from the server.</p>
+        <p>It can be either <code>text</code> or <code>json</code>.</p>
+      </td>
     </tr>
     <tr id="ajax-options-contentType">
       <td><a href="#ajax-options-contentType"><code>contentType</code></a></td>

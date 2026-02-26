@@ -1,8 +1,8 @@
 # MCP Server
 
-mdui provides a dedicated [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server, `@mdui/mcp`, that lets AI agents query local knowledge about components, icons, CSS variables, and documentation.
+mdui provides a dedicated [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server, `@mdui/mcp`, that lets AI agents query local information about components, icons, CSS variables, and documentation.
 
-It works with developer tools like Claude Code, Cursor, GitHub Copilot, and others to help you generate code and use mdui components and styles correctly.
+It integrates with developer tools like Claude Code, Cursor, and GitHub Copilot to help you use mdui components and styles correctly.
 
 ## Tools {#tools}
 
@@ -14,12 +14,12 @@ The mdui MCP server exposes the following tools to AI agents:
 - `list_css_variables`: List global CSS variables.
 - `list_documents`: List all documentation entries.
 - `get_document`: Get the full content of a single document.
-- `list_icon_codes`: List icon codes that can be used in attributes or APIs.
+- `list_icon_codes`: List icon codes for attributes or APIs.
 - `list_icon_components`: List standalone icon components and their ESM import statements.
 
 ## How to use {#usage}
 
-This server supports the stdio transport only (see MCP spec: https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#stdio) and can be used directly in VS Code, Cursor, Claude Code, Windsurf, Zed, and other clients, as well as AI agents that support MCP over stdio.
+This server supports only the stdio transport (see MCP spec: https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#stdio). It works directly with VS Code, Cursor, Claude Code, Windsurf, Zed, and other clients, as well as AI agents that support MCP over stdio.
 
 ### VS Code {#vscode}
 
@@ -38,7 +38,7 @@ This server supports the stdio transport only (see MCP spec: https://modelcontex
    }
    ```
 
-2. Click the "Start" button shown in the `mcp.json` file.
+2. Click the "Start" button that appears in the `mcp.json` file.
 3. Start a conversation in GitHub Copilot Chat.
 
 ### Cursor {#cursor}
@@ -68,7 +68,7 @@ This server supports the stdio transport only (see MCP spec: https://modelcontex
    ```
 
 2. Then run `claude` to start a session.
-3. Enter your prompts to start using it.
+3. Enter your prompts to start interacting with the server.
 
 ### Windsurf {#windsurf}
 

@@ -1,6 +1,6 @@
 # Icon Button Component
 
-Icon buttons are used to execute minor actions with a single click.
+Icon buttons are used to perform small actions with a single click.
 
 ## Usage {#usage}
 
@@ -26,7 +26,7 @@ Example:
 
 ### Icon {#example-icon}
 
-Use the `icon` attribute to specify the Material Icons name. Alternatively, you can use the default slot to specify the icon element.
+Use the `icon` attribute to specify the Material Icon name. Alternatively, you can use the default slot to specify the icon element.
 
 ```html,example,expandable,playgroundId=204
 <mdui-button-icon icon="search"></mdui-button-icon>
@@ -54,7 +54,7 @@ Add the `selectable` attribute to make the icon button selectable.
 <mdui-button-icon selectable icon="favorite_border"></mdui-button-icon>
 ```
 
-Use the `selected-icon` attribute to specify the Material Icons name for the selected state. Alternatively, use the `selected-icon` slot to specify the selected state icon element.
+Use the `selected-icon` attribute to specify the Material Icon name for the selected state. Alternatively, use the `selected-icon` slot to specify the selected state icon element.
 
 ```html,example,expandable,playgroundId=207
 <mdui-button-icon selectable icon="favorite_border" selected-icon="favorite"></mdui-button-icon>
@@ -79,7 +79,7 @@ Use the `href` attribute to turn the icon button into a link. The `download`, `t
 
 ### Disabled and Loading State {#example-disabled}
 
-Use the `disabled` attribute to disable the icon button. The `loading` attribute displays the loading state.
+Use the `disabled` attribute to disable the icon button. The `loading` attribute shows the loading state.
 
 ```html,example,expandable,playgroundId=210
 <mdui-button-icon disabled icon="search" variant="tonal"></mdui-button-icon>

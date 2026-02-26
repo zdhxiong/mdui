@@ -1,6 +1,6 @@
 # removeColorScheme Function
 
-The `removeColorScheme` function is used to remove the color scheme from the current page or a specified element. For more details, see [Dynamic Color](/en/docs/2/styles/dynamic-color).
+The `removeColorScheme` function removes the color scheme from the current page or a specified element. For more details, see [Dynamic Color](/en/docs/2/styles/dynamic-color).
 
 ## Usage {#usage}
 

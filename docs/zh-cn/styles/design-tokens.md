@@ -147,9 +147,9 @@ mdui 使用全局 CSS 自定义属性来实现设计令牌。这意味着，你�
 
 ## 颜色 {#color}
 
-mdui 为亮色模式和暗色模式分别提供了一组 CSS 自定义属性。在亮色模式下，CSS 自定义属性名为 `--mdui-color-{name}-light`，其中 `{name}` 为颜色名称；在暗色模式下则为 `--mdui-color-{name}-dark`。
+mdui 为浅色模式和深色模式分别提供了一组 CSS 自定义属性。在浅色模式下，CSS 自定义属性名为 `--mdui-color-{name}-light`，其中 `{name}` 为颜色名称；在深色模式下则为 `--mdui-color-{name}-dark`。
 
-此外，mdui 还提供了一组名为 `--mdui-color-{name}` 的 CSS 自定义属性，该属性在亮色模式下会引用 `--mdui-color-{name}-light`，在暗色模式下会引用 `--mdui-color-{name}-dark`，因此能根据当前亮、暗色模式自动切换颜色。
+此外，mdui 还提供了一组名为 `--mdui-color-{name}` 的 CSS 自定义属性，该属性在浅色模式下会引用 `--mdui-color-{name}-light`，在深色模式下会引用 `--mdui-color-{name}-dark`，因此能根据当前浅色模式和深色模式自动切换颜色。
 
 如果你需要修改部分颜色的 CSS 自定义属性，需要同时修改 `--mdui-color-{name}-light` 和 `--mdui-color-{name}-dark` 两个属性。而在读取 CSS 自定义属性时，直接使用 `--mdui-color-{name}` 属性即可。
 
@@ -182,8 +182,8 @@ CSS 自定义属性的属性值为 RGB 的三个颜色使用 `,` 分隔，下面
       <th>CSS 自定义属性</th>
       <th>默认值</th>
       <th>示例</th>
-    <tr>
-  <thead>
+    </tr>
+  </thead>
   <tbody>
     <tr>
       <th rowspan="3">Primary</th>

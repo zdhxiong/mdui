@@ -40,7 +40,7 @@ export class Slider extends SliderBase<SliderEventMap> implements FormControl {
   public static override styles: CSSResultGroup = [SliderBase.styles, style];
 
   /**
-   * 滑块的值，将于表单数据一起提交
+   * 滑块的值，将与表单数据一起提交
    */
   @property({ type: Number })
   public value = 0;

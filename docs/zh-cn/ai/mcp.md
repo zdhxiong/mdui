@@ -1,6 +1,6 @@
-# MCP 服务
+# MCP 服务器
 
-mdui 提供专用的 [MCP（Model Context Protocol）](https://modelcontextprotocol.io/) 服务器 `@mdui/mcp`，用于在本地为 AI 智能体提供组件、图标、CSS 变量和文档的查询能力。
+mdui 提供专用的 [MCP（Model Context Protocol）](https://modelcontextprotocol.io/) 服务器 `@mdui/mcp`，用于在本地为 AI 智能体提供组件、图标、CSS 自定义属性和文档的查询能力。
 
 它可与 Claude Code、Cursor、GitHub Copilot 等开发工具配合，辅助生成代码，并更好地使用 mdui 的组件与样式。
 
@@ -11,7 +11,7 @@ mdui 的 MCP 服务器向 AI 智能体暴露以下工具：
 - `list_components`：列出全部 mdui 组件。
 - `get_component_metadata`：获取单个组件的详细 API 元数据。
 - `list_css_classes`：列出全局 CSS 类名。
-- `list_css_variables`：列出全局 CSS 变量。
+- `list_css_variables`：列出全局 CSS 自定义属性。
 - `list_documents`：列出所有文档。
 - `get_document`：获取单个文档的完整内容。
 - `list_icon_codes`：列出可用于属性或 API 的图标代码。
@@ -19,7 +19,7 @@ mdui 的 MCP 服务器向 AI 智能体暴露以下工具：
 
 ## 使用方式 {#usage}
 
-MCP 服务仅支持 [stdio 传输](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#stdio)，可在 VS Code、Cursor、Claude Code、Windsurf、Zed 等客户端，以及支持 stdio 协议的 AI 智能体中直接使用。
+MCP 服务器仅支持 [stdio 传输](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#stdio)，可在 VS Code、Cursor、Claude Code、Windsurf、Zed 等客户端，以及支持 stdio 协议的 AI 智能体中直接使用。
 
 ### VS Code {#vscode}
 
@@ -61,7 +61,7 @@ MCP 服务仅支持 [stdio 传输](https://modelcontextprotocol.io/specification
 
 ### Claude Code {#claude-code}
 
-1. 在终端中运行以下命令添加 mdui MCP 服务：
+1. 在终端中运行以下命令添加 mdui MCP 服务器：
 
    ```bash
    claude mcp add mdui -- npx -y @mdui/mcp
@@ -86,7 +86,7 @@ MCP 服务仅支持 [stdio 传输](https://modelcontextprotocol.io/specification
    }
    ```
 
-   > 如 MCP 服务未自动出现，可点击 Refresh 刷新列表。
+   > 如 MCP 服务器未自动出现，可点击 Refresh 刷新列表。
 
 3. 输入提示词开始对话。
 

@@ -1,4 +1,4 @@
-# TextField Component
+# Text Field Component
 
 Text fields, typically used in forms and dialogs, allow users to input text.
 
@@ -38,19 +38,19 @@ The `variant` attribute modifies the shape of the text field.
 
 ### Helper Text {#example-helper-text}
 
-The `label` attribute sets the label text above the text field.
+Use the `label` attribute to display a label above the text field.
 
 ```html,example,expandable,playgroundId=398
 <mdui-text-field label="Text Field"></mdui-text-field>
 ```
 
-The `placeholder` attribute sets the placeholder text when there is no value.
+Use the `placeholder` attribute to display placeholder text when there is no value.
 
 ```html,example,expandable,playgroundId=399
 <mdui-text-field label="Text Field" placeholder="Placeholder"></mdui-text-field>
 ```
 
-The `helper` attribute or `helper` slot sets the helper text at the bottom of the text field. To display the helper text only when the input is focused, use the `helper-on-focus` attribute.
+Use the `helper` attribute or `helper` slot to display helper text at the bottom of the text field. To display the helper text only when the input is focused, use the `helper-on-focus` attribute.
 
 ```html,example,expandable,playgroundId=400
 <mdui-text-field label="Text Field" helper="Supporting text"></mdui-text-field>
@@ -64,7 +64,7 @@ The `helper` attribute or `helper` slot sets the helper text at the bottom of th
 
 ### Clearable {#example-clearable}
 
-The `clearable` attribute adds a clear button on the right when the text field has a value.
+The `clearable` attribute displays a clear button on the right when the text field has a value.
 
 ```html,example,expandable,playgroundId=401
 <mdui-text-field clearable label="Text Field" value="Input Text"></mdui-text-field>
@@ -93,7 +93,7 @@ The `icon` and `end-icon` attributes or slots add Material Icons to the left and
 </mdui-text-field>
 ```
 
-The `prefix` and `suffix` attributes or slots add text to the left and right of the text field. This text is displayed only when the text field is focused or has a value.
+The `prefix` and `suffix` attributes or slots add text to the left and right of the text field. They are displayed only when the text field is focused or has a value.
 
 ```html,example,expandable,playgroundId=404
 <mdui-text-field prefix="$" suffix="/100" label="Text Field"></mdui-text-field>
@@ -124,7 +124,7 @@ The `disabled` attribute disables the text field.
 
 ### Multi-line Text Field {#example-rows}
 
-The `rows` attribute sets the number of rows for a multi-line text field.
+The `rows` attribute specifies the number of rows for a multi-line text field.
 
 ```html,example,expandable,playgroundId=407
 <mdui-text-field rows="3" label="Text Field"></mdui-text-field>

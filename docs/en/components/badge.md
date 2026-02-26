@@ -16,7 +16,7 @@ Import the TypeScript type:
 import type { Badge } from 'mdui/components/badge.js';
 ```
 
-example:
+Example:
 
 ```html,example,playgroundId=191
 <mdui-badge>12</mdui-badge>
@@ -26,7 +26,7 @@ example:
 
 ### Variants {#example-variant}
 
-The `variant` attribute determines the badge's shape. A `large` value creates a larger badge. Specify the content to display within the default slot.
+The `variant` attribute controls the badge's shape. A `large` value creates a larger badge. Specify the content to display in the default slot.
 
 ```html,example,expandable,playgroundId=192
 <mdui-badge variant="small"></mdui-badge>

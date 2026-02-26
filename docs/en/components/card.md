@@ -1,6 +1,6 @@
 # Card Component
 
-Cards are versatile components that serve as containers for content and actions about a single subject.
+Cards are versatile components that hold content and actions for a single subject.
 
 ## Usage {#usage}
 
@@ -36,7 +36,7 @@ The `variant` attribute determines the card's appearance.
 
 ### Clickable {#example-clickable}
 
-Add the `clickable` attribute to make the card interactive. This will add hover and click ripple effects.
+Add the `clickable` attribute to make the card interactive. This adds hover and click ripple effects.
 
 ```html,example,expandable,playgroundId=213
 <mdui-card clickable style="width: 200px;height: 124px"></mdui-card>
@@ -44,7 +44,7 @@ Add the `clickable` attribute to make the card interactive. This will add hover 
 
 ### Link {#example-link}
 
-Use the `href` attribute to transform the card into a link. The `download`, `target`, and `rel` attributes are available for link-related functionality.
+Use the `href` attribute to turn the card into a link. The `download`, `target`, and `rel` attributes are available for link-related functionality.
 
 ```html,example,expandable,playgroundId=214
 <mdui-card href="https://www.mdui.org" target="_blank" style="width: 200px;height: 124px"></mdui-card>

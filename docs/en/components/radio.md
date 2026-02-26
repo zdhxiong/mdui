@@ -1,6 +1,6 @@
 # Radio Component
 
-The radio group component is designed for selecting a single option from a set of options.
+The radio group component is designed for selecting one option from a set of choices.
 
 ## Usage {#usage}
 

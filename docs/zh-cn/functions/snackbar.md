@@ -177,7 +177,7 @@ import { snackbar } from 'mdui/functions/snackbar.js';
       </td>
     </tr>
     <tr id="options-onClose">
-      <td><a href="options-onClose"><code>onClose</code></a></td>
+      <td><a href="#options-onClose"><code>onClose</code></a></td>
       <td><code>(snackbar: <a href="/zh-cn/docs/2/components/snackbar">Snackbar</a>) => void</code></td>
       <td>-</td>
     </tr>

@@ -1,6 +1,6 @@
 # Navigation Rail Component
 
-The navigation rail provides a means to access different primary pages on tablets and desktop computers.
+The navigation rail lets you switch between primary pages on tablets and desktop computers.
 
 ## Usage {#usage}
 
@@ -18,7 +18,7 @@ import type { NavigationRail } from 'mdui/components/navigation-rail.js';
 import type { NavigationRailItem } from 'mdui/components/navigation-rail-item.js';
 ```
 
-Example: (Note: The `style="position: relative"` in the example is for demonstration purposes, Remove it in actual use.)
+Example: (Note: The `style="position: relative"` in the example is for demonstration purposes. Don't include it in production.)
 
 ```html,example,playgroundId=320
 <mdui-navigation-rail value="recent" style="position: relative">
@@ -30,18 +30,18 @@ Example: (Note: The `style="position: relative"` in the example is for demonstra
 
 **Notes:**
 
-By default, this component uses the `position: fixed` style and automatically adds `padding-left` or `padding-right` to the `body` to prevent content obscuration.
+By default, this component uses the `position: fixed` style and automatically adds `padding-left` or `padding-right` to the `body` to prevent content from being obscured.
 
-However, it defaults to `position: absolute` style in the following cases:
+However, it falls back to `position: absolute` in the following cases:
 
 1. When the `contained` property of the `<mdui-navigation-rail>` component is `true`. In this case, it adds `padding-left` or `padding-right` style to the parent element.
-2. When it's within the [`<mdui-layout></mdui-layout>`](/en/docs/2/components/layout) component. In this case, it doesn't add `padding-left` or `padding-right` style.
+2. When the component is used inside the [`<mdui-layout></mdui-layout>`](/en/docs/2/components/layout) component. In this case, `padding-left` or `padding-right` style is not added.
 
-## Styles {#examples}
+## Examples {#examples}
 
 ### In Container {#example-contained}
 
-By default, the navigation rail displays on the left or right side of the current window. To place it inside a container, add the `contained` attribute to the `<mdui-navigation-rail>` component. This positions the navigation rail relative to the parent element (you need to manually add `position: relative` style to the parent element).
+By default, the navigation rail appears on the left or right side of the viewport. To place it inside a container, add the `contained` attribute to the `<mdui-navigation-rail>` component. This makes the navigation rail position itself relative to the parent element (you need to add `position: relative` style to the parent element).
 
 ```html,example,expandable,playgroundId=321
 <div style="position: relative">

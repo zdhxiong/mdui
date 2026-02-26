@@ -26,7 +26,7 @@ Example:
 
 ### Image Avatar {#example-src}
 
-To use an image as the avatar, specify the image link using the `src` attribute, or provide an `<img>` element within the default slot.
+Use the `src` attribute to set an image as the avatar, or pass an `<img>` element into the default slot.
 
 ```html,example,expandable,playgroundId=188
 <mdui-avatar src="https://avatars.githubusercontent.com/u/3030330?s=40&v=4"></mdui-avatar>
@@ -36,11 +36,11 @@ To use an image as the avatar, specify the image link using the `src` attribute,
 </mdui-avatar>
 ```
 
-The `fit` attribute determines how the image should fit the container box. It works similar to the native [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) property.
+The `fit` attribute controls how the image fits in its container. It works similarly to the native [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) property.
 
 ### Icon Avatar {#example-icon}
 
-To use a Material Icons icon as the avatar, specify the icon using the `icon` attribute. Alternatively, provide an icon element within the default slot.
+Use the `icon` attribute to set a Material Icon for the avatar. Alternatively, pass an icon element into the default slot.
 
 ```html,example,expandable,playgroundId=189
 <mdui-avatar icon="people_alt"></mdui-avatar>
@@ -52,7 +52,7 @@ To use a Material Icons icon as the avatar, specify the icon using the `icon` at
 
 ### Character Avatar {#example-char}
 
-You can use any text within the default slot as the avatar.
+You can use any text in the default slot as the avatar.
 
 ```html,example,expandable,playgroundId=190
 <mdui-avatar>A</mdui-avatar>

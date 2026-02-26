@@ -1,6 +1,6 @@
 # Switch Component
 
-The Switch component is utilized to toggle the state of a single setting between on and off.
+The Switch component toggles a single setting on or off.
 
 ## Usage {#usage}
 
@@ -26,7 +26,7 @@ Example:
 
 ### Checked State {#example-checked}
 
-The `checked` attribute indicates whether the switch is on or off. To set the switch to the on state by default, add the `checked` attribute.
+The `checked` attribute indicates whether the switch is on or off. Add the `checked` attribute to turn it on by default.
 
 ```html,example,expandable,playgroundId=386
 <mdui-switch checked></mdui-switch>
@@ -34,7 +34,7 @@ The `checked` attribute indicates whether the switch is on or off. To set the sw
 
 ### Disabled State {#example-disabled}
 
-The `disabled` attribute can be used to disable the switch.
+Use the `disabled` attribute to disable the switch.
 
 ```html,example,expandable,playgroundId=387
 <mdui-switch disabled></mdui-switch>
@@ -43,7 +43,7 @@ The `disabled` attribute can be used to disable the switch.
 
 ### Icons {#example-icon}
 
-The `unchecked-icon` and `checked-icon` attributes can be used to set the Material Icons for the unchecked and checked states, respectively. Alternatively, the `unchecked-icon` and `checked-icon` slots can be used to set the icons for the unchecked and checked states.
+Use the `unchecked-icon` and `checked-icon` attributes to set the Material Icons for the unchecked and checked states, respectively. Alternatively, use the `unchecked-icon` and `checked-icon` slots to set the icons for the unchecked and checked states.
 
 ```html,example,expandable,playgroundId=388
 <mdui-switch unchecked-icon="remove_moderator" checked-icon="verified_user"></mdui-switch>

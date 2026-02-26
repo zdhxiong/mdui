@@ -36,7 +36,7 @@ import type { Avatar } from 'mdui/components/avatar.js';
 </mdui-avatar>
 ```
 
-可以使用 `fit` 属性定义图片如何适应容器框，类似于原生的 [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)。
+可以使用 `fit` 属性定义图片如何适应容器框，类似于原生的 [`object-fit`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit)。
 
 ### 图标头像 {#example-icon}
 

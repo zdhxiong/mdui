@@ -1,8 +1,6 @@
 # prompt Function
 
-The `prompt` function is a wrapper for the [`<mdui-dialog>`](/en/docs/2/components/dialog) component and serves as a replacement for the native `window.prompt` function.
-
-By using this function, you can open a text input dialog without needing to write any HTML code for the component.
+The `prompt` function wraps the [`<mdui-dialog>`](/en/docs/2/components/dialog) component and replaces the native `window.prompt` function. With this function, you can open a text input dialog without writing any HTML.
 
 ## Usage {#usage}
 
@@ -39,7 +37,7 @@ Example:
 
 <pre><code class="nohighlight">prompt(options: <a href="#api-options">Options</a>): Promise&lt;string&gt;</code></pre>
 
-The function accepts an [Options](#api-options) object as a parameter and returns a Promise. If the dialog is closed by clicking the confirm button, the Promise resolves with the value entered in the text field. If the dialog is closed in any other way, the Promise is rejected.
+The function takes an [Options](#api-options) object and returns a Promise. The Promise resolves with the value entered in the text field when the dialog is closed by clicking the confirm button and rejects otherwise.
 
 ### Options {#api-options}
 
@@ -124,9 +122,9 @@ The function accepts an [Options](#api-options) object as a parameter and return
     <tr>
       <td colspan="3">
         <p>The queue name.</p>
-        <p>By default, the queue is disabled. If this function is invoked multiple times, multiple dialogs will appear simultaneously.</p>
-        <p>If a queue name is provided, dialogs with the same queue name will open sequentially, each one after the previous one closes.</p>
-        <p>The <a href="/en/docs/2/functions/dialog"><code>dialog()</code></a>, <code>alert()</code>, <a href="/en/docs/2/functions/confirm"><code>confirm()</code></a>, and <a href="/en/docs/2/functions/prompt"><code>prompt()</code></a> functions share the same queue if their queue names match.</p>
+        <p>Queues are disabled by default. If this function is called multiple times, multiple dialogs will appear simultaneously.</p>
+        <p>If you provide a queue name, dialogs with the same name open one after another.</p>
+        <p>The <a href="/en/docs/2/functions/dialog"><code>dialog()</code></a>, <a href="/en/docs/2/functions/alert"><code>alert()</code></a>, <a href="/en/docs/2/functions/confirm"><code>confirm()</code></a>, and <code>prompt()</code> functions share the same queue if their queue names match.</p>
       </td>
     </tr>
     <tr id="options-onConfirm">
@@ -136,8 +134,8 @@ The function accepts an [Options](#api-options) object as a parameter and return
     </tr>
     <tr>
       <td colspan="3">
-        <p>A callback function that is triggered when the confirm button is clicked.</p>
-        <p>The function receives the value of the text field and the dialog instance as parameters, and <code>this</code> refers to the dialog instance.</p>
+        <p>Called when the confirm button is clicked.</p>
+        <p>The callback receives the text field value and the dialog instance as its arguments, and <code>this</code> refers to the dialog instance.</p>
         <p>By default, clicking the confirm button closes the dialog. If the return value is <code>false</code>, the dialog remains open. If the return value is a promise, the dialog closes after the promise resolves.</p>
       </td>
     </tr>
@@ -148,8 +146,8 @@ The function accepts an [Options](#api-options) object as a parameter and return
     </tr>
     <tr>
       <td colspan="3">
-        <p>A callback function that is triggered when the cancel button is clicked.</p>
-        <p>The function receives the value of the text field and the dialog instance as parameters, and <code>this</code> refers to the dialog instance.</p>
+        <p>Called when the cancel button is clicked.</p>
+        <p>The callback receives the text field value and the dialog instance as its arguments, and <code>this</code> refers to the dialog instance.</p>
         <p>By default, clicking the cancel button closes the dialog. If the return value is <code>false</code>, the dialog remains open. If the return value is a promise, the dialog closes after the promise resolves.</p>
       </td>
     </tr>
@@ -160,8 +158,8 @@ The function accepts an [Options](#api-options) object as a parameter and return
     </tr>
     <tr>
       <td colspan="3">
-        <p>A callback function that is triggered when the dialog starts to open.</p>
-        <p>The function receives the dialog instance as a parameter, and <code>this</code> also refers to the dialog instance.</p>
+        <p>Called when the dialog starts to open.</p>
+        <p>The callback receives the dialog instance as its argument, and <code>this</code> also refers to it.</p>
       </td>
     </tr>
     <tr id="options-onOpened">
@@ -171,8 +169,8 @@ The function accepts an [Options](#api-options) object as a parameter and return
     </tr>
     <tr>
       <td colspan="3">
-        <p>A callback function that is triggered when the dialog's opening animation completes.</p>
-        <p>The function receives the dialog instance as a parameter, and <code>this</code> also refers to the dialog instance.</p>
+        <p>Called when the dialog's opening animation completes.</p>
+        <p>The callback receives the dialog instance as its argument, and <code>this</code> also refers to it.</p>
       </td>
     </tr>
     <tr id="options-onClose">
@@ -182,8 +180,8 @@ The function accepts an [Options](#api-options) object as a parameter and return
     </tr>
     <tr>
       <td colspan="3">
-        <p>A callback function that is triggered when the dialog starts to close.</p>
-        <p>The function receives the dialog instance as a parameter, and <code>this</code> also refers to the dialog instance.</p>
+        <p>Called when the dialog starts to close.</p>
+        <p>The callback receives the dialog instance as its argument, and <code>this</code> also refers to it.</p>
       </td>
     </tr>
     <tr id="options-onClosed">
@@ -193,8 +191,8 @@ The function accepts an [Options](#api-options) object as a parameter and return
     </tr>
     <tr>
       <td colspan="3">
-        <p>A callback function that is triggered when the dialog's closing animation completes.</p>
-        <p>The function receives the dialog instance as a parameter, and <code>this</code> also refers to the dialog instance.</p>
+        <p>Called when the dialog's closing animation completes.</p>
+        <p>The callback receives the dialog instance as its argument, and <code>this</code> also refers to it.</p>
       </td>
     </tr>
     <tr id="options-onOverlayClick">
@@ -204,8 +202,8 @@ The function accepts an [Options](#api-options) object as a parameter and return
     </tr>
     <tr>
       <td colspan="3">
-        <p>A callback function that is triggered when the overlay is clicked.</p>
-        <p>The function receives the dialog instance as a parameter, and <code>this</code> also refers to the dialog instance.</p>
+        <p>Called when the overlay is clicked.</p>
+        <p>The callback receives the dialog instance as its argument, and <code>this</code> also refers to it.</p>
       </td>
     </tr>
     <tr id="options-validator">
@@ -215,11 +213,11 @@ The function accepts an [Options](#api-options) object as a parameter and return
     </tr>
     <tr>
       <td colspan="3">
-        <p>A validation function for the text field, takes the text field's value as a parameter. <code>this</code> refers to the TextField instance.</p>
-        <p>Validation is executed after the browser's native validation API is successfully passed.</p>
+        <p>A validation function for the text field that takes the field value as its parameter. <code>this</code> refers to the TextField instance.</p>
+        <p>It runs only after native browser validation succeeds.</p>
         <p>If it returns a <code>boolean</code> value, <code>false</code> indicates a validation failure, and <code>true</code> indicates a validation success.</p>
         <p>If it returns a string, a non-empty string indicates a validation failure, with the returned string serving as the error message.</p>
-        <p>If it returns a Promise, a resolution indicates validation success, while a rejection indicates validation failure. The reason for rejection is used as the error message.</p>
+        <p>If it returns a Promise, a resolved Promise indicates success and a rejected Promise indicates failure. The rejection reason is used as the error message.</p>
       </td>
     </tr>
     <tr id="options-textFieldOptions">

@@ -2,7 +2,7 @@
   /**
    * 颜色值：https://m3.material.io/styles/color/the-color-system/tokens
    */
-  // 亮色模式下的颜色
+  // 浅色模式下的颜色
   --mdui-color-primary-light: 103, 80, 164;
   --mdui-color-primary-container-light: 234, 221, 255;
   --mdui-color-on-primary-light: 255, 255, 255;
@@ -41,7 +41,7 @@
   --mdui-color-surface-tint-color-light: 103, 80, 164;
   --mdui-color-scrim-light: 0, 0, 0;
 
-  // 暗色模式下的颜色
+  // 深色模式下的颜色
   --mdui-color-primary-dark: 208, 188, 255;
   --mdui-color-primary-container-dark: 79, 55, 139;
   --mdui-color-on-primary-dark: 55, 30, 115;
@@ -80,10 +80,10 @@
   --mdui-color-surface-tint-color-dark: 208, 188, 255;
   --mdui-color-scrim-dark: 0, 0, 0;
 
-  font-size: ~"@{mdui-root-font-size}px";
+  font-size:~"@{mdui-root-font-size}px";
 }
 
-// 强制使用亮色模式的颜色
+// 强制使用浅色模式的颜色
 .theme-light() {
   color-scheme: light;
 
@@ -129,7 +129,7 @@
   .background-color(background);
 }
 
-// 强制使用暗色模式、或设置成自动适配且处于暗色模式的颜色
+// 强制使用深色模式、或设置成自动适配且处于深色模式的颜色
 .theme-dark() {
   color-scheme: dark;
 

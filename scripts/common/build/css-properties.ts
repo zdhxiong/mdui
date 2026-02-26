@@ -75,7 +75,7 @@ export const getCssProperties = (
     });
   };
 
-  // 亮色、暗色、及自动适配 颜色值
+  // 浅色、深色、及自动适配 颜色值
   const getColors = (): CSSProperty[] => {
     const themes: Theme[] = ['light', 'dark', ''];
 
@@ -124,7 +124,7 @@ export const getCssProperties = (
           const docUrl = `${docOrigin}/${languagePath}docs/2/styles/design-tokens#color`;
 
           if (theme) {
-            // 亮色、或暗色
+            // 浅色、或深色
             const name = `--mdui-color-${color}-${theme}`;
             const nameAuto = `--mdui-color-${color}`;
             const modeName =

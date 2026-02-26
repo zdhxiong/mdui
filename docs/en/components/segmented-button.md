@@ -1,6 +1,6 @@
 # Segmented Button Component
 
-The segmented button group is a component that encapsulates a set of buttons. It is used to provide options, switch views, or sort elements.
+Segmented button groups combine buttons into a single control. It can present options, switch views, or sort items.
 
 ## Usage {#usage}
 
@@ -64,7 +64,7 @@ To enable single selection mode, set the `selects` attribute of the `<mdui-segme
 
 To enable multiple selection mode, set the `selects` attribute of the `<mdui-segmented-button-group>` component to `multiple`. In this mode, the `value` property of `<mdui-segmented-button-group>` is an array consisting of the `value` properties of the currently selected `<mdui-segmented-button>` components.
 
-Note that when supporting multiple selection, the `value` property of `<mdui-segmented-button-group>` is an array, and it can only be read and set through JavaScript property.
+When multiple selection is enabled, the `value` property of `<mdui-segmented-button-group>` is an array and can only be accessed and updated in JavaScript.
 
 ```html,example,expandable,playgroundId=347
 <mdui-segmented-button-group selects="multiple">

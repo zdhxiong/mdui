@@ -64,7 +64,7 @@ export class RangeSlider
   private _value: number[] = [];
 
   /**
-   * 滑块的值，为数组格式，将于表单数据一起提交。
+   * 滑块的值，为数组格式，将与表单数据一起提交。
    *
    * **NOTE**：该属性无法通过 HTML 属性设置初始值，如果要修改该值，只能通过修改 JavaScript 属性值实现。
    */

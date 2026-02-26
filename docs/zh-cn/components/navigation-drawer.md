@@ -1,8 +1,8 @@
-# 侧边抽屉栏组件 NavigationDrawer
+# 抽屉导航栏组件 NavigationDrawer
 
-侧边抽屉栏用于在页面侧边提供导航功能，使用户能够快速访问不同的页面或内容。
+抽屉导航栏用于在页面侧边提供导航功能，使用户能够快速访问不同的页面或内容。
 
-通常，可以在侧边抽屉栏中使用 [`<mdui-list>`](/zh-cn/docs/2/components/list) 组件来添加导航项。
+通常，可以在抽屉导航栏中使用 [`<mdui-list>`](/zh-cn/docs/2/components/list) 组件来添加导航项。
 
 ## 使用方法 {#usage}
 
@@ -22,10 +22,10 @@ import type { NavigationDrawer } from 'mdui/components/navigation-drawer.js';
 
 ```html,example,playgroundId=316
 <mdui-navigation-drawer close-on-overlay-click class="example-drawer">
-  <mdui-button>关闭侧边抽屉栏</mdui-button>
+  <mdui-button>关闭抽屉导航栏</mdui-button>
 </mdui-navigation-drawer>
 
-<mdui-button>打开侧边抽屉栏</mdui-button>
+<mdui-button>打开抽屉导航栏</mdui-button>
 
 <script>
   const navigationDrawer = document.querySelector(".example-drawer");
@@ -52,16 +52,16 @@ import type { NavigationDrawer } from 'mdui/components/navigation-drawer.js';
 
 ### 位于指定容器内 {#example-contained}
 
-默认情况下，侧边抽屉栏会相对于当前窗口，在页面左侧或右侧显示。如果你希望把侧边抽屉栏放在指定容器内，可以添加 `contained` 属性，此时侧边抽屉栏会相对于父元素显示（你需要自行在父元素上添加样式 `position: relative; overflow: hidden;`）。
+默认情况下，抽屉导航栏会相对于当前窗口，在页面左侧或右侧显示。如果你希望把抽屉导航栏放在指定容器内，可以添加 `contained` 属性，此时抽屉导航栏会相对于父元素显示（你需要自行在父元素上添加样式 `position: relative; overflow: hidden;`）。
 
 ```html,example,expandable,playgroundId=317
 <div class="example-contained" style="position: relative; overflow: hidden">
   <mdui-navigation-drawer contained>
-    <mdui-button class="close">关闭侧边抽屉栏</mdui-button>
+    <mdui-button class="close">关闭抽屉导航栏</mdui-button>
   </mdui-navigation-drawer>
 
   <div style="height: 160px;">
-    <mdui-button class="open">打开侧边抽屉栏</mdui-button>
+    <mdui-button class="open">打开抽屉导航栏</mdui-button>
   </div>
 </div>
 
@@ -78,20 +78,20 @@ import type { NavigationDrawer } from 'mdui/components/navigation-drawer.js';
 
 ### 模态化 {#example-modal}
 
-添加 `modal` 属性可以在打开侧边抽屉栏时显示遮罩层。注意在窗口或父元素宽度小于 [`--mdui-breakpoint-md`](/zh-cn/docs/2/styles/design-tokens#breakpoint) 时，会无视该参数，始终会显示遮罩层。
+添加 `modal` 属性可以在打开抽屉导航栏时显示遮罩层。注意在窗口或父元素宽度小于 [`--mdui-breakpoint-md`](/zh-cn/docs/2/styles/design-tokens#breakpoint) 时，会无视该参数，始终会显示遮罩层。
 
-添加 `close-on-esc` 属性，可以在按下 ESC 键时关闭侧边抽屉栏。
+添加 `close-on-esc` 属性，可以在按下 ESC 键时关闭抽屉导航栏。
 
-添加 `close-on-overlay-click` 属性，可以在点击遮罩层时关闭侧边抽屉栏。
+添加 `close-on-overlay-click` 属性，可以在点击遮罩层时关闭抽屉导航栏。
 
 ```html,example,expandable,playgroundId=318
 <div class="example-modal" style="position: relative; overflow: hidden">
   <mdui-navigation-drawer modal close-on-esc close-on-overlay-click contained>
-    <mdui-button class="close">关闭侧边抽屉栏</mdui-button>
+    <mdui-button class="close">关闭抽屉导航栏</mdui-button>
   </mdui-navigation-drawer>
 
   <div style="height: 160px;">
-    <mdui-button class="open">打开侧边抽屉栏</mdui-button>
+    <mdui-button class="open">打开抽屉导航栏</mdui-button>
   </div>
 </div>
 
@@ -108,16 +108,16 @@ import type { NavigationDrawer } from 'mdui/components/navigation-drawer.js';
 
 ### 位于右侧 {#example-placement}
 
-通过将 `placement` 属性设置为 `right`，可以将侧边抽屉栏显示在页面右侧。
+通过将 `placement` 属性设置为 `right`，可以将抽屉导航栏显示在页面右侧。
 
 ```html,example,expandable,playgroundId=319
 <div class="example-placement" style="position: relative; overflow: hidden">
   <mdui-navigation-drawer placement="right" modal close-on-esc close-on-overlay-click contained>
-    <mdui-button class="close">关闭侧边抽屉栏</mdui-button>
+    <mdui-button class="close">关闭抽屉导航栏</mdui-button>
   </mdui-navigation-drawer>
 
   <div style="height: 160px;">
-    <mdui-button class="open">打开侧边抽屉栏</mdui-button>
+    <mdui-button class="open">打开抽屉导航栏</mdui-button>
   </div>
 </div>
 

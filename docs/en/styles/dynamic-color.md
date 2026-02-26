@@ -1,8 +1,8 @@
-# Dynamic Theme
+# Dynamic Color
 
-mdui supports dynamic theming. By providing a color value, mdui generates a comprehensive color scheme. It can also extract the dominant color from a wallpaper and create a color scheme based on it.
+mdui supports dynamic theming. Given a color value, mdui generates a complete color scheme. It can also extract the dominant color from a wallpaper and build a color scheme from it.
 
-Click the palette icon <mdui-icon name="palette--outlined" style="vertical-align: middle"></mdui-icon> in the top right corner of the documentation page to toggle between color schemes and observe the appearance of various components under different color schemes.
+Click the palette icon <mdui-icon name="palette--outlined" style="vertical-align: middle"></mdui-icon> in the top-right corner of the documentation page to switch between color schemes and preview how different components look in each one.
 
 A color scheme in mdui is a set of CSS custom properties. mdui components reference these properties for their color values, enabling you to update the entire color scheme simultaneously. Refer to [Design Tokens - Color](/en/docs/2/styles/design-tokens#color) for a complete list of CSS custom properties.
 
@@ -57,9 +57,9 @@ A custom color group includes four CSS custom properties:
 
 Here, `{name}` is the custom color `name` you provided in the `customColors` field.
 
-Custom color names can be existing color names from the default color scheme, such as `primary`, `secondary`, `tertiary`, `error`, etc. If you specify these values as custom color names, the corresponding four CSS custom properties in the generated color scheme will use the color values you specified. For example, in the above example, the custom color name `error` is specified, and since `error` is an existing color name in the default color scheme, its corresponding CSS custom properties are used by mdui components to represent error states. Now, because the color value is set to a green color, the error state in mdui components will also become green.
+Custom color names can be existing color names from the default color scheme, such as `primary`, `secondary`, `tertiary`, and `error` — these are all included in the default color scheme. If you specify these values as custom color names, the corresponding four CSS custom properties in the generated color scheme will use the color values you specified. For example, in the above example, the custom color name `error` is specified, and since `error` is an existing color name in the default color scheme, its corresponding CSS custom properties are used by mdui components to represent error states. Now, because the color value is set to a green color, the error state in mdui components will also become green.
 
-Custom color names can also be new ones, such as `music` in the above example, which does not exist in the default color scheme. In this case, the generated color scheme will additionally include four CSS custom properties. You can reference these CSS custom properties in your own styles:
+Custom color names can also be new ones, such as `music` in the example above, which does not exist in the default color scheme. In this case, the generated color scheme includes four additional CSS custom properties, which you can reference in your own styles:
 
 ```html
 <style>
@@ -82,7 +82,7 @@ You can also use the [`removeColorScheme`](/en/docs/2/functions/removeColorSchem
 
 ## Extracting Colors from Wallpaper {#from-wallpaper}
 
-The [`getColorFromImage`](/en/docs/2/functions/getColorFromImage) function in mdui extracts the dominant color from an Image instance. This function returns a Promise that resolves to the extracted hexadecimal color value.
+The [`getColorFromImage`](/en/docs/2/functions/getColorFromImage) function extracts the dominant color from an image. It returns a Promise that resolves to the extracted hexadecimal color value.
 
 You can use this color value with the [`setColorScheme`](/en/docs/2/functions/setColorScheme) function to set the color scheme. For example:
 

@@ -1,6 +1,6 @@
 # alert Function
 
-The `alert` function, a wrapper for the [`<mdui-dialog>`](/en/docs/2/components/dialog) component, supersedes the native `window.alert` function, enabling the creation of alert dialogs without HTML code.
+The `alert` function wraps the [`<mdui-dialog>`](/en/docs/2/components/dialog) component, replaces the native `window.alert` function, and lets you create alert dialogs without writing any HTML.
 
 ## Usage {#usage}
 
@@ -35,7 +35,7 @@ Example:
 
 <pre><code class="nohighlight">alert(options: <a href="#api-options">Options</a>): Promise&lt;void&gt;</code></pre>
 
-The `alert` function takes an [Options](#api-options) object and returns a Promise. The Promise resolves if the dialog is closed by clicking the confirm button, and rejects if closed by other means.
+The `alert` function takes an [Options](#api-options) object and returns a Promise. The Promise resolves when the confirm button closes the dialog and rejects if the dialog is closed any other way.
 
 ### Options {#api-options}
 
@@ -104,8 +104,8 @@ The `alert` function takes an [Options](#api-options) object and returns a Promi
     <tr>
       <td colspan="3">
         <p>The queue name.</p>
-        <p>By default, the queue is disabled. If this function is invoked multiple times, multiple dialogs will appear simultaneously.</p>
-        <p>If a queue name is provided, dialogs with the same queue name will open sequentially, each one after the previous one closes.</p>
+        <p>Queues are disabled by default. If this function is called multiple times, multiple dialogs will appear simultaneously.</p>
+        <p>If you provide a queue name, dialogs with the same name open one after another.</p>
         <p>The <a href="/en/docs/2/functions/dialog"><code>dialog()</code></a>, <code>alert()</code>, <a href="/en/docs/2/functions/confirm"><code>confirm()</code></a>, and <a href="/en/docs/2/functions/prompt"><code>prompt()</code></a> functions share the same queue if their queue names match.</p>
       </td>
     </tr>
@@ -116,8 +116,8 @@ The `alert` function takes an [Options](#api-options) object and returns a Promi
     </tr>
     <tr>
       <td colspan="3">
-        <p>A callback function that is triggered when the confirm button is clicked. </p>
-        <p>The function receives the dialog instance as a parameter, and <code>this</code> also refers to the dialog instance.</p>
+        <p>Called when the confirm button is clicked.</p>
+        <p>The callback receives the dialog instance as its argument, and <code>this</code> also refers to it.</p>
         <p>By default, clicking the confirm button closes the dialog. If the return value is <code>false</code>, the dialog remains open. If the return value is a promise, the dialog closes after the promise resolves.</p>
       </td>
     </tr>
@@ -128,8 +128,8 @@ The `alert` function takes an [Options](#api-options) object and returns a Promi
     </tr>
     <tr>
       <td colspan="3">
-        <p>A callback function that is triggered when the dialog starts to open.</p>
-        <p>The function receives the dialog instance as a parameter, and <code>this</code> also refers to the dialog instance.</p>
+        <p>Called when the dialog starts to open.</p>
+        <p>The callback receives the dialog instance as its argument, and <code>this</code> also refers to it.</p>
       </td>
     </tr>
     <tr id="options-onOpened">
@@ -139,8 +139,8 @@ The `alert` function takes an [Options](#api-options) object and returns a Promi
     </tr>
     <tr>
       <td colspan="3">
-        <p>A callback function that is triggered when the dialog's opening animation completes.</p>
-        <p>The function receives the dialog instance as a parameter, and <code>this</code> also refers to the dialog instance.</p>
+        <p>Called when the dialog's open animation completes.</p>
+        <p>The callback receives the dialog instance as its argument, and <code>this</code> also refers to it.</p>
       </td>
     </tr>
     <tr id="options-onClose">
@@ -150,8 +150,8 @@ The `alert` function takes an [Options](#api-options) object and returns a Promi
     </tr>
     <tr>
       <td colspan="3">
-        <p>A callback function that is triggered when the dialog starts to close.</p>
-        <p>The function receives the dialog instance as a parameter, and <code>this</code> also refers to the dialog instance.</p>
+        <p>Called when the dialog starts to close.</p>
+        <p>The callback receives the dialog instance as its argument, and <code>this</code> also refers to it.</p>
       </td>
     </tr>
     <tr id="options-onClosed">
@@ -161,8 +161,8 @@ The `alert` function takes an [Options](#api-options) object and returns a Promi
     </tr>
     <tr>
       <td colspan="3">
-        <p>A callback function that is triggered when the dialog's closing animation completes.</p>
-        <p>The function receives the dialog instance as a parameter, and <code>this</code> also refers to the dialog instance.</p>
+        <p>Called when the dialog's close animation completes.</p>
+        <p>The callback receives the dialog instance as its argument, and <code>this</code> also refers to it.</p>
       </td>
     </tr>
     <tr id="options-onOverlayClick">
@@ -172,8 +172,8 @@ The `alert` function takes an [Options](#api-options) object and returns a Promi
     </tr>
     <tr>
       <td colspan="3">
-        <p>A callback function that is triggered when the overlay is clicked.</p>
-        <p>The function receives the dialog instance as a parameter, and <code>this</code> also refers to the dialog instance.</p>
+        <p>Called when the overlay is clicked.</p>
+        <p>The callback receives the dialog instance as its argument, and <code>this</code> also refers to it.</p>
       </td>
     </tr>
   </tbody>

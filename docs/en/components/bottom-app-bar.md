@@ -1,6 +1,6 @@
 # Bottom App Bar Component
 
-The Bottom App Bar provides navigation and key actions at the bottom of a mobile page.
+The Bottom App Bar provides navigation and key actions at the bottom of a mobile screen.
 
 ## Usage {#usage}
 
@@ -16,7 +16,7 @@ Import the TypeScript type:
 import type { BottomAppBar } from 'mdui/components/bottom-app-bar.js';
 ```
 
-Example: (Note: The `style="position: relative"` in the example is for demonstration purposes only. Remove it in actual use.)
+Example: (Note: The `style="position: relative"` in the example is for demonstration purposes only. Remove it in production.)
 
 ```html,example,playgroundId=193
 <mdui-bottom-app-bar style="position: relative;">
@@ -31,20 +31,20 @@ Example: (Note: The `style="position: relative"` in the example is for demonstra
 
 **Notes:**
 
-The BottomAppBar component uses `position: fixed` by default. It automatically adds `padding-bottom` to the `body` to prevent the page content from being obscured.
+The `<mdui-bottom-app-bar>` component uses `position: fixed` by default. It automatically adds `padding-bottom` to the `body` to prevent the page content from being obscured.
 
-However, it uses `position: absolute` in the following two cases:
+However, it falls back to `position: absolute` in the following cases:
 
-1. When the `scroll-target` attribute is specified. In this case, `padding-bottom` will be added to the element specified by `scroll-target`.
-2. When it's within the [`<mdui-layout></mdui-layout>`](/en/docs/2/components/layout) component. In this case, `padding-bottom` won't be added.
+1. When the `scroll-target` attribute is specified. In this case, `padding-bottom` is added to the element specified by `scroll-target`.
+2. When the component is used inside the [`<mdui-layout></mdui-layout>`](/en/docs/2/components/layout) component. In that case, `padding-bottom` is not added.
 
 ## Examples {#examples}
 
 ### In Container {#example-scroll-target}
 
-By default, the Bottom App Bar displays at the bottom of the page, relative to the current window.
+By default, the Bottom App Bar is fixed to the bottom of the page.
 
-To place it inside a specific container, specify the `scroll-target` attribute with the CSS selector or DOM element of the container. Ensure the parent element has `position: relative; overflow: hidden` styles.
+To place it inside a specific container, specify the `scroll-target` attribute with the CSS selector or DOM element of the container. The parent element must have `position: relative; overflow: hidden` styles.
 
 ```html,example,expandable,playgroundId=194
 <div style="position: relative;overflow: hidden">
@@ -60,7 +60,7 @@ To place it inside a specific container, specify the `scroll-target` attribute w
 
 To hide the Bottom App Bar when scrolling down and display it when scrolling up, set the `scroll-behavior` attribute to `hide`.
 
-The `scroll-threshold` attribute can be used to set the number of pixels to start hiding the Bottom App Bar.
+Use the `scroll-threshold` attribute to set how many pixels must be scrolled before the Bottom App Bar starts hiding.
 
 ```html,example,expandable,playgroundId=195
 <div style="position: relative;overflow: hidden">
@@ -78,7 +78,7 @@ The `scroll-threshold` attribute can be used to set the number of pixels to star
 
 ### Fixed Floating Action Button {#example-fab-detach}
 
-If the Bottom App Bar includes a [Floating Action Button (FAB)](/en/docs/2/components/fab), add the `fab-detach` attribute to anchor the FAB at the page's bottom right when the Bottom App Bar hides on scroll.
+If the Bottom App Bar includes a [Floating Action Button (FAB)](/en/docs/2/components/fab), add the `fab-detach` attribute to pin the FAB to the page's bottom-right corner when the Bottom App Bar hides on scroll.
 
 ```html,example,expandable,playgroundId=196
 <div style="position: relative;overflow: hidden">

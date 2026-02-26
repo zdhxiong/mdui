@@ -30,7 +30,7 @@ observer.unobserve();
 
 ## API {#api}
 
-<pre><code class="nohighlight">observeResize(target: string | HTMLElement | <a href="/zh-cn/docs/2/functions/jq">JQ</a>&lt;HTMLElement&gt;, callback: <a href="#api-callback">Callback</a>)): <a href="#api-ObserveResize">ObserveResize</a></code></pre>
+<pre><code class="nohighlight">observeResize(target: string | HTMLElement | <a href="/zh-cn/docs/2/functions/jq">JQ</a>&lt;HTMLElement&gt;, callback: <a href="#api-callback">Callback</a>): <a href="#api-ObserveResize">ObserveResize</a></code></pre>
 
 `target` 参数可以是 CSS 选择器、DOM 元素、或 <a href="/zh-cn/docs/2/functions/jq">JQ 对象</a>。
 

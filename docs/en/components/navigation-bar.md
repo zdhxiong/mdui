@@ -1,6 +1,6 @@
 # Navigation Bar Component
 
-The navigation bar facilitates easy switching between main pages on mobile devices.
+The navigation bar makes it easy to switch between main pages on mobile devices.
 
 ## Usage {#usage}
 
@@ -18,7 +18,7 @@ import type { NavigationBar } from 'mdui/components/navigation-bar.js';
 import type { NavigationBarItem } from 'mdui/components/navigation-bar-item.js';
 ```
 
-Example: (Note: The `style="position: relative"` in the example is for demonstration purposes. Remove it in actual use.)
+Example: (Note: The `style="position: relative"` in the example is for demonstration purposes. Don't include it in production.)
 
 ```html,example,playgroundId=308
 <mdui-navigation-bar value="item-1" style="position: relative">
@@ -39,7 +39,7 @@ By default, this component uses a `position: fixed` style and automatically adds
 
 ### Label Visibility {#example-label-visibility}
 
-Text labels in the navigation bar are always visible when there are 3 or fewer navigation items. If there are more than 3 items, only the text of the selected item is displayed.
+With three or fewer items, labels in the navigation bar are always visible. When there are more than three items, only the selected item's label is shown.
 
 ```html,example,expandable,playgroundId=309
 <mdui-navigation-bar value="item-1" style="position: relative">
@@ -89,9 +89,9 @@ The `label-visibility` attribute on `<mdui-navigation-bar>` controls the visibil
 
 ### In Container {#example-scroll-target}
 
-By default, the navigation bar is relative to the current window and appears at the bottom of the page.
+By default, the navigation bar is fixed to the bottom of the viewport.
 
-If you want to place the navigation bar within a specific container, use the `scroll-target` attribute on `<mdui-navigation-bar>`. The value should be the CSS selector or DOM element of the container with scrollable content. In this case, the navigation bar will be relative to the parent element. You need to manually add the styles `position: relative; overflow: hidden` to the parent element.
+To place the navigation bar in a specific container, set the `scroll-target` attribute on `<mdui-navigation-bar>` to the CSS selector or DOM element for the scrollable container. In this case, the navigation bar is positioned relative to its parent element. You must add the styles `position: relative; overflow: hidden` to the parent element yourself.
 
 ```html,example,expandable,playgroundId=311
 <div style="position: relative;overflow: hidden">
@@ -111,7 +111,7 @@ If you want to place the navigation bar within a specific container, use the `sc
 
 The `scroll-behavior` attribute on `<mdui-navigation-bar>` controls the visibility of the navigation bar during scrolling. Set its value to `hide` to hide the navigation bar when scrolling down and show it when scrolling up.
 
-The `scroll-threshold` attribute sets the number of pixels to start hiding the navigation bar.
+Use the `scroll-threshold` attribute to set how many pixels must be scrolled before the navigation bar starts hiding.
 
 ```html,example,expandable,playgroundId=312
 <div style="position: relative;overflow: hidden">

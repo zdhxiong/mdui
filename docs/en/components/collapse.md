@@ -1,8 +1,8 @@
 # Collapse Component
 
-Collapse panels are utilized to group and conceal complex content areas, enhancing page organization.
+Collapse panels are used to group and hide complex content areas, improving page organization.
 
-The collapse panel component does not come with styles. You must either create your own styles or use it in conjunction with other components.
+The collapse component does not include default styles. You must either create your own styles or use it alongside other components.
 
 ## Usage {#usage}
 
@@ -79,7 +79,7 @@ To enable accordion mode, add the `accordion` attribute to the `<mdui-collapse>`
 
 ### Setting the Active Panel {#example-value}
 
-The `value` attribute of the `<mdui-collapse>` component can be used to get the currently open panel or set the panel you want to open.
+The `value` attribute of the `<mdui-collapse>` component can be used to get or set the currently open panel.
 
 In accordion mode, `value` is a string and can be manipulated using either attribute or property. In non-accordion mode, `value` is an array and can only be manipulated using JavaScript property.
 
@@ -166,7 +166,7 @@ To disable the entire collapse panel group, add the `disabled` attribute to the 
 
 ### Triggering Element for Collapse {#example-trigger}
 
-By default, clicking the entire panel header area triggers the collapse. You can specify the triggering element by using the `trigger` attribute of the `<mdui-collapse-item>` component. The `trigger` attribute can be a CSS selector or a DOM element.
+By default, clicking the entire panel header area triggers the collapse. You can specify a different trigger element using the `trigger` attribute of the `<mdui-collapse-item>` component. The `trigger` attribute can be a CSS selector or a DOM element.
 
 ```html,example,expandable,playgroundId=239
 <mdui-list>

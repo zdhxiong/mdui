@@ -1,4 +1,4 @@
-# Dark Theme
+# Dark Mode
 
 All mdui components support dark mode and can automatically switch themes based on the operating system's settings.
 
@@ -31,7 +31,7 @@ All mdui components support dark mode and can automatically switch themes based 
 }
 </style>
 
-Switch between light and dark themes by clicking the <mdui-icon class="dark-mode-light-visible" name="light_mode--outlined" style="vertical-align: middle"></mdui-icon><mdui-icon class="dark-mode-dark-visible" name="dark_mode--outlined" style="vertical-align: middle"></mdui-icon> icons in the top right corner of the documentation page. This allows you to preview component appearance in different themes.
+Click the <mdui-icon class="dark-mode-light-visible" name="light_mode--outlined" style="vertical-align: middle"></mdui-icon><mdui-icon class="dark-mode-dark-visible" name="dark_mode--outlined" style="vertical-align: middle"></mdui-icon> icons in the top-right corner of the documentation page to switch between light and dark themes and preview components in both modes.
 
 To enable dark mode, add the `mdui-theme-dark` class to the `<html>` tag:
 

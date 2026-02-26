@@ -1,6 +1,6 @@
 # Navigation Drawer Component
 
-The navigation drawer provides a side-access method to different pages on a webpage.
+The navigation drawer provides side navigation between pages on a website.
 
 Typically, the [`<mdui-list>`](/en/docs/2/components/list) component is used within the navigation drawer to add navigation items.
 
@@ -39,20 +39,20 @@ Example:
 
 **Notes:**
 
-This component defaults to a `position: fixed` style.
+By default, this component uses `position: fixed`.
 
-When the `modal` attribute is set to `false` and the breakpoint is equal to or greater than [`--mdui-breakpoint-md`](/en/docs/2/styles/design-tokens#breakpoint), it automatically adds `padding-left` or `padding-right` to the body to prevent content from being obscured.
+When `modal` is `false` and the breakpoint is at least [`--mdui-breakpoint-md`](/en/docs/2/styles/design-tokens#breakpoint), it automatically adds `padding-left` or `padding-right` to the body to prevent content from being obscured.
 
 However, it uses a `position: absolute` style in the following cases:
 
 1. When the `contained` property is `true`.
-2. When it's within the [`<mdui-layout></mdui-layout>`](/en/docs/2/components/layout) component. In this case, it doesn't add `padding-left` or `padding-right`.
+2. When the component is used inside the [`<mdui-layout></mdui-layout>`](/en/docs/2/components/layout) component. In this case, `padding-left` or `padding-right` is not added.
 
 ## Examples {#examples}
 
 ### In Container {#example-contained}
 
-By default, the navigation drawer displays on the left or right side of the current window. To place it inside a container, add the `contained` attribute. This positions the navigation drawer relative to the parent element (you need to manually add `position: relative; overflow: hidden;` styles to the parent element).
+By default, the navigation drawer appears on the left or right side of the viewport. To place it inside a container, add the `contained` attribute. This makes the navigation drawer position itself relative to the parent element (you need to add `position: relative; overflow: hidden;` styles to the parent element).
 
 ```html,example,expandable,playgroundId=317
 <div class="example-contained" style="position: relative; overflow: hidden">
@@ -80,9 +80,9 @@ By default, the navigation drawer displays on the left or right side of the curr
 
 The `modal` attribute displays a modal overlay when the navigation drawer is open. Note that if the window or parent element width is less than [`--mdui-breakpoint-md`](/en/docs/2/styles/design-tokens#breakpoint), this attribute is ignored and the modal overlay is always displayed.
 
-The `close-on-esc` attribute allows the navigation drawer to close when the ESC key is pressed.
+The `close-on-esc` attribute lets the navigation drawer close when the ESC key is pressed.
 
-The `close-on-overlay-click` attribute allows the navigation drawer to close when the modal overlay is clicked.
+The `close-on-overlay-click` attribute lets the navigation drawer close when the modal overlay is clicked.
 
 ```html,example,expandable,playgroundId=318
 <div class="example-modal" style="position: relative; overflow: hidden">
@@ -108,7 +108,7 @@ The `close-on-overlay-click` attribute allows the navigation drawer to close whe
 
 ### Right Placement {#example-placement}
 
-Set the `placement` attribute to `right` to display the navigation drawer on the right side.
+Use the `placement` attribute to place the navigation drawer on the right side.
 
 ```html,example,expandable,playgroundId=319
 <div class="example-placement" style="position: relative; overflow: hidden">

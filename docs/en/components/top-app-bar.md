@@ -1,6 +1,6 @@
 # Top App Bar Component
 
-The Top App Bar provides information and actions related to the current screen, serving as a tool for branding, navigation, search, and actions.
+The Top App Bar provides context and actions for the current screen, supporting branding, navigation, search, and other actions.
 
 ## Usage {#usage}
 
@@ -18,7 +18,7 @@ import type { TopAppBar } from 'mdui/components/top-app-bar.js';
 import type { TopAppBarTitle } from 'mdui/components/top-app-bar-title.js';
 ```
 
-Example: (Note: The `style="position: relative"` in the example is for demonstration purposes. Remove it in actual use.)
+Example: (Note: The `style="position: relative"` in the example is for demonstration purposes. Don't include it in production.)
 
 ```html,example,playgroundId=420
 <mdui-top-app-bar style="position: relative;">
@@ -36,15 +36,15 @@ By default, the top app bar uses `position: fixed` and automatically adds `paddi
 However, it uses `position: absolute` in the following cases:
 
 1. When the `scroll-target` attribute is specified. In this case, `padding-top` is added to the element specified by `scroll-target`.
-2. When it is within the [`<mdui-layout></mdui-layout>`](/en/docs/2/components/layout) component. In this case, `padding-top` is not added.
+2. When the component is used inside the [`<mdui-layout></mdui-layout>`](/en/docs/2/components/layout) component. In this case, `padding-top` is not added.
 
 ## Examples {#examples}
 
 ### In Container {#example-scroll-target}
 
-By default, the top app bar is positioned relative to the current window and appears at the top of the page.
+By default, the top app bar is fixed to the top of the viewport.
 
-To place the top app bar inside a container, specify the `scroll-target` attribute on the `<mdui-top-app-bar>` component. Set its value to the CSS selector or DOM element of the container with scrollable content. In this case, the top app bar will be positioned relative to the parent element. Ensure to add the styles `position: relative; overflow: hidden` to the parent element.
+To place the top app bar inside a container, set the `scroll-target` attribute on the `<mdui-top-app-bar>` component to the CSS selector or DOM element of the scrollable container. In this case, the top app bar is positioned relative to its parent element. Be sure to add the styles `position: relative; overflow: hidden` to the parent element yourself.
 
 ```html,example,expandable,playgroundId=421
 <div style="position: relative;overflow: hidden">
@@ -60,7 +60,7 @@ To place the top app bar inside a container, specify the `scroll-target` attribu
 
 ### Shape {#example-variant}
 
-The `variant` attribute on the `<mdui-top-app-bar>` component sets the shape of the top app bar.
+The `variant` attribute on the `<mdui-top-app-bar>` component controls the top app bar's shape.
 
 ```html,example,expandable,playgroundId=422
 <div style="position: relative;overflow: hidden">
@@ -95,15 +95,15 @@ The `variant` attribute on the `<mdui-top-app-bar>` component sets the shape of 
 
 ### Scroll Behavior {#example-scroll-behavior}
 
-The `scroll-behavior` attribute on the `<mdui-top-app-bar>` component defines the top app bar's behavior when the page is scrolled. You can use multiple scroll behaviors simultaneously by separating them with spaces.
+The `scroll-behavior` attribute on the `<mdui-top-app-bar>` component defines how the top app bar behaves when the page is scrolled. You can use multiple scroll behaviors at once by separating them with spaces.
 
 Scroll behaviors include:
 
-- `hide`: Hides the top app bar when scrolling down and shows it when scrolling up.
-- `shrink`: Effective when `variant` is `medium` or `large`. Expands the top app bar when scrolling down and shrinks it when scrolling up.
-- `elevate`: Adds a shadow to the top app bar when scrolling down and removes the shadow when scrolling back to the top.
+- `hide`: Hides the top app bar on scroll down and shows it on scroll up.
+- `shrink`: Effective when `variant` is `medium` or `large`. Expands the top app bar on scroll down and shrinks it on scroll up.
+- `elevate`: Adds a shadow to the top app bar on scroll down and removes the shadow when scrolling back to the top.
 
-The `scroll-threshold` attribute sets the number of pixels to start the scroll behavior of the top app bar. (Do not set the `scroll-threshold` attribute when using the `elevate` scroll behavior to respond promptly)
+The `scroll-threshold` attribute sets how many pixels must be scrolled before the top app bar starts reacting. Do not set `scroll-threshold` when using `elevate`, so it responds immediately.
 
 **Example: Hide on Scroll**
 

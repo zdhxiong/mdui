@@ -46,7 +46,7 @@ import type { LayoutMain } from 'mdui/components/layout-main.js';
 
 **Introduction:**
 
-The layout system is built from the outside in. Each layout component (`<mdui-layout-item>`) occupies space in one of the four directions (top, bottom, left, right). Subsequent layout components continue to occupy the remaining space.
+The layout system is designed to be built from the outside in. Each layout component (`<mdui-layout-item>`) occupies space on one of the four sides (top, bottom, left, right). Subsequent layout components fill the remaining space.
 
 The following components inherit from `<mdui-layout-item>` and can also be used as layout components:
 
@@ -62,7 +62,7 @@ The `<mdui-layout-main>` component occupies the remaining space, where you can p
 
 ### Layout Component Order {#layout-default-order}
 
-By default, layout components occupy space in the order they appear in the code. The following examples illustrate this concept, showing different orders for [`<mdui-top-app-bar>`](/en/docs/2/components/top-app-bar) and [`<mdui-navigation-drawer>`](/en/docs/2/components/navigation-drawer).
+By default, layout components take up space in the order they appear in the code. The following examples show how order affects [`<mdui-top-app-bar>`](/en/docs/2/components/top-app-bar) and [`<mdui-navigation-drawer>`](/en/docs/2/components/navigation-drawer).
 
 <p class="example-md-visible">View this example on a large screen.</p>
 
@@ -98,7 +98,7 @@ By default, layout components occupy space in the order they appear in the code.
 </mdui-layout>
 ```
 
-When [`<mdui-top-app-bar>`](/en/docs/2/components/top-app-bar) is placed before [`<mdui-navigation-drawer>`](/en/docs/2/components/navigation-drawer), it occupies the full screen width first, leaving only the remaining height for `<mdui-navigation-drawer>`. If their positions are swapped, [`<mdui-navigation-drawer>`](/en/docs/2/components/navigation-drawer) occupies the full screen height first, leaving only the remaining width for [`<mdui-top-app-bar>`](/en/docs/2/components/top-app-bar).
+When [`<mdui-top-app-bar>`](/en/docs/2/components/top-app-bar) appears before [`<mdui-navigation-drawer>`](/en/docs/2/components/navigation-drawer), it takes the full screen width, leaving only the remaining height for `<mdui-navigation-drawer>`. If you swap the order, [`<mdui-navigation-drawer>`](/en/docs/2/components/navigation-drawer) takes the full screen height first, leaving only the remaining width for [`<mdui-top-app-bar>`](/en/docs/2/components/top-app-bar).
 
 ### Layout Component Placement {#example-placement}
 
@@ -132,7 +132,7 @@ In the following example, two `<mdui-layout-item>` components are placed on both
 
 In most cases, the order of layout components in the code will achieve the desired layout.
 
-However, you can use the `order` attribute to specify the layout order. The system arranges the components in ascending order of `order` value. When `order` values are the same, it arranges them in the order they appear in the code. The default `order` for all layout components is `0`.
+However, you can use the `order` attribute to specify the layout order. Layout components are ordered by ascending `order` value. When `order` values are the same, source order is used. The default `order` for all layout components is `0`.
 
 ```html,example,expandable,playgroundId=278
 <mdui-layout class="example-order">

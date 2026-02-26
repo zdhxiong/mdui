@@ -80,7 +80,7 @@ import { dialog } from 'mdui/functions/dialog.js';
       <td>-</td>
     </tr>
     <tr>
-      <td colspan="3">dialog 中的 body 内容，可以是 HTML 字符串、DOM 元素、或 <a href="/en/docs/2/functions/jq">JQ 对象</a>。</td>
+      <td colspan="3">dialog 中的 body 内容，可以是 HTML 字符串、DOM 元素、或 <a href="/zh-cn/docs/2/functions/jq">JQ 对象</a>。</td>
     </tr>
     <tr id="options-icon">
       <td><a href="#options-icon"><code>icon</code></a></td>

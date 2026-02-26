@@ -1,8 +1,8 @@
 # Usage
 
-mdui components, as standard Web Components, can be used like `<div>` elements. Each component's documentation provides a comprehensive API, including attributes, methods, events, slots, CSS parts, and CSS custom properties.
+mdui components are standard Web Components and can be used like `<div>` elements. Each component's documentation provides a comprehensive API, including attributes, methods, events, slots, CSS parts, and CSS custom properties.
 
-This guide focuses on the usage of Web Components.
+This guide focuses on how to use Web Components.
 
 ## Attributes {#attribute}
 
@@ -40,7 +40,7 @@ JavaScript properties can be accessed directly on the component instance or set 
 </script>
 ```
 
-Some attributes are boolean. The corresponding JavaScript property is `true` when the HTML attribute exists and `false` otherwise. However, mdui treats the string value `false` as equivalent to the boolean value `false` for compatibility with certain frameworks.
+Boolean attributes map to JavaScript properties that are `true` when the HTML attribute is present and `false` otherwise. However, mdui treats the string value `false` as the boolean value `false` for compatibility with certain frameworks.
 
 ```html
 <!-- This component has the disabled attribute, so the disabled property is true by default -->
@@ -57,7 +57,7 @@ Some attributes are boolean. The corresponding JavaScript property is `true` whe
 </script>
 ```
 
-For properties that are arrays, objects, or functions, there is only a JavaScript property, and no corresponding HTML attribute. For example, the [`<mdui-slider>`](/en/docs/2/components/slider) component's [`labelFormatter`](/en/docs/2/components/slider#attributes-labelFormatter) property is a function, which can only be set using JavaScript property:
+For properties that are arrays, objects, or functions, there is only a JavaScript property; there is no corresponding HTML attribute. For example, the [`<mdui-slider>`](/en/docs/2/components/slider) component's [`labelFormatter`](/en/docs/2/components/slider#attributes-labelFormatter) property is a function, which can only be set using JavaScript property:
 
 ```html
 <mdui-slider></mdui-slider>
@@ -76,7 +76,7 @@ Here's an example from the attribute documentation of the [`<mdui-slider>`](/en/
 | `value`        | `value`             |                                                                                        |
 |                | `labelFormatter`    |                                                                                        |
 
-The `name` attribute of this component has both HTML and JavaScript properties, and the reflect column indicates that if the JavaScript property is updated, the HTML attribute will also be updated. However, the `value` attribute does not reflect changes from the JavaScript property to the HTML attribute. The `labelFormatter` property only exists as a JavaScript property.
+The `name` attribute of this component has both HTML and JavaScript properties, and the reflect column means that updating the JavaScript property also updates the HTML attribute. However, the `value` attribute does not reflect changes from the JavaScript property to the HTML attribute. The `labelFormatter` property only exists as a JavaScript property.
 
 ## Methods {#method}
 
@@ -91,7 +91,7 @@ Components provide public methods that trigger specific behaviors. For example, 
 </script>
 ```
 
-Please refer to the individual documentation of each component for a comprehensive list of methods and their parameters.
+Refer to each component's documentation for a complete list of methods and parameters.
 
 ## Events {#event}
 
@@ -113,7 +113,7 @@ A comprehensive list of events and their parameters for each component can be fo
 
 When integrating mdui with other frameworks such as Vue, React, or Angular, you can use the framework's syntax to bind events. However, some frameworks, like React, may only support standard events like `click` and not custom events like `open`. In these cases, you may need to manually bind the event using `addEventListener` by obtaining a reference to the element.
 
-For more information on using mdui with React, please refer to the [Frameworks - React](/en/docs/2/frameworks/react) section.
+For more information on using mdui with React, see the [Frameworks - React](/en/docs/2/frameworks/react) section.
 
 ## Slot {#slot}
 
@@ -140,7 +140,7 @@ Refer to each component's documentation for a list of supported slots.
 
 ## CSS Custom Properties {#css-custom-properties}
 
-mdui utilizes CSS Custom Properties, also known as CSS variables, to establish a series of [global design tokens](/en/docs/2/styles/design-tokens). These tokens are referenced by various components, enabling you to adjust the styles of mdui components globally.
+mdui uses CSS Custom Properties, also known as CSS variables, to establish a series of [global design tokens](/en/docs/2/styles/design-tokens). These tokens are referenced by various components, enabling you to adjust the styles of mdui components globally.
 
 For example, you can reduce the corner radius of all components by modifying the relevant CSS custom properties:
 
@@ -178,7 +178,7 @@ Please refer to the documentation of each component for a list of supported CSS 
 
 ## CSS Part {#css-part}
 
-mdui components utilize the shadow DOM for encapsulating styles and behaviors. However, standard CSS selectors cannot select elements within the shadow DOM. To overcome this, some components add a `part` attribute to elements within the shadow DOM. These elements can then be selected and styled using the `::part` CSS selector.
+mdui components use the shadow DOM for encapsulating styles and behaviors. However, standard CSS selectors cannot select elements within the shadow DOM. To overcome this, some components add a `part` attribute to elements within the shadow DOM. These elements can then be selected and styled using the `::part` CSS selector.
 
 For example, the [`button`](/en/docs/2/components/button#cssParts-button) part modifies the inner padding of the button, while the [`label`](/en/docs/2/components/button#cssParts-label), [`icon`](/en/docs/2/components/button#cssParts-icon), and [`end-icon`](/en/docs/2/components/button#cssParts-end-icon) parts adjust the text color, left icon color, and right icon color, respectively:
 
@@ -204,17 +204,17 @@ For example, the [`button`](/en/docs/2/components/button#cssParts-button) part m
 </style>
 ```
 
-To understand the structure and default styles of component shadow DOM elements, you can inspect them using your browser's developer tools.
+You can inspect component shadow DOM elements in your browser's developer tools to see their structure and default styles.
 
-Before using CSS Part, consider whether global CSS custom properties and component-specific CSS custom properties can meet your needs. If they can, it's recommended to use CSS custom properties for style customization.
+Before using CSS Part, check whether global CSS custom properties or component-specific CSS custom properties already cover your needs. If they do, prefer them for style customization.
 
 For a list of publicly exposed `part` properties, please refer to the documentation of each component.
 
 ## Component Update Mechanism {#update-mechanism}
 
-mdui components are built using [Lit](https://lit.dev/), a lightweight library that streamlines the development of Web Components. Understanding the rendering and update mechanism of the components can enhance your experience when using mdui components.
+mdui components are built using [Lit](https://lit.dev/), a lightweight library that streamlines the development of Web Components. Understanding how components render and update can improve your experience with mdui components.
 
-When you modify the properties of mdui components, the components will re-render. However, this re-rendering is not synchronous. When multiple property values change at the same time, Lit buffers these changes until the next update cycle. This approach ensures that each component re-renders only once, regardless of the number of property changes. Only the parts of the shadow DOM where changes have occurred will be re-rendered.
+When you modify the properties of mdui components, the components will re-render. However, this re-rendering is not synchronous. When multiple property values change at the same time, Lit batches these changes until the next update cycle. This approach ensures that each component re-renders only once, regardless of how many properties change. Only the parts of the shadow DOM that actually change will be re-rendered.
 
 In the example below, we set the `disabled` JavaScript property of a button to `true` and immediately query its HTML attribute. However, the component hasn't had a chance to re-render yet, so the queried HTML attribute remains `false`:
 

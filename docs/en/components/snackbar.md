@@ -2,7 +2,7 @@
 
 Snackbars provide brief updates about app processes at the bottom of the screen.
 
-In addition to direct component usage, mdui also offers a [`mdui.snackbar`](/en/docs/2/functions/snackbar) function for simplified Snackbar component usage.
+In addition to direct component usage, mdui also offers a [`mdui.snackbar`](/en/docs/2/functions/snackbar) function for a simpler way to use the Snackbar component.
 
 ## Usage {#usage}
 
@@ -35,7 +35,7 @@ Example:
 
 ## Examples {#examples}
 
-### Position {#example-placement}
+### Placement {#example-placement}
 
 You can set the snackbar's position using the `placement` attribute.
 
@@ -137,7 +137,7 @@ The `closeable` attribute adds a close button on the right. Clicking the button 
 </script>
 ```
 
-The `close-button` slot specifies the element of the close button.
+The `close-button` slot specifies the close button's content.
 
 ```html,example,expandable,playgroundId=380
 <mdui-snackbar closeable class="example-close-button-slot">

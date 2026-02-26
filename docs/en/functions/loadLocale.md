@@ -1,6 +1,6 @@
 # loadLocale Function
 
-The `loadLocale` function is used to load locale modules. For more details, refer to [Localization](/en/docs/2/getting-started/localization).
+The `loadLocale` function loads locale modules. For more details, see [Localization](/en/docs/2/getting-started/localization).
 
 ## Usage {#usage}
 
@@ -10,7 +10,7 @@ Import the function:
 import { loadLocale } from 'mdui/functions/loadLocale.js';
 ```
 
-Here are a few common patterns to load locale modules. For detailed explanations, see [Localization](/en/docs/2/getting-started/localization).
+Here are a few common ways to load locale modules. For detailed explanations, see [Localization](/en/docs/2/getting-started/localization).
 
 Dynamic import (Lazy-load):
 
@@ -49,6 +49,6 @@ loadLocale(async (locale) => localizedTemplates.get(locale));
 loadLocale((LocaleTargetCode) => Promise<LocaleModule>): void;
 ```
 
-This function accepts a function that defines how to load the locale modules. The locale modules loading function takes a locale code as an argument and returns a Promise that resolves to the corresponding locale module.
+This function accepts a function that defines how to load the locale modules. The loader function takes a locale code and returns a Promise that resolves to the matching locale module.
 
 Refer to [Supported Languages](/en/docs/2/getting-started/localization#languages) for a list of locale codes. `en-us` is the built-in locale module and does not need to be loaded.

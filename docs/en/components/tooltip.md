@@ -1,6 +1,6 @@
 # Tooltip Component
 
-Tooltips provide supplementary text information for a specific element, enhancing the comprehension of its function or purpose.
+Tooltips display supplementary information about a specific element and help explain its function.
 
 ## Usage {#usage}
 
@@ -28,7 +28,7 @@ Example:
 
 ### Plain Text Tooltip {#example-plain}
 
-By default, the tooltip displays plain text. The `content` attribute specifies the tooltip content.
+By default, the tooltip displays plain text. The `content` attribute sets the tooltip content.
 
 ```html,example,expandable,playgroundId=412
 <mdui-tooltip content="Plain tooltip">
@@ -36,7 +36,7 @@ By default, the tooltip displays plain text. The `content` attribute specifies t
 </mdui-tooltip>
 ```
 
-Alternatively, the `content` slot can also be used for this purpose.
+Alternatively, use the `content` slot.
 
 ```html,example,expandable,playgroundId=413
 <mdui-tooltip>
@@ -56,7 +56,7 @@ For a rich text tooltip, set the `variant` attribute to `rich`. The tooltip's ti
 <mdui-tooltip
   variant="rich"
   headline="Rich tooltip"
-  content="Rich tooltips bring attention to a particular element of feature that warrants the user's focus. It supports multiple lines of informational text."
+  content="Rich tooltips bring attention to a particular element or feature that warrants the user's focus. It supports multiple lines of informational text."
 >
   <mdui-button>button</mdui-button>
 </mdui-tooltip>
@@ -68,7 +68,7 @@ Alternatively, the `headline` and `content` slots can be used to specify the too
 <mdui-tooltip variant="rich">
   <mdui-button>button</mdui-button>
   <div slot="headline">Rich tooltip</div>
-  <div slot="content">Rich tooltips bring attention to a particular element of feature that warrants the user's focus. It supports multiple lines of informational text.</div>
+  <div slot="content">Rich tooltips bring attention to a particular element or feature that warrants the user's focus. It supports multiple lines of informational text.</div>
   <mdui-button slot="action" variant="text">Action</mdui-button>
 </mdui-tooltip>
 ```
@@ -156,7 +156,7 @@ The `placement` attribute sets the tooltip's position.
 
 ### Trigger Method {#example-trigger}
 
-The `trigger` attribute determines the trigger method for the tooltip.
+The `trigger` attribute sets how the tooltip is triggered.
 
 ```html,example,expandable,playgroundId=417
 <mdui-tooltip trigger="click" content="tooltip">
@@ -166,7 +166,7 @@ The `trigger` attribute determines the trigger method for the tooltip.
 
 ### Open/Close Delay {#example-delay}
 
-When the trigger method is `hover`, the `open-delay` and `close-delay` attributes set the opening and closing delays, respectively. The unit is in milliseconds.
+When the trigger method is `hover`, the `open-delay` and `close-delay` attributes set the opening and closing delays, respectively. The values are in milliseconds.
 
 ```html,example,expandable,playgroundId=418
 <mdui-tooltip open-delay="1000" close-delay="1000" content="tooltip">

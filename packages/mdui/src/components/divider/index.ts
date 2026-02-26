@@ -7,7 +7,7 @@ import { style } from './style.js';
 import type { CSSResultGroup, TemplateResult } from 'lit';
 
 /**
- * @summary 分割线组件
+ * @summary 分隔线组件
  *
  * ```html
  * <mdui-divider></mdui-divider>
@@ -18,7 +18,7 @@ export class Divider extends MduiElement<DividerEventMap> {
   public static override styles: CSSResultGroup = [componentStyle, style];
 
   /**
-   * 是否为垂直分割线
+   * 是否为垂直分隔线
    */
   @property({
     type: Boolean,

@@ -1,10 +1,10 @@
 # Integrate with Vue
 
-After completing the [installation](/en/docs/2/getting-started/installation#npm) of mdui in Vue, you'll need to perform some additional configurations.
+After [installing mdui](/en/docs/2/getting-started/installation#npm) in Vue, you'll need to make a few additional changes.
 
 ## Configuration {#configuration}
 
-To prevent Vue from interpreting mdui components as Vue components, you'll need to adjust the `compilerOptions.isCustomElement` option in the `vite.config file`:
+To prevent Vue from interpreting mdui components as Vue components, you'll need to adjust the `compilerOptions.isCustomElement` option in `vite.config.js`:
 
 ```js
 // vite.config.js
@@ -24,7 +24,7 @@ export default {
 };
 ```
 
-For more information, please refer to the [Vue official documentation](https://cn.vuejs.org/guide/extras/web-components.html#using-custom-elements-in-vue).
+For more information, please refer to the [Vue official documentation](https://vuejs.org/guide/extras/web-components.html#using-custom-elements-in-vue).
 
 ## Notes {#notes}
 

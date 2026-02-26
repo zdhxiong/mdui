@@ -1,6 +1,6 @@
 # Button Component
 
-Buttons are interactive components that enable users to execute actions such as sending emails, sharing documents, or expressing preferences.
+Buttons are interactive components that let users perform actions such as sending emails, sharing documents, or expressing preferences.
 
 ## Usage {#usage}
 
@@ -59,7 +59,7 @@ Use the `icon` and `end-icon` attributes to add Material Icons to the left and r
 
 ### Link {#example-link}
 
-Use the `href` attribute to transform the button into a link. The `download`, `target`, and `rel` attributes are available for link-related functionality.
+Use the `href` attribute to turn the button into a link. The `download`, `target`, and `rel` attributes are available for link-related functionality.
 
 ```html,example,expandable,playgroundId=201
 <mdui-button href="https://www.mdui.org" target="_blank">Link</mdui-button>

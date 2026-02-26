@@ -1,6 +1,6 @@
 # setLocale Function
 
-The `setLocale` function sets the current locale code. For more details, refer to [Localization](/en/docs/2/getting-started/localization).
+The `setLocale` function sets the current locale code. For more details, see [Localization](/en/docs/2/getting-started/localization).
 
 ## Usage {#usage}
 
@@ -14,7 +14,7 @@ Example:
 
 ```js
 setLocale('zh-cn').then(() => {
-  // The locale switch is complete when the promise resolves
+  // The locale switch is complete once the promise resolves
 });
 ```
 
@@ -24,6 +24,6 @@ setLocale('zh-cn').then(() => {
 setLocale(LocaleCode): Promise<void>
 ```
 
-This function accepts a locale code as an argument and returns a Promise. The locale switch is complete when the Promise resolves.
+This function accepts a locale code as an argument and returns a Promise. The locale switch is complete once the Promise resolves.
 
 Refer to [Supported Languages](/en/docs/2/getting-started/localization#languages) for a list of locale codes.

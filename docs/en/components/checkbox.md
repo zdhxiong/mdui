@@ -43,7 +43,7 @@ Use the `disabled` attribute to disable the checkbox.
 
 ### Indeterminate State {#example-indeterminate}
 
-The `indeterminate` attribute indicates an indeterminate state for the checkbox.
+The `indeterminate` attribute sets the checkbox to an indeterminate state.
 
 ```html,example,expandable,playgroundId=219
 <mdui-checkbox indeterminate>Checkbox</mdui-checkbox>
@@ -51,7 +51,7 @@ The `indeterminate` attribute indicates an indeterminate state for the checkbox.
 
 ### Icons {#example-icon}
 
-Use the `unchecked-icon`, `checked-icon`, and `indeterminate-icon` attributes to set Material Icons for the checkbox in unchecked, checked, and indeterminate states, respectively. Alternatively, use the corresponding slots for setting icons.
+Use the `unchecked-icon`, `checked-icon`, and `indeterminate-icon` attributes to set the Material Icons for the checkbox in unchecked, checked, and indeterminate states, respectively. Alternatively, use the corresponding slots to set the icons.
 
 ```html,example,expandable,playgroundId=220
 <mdui-checkbox

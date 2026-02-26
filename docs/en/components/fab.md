@@ -1,6 +1,6 @@
-# Fab Component
+# Floating Action Button Component
 
-The Floating Action Button (FAB) is a primary component for key actions, offering easy access.
+The Floating Action Button (FAB) is a primary action button that gives users quick access to key actions.
 
 ## Usage {#usage}
 
@@ -26,7 +26,7 @@ Example:
 
 ### Icon {#example-icon}
 
-Set the Material Icon name with the `icon` attribute or use the `icon` slot.
+Use the `icon` attribute to set the Material Icon name, or use the `icon` slot.
 
 ```html,example,expandable,playgroundId=263
 <mdui-fab icon="edit"></mdui-fab>
@@ -37,7 +37,7 @@ Set the Material Icon name with the `icon` attribute or use the `icon` slot.
 
 ### Extended State {#example-extended}
 
-Use `extended` to display text from the default slot in the extended state.
+Use `extended` to show the default slot's text in the extended state.
 
 ```html,example,expandable,playgroundId=264
 <mdui-fab extended icon="edit">Compose</mdui-fab>
@@ -45,7 +45,7 @@ Use `extended` to display text from the default slot in the extended state.
 
 ### Shape {#example-variant}
 
-Set the FAB shape with the `variant` attribute.
+Use the `variant` attribute to set the FAB shape.
 
 ```html,example,expandable,playgroundId=265
 <mdui-fab variant="primary" icon="edit"></mdui-fab>
@@ -56,7 +56,7 @@ Set the FAB shape with the `variant` attribute.
 
 ### Size {#example-size}
 
-Set the FAB size with the `size` attribute.
+Use the `size` attribute to set the FAB size.
 
 ```html,example,expandable,playgroundId=266
 <mdui-fab size="small" icon="edit"></mdui-fab>
@@ -74,7 +74,7 @@ Use the `href` attribute to turn the FAB into a link. The `download`, `target`, 
 
 ### Disabled and Loading State {#example-disabled}
 
-Use `disabled` to disable the FAB. Use `loading` to add a loading state.
+Use `disabled` to disable the FAB. Use `loading` to show a loading state.
 
 ```html,example,expandable,playgroundId=268
 <mdui-fab disabled icon="edit"></mdui-fab>

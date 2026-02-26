@@ -26,7 +26,7 @@ Example:
 
 ### Default Value {#example-value}
 
-The `value` property represents the current value of the range slider. You can set the range slider's value by updating the `value` property. Note that the `value` property is an array and can only be accessed and modified through JavaScript property.
+The `value` property represents the current value of the range slider. You can set the range slider's value by updating the `value` property. Note that the `value` property is an array and can only be accessed and updated in JavaScript.
 
 ```html,example,expandable,playgroundId=337
 <mdui-range-slider class="example-value"></mdui-range-slider>
@@ -69,17 +69,17 @@ Tickmarks can be displayed on the range slider by adding the `tickmarks` attribu
 <mdui-range-slider tickmarks step="10"></mdui-range-slider>
 ```
 
-### Hide Tooltip {#example-nolabel}
+### Hide Value Label {#example-nolabel}
 
-The tooltip on the range slider can be hidden by adding the `nolabel` attribute.
+The value label on the range slider can be hidden by adding the `nolabel` attribute.
 
 ```html,example,expandable,playgroundId=342
 <mdui-range-slider nolabel></mdui-range-slider>
 ```
 
-### Modify Tooltip {#example-labelFormatter}
+### Customize Value Label {#example-labelFormatter}
 
-The `labelFormatter` property allows you to customize the display format of the tooltip. This property is a function that takes the current value of the range slider as a parameter and returns the text you want to display.
+The `labelFormatter` property lets you customize how the value label is displayed. It receives the current range slider value and returns the text to display.
 
 ```html,example,expandable,playgroundId=343
 <mdui-range-slider class="example-label-formatter"></mdui-range-slider>

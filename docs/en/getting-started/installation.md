@@ -10,7 +10,7 @@ npm install mdui --save
 
 ### Full Import {#full-import}
 
-To utilize all mdui components, import the following two files in your project's entry file:
+To use all mdui components, import the following two files in your project's entry file:
 
 ```js
 import 'mdui/mdui.css';
@@ -50,7 +50,7 @@ import { snackbar } from 'mdui';
 
 ### Cherry-picking Import {#cherry-picking}
 
-To optimize your project size, import only the necessary components and functions. For example, if you only need the [`<mdui-button>`](/en/docs/2/components/button) component and [`snackbar`](/en/docs/2/functions/snackbar) function, import them as follows:
+To keep your bundle size down, import only the components and functions you need. For example, if you only need the [`<mdui-button>`](/en/docs/2/components/button) component and [`snackbar`](/en/docs/2/functions/snackbar) function, import them as follows:
 
 ```js
 // Always import the CSS file
@@ -75,8 +75,8 @@ import 'mdui/components/card.js';
 import 'mdui/components/checkbox.js';
 import 'mdui/components/chip.js';
 import 'mdui/components/circular-progress.js';
-import 'mdui/components/collapse/collapse.js';
-import 'mdui/components/collapse/collapse-item.js';
+import 'mdui/components/collapse.js';
+import 'mdui/components/collapse-item.js';
 import 'mdui/components/dialog.js';
 import 'mdui/components/divider.js';
 import 'mdui/components/dropdown.js';
@@ -86,13 +86,13 @@ import 'mdui/components/layout.js';
 import 'mdui/components/layout-item.js';
 import 'mdui/components/layout-main.js';
 import 'mdui/components/linear-progress.js';
+import 'mdui/components/list.js';
 import 'mdui/components/list-item.js';
 import 'mdui/components/list-subheader.js';
-import 'mdui/components/list.js';
-import 'mdui/components/menu-item.js';
 import 'mdui/components/menu.js';
-import 'mdui/components/navigation-bar-item.js';
+import 'mdui/components/menu-item.js';
 import 'mdui/components/navigation-bar.js';
+import 'mdui/components/navigation-bar-item.js';
 import 'mdui/components/navigation-drawer.js';
 import 'mdui/components/navigation-rail.js';
 import 'mdui/components/navigation-rail-item.js';
@@ -111,8 +111,8 @@ import 'mdui/components/tab-panel.js';
 import 'mdui/components/tabs.js';
 import 'mdui/components/text-field.js';
 import 'mdui/components/tooltip.js';
-import 'mdui/components/top-app-bar-title.js';
 import 'mdui/components/top-app-bar.js';
+import 'mdui/components/top-app-bar-title.js';
 import { $ } from 'mdui/jq.js';
 import { alert } from 'mdui/functions/alert.js';
 import { breakpoint } from 'mdui/functions/breakpoint.js';
@@ -139,7 +139,7 @@ mdui can also be included directly via a CDN using `<link>` and `<script>` tags.
 
 ### Global Build {#global-build}
 
-The global build of mdui exposes all functions as properties on the global `mdui` object.
+The global build of mdui exposes its functions as properties on the global `mdui` object.
 
 ```html,playgroundId=184
 <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css">

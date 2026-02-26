@@ -1,6 +1,6 @@
 # snackbar Function
 
-The `snackbar` function provides a simple method to utilize the [`<mdui-snackbar>`](/en/docs/2/components/snackbar) component without the need to write HTML code.
+The `snackbar` function provides a simple way to use the [`<mdui-snackbar>`](/en/docs/2/components/snackbar) component without writing HTML.
 
 ## Usage {#usage}
 
@@ -34,7 +34,7 @@ Example:
 
 <pre><code class="nohighlight">snackbar(options: <a href="#api-options">Options</a>): <a href="/en/docs/2/components/snackbar">Snackbar</a></code></pre>
 
-The snackbar function accepts an [Options](#api-options) object as its parameter and returns an instance of the [`<mdui-snackbar>`](/en/docs/2/components/snackbar) component.
+The snackbar function takes an [Options](#api-options) object and returns an instance of the [`<mdui-snackbar>`](/en/docs/2/components/snackbar) component.
 
 ### Options {#api-options}
 
@@ -127,8 +127,8 @@ The snackbar function accepts an [Options](#api-options) object as its parameter
     <tr>
       <td colspan="3">
         <p>The queue name.</p>
-        <p>By default, the queue is not enabled. If this function is called multiple times, multiple snackbars will be displayed simultaneously.</p>
-        <p>If a queue name is provided, snackbars with the same queue name will open sequentially, each after the previous one closes.</p>
+        <p>Queues are disabled by default. If this function is called multiple times, multiple snackbars will be displayed simultaneously.</p>
+        <p>If you provide a queue name, snackbars with the same name open one after another.</p>
       </td>
     </tr>
     <tr id="options-onClick">
@@ -177,7 +177,7 @@ The snackbar function accepts an [Options](#api-options) object as its parameter
       </td>
     </tr>
     <tr id="options-onClose">
-      <td><a href="options-onClose"><code>onClose</code></a></td>
+      <td><a href="#options-onClose"><code>onClose</code></a></td>
       <td><code>(snackbar: <a href="/en/docs/2/components/snackbar">Snackbar</a>) => void</code></td>
       <td>-</td>
     </tr>

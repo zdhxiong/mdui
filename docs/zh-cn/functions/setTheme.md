@@ -2,7 +2,7 @@
 
 `setTheme` 函数用于设置当前页面或指定元素的主题。
 
-可选的主题包括 `light`、`dark`和 `auto`。详见 [暗色模式](/zh-cn/docs/2/styles/dark-mode)。
+可选的主题包括 `light`、`dark`和 `auto`。详见 [深色模式](/zh-cn/docs/2/styles/dark-mode)。
 
 ## 使用方法 {#usage}
 
@@ -15,13 +15,13 @@ import { setTheme } from 'mdui/functions/setTheme.js';
 使用示例：
 
 ```js
-// 把整个页面设置成暗色模式
+// 把整个页面设置成深色模式
 setTheme('dark');
 
-// 把 class="element" 元素设置成暗色模式
+// 把 class="element" 元素设置成深色模式
 setTheme('dark', '.element');
 
-// 把指定 DOM 元素设置成暗色模式
+// 把指定 DOM 元素设置成深色模式
 const element = document.querySelector('.element');
 setTheme('dark', element);
 ```

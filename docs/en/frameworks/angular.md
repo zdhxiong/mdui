@@ -1,10 +1,10 @@
 # Integrate with Angular
 
-To utilize mdui in Angular, you must first complete the [installation](/en/docs/2/getting-started/installation#npm) of mdui. Following this, additional configuration is required.
+To use mdui in Angular, first complete the [installation](/en/docs/2/getting-started/installation#npm). Then add the configuration below.
 
 ## Configuration {#configuration}
 
-The first step is to enable the use of Web Components in Angular. This can be achieved by adding the `CUSTOM_ELEMENTS_SCHEMA` to the `schemas` array in your module.
+First, enable Web Components in Angular by adding the `CUSTOM_ELEMENTS_SCHEMA` to the `schemas` array in your module.
 
 ```js
 import { BrowserModule } from '@angular/platform-browser';
@@ -31,7 +31,7 @@ import { Dialog } from 'mdui/components/dialog.js';
   selector: 'app-dialog-example',
   template: `<div id="page">
     <button (click)="openDialog()">Open Dialog</button>
-    <mdui-dialog #dialog primary="Dialog Title">Dialog Content</mdui-dialog>
+    <mdui-dialog #dialog headline="Dialog Title">Dialog Content</mdui-dialog>
   </div>`
 })
 export class DialogExampleComponent implements OnInit {

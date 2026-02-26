@@ -459,7 +459,6 @@ $('input').prop('checked');
 如果传入了两个参数，该方法将设置集合中所有元素的指定 JavaScript 属性值。
 
 属性值可以是任意类型的值，或回调函数的返回值。回调函数的第一个参数为元素的索引位置，第二个参数为该元素上原有的属性值，函数内的 `this` 指向当前元素。
-属性值可以是任意类型的值，也可以是一个返回属性值的回调函数。如果参数是回调函数，该函数的第一个参数是元素的索引位置，第二个参数是该元素上原有的属性值。在函数内部，`this` 指向当前元素。
 
 如果属性值或回调函数的返回值为 `undefined`，该方法将不会修改元素的原有属性。
 
@@ -794,7 +793,7 @@ $('.box').height('20%');
 $('.box').height(10);
 
 // 通过回调函数的返回值设置高度
-$('.box').height(function (index, oldWidth) {
+$('.box').height(function (index, oldHeight) {
   return 10;
 });
 ```
@@ -916,7 +915,7 @@ $('.box').outerHeight(10);
 $('.box').outerHeight(10, true);
 
 // 通过回调函数的返回值设置高度
-$('.box').outerHeight(function (index, oldWidth) {
+$('.box').outerHeight(function (index, oldHeight) {
   return 10;
 });
 ```
@@ -1218,7 +1217,7 @@ $('<p>I would like to say: </p>').prepend('<b>Hello</b>', '<b>World</b>');
 // 结果：<p><b>Hello</b><b>World</b>I would like to say: </p>
 
 // 通过回调函数插入一个元素
-$('<p>Hello</p>').append(function (index, oldHTML) {
+$('<p>Hello</p>').prepend(function (index, oldHTML) {
   return '<b>' + oldHTML + index + '</b>';
 });
 // 结果：<p><b>Hello0</b>Hello</p>
@@ -1560,7 +1559,7 @@ $(document).off('click', '.box');
 $(document).off('click', '.box', callback);
 
 // 同时解绑多个事件处理函数
-$('.box.').off({
+$('.box').off({
   click: callback1,
   focus: callback2,
 });
@@ -1594,9 +1593,9 @@ $('.box').trigger('click.myPlugin');
 
 // 传入 CustomEvent 的参数
 $('.box').trigger('click', undefined, {
-  bubbles: true;
-  cancelable: true;
-  composed: true
+  bubbles: true,
+  cancelable: true,
+  composed: true,
 });
 ```
 

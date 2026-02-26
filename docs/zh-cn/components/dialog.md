@@ -146,7 +146,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 ```html,example,expandable,playgroundId=246
 <mdui-dialog
   headline="Delete selected images?"
-  description="Images will be permenantly removed from you account and all synced devices."
+  description="Images will be permanently removed from your account and all synced devices."
   close-on-overlay-click
   class="example-headline"
 ></mdui-dialog>
@@ -166,7 +166,7 @@ import type { Dialog } from 'mdui/components/dialog.js';
 ```html,example,expandable,playgroundId=247
 <mdui-dialog close-on-overlay-click class="example-headline-slot">
   <span slot="headline">Delete selected images?</span>
-  <span slot="description">Images will be permenantly removed from you account and all synced devices.</span>
+  <span slot="description">Images will be permanently removed from your account and all synced devices.</span>
 </mdui-dialog>
 
 <mdui-button>打开对话框</mdui-button>

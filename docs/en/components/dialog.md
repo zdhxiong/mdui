@@ -2,7 +2,7 @@
 
 Dialogs are used to display crucial information during a user's workflow.
 
-In addition to directly using this component, mdui also provides four functions: [`mdui.dialog`](/en/docs/2/functions/dialog), [`mdui.alert`](/en/docs/2/functions/alert), [`mdui.confirm`](/en/docs/2/functions/confirm), [`mdui.prompt`](/en/docs/2/functions/prompt). These functions simplify the use of the Dialog component.
+In addition to using this component directly, mdui also provides four functions: [`mdui.dialog`](/en/docs/2/functions/dialog), [`mdui.alert`](/en/docs/2/functions/alert), [`mdui.confirm`](/en/docs/2/functions/confirm), [`mdui.prompt`](/en/docs/2/functions/prompt). These functions provide a more convenient way to use the dialog component.
 
 ## Usage {#usage}
 
@@ -146,7 +146,7 @@ Use the `headline` and `description` attributes to set the dialog's title and de
 ```html,example,expandable,playgroundId=246
 <mdui-dialog
   headline="Delete selected images?"
-  description="Images will be permenantly removed from you account and all synced devices."
+  description="Images will be permanently removed from your account and all synced devices."
   close-on-overlay-click
   class="example-headline"
 ></mdui-dialog>
@@ -166,7 +166,7 @@ Alternatively, use the `headline` and `description` slots to set the title and d
 ```html,example,expandable,playgroundId=247
 <mdui-dialog close-on-overlay-click class="example-headline-slot">
   <span slot="headline">Delete selected images?</span>
-  <span slot="description">Images will be permenantly removed from you account and all synced devices.</span>
+  <span slot="description">Images will be permanently removed from your account and all synced devices.</span>
 </mdui-dialog>
 
 <mdui-button>Open Dialog</mdui-button>

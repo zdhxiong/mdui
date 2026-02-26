@@ -1,6 +1,6 @@
 # throttle Function
 
-The `throttle` function is used to create a throttled function that can be executed at most once within a specified time interval.
+The `throttle` function creates a throttled function that can be executed at most once within a specified time interval.
 
 ## Usage {#usage}
 
@@ -28,4 +28,4 @@ window.addEventListener(
 throttle(func: Function, wait: number): Function
 ```
 
-The function accepts two parameters. The first parameter, is the function to throttle. The second parameter, is the number of milliseconds to delay before the function can be invoked again. The function returns the throttled version of the provided function.
+The function accepts two parameters. The first parameter is the function to throttle. The second parameter is the number of milliseconds to delay before the function can be invoked again. The function returns the throttled version of the provided function.

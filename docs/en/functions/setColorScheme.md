@@ -1,6 +1,6 @@
 # setColorScheme Function
 
-The `setColorScheme` function is used to set the color scheme for the current page or a specific element based on a provided hexadecimal color value.
+The `setColorScheme` function sets the color scheme for the current page or a specific element based on a provided hexadecimal color value.
 
 This function affects all mdui components on the page. For more information, refer to the [Dynamic Color](/en/docs/2/styles/dynamic-color) section.
 

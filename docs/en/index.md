@@ -1,6 +1,6 @@
 # Introduction
 
-Let's begin by incorporating mdui into a basic page template using a CDN.
+Let's start with a basic page template that loads mdui from a CDN.
 
 > You are currently reading the documentation for mdui 2!
 >
@@ -21,9 +21,9 @@ Add the following lines to your page's `<head>` tag:
 <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
 ```
 
-To utilize the icon attribute (for example, `icon="search"` in `<mdui-button icon="search"></mdui-button>`), include the CSS file for the icon. Refer to [Using Material Icons](/en/docs/2/components/icon#usage-material-icons) for more information.
+To use the icon attribute (for example, `icon="search"` in `<mdui-button icon="search"></mdui-button>`), include the CSS file for the icon. Refer to [Using Material Icons](/en/docs/2/components/icon#usage-material-icons) for more information.
 
-mdui operates independently of third-party libraries and is ready to use once the files are included.
+mdui works independently of third-party libraries and is ready to use once the files are included.
 
 ## Simplest Page Template {#template}
 

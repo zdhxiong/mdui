@@ -1,6 +1,6 @@
 # Circular Progress Component
 
-Circular progress indicators are used to show the progress of ongoing tasks.
+Circular progress indicators show the progress of ongoing tasks.
 
 ## Usage {#usage}
 

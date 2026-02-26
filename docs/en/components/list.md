@@ -1,6 +1,6 @@
 # List Component
 
-A List is a vertical arrangement of items that can contain text or images.
+A list is a vertical collection of items that can contain text or images.
 
 ## Usage {#usage}
 
@@ -55,7 +55,7 @@ Alternatively, use the default slot for the primary text and the `description` s
 </mdui-list>
 ```
 
-By default, both primary and secondary text are displayed in full. To limit the number of lines, use the `headline-line` and `description-line` attributes. The maximum limit is `3` lines.
+By default, both primary and secondary text are shown in full. To limit the number of lines, use the `headline-line` and `description-line` attributes. The maximum is `3` lines.
 
 ```html,example,expandable,playgroundId=285
 <mdui-list>
@@ -90,7 +90,7 @@ Alternatively, use the `icon` and `end-icon` slots to add elements to the left a
 
 ### Link {#example-link}
 
-The `href` attribute turns the list into a link, with `download`, `target`, and `rel` attributes available for link-related functionality.
+The `href` attribute turns the list item into a link, with `download`, `target`, and `rel` attributes available for link-related functionality.
 
 ```html,example,expandable,playgroundId=288
 <mdui-list>
@@ -144,11 +144,11 @@ The `rounded` attribute on `<mdui-list-item>` gives the item a rounded appearanc
 
 ### Vertical Alignment {#example-alignment}
 
-The `alignment` attribute on `<mdui-list-item>` aligns elements on the left and right. Possible values:
+The `alignment` attribute on `<mdui-list-item>` controls the vertical alignment of side elements. Possible values:
 
-- `start`: top alignment.
-- `center`: center alignment.
-- `end`: bottom alignment.
+- `start`: align to the top.
+- `center`: center aligned.
+- `end`: align to the bottom.
 
 ```html,example,expandable,playgroundId=293
 <mdui-list>
@@ -169,7 +169,7 @@ The `alignment` attribute on `<mdui-list-item>` aligns elements on the left and 
 
 ### Custom Content {#example-custom}
 
-The `custom` slot in `<mdui-list-item>` allows for full customization of the list item content.
+The `custom` slot in `<mdui-list-item>` lets you fully customize the list item content.
 
 ```html,example,expandable,playgroundId=294
 <mdui-list>

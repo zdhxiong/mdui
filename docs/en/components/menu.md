@@ -1,8 +1,8 @@
 # Menu Component
 
-Menus display a list of choices on a temporary surface. They appear when users interact with a button, action, or other control.
+Menus present a list of choices in a temporary surface. They appear when users interact with a button, action, or other control.
 
-For dropdown menus, utilize the [`<mdui-dropdown>`](/en/docs/2/components/dropdown) component.
+For dropdown menus, use the [`<mdui-dropdown>`](/en/docs/2/components/dropdown) component.
 
 ## Usage {#usage}
 
@@ -37,7 +37,7 @@ To create a dropdown menu, use the [`<mdui-dropdown>`](/en/docs/2/components/dro
 
 ```html,example,expandable,playgroundId=296
 <mdui-dropdown>
-  <mdui-button slot="trigger">open dropdown</mdui-button>
+  <mdui-button slot="trigger">Open dropdown</mdui-button>
   <mdui-menu>
     <mdui-menu-item>Item 1</mdui-menu-item>
     <mdui-menu-item>Item 2</mdui-menu-item>
@@ -84,7 +84,7 @@ For single selection, set the `selects` attribute to `single` on `<mdui-menu>`. 
 
 For multiple selection, set the `selects` attribute to `multiple` on `<mdui-menu>`. The `value` of `<mdui-menu>` is an array of the selected `<mdui-menu-item>` values.
 
-Note: For multiple selection, the `value` of `<mdui-menu>` is an array and can only be read and set via JavaScript property.
+Note: For multiple selection, the `value` of `<mdui-menu>` is an array and can only be accessed and updated in JavaScript.
 
 ```html,example,expandable,playgroundId=300
 <mdui-menu selects="multiple" class="example-multiple">
@@ -104,7 +104,7 @@ Note: For multiple selection, the `value` of `<mdui-menu>` is an array and can o
 
 To add Material Icons on the left and right, add `icon`, `end-icon` attributes to `<mdui-menu-item>`. Use `end-text` attribute to add text on the right side. Alternatively, use `icon`, `end-icon`, `end-text` slots for the same purpose.
 
-Setting `icon` attribute to an empty string creates space for an icon on the left, aligning it with other items.
+Setting the `icon` attribute to an empty string reserves space for a left-side icon so the item aligns with the others.
 
 ```html,example,expandable,playgroundId=301
 <mdui-menu>
@@ -119,7 +119,7 @@ Setting `icon` attribute to an empty string creates space for an icon on the lef
 </mdui-menu>
 ```
 
-For single or multiple selection, use `selected-icon` attribute or `selected-icon` slot to define the icon for selected state.
+For single or multiple selection, use the `selected-icon` attribute or slot to define the selected-state icon.
 
 ```html,example,expandable,playgroundId=302
 <mdui-menu selects="multiple">
@@ -144,7 +144,7 @@ To turn the menu item into a link, use the `href` attribute on the `<mdui-menu-i
 
 ### Submenu {#example-submenu}
 
-To specify submenu items, use the `submenu` slot within `<mdui-menu-item>`.
+Use the `submenu` slot in `<mdui-menu-item>` to define submenu items.
 
 ```html,example,expandable,playgroundId=304
 <mdui-menu>
@@ -159,7 +159,7 @@ To specify submenu items, use the `submenu` slot within `<mdui-menu-item>`.
 </mdui-menu>
 ```
 
-Set `submenu-trigger` attribute on `<mdui-menu>` to define the trigger method for the submenu.
+Use the `submenu-trigger` attribute on `<mdui-menu>` to define how the submenu opens.
 
 ```html,example,expandable,playgroundId=305
 <mdui-menu submenu-trigger="click">

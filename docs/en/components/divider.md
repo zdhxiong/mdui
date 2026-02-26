@@ -1,6 +1,6 @@
 # Divider Component
 
-A divider is a thin line that groups content in lists and layouts.
+A divider is a thin line that separates content in lists and layouts.
 
 ## Usage {#usage}
 

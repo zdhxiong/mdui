@@ -1,13 +1,13 @@
 # Localization
 
-mdui uses English by default. If you wish to use other languages, you'll need to do some localization configuration.
+mdui defaults to English. To support other languages, configure localization.
 
 ## Usage {#usage}
 
 mdui provides three functions for localization:
 
-- [`loadLocale`](/en/docs/2/functions/loadLocale): Loads locale modules. Accepts a function that takes a locale code and returns a Promise resolving to the locale module. Ensure to call this function in your project's entry file.
-- [`setLocale`](/en/docs/2/functions/setLocale): Begins switching the active locale to the given locale code, and returns a promise that resolves when the new locale has loaded.
+- [`loadLocale`](/en/docs/2/functions/loadLocale): Loads locale modules. Accepts a loader function that takes a locale code and returns a Promise that resolves to the matching locale module. Call this function in your project's entry file.
+- [`setLocale`](/en/docs/2/functions/setLocale): Starts switching to the given locale code and returns a promise that resolves once the new locale has loaded.
 - [`getLocale`](/en/docs/2/functions/getLocale): Returns the active locale code.
 
 Example usage:
@@ -20,7 +20,7 @@ import { getLocale } from 'mdui/functions/getLocale.js';
 // Load locale modules in the entry point of your project
 loadLocale((locale) => import(`../node_modules/mdui/locales/${locale}.js`));
 
-// Switch locale, and returns a promise that resolves when the new locale has loaded
+// Switch the locale and return a promise that resolves once the new locale has loaded
 setLocale('zh-cn').then(() => {
   // You can use getLocale() to get the current locale code
   console.log(getLocale()); // zh-cn
@@ -31,7 +31,7 @@ setLocale('zh-cn').then(() => {
 
 The `mdui-localize-status` event fires on `window` whenever a locale switch starts, finishes, or fails. You can listen to this event to execute custom operations, such as setting a locale preference cookie.
 
-The `detail.status` string property tells you what kind of status change has occured, and can be either `loading`, `ready`, or `error`:
+The `detail.status` string property tells you what kind of status change has occurred, and can be either `loading`, `ready`, or `error`:
 
 <table>
   <thead>
@@ -48,7 +48,7 @@ The `detail.status` string property tells you what kind of status change has occ
         <p>The <code>detail</code> object contains:</p>
         <ul>
           <li><code>loadingLocale</code>: Code of the locale that has started loading.</li>
-        <ul>
+        </ul>
       </td>
     </tr>
     <tr>
@@ -105,7 +105,7 @@ loadLocale((locale) => import(`../node_modules/mdui/locales/${locale}.js`));
 
 ### Pre-load {#pre-load}
 
-Start pre-loading all locales when the page loads. Dynamic imports are still used to ensure that the remaining script on the page is not blocked while the locale modules are being fetched.
+Download all required locale modules when the page loads. This eliminates additional downloads when switching languages, making language switching faster.
 
 ```js
 import { loadLocale } from 'mdui/functions/loadLocale.js';
@@ -120,7 +120,7 @@ loadLocale(async (locale) => localizedTemplates.get(locale));
 
 ### Static imports {#static-imports}
 
-Use [static imports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) to pre-load all locales in a way that blocks other script on the page.
+This method bundles all required locale modules into the same file as your project code, eliminating the need for separate locale downloads.
 
 ```js
 import { loadLocale } from 'mdui/functions/loadLocale.js';
@@ -154,73 +154,73 @@ When using mdui via CDN, you can directly load locale modules from the CDN:
 
 mdui supports the following locales:
 
-| Language                 | Locale Code |
-| ------------------------ | ----------- |
-| Arabic                   | ar-eg       |
-| Azerbaijani              | az-az       |
-| Bulgarian                | bg-bg       |
-| Bangla (Bangladesh)      | bn-bd       |
-| Belarusian               | be-by       |
-| Catalan                  | ca-es       |
-| Czech                    | cs-cz       |
-| Danish                   | da-dk       |
-| German                   | de-de       |
-| Greek                    | el-gr       |
-| English (United Kingdom) | en-gb       |
-| English                  | en-us       |
-| Spanish                  | es-es       |
-| Estonian                 | et-ee       |
-| Persian                  | fa-ir       |
-| Finnish                  | fi-fi       |
-| French (Belgium)         | fr-be       |
-| French (Canada)          | fr-ca       |
-| French (France)          | fr-fr       |
-| Irish (Ireland)          | ga-ie       |
-| Galician (Spain)         | gl-es       |
-| Hebrew                   | he-il       |
-| Hindi                    | hi-in       |
-| Croatian                 | hr-hr       |
-| Hungarian                | hu-hu       |
-| Armenian                 | hy-am       |
-| Indonesian               | id-id       |
-| Italian                  | it-it       |
-| Icelandic                | is-is       |
-| Japanese                 | ja-jp       |
-| Georgian                 | ka-ge       |
-| Khmer                    | km-kh       |
-| Kurdish (Kurmanji)       | kmr-iq      |
-| Kannada                  | kn-in       |
-| Kazakh                   | kk-kz       |
-| Korean                   | ko-kr       |
-| Lithuanian               | lt-lt       |
-| Latvian                  | lv-lv       |
-| Macedonian               | mk-mk       |
-| Malayalam (India)        | ml-in       |
-| Mongolian                | mn-mn       |
-| Malay (Malaysia)         | ms-my       |
-| Norwegian                | nb-no       |
-| Nepal                    | ne-np       |
-| Dutch (Belgium)          | nl-be       |
-| Dutch                    | nl-nl       |
-| Polish                   | pl-pl       |
-| Portuguese (Brazil)      | pt-br       |
-| Portuguese               | pt-pt       |
-| Romanian                 | ro-ro       |
-| Russian                  | ru-ru       |
-| Slovak                   | sk-sk       |
-| Serbian                  | sr-rs       |
-| Slovenian                | sl-si       |
-| Swedish                  | sv-se       |
-| Tamil                    | ta-in       |
-| Thai                     | th-th       |
-| Turkish                  | tr-tr       |
-| Urdu (Pakistan)          | ur-pk       |
-| Ukrainian                | uk-ua       |
-| Vietnamese               | vi-vn       |
-| Chinese (Simplified)     | zh-cn       |
-| Chinese (Traditional)    | zh-hk       |
-| Chinese (Traditional)    | zh-tw       |
+| Language                         | Locale Code |
+| -------------------------------- | ----------- |
+| Arabic                           | ar-eg       |
+| Azerbaijani                      | az-az       |
+| Bulgarian                        | bg-bg       |
+| Bangla (Bangladesh)              | bn-bd       |
+| Belarusian                       | be-by       |
+| Catalan                          | ca-es       |
+| Czech                            | cs-cz       |
+| Danish                           | da-dk       |
+| German                           | de-de       |
+| Greek                            | el-gr       |
+| English (United Kingdom)         | en-gb       |
+| English                          | en-us       |
+| Spanish                          | es-es       |
+| Estonian                         | et-ee       |
+| Persian                          | fa-ir       |
+| Finnish                          | fi-fi       |
+| French (Belgium)                 | fr-be       |
+| French (Canada)                  | fr-ca       |
+| French (France)                  | fr-fr       |
+| Irish (Ireland)                  | ga-ie       |
+| Galician (Spain)                 | gl-es       |
+| Hebrew                           | he-il       |
+| Hindi                            | hi-in       |
+| Croatian                         | hr-hr       |
+| Hungarian                        | hu-hu       |
+| Armenian                         | hy-am       |
+| Indonesian                       | id-id       |
+| Italian                          | it-it       |
+| Icelandic                        | is-is       |
+| Japanese                         | ja-jp       |
+| Georgian                         | ka-ge       |
+| Khmer                            | km-kh       |
+| Kurdish (Kurmanji)               | kmr-iq      |
+| Kannada                          | kn-in       |
+| Kazakh                           | kk-kz       |
+| Korean                           | ko-kr       |
+| Lithuanian                       | lt-lt       |
+| Latvian                          | lv-lv       |
+| Macedonian                       | mk-mk       |
+| Malayalam (India)                | ml-in       |
+| Mongolian                        | mn-mn       |
+| Malay (Malaysia)                 | ms-my       |
+| Norwegian                        | nb-no       |
+| Nepali                           | ne-np       |
+| Dutch (Belgium)                  | nl-be       |
+| Dutch                            | nl-nl       |
+| Polish                           | pl-pl       |
+| Portuguese (Brazil)              | pt-br       |
+| Portuguese                       | pt-pt       |
+| Romanian                         | ro-ro       |
+| Russian                          | ru-ru       |
+| Slovak                           | sk-sk       |
+| Serbian                          | sr-rs       |
+| Slovenian                        | sl-si       |
+| Swedish                          | sv-se       |
+| Tamil                            | ta-in       |
+| Thai                             | th-th       |
+| Turkish                          | tr-tr       |
+| Urdu (Pakistan)                  | ur-pk       |
+| Ukrainian                        | uk-ua       |
+| Vietnamese                       | vi-vn       |
+| Chinese (Simplified)             | zh-cn       |
+| Chinese (Traditional, Hong Kong) | zh-hk       |
+| Chinese (Traditional, Taiwan)    | zh-tw       |
 
 ## Submitting New Translations or Improvements {#contribute}
 
-To contribute new translations or improvements to existing translations, please submit a pull request on GitHub. Translations are located in [`packages/mdui/src/xliff`](https://github.com/zdhxiong/mdui/tree/v2/packages/mdui/src/xliff) and can be edited directly on GitHub if you don’t want to clone the repo locally.
+To contribute new translations or improvements to existing translations, please submit a pull request on GitHub. Translations are located in [`packages/mdui/src/xliff`](https://github.com/zdhxiong/mdui/tree/v2/packages/mdui/src/xliff) and can be edited directly on GitHub.

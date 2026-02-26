@@ -1,8 +1,8 @@
 # getTheme Function
 
-The `getTheme` function is used to obtain the current theme applied to the page or a specific element.
+The `getTheme` function returns the current theme applied to the page or a specific element.
 
-The available themes are `light`, `dark`, and `auto`. For more information, refer to the [Dark Mode](/en/docs/2/styles/dark-mode) section.
+The available themes are `light`, `dark`, and `auto`. For more information, see the [Dark Mode](/en/docs/2/styles/dark-mode) section.
 
 ## Usage {#usage}
 

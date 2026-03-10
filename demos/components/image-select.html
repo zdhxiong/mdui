@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+  <title>Image Select</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      font-family: Roboto;
+      padding: 24px;
+    }
+
+    section {
+      margin-bottom: 32px;
+    }
+
+    .standalone mdui-image-select {
+      width: 200px;
+      height: 200px;
+      margin-right: 16px;
+    }
+
+    mdui-image-select-group {
+      max-width: 640px;
+    }
+
+    mdui-image-select {
+      aspect-ratio: 1;
+    }
+
+    #output {
+      margin-top: 16px;
+      padding: 12px;
+      background: #f5f5f5;
+      border-radius: 8px;
+      font-family: monospace;
+    }
+  </style>
+  <script type="module">
+    import '../../packages/mdui/mdui.css';
+    import '../../packages/mdui/components/image-select.js';
+    import '../../packages/mdui/components/image-select-group.js';
+
+    // Log group value changes
+    document.querySelector('#group-multiple').addEventListener('change', (e) => {
+      document.querySelector('#output-multiple').textContent =
+        'value: ' + JSON.stringify(e.target.value);
+    });
+
+    document.querySelector('#group-single').addEventListener('change', (e) => {
+      document.querySelector('#output-single').textContent =
+        'value: ' + JSON.stringify(e.target.value);
+    });
+  </script>
+</head>
+
+<body>
+  <main>
+    <h1>Image Select</h1>
+
+    <section>
+      <h2>Standalone</h2>
+      <div class="standalone" style="display: flex; flex-wrap: wrap; gap: 16px;">
+        <mdui-image-select
+          src="https://picsum.photos/seed/a/400/400"
+          value="1"
+        ></mdui-image-select>
+        <mdui-image-select
+          src="https://picsum.photos/seed/b/400/400"
+          value="2"
+          selected
+        ></mdui-image-select>
+        <mdui-image-select
+          src="https://picsum.photos/seed/c/400/400"
+          value="3"
+          disabled
+        ></mdui-image-select>
+      </div>
+    </section>
+
+    <section>
+      <h2>Group - Multiple Selection</h2>
+      <mdui-image-select-group id="group-multiple" selects="multiple">
+        <mdui-image-select src="https://picsum.photos/seed/1/400/400" value="1"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/2/400/400" value="2"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/3/400/400" value="3"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/4/400/400" value="4"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/5/400/400" value="5"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/6/400/400" value="6"></mdui-image-select>
+      </mdui-image-select-group>
+      <div id="output-multiple" class="output">value: []</div>
+    </section>
+
+    <section>
+      <h2>Group - Single Selection</h2>
+      <mdui-image-select-group id="group-single" selects="single">
+        <mdui-image-select src="https://picsum.photos/seed/7/400/400" value="a"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/8/400/400" value="b"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/9/400/400" value="c"></mdui-image-select>
+      </mdui-image-select-group>
+      <div id="output-single" class="output">value: ""</div>
+    </section>
+
+    <section>
+      <h2>Group - 4 Columns</h2>
+      <mdui-image-select-group selects="multiple" style="--columns: 4; --gap: 4px;">
+        <mdui-image-select src="https://picsum.photos/seed/10/400/400" value="1"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/11/400/400" value="2"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/12/400/400" value="3"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/13/400/400" value="4"></mdui-image-select>
+      </mdui-image-select-group>
+    </section>
+
+    <section>
+      <h2>Group - Disabled</h2>
+      <mdui-image-select-group selects="multiple" disabled>
+        <mdui-image-select src="https://picsum.photos/seed/14/400/400" value="1"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/15/400/400" value="2"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/16/400/400" value="3"></mdui-image-select>
+      </mdui-image-select-group>
+    </section>
+
+    <section class="mdui-theme-dark" style="background: #1c1b1f; padding: 24px; border-radius: 16px;">
+      <h2 style="color: white;">Dark Theme</h2>
+      <mdui-image-select-group selects="multiple">
+        <mdui-image-select src="https://picsum.photos/seed/17/400/400" value="1"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/18/400/400" value="2"></mdui-image-select>
+        <mdui-image-select src="https://picsum.photos/seed/19/400/400" value="3"></mdui-image-select>
+      </mdui-image-select-group>
+    </section>
+  </main>
+</body>
+
+</html>

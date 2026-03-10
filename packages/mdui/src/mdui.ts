@@ -16,6 +16,8 @@ export * from './components/divider.js';
 export * from './components/dropdown.js';
 export * from './components/fab.js';
 export * from './components/icon.js';
+export * from './components/image-select.js';
+export * from './components/image-select-group.js';
 export * from './components/layout.js';
 export * from './components/layout-item.js';
 export * from './components/layout-main.js';

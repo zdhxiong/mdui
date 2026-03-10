@@ -205,6 +205,7 @@
       "tagNames": [
         "mdui-card",
         "mdui-checkbox",
+        "mdui-image-select",
         "mdui-list-item",
         "mdui-menu-item",
         "mdui-navigation-bar-item",
@@ -862,6 +863,82 @@
     },
     "slots": {
       "": "`svg` 图标的内容"
+    }
+  },
+  "mdui-image-select": {
+    "summary": "图片选择组件。可配合 `<mdui-image-select-group>` 组件使用\n\n```html\n<mdui-image-select src=\"https://example.com/image.jpg\" value=\"1\"></mdui-image-select>\n```",
+    "properties": {
+      "src": {
+        "description": "图片的 URL 地址"
+      },
+      "alt": {
+        "description": "图片的替代文本描述"
+      },
+      "fit": {
+        "description": "图片如何适应容器框，与原生的 `object-fit` 属性相同。可选值包括：\n\n* `contain`：保持图片原有尺寸比例，内容会被等比例缩放\n* `cover`：保持图片原有尺寸比例，但部分内容可能被剪切\n* `fill`：不保持图片原有尺寸比例，内容会被拉伸以填充整个容器\n* `none`：保留图片原有尺寸，内容不会被缩放或拉伸\n* `scale-down`：保持图片原有尺寸比例，内容尺寸与 `none` 或 `contain` 中较小的一个相同",
+        "enum": {
+          "contain": "保持图片原有尺寸比例，内容会被等比例缩放",
+          "cover": "保持图片原有尺寸比例，但部分内容可能被剪切",
+          "fill": "不保持图片原有尺寸比例，内容会被拉伸以填充整个容器",
+          "none": "保留图片原有尺寸，内容不会被缩放或拉伸",
+          "scale-down": "保持图片原有尺寸比例，内容尺寸与 `none` 或 `contain` 中较小的一个相同"
+        }
+      },
+      "selected": {
+        "description": "是否为选中状态"
+      },
+      "disabled": {
+        "description": "是否为禁用状态"
+      },
+      "value": {
+        "description": "图片选择的值，将被 `<mdui-image-select-group>` 使用"
+      },
+      "groupDisabled": {
+        "description": "是否被 group 组件禁用（内部使用）"
+      }
+    },
+    "events": {
+      "focus": "获得焦点时触发",
+      "blur": "失去焦点时触发",
+      "change": "选中状态变更时触发"
+    },
+    "slots": {
+      "": "自定义图片内容，可以为 `<img>` 元素或其他内容"
+    },
+    "cssParts": {
+      "image": "组件内部的 `<img>` 元素",
+      "indicator": "选中状态的指示器图标"
+    },
+    "cssProperties": {
+      "--shape-corner": "组件的圆角大小。可以指定一个具体的像素值；但更推荐引用设计令牌"
+    }
+  },
+  "mdui-image-select-group": {
+    "summary": "图片选择组组件。需配合 `<mdui-image-select>` 组件使用\n\n```html\n<mdui-image-select-group selects=\"multiple\">\n..<mdui-image-select src=\"image1.jpg\" value=\"1\"></mdui-image-select>\n..<mdui-image-select src=\"image2.jpg\" value=\"2\"></mdui-image-select>\n..<mdui-image-select src=\"image3.jpg\" value=\"3\"></mdui-image-select>\n</mdui-image-select-group>\n```",
+    "properties": {
+      "selects": {
+        "description": "选择模式。可选值包括：\n\n* `single`：单选\n* `multiple`：多选",
+        "enum": {
+          "single": "单选",
+          "multiple": "多选"
+        }
+      },
+      "disabled": {
+        "description": "是否为禁用状态"
+      },
+      "value": {
+        "description": "当前选中的 `<mdui-image-select>` 的值。\n\n在 `selects=\"single\"` 时为字符串，在 `selects=\"multiple\"` 时为字符串数组。"
+      }
+    },
+    "events": {
+      "change": "选中的值变更时触发"
+    },
+    "slots": {
+      "": "`<mdui-image-select>` 组件"
+    },
+    "cssProperties": {
+      "--columns": "网格列数。默认为 `3`",
+      "--gap": "网格间距。默认为 `0.5rem`"
     }
   },
   "mdui-layout": {

@@ -1,0 +1,78 @@
+:host {
+  --shape-corner: var(--mdui-shape-corner-medium);
+
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: var(--shape-corner);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  .border(3px, solid, surface, 1, border);
+  .transition(border-color, short4, standard);
+  .state-layer-color(on-surface);
+}
+
+:host([selected]:not([selected="false" i])) {
+  .border-color(primary);
+  .state-layer-color(primary);
+
+  .indicator {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+:host([disabled]:not([disabled="false" i])),
+:host([group-disabled]:not([group-disabled="false" i])) {
+  opacity: 0.38;
+  cursor: default;
+  pointer-events: none;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: calc(var(--shape-corner) - 3px);
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+::slotted(img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.indicator {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .top(8);
+  .left(8);
+  .width(24);
+  .height(24);
+  border-radius: 50%;
+  .background-color(primary);
+  .color(on-primary);
+  opacity: 0;
+  transform: scale(0.5);
+  transition-property: opacity, transform;
+  .transition-duration(short4);
+  .transition-timing-function(standard);
+  pointer-events: none;
+  z-index: 1;
+
+  mdui-icon-check-circle {
+    .width(24);
+    .height(24);
+  }
+}

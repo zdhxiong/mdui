@@ -26,6 +26,7 @@ const sharedIcons = [
   'cancel--outlined',
   'visibility-off',
   'visibility',
+  'check-circle',
 ];
 
 // 字符串转驼峰，且首字母大写

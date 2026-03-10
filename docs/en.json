@@ -205,6 +205,7 @@
       "tagNames": [
         "mdui-card",
         "mdui-checkbox",
+        "mdui-image-select",
         "mdui-list-item",
         "mdui-menu-item",
         "mdui-navigation-bar-item",
@@ -862,6 +863,82 @@
     },
     "slots": {
       "": "The SVG icon content."
+    }
+  },
+  "mdui-image-select": {
+    "summary": "Image Select Component. Can be used with `<mdui-image-select-group>`.\n\n```html\n<mdui-image-select src=\"https://example.com/image.jpg\" value=\"1\"></mdui-image-select>\n```",
+    "properties": {
+      "src": {
+        "description": "The URL of the image."
+      },
+      "alt": {
+        "description": "Alternative text description for the image."
+      },
+      "fit": {
+        "description": "Defines how the image fits within its container, same as the native `object-fit` property. Possible values:\n\n* `contain`: Scales the image to maintain its aspect ratio while fitting within the container.\n* `cover`: Scales the image to maintain its aspect ratio while filling the container. Parts of the image may be clipped.\n* `fill`: Stretches the image to fill the container without maintaining its aspect ratio.\n* `none`: Keeps the image at its original size without scaling or stretching.\n* `scale-down`: Sizes the image as the smaller of `none` or `contain`.",
+        "enum": {
+          "contain": "Scales the image to maintain its aspect ratio while fitting within the container.",
+          "cover": "Scales the image to maintain its aspect ratio while filling the container. Parts of the image may be clipped.",
+          "fill": "Stretches the image to fill the container without maintaining its aspect ratio.",
+          "none": "Keeps the image at its original size without scaling or stretching.",
+          "scale-down": "Sizes the image as the smaller of `none` or `contain`."
+        }
+      },
+      "selected": {
+        "description": "Whether the item is selected."
+      },
+      "disabled": {
+        "description": "Whether the item is disabled."
+      },
+      "value": {
+        "description": "The value of the image select item, used by `<mdui-image-select-group>`."
+      },
+      "groupDisabled": {
+        "description": "Whether the item is disabled by the group component (internal use)."
+      }
+    },
+    "events": {
+      "focus": "Emitted when the component gains focus.",
+      "blur": "Emitted when the component loses focus.",
+      "change": "Emitted when the selected state changes."
+    },
+    "slots": {
+      "": "Custom image content. Can be an `<img>` element or other content."
+    },
+    "cssParts": {
+      "image": "The internal `<img>` element.",
+      "indicator": "The selection indicator icon."
+    },
+    "cssProperties": {
+      "--shape-corner": "The corner radius of the component. You can use a specific pixel value, but it is recommended to reference design tokens."
+    }
+  },
+  "mdui-image-select-group": {
+    "summary": "Image Select Group Component. Used with `<mdui-image-select>` components.\n\n```html\n<mdui-image-select-group selects=\"multiple\">\n..<mdui-image-select src=\"image1.jpg\" value=\"1\"></mdui-image-select>\n..<mdui-image-select src=\"image2.jpg\" value=\"2\"></mdui-image-select>\n..<mdui-image-select src=\"image3.jpg\" value=\"3\"></mdui-image-select>\n</mdui-image-select-group>\n```",
+    "properties": {
+      "selects": {
+        "description": "The selection mode. Possible values:\n\n* `single`: Single selection.\n* `multiple`: Multiple selection.",
+        "enum": {
+          "single": "Single selection.",
+          "multiple": "Multiple selection."
+        }
+      },
+      "disabled": {
+        "description": "Whether all items are disabled."
+      },
+      "value": {
+        "description": "The value of the currently selected `<mdui-image-select>` item(s).\n\nWhen `selects=\"single\"`, this is a string. When `selects=\"multiple\"`, this is an array of strings."
+      }
+    },
+    "events": {
+      "change": "Emitted when the selected value changes."
+    },
+    "slots": {
+      "": "`<mdui-image-select>` components."
+    },
+    "cssProperties": {
+      "--columns": "The number of grid columns. Defaults to `3`.",
+      "--gap": "The grid gap. Defaults to `0.5rem`."
     }
   },
   "mdui-layout": {

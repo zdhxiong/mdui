@@ -37,6 +37,7 @@ export const docComponents: Record<string, string[]> = {
   'bottom-app-bar': ['mdui-bottom-app-bar'],
   'top-app-bar': ['mdui-top-app-bar', 'mdui-top-app-bar-title'],
   layout: ['mdui-layout', 'mdui-layout-item', 'mdui-layout-main'],
+  'image-select': ['mdui-image-select-group', 'mdui-image-select'],
 };
 
 // vscode 和 webstorm 中的 description 如果包含链接，默认是不包含域名的，这里手动添加域名

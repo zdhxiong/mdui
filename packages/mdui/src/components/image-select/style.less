@@ -12,8 +12,8 @@
   .state-layer-color(on-surface);
 }
 
-:host([selected]:not([selected="false" i])) {
-  .border-color(primary);
+:host([selected]:not([selected='false' i])) {
+  .border(3px, solid, primary) !important;
   .state-layer-color(primary);
 
   .indicator {
@@ -22,8 +22,8 @@
   }
 }
 
-:host([disabled]:not([disabled="false" i])),
-:host([group-disabled]:not([group-disabled="false" i])) {
+:host([disabled]:not([disabled='false' i])),
+:host([group-disabled]:not([group-disabled='false' i])) {
   opacity: 0.38;
   cursor: default;
   pointer-events: none;

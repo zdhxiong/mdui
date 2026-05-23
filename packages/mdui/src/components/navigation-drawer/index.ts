@@ -102,9 +102,7 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
    */
   @property({ reflect: true })
   // eslint-disable-next-line prettier/prettier
-  public placement:
-    | /*左侧*/ 'left'
-    | /*右侧*/ 'right' = 'left';
+  public placement: /*左侧*/ 'left' | /*右侧*/ 'right' = 'left';
 
   /**
    * 默认情况下，抽屉导航栏相对于 `body` 元素显示。当该属性设置为 `true` 时，抽屉导航栏将相对于其父元素显示。
@@ -131,6 +129,7 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
 
   private observeResize?: ObserveResize;
   private modalHelper!: Modal;
+  private isLayoutAnimating = false;
   private readonly overlayRef: Ref<HTMLElement> = createRef();
   private readonly panelRef: Ref<HTMLElement> = createRef();
   private readonly definedController = new DefinedController(this, {
@@ -294,6 +293,7 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
       if (this.isParentLayout && hasUpdated) {
         setLayoutTransition(duration, easingEmphasized);
 
+        this.isLayoutAnimating = true;
         this.layoutManager!.updateLayout(this);
       }
 
@@ -321,6 +321,7 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
       // 若位于 layout 中，则 drawer 动画完成后，移除 layout-main 的动画
       if (this.isParentLayout && hasUpdated) {
         setLayoutTransition(null);
+        this.isLayoutAnimating = false;
       }
 
       if (hasUpdated) {
@@ -362,6 +363,7 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
       // 若位于 layout 中，则 layout-main 的 padding 变化需要有和 drawer 相同的动画
       if (this.isParentLayout) {
         setLayoutTransition(duration, easingEmphasized);
+        this.isLayoutAnimating = true;
 
         // 关闭动画开始时，drawer 的宽度不变。等到关闭动画结束，drawer 的宽度才变为 0
         // 为了 layout-main 的动画能在关闭动画开始时就执行，强制调用 updateLayout 更新布局
@@ -389,6 +391,7 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
       // 若位于 layout 中，则 drawer 动画结束后，移除 layout-main 的动画
       if (this.isParentLayout) {
         setLayoutTransition(null);
+        this.isLayoutAnimating = false;
       }
 
       this.style.display = 'none';
@@ -467,7 +470,7 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
         this.mobile = breakpoint(target).down('md');
 
         // 若位于 layout 中，且为模态化，则重新布局时，占据的宽度为 0
-        if (this.isParentLayout) {
+        if (this.isParentLayout && !this.isLayoutAnimating) {
           this.layoutManager!.updateLayout(this, {
             width: this.isModal ? 0 : undefined,
           });

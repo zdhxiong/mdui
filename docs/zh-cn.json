@@ -186,7 +186,6 @@
         }
       },
       "tagNames": [
-        "mdui-button-icon",
         "mdui-card",
         "mdui-list-item",
         "mdui-menu-item",
@@ -204,7 +203,6 @@
         }
       },
       "tagNames": [
-        "mdui-button-icon",
         "mdui-card",
         "mdui-checkbox",
         "mdui-list-item",

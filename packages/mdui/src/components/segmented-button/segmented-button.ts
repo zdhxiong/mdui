@@ -1,12 +1,12 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import '@mdui/icons-shared/check.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
-import '@mdui/shared/icons/check.js';
 import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
 import { segmentedButtonStyle } from './segmented-button-style.js';

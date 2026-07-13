@@ -12,7 +12,7 @@ import path from 'node:path';
  */
 type Variant = 'filled' | 'outlined' | 'rounded' | 'sharp' | 'two-tone';
 
-// 组件内部用到的图标，统一写入 @mdui/shared/src/icons 中
+// 组件内部用到的图标，统一写入 @mdui/icons-shared 包中
 const sharedIcons = [
   'check-box-outline-blank',
   'check-box',
@@ -48,6 +48,7 @@ const variants: Variant[] = [
   'sharp',
   'two-tone',
 ];
+
 // 原始 svg 文件（变体名 => 文件夹路径）的映射
 const folderPathMap = new Map<Variant, string>(
   variants.map((variant) => [
@@ -59,8 +60,8 @@ const folderPathMap = new Map<Variant, string>(
 // 图标组件模板
 const template = `import { LitElement } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
-import { style } from '@mdui/shared/icons/shared/style.js';
-import { svgTag } from '@mdui/shared/icons/shared/svg-tag.js';
+import { style } from '@mdui/icons-shared/shared/style.js';
+import { svgTag } from '@mdui/icons-shared/shared/svg-tag.js';
 import type { TemplateResult, CSSResultGroup } from 'lit';
 
 @customElement('TemplateTagName')
@@ -81,8 +82,8 @@ declare global {
 }
 `;
 
-// 用于在 @mdui/icons 包中引用 @mdui/shared 中的图标
-const templateRef = `export * from '@mdui/shared/icons/TemplateFilename.js';
+// 用于在 @mdui/icons 包中引用 @mdui/icons-shared 中的图标
+const templateRef = `export * from '@mdui/icons-shared/TemplateFilename.js';
 `;
 
 folderPathMap.forEach((folderPath, variant) => {
@@ -120,18 +121,18 @@ folderPathMap.forEach((folderPath, variant) => {
       .replace(/TemplateTagName/g, `mdui-icon-${componentFilename}`)
       .replace(/TemplateSvgContent/g, svgContent);
 
-    // 公共图标，写到 @mdui/shared 中
+    // 公共图标，写到 @mdui/icons-shared 中
     if (sharedIcons.includes(componentFilename)) {
       fs.writeFileSync(
-        path.resolve(`./packages/shared/src/icons/${componentFilename}.ts`),
-        componentContent.replace(/@mdui\/shared\/icons\//g, './'),
+        path.resolve(`./packages/icons-shared/src/${componentFilename}.ts`),
+        componentContent.replace(/@mdui\/icons-shared\//g, './'),
       );
       fs.writeFileSync(
         path.resolve(`./packages/icons/src/${componentFilename}.ts`),
         templateRef.replace(/TemplateFilename/g, componentFilename),
       );
     }
-    // 非公共图标，写道 @mdui/icons 中
+    // 非公共图标，写到 @mdui/icons 中
     else {
       fs.writeFileSync(
         path.resolve(`./packages/icons/src/${componentFilename}.ts`),

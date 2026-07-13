@@ -51,7 +51,10 @@
     </ul>
   ]]></description>
   <change-notes><![CDATA[
-  Initial version
+    <ol>
+      <li>Full Support for WebStorm 2025.2+: Fully compatible and optimized for the latest IDE releases.</li>
+      <li>Support for the Latest mdui v2.1.5: Upgraded framework synchronization to ensure proper autocompletion and hover tips for the newest components and attributes.</li>
+    </ol>
   ]]></change-notes>
   <depends>com.intellij.modules.platform</depends>
   <depends>com.intellij.modules.xml</depends>

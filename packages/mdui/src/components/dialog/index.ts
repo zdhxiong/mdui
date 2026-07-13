@@ -54,7 +54,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart description - 副文本部分，位于 body 中
  * @csspart action - 底部操作按钮
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/zh-cn/docs/2/styles/design-tokens#shape-corner)
  * @cssprop --z-index - 组件的 CSS `z-index` 值
  */
 @customElement('mdui-dialog')

@@ -49,7 +49,7 @@ export const ScrollBehaviorMixin = <T extends Constructor<LitElement>>(
 ): Constructor<ScrollBehaviorMixinInterface> & T => {
   class ScrollBehaviorMixinClass extends superclass {
     /**
-     * 需要监听其滚动事件的元素。值可以是 CSS 选择器、DOM 元素、或 [JQ 对象](/docs/2/functions/jq)。默认监听 `window` 的滚动事件
+     * 需要监听其滚动事件的元素。值可以是 CSS 选择器、DOM 元素、或 [JQ 对象](/zh-cn/docs/2/functions/jq)。默认监听 `window` 的滚动事件
      */
     @property({ attribute: 'scroll-target' })
     public scrollTarget?: string | HTMLElement | JQ<HTMLElement>;

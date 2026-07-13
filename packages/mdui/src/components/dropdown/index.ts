@@ -44,7 +44,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @event closed - 下拉组件关闭动画完成时，事件被触发
  *
  * @slot - 下拉组件的内容
- * @slot trigger - 触发下拉组件的元素，例如 [`<mdui-button>`](/docs/2/components/button) 元素
+ * @slot trigger - 触发下拉组件的元素，例如 [`<mdui-button>`](/zh-cn/docs/2/components/button) 元素
  *
  * @csspart trigger - 触发下拉组件的元素的容器，即 `trigger` slot 的容器
  * @csspart panel - 下拉组件内容的容器
@@ -127,7 +127,7 @@ export class Dropdown extends MduiElement<DropdownEventMap> {
     | /*右侧底部对齐*/ 'right-end' = 'auto';
 
   /**
-   * 点击 [`<mdui-menu-item>`](/docs/2/components/menu#menu-item-api) 后，下拉组件是否保持打开状态
+   * 点击 [`<mdui-menu-item>`](/zh-cn/docs/2/components/menu#menu-item-api) 后，下拉组件是否保持打开状态
    */
   @property({
     type: Boolean,

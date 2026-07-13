@@ -9,9 +9,10 @@
     "packages/**/*.d.ts": true,
     "packages/**/*.js": true,
     "packages/**/*style.ts": true,
-    "packages/shared/{controllers,decorators,helpers,icons,lit-styles,mixins}": true,
+    "packages/shared/{base,controllers,decorators,helpers,lit-styles,mixins}": true,
     "packages/jq/{functions,methods,shared,static}": true,
     "packages/mdui/{components,functions}": true,
+    "packages/icons-shared/shared": true,
     "packages/icons/src/*.ts": true
   }
 }

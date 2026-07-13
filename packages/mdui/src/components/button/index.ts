@@ -31,7 +31,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart end-icon - 按钮右侧的图标
  * @csspart loading - 加载中状态的 `<mdui-circular-progress>` 元素
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/zh-cn/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-button')
 export class Button extends ButtonBase<ButtonEventMap> {

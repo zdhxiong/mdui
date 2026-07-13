@@ -1,13 +1,13 @@
 import { html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
+import '@mdui/icons-shared/check.js';
+import '@mdui/icons-shared/clear.js';
 import cc from 'classcat';
 import { HasSlotController } from '@mdui/shared/controllers/has-slot.js';
 import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
-import '@mdui/shared/icons/check.js';
-import '@mdui/shared/icons/clear.js';
 import { ButtonBase } from '../button/button-base.js';
 import '../icon.js';
 import { style } from './style.js';
@@ -42,7 +42,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart delete-icon - 可删除时的右侧删除图标
  * @csspart loading - 加载中状态的 `<mdui-circular-progress>` 元素
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/zh-cn/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-chip')
 export class Chip extends ButtonBase<ChipEventMap> {

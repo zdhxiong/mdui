@@ -48,8 +48,8 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart headline - 主标题
  * @csspart description - 副标题
  *
- * @cssprop --shape-corner - 列表项的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
- * @cssprop --shape-corner-rounded - 指定了 `rounded` 属性时，列表项的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 列表项的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/zh-cn/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner-rounded - 指定了 `rounded` 属性时，列表项的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/zh-cn/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-list-item')
 export class ListItem extends AnchorMixin(
@@ -111,7 +111,7 @@ export class ListItem extends AnchorMixin(
   public endIcon?: string;
 
   /**
-   * 是否禁用该列表项，禁用后，列表项将变为灰色，且其中的 [`<mdui-checkbox>`](/docs/2/components/checkbox)、[`<mdui-radio>`](/docs/2/components/radio)、[`<mdui-switch>`](/docs/2/components/switch) 等也将禁用
+   * 是否禁用该列表项，禁用后，列表项将变为灰色，且其中的 [`<mdui-checkbox>`](/zh-cn/docs/2/components/checkbox)、[`<mdui-radio>`](/zh-cn/docs/2/components/radio)、[`<mdui-switch>`](/zh-cn/docs/2/components/switch) 等也将禁用
    */
   @property({
     type: Boolean,
@@ -131,7 +131,7 @@ export class ListItem extends AnchorMixin(
   public active = false;
 
   /**
-   * 是否使列表项不可点击。设置后，列表项中的 [`<mdui-checkbox>`](/docs/2/components/checkbox)、[`<mdui-radio>`](/docs/2/components/radio)、[`<mdui-switch>`](/docs/2/components/switch) 等仍可交互
+   * 是否使列表项不可点击。设置后，列表项中的 [`<mdui-checkbox>`](/zh-cn/docs/2/components/checkbox)、[`<mdui-radio>`](/zh-cn/docs/2/components/radio)、[`<mdui-switch>`](/zh-cn/docs/2/components/switch) 等仍可交互
    */
   @property({
     type: Boolean,

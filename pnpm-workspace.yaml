@@ -1,6 +1,13 @@
 packages:
   - 'packages/icons'
+  - 'packages/icons-shared'
   - 'packages/jq'
   - 'packages/mdui'
   - 'packages/shared'
   - 'packages/mcp'
+allowBuilds:
+  '@vscode/vsce-sign': false
+  esbuild: false
+  keytar: false
+  unrs-resolver: false
+  yorkie: false

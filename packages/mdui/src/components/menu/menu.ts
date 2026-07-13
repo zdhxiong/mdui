@@ -55,9 +55,9 @@ type MenuItem = MenuItemOriginal & {
  *
  * @event change - 菜单项选中状态变化时触发
  *
- * @slot - 子菜单项（`<mdui-menu-item>`）、分隔线（[`<mdui-divider>`](/docs/2/components/divider)）等元素
+ * @slot - 子菜单项（`<mdui-menu-item>`）、分隔线（[`<mdui-divider>`](/zh-cn/docs/2/components/divider)）等元素
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/zh-cn/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-menu')
 export class Menu extends MduiElement<MenuEventMap> {
@@ -70,10 +70,9 @@ export class Menu extends MduiElement<MenuEventMap> {
    * * `multiple`：多选
    */
   @property({ reflect: true })
-  // eslint-disable-next-line prettier/prettier
-  public selects?:
-    | /*单选*/ 'single'
-    | /*多选*/ 'multiple' ;
+  public selects?: // prettier-ignore
+  | /*单选*/ 'single'
+    | /*多选*/ 'multiple';
 
   /**
    * 当前选中的 `<mdui-menu-item>` 的值。

@@ -65,7 +65,7 @@ export class CollapseItem extends MduiElement<CollapseItemEventMap> {
   public disabled = false;
 
   /**
-   * 点击该元素时触发折叠，值可以是 CSS 选择器、DOM 元素、或 [JQ 对象](/docs/2/functions/jq)。默认为点击整个 header 区域触发
+   * 点击该元素时触发折叠，值可以是 CSS 选择器、DOM 元素、或 [JQ 对象](/zh-cn/docs/2/functions/jq)。默认为点击整个 header 区域触发
    */
   @property()
   public trigger?: string | HTMLElement | JQ<HTMLElement>;

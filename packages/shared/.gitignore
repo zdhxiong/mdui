@@ -1,5 +1,3 @@
-src/icons/shared/style.ts
-src/icons/*.ts
 src/lit-styles/*style.ts
 /mixin.less
 /lit-styles/component-style.less

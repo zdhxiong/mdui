@@ -43,7 +43,7 @@ import type { Ref } from 'lit/directives/ref.js';
  * @csspart overlay - 遮罩层
  * @csspart panel - 抽屉导航栏容器
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/zh-cn/docs/2/styles/design-tokens#shape-corner)
  * @cssprop --z-index - 组件的 CSS `z-index` 值
  */
 @customElement('mdui-navigation-drawer')
@@ -63,7 +63,7 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
   /**
    * 抽屉导航栏打开时，是否显示遮罩层
    *
-   * 在窄屏设备上（屏幕宽度小于 [`--mdui-breakpoint-md`](/docs/2/styles/design-tokens#breakpoint)），会始终显示遮罩层，无视该参数
+   * 在窄屏设备上（屏幕宽度小于 [`--mdui-breakpoint-md`](/zh-cn/docs/2/styles/design-tokens#breakpoint)），会始终显示遮罩层，无视该参数
    */
   @property({
     type: Boolean,
@@ -101,9 +101,8 @@ export class NavigationDrawer extends LayoutItemBase<NavigationDrawerEventMap> {
    * * `right`：右侧
    */
   @property({ reflect: true })
-  // eslint-disable-next-line prettier/prettier
-  public placement:
-    | /*左侧*/ 'left'
+  public placement: // prettier-ignore
+  | /*左侧*/ 'left'
     | /*右侧*/ 'right' = 'left';
 
   /**

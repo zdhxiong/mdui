@@ -15,7 +15,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  *
  * @slot - 徽标中显示的文本
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/zh-cn/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-badge')
 export class Badge extends MduiElement<BadgeEventMap> {

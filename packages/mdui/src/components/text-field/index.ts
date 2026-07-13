@@ -6,6 +6,10 @@ import { live } from 'lit/directives/live.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
 import { msg } from '@lit/localize';
+import '@mdui/icons-shared/cancel--outlined.js';
+import '@mdui/icons-shared/error.js';
+import '@mdui/icons-shared/visibility-off.js';
+import '@mdui/icons-shared/visibility.js';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
@@ -16,10 +20,6 @@ import { watch } from '@mdui/shared/decorators/watch.js';
 import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { observeResize } from '@mdui/shared/helpers/observeResize.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
-import '@mdui/shared/icons/cancel--outlined.js';
-import '@mdui/shared/icons/error.js';
-import '@mdui/shared/icons/visibility-off.js';
-import '@mdui/shared/icons/visibility.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
 import { onLocaleReady, offLocaleReady } from '../../internal/localize.js';
@@ -1025,7 +1025,7 @@ export class TextField
       autocapitalize=${ifDefined(
         this.type === 'password' ? 'off' : this.autocapitalize,
       )}
-      autocomplete=${this.autocomplete}
+      autocomplete=${ifDefined(this.autocomplete)}
       autocorrect=${ifDefined(
         this.type === 'password' ? 'off' : this.autocorrect,
       )}

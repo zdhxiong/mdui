@@ -17,6 +17,7 @@ repositories {
 dependencies {
   intellijPlatform {
     create("WS", "2025.3")
+    zipSigner()
     instrumentationTools()
   }
 }
@@ -37,7 +38,7 @@ tasks {
 
   patchPluginXml {
     sinceBuild.set("252")
-    untilBuild.set("")
+    untilBuild.set(provider { null })
   }
 
   signPlugin {

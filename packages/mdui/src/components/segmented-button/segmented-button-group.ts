@@ -45,7 +45,7 @@ type SegmentedButton = SegmentedButtonOriginal & {
  *
  * @slot - `<mdui-segmented-button>` 组件
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/zh-cn/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-segmented-button-group')
 export class SegmentedButtonGroup
@@ -75,9 +75,8 @@ export class SegmentedButtonGroup
    * * `multiple`：多选
    */
   @property({ reflect: true })
-  // eslint-disable-next-line prettier/prettier
-  public selects?:
-    | /*单选*/ 'single'
+  public selects?: // prettier-ignore
+  | /*单选*/ 'single'
     | /*多选*/ 'multiple';
 
   /**

@@ -1,7 +1,10 @@
 import { html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
+import '@mdui/icons-shared/arrow-right.js';
+import '@mdui/icons-shared/check.js';
 import cc from 'classcat';
 import { $ } from '@mdui/jq/$.js';
 import '@mdui/jq/methods/css.js';
@@ -20,8 +23,6 @@ import { booleanConverter } from '@mdui/shared/helpers/decorator.js';
 import { getDuration, getEasing } from '@mdui/shared/helpers/motion.js';
 import { nothingTemplate } from '@mdui/shared/helpers/template.js';
 import { uniqueId } from '@mdui/shared/helpers/uniqueId.js';
-import '@mdui/shared/icons/arrow-right.js';
-import '@mdui/shared/icons/check.js';
 import { componentStyle } from '@mdui/shared/lit-styles/component-style.js';
 import { AnchorMixin } from '@mdui/shared/mixins/anchor.js';
 import { FocusableMixin } from '@mdui/shared/mixins/focusable.js';
@@ -558,7 +559,10 @@ export class MenuItem extends AnchorMixin(
           </slot>`
         : html`<slot name="icon" part="icon" class="icon">
             ${hasIcon
-              ? html`<mdui-icon name=${this.icon} class="i"></mdui-icon>`
+              ? html`<mdui-icon
+                  name=${ifDefined(this.icon)}
+                  class="i"
+                ></mdui-icon>`
               : nothingTemplate}
           </slot>`}
       <div class="label-container">

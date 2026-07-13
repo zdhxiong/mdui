@@ -47,7 +47,7 @@ export const handleDescription = (
   const languagePath = language ? `${language}/` : '';
 
   return (description || '').replaceAll(
-    '](/docs/2/',
+    '](/zh-cn/docs/2/',
     `](${docOrigin}/${languagePath}docs/2/`,
   );
 };

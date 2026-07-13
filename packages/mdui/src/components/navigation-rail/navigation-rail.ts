@@ -48,7 +48,7 @@ type NavigationRailItem = NavigationRailItemOriginal & {
  * @csspart bottom - 底部元素的容器
  * @csspart items - `<mdui-navigation-rail-item>` 组件的容器
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/zh-cn/docs/2/styles/design-tokens#shape-corner)
  * @cssprop --z-index - 组件的 CSS `z-index` 值
  */
 @customElement('mdui-navigation-rail')
@@ -71,9 +71,8 @@ export class NavigationRail extends LayoutItemBase<NavigationRailEventMap> {
    * * `right`：右侧
    */
   @property({ reflect: true })
-  // eslint-disable-next-line prettier/prettier
-  public placement:
-    | /*左侧*/ 'left'
+  public placement: // prettier-ignore
+  | /*左侧*/ 'left'
     | /*右侧*/ 'right' = 'left';
 
   /**

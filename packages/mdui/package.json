@@ -54,6 +54,7 @@
     "@material/material-color-utilities": "^0.3.0",
     "@mdui/shared": "workspace:^",
     "@mdui/jq": "workspace:^",
+    "@mdui/icons-shared": "workspace:^",
     "@floating-ui/utils": "^0.2.10",
     "classcat": "^5.0.5",
     "is-promise": "^4.0.0",

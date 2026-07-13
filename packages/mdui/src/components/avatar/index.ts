@@ -22,7 +22,7 @@ import type { CSSResultGroup, TemplateResult } from 'lit';
  * @csspart image - 使用图片作为头像时，组件内部的 `<img>` 元素
  * @csspart icon - 使用图标作为头像时，组件内部的 `<mdui-icon>` 元素
  *
- * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/docs/2/styles/design-tokens#shape-corner)
+ * @cssprop --shape-corner - 组件的圆角大小。可以指定一个具体的像素值；但更推荐引用[设计令牌](/zh-cn/docs/2/styles/design-tokens#shape-corner)
  */
 @customElement('mdui-avatar')
 export class Avatar extends MduiElement<AvatarEventMap> {
@@ -35,7 +35,7 @@ export class Avatar extends MduiElement<AvatarEventMap> {
   public src?: string;
 
   /**
-   * 图片如何适应容器框，与原生的 [`object-fit`](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) 属性相同。可选值包括：
+   * 图片如何适应容器框，与原生的 [`object-fit`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-fit) 属性相同。可选值包括：
    *
    * * `contain`：保持图片原有尺寸比例，内容会被等比例缩放
    * * `cover`：保持图片原有尺寸比例，但部分内容可能被剪切

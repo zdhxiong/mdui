@@ -1,6 +1,6 @@
 {
   "name": "@mdui/icons",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Material Icons 的 Web Components 图标组件库",
   "type": "module",
   "files": [

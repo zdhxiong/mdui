@@ -2,7 +2,7 @@
 <idea-plugin>
   <id>org.mdui.plugin</id>
   <name>mdui</name>
-  <version>2.1.4</version>
+  <version>2.1.5</version>
   <idea-version since-build="252"/>
   <vendor email="zdhxiong@gmail.com" url="https://www.mdui.org">zdhxiong</vendor>
   <description><![CDATA[

@@ -340,12 +340,12 @@ textarea.input {
 }
 
 :host([variant="filled"]) .label {
-  + .input {
+  +.input {
     .padding-top(22);
     .padding-bottom(6);
   }
 
-  + textarea.input {
+  +textarea.input {
     padding-top: 0;
     .margin-top(22);
   }
@@ -391,6 +391,10 @@ textarea.input {
   flex-wrap: nowrap;
   .padding-left(16);
   .typescale(body-small);
+
+  :host([disabled]:not([disabled="false" i])) & {
+    .color(on-surface, 38%);
+  }
 }
 
 // edge 中会默认添加密码切换按钮，隐藏掉

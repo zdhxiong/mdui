@@ -18,6 +18,7 @@
     "html-data.{en,zh-cn}.json",
     "jq.{js,d.ts}",
     "jsx.{en,zh-cn}.d.ts",
+    "jsx2.{en,zh-cn}.d.ts",
     "LICENSE",
     "mdui.css",
     "mdui.{js,d.ts}",

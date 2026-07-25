@@ -1,4 +1,4 @@
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref } from 'lit/directives/ref.js';
 import { MduiElement } from '@mdui/shared/base/mdui-element.js';
@@ -86,16 +86,17 @@ export class Card extends AnchorMixin(
   }
 
   protected override render(): TemplateResult {
-    return html`<mdui-ripple
-        ${ref(this.rippleRef)}
-        .noRipple=${this.noRipple}
-      ></mdui-ripple
-      >${this.href && !this.disabled
+    return html`${this.href && !this.disabled
         ? this.renderAnchor({
             className: 'link',
-            content: html`<slot></slot>`,
+            content: nothing,
           })
-        : html`<slot></slot>`}`;
+        : ''}
+      <mdui-ripple
+        ${ref(this.rippleRef)}
+        .noRipple=${this.noRipple}
+      ></mdui-ripple>
+      <slot></slot>`;
   }
 }
 

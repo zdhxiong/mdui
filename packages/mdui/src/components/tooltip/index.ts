@@ -276,7 +276,10 @@ export class Tooltip extends MduiElement<TooltipEventMap> {
         [{ transform: 'scale(1)' }, { transform: 'scale(0)' }],
         { duration, easing },
       );
-      this.popupRef.value!.hidden = true;
+      const refVal = this.popupRef.value;
+      if (refVal) {
+        refVal!.hidden = true;
+      }
       this.emit('closed');
     }
   }
